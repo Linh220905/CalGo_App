@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240" fill="none">
+  <ellipse cx="100" cy="225" rx="50" ry="10" fill="rgba(0,0,0,0.08)"/>
+  <defs>
+    <linearGradient id="appleGrad" x1="50" y1="0" x2="150" y2="200">
+      <stop offset="0%" stop-color="#FF6B6B"/>
+      <stop offset="50%" stop-color="#EE4444"/>
+      <stop offset="100%" stop-color="#CC2222"/>
+    </linearGradient>
+    <linearGradient id="leafGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#4ADE80"/>
+      <stop offset="100%" stop-color="#22C55E"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="105" cy="46" rx="14" ry="18" fill="url(#leafGrad)" transform="rotate(20 105 46)"/>
+  <line x1="105" y1="40" x2="105" y2="58" stroke="#16A34A" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M100 50 L100 36" stroke="#78350F" stroke-width="3" stroke-linecap="round"/>
+  <path d="M100 190 C145 190 170 168 170 130 C170 95 155 80 140 70 C130 62 118 58 100 56 C82 58 70 62 60 70 C45 80 30 95 30 130 C30 168 55 190 100 190Z" fill="url(#appleGrad)"/>
+  <path d="M55 110 C50 125 50 145 60 160" stroke="rgba(255,255,255,0.25)" stroke-width="6" stroke-linecap="round" fill="none"/>
+  <!-- Eyebrows: angled up toward center = worried/sympathetic -->
+  <path d="M66 98 C74 92 82 92 88 96" stroke="#1E293B" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <path d="M134 98 C126 92 118 92 112 96" stroke="#1E293B" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <!-- Eyes: soft concerned look, pupils shifted inward -->
+  <ellipse cx="78" cy="112" rx="6" ry="8" fill="#1E293B"/>
+  <ellipse cx="122" cy="112" rx="6" ry="8" fill="#1E293B"/>
+  <ellipse cx="78" cy="110" rx="3" ry="3.5" fill="white" opacity="0.9"/>
+  <ellipse cx="122" cy="110" rx="3" ry="3.5" fill="white" opacity="0.9"/>
+  <!-- Mouth: gentle concerned curve -->
+  <path d="M88 137 C94 141 106 141 112 137" stroke="#1E293B" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+  <!-- Blush: warm, soft -->
+  <ellipse cx="62" cy="126" rx="10" ry="6" fill="#FFB3B3" opacity="0.55"/>
+  <ellipse cx="138" cy="126" rx="10" ry="6" fill="#FFB3B3" opacity="0.55"/>
+  <!-- Arms: reaching forward in comforting gesture -->
+  <path d="M38 115 C18 118 12 135 22 148" stroke="#CC2222" stroke-width="7" stroke-linecap="round" fill="none"/>
+  <circle cx="22" cy="148" r="5" fill="#FF6B6B"/>
+  <path d="M162 115 C182 118 188 135 178 148" stroke="#CC2222" stroke-width="7" stroke-linecap="round" fill="none"/>
+  <circle cx="178" cy="148" r="5" fill="#FF6B6B"/>
+  <!-- Feet -->
+  <rect x="70" y="190" width="16" height="20" rx="8" fill="#CC2222"/>
+  <rect x="114" y="190" width="16" height="20" rx="8" fill="#CC2222"/>
+</svg>

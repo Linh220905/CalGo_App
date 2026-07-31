@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240" fill="none">
+  <ellipse cx="100" cy="225" rx="50" ry="10" fill="rgba(0,0,0,0.05)"/>
+  <defs>
+    <linearGradient id="appleGrad" x1="50" y1="0" x2="150" y2="200">
+      <stop offset="0%" stop-color="#FF6B6B"/>
+      <stop offset="50%" stop-color="#EE4444"/>
+      <stop offset="100%" stop-color="#CC2222"/>
+    </linearGradient>
+    <linearGradient id="leafGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#4ADE80"/>
+      <stop offset="100%" stop-color="#22C55E"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="105" cy="46" rx="14" ry="18" fill="url(#leafGrad)" transform="rotate(20 105 46)"/>
+  <line x1="105" y1="40" x2="105" y2="58" stroke="#16A34A" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M100 50 L100 36" stroke="#78350F" stroke-width="3" stroke-linecap="round"/>
+  <path d="M100 190 C145 190 170 168 170 130 C170 95 155 80 140 70 C130 62 118 58 100 56 C82 58 70 62 60 70 C45 80 30 95 30 130 C30 168 55 190 100 190Z" fill="url(#appleGrad)"/>
+  <path d="M55 110 C50 125 50 145 60 160" stroke="rgba(255,255,255,0.25)" stroke-width="6" stroke-linecap="round" fill="none"/>
+  <ellipse cx="78" cy="105" rx="6" ry="7" fill="#1E293B"/>
+  <ellipse cx="122" cy="105" rx="6" ry="7" fill="#1E293B"/>
+  <circle cx="80" cy="103" r="3.5" fill="white"/>
+  <circle cx="124" cy="103" r="3.5" fill="white"/>
+  <ellipse cx="100" cy="135" rx="5" ry="6" fill="#1E293B" opacity="0.5"/>
+  <ellipse cx="65" cy="122" rx="8" ry="5" fill="#FFB3B3" opacity="0.4"/>
+  <ellipse cx="135" cy="122" rx="8" ry="5" fill="#FFB3B3" opacity="0.4"/>
+  <path d="M155 120 C170 125 175 140 165 155 C158 165 148 160 145 150" stroke="#CC2222" stroke-width="8" stroke-linecap="round" fill="none"/>
+  <circle cx="145" cy="148" r="5" fill="#FF6B6B"/>
+  <path d="M40 120 C25 135 25 155 35 165" stroke="#CC2222" stroke-width="8" stroke-linecap="round" fill="none"/>
+  <ellipse cx="150" cy="50" rx="28" ry="18" fill="white" stroke="#94A3B8" stroke-width="1.5"/>
+  <text x="150" y="56" text-anchor="middle" font-size="20">🤔</text>
+  <circle cx="138" cy="75" r="5" fill="white" stroke="#94A3B8" stroke-width="1"/>
+  <circle cx="145" cy="85" r="3" fill="white" stroke="#94A3B8" stroke-width="1"/>
+  <rect x="70" y="190" width="16" height="20" rx="8" fill="#CC2222"/>
+  <rect x="114" y="190" width="16" height="20" rx="8" fill="#CC2222"/>
+</svg>

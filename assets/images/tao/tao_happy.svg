@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240" fill="none">
+  <ellipse cx="100" cy="225" rx="50" ry="10" fill="rgba(0,0,0,0.08)"/>
+  <defs>
+    <linearGradient id="appleGrad" x1="50" y1="0" x2="150" y2="200">
+      <stop offset="0%" stop-color="#FF6B6B"/>
+      <stop offset="50%" stop-color="#EE4444"/>
+      <stop offset="100%" stop-color="#CC2222"/>
+    </linearGradient>
+    <linearGradient id="leafGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#4ADE80"/>
+      <stop offset="100%" stop-color="#22C55E"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="105" cy="46" rx="14" ry="18" fill="url(#leafGrad)" transform="rotate(20 105 46)"/>
+  <line x1="105" y1="40" x2="105" y2="58" stroke="#16A34A" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M100 50 L100 36" stroke="#78350F" stroke-width="3" stroke-linecap="round"/>
+  <path d="M100 190 C145 190 170 168 170 130 C170 95 155 80 140 70 C130 62 118 58 100 56 C82 58 70 62 60 70 C45 80 30 95 30 130 C30 168 55 190 100 190Z" fill="url(#appleGrad)"/>
+  <path d="M55 110 C50 125 50 145 60 160" stroke="rgba(255,255,255,0.25)" stroke-width="6" stroke-linecap="round" fill="none"/>
+  <path d="M72 108 C78 100 84 100 84 108" stroke="#1E293B" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <path d="M116 108 C122 100 128 100 128 108" stroke="#1E293B" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <path d="M72 130 C80 150 120 150 128 130" stroke="#1E293B" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <path d="M88 133 L88 140 C93 143 107 143 112 140 L112 133Z" fill="white"/>
+  <ellipse cx="62" cy="128" rx="12" ry="7" fill="#FFB3B3" opacity="0.5"/>
+  <ellipse cx="138" cy="128" rx="12" ry="7" fill="#FFB3B3" opacity="0.5"/>
+  <path d="M40 100 C20 80 15 50 25 40" stroke="#CC2222" stroke-width="8" stroke-linecap="round" fill="none"/>
+  <circle cx="25" cy="40" r="5" fill="#FF6B6B"/>
+  <path d="M160 100 C180 80 185 50 175 40" stroke="#CC2222" stroke-width="8" stroke-linecap="round" fill="none"/>
+  <circle cx="175" cy="40" r="5" fill="#FF6B6B"/>
+  <path d="M45 30 L48 36 L54 36 L49 40 L51 46 L45 42 L39 46 L41 40 L36 36 L42 36Z" fill="#FBBF24" opacity="0.8"/>
+  <path d="M155 20 L157 24 L161 24 L158 27 L159 30 L155 28 L151 30 L152 27 L149 24 L153 24Z" fill="#FBBF24" opacity="0.8"/>
+  <rect x="70" y="190" width="16" height="20" rx="8" fill="#CC2222"/>
+  <rect x="114" y="190" width="16" height="20" rx="8" fill="#CC2222"/>
+</svg>
