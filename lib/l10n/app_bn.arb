@@ -1,0 +1,922 @@
+{
+  "@@locale": "bn",
+  "tabHome": "হোম",
+  "tabAnalytics": "বিশ্লেষণ",
+  "tabSettings": "বৈশিষ্ট্য",
+  "today": "আজ",
+  "yesterday": "গতকাল",
+  "caloriesLeft": "পানামা",
+  "proteinLeft": "প্রোটোন",
+  "carbsLeft": "কার্বস বাঁদিকে",
+  "fatsLeft": "% 1 বছর",
+  "recentlyUploaded": "সম্প্রতি আপলোড",
+  "noMealsUploaded": "এখনো কোন খাবার আপলোড করা হয়নি",
+  "tapToScanMeal": "Tap to scan your first meal with AI",
+  "profileTitle": "ব্যক্তিগত অ্যাকাউন্ট",
+  "creditsLabel": "স্ক্যান করা হবে",
+  "scannedCountLabel": "ভোজ স্ক্যান",
+  "buyCredits": "স্বীকৃতি:",
+  "statistics": "পরিসংখ্যান",
+  "calorieTarget": "কাইরি গোলাল",
+  "notifications": "সূচনাবার্তা",
+  "darkMode": "কালো মোড",
+  "language": "ভাষা",
+  "languageDisplayName": "বাংলা",
+  "userGuide": "ব্যবহার নির্দেশিকা",
+  "customerSupport": "গ্রাহক সমর্থন",
+  "logout": "প্রস্থান করুন",
+  "selectLanguageTitle": "ভাষা নির্বাচন করুন",
+  "scanTitle": "স্ক্যানের সময়",
+  "scanInstructionHeader": "ফ্রেমের মধ্যে খাবার রাখা হবে",
+  "scanInstructionSub": "Ensure proper lighting for accurate AI recognition",
+  "selectFromGallery": "গ্যালারি থেকে নির্বাচন করুন",
+  "outOfCreditsTitle": "স্ক্যান করা ছবি!",
+  "outOfCreditsMessage": "তুমি তোমার সব স্ক্যান লেওভার ব্যবহার করেছ. পুষ্টি খোঁজার জন্য উপরে!",
+  "buyMore": "অতিরিক্ত সামগ্রী প্রাপ্ত করুন",
+  "cancel": "বাতিল",
+  "pricingTitle": "আপগ্রেড করুন (S)",
+  "pricingSubtitle": "Choose the best plan to unlock full AI capabilities",
+  "creditPacksTitle": "ক্রেডিট প্যাকেজ স্ক্যান করুন",
+  "noExpiryBadge": "মেয়াদহীন",
+  "popularBadge": "জনপ্রীয়",
+  "subscriptionsTitle": "সাবস্ক্রিপশন",
+  "payButton": "এখন বল",
+  "privacyPolicy": "ব্যক্তিগত তথ্যের নীতিমালা",
+  "termsOfService": "পরিসেবাের তালিকা",
+  "deleteAccount": "অ্যাকাউন্ট মুছে ফেলুন",
+  "openOnline": "ফোল্ডার খুলুন",
+  "onlineGuide": "অনলাইন গাইড",
+  "deleteAccountSubscriptionWarning": "Deleting your CalGo account does not cancel a Google Play subscription. If you have Premium, cancel it separately in Google Play to avoid a renewal charge.",
+  "restorePurchases": "পেস্ট করুন",
+  "privacyPolicyContent": "CalGo Privacy Policy (updated 5 Aug 2026):\n\n1. Data we collect: account email, display name, Google sign-in identifier, onboarding nutrition information, meal photos, scan results, meal history, purchase metadata, app/device diagnostics and notification preferences.\n2. How permissions are used: camera and photo access are requested only when you choose to capture or select a meal photo; notifications are used only when enabled.\n3. How data is used: to provide AI nutrition analysis, sync your account, process Google Play purchases, prevent abuse, provide support and improve reliability. Photos may be processed by our hosting and AI service providers.\n4. Sharing and security: we do not sell your personal data or meal photos. Necessary providers such as hosting, AI processing, Google Sign-In and Google Play Billing may process limited data. We use HTTPS and access controls, but no system is completely secure.\n5. Retention and deletion: account data and meal history are deleted when you delete your account, except data that must be retained for fraud prevention, disputes or legal obligations. Backups may take a reasonable time to expire.\n6. Your rights: delete your account in Profile or visit https://calgo.tech/delete-account. For access, correction or questions, contact support@calgo.tech. Full policy: https://calgo.tech/privacy.",
+  "termsOfServiceContent": "CalGo Terms of Service:\n\n1. Service and medical disclaimer: AI nutrition results are estimates for reference only and do not replace professional medical advice. CalGo is not a medical device.\n2. Payments: credit packs are one-time digital purchases. Premium weekly, monthly and annual plans are auto-renewing Google Play subscriptions unless cancelled before the next renewal. Manage or cancel at https://play.google.com/store/account/subscriptions.\n3. Refunds and deletion: Google Play handles Android billing and refunds. Deleting a CalGo account does not cancel a Google Play subscription.\n4. Content and intellectual property: you retain ownership of uploaded photos; CalGo receives a limited license to process them to provide and improve the service. CalGo owns its app, branding and software.\n5. Contact: support@calgo.tech. Full terms: https://calgo.tech/terms.",
+  "deleteAccountConfirmMessage": "Are you sure you want to permanently delete your CalGo account and all calorie log data? This action cannot be undone.",
+  "historyTitle": "ভোজ ইতিহাস",
+  "historySubtitle": "আপনার পুষ্টি যাত্রা",
+  "mealsCountLabel": "ভোজ",
+  "streakDaysLabel": "ক্রেক",
+  "kcalPerDay": "কে- ক্যাল- ডেName",
+  "proteinPerDay": "প্রোটেইন",
+  "noMealsHistory": "কোনো খাবার লগ-ইন করা হয়নি",
+  "scanFirstMealPrompt": "শুরু করার প্রথম খাবারটা স্ক্যান করুন\nতোমার পুষ্টি যাত্রা",
+  "scanFirstMealButton": "প্রথম ভোজ স্ক্যান",
+  "deleteMealConfirm": "আপনি কি এই খাবারটি মুছে ফেলতে চান?",
+  "cannotDeleteMeal": "খাবার মুছে ফেলা যায়নি। অনুগ্রহ করে পুনরায় প্রচেষ্টা করুন।",
+  "photoGalleryTitle": "খাদ্য ফটো",
+  "noPhotosYet": "কোনো খাবার স্ক্যানের ছবি নেই",
+  "takePhotosPrompt": "আপনার সংগ্রহ করার জন্য আপনার খাবারের স্ন্যাপ ছবি!",
+  "scanFoodNow": "খাদ্য স্ক্যান করুন",
+  "welcomeTo": "স্বাগতম",
+  "getStarted": "প্রারম্ভকাল",
+  "snapPhotoAiTitle": "একটা ছবি দেখাও। জেজেডপিএইচজেডজেডজেডজেডজেডজেড কাজ করতে দাও।",
+  "snapPhotoAiDesc": "AI automatically recognizes food and calculates calories in seconds.",
+  "trackEasilyTitle": "সহজ করে ট্র্যাক।",
+  "trackEasilyDesc": "ট্র্যাক ক্লারিস, প্রোটিন, গাড়ি আর মোটা প্রতিদিন।",
+  "reachGoalsTitle": "তাড়াতাড়ি লক্ষ্যে পৌঁছাতে হবে।",
+  "reachGoalsDesc": "ব্যক্তিগত টার্গেট আর মোটা অগ্রগতির দিকে খেয়াল রাখুন।",
+  "nextStepButton": "পরবর্তী",
+  "goalStepTitle": "তোমার লক্ষ্য কী?",
+  "goalStepSubtitle": "Helps CalGo build a plan that fits you",
+  "goalLoseWeight": "হার",
+  "goalLoseWeightDesc": "কঠোর পরিশ্রম করুন",
+  "goalLoseWeightReason": "এটা আমাদের মোটা অঙ্কের পরিকল্পনা তৈরি করতে সাহায্য করে যা পেশি রক্ষা করে এবং টিকে থাকে।",
+  "goalGainMuscle": "মাসল শোলস",
+  "goalGainMuscleDesc": "পেশী গঠন করুন এবং শক্তি বৃদ্ধি করুন",
+  "goalGainMuscleReason": "এটা আমাদের সাহায্য করবে তোমার ট্রেনিং আর প্রোটিনের প্রয়োজনের মধ্যে দিয়ে।",
+  "goalMaintain": "[ পাদটীকা]",
+  "goalMaintainDesc": "ভারসাম্য বজায় রাখুন",
+  "goalMaintainReason": "এটা আমাদের এক ভারসাম্যপূর্ণ পরিকল্পনা গড়ে তুলতে সাহায্য করে, যা আপনার জীবনকে দীর্ঘ সময় ধরে মানানসই করে ।",
+  "nameStepTitle": "তোমার নাম...",
+  "nameStepHint": "আপনার নাম লিখুন",
+  "demoStepTitle": "কর্ম",
+  "genderStepTitle": "তোমার লিঙ্গ কি?",
+  "genderStepSubtitle": "সঠিক গণনা করুন",
+  "genderMale": "মালে",
+  "genderFemale": "স্ত্রী",
+  "genderOther": "অন্যান্য",
+  "ageStepTitle": "বয়স কত তোমার?",
+  "heightStepTitle": "তোমার উচ্চতা কত?",
+  "weightStepTitle": "আপনার বর্তমান ওজন কি?",
+  "targetWeightStepTitle": "তোমার লক্ষ্য কি?",
+  "activityStepTitle": "আপনার কাজের স্তর কী?",
+  "dietStepTitle": "আপনি কি কোন নির্দিষ্ট খাবার অনুসরণ করেন?",
+  "analysisTitle": "আপনার তথ্য বিশ্লেষণ করা হচ্ছে...",
+  "accountStepTitle": "আপনার ব্যবহৃত প্ল্যান সংরক্ষণ করুন",
+  "continueWithGoogle": "গুগলে অগ্রসর হোন",
+  "continueWithApple": "Apple সঙ্গে এগিয়ে চলুন",
+  "heightStepDesc": "Helps calculate BMI and accurate calorie needs",
+  "weightStepDesc": "আপনার ব্যক্তিগত পুষ্টির লক্ষ্য নির্ধারণ করে",
+  "currentHeightHeader": "বর্তমান উচ্চতা",
+  "currentWeightHeader": "বর্তমান ওয়েট",
+  "bmiIndexTitle": "BMI Index",
+  "bmiUnderweight": "যোগ করো...",
+  "bmiNormal": "স্বাভাবিক",
+  "bmiOverweight": "টাইপরাইটার",
+  "bmiObese": "পতিউ",
+  "targetWeightDesc": "আপনার ব্যক্তিগত পুষ্টির পরিমাণ নির্ধারণ করতে সাহায্য করুন",
+  "goalMaintainLabel": "গঠন বজায় রাখুন",
+  "goalLoseLabel": "[ পাদটীকাগুল",
+  "goalGainLabel": "মাসল লাভ",
+  "goalMaintainHint": "লক্ষ্য আপনার বর্তমান আকৃতি সমান করুন",
+  "goalLoseDiffText": "Target: Lose {kg} kg",
+  "@goalLoseDiffText": {
+    "description": "Localized UI text: goalLoseDiffText",
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      }
+    }
+  },
+  "goalGainDiffText": "Target: Gain {kg} kg",
+  "@goalGainDiffText": {
+    "description": "Localized UI text: goalGainDiffText",
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      }
+    }
+  },
+  "paceStepTitle": "প্রতি সপ্তাহে কিছু?",
+  "paceStepSubtitle": "আপনার জীবনধারার জন্য আরামদায়ক হার বেছে নিন",
+  "activityStepSubtitle": "আপনার রোজকার খরচের ওপর প্রভাব ফেলে",
+  "dietStepSubtitle": "জেজেডপিজেডজেডজেডজেডজেডজেডজেডজেডজেডজি আপনার শরীর এবং লক্ষ্যের জন্য সবচেয়ে ভালো খাবার খাওয়ার পরামর্শ প্রদান করছে।",
+  "socialProofTitle": "জিজেডপিএইচজেডজেডজেডজেডজেডজেড বিষয়ে সম্প্রদায় যা বলে",
+  "socialProofSubtitle": "প্রকৃত সদস্যদের সমালোচনা",
+  "ratingTag": "৫মন্ট মাত্রা",
+  "referralStepTitle": "জেজেডপিজেডজেড এর ব্যাপারে তুমি কি জানো?",
+  "referralStepSubtitle": "আপনার যাত্রা সম্পর্কে আমাদের সাহায্য",
+  "referralFriend": "বন্ধু পরামর্শ",
+  "sportsStepTitle": "তুমি কোন খেলা খেলছ?",
+  "sportsStepSubtitle": "আপনি নিয়মিত কাজ করুন",
+  "accountStepSubtitle": "নিরাপদ তথ্য এবং ব্যক্তিগত- যেদিন অনুসন্ধান করুন (v)",
+  "dataPrivacyNote": "আপনার তথ্য অত্যন্ত গোপনীয় ও গোপনীয়",
+  "analysisHello": "Hello, {name}",
+  "@analysisHello": {
+    "description": "Localized UI text: analysisHello",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "analysisPlanReady": "তোমার প্ল্যান রেডি",
+  "dailyCalorieTargetTitle": "ডিজেডজেডজেডজেডজেডজেডজেডজেডজিলির সাথে",
+  "kcalPerDayUnit": "kcal / day",
+  "workoutLabel": "কর্ম",
+  "workoutDaysText": "{days} days",
+  "@workoutDaysText": {
+    "description": "Localized UI text: workoutDaysText",
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "perWeekText": "প্রতি সপ্তাহে",
+  "yourJourneyTitle": "তোমার জেল",
+  "journeyCurrent": "বর্তমান",
+  "journeyTarget": "লক্ষ্য",
+  "journeyTimeframe": "Timeframe",
+  "weeksUnit": "{weeks} weeks",
+  "@weeksUnit": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
+  "completedPercent": "{p}% completed",
+  "@completedPercent": {
+    "description": "Localized UI text: completedPercent",
+    "placeholders": {
+      "p": {
+        "type": "int"
+      }
+    }
+  },
+  "loginTitle": "জেজেডজেডজেডজেড-এ স্বাগতম",
+  "loginSubtitle": "আপনার পুষ্টি উপাত্ত সুসংগত করতে সাইন ইন করুন",
+  "loginGoogle": "গুগলে অগ্রসর হোন",
+  "loginApple": "Apple সঙ্গে এগিয়ে চলুন",
+  "loginFailed": "Sign-in failed: {error}",
+  "@loginFailed": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "appleComingSoon": "আপেল সাইন ইন শীঘ্রই আসছে!",
+  "loginRequired": "অনুগ্রহ করে আপনার ডাটা সংরক্ষণ করে ও যাচাই করুন।",
+  "loginRequiredButton": "সুসংগত করার উদ্দেশ্যে সাইন-ইন প্রাপ্ত হয়েছে",
+  "progressLabel": "প্রগতি",
+  "dataLoadFailed": "তথ্য লোড করতে ব্যর্থ",
+  "deleteMealQuestion": "আপনি কি এই খাবারটি মুছে ফেলতে চান?",
+  "deleteMealFailed": "খাবার মুছে ফেলা যায়নি। অনুগ্রহ করে পুনরায় প্রচেষ্টা করুন।",
+  "retry": "পুনরায় প্রচেষ্টা করুন",
+  "mealTypeBreakfast": "প্রাতরাশ",
+  "mealTypeLunch": "মধ্যভোজ",
+  "mealTypeDinner": "ডিনার",
+  "mealTypeSnack": "সাক্যাক",
+  "greetingMorning": "শুভ সকাল",
+  "greetingAfternoon": "শুভ অপরাহ্ণ",
+  "greetingEvening": "শুভ সন্ধ্যা",
+  "aiCoachAlmostGoal": "তোমার লক্ষ্য প্রায় ধ্বংস হয়ে গেছে! যেতে থাকো!",
+  "aiCoachPlentyCalories": "অনেক ক্যারিস আজ চলে গেছে। ভালো খাও!",
+  "aiCoachMomentum": "ভাল গতি বজায় রাখুন!",
+  "mascotGoalTipWater": "সতেজ হওয়ার জন্য এক গ্লাস পানি পান করুন!",
+  "mascotGoalTipSlow": "ধীরে ধীরে খাবার খাওয়া এবং আপনার শরীরের কথা শোনা অসাধারণ ।",
+  "mascotGoalTipGreat": "আজ আপনি মহান  ত্রাত",
+  "mascotGoalReached": "ক্রের গোল আজকের জন্য পৌঁছে গেছে! এই গতি বজায় রাখাটাই হল টেইলর টেইল",
+  "mascotGuidanceIntro": "আজ তোমার জন্য কিছু সুন্দর খাবার এনেছি। চেক করার জন্য ট্যাপ!",
+  "mascotGuidanceOpen": "সুপারিশকৃত কুকি এখনও আছে!",
+  "mascotGuidanceTipWater": "তুমি কি যথেষ্ট পানি পান করেছ? সতেজ করার জন্য এক কাপ কফি খাও!",
+  "mascotGuidanceTipSlow": "ধীরে ধীরে খাও, তুমি আর পুরো সময় অনুভব করবে!",
+  "mascotGuidanceOverTarget": "You are {calories} kcal over. I picked light meals for you!",
+  "@mascotGuidanceOverTarget": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "mascotGuidanceRemaining": "You need {calories} kcal more to hit your goal. Check out my picks!",
+  "@mascotGuidanceRemaining": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "mascotTipHydration": "নষ্ট হয়ে গেছে, ব্রো? ♪ অল্প একটু পানি নিয়ে নাও ♪",
+  "mascotTipChew": "ধীরে ধীরে, এটি পরিপাককে সাহায্য করে এবং আপনি পূর্ণ রাখতে",
+  "mascotTipConsistency": "♪ প্রত্যেক দিন আত্মা একটি মহান জ্যামিতি তৈরি করে ♪",
+  "mascotNoMeals": "এখনো কিছু হয়নি? আমাকে দেখানোর জন্য একটা খাবারের ফটো লাগিয়ে দাও!",
+  "mascotOverTarget": "Over your target by about {calories} kcal today. No worries, go light and high protein for your next meal!",
+  "@mascotOverTarget": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "mascotMissingCalories": "Still missing {calories} kcal today. Go grab something delicious!",
+  "@mascotMissingCalories": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "mascotOnTrack": "কঠোর শাসন! কাল্লী ঠিক উপরে আঘাত করেছে!",
+  "mealCount": "{count, plural, =0 {কোনো খাবার নেই} =1 {১টি খাবার} other {{count}টি খাবার}}",
+  "@mealCount": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "ingredientCount": "{count, plural, =0 {কোনো উপকরণ নেই} =1 {১টি উপকরণ} other {{count}টি উপকরণ}}",
+  "@ingredientCount": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "dishCount": "{count, plural, =1 {১টি পদ} other {{count}টি পদ}}",
+  "@dishCount": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "monthFallback": "Month {month}",
+  "@monthFallback": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "month": {
+        "type": "int"
+      }
+    }
+  },
+  "scanProcessingRecognizing": "আপনার খাবার পরিষ্কার করছি...",
+  "scanProcessingRecognized": "আহার পরিচিত",
+  "scanProcessingIngredients": "উপাদান তৈরি করা হচ্ছে...",
+  "scanProcessingNutrition": "পুষ্টি শনাক্ত করা...",
+  "scanProcessingCalories": "গণনা করা হচ্ছে...",
+  "scanProcessingPortion": "অংশের মাপ গণনা করা হচ্ছে...",
+  "scanProcessingSummary": "AI is compiling your result...",
+  "scanProcessingReport": "প্রতিবেদন প্রস্তুত করা হচ্ছে...",
+  "cameraPermissionDenied": "Camera permission was denied. Open Settings and allow camera access for CalGo!",
+  "cameraPermissionRequired": "জিজেডপিএইচজেডজেডজেডজেডজেডজেডজেডজেড এর খাবার স্ক্যানের জন্য ক্যামেরা প্রয়োজন।",
+  "noCamera": "কোনো ক্যামেরা খুঁজে পাওয়া যায়নি",
+  "cameraStartFailed": "ক্যামেরা আরম্ভ করতে ব্যর্থ। এই পর্দা বন্ধ করে পুনরায় প্রচেষ্টা করুন!",
+  "scanInProgress": "আরেকটা খাবারের বিশ্লেষণ হচ্ছে। একটু অপেক্ষা করুন!",
+  "notLoggedIn": "আপনি সাইন ইন করেননি. গুগলে এই বৈশিষ্ট্য ব্যবহারের জন্য স্বাক্ষর করুন!",
+  "cameraPermissionMissing": "Camera permission is not enabled. Allow camera access for CalGo in phone Settings!",
+  "networkTimeout": "নেটওয়ার্ক সার্ভার ধীর অথবা সময় সীমা উত্তীর্ণ হয়েছে। আপনার সংযোগ পরীক্ষা করে পুনরায় প্রচেষ্টা করুন!",
+  "scanFailed": "Could not analyze the photo ({error}). Please try again!",
+  "@scanFailed": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "scanAgain": "পুনরায় স্ক্যান করুন",
+  "nutritionTitle": "বিপর্যয়",
+  "guidanceRecoverySubtitle": "ভদ্র আচরণ",
+  "guidanceLoggedSubtitle": "আপনার সাম্প্রতিক খাবারের উপর ভিত্তি করে",
+  "guidanceRefreshTooltip": "নতুন বানান",
+  "guidanceCaloriesRemaining": "{calories} kcal remaining",
+  "@guidanceCaloriesRemaining": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "guidanceProteinRemaining": "{grams}g protein needed",
+  "@guidanceProteinRemaining": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "guidanceAlternativesTitle": "অথবা এগুলো খেয়ে ফেলবে",
+  "guidanceOtherMeal": "আমি অন্য কিছু খাওয়া পরিকল্পনা",
+  "guidanceSeeMore": "আরো দেখুন",
+  "guidanceDisclaimer": "পরামর্শ শুধুমাত্র রেফারেন্সের জন্য. খাবারটি সঠিকভাবে লগ করার জন্য স্ক্যান করুন।",
+  "guidanceFamiliarTag": "প্রকাশক",
+  "guidanceDishCalories": "{calories} kcal",
+  "@guidanceDishCalories": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "guidanceDishProtein": "P {grams}g",
+  "@guidanceDishProtein": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "guidanceDishCarbs": "C {grams}g",
+  "@guidanceDishCarbs": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "guidancePrepTime": "{minutes} min",
+  "@guidancePrepTime": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "guidancePrice": "~{price}k",
+  "@guidancePrice": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "guidanceFitGreat": "দারুণ",
+  "guidanceFitAdjust": "পরিবর্তন",
+  "guidanceFitGood": "ভাল",
+  "guidanceAppleTitle": "Let Tao calculate with you",
+  "guidanceFirstScanAction": "আপনার প্রথম খাবার স্ক্যান করুন",
+  "guidanceAppleSuggestionTitle": "জেজেডপিজেডজেডজেডজেডজের পরামর্শ",
+  "guidanceNextMealAction": "আপনার পরবর্তী খাবার স্ক্যান করুন",
+  "guidanceGoalReachedTitle": "আজকের লক্ষ্য পরিপূর্ণ!",
+  "guidanceScreenTitle": "তুমি কি খাবে?",
+  "guidanceUnavailableTitle": "কোন পরামর্শ নাই",
+  "guidanceUnavailableMessage": "খাবারের পর আবার চেষ্টা করুন।",
+  "guidanceScanMeal": "খাবার স্ক্যান করুন",
+  "guidanceConsiderMeals": "বিবেচনা করার জন্য ভোজ",
+  "guidanceScanForAccuracy": "সঠিক লগের জন্য স্ক্যান করুন",
+  "guidanceSwapWith": "অথবা এটা চালু করে",
+  "guidanceChangeSuggestion": "পরামর্শ পরিবর্তন করো",
+  "guidancePremiumSwapTitle": "পরামর্শ পরিবর্তন একটি প্রিমিয়াম বৈশিষ্ট্য",
+  "guidancePremiumSwapMessage": "আপনার লক্ষ্যগুলোর ওপর ভিত্তি করে খাওয়ার পরামর্শ পরিবর্তন করার জন্য প্রিমিয়ামকে উন্নীত করুন ।",
+  "later": "পরে ( L)",
+  "upgradePremium": "প্রেসিয়াম উন্নীত করুন",
+  "guidanceTodayTitle": "আজকের জন্য ব্যক্তিগত পরামর্শ",
+  "guidanceTodaySubtitle": "আপনার ম্যাক্রোর মান নির্ধারণ করুন ও লগ করার পূর্বে প্রকৃত খাবার স্ক্যান করুন ।",
+  "guidanceScanRealMeal": "আসল খাবার স্ক্যান করুন",
+  "guidanceNextMealGoal": "তোমার জীবনের পথ বেছে নাও",
+  "remainingLabel": "অবশিষ্ট",
+  "proteinNeededLabel": "প্রোটেইন প্রয়োজন",
+  "familiarMacroLabel": "অস্ট্রেলিয়া",
+  "numberOneChoice": "এপ্রিল",
+  "energyLabel": "ইরগি",
+  "familiarLabel": "প্রকাশক",
+  "dishTip": "Tip: {adjustment}",
+  "@dishTip": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "adjustment": {
+        "type": "String"
+      }
+    }
+  },
+  "dishMacroSummary": "{calories} kcal · {protein}g protein",
+  "@dishMacroSummary": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      },
+      "protein": {
+        "type": "String"
+      }
+    }
+  },
+  "fitGoalGreat": "আপনার লক্ষ্য জন্য ভাল",
+  "fitGoalAdjust": "সমন্বয় করা হবে",
+  "fitGoalGood": "আপনার লক্ষ্য পূরণ করুন",
+  "goalSpecificGainTitle": "প্রতি সপ্তাহে কত বার তুমি প্রশিক্ষণ পাও?",
+  "goalSpecificGainNone": "আমি এখনো ট্রেনে চড়ি না",
+  "goalSpecificGain12": "১-২ সেশান",
+  "goalSpecificGain34": "৩ - ৪ সেশন",
+  "goalSpecificGain5": "৫+ সেশন",
+  "goalSpecificMaintainTitle": "আপনার আকার বজায় রাখার জন্য সবচেয়ে গুরুত্বপূর্ণ বিষয় কী?",
+  "goalSpecificStable": "আমার ওজন স্থির রাখো",
+  "goalSpecificBalanced": "আরও ভারসাম্যপূর্ণ খাবার খান",
+  "goalSpecificHabits": "দীর্ঘমেয়াদী অভ্যাস তৈরি করুন",
+  "goalSpecificWeekends": "সভার অনুসূচনা করে ( ম)...",
+  "goalSpecificLoseTitle": "কী তোমার জন্য মোটা হয়ে যায়?",
+  "goalSpecificHunger": "আমি প্রায়ই ক্ষুধার্ত হয়",
+  "goalSpecificPortions": "পোর্ট নিয়ন্ত্রণ",
+  "goalSpecificChoices": "আমি জানি না কি খেতে হবে",
+  "goalSpecificLogging": "লগ করা কঠিন",
+  "goalSpecificOvereat": "আমি রাতে ওভার",
+  "goalSpecificWeekendsHard": "উইকএন্ড কঠিন",
+  "avoidFoodsTitle": "আপনার কি কোনো খাদ্য বা উপাদান আছে?",
+  "foodSeafood": "সামুদ্রিক খাবার",
+  "foodRedMeat": "লাল মাংস",
+  "foodEggs": "ডিম",
+  "foodDairy": "দুধ ও পনির",
+  "foodFried": "ফ্রি খাদ্য",
+  "foodSpicy": "সা. কা.",
+  "challengeTitle": "তোমার জন্য সবচেয়ে কঠিন অংশ কি?",
+  "challengeCalories": "আমি খাবারে কৃমি জানি না",
+  "challengeSweets": "মিষ্টিকে প্রতিরোধ করা",
+  "challengePortions": "পোর্ট নিয়ন্ত্রণ",
+  "challengeBetweenMeals": "খাবারের মধ্যে ক্ষুধা পাওয়া",
+  "challengeCookingTime": "রান্না করার সময় নেই",
+  "challengeMotivation": "থাকার উদ্দেশ্য",
+  "budgetTitle": "এক খাবারের জন্য আপনার বাজেট কি?",
+  "budgetNote": "জেজেডপিজেডজেডজেডজেডজেডজেডজেডজি জিজ্ঞেস করেছে যে এতে আপনার লক্ষ্য ও বাজেট নির্ধারণ করা যাবে।",
+  "budgetLow": "৩০,০০০ সালে",
+  "budgetLowNote": "সহজ, সহজ খাবার",
+  "budgetMid": "৩০,৬৪০",
+  "budgetMidNote": "সাধারণত এক খাবারের জন্য বাজেট",
+  "budgetHigh": "৬০,০০০-১০ হাজার",
+  "budgetHighNote": "গুণমানের জন্য অতিরিক্ত ঘর",
+  "budgetAny": "সীমা অনুপস্থিত",
+  "budgetAnyNote": "পুষ্টির অনুধাবন করুন",
+  "prepTitle": "খাবার তৈরি করার জন্য আপনাকে কত সময় দিতে হবে?",
+  "prepNote": "জেজেডপিএইচজেডজেডজেডজেডজেডজেডজি জিজ্ঞেস করেছে যাতে এটা আপনার তালিকা অনুযায়ী খাবার তৈরি করতে পারে।",
+  "prepShort": "১০ মিনিটের মধ্যে",
+  "prepShortNote": "ব্যস্ত থাকলে দ্রুত এবং সুবিধাজনক",
+  "prepMedium": "১০ -২০ মিনিট",
+  "prepMediumNote": "অল্প খাওয়ার জন্য যথেষ্ট হয়েছে",
+  "prepLong": "২০ মিনিটের বেশি",
+  "prepLongNote": "সতর্কতার সঙ্গে প্রস্তুত হওয়ার জন্য আরও সময়",
+  "prepAny": "পছন্দ নেই",
+  "prepAnyNote": "যতক্ষণ এটা আমার লক্ষ্যের সাথে মানানসই হয়",
+  "nutritionPriorityTitle": "আপনি খাবারে কি করছেন?",
+  "nutritionPriorityNote": "জেজেডপিএইচজেডজেডজেডজেডজেডজি জিজ্ঞাসা করেছে যাতে এটা সাধারণ পরামর্শ দেয় না।",
+  "priorityProtein": "উচ্চ প্রোটিন",
+  "priorityProteinNote": "পূর্ণরূপে এবং পেশীকরণ সমর্থন করুন",
+  "priorityLight": "লাইটার",
+  "priorityLightNote": "সারা দিন ভারসাম্য বজায় রাখা",
+  "priorityBalanced": "ভারসাম্য",
+  "priorityBalancedNote": "অর্থ ও ম্যাক্রোর একটি যৌক্তিক মিশ্রণ",
+  "priorityFilling": "আমাকে পূর্ণ রাখো",
+  "priorityFillingNote": "প্রোটিন এবং যথেষ্ট গাড়ি",
+  "habitTitle": "তোমার অভ্যাস কি?",
+  "habitNote": "জেজেডপিজেডজেডজেডজেডজেডজেডজেডজি জিজ্ঞেস করেছে, যাতে এটা আপনার জীবনধারার সাথে মিলে যায়।",
+  "habitRegular": "আমি নিয়মিত, ভারসাম্যপূর্ণ খাবার খাই",
+  "habitSnacking": "আমি প্রায়ই খাবার খাই",
+  "habitSkipBreakfast": "আমি প্রায়ই সকালের নাস্তা খাই",
+  "habitLateNight": "আমি রাতে খাই",
+  "habitEatingOut": "আমি প্রায়ই খাই",
+  "habitCook": "আমি বাড়িতে রান্না",
+  "motivationTitle": "তুমি কি পরিবর্তন করতে চাও?",
+  "motivationHealth": "ভাল স্বাস্থ্য",
+  "motivationMuscle": "গঠন করুন",
+  "motivationClothes": "কাপড় পরে ভাল করে দেখো",
+  "motivationWeight": "অবশিষ্ট পরিমাণ কম",
+  "motivationEnergy": "সুস্থ এবং শক্তিশালী",
+  "motivationOther": "অন্যান্য কারণ",
+  "painTitle": "কখনো...",
+  "painNote": "আপনার অভিজ্ঞতার বিষয়গুলো বেছে নিন",
+  "painEatLess": "অল্প একটু খাও কিন্তু এখনো ওজনের কমবে না",
+  "painCardio": "অনেক কার্ডিও করেন",
+  "painGiveUp": "কিছু দিন পর ছেড়ে দিন",
+  "painUnknownCalories": "জানিনা কত টাকা খাই",
+  "painHungry": "ক্ষুধা লেগেছে অর্ধেক পথ দিয়ে",
+  "painStressEating": "চাপ খাওয়া",
+  "emotionalTitle": "যদি তুমি এখন খাওয়া চালিয়ে যাও...",
+  "emotionalCurrent": "এখন",
+  "emotionalAfterSixMonths": "৬ মাস পর",
+  "emotionalStillWeight": "You may stay around your current weight. With CalGo, you can change.",
+  "emotionalHelpChange": "আমি তোমাকে পরিবর্তন করতে সাহায্য করবো",
+  "referralX": "এক্স (টুইটার)",
+  "referralOther": "অন্যান্য",
+  "sportsRunning": "চলমান",
+  "sportsCycling": "সাইক্লিং",
+  "sportsSwimming": "সাঁতার কাটা হচ্ছে",
+  "sportsFootball": "ফুটবল",
+  "sportsBadminton": "হনটন",
+  "sportsBasketball": "বেকিবল",
+  "sportsOther": "অন্যান্য",
+  "durationTitle": "তুমি কখন তোমার লক্ষ্যে পৌঁছাতে চাও?",
+  "durationNote": "একটি সময় নির্বাচন করুন",
+  "dailyCalorieGoal": "দৈনিক ক্যালরি গোলাল",
+  "dailyCalorieGoalMessage": "Your current goal is {calories} kcal/day. You can change it in onboarding settings or contact support.",
+  "@dailyCalorieGoalMessage": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "close": "বন্ধ",
+  "reminderNotifications": "তাগাদা!",
+  "reminderNotificationsEnabled": "স্বয়ংক্রিয় সংরক্ষণ ব্যবস্থা ও দৈনিক লগ-ইন ব্যবস্থা সক্রিয় করা হয়েছে।",
+  "gotIt": "বুঝেছি",
+  "userGuideTitle": "How to use CalGo",
+  "userGuideContent": "১. স্ক্যান (+) ট্যাপ করে খাবারের ছবি তুলুন বা বেছে নিন।\n২. AI স্বয়ংক্রিয়ভাবে ক্যালরি ও পুষ্টি বিশ্লেষণ করে।\n৩. সংরক্ষণের আগে পরিমাণ পরিবর্তন বা উপাদান যোগ করুন।\n৪. History ট্যাবে খাবারের ইতিহাস দেখুন।",
+  "great": "দারুন",
+  "customerSupportMessage": "For help or product feedback, email us at: support@calgo.tech",
+  "deleteAccountFailed": "অ্যাকাউন্ট মুছে ফেলা যায়নি। অনলাইন গাইড বা যোগাযোগ করুন।",
+  "galleryLoadFailed": "ছবি লোড করা যায় নি",
+  "viewResult": "ফলাফল প্রদর্শন",
+  "shareMemoryCard": "যৌথরূপে ব্যবহৃত মেমরি কার্ড",
+  "deletePhoto": "চিহ্নিত ছবি মুছে ফেলুন",
+  "confirmDelete": "মুছে ফেলার প্রক্রিয় নিশ্চিত করুন",
+  "deletePhotoMessage": "Are you sure you want to delete the meal photo \"{meal}\"?",
+  "@deletePhotoMessage": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "meal": {
+        "type": "String"
+      }
+    }
+  },
+  "mealDeleted": "আপনার সংগ্রহ থেকে আহার অপসারণ করুন",
+  "deleteFailed": "মুছে ফেলতে ব্যর্থ। অনুগ্রহ করে পুনরায় প্রচেষ্টা করুন।",
+  "paymentProcessing": "Processing payment through Google Play...",
+  "paymentOpenFailed": "Could not open Google Play payment. Please try again.",
+  "errorWithDetails": "Error: {error}",
+  "@errorWithDetails": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "packIncludes": "Includes {count} AI nutrition scans",
+  "@packIncludes": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "permanentCredits": "স্ক্যানের সময় কখনো পূর্ণ হবে না",
+  "testingFreeCredits": "Testing build: Premium scans are free. No Google Play payment is made.",
+  "restoreSuccess": "পুনর্স্থাপন সফলভাবে পরীক্ষা করুন!",
+  "restoreFailed": "জেজেডজেডজেডজেডজেডজেডএ ক্রয় করা যায়নি।",
+  "restoreFailedWithDetails": "Restore failed: {error}",
+  "@restoreFailedWithDetails": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "moreScanCredits": "Buy more AI meal scans",
+  "shareCreateFailed": "কার্ড তৈরি করতে ব্যর্থ। অনুগ্রহ করে পুনরায় প্রচেষ্টা করুন!",
+  "shareExported": "মেমরি কার্ড সাফল্যের সাথে এক্সপোর্ট করা হয়েছে!",
+  "shareResult": "শেয়ারের ফলাফল",
+  "shareNutritionLabel": "ছবিটিকে পুষ্টির লেবেল সহযোগে সংরক্ষণ করা হবে",
+  "saveImage": "ছবি সংরক্ষণ করুন",
+  "share": "যৌথ ব্যবহার",
+  "resultLoadFailed": "Could not load the analysis result (ID: {id}). Please try again!",
+  "@resultLoadFailed": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "edit": "সম্পাদনা",
+  "done": "সম্পন্ন",
+  "healthScore": "স্বাস্থ্যের স্কোর",
+  "dishesInPhoto": "ছবিতে বিকৃত",
+  "ingredientsInDish": "স্থগিত",
+  "addIngredient": "সামগ্রী যোগ করুন",
+  "feedbackThanks": "আপনাদের মতামতের জন্য ধন্যবাদ!",
+  "feedbackPrompt": "Was the AI scan inaccurate? Tell us what happened:",
+  "feedbackHint": "উদাহরণ: ভুল খাবার নাম, সবজি হারিয়ে গেছে...",
+  "skip": "উপেক্ষা করুন",
+  "sending": "প্রেরিত হচ্ছে...",
+  "sendFeedback": "প্রতিবেদন পাঠাও",
+  "newIngredient": "নতুন উপাদান",
+  "choosePortion": "অংশ বেছে নিন",
+  "searchNutritionLibrary": "পুষ্টির লাইব্রেরি অনুসন্ধান করুন",
+  "adjustBeforeAdding": "যোগ করার পূর্বে কর্মের পরিমাণ পরিবর্তন করুন",
+  "ingredientSearchHint": "গরুর মাংস, ডিম, ভাত...",
+  "ingredientNotFound": "gridd পাওয়া যায়নি",
+  "ingredientSearchTip": "একটি ছোট অথবা অধিক সাধারণ নাম চেষ্টা করুন",
+  "unitPiece": "টুকরো",
+  "defaultUserName": "আপনি",
+  "analyzingMessage1": "আপনার প্রোফাইল সংক্রান্ত তথ্য বিশ্লেষণ করা হচ্ছে...",
+  "analyzingMessage2": "রোজকার টার্গেট গণনা করছি...",
+  "analyzingMessage3": "ব্যক্তিগত লক্ষ্য ডিজাইন করা...",
+  "analyzingMessage4": "পুষ্টি কৌশল তৈরি করা...",
+  "analyzingMessage5": "প্রায় তৈরি...",
+  "dietNormal": "নিয়মিত খাওয়া",
+  "dietClean": "মুছে ফেলুন ( a)",
+  "dietKeto": "কেকাহা",
+  "dietLowCarb": "নিম্ন কারবি",
+  "dietVegetarian": "নিরেট",
+  "dietVegan": "ভেগান",
+  "activitySedentary": "বাষ্পীয়",
+  "activitySedentaryDesc": "দেশী কাজ, সামান্য আন্দোলন",
+  "activityLight": "সাদা ব্যবস্থাপনা",
+  "activityLightDesc": "হালকা আন্দোলন ১-২ বার/সপ্তাহ",
+  "activityModerate": "ট্রেন ১-৩ বার",
+  "activityModerateDesc": "অনুশীলন করুন - ৩ দিন/ সপ্তাহ",
+  "activityActive": "ট্রেন ৪-৫ বার",
+  "activityActiveDesc": "৪-৫ দিন/ সপ্তাহ",
+  "activityVeryActive": "প্রতিদিন ট্রেন",
+  "activityVeryActiveDesc": "প্রতিদিন কঠিন অনুশীলন",
+  "paceSlow": "◆ ধীর গতিতে ।",
+  "paceLight": "খোলা আলো — ০.",
+  "paceMedium": "খোলা আকাশের রংধনু",
+  "paceHigh": "ফেলেছে",
+  "paceHighest": "খোলা আকাশের নিচে",
+  "weekUnit": "সপ্তাহ",
+  "sportsGym": "গিম",
+  "sportsYoga": "ইয়োগা",
+  "scanResultUnavailable": "এই ভোজ বিশ্লেষণ করা যাবে না",
+  "scanResultRetryHint": "আবার স্ক্যান করে দেখো।",
+  "guidanceDishFat": "F {grams}g",
+  "@guidanceDishFat": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "ok": "ঠিক আছে",
+  "defaultProfileName": "CalGo user",
+  "premiumMembership": "প্রিমিয়াম সদস্য",
+  "creditsCount": "{count} credits",
+  "@creditsCount": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "paymentMethods": "Payment through Google Play / App Store",
+  "deleteAction": "মুছে ফেলুন",
+  "proteinLabel": "স্থগিত রাখো",
+  "onboardingSaveFailed": "তোমার পুষ্টি সংরক্ষণ করা সম্ভব হয়নি. অনুগ্রহ করে পুনরায় প্রচেষ্টা করুন।",
+  "onboardingSaveNetworkFailed": "তোমার পুষ্টি সংরক্ষণ করা সম্ভব হয়নি. আপনার সংযোগ পরীক্ষা করে পুনরায় প্রচেষ্টা করুন।",
+  "googleSignInFailed": "Google sign-in failed: {error}",
+  "@googleSignInFailed": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "appleSignInPending": "আপেল সাইন ইন ইন এখনো সমাপ্ত হচ্ছে। দয়া করে এখন গুগলে ব্যবহার করুন।",
+  "firstScanTitle": "আপনার প্রথম খাবার স্ক্যানের জন্য প্রস্তুত?",
+  "firstScanSubtitle": "তাইপ স্ক্যান শুরু করতে নিচে",
+  "scanLabel": "স্ক্যান",
+  "startScanning": "স্ক্যান আরম্ভ করা হচ্ছে",
+  "socialProofOneTag": "Lost 6.5 kg",
+  "socialProofOneTime": "২ দিন আগে",
+  "socialProofOneTitle": "ভিয়েতনামের খাদ্য স্বীকৃতির স্থান!",
+  "socialProofOneBody": "I used to struggle tracking pho and bun cha in foreign apps. CalGo recognizes Vietnamese dishes and calories accurately from a photo. 10/10!",
+  "socialProofTwoTag": "Gained 4 kg muscle",
+  "socialProofTwoTime": "৫ দিন পূর্বে",
+  "socialProofTwoTitle": "Smooth UI and accurate TDEE",
+  "socialProofTwoBody": "জেজেডপিজেডজেডজেডজেডজেডজেডজি খুঁজে বের এবং ম্যাক্রো পরামর্শ বিস্তারিত। আমি প্রতিদিন ট্রেন এবং ট্র্যাকার, এবং আমার দেহ এক মাসের চেয়েও শক্তিশালী।",
+  "socialProofThreeTag": "আমি আমার আকৃতি বজায় রেখেছি",
+  "socialProofThreeTime": "১ সপ্তাহ আগে",
+  "socialProofThreeTitle": "সুস্থ খাওয়া অভ্যাস গড়ে তোলা",
+  "socialProofThreeBody": "Tao's reminders are adorable. The app never pushes extreme dieting; it guides me toward balanced nutrition.",
+  "premiumActivatedMessage": "প্রিমিয়াম সক্রিয়। খাবার উপভোগ করুন!",
+  "premiumPaymentFailed": "প্রিমিয়াম পাওয়া যায়নি।",
+  "continueFreePremium": "চালিয়ে যাও",
+  "continueLabel": "এগিয়ে চলুন",
+  "premiumFreeUnlocked": "মুক্তভাবে আনিয়াম খুলে দাও",
+  "premiumActivated": "প্রিমিয়াম সক্রিয় করা হয়েছে",
+  "processingShort": "প্রসেস করা হচ্ছে...",
+  "subscribePremium": "সাবস্ক্রাইব করুন",
+  "premiumTestingNote": "নকশা: প্রিমিয়াম মুক্ত। কোন টাকা নেই।",
+  "premiumNoChargeNote": "এই ধাপে আপনার চার্জ করা হবে না।",
+  "premiumAutoRenewNote": "অটো-রেনিউজ। যেকোন সময়.",
+  "premiumHeadlineBefore": "এই দিয়ে আরম্ভ হয়",
+  "todayLower": "আজ",
+  "yourExperience": "আপনার\nঅভিজ্ঞতা",
+  "premiumBenefitCalories": "Know your calories instantly — unlimited AI scans",
+  "premiumBenefitSuggestions": "[ অধ্যয়ন প্রশ্নাবলি]",
+  "premiumBenefitDescriptions": "AI meal descriptions without manual entry",
+  "premiumBenefitProgress": "সিস্টেমে প্রতিদিনের পরিমাণ গণনা করা হবে",
+  "premiumBenefitSupport": "যখনই আপনার এটি প্রয়োজন হবে উচ্চ সমর্থন",
+  "planWeek": "সপ্তাহ",
+  "planYear": "বছর",
+  "planMonth": "মাস",
+  "free": "মুক্ত",
+  "weeklyPayment": "সাপ্তাহিক কর্মের দিন",
+  "popularMost": "সর্বাধিক জনপ্রিয়",
+  "testingAccess": "ব্যবহারের পরীক্ষা",
+  "restoreChecked": "পূ.",
+  "restoreException": "Restore failed: {error}",
+  "@restoreException": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "manageSubscription": "সাবস্ক্রিপশন...( S)",
+  "manageSubscriptionFailed": "চলচ্চিত্র ও গান চালানো হোক",
+  "scanCreditsExhausted": "আপনার কাছে কোন স্ক্যান লেঅাউট নেই।",
+  "networkRetry": "সংযোগ খুবই ধীর । আবার চেষ্টা করো।",
+  "scanUnavailable": "এই ছবিটি বিশ্লেষণ করা যায়নি।",
+  "notificationChannelName": "প্রতিদিনের খাবার",
+  "notificationChannelDescription": "Reminders to scan breakfast, lunch and dinner with CalGo",
+  "notificationBreakfastTitle": "CalGo - Breakfast",
+  "notificationBreakfastBody": "শুভ সকাল! সকালের নাস্তা স্ক্যানের কথা মনে আছে, যাতে দিনের জন্য যথেষ্ট শক্তি পাওয়া যায়।",
+  "notificationLunchTitle": "CalGo - Lunch",
+  "notificationLunchBody": "It is lunch break. Scan your meal in CalGo to track calories accurately.",
+  "notificationDinnerTitle": "CalGo - Dinner",
+  "notificationDinnerBody": "ডিনার রেডি? লক্ষ্য সহ এর ট্র্যাক চালু করুন।",
+  "notificationDirectChannel": "সরাসরি বিজ্ঞপ্তি",
+  "caloriesLabel": "ইহুদী",
+  "carbsLabel": "হব্‌স",
+  "fatLabel": "FAT",
+  "guidanceTodayShortSubtitle": "আজকের লক্ষ্যের জন্য পরামর্শ প্রদর্শন",
+  "ingredientBeef": "তাজা গরুর মাংস",
+  "ingredientChicken": "প্যানের তৈরি মুরগির বুক",
+  "ingredientEgg": "ডিম",
+  "ingredientRiceNoodles": "তাজা নকল নুডলস",
+  "ingredientRice": "সাদা চাল",
+  "ingredientBun": "টাটকা চালের নিরামিষ",
+  "ingredientSalad": "টমেটো ও টমেটো",
+  "ingredientCheddar": "পোড়া পনির",
+  "ingredientPassionSauce": "ফল সস",
+  "ingredientPork": "লে লা নির্দিষ্ট করে",
+  "mockPhoTitle": "মাংসের মাংসের মাংস",
+  "mockPhoNoodles": "তাজা নকল নুডলস",
+  "mockPhoRareBeef": "মাংসের মাংস",
+  "mockPhoBrisket": "উপহার",
+  "mockPhoBroth": "ছাকন",
+  "mockRiceTitle": "গ্রিলকৃত শুকর, শুকরের চামড়া এবং ডিমের কেকের ভাঙ্গা চাল",
+  "mockRice": "ব্রোকেন চাল",
+  "mockGrilledPork": "কা. পূ.",
+  "mockEggCake": "স্টিমড ডিম কেক",
+  "mockFriedEgg": "ফ্রিড ডিম",
+  "mockSaladTitle": "মুরগির সালাদ... ...প্রতারণার পোষাকে",
+  "mockChicken": "প্যানের তৈরি মুরগির বুক",
+  "mockSalad": "লেটুস এবং চেরি টমেটো",
+  "mockPassionSauce": "ফল ফল পোশাক",
+  "motivationAdviceLose": "You are only {remaining} kg from your goal. Small daily habits work better than extreme diets.",
+  "@motivationAdviceLose": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "remaining": {
+        "type": "String"
+      }
+    }
+  },
+  "motivationAdviceGain": "আপনার ক্যাররি গোল অতিরিক্ত মোটা হওয়ার কারণে পেশি তৈরি করা যায়।",
+  "motivationAdviceMaintain": "আপনার বর্তমান ওজন এখন সুস্থ । ( ১ করি.",
+  "motivationAdviceDefault": "( হিতো.",
+  "taoAdviceLabel": "শনাবলীর টাকা",
+  "taoReminder": "Tao will remind you every day",
+  "packBasic": "মেইলার",
+  "packPopular": "জনপ্রীয়",
+  "packPremium": "প্রিমিয়াম",
+  "creditPackageSummary": "{count} credits • {unit}",
+  "@creditPackageSummary": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "perScan": "/লগ",
+  "caloriesValue": "{calories} kcal",
+  "@caloriesValue": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "caloriesPer100g": "{calories} kcal / 100g",
+  "@caloriesPer100g": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "gramsValue": "{grams}g",
+  "@gramsValue": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "weightKgValue": "{weight} kg",
+  "@weightKgValue": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
+  "galleryMacroSummary": "{calories} kcal • C:{carbs}g P:{protein}g F:{fat}g",
+  "@galleryMacroSummary": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      },
+      "carbs": {
+        "type": "String"
+      },
+      "protein": {
+        "type": "String"
+      },
+      "fat": {
+        "type": "String"
+      }
+    }
+  },
+  "sharePayload": "🔥 {dish} · {calories} kcal | CalGo",
+  "@sharePayload": {
+    "placeholders": {
+      "dish": {
+        "type": "String"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  }
+}

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/onboarding_provider.dart';
+import '../../../providers/app_settings_provider.dart';
 
 class SportsStep extends StatefulWidget {
   const SportsStep({super.key});
@@ -11,20 +12,22 @@ class SportsStep extends StatefulWidget {
 class _SportsStepState extends State<SportsStep> {
   final Set<String> _selected = {};
 
-  static const _sports = <(String, IconData)>[
-    ('Gym', Icons.fitness_center),
-    ('Chạy bộ', Icons.directions_run),
-    ('Đạp xe', Icons.pedal_bike),
-    ('Yoga', Icons.self_improvement),
-    ('Bơi', Icons.pool),
-    ('Bóng đá', Icons.sports_soccer),
-    ('Cầu lông', Icons.sports_tennis),
-    ('Bóng rổ', Icons.sports_basketball),
-    ('Khác', Icons.more_horiz),
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final settings = context.watch<AppSettingsProvider>();
+    final s = settings.strings;
+    final sports = <(String, IconData)>[
+      (s.sportsGym, Icons.fitness_center),
+      (s.sportsRunning, Icons.directions_run),
+      (s.sportsCycling, Icons.pedal_bike),
+      (s.sportsYoga, Icons.self_improvement),
+      (s.sportsSwimming, Icons.pool),
+      (s.sportsFootball, Icons.sports_soccer),
+      (s.sportsBadminton, Icons.sports_tennis),
+      (s.sportsBasketball, Icons.sports_basketball),
+      (s.sportsOther, Icons.more_horiz),
+    ];
+
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
       body: SafeArea(
@@ -35,14 +38,17 @@ class _SportsStepState extends State<SportsStep> {
                 padding: const EdgeInsets.symmetric(horizontal: 28),
                 child: Column(children: [
                   const SizedBox(height: 16),
-                  const Text('Bạn tập môn gì?',
-                      style: TextStyle(
+                  Text(s.sportsStepTitle,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
                           fontSize: 28,
                           fontWeight: FontWeight.w700,
                           color: Color(0xFF111111))),
                   const SizedBox(height: 8),
-                  const Text('Chọn môn bạn thường tập',
-                      style: TextStyle(fontSize: 15, color: Color(0xFF7A7A7A))),
+                  Text(s.sportsStepSubtitle,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                          fontSize: 15, color: Color(0xFF7A7A7A))),
                   const SizedBox(height: 24),
                   GridView.builder(
                     shrinkWrap: true,
@@ -53,9 +59,9 @@ class _SportsStepState extends State<SportsStep> {
                             childAspectRatio: 1.0,
                             crossAxisSpacing: 10,
                             mainAxisSpacing: 10),
-                    itemCount: _sports.length,
+                    itemCount: sports.length,
                     itemBuilder: (ctx, i) {
-                      final (sport, icon) = _sports[i];
+                      final (sport, icon) = sports[i];
                       final sel = _selected.contains(sport);
                       return InkWell(
                         onTap: () => setState(() {
@@ -129,7 +135,7 @@ class _SportsStepState extends State<SportsStep> {
                         borderRadius: BorderRadius.circular(18)),
                     elevation: 0,
                   ),
-                  child: Text('Tiếp theo',
+                  child: Text(s.nextStepButton,
                       style: const TextStyle(
                           fontSize: 17, fontWeight: FontWeight.w600)),
                 ),

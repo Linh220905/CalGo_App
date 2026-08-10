@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/onboarding_provider.dart';
+import '../../../providers/app_settings_provider.dart';
 import '../../../widgets/premium_ui.dart';
 
 class PaceStep extends StatefulWidget {
@@ -12,17 +13,20 @@ class PaceStep extends StatefulWidget {
 class _PaceStepState extends State<PaceStep> {
   int _selected = 1;
 
-  static const _options = <String>[
-    '🐢  Chậm — 0.25 kg/tuần',
-    '🚶  Nhẹ — 0.5 kg/tuần (Phổ biến)',
-    '🏃  Trung bình — 0.75 kg/tuần',
-    '🔥  Cao — 1 kg/tuần',
-    '⚡  Cao nhất — 1.25-1.5 kg/tuần',
-  ];
   static const _values = [0.25, 0.5, 0.75, 1.0, 1.5];
 
   @override
   Widget build(BuildContext context) {
+    final settings = context.watch<AppSettingsProvider>();
+    final s = settings.strings;
+    final options = [
+      s.paceSlow,
+      s.paceLight,
+      s.paceMedium,
+      s.paceHigh,
+      s.paceHighest,
+    ];
+
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
       body: SafeArea(
@@ -33,21 +37,24 @@ class _PaceStepState extends State<PaceStep> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 28, vertical: 24),
                 child: Column(children: [
-                  const Text('Tốc độ giảm/tuần?',
-                      style: TextStyle(
+                  Text(s.paceStepTitle,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
                           fontSize: 28,
                           fontWeight: FontWeight.w700,
                           color: Color(0xFF111111))),
                   const SizedBox(height: 8),
-                  const Text('Chọn tốc độ phù hợp với bạn',
-                      style: TextStyle(fontSize: 15, color: Color(0xFF7A7A7A))),
+                  Text(s.paceStepSubtitle,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                          fontSize: 15, color: Color(0xFF7A7A7A))),
                   const SizedBox(height: 24),
                   ...List.generate(
-                      _options.length,
+                      options.length,
                       (i) => Padding(
                             padding: const EdgeInsets.only(bottom: 8),
                             child: OptionCard(
-                                title: _options[i],
+                                title: options[i],
                                 selected: _selected == i,
                                 onTap: () => setState(() => _selected = i)),
                           )),
@@ -73,9 +80,9 @@ class _PaceStepState extends State<PaceStep> {
                         borderRadius: BorderRadius.circular(18)),
                     elevation: 0,
                   ),
-                  child: const Text('Tiếp theo',
-                      style:
-                          TextStyle(fontSize: 17, fontWeight: FontWeight.w600)),
+                  child: Text(s.nextStepButton,
+                      style: const TextStyle(
+                          fontSize: 17, fontWeight: FontWeight.w600)),
                 ),
               ),
             ),

@@ -1,0 +1,874 @@
+{
+  "@@locale": "vi",
+  "tabHome": "Trang chủ",
+  "tabAnalytics": "Thống kê",
+  "tabSettings": "Cài đặt",
+  "today": "Hôm nay",
+  "yesterday": "Hôm qua",
+  "caloriesLeft": "Calo còn lại",
+  "proteinLeft": "Protein còn",
+  "carbsLeft": "Carbs còn",
+  "fatsLeft": "Fats còn",
+  "recentlyUploaded": "Đã tải lên gần đây",
+  "noMealsUploaded": "Chưa có bữa ăn nào",
+  "tapToScanMeal": "Chạm để quét bữa ăn đầu tiên bằng AI",
+  "profileTitle": "Tài khoản cá nhân",
+  "creditsLabel": "Lượt quét",
+  "scannedCountLabel": "Đã scan",
+  "buyCredits": "Mua lượt quét",
+  "statistics": "Thống kê",
+  "calorieTarget": "Mục tiêu Calo",
+  "notifications": "Thông báo",
+  "darkMode": "Chế độ tối",
+  "language": "Ngôn ngữ",
+  "languageDisplayName": "Tiếng Việt",
+  "userGuide": "Hướng dẫn sử dụng",
+  "customerSupport": "Hỗ trợ khách hàng",
+  "logout": "Đăng xuất",
+  "selectLanguageTitle": "Chọn ngôn ngữ",
+  "scanTitle": "Quét món ăn",
+  "scanInstructionHeader": "Giữ món ăn trong khung hình",
+  "scanInstructionSub": "Đảm bảo đủ ánh sáng để AI nhận diện chính xác",
+  "selectFromGallery": "Chọn từ thư viện",
+  "outOfCreditsTitle": "Hết lượt quét!",
+  "outOfCreditsMessage": "Bạn đã hết lượt quét. Mua thêm lượt để tiếp tục theo dõi dinh dưỡng nhé!",
+  "buyMore": "Mua ngay",
+  "cancel": "Hủy",
+  "pricingTitle": "Gói dịch vụ & Lượt quét",
+  "pricingSubtitle": "Lựa chọn gói phù hợp để trải nghiệm AI tối đa",
+  "creditPacksTitle": "Gói mua lượt quét",
+  "noExpiryBadge": "Không hết hạn",
+  "popularBadge": "Phổ biến",
+  "subscriptionsTitle": "Gói thành viên Premium",
+  "payButton": "Thanh toán ngay",
+  "privacyPolicy": "Chính sách bảo mật",
+  "termsOfService": "Điều khoản sử dụng",
+  "deleteAccount": "Xóa tài khoản",
+  "openOnline": "Mở bản online",
+  "onlineGuide": "Hướng dẫn online",
+  "deleteAccountSubscriptionWarning": "Xóa tài khoản CalGo không tự hủy subscription Google Play. Nếu đang đăng ký Premium, hãy hủy riêng trong Google Play để tránh bị gia hạn.",
+  "restorePurchases": "Khôi phục mua hàng",
+  "privacyPolicyContent": "Chính sách bảo mật CalGo (cập nhật ngày 05/08/2026):\n\n1. Dữ liệu thu thập: email, tên hiển thị, mã đăng nhập Google, thông tin cá nhân hóa dinh dưỡng trong onboarding, ảnh món ăn, kết quả phân tích, lịch sử bữa ăn, mã và trạng thái giao dịch, dữ liệu kỹ thuật và lựa chọn thông báo.\n2. Quyền thiết bị: camera và thư viện ảnh chỉ được dùng khi bạn chủ động chụp hoặc chọn ảnh món ăn; thông báo chỉ dùng khi bạn bật quyền.\n3. Mục đích sử dụng: cung cấp phân tích dinh dưỡng AI, đồng bộ tài khoản, xử lý giao dịch Google Play, chống lạm dụng, hỗ trợ khách hàng và cải thiện độ ổn định. Ảnh có thể được xử lý bởi nhà cung cấp máy chủ và AI cần thiết.\n4. Chia sẻ và bảo mật: CalGo không bán dữ liệu cá nhân hoặc ảnh món ăn. Nhà cung cấp hosting, AI, Google Sign-In và Google Play Billing có thể xử lý dữ liệu giới hạn để cung cấp dịch vụ. Chúng tôi dùng HTTPS và kiểm soát truy cập, nhưng không hệ thống nào an toàn tuyệt đối.\n5. Lưu trữ và xóa: dữ liệu tài khoản và lịch sử được xóa khi bạn xóa tài khoản, trừ dữ liệu cần giữ để chống gian lận, xử lý tranh chấp hoặc đáp ứng pháp luật. Bản sao lưu có thể cần thời gian hợp lý để hết hạn.\n6. Quyền của bạn: xóa tài khoản trong mục Cá nhân hoặc truy cập https://calgo.tech/delete-account. Yêu cầu truy cập, chỉnh sửa hoặc thắc mắc: support@calgo.tech. Bản đầy đủ: https://calgo.tech/privacy.",
+  "termsOfServiceContent": "Điều khoản sử dụng CalGo:\n\n1. Dịch vụ và miễn trừ y tế: kết quả dinh dưỡng AI chỉ là ước tính tham khảo, không thay thế tư vấn, chẩn đoán hay điều trị y khoa. CalGo không phải thiết bị y tế.\n2. Thanh toán: gói credit là giao dịch mua kỹ thuật số một lần. Gói Premium tuần, tháng và năm là subscription Google Play tự động gia hạn, trừ khi bạn hủy trước kỳ gia hạn tiếp theo. Quản lý/hủy tại https://play.google.com/store/account/subscriptions.\n3. Hoàn tiền và xóa tài khoản: Google Play xử lý thanh toán/hoàn tiền Android. Xóa tài khoản CalGo không tự hủy subscription Google Play.\n4. Nội dung và sở hữu trí tuệ: bạn vẫn sở hữu ảnh đã tải lên; CalGo có quyền giới hạn để xử lý ảnh nhằm cung cấp và cải thiện dịch vụ. CalGo sở hữu ứng dụng, thương hiệu và phần mềm.\n5. Liên hệ: support@calgo.tech. Điều khoản đầy đủ: https://calgo.tech/terms.",
+  "deleteAccountConfirmMessage": "Bạn có chắc chắn muốn xóa tài khoản CalGo và toàn bộ dữ liệu nhật ký calo của mình không?\n\nHành động này không thể hoàn tác.",
+  "historyTitle": "Nhật Ký Ăn Uống",
+  "historySubtitle": "Hành trình dinh dưỡng của bạn",
+  "mealsCountLabel": "Bữa ăn",
+  "streakDaysLabel": "Chuỗi ngày",
+  "kcalPerDay": "Kcal/ngày",
+  "proteinPerDay": "Protein/ngày",
+  "noMealsHistory": "Chưa có bữa ăn nào",
+  "scanFirstMealPrompt": "Quét bữa ăn đầu tiên để bắt đầu\nhành trình dinh dưỡng của bạn",
+  "scanFirstMealButton": "Quét bữa ăn đầu tiên",
+  "deleteMealConfirm": "Bạn có muốn xóa món ăn này?",
+  "cannotDeleteMeal": "Không thể xóa món ăn. Vui lòng thử lại.",
+  "photoGalleryTitle": "Ảnh món ăn",
+  "noPhotosYet": "Chưa có ảnh scan món ăn nào",
+  "takePhotosPrompt": "Hãy chụp ảnh món ăn của bạn để lưu lại bộ sưu tập!",
+  "scanFoodNow": "Scan món ăn ngay",
+  "welcomeTo": "Chào mừng đến với",
+  "getStarted": "Bắt đầu",
+  "snapPhotoAiTitle": "Chụp ảnh. Để AI lo.",
+  "snapPhotoAiDesc": "AI tự động nhận diện món ăn và tính calo trong vài giây.",
+  "trackEasilyTitle": "Theo dõi dễ dàng.",
+  "trackEasilyDesc": "Theo dõi calo, protein, carb và chất béo mỗi ngày.",
+  "reachGoalsTitle": "Đạt mục tiêu nhanh hơn.",
+  "reachGoalsDesc": "Nhận mục tiêu cá nhân hóa và theo dõi tiến trình giảm mỡ.",
+  "nextStepButton": "Tiếp theo",
+  "goalStepTitle": "Mục tiêu của bạn?",
+  "goalStepSubtitle": "Giúp CalGo xây lộ trình phù hợp",
+  "goalLoseWeight": "Giảm cân",
+  "goalLoseWeightDesc": "Đốt mỡ hiệu quả, săn chắc cơ thể",
+  "goalLoseWeightReason": "Giúp CalGo xây lộ trình giảm mỡ phù hợp, ưu tiên giữ cơ và dễ duy trì.",
+  "goalGainMuscle": "Tăng cơ",
+  "goalGainMuscleDesc": "Tăng cơ, tăng sức mạnh",
+  "goalGainMuscleReason": "Giúp CalGo xây lộ trình tăng cơ theo lịch tập, năng lượng và protein của bạn.",
+  "goalMaintain": "Duy trì",
+  "goalMaintainDesc": "Giữ vóc dáng cân đối",
+  "goalMaintainReason": "Giúp CalGo xây lộ trình cân bằng, phù hợp với cuộc sống lâu dài của bạn.",
+  "nameStepTitle": "Tên của bạn là...",
+  "nameStepHint": "Nhập tên của bạn",
+  "demoStepTitle": "Xem CalGo hoạt động",
+  "genderStepTitle": "Giới tính của bạn?",
+  "genderStepSubtitle": "Để tính toán chính xác hơn",
+  "genderMale": "Nam",
+  "genderFemale": "Nữ",
+  "genderOther": "Khác",
+  "ageStepTitle": "Tuổi của bạn?",
+  "heightStepTitle": "Chiều cao của bạn?",
+  "weightStepTitle": "Cân nặng hiện tại?",
+  "targetWeightStepTitle": "Cân nặng mục tiêu?",
+  "activityStepTitle": "Mức độ vận động?",
+  "dietStepTitle": "Chế độ ăn của bạn?",
+  "analysisTitle": "Đang phân tích dữ liệu...",
+  "accountStepTitle": "Tạo tài khoản để lưu kế hoạch",
+  "continueWithGoogle": "Đăng nhập với Google",
+  "continueWithApple": "Đăng nhập với Apple",
+  "heightStepDesc": "Điều này giúp tính chỉ số BMI và nhu cầu calo chính xác",
+  "weightStepDesc": "Điều này giúp xác định mục tiêu dinh dưỡng của bạn",
+  "currentHeightHeader": "Chiều cao hiện tại",
+  "currentWeightHeader": "Cân nặng hiện tại",
+  "bmiIndexTitle": "Chỉ số BMI",
+  "bmiUnderweight": "Thiếu cân",
+  "bmiNormal": "Bình thường",
+  "bmiOverweight": "Thừa cân",
+  "bmiObese": "Béo phì",
+  "targetWeightDesc": "Điều này giúp xác định mục tiêu dinh dưỡng của bạn",
+  "goalMaintainLabel": "Duy trì vóc dáng",
+  "goalLoseLabel": "Giảm cân",
+  "goalGainLabel": "Tăng cơ",
+  "goalMaintainHint": "Mục tiêu duy trì bằng cân nặng hiện tại",
+  "goalLoseDiffText": "Mục tiêu giảm {kg} kg",
+  "@goalLoseDiffText": {
+    "description": "Localized UI text: goalLoseDiffText",
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      }
+    }
+  },
+  "goalGainDiffText": "Mục tiêu tăng {kg} kg",
+  "@goalGainDiffText": {
+    "description": "Localized UI text: goalGainDiffText",
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      }
+    }
+  },
+  "paceStepTitle": "Tốc độ giảm/tuần?",
+  "paceStepSubtitle": "Chọn tốc độ phù hợp với bạn",
+  "activityStepSubtitle": "Ảnh hưởng đến lượng calo tiêu thụ",
+  "dietStepSubtitle": "CalGo hỏi để gợi ý món phù hợp với cơ thể và mục tiêu của bạn.",
+  "socialProofTitle": "Cộng đồng nói gì về CalGo?",
+  "socialProofSubtitle": "Đánh giá chân thực từ người trải nghiệm",
+  "ratingTag": "Đánh giá 5★",
+  "referralStepTitle": "Bạn biết đến CalGo từ đâu?",
+  "referralStepSubtitle": "Giúp chúng mình thấu hiểu hành trình của bạn",
+  "referralFriend": "Bạn bè giới thiệu",
+  "sportsStepTitle": "Bạn tập môn gì?",
+  "sportsStepSubtitle": "Chọn môn bạn thường tập",
+  "accountStepSubtitle": "Bảo mật thông tin & đồng bộ tiến trình cá nhân",
+  "dataPrivacyNote": "Dữ liệu của bạn được bảo mật tuyệt đối",
+  "analysisHello": "Xin chào, {name}",
+  "@analysisHello": {
+    "description": "Localized UI text: analysisHello",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "analysisPlanReady": "Kế hoạch của bạn đã sẵn sàng",
+  "dailyCalorieTargetTitle": "MỤC TIÊU CALO HẰNG NGÀY",
+  "kcalPerDayUnit": "kcal / ngày",
+  "workoutLabel": "Tập luyện",
+  "workoutDaysText": "{days} ngày",
+  "@workoutDaysText": {
+    "description": "Localized UI text: workoutDaysText",
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "perWeekText": "mỗi tuần",
+  "yourJourneyTitle": "HÀNH TRÌNH CỦA BẠN",
+  "journeyCurrent": "Hiện tại",
+  "journeyTarget": "Mục tiêu",
+  "journeyTimeframe": "Thời gian",
+  "weeksUnit": "{weeks} tuần",
+  "@weeksUnit": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
+  "completedPercent": "{p}% hoàn thành",
+  "@completedPercent": {
+    "description": "Localized UI text: completedPercent",
+    "placeholders": {
+      "p": {
+        "type": "int"
+      }
+    }
+  },
+  "loginTitle": "Chào mừng đến với CalGo",
+  "loginSubtitle": "Đăng nhập để đồng bộ dữ liệu dinh dưỡng của bạn",
+  "loginGoogle": "Đăng nhập với Google",
+  "loginApple": "Đăng nhập với Apple",
+  "loginFailed": "Đăng nhập thất bại: {error}",
+  "@loginFailed": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "appleComingSoon": "Tính năng Đăng nhập Apple sắp ra mắt!",
+  "loginRequired": "Vui lòng đăng nhập Google để bảo vệ và đồng bộ dữ liệu.",
+  "loginRequiredButton": "Đăng nhập là cần thiết để đồng bộ dữ liệu",
+  "progressLabel": "Tiến trình",
+  "dataLoadFailed": "Không thể tải dữ liệu",
+  "deleteMealQuestion": "Bạn có muốn xóa bữa ăn này không?",
+  "deleteMealFailed": "Không thể xóa món ăn. Vui lòng thử lại.",
+  "retry": "Thử lại",
+  "mealTypeBreakfast": "Bữa sáng",
+  "mealTypeLunch": "Bữa trưa",
+  "mealTypeDinner": "Bữa tối",
+  "mealTypeSnack": "Bữa phụ",
+  "greetingMorning": "Chào buổi sáng",
+  "greetingAfternoon": "Chào buổi chiều",
+  "greetingEvening": "Chào buổi tối",
+  "aiCoachAlmostGoal": "Sắp đạt mục tiêu rồi! Cố lên!",
+  "aiCoachPlentyCalories": "Hôm nay còn nhiều năng lượng. Ăn uống lành mạnh nhé!",
+  "aiCoachMomentum": "Hãy duy trì đà này nhé!",
+  "mascotGoalTipWater": "Làm ngụm nước cho tỉnh táo nha!",
+  "mascotGoalTipSlow": "Ăn chậm và lắng nghe cơ thể là quá chuẩn rồi.",
+  "mascotGoalTipGreat": "Hôm nay mình làm tốt lắm đó ✨",
+  "mascotGoalReached": "Đủ mục tiêu calo hôm nay rồi nha! Giữ nhịp này là quá đỉnh ✨",
+  "mascotGuidanceIntro": "Tớ lựa sẵn vài món hợp với hôm nay nè. Bấm vào xem thử ha!",
+  "mascotGuidanceOpen": "Mấy món tớ chọn vẫn nằm ở màn gợi ý nha!",
+  "mascotGuidanceTipWater": "Uống đủ nước chưa nè? Làm một ngụm cho tỉnh táo ha!",
+  "mascotGuidanceTipSlow": "Ăn chậm chậm thôi nha, no lâu hơn đó!",
+  "mascotGuidanceOverTarget": "Mình đang dư {calories} kcal rồi nè. Tớ lựa món nhẹ nhẹ, bấm xem ha!",
+  "@mascotGuidanceOverTarget": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "mascotGuidanceRemaining": "Còn {calories} kcal để chạm mục tiêu nè. Tớ lựa sẵn mấy món hợp rồi, bấm xem ha!",
+  "@mascotGuidanceRemaining": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "mascotTipHydration": "Uống đủ nước chưa đấy bro, làm ngụm nước cho tỉnh táo nào",
+  "mascotTipChew": "Ăn chậm chậm thôi nghen, vừa tốt cho dạ dày vừa no lâu",
+  "mascotTipConsistency": "Mỗi ngày kỷ luật một xíu là dáng đẹp ngay thôi mà",
+  "mascotNoMeals": "Chưa nạp gì đúng không bro? Chụp cái hình món ăn cho tui xem với",
+  "mascotOverTarget": "Hôm nay đang cao hơn mục tiêu khoảng {calories} kcal. Không sao, bữa tiếp theo mình chọn nhẹ và đủ protein nhé.",
+  "@mascotOverTarget": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "mascotMissingCalories": "Hôm nay còn thiếu tận {calories} kcal đấy, làm thêm miếng gì ngon ngon đi",
+  "@mascotMissingCalories": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "mascotOnTrack": "Out trình kỷ luật luôn, calo chuẩn đét không lệch phát nào",
+  "mealCount": "{count, plural, =0 {Chưa có bữa ăn} =1 {1 bữa ăn} other {{count} bữa ăn}}",
+  "@mealCount": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "ingredientCount": "{count, plural, =0 {Chưa có nguyên liệu} =1 {1 nguyên liệu} other {{count} nguyên liệu}}",
+  "@ingredientCount": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "dishCount": "{count, plural, =1 {1 món} other {{count} món}}",
+  "@dishCount": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "monthFallback": "Tháng {month}",
+  "@monthFallback": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "month": {
+        "type": "int"
+      }
+    }
+  },
+  "scanProcessingRecognizing": "Đang nhận diện món ăn...",
+  "scanProcessingRecognized": "Đã nhận diện món ăn",
+  "scanProcessingIngredients": "Đang phân tích nguyên liệu...",
+  "scanProcessingNutrition": "Xác định thành phần dinh dưỡng...",
+  "scanProcessingCalories": "Đang tính toán calories...",
+  "scanProcessingPortion": "Ước lượng khẩu phần ăn...",
+  "scanProcessingSummary": "AI đang tổng hợp kết quả...",
+  "scanProcessingReport": "Chuẩn bị báo cáo...",
+  "cameraPermissionDenied": "Quyền Máy ảnh đã bị từ chối. Hãy mở Cài đặt và cấp quyền Máy ảnh cho CalGo!",
+  "cameraPermissionRequired": "CalGo cần quyền Máy ảnh để quét món ăn.",
+  "noCamera": "Không tìm thấy camera",
+  "cameraStartFailed": "Không thể khởi động camera. Vui lòng đóng màn hình và thử lại!",
+  "scanInProgress": "Một món khác đang được phân tích. Chờ xíu nha!",
+  "notLoggedIn": "Bạn chưa đăng nhập. Vui lòng đăng nhập bằng Google để sử dụng tính năng này!",
+  "cameraPermissionMissing": "Chưa được cấp quyền Máy ảnh. Vui lòng bật quyền Máy ảnh cho CalGo trong Cài đặt điện thoại!",
+  "networkTimeout": "Kết nối mạng yếu hoặc quá thời gian chờ. Vui lòng kiểm tra lại 4G/Wi-Fi!",
+  "scanFailed": "Không thể phân tích ảnh ({error}). Vui lòng thử lại!",
+  "@scanFailed": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "scanAgain": "Quét lại",
+  "nutritionTitle": "Dinh dưỡng",
+  "guidanceRecoverySubtitle": "Nhẹ nhàng điều chỉnh thôi",
+  "guidanceLoggedSubtitle": "Dựa trên bữa bạn vừa ghi lại",
+  "guidanceRefreshTooltip": "Gợi ý mới",
+  "guidanceCaloriesRemaining": "{calories} kcal còn lại",
+  "@guidanceCaloriesRemaining": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "guidanceProteinRemaining": "Thiếu {grams}g protein",
+  "@guidanceProteinRemaining": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "guidanceAlternativesTitle": "Hoặc chọn một trong các món này",
+  "guidanceOtherMeal": "Tôi định ăn món khác",
+  "guidanceSeeMore": "Xem thêm",
+  "guidanceDisclaimer": "Gợi ý chỉ để tham khảo. Hãy scan món thực tế để ghi nhật ký chính xác.",
+  "guidanceFamiliarTag": "QUEN",
+  "guidanceDishCalories": "{calories} kcal",
+  "@guidanceDishCalories": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "guidanceDishProtein": "P {grams}g",
+  "@guidanceDishProtein": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "guidanceDishCarbs": "C {grams}g",
+  "@guidanceDishCarbs": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "guidancePrepTime": "{minutes} phút",
+  "@guidancePrepTime": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "guidancePrice": "~{price}k",
+  "@guidancePrice": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "guidanceFitGreat": "Rất hợp",
+  "guidanceFitAdjust": "Cần chỉnh",
+  "guidanceFitGood": "Phù hợp",
+  "guidanceAppleTitle": "Để Táo tính cùng bạn",
+  "guidanceFirstScanAction": "Chụp bữa đầu tiên",
+  "guidanceAppleSuggestionTitle": "Gợi ý của Táo",
+  "guidanceNextMealAction": "Chụp món tiếp theo",
+  "guidanceGoalReachedTitle": "Đủ mục tiêu hôm nay rồi!",
+  "guidanceScreenTitle": "Ăn gì để chạm mục tiêu?",
+  "guidanceUnavailableTitle": "Chưa có gợi ý",
+  "guidanceUnavailableMessage": "Hãy thử lại sau khi bạn quét món ăn.",
+  "guidanceScanMeal": "Quét món ăn",
+  "guidanceConsiderMeals": "Món nên cân nhắc",
+  "guidanceScanForAccuracy": "Scan để ghi chính xác",
+  "guidanceSwapWith": "Hoặc đổi vị với",
+  "guidanceChangeSuggestion": "Đổi gợi ý",
+  "guidancePremiumSwapTitle": "Đổi gợi ý là tính năng Premium",
+  "guidancePremiumSwapMessage": "Nâng cấp Premium để đổi gợi ý món ăn không giới hạn theo mục tiêu của bạn.",
+  "later": "Để sau",
+  "upgradePremium": "Nâng cấp Premium",
+  "guidanceTodayTitle": "Gợi ý riêng cho hôm nay",
+  "guidanceTodaySubtitle": "Chọn món hợp macro, rồi scan món thật trước khi ghi.",
+  "guidanceScanRealMeal": "Scan món thực tế",
+  "guidanceNextMealGoal": "MỤC TIÊU CHO BỮA TIẾP THEO",
+  "remainingLabel": "Còn lại",
+  "proteinNeededLabel": "Protein cần thêm",
+  "familiarMacroLabel": "MÓN QUEN · HỢP MACRO",
+  "numberOneChoice": "LỰA CHỌN SỐ 1",
+  "energyLabel": "NĂNG LƯỢNG",
+  "familiarLabel": "MÓN QUEN",
+  "dishTip": "Mẹo: {adjustment}",
+  "@dishTip": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "adjustment": {
+        "type": "String"
+      }
+    }
+  },
+  "dishMacroSummary": "{calories} kcal · {protein}g protein",
+  "@dishMacroSummary": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      },
+      "protein": {
+        "type": "String"
+      }
+    }
+  },
+  "fitGoalGreat": "Rất hợp mục tiêu",
+  "fitGoalAdjust": "Nên điều chỉnh",
+  "fitGoalGood": "Phù hợp mục tiêu",
+  "goalSpecificGainTitle": "Bạn tập luyện bao nhiêu buổi mỗi tuần?",
+  "goalSpecificGainNone": "Chưa tập",
+  "goalSpecificGain12": "1–2 buổi",
+  "goalSpecificGain34": "3–4 buổi",
+  "goalSpecificGain5": "5 buổi trở lên",
+  "goalSpecificMaintainTitle": "Điều gì quan trọng nhất khi bạn duy trì vóc dáng?",
+  "goalSpecificStable": "Giữ cân nặng ổn định",
+  "goalSpecificBalanced": "Ăn uống cân bằng hơn",
+  "goalSpecificHabits": "Xây thói quen lâu dài",
+  "goalSpecificWeekends": "Kiểm soát tốt hơn vào cuối tuần",
+  "goalSpecificLoseTitle": "Điều gì khiến bạn khó giảm mỡ nhất?",
+  "goalSpecificHunger": "Hay đói",
+  "goalSpecificPortions": "Khó kiểm soát khẩu phần",
+  "goalSpecificChoices": "Không biết nên ăn gì",
+  "goalSpecificLogging": "Lười ghi món ăn",
+  "goalSpecificOvereat": "Hay ăn quá mức buổi tối",
+  "goalSpecificWeekendsHard": "Hay phá kế hoạch cuối tuần",
+  "avoidFoodsTitle": "Bạn có dị ứng với món/nguyên liệu nào không?",
+  "foodSeafood": "Hải sản",
+  "foodRedMeat": "Thịt đỏ",
+  "foodEggs": "Trứng",
+  "foodDairy": "Sữa & phô mai",
+  "foodFried": "Đồ chiên/rán",
+  "foodSpicy": "Món cay",
+  "challengeTitle": "Điều khó khăn nhất với bạn là gì?",
+  "challengeCalories": "Không biết calo trong món ăn",
+  "challengeSweets": "Cưỡng lại đồ ngọt",
+  "challengePortions": "Kiểm soát khẩu phần",
+  "challengeBetweenMeals": "Đói giữa buổi",
+  "challengeCookingTime": "Không có thời gian nấu",
+  "challengeMotivation": "Duy trì động lực",
+  "budgetTitle": "Ngân sách cho 1 món ăn của bạn?",
+  "budgetNote": "CalGo hỏi để gợi ý món hợp mục tiêu và túi tiền của bạn.",
+  "budgetLow": "Dưới 30.000đ",
+  "budgetLowNote": "Món bình dân, dễ tìm",
+  "budgetMid": "30.000–60.000đ",
+  "budgetMidNote": "Mức phổ biến cho một bữa",
+  "budgetHigh": "60.000–100.000đ",
+  "budgetHighNote": "Thoải mái chọn thêm chất lượng",
+  "budgetAny": "Không giới hạn",
+  "budgetAnyNote": "Ưu tiên mục tiêu dinh dưỡng",
+  "prepTitle": "Thời gian chuẩn bị 1 bữa ăn của bạn?",
+  "prepNote": "CalGo hỏi để gợi ý món hợp với lịch của bạn.",
+  "prepShort": "Dưới 10 phút",
+  "prepShortNote": "Món nhanh, tiện khi bận rộn",
+  "prepMedium": "10–20 phút",
+  "prepMediumNote": "Vừa đủ cho một bữa gọn gàng",
+  "prepLong": "Trên 20 phút",
+  "prepLongNote": "Có thời gian chuẩn bị kỹ hơn",
+  "prepAny": "Không quan trọng",
+  "prepAnyNote": "Miễn hợp mục tiêu của mình",
+  "nutritionPriorityTitle": "Bạn ưu tiên gì trong bữa ăn?",
+  "nutritionPriorityNote": "CalGo hỏi để không đưa cho bạn những gợi ý chung chung.",
+  "priorityProtein": "Giàu protein",
+  "priorityProteinNote": "Hỗ trợ no lâu và phục hồi cơ",
+  "priorityLight": "Nhẹ calo",
+  "priorityLightNote": "Ưu tiên món nhẹ, dễ cân đối trong ngày",
+  "priorityBalanced": "Cân bằng",
+  "priorityBalancedNote": "Hợp lý giữa calo và các nhóm chất",
+  "priorityFilling": "No lâu",
+  "priorityFillingNote": "Ưu tiên món có protein và tinh bột vừa đủ",
+  "habitTitle": "Thói quen ăn uống của bạn?",
+  "habitNote": "CalGo hỏi để chọn những món dễ duy trì với nhịp sống của bạn.",
+  "habitRegular": "Ăn đúng bữa, khoa học",
+  "habitSnacking": "Hay ăn vặt",
+  "habitSkipBreakfast": "Thường bỏ bữa sáng",
+  "habitLateNight": "Ăn đêm",
+  "habitEatingOut": "Ăn ngoài nhiều",
+  "habitCook": "Tự nấu ở nhà",
+  "motivationTitle": "Điều gì khiến bạn muốn thay đổi?",
+  "motivationHealth": "Sức khỏe tốt hơn",
+  "motivationMuscle": "Tăng cơ",
+  "motivationClothes": "Mặc đồ đẹp hơn",
+  "motivationWeight": "Giảm cân",
+  "motivationEnergy": "Khỏe mạnh và nhiều năng lượng",
+  "motivationOther": "Lý do khác",
+  "painTitle": "Bạn đã từng...",
+  "painNote": "Chọn những điều bạn từng gặp phải",
+  "painEatLess": "Ăn rất ít nhưng vẫn không giảm",
+  "painCardio": "Cardio rất nhiều",
+  "painGiveUp": "Bỏ cuộc sau vài ngày",
+  "painUnknownCalories": "Không biết mình ăn bao nhiêu calo",
+  "painHungry": "Hay bị đói giữa chừng",
+  "painStressEating": "Ăn uống stress",
+  "emotionalTitle": "Nếu tiếp tục ăn như hiện tại...",
+  "emotionalCurrent": "Hiện tại",
+  "emotionalAfterSixMonths": "Sau 6 tháng",
+  "emotionalStillWeight": "Bạn gần như vẫn ở cân nặng hiện tại. Nhưng nếu theo CalGo, bạn có thể thay đổi.",
+  "emotionalHelpChange": "Mình sẽ giúp bạn thay đổi",
+  "referralX": "X (Twitter)",
+  "referralOther": "Khác",
+  "sportsRunning": "Chạy bộ",
+  "sportsCycling": "Đạp xe",
+  "sportsSwimming": "Bơi",
+  "sportsFootball": "Bóng đá",
+  "sportsBadminton": "Cầu lông",
+  "sportsBasketball": "Bóng rổ",
+  "sportsOther": "Khác",
+  "durationTitle": "Bạn muốn đạt mục tiêu trong?",
+  "durationNote": "Chọn thời gian phù hợp với bạn",
+  "dailyCalorieGoal": "Mục tiêu Calo hàng ngày",
+  "dailyCalorieGoalMessage": "Mục tiêu hiện tại của bạn là {calories} kcal/ngày. Bạn có thể thay đổi mục tiêu này trong cài đặt Onboarding hoặc liên hệ hỗ trợ.",
+  "@dailyCalorieGoalMessage": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "close": "Đóng",
+  "reminderNotifications": "Thông báo nhắc nhở",
+  "reminderNotificationsEnabled": "Thông báo nhắc bữa ăn và theo dõi lượng calo hằng ngày đã được bật tự động.",
+  "gotIt": "Đã hiểu",
+  "userGuideTitle": "Hướng dẫn sử dụng CalGo",
+  "userGuideContent": "1. Nhấn nút Scan (+) để chụp hoặc chọn ảnh món ăn.\n2. AI sẽ tự động phân tích calo và dinh dưỡng.\n3. Bạn có thể chỉnh sửa khối lượng hoặc thêm nguyên liệu trước khi lưu.\n4. Xem lại lịch sử ăn uống tại tab Lịch sử.",
+  "great": "Tuyệt vời",
+  "customerSupportMessage": "Nếu bạn cần hỗ trợ hoặc góp ý sản phẩm, vui lòng gửi email về: support@calgo.tech",
+  "deleteAccountFailed": "Không thể xoá tài khoản. Vui lòng xem hướng dẫn online hoặc liên hệ hỗ trợ.",
+  "galleryLoadFailed": "Không thể tải bộ sưu tập ảnh",
+  "viewResult": "Xem chi tiết kết quả",
+  "shareMemoryCard": "Chia sẻ Card Memory",
+  "deletePhoto": "Xóa ảnh này",
+  "confirmDelete": "Xác nhận xóa",
+  "deletePhotoMessage": "Bạn có chắc muốn xóa ảnh món \"{meal}\"?",
+  "@deletePhotoMessage": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "meal": {
+        "type": "String"
+      }
+    }
+  },
+  "mealDeleted": "Đã xóa món ăn khỏi bộ sưu tập",
+  "deleteFailed": "Không thể xóa. Vui lòng thử lại!",
+  "paymentProcessing": "Đang xử lý thanh toán qua Google Play...",
+  "paymentOpenFailed": "Không thể mở thanh toán Google Play. Vui lòng thử lại.",
+  "errorWithDetails": "Lỗi: {error}",
+  "@errorWithDetails": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "packIncludes": "Bao gồm {count} lượt quét dinh dưỡng AI",
+  "@packIncludes": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "permanentCredits": "Lượt quét dùng vĩnh viễn, không giới hạn thời gian",
+  "testingFreeCredits": "Bản testing: lượt quét Premium được mở miễn phí. Không có thanh toán Google Play.",
+  "restoreSuccess": "Đã kiểm tra khôi phục giao dịch mua thành công!",
+  "restoreFailed": "Không thể khôi phục giao dịch Google Play.",
+  "restoreFailedWithDetails": "Khôi phục thất bại: {error}",
+  "@restoreFailedWithDetails": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "moreScanCredits": "Mua thêm lượt quét món ăn bằng AI",
+  "shareCreateFailed": "Không thể tạo ảnh card. Vui lòng thử lại!",
+  "shareExported": "Đã xuất Card Memory thành công!",
+  "shareResult": "Chia sẻ kết quả",
+  "shareNutritionLabel": "Ảnh sẽ được lưu với nhãn dinh dưỡng",
+  "saveImage": "Lưu ảnh",
+  "share": "Chia sẻ",
+  "resultLoadFailed": "Không thể tải kết quả phân tích (ID: {id}). Vui lòng thử lại!",
+  "@resultLoadFailed": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "edit": "Chỉnh sửa",
+  "done": "Xong",
+  "healthScore": "Điểm sức khỏe",
+  "dishesInPhoto": "Các món trong ảnh",
+  "ingredientsInDish": "Thành phần món ăn",
+  "addIngredient": "Thêm nguyên liệu",
+  "feedbackThanks": "Cảm ơn bạn đã góp ý!",
+  "feedbackPrompt": "AI scan chưa chính xác? Hãy cho chúng tôi biết chi tiết:",
+  "feedbackHint": "Ví dụ: Sai tên món, thiếu rau...",
+  "skip": "Bỏ qua",
+  "sending": "Đang gửi...",
+  "sendFeedback": "Gửi góp ý",
+  "newIngredient": "Thành phần mới",
+  "choosePortion": "Chọn khẩu phần",
+  "searchNutritionLibrary": "Tìm trong thư viện dinh dưỡng",
+  "adjustBeforeAdding": "Điều chỉnh khối lượng trước khi thêm",
+  "ingredientSearchHint": "Tìm thịt bò, trứng, cơm...",
+  "ingredientNotFound": "Không tìm thấy nguyên liệu",
+  "ingredientSearchTip": "Thử một tên ngắn hoặc phổ biến hơn",
+  "unitPiece": "quả",
+  "defaultUserName": "bạn",
+  "analyzingMessage1": "Đang phân tích thông tin của bạn...",
+  "analyzingMessage2": "Đang tính toán nhu cầu calo...",
+  "analyzingMessage3": "Đang xây dựng mục tiêu phù hợp...",
+  "analyzingMessage4": "Đang tạo kế hoạch dinh dưỡng...",
+  "analyzingMessage5": "Sắp hoàn tất...",
+  "dietNormal": "Ăn bình thường",
+  "dietClean": "Eat Clean",
+  "dietKeto": "Keto",
+  "dietLowCarb": "Low Carb",
+  "dietVegetarian": "Vegetarian",
+  "dietVegan": "Vegan",
+  "activitySedentary": "Ít vận động",
+  "activitySedentaryDesc": "Ngồi làm việc, ít di chuyển",
+  "activityLight": "Đi bộ nhẹ",
+  "activityLightDesc": "Đi lại nhẹ 1-2 lần/tuần",
+  "activityModerate": "Tập 1-3 buổi",
+  "activityModerateDesc": "Thể dục 1-3 ngày/tuần",
+  "activityActive": "Tập 4-5 buổi",
+  "activityActiveDesc": "Thể dục 4-5 ngày/tuần",
+  "activityVeryActive": "Tập hằng ngày",
+  "activityVeryActiveDesc": "Vận động nặng hằng ngày",
+  "paceSlow": "🐢  Chậm — 0.25 kg/tuần",
+  "paceLight": "🚶  Nhẹ — 0.5 kg/tuần (Phổ biến)",
+  "paceMedium": "🏃  Trung bình — 0.75 kg/tuần",
+  "paceHigh": "🔥  Cao — 1 kg/tuần",
+  "paceHighest": "⚡  Cao nhất — 1.25-1.5 kg/tuần",
+  "weekUnit": "tuần",
+  "sportsGym": "Gym",
+  "sportsYoga": "Yoga",
+  "scanResultUnavailable": "Chưa phân tích được món này",
+  "scanResultRetryHint": "Bạn thử quét lại nha.",
+  "guidanceDishFat": "F {grams}g",
+  "@guidanceDishFat": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "ok": "OK",
+  "defaultProfileName": "Người dùng CalGo",
+  "premiumMembership": "Gói thành viên Premium",
+  "creditsCount": "{count} lượt",
+  "@creditsCount": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "paymentMethods": "Thanh toán qua Google Play / App Store",
+  "deleteAction": "Xóa",
+  "proteinLabel": "PROTEIN",
+  "onboardingSaveFailed": "Không thể lưu mục tiêu dinh dưỡng. Vui lòng thử lại.",
+  "onboardingSaveNetworkFailed": "Không thể lưu mục tiêu dinh dưỡng. Vui lòng kiểm tra mạng và thử lại.",
+  "googleSignInFailed": "Đăng nhập Google thất bại: {error}",
+  "@googleSignInFailed": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "appleSignInPending": "Đăng nhập Apple đang được hoàn thiện. Vui lòng dùng Google.",
+  "firstScanTitle": "Thử quét bữa ăn đầu tiên nhé!",
+  "firstScanSubtitle": "Nhấn vào nút Scan bên dưới để bắt đầu",
+  "scanLabel": "Scan",
+  "startScanning": "Bắt đầu quét",
+  "socialProofOneTag": "Giảm 6.5 kg",
+  "socialProofOneTime": "2 ngày trước",
+  "socialProofOneTitle": "Quét đồ ăn Việt Nam cực chuẩn!",
+  "socialProofOneBody": "Trước đây mình dùng app ngoại tra phở, bún chả rất cực. CalGo chụp ảnh nhận diện món Việt chính xác từng gram calo luôn. 10/10!",
+  "socialProofTwoTag": "Tăng cơ 4 kg",
+  "socialProofTwoTime": "5 ngày trước",
+  "socialProofTwoTitle": "Giao diện mượt, tính TDEE sát thực tế",
+  "socialProofTwoBody": "Thước đo BMI và gợi ý macro rất chi tiết. Mình tập gym kết hợp theo dõi calo mỗi ngày, cơ thể săn chắc rõ rệt sau 1 tháng.",
+  "socialProofThreeTag": "Duy trì vóc dáng",
+  "socialProofThreeTime": "1 tuần trước",
+  "socialProofThreeTitle": "Tạo thói quen ăn uống lành mạnh",
+  "socialProofThreeBody": "Linh vật Táo nhắc nhở đáng yêu lắm. App không hề ép ăn kiêng hà khắc mà hướng dẫn cân bằng dinh dưỡng thông minh.",
+  "premiumActivatedMessage": "Premium đã được kích hoạt. Chúc bạn ăn ngon!",
+  "premiumPaymentFailed": "Không thể mở thanh toán Premium.",
+  "continueFreePremium": "Tiếp tục · Premium miễn phí",
+  "continueLabel": "Tiếp tục",
+  "premiumFreeUnlocked": "Premium đã mở miễn phí",
+  "premiumActivated": "Premium đã kích hoạt",
+  "processingShort": "Đang xử lý…",
+  "subscribePremium": "Đăng ký Premium",
+  "premiumTestingNote": "Bản testing: Premium được mở miễn phí. Không có thanh toán.",
+  "premiumNoChargeNote": "Bạn chưa bị tính phí ở bước này.",
+  "premiumAutoRenewNote": "Tự động gia hạn. Hủy bất cứ lúc nào.",
+  "premiumHeadlineBefore": "Thay đổi bản thân bắt đầu từ ",
+  "todayLower": "hôm nay",
+  "yourExperience": "Trải\nnghiệm\ncủa bạn",
+  "premiumBenefitCalories": "Biết ngay lượng calo — quét AI không giới hạn",
+  "premiumBenefitSuggestions": "Đổi gợi ý món ăn không giới hạn theo mục tiêu mỗi ngày",
+  "premiumBenefitDescriptions": "Mô tả món ăn bằng AI, không cần nhập tay",
+  "premiumBenefitProgress": "Theo dõi tiến trình cơ thể mỗi ngày",
+  "premiumBenefitSupport": "Được hỗ trợ ưu tiên bất cứ khi nào cần",
+  "planWeek": "Tuần",
+  "planYear": "Năm",
+  "planMonth": "Tháng",
+  "free": "Miễn phí",
+  "weeklyPayment": "thanh toán hàng tuần",
+  "popularMost": "Phổ biến nhất",
+  "testingAccess": "quyền truy cập testing",
+  "restoreChecked": "Đã kiểm tra khôi phục giao dịch.",
+  "restoreException": "Khôi phục thất bại: {error}",
+  "@restoreException": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "manageSubscription": "Quản lý gói",
+  "manageSubscriptionFailed": "Không thể mở trang quản lý gói.",
+  "scanCreditsExhausted": "Bạn đã hết lượt quét.",
+  "networkRetry": "Kết nối chậm, thử lại nhé.",
+  "scanUnavailable": "Chưa phân tích được ảnh này.",
+  "notificationChannelName": "Nhắc nhở bữa ăn hàng ngày",
+  "notificationChannelDescription": "Thông báo nhắc nhở quét calo bữa sáng, trưa, tối từ CalGo",
+  "notificationBreakfastTitle": "CalGo - Bữa Sáng",
+  "notificationBreakfastBody": "Chào buổi sáng bro, đừng quên quét hình bữa sáng để nạp đủ năng lượng cho ngày mới nhé",
+  "notificationLunchTitle": "CalGo - Bữa Trưa",
+  "notificationLunchBody": "Giờ nghỉ trưa rồi nè bro, mở CalGo quét món trưa để theo dõi calo chuẩn đét nhé",
+  "notificationDinnerTitle": "CalGo - Bữa Tối",
+  "notificationDinnerBody": "Bữa tối đã sẵn sàng chưa bro, chụp hình quét calo để giữ kỷ luật dáng đẹp nào",
+  "notificationDirectChannel": "Thông báo trực tiếp",
+  "caloriesLabel": "Calo",
+  "carbsLabel": "CARB",
+  "fatLabel": "CHẤT BÉO",
+  "guidanceTodayShortSubtitle": "Xem gợi ý theo mục tiêu hôm nay",
+  "ingredientBeef": "Thịt bò tươi",
+  "ingredientChicken": "Ức gà áp chảo",
+  "ingredientEgg": "Trứng gà",
+  "ingredientRiceNoodles": "Bánh phở tươi",
+  "ingredientRice": "Cơm trắng",
+  "ingredientBun": "Bún tươi",
+  "ingredientSalad": "Xà lách & Cà chua",
+  "ingredientCheddar": "Phô mai Cheddar",
+  "ingredientPassionSauce": "Sốt chanh dây",
+  "ingredientPork": "Thịt nạc heo",
+  "mockPhoTitle": "Phở Bò Tái Nạm",
+  "mockPhoNoodles": "Bánh phở tươi",
+  "mockPhoRareBeef": "Thịt bò tái",
+  "mockPhoBrisket": "Thịt nạm bò",
+  "mockPhoBroth": "Nước dùng phở & Hành lá",
+  "mockRiceTitle": "Cơm Tấm Sườn Bì Chả",
+  "mockRice": "Cơm tấm",
+  "mockGrilledPork": "Sườn heo nướng",
+  "mockEggCake": "Chả trứng hấp",
+  "mockFriedEgg": "Trứng ốp la",
+  "mockSaladTitle": "Salad Ức Gà Sốt Chanh Dây",
+  "mockChicken": "Ức gà áp chảo",
+  "mockSalad": "Xà lách & Cà chua chery",
+  "mockPassionSauce": "Sốt chanh dây",
+  "motivationAdviceLose": "Bạn chỉ còn cách mục tiêu {remaining} kg. Những thói quen nhỏ mỗi ngày sẽ hiệu quả hơn chế độ ăn kiêng khắc nghiệt.",
+  "@motivationAdviceLose": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "remaining": {
+        "type": "String"
+      }
+    }
+  },
+  "motivationAdviceGain": "Mục tiêu calo được tối ưu để xây dựng cơ bắp săn chắc, đồng thời hạn chế tích tụ mỡ thừa.",
+  "motivationAdviceMaintain": "Cân nặng hiện tại của bạn đã ở mức khỏe mạnh. Hãy cùng xây dựng thói quen giúp bạn luôn cảm thấy tốt nhất mỗi ngày.",
+  "motivationAdviceDefault": "Hãy cùng nhau đạt được mục tiêu sức khỏe của bạn với những thói quen bền vững.",
+  "taoAdviceLabel": "LỜI KHUYÊN TỪ TÁO",
+  "taoReminder": "Táo sẽ nhắc bạn mỗi ngày",
+  "packBasic": "Phổ thông",
+  "packPopular": "Phổ biến",
+  "packPremium": "Cao cấp",
+  "creditPackageSummary": "{count} lượt • {unit}",
+  "@creditPackageSummary": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "perScan": "/lượt",
+  "caloriesValue": "{calories} kcal",
+  "@caloriesValue": {"placeholders": {"calories": {"type": "int"}}},
+  "caloriesPer100g": "{calories} kcal / 100g",
+  "@caloriesPer100g": {"placeholders": {"calories": {"type": "int"}}},
+  "gramsValue": "{grams}g",
+  "@gramsValue": {"placeholders": {"grams": {"type": "int"}}},
+  "weightKgValue": "{weight} kg",
+  "@weightKgValue": {"placeholders": {"weight": {"type": "String"}}},
+  "galleryMacroSummary": "{calories} kcal • C:{carbs}g P:{protein}g F:{fat}g",
+  "@galleryMacroSummary": {"placeholders": {"calories": {"type": "int"}, "carbs": {"type": "String"}, "protein": {"type": "String"}, "fat": {"type": "String"}}},
+  "sharePayload": "🔥 {dish} · {calories} kcal | CalGo",
+  "@sharePayload": {"placeholders": {"dish": {"type": "String"}, "calories": {"type": "int"}}}
+}

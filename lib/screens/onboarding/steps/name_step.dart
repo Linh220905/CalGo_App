@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/onboarding_provider.dart';
+import '../../../providers/app_settings_provider.dart';
 
 class NameStep extends StatefulWidget {
   const NameStep({super.key});
@@ -26,6 +27,9 @@ class _NameStepState extends State<NameStep> {
 
   @override
   Widget build(BuildContext context) {
+    final settings = context.watch<AppSettingsProvider>();
+    final s = settings.strings;
+
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
       body: SafeArea(
@@ -42,8 +46,8 @@ class _NameStepState extends State<NameStep> {
                     fit: BoxFit.contain,
                   ),
                   const SizedBox(height: 12),
-                  const Text('Tên của bạn là...',
-                      style: TextStyle(
+                  Text(s.nameStepTitle,
+                      style: const TextStyle(
                           fontSize: 28,
                           fontWeight: FontWeight.w700,
                           color: Color(0xFF111111))),
@@ -64,7 +68,7 @@ class _NameStepState extends State<NameStep> {
                       autofocus: true,
                       textCapitalization: TextCapitalization.words,
                       decoration: InputDecoration(
-                          hintText: 'Nhập tên của bạn',
+                          hintText: s.nameStepHint,
                           hintStyle: const TextStyle(color: Color(0xFF7A7A7A)),
                           suffixIcon: _c.text.isNotEmpty
                               ? IconButton(
@@ -106,9 +110,9 @@ class _NameStepState extends State<NameStep> {
                     disabledBackgroundColor: const Color(0xFFECECEC),
                     disabledForegroundColor: const Color(0xFFAAAAAA),
                   ),
-                  child: const Text('Tiếp theo',
-                      style:
-                          TextStyle(fontSize: 17, fontWeight: FontWeight.w600)),
+                  child: Text(s.nextStepButton,
+                      style: const TextStyle(
+                          fontSize: 17, fontWeight: FontWeight.w600)),
                 ),
               ),
             ),

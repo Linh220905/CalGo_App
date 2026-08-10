@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../providers/app_settings_provider.dart';
 
 class SwipeableCard extends StatefulWidget {
   final Widget child;
@@ -77,6 +79,7 @@ class _SwipeableCardState extends State<SwipeableCard>
 
   @override
   Widget build(BuildContext context) {
+    final s = context.watch<AppSettingsProvider>().strings;
     return LayoutBuilder(
       builder: (context, constraints) {
         final cardWidth = constraints.maxWidth;
@@ -168,7 +171,7 @@ class _SwipeableCardState extends State<SwipeableCard>
                             ),
                             const SizedBox(height: 12),
                             Text(
-                              widget.confirmMessage ?? 'Bạn có chắc muốn xóa?',
+                              widget.confirmMessage ?? s.deleteMealQuestion,
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                   color: Colors.white,
@@ -190,7 +193,7 @@ class _SwipeableCardState extends State<SwipeableCard>
                                         borderRadius: BorderRadius.circular(12),
                                       ),
                                       alignment: Alignment.center,
-                                      child: const Text('Hủy',
+                                      child: Text(s.cancel,
                                           style: TextStyle(
                                               color: Colors.white,
                                               fontSize: 14,
@@ -213,7 +216,7 @@ class _SwipeableCardState extends State<SwipeableCard>
                                         borderRadius: BorderRadius.circular(12),
                                       ),
                                       alignment: Alignment.center,
-                                      child: const Text('Xóa',
+                                      child: Text(s.deleteAction,
                                           style: TextStyle(
                                               color: Colors.white,
                                               fontSize: 14,

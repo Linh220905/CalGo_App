@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/onboarding_provider.dart';
+import '../../../providers/app_settings_provider.dart';
 
 class MotivationStep extends StatefulWidget {
   const MotivationStep({super.key});
@@ -12,17 +13,17 @@ class MotivationStep extends StatefulWidget {
 class _MotivationStepState extends State<MotivationStep> {
   String? _selected;
 
-  static const _items = [
-    'Sức khỏe tốt hơn',
-    'Tăng cơ',
-    'Mặc đồ đẹp hơn',
-    'Giảm cân',
-    'Khỏe mạnh và nhiều năng lượng',
-    'Lý do khác',
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final s = context.watch<AppSettingsProvider>().strings;
+    final items = [
+      s.motivationHealth,
+      s.motivationMuscle,
+      s.motivationClothes,
+      s.motivationWeight,
+      s.motivationEnergy,
+      s.motivationOther,
+    ];
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
       body: SafeArea(
@@ -40,8 +41,8 @@ class _MotivationStepState extends State<MotivationStep> {
                       fit: BoxFit.contain,
                     ),
                     const SizedBox(height: 12),
-                    const Text(
-                      'Điều gì khiến bạn\nmuốn thay đổi?',
+                    Text(
+                      s.motivationTitle,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 26,
@@ -51,7 +52,7 @@ class _MotivationStepState extends State<MotivationStep> {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    ..._items.map((item) {
+                    ...items.map((item) {
                       final sel = _selected == item;
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 10),
@@ -130,9 +131,9 @@ class _MotivationStepState extends State<MotivationStep> {
                         borderRadius: BorderRadius.circular(18)),
                     elevation: 0,
                   ),
-                  child: const Text('Tiếp theo',
-                      style:
-                          TextStyle(fontSize: 17, fontWeight: FontWeight.w600)),
+                  child: Text(s.nextStepButton,
+                      style: const TextStyle(
+                          fontSize: 17, fontWeight: FontWeight.w600)),
                 ),
               ),
             ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/onboarding_provider.dart';
+import '../../../providers/app_settings_provider.dart';
 
 class BiggestChallengeStep extends StatefulWidget {
   const BiggestChallengeStep({super.key});
@@ -12,17 +13,17 @@ class BiggestChallengeStep extends StatefulWidget {
 class _BiggestChallengeStepState extends State<BiggestChallengeStep> {
   String? _selected;
 
-  static const _items = [
-    'Không biết calo trong món ăn',
-    'Cưỡng lại đồ ngọt',
-    'Kiểm soát khẩu phần',
-    'Đói giữa buổi',
-    'Không có thời gian nấu',
-    'Duy trì động lực',
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final s = context.watch<AppSettingsProvider>().strings;
+    final items = [
+      s.challengeCalories,
+      s.challengeSweets,
+      s.challengePortions,
+      s.challengeBetweenMeals,
+      s.challengeCookingTime,
+      s.challengeMotivation,
+    ];
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
       body: SafeArea(
@@ -40,8 +41,8 @@ class _BiggestChallengeStepState extends State<BiggestChallengeStep> {
                       fit: BoxFit.contain,
                     ),
                     const SizedBox(height: 12),
-                    const Text(
-                      'Điều khó khăn nhất\nvới bạn là gì?',
+                    Text(
+                      s.challengeTitle,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 26,
@@ -51,7 +52,7 @@ class _BiggestChallengeStepState extends State<BiggestChallengeStep> {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    ..._items.map((item) {
+                    ...items.map((item) {
                       final sel = _selected == item;
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 10),
@@ -130,9 +131,9 @@ class _BiggestChallengeStepState extends State<BiggestChallengeStep> {
                         borderRadius: BorderRadius.circular(18)),
                     elevation: 0,
                   ),
-                  child: const Text('Tiếp theo',
-                      style:
-                          TextStyle(fontSize: 17, fontWeight: FontWeight.w600)),
+                  child: Text(s.nextStepButton,
+                      style: const TextStyle(
+                          fontSize: 17, fontWeight: FontWeight.w600)),
                 ),
               ),
             ),

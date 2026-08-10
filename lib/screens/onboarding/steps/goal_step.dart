@@ -1,100 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/onboarding_provider.dart';
+import '../../../providers/app_settings_provider.dart';
 import '../../../models/onboarding_data.dart';
+import 'personalization_widgets.dart';
 
 class GoalStep extends StatelessWidget {
   const GoalStep({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFFFFFFF),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 28),
-          child: SingleChildScrollView(
-            child: Column(children: [
-              const SizedBox(height: 16),
-              Image.asset(
-                'assets/images/apple_mascot/apple_thinking.png',
-                height: 105,
-                fit: BoxFit.contain,
-              ),
-              const SizedBox(height: 12),
-              const Text('Mục tiêu của bạn?',
-                  style: TextStyle(
-                      fontSize: 26,
-                      fontWeight: FontWeight.w700,
-                      color: Color(0xFF111111))),
-              const SizedBox(height: 4),
-              const Text('Chọn mục tiêu phù hợp nhất',
-                  style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xFF71717A))),
-              const SizedBox(height: 24),
-              Consumer<OnboardingProvider>(
-                builder: (context, provider, _) => Column(
-                  children: [
-                    _GoalCard(
-                      icon: Icons.trending_down_rounded,
-                      iconColor: const Color(0xFFFF6B35),
-                      label: 'Giảm cân',
-                      desc: 'Đốt mỡ hiệu quả, săn chắc cơ thể',
-                      selected: provider.data.goalType == GoalType.lose,
-                      onTap: () => provider.setGoalType(GoalType.lose),
-                    ),
-                    const SizedBox(height: 12),
-                    _GoalCard(
-                      icon: Icons.fitness_center_rounded,
-                      iconColor: const Color(0xFF007AFF),
-                      label: 'Tăng cơ',
-                      desc: 'Tăng cơ, tăng sức mạnh',
-                      selected: provider.data.goalType == GoalType.gain,
-                      onTap: () => provider.setGoalType(GoalType.gain),
-                    ),
-                    const SizedBox(height: 12),
-                    _GoalCard(
-                      icon: Icons.balance_rounded,
-                      iconColor: const Color(0xFF34C759),
-                      label: 'Duy trì',
-                      desc: 'Giữ vóc dáng cân đối',
-                      selected: provider.data.goalType == GoalType.maintain,
-                      onTap: () => provider.setGoalType(GoalType.maintain),
-                    ),
-                    const SizedBox(height: 32),
-                    SizedBox(
-                      width: double.infinity,
-                      height: 60,
-                      child: ElevatedButton(
-                        onPressed: provider.data.goalType != null
-                            ? () {
-                                provider.nextStep();
-                              }
-                            : null,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF111111),
-                          foregroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18),
-                          ),
-                          elevation: 0,
-                          disabledBackgroundColor: const Color(0xFFECECEC),
-                          disabledForegroundColor: const Color(0xFFAAAAAA),
-                        ),
-                        child: const Text('Tiếp theo',
-                            style: TextStyle(
-                                fontSize: 17, fontWeight: FontWeight.w600)),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 32),
-            ]),
+    final settings = context.watch<AppSettingsProvider>();
+    final s = settings.strings;
+
+    return Consumer<OnboardingProvider>(
+      builder: (context, provider, _) => OnboardingQuestionShell(
+        title: s.goalStepTitle,
+        note: s.goalStepSubtitle,
+        children: [
+          _GoalCard(
+            icon: Icons.trending_down_rounded,
+            iconColor: const Color(0xFFFF6B35),
+            label: s.goalLoseWeight,
+            selected: provider.data.goalType == GoalType.lose,
+            onTap: () => provider.setGoalType(GoalType.lose),
           ),
-        ),
+          const SizedBox(height: 10),
+          _GoalCard(
+            icon: Icons.fitness_center_rounded,
+            iconColor: const Color(0xFF007AFF),
+            label: s.goalGainMuscle,
+            selected: provider.data.goalType == GoalType.gain,
+            onTap: () => provider.setGoalType(GoalType.gain),
+          ),
+          const SizedBox(height: 10),
+          _GoalCard(
+            icon: Icons.balance_rounded,
+            iconColor: const Color(0xFF34C759),
+            label: s.goalMaintain,
+            selected: provider.data.goalType == GoalType.maintain,
+            onTap: () => provider.setGoalType(GoalType.maintain),
+          ),
+        ],
+        onNext: provider.data.goalType == null ? null : provider.nextStep,
+        nextLabel: s.nextStepButton,
       ),
     );
   }
@@ -104,7 +53,6 @@ class _GoalCard extends StatelessWidget {
   final IconData icon;
   final Color iconColor;
   final String label;
-  final String desc;
   final bool selected;
   final VoidCallback onTap;
 
@@ -112,7 +60,6 @@ class _GoalCard extends StatelessWidget {
     required this.icon,
     required this.iconColor,
     required this.label,
-    required this.desc,
     required this.selected,
     required this.onTap,
   });
@@ -158,10 +105,6 @@ class _GoalCard extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                     color: Color(0xFF111111),
                   )),
-              const SizedBox(height: 2),
-              Text(desc,
-                  style:
-                      const TextStyle(fontSize: 13, color: Color(0xFF7A7A7A))),
             ]),
           ),
           if (selected)

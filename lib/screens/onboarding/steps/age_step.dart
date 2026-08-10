@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/onboarding_provider.dart';
+import '../../../providers/app_settings_provider.dart';
 import '../../../widgets/number_wheel_picker.dart';
 
 class AgeStep extends StatelessWidget {
@@ -10,6 +11,8 @@ class AgeStep extends StatelessWidget {
   Widget build(BuildContext context) {
     final provider = context.watch<OnboardingProvider>();
     final age = provider.data.age ?? 25;
+    final settings = context.watch<AppSettingsProvider>();
+    final s = settings.strings;
 
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
@@ -24,10 +27,10 @@ class AgeStep extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const SizedBox(height: 8),
-                    const Text(
-                      'Bạn bao nhiêu tuổi?',
+                    Text(
+                      s.ageStepTitle,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.w800,
                         color: Color(0xFF0A0A0A),
@@ -35,10 +38,10 @@ class AgeStep extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    const Text(
-                      'Độ tuổi ảnh hưởng trực tiếp đến tốc độ trao đổi chất',
+                    Text(
+                      s.genderStepSubtitle,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 14,
                         color: Color(0xFF71717A),
                       ),
@@ -80,16 +83,16 @@ class AgeStep extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
-                  child: const Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Tiếp tục',
-                        style: TextStyle(
+                        s.nextStepButton,
+                        style: const TextStyle(
                             fontSize: 17, fontWeight: FontWeight.w700),
                       ),
-                      SizedBox(width: 8),
-                      Icon(Icons.arrow_forward_rounded, size: 20),
+                      const SizedBox(width: 8),
+                      const Icon(Icons.arrow_forward_rounded, size: 20),
                     ],
                   ),
                 ),

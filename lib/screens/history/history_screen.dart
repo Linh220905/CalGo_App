@@ -2,33 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import '../../config/app_build_config.dart';
 import '../../models/history_item.dart';
+import '../../providers/app_settings_provider.dart';
 import '../../providers/auth_provider.dart';
 import '../../services/scan_service.dart';
+import '../../utils/localized_date_utils.dart';
 import 'widgets/month_calendar_grid.dart';
 import 'widgets/day_detail_bottom_sheet.dart';
 
 String _formatYMD(DateTime dt) {
   return '${dt.year.toString().padLeft(4, '0')}-${dt.month.toString().padLeft(2, '0')}-${dt.day.toString().padLeft(2, '0')}';
-}
-
-// Localization helper
-String _monthName(int month) {
-  const names = [
-    'Tháng 1',
-    'Tháng 2',
-    'Tháng 3',
-    'Tháng 4',
-    'Tháng 5',
-    'Tháng 6',
-    'Tháng 7',
-    'Tháng 8',
-    'Tháng 9',
-    'Tháng 10',
-    'Tháng 11',
-    'Tháng 12'
-  ];
-  return names[month - 1];
 }
 
 class HistoryScreen extends StatefulWidget {
@@ -41,6 +25,7 @@ class HistoryScreen extends StatefulWidget {
 class _HistoryScreenState extends State<HistoryScreen> {
   List<HistoryItem> _items = [];
   bool _loading = true;
+  String? _loadedUserId;
 
   @override
   void initState() {
@@ -51,16 +36,13 @@ class _HistoryScreenState extends State<HistoryScreen> {
   Future<void> _loadHistory({bool forceRefresh = false}) async {
     try {
       final service = context.read<ScanService>();
-      final data = await service.getHistory(
-        limit: 100,
-        offset: 0,
-        forceRefresh: forceRefresh,
-      );
+      final data = await service.getAllHistory(forceRefresh: forceRefresh);
       if (mounted) {
         setState(() {
           _items = data;
           _loading = false;
         });
+        service.precacheItems(context, data.take(12).toList());
       }
     } catch (_) {
       if (mounted) setState(() => _loading = false);
@@ -68,6 +50,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
   }
 
   Future<bool> _deleteItem(String id) async {
+    final strings = context.read<AppSettingsProvider>().strings;
     try {
       await context.read<ScanService>().deleteScan(id);
       if (mounted) {
@@ -79,8 +62,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     } catch (_) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-              content: Text('Không thể xóa món ăn. Vui lòng thử lại.')),
+          SnackBar(content: Text(strings.cannotDeleteMeal)),
         );
       }
       return false;
@@ -110,6 +92,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final settings = context.watch<AppSettingsProvider>();
+    final strings = settings.strings;
 
     final bgColor = isDark ? const Color(0xFF0E0E10) : const Color(0xFFF7F7F8);
     final cardColor = isDark ? const Color(0xFF1C1C1E) : Colors.white;
@@ -135,7 +119,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
               ),
               const SizedBox(height: 14),
               Text(
-                'Đang tải...',
+                '...',
                 style: GoogleFonts.beVietnamPro(
                   fontSize: 13,
                   color: subtitleColor,
@@ -186,6 +170,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
     final todayKey = _formatYMD(DateTime.now());
     final user = context.watch<AuthProvider>().user;
+    if (user != null && _loadedUserId != user.id) {
+      _loadedUserId = user.id;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) _loadHistory(forceRefresh: true);
+      });
+    }
 
     return Scaffold(
       backgroundColor: bgColor,
@@ -202,32 +192,38 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Nhật Ký Ăn Uống',
-                            style: GoogleFonts.beVietnamPro(
-                              fontSize: 26,
-                              fontWeight: FontWeight.w800,
-                              color: primaryTextColor,
-                              letterSpacing: -0.6,
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              strings.historyTitle,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: GoogleFonts.beVietnamPro(
+                                fontSize: 26,
+                                fontWeight: FontWeight.w800,
+                                color: primaryTextColor,
+                                letterSpacing: -0.6,
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 2),
-                          Text(
-                            'Hành trình dinh dưỡng của bạn',
-                            style: GoogleFonts.beVietnamPro(
-                              fontSize: 13,
-                              color: subtitleColor,
-                              fontWeight: FontWeight.w400,
+                            const SizedBox(height: 2),
+                            Text(
+                              strings.historySubtitle,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: GoogleFonts.beVietnamPro(
+                                fontSize: 13,
+                                color: subtitleColor,
+                                fontWeight: FontWeight.w400,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
+                      const SizedBox(width: 12),
                       _AvatarButton(
                           user: user, isDark: isDark, cardColor: cardColor),
                     ],
@@ -278,7 +274,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       final parts = mKey.split('-');
                       final year = int.parse(parts[0]);
                       final month = int.parse(parts[1]);
-                      final label = '${_monthName(month)} $year';
+                      final label = '${localizedMonth(
+                        DateTime(year, month),
+                        settings.languageCode,
+                      )} $year';
                       final dayMap = monthsMap[mKey]!;
 
                       int monthTotal = 0;
@@ -365,32 +364,36 @@ class _StatsGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(4),
-      decoration: BoxDecoration(
-        color: cardColor,
-        borderRadius: BorderRadius.circular(22),
-        boxShadow: [
-          BoxShadow(
-            color: isDark
-                ? Colors.black.withOpacity(0.3)
-                : Colors.black.withOpacity(0.06),
-            blurRadius: 20,
-            offset: const Offset(0, 4),
+    final strings = context.watch<AppSettingsProvider>().strings;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final isNarrow = constraints.maxWidth < 340;
+        return Container(
+          padding: const EdgeInsets.all(4),
+          decoration: BoxDecoration(
+            color: cardColor,
+            borderRadius: BorderRadius.circular(22),
+            boxShadow: [
+              BoxShadow(
+                color: isDark
+                    ? Colors.black.withOpacity(0.3)
+                    : Colors.black.withOpacity(0.06),
+                blurRadius: 20,
+                offset: const Offset(0, 4),
+              ),
+            ],
           ),
-        ],
-      ),
-      child: GridView.count(
-        crossAxisCount: 2,
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        childAspectRatio: 1.6,
-        crossAxisSpacing: 2,
-        mainAxisSpacing: 2,
-        children: [
+          child: GridView.count(
+            crossAxisCount: 2,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            childAspectRatio: isNarrow ? 1.25 : 1.6,
+            crossAxisSpacing: 2,
+            mainAxisSpacing: 2,
+            children: [
           _StatCell(
             value: '$totalMeals',
-            label: 'Bữa ăn',
+            label: strings.mealsCountLabel,
             icon: _MealIcon(isDark: isDark),
             accentColor: const Color(0xFFFF9F0A),
             isDark: isDark,
@@ -401,7 +404,7 @@ class _StatsGrid extends StatelessWidget {
           ),
           _StatCell(
             value: '$streak',
-            label: 'Chuỗi ngày',
+            label: strings.streakDaysLabel,
             icon: _FireIcon(isDark: isDark),
             accentColor: const Color(0xFFFF6B35),
             isDark: isDark,
@@ -412,7 +415,7 @@ class _StatsGrid extends StatelessWidget {
           ),
           _StatCell(
             value: '$avgCalo',
-            label: 'Kcal/ngày',
+            label: strings.kcalPerDay,
             icon: _CalIcon(isDark: isDark),
             accentColor: const Color(0xFF0A84FF),
             isDark: isDark,
@@ -423,7 +426,7 @@ class _StatsGrid extends StatelessWidget {
           ),
           _StatCell(
             value: '${avgProtein}g',
-            label: 'Protein/ngày',
+            label: strings.proteinPerDay,
             icon: _ProteinIcon(isDark: isDark),
             accentColor: const Color(0xFF30D158),
             isDark: isDark,
@@ -432,8 +435,10 @@ class _StatsGrid extends StatelessWidget {
             primaryTextColor: primaryTextColor,
             isBottomRight: true,
           ),
-        ],
-      ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
@@ -480,57 +485,70 @@ class _StatCell extends StatelessWidget {
       bottomRight: isBottomRight ? const Radius.circular(19) : Radius.zero,
     );
 
-    return Container(
-      decoration: BoxDecoration(
-        color: cardColor,
-        borderRadius: radius,
-        border: Border(
-          right: (isTopLeft || isBottomLeft)
-              ? BorderSide(color: dividerColor, width: 0.5)
-              : BorderSide.none,
-          bottom: (isTopLeft || isTopRight)
-              ? BorderSide(color: dividerColor, width: 0.5)
-              : BorderSide.none,
-        ),
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          icon,
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  value,
-                  style: GoogleFonts.beVietnamPro(
-                    fontSize: 22,
-                    fontWeight: FontWeight.w700,
-                    color: primaryTextColor,
-                    letterSpacing: -0.5,
-                    height: 1.0,
-                  ),
-                ),
-                const SizedBox(height: 3),
-                Text(
-                  label,
-                  style: GoogleFonts.beVietnamPro(
-                    fontSize: 11,
-                    fontWeight: FontWeight.w500,
-                    color: subtitleColor,
-                    height: 1.2,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final isCompact = constraints.maxWidth < 150;
+        return Container(
+          decoration: BoxDecoration(
+            color: cardColor,
+            borderRadius: radius,
+            border: Border(
+              right: (isTopLeft || isBottomLeft)
+                  ? BorderSide(color: dividerColor, width: 0.5)
+                  : BorderSide.none,
+              bottom: (isTopLeft || isTopRight)
+                  ? BorderSide(color: dividerColor, width: 0.5)
+                  : BorderSide.none,
             ),
           ),
-        ],
-      ),
+          padding: EdgeInsets.symmetric(
+            horizontal: isCompact ? 12 : 18,
+            vertical: isCompact ? 12 : 14,
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              icon,
+              SizedBox(width: isCompact ? 8 : 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        value,
+                        maxLines: 1,
+                        style: GoogleFonts.beVietnamPro(
+                          fontSize: 22,
+                          fontWeight: FontWeight.w700,
+                          color: primaryTextColor,
+                          letterSpacing: -0.5,
+                          height: 1.0,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 3),
+                    Text(
+                      label,
+                      style: GoogleFonts.beVietnamPro(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w500,
+                        color: subtitleColor,
+                        height: 1.2,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
@@ -670,7 +688,7 @@ class _AvatarButton extends StatelessWidget {
                     ),
                   ),
           ),
-          if (user?.subscriptionTier != null)
+          if (!AppBuildConfig.isTesting && user?.hasPremiumAccess == true)
             Positioned(
               top: -3,
               right: -3,
@@ -703,6 +721,7 @@ class _EmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final strings = context.watch<AppSettingsProvider>().strings;
     final subtitleColor =
         isDark ? const Color(0xFF636366) : const Color(0xFF8E8E93);
     final primaryTextColor = isDark ? Colors.white : const Color(0xFF1C1C1E);
@@ -732,7 +751,7 @@ class _EmptyState extends StatelessWidget {
         ),
         const SizedBox(height: 16),
         Text(
-          'Chưa có bữa ăn nào',
+          strings.noMealsHistory,
           style: GoogleFonts.beVietnamPro(
             fontSize: 17,
             fontWeight: FontWeight.w700,
@@ -741,7 +760,7 @@ class _EmptyState extends StatelessWidget {
         ),
         const SizedBox(height: 6),
         Text(
-          'Quét bữa ăn đầu tiên để bắt đầu\nhành trình dinh dưỡng của bạn',
+          strings.scanFirstMealPrompt,
           textAlign: TextAlign.center,
           style: GoogleFonts.beVietnamPro(
             fontSize: 14,
@@ -765,7 +784,7 @@ class _EmptyState extends StatelessWidget {
                     color: Colors.white, size: 16),
                 const SizedBox(width: 8),
                 Text(
-                  'Quét bữa ăn đầu tiên',
+                  strings.scanFirstMealButton,
                   style: GoogleFonts.beVietnamPro(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,

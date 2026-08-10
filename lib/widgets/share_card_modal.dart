@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:provider/provider.dart';
+import '../providers/app_settings_provider.dart';
 
 class CardMemoryData {
   final String dishName;
@@ -54,8 +56,8 @@ class _ShareCardModalState extends State<ShareCardModal> {
 
   Future<Uint8List?> _captureCardBytes() async {
     try {
-      final boundary = _cardKey.currentContext?.findRenderObject()
-          as RenderRepaintBoundary?;
+      final boundary =
+          _cardKey.currentContext?.findRenderObject() as RenderRepaintBoundary?;
       if (boundary == null) return null;
 
       // 3.0 pixelRatio ensures high quality 1080p+ square image output
@@ -85,14 +87,15 @@ class _ShareCardModalState extends State<ShareCardModal> {
   Future<void> _handleSaveImage() async {
     if (_isProcessing) return;
     setState(() => _isProcessing = true);
+    final s = context.read<AppSettingsProvider>().strings;
 
     try {
       final bytes = await _captureCardBytes();
       if (bytes == null) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Không thể tạo ảnh card. Vui lòng thử lại!'),
+            SnackBar(
+              content: Text(s.shareCreateFailed),
               backgroundColor: Colors.redAccent,
             ),
           );
@@ -106,8 +109,8 @@ class _ShareCardModalState extends State<ShareCardModal> {
         await Share.shareXFiles([XFile(filePath)], text: widget.data.dishName);
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Đã xuất Card Memory thành công!'),
+            SnackBar(
+              content: Text(s.shareExported),
               backgroundColor: Color(0xFF16A34A),
             ),
           );
@@ -123,6 +126,7 @@ class _ShareCardModalState extends State<ShareCardModal> {
   Future<void> _handleShareNative() async {
     if (_isProcessing) return;
     setState(() => _isProcessing = true);
+    final s = context.read<AppSettingsProvider>().strings;
 
     try {
       final bytes = await _captureCardBytes();
@@ -132,7 +136,8 @@ class _ShareCardModalState extends State<ShareCardModal> {
       if (filePath != null && mounted) {
         await Share.shareXFiles(
           [XFile(filePath)],
-          text: '🔥 ${widget.data.dishName} - ${widget.data.calories.round()} kcal | CalGo',
+          text: s.sharePayload(
+              widget.data.dishName, widget.data.calories.round()),
         );
       }
     } finally {
@@ -146,9 +151,15 @@ class _ShareCardModalState extends State<ShareCardModal> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
+    final s = context.watch<AppSettingsProvider>().strings;
+    final mediaQuery = MediaQuery.of(context);
+    final availableHeight =
+        mediaQuery.size.height - mediaQuery.viewInsets.bottom;
 
     return Container(
       margin: const EdgeInsets.all(12),
+      constraints: BoxConstraints(maxHeight: availableHeight * 0.92),
+      clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         color: isDark ? const Color(0xFF1E1D24) : Colors.white,
         borderRadius: BorderRadius.circular(28),
@@ -162,9 +173,11 @@ class _ShareCardModalState extends State<ShareCardModal> {
       ),
       child: SafeArea(
         top: false,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
+        child: SingleChildScrollView(
+          physics: const ClampingScrollPhysics(),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
             // Header
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
@@ -182,7 +195,7 @@ class _ShareCardModalState extends State<ShareCardModal> {
                   ),
                   const SizedBox(height: 14),
                   Text(
-                    'Chia sẻ kết quả',
+                    s.shareResult,
                     style: TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.w800,
@@ -191,7 +204,7 @@ class _ShareCardModalState extends State<ShareCardModal> {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'Ảnh sẽ được lưu với nhãn dinh dưỡng',
+                    s.shareNutritionLabel,
                     style: TextStyle(
                       fontSize: 12,
                       color: isDark
@@ -217,15 +230,17 @@ class _ShareCardModalState extends State<ShareCardModal> {
 
             // Action buttons row
             Padding(
-              padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
+              padding: const EdgeInsets.fromLTRB(14, 10, 14, 16),
               child: Row(
                 children: [
                   Expanded(
+                    flex: 2,
                     child: SizedBox(
                       height: 48,
                       child: TextButton(
                         onPressed: () => Navigator.pop(context),
                         style: TextButton.styleFrom(
+                          padding: EdgeInsets.zero,
                           backgroundColor: isDark
                               ? const Color(0xFF2C2A34)
                               : const Color(0xFFF1F5F9),
@@ -234,12 +249,12 @@ class _ShareCardModalState extends State<ShareCardModal> {
                           ),
                         ),
                         child: Text(
-                          'Đóng',
+                          s.close,
                           style: TextStyle(
                             color: isDark
                                 ? const Color(0xFFCBD5E1)
                                 : const Color(0xFF475569),
-                            fontSize: 14,
+                            fontSize: 13,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
@@ -248,11 +263,13 @@ class _ShareCardModalState extends State<ShareCardModal> {
                   ),
                   const SizedBox(width: 8),
                   Expanded(
+                    flex: 3,
                     child: SizedBox(
                       height: 48,
                       child: ElevatedButton.icon(
                         onPressed: _isProcessing ? null : _handleSaveImage,
                         style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.zero,
                           backgroundColor: isDark
                               ? const Color(0xFF334155)
                               : const Color(0xFF0F172A),
@@ -262,11 +279,13 @@ class _ShareCardModalState extends State<ShareCardModal> {
                             borderRadius: BorderRadius.circular(16),
                           ),
                         ),
-                        icon: const Icon(Icons.download_rounded, size: 18),
-                        label: const Text(
-                          'Lưu ảnh',
+                        icon: const Icon(Icons.download_rounded, size: 16),
+                        label: Text(
+                          s.saveImage,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 13,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
@@ -275,11 +294,13 @@ class _ShareCardModalState extends State<ShareCardModal> {
                   ),
                   const SizedBox(width: 8),
                   Expanded(
+                    flex: 3,
                     child: SizedBox(
                       height: 48,
                       child: ElevatedButton.icon(
                         onPressed: _isProcessing ? null : _handleShareNative,
                         style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.zero,
                           backgroundColor: const Color(0xFF2563EB),
                           foregroundColor: Colors.white,
                           elevation: 0,
@@ -287,11 +308,13 @@ class _ShareCardModalState extends State<ShareCardModal> {
                             borderRadius: BorderRadius.circular(16),
                           ),
                         ),
-                        icon: const Icon(Icons.share_rounded, size: 18),
-                        label: const Text(
-                          'Share',
+                        icon: const Icon(Icons.share_rounded, size: 16),
+                        label: Text(
+                          s.share,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 13,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
@@ -301,7 +324,8 @@ class _ShareCardModalState extends State<ShareCardModal> {
                 ],
               ),
             ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -4,6 +4,7 @@ import '../config/api_config.dart';
 
 class ApiService {
   String? _accessToken;
+  int _authScope = 0;
   final http.Client _client = http.Client();
   final Map<String, Future<dynamic>> _inFlightGets = {};
 
@@ -18,8 +19,15 @@ class ApiService {
   }
 
   void setToken(String? token) {
+    if (_accessToken != token) {
+      _authScope++;
+    }
     _accessToken = token;
   }
+
+  /// Changes whenever the signed-in account changes. Services use this to
+  /// keep short-lived caches from ever crossing account boundaries.
+  int get authScope => _authScope;
 
   Future<dynamic> get(String path) async {
     final requestKey = '${_accessToken ?? ''}\n$path';

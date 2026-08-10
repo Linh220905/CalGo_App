@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../../providers/app_settings_provider.dart';
 
 class StepProgressBar extends StatelessWidget {
   final double value;
@@ -14,26 +16,27 @@ class StepProgressBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = context.watch<AppSettingsProvider>().strings;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
       child: Column(mainAxisSize: MainAxisSize.min, children: [
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          const Text('Tiến trình',
+          Text(s.progressLabel,
               style: TextStyle(
                   color: Color(0xFF71717A),
-                  fontSize: 13,
+                  fontSize: 11,
                   fontWeight: FontWeight.w500)),
           Text('${(value * 100).toInt()}%',
               style: const TextStyle(
                   color: Color(0xFF111111),
-                  fontSize: 13,
+                  fontSize: 11,
                   fontWeight: FontWeight.w700)),
         ]),
-        const SizedBox(height: 6),
+        const SizedBox(height: 3),
         ClipRRect(
           borderRadius: BorderRadius.circular(4),
           child: Container(
-            height: 6,
+            height: 4,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4),
               color: const Color(0xFFECECEC),

@@ -337,6 +337,7 @@ class HorizontalRulerPickerCard extends StatefulWidget {
   final IconData headerIcon;
   final String scrollHintText;
   final ValueChanged<double> onChanged; // Always returns value in primary unit
+  final bool compact;
 
   const HorizontalRulerPickerCard({
     super.key,
@@ -351,6 +352,7 @@ class HorizontalRulerPickerCard extends StatefulWidget {
     this.headerIcon = Icons.fitness_center_rounded,
     this.scrollHintText = '',
     required this.onChanged,
+    this.compact = false,
   });
 
   @override
@@ -436,13 +438,15 @@ class _HorizontalRulerPickerCardState extends State<HorizontalRulerPickerCard> {
               ],
             ),
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: widget.compact ? 10 : 20),
         ],
 
         // Main Rounded Card Container
         Container(
           width: double.infinity,
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+          padding: EdgeInsets.symmetric(
+              horizontal: widget.compact ? 16 : 20,
+              vertical: widget.compact ? 16 : 24),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(28),
@@ -464,20 +468,25 @@ class _HorizontalRulerPickerCardState extends State<HorizontalRulerPickerCard> {
                   Icon(
                     widget.headerIcon,
                     color: const Color(0xFF1E293B),
-                    size: 22,
+                    size: widget.compact ? 19 : 22,
                   ),
                   const SizedBox(width: 8),
-                  Text(
-                    widget.headerTitle,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFF1E293B),
+                  Flexible(
+                    child: Text(
+                      widget.headerTitle,
+                      textAlign: TextAlign.center,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: widget.compact ? 14 : 16,
+                        fontWeight: FontWeight.w600,
+                        color: const Color(0xFF1E293B),
+                      ),
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 18),
+              SizedBox(height: widget.compact ? 10 : 18),
 
               // Clean Numeric Value Display (Black Tone)
               Row(
@@ -487,10 +496,10 @@ class _HorizontalRulerPickerCardState extends State<HorizontalRulerPickerCard> {
                 children: [
                   Text(
                     _formattedValueString,
-                    style: const TextStyle(
-                      fontSize: 52,
+                    style: TextStyle(
+                      fontSize: widget.compact ? 42 : 52,
                       fontWeight: FontWeight.w800,
-                      color: Color(0xFF0A0A0A),
+                      color: const Color(0xFF0A0A0A),
                       height: 1.0,
                       letterSpacing: -1.5,
                     ),
@@ -498,16 +507,16 @@ class _HorizontalRulerPickerCardState extends State<HorizontalRulerPickerCard> {
                   const SizedBox(width: 6),
                   Text(
                     _displayUnitStr,
-                    style: const TextStyle(
-                      fontSize: 20,
+                    style: TextStyle(
+                      fontSize: widget.compact ? 16 : 20,
                       fontWeight: FontWeight.w700,
-                      color: Color(0xFF334155),
+                      color: const Color(0xFF334155),
                     ),
                   ),
                 ],
               ),
 
-              const SizedBox(height: 20),
+              SizedBox(height: widget.compact ? 12 : 20),
 
               // Horizontal Ruler Picker
               HorizontalRulerPicker(

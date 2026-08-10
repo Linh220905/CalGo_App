@@ -85,13 +85,20 @@ class _SocialAuthButtonState extends State<SocialAuthButton> {
                           color: Colors.white,
                         ),
                       const SizedBox(width: 12),
-                      Text(
-                        widget.label,
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600,
-                          color: textColor,
-                          letterSpacing: -0.2,
+                      Flexible(
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            widget.label,
+                            maxLines: 1,
+                            softWrap: false,
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                              color: textColor,
+                              letterSpacing: -0.2,
+                            ),
+                          ),
                         ),
                       ),
                     ],

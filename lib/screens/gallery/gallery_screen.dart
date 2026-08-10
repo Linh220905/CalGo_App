@@ -83,11 +83,13 @@ class _PhotoGalleryScreenState extends State<PhotoGalleryScreen> {
           _hasMore = list.length >= _pageSize;
           _isLoadingInitial = false;
         });
+        service.precacheItems(context, photoItems.take(12).toList());
       }
     } catch (e) {
       if (mounted) {
         setState(() {
-          _error = 'Không thể tải bộ sưu tập ảnh';
+          _error =
+              context.read<AppSettingsProvider>().strings.galleryLoadFailed;
           _isLoadingInitial = false;
         });
       }
@@ -124,6 +126,7 @@ class _PhotoGalleryScreenState extends State<PhotoGalleryScreen> {
           _hasMore = list.length >= _pageSize;
           _isLoadingMore = false;
         });
+        service.precacheItems(context, photoItems.take(6).toList());
       }
     } catch (e) {
       if (mounted) {
@@ -133,18 +136,23 @@ class _PhotoGalleryScreenState extends State<PhotoGalleryScreen> {
   }
 
   void _showItemOptions(HistoryItem item) {
-    final isDark = context.read<AppSettingsProvider>().isDarkMode;
+    final settings = context.read<AppSettingsProvider>();
+    final isDark = settings.isDarkMode;
+    final s = settings.strings;
 
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
-      builder: (ctx) => Container(
-        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
-        decoration: BoxDecoration(
-          color: isDark ? const Color(0xFF1E1D24) : Colors.white,
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-        ),
-        child: Column(
+      builder: (ctx) => SafeArea(
+        top: false,
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+          decoration: BoxDecoration(
+            color: isDark ? const Color(0xFF1E1D24) : Colors.white,
+            borderRadius:
+                const BorderRadius.vertical(top: Radius.circular(24)),
+          ),
+          child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
@@ -166,7 +174,11 @@ class _PhotoGalleryScreenState extends State<PhotoGalleryScreen> {
             ),
             const SizedBox(height: 4),
             Text(
-              '${item.totalCalo.round()} kcal • C:${item.totalCarb.round()}g P:${item.totalProtein.round()}g F:${item.totalFat.round()}g',
+              s.galleryMacroSummary(
+                  item.totalCalo.round(),
+                  item.totalCarb.round().toString(),
+                  item.totalProtein.round().toString(),
+                  item.totalFat.round().toString()),
               style: const TextStyle(
                 fontSize: 13,
                 color: Color(0xFF64748B),
@@ -174,16 +186,18 @@ class _PhotoGalleryScreenState extends State<PhotoGalleryScreen> {
             ),
             const SizedBox(height: 20),
             ListTile(
-              leading: const Icon(Icons.analytics_outlined, color: Color(0xFF2563EB)),
-              title: const Text('Xem chi tiết kết quả'),
+              leading: const Icon(Icons.analytics_outlined,
+                  color: Color(0xFF2563EB)),
+              title: Text(s.viewResult),
               onTap: () {
                 Navigator.pop(ctx);
                 context.push('/result/${item.id}');
               },
             ),
             ListTile(
-              leading: const Icon(Icons.share_rounded, color: Color(0xFF10B981)),
-              title: const Text('Chia sẻ Card Memory'),
+              leading:
+                  const Icon(Icons.share_rounded, color: Color(0xFF10B981)),
+              title: Text(s.shareMemoryCard),
               onTap: () {
                 Navigator.pop(ctx);
                 ShareCardModal.show(
@@ -200,34 +214,38 @@ class _PhotoGalleryScreenState extends State<PhotoGalleryScreen> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.delete_outline_rounded, color: Colors.redAccent),
-              title: const Text('Xóa ảnh này', style: TextStyle(color: Colors.redAccent)),
+              leading: const Icon(Icons.delete_outline_rounded,
+                  color: Colors.redAccent),
+              title: Text(s.deletePhoto,
+                  style: const TextStyle(color: Colors.redAccent)),
               onTap: () async {
                 Navigator.pop(ctx);
                 await _confirmAndDelete(item);
               },
             ),
           ],
+          ),
         ),
       ),
     );
   }
 
   Future<void> _confirmAndDelete(HistoryItem item) async {
+    final s = context.read<AppSettingsProvider>().strings;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Xác nhận xóa'),
-        content: Text('Bạn có chắc muốn xóa ảnh món "${item.monChinh}"?'),
+        title: Text(s.confirmDelete),
+        content: Text(s.deletePhotoMessage(item.monChinh)),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Hủy'),
+            child: Text(s.cancel),
           ),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
             style: TextButton.styleFrom(foregroundColor: Colors.redAccent),
-            child: const Text('Xóa'),
+            child: Text(s.deleteAccount),
           ),
         ],
       ),
@@ -241,13 +259,13 @@ class _PhotoGalleryScreenState extends State<PhotoGalleryScreen> {
         });
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Đã xóa món ăn khỏi bộ sưu tập')),
+            SnackBar(content: Text(s.mealDeleted)),
           );
         }
       } catch (e) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Không thể xóa. Vui lòng thử lại!')),
+            SnackBar(content: Text(s.deleteFailed)),
           );
         }
       }
@@ -260,7 +278,8 @@ class _PhotoGalleryScreenState extends State<PhotoGalleryScreen> {
 
     final bgColor = isDark ? const Color(0xFF0F0E13) : const Color(0xFFF8FAFC);
     final textColor = isDark ? Colors.white : const Color(0xFF0F172A);
-    final cardBgColor = isDark ? const Color(0xFF1E1D25) : const Color(0xFFE2E8F0);
+    final cardBgColor =
+        isDark ? const Color(0xFF1E1D25) : const Color(0xFFE2E8F0);
 
     return Scaffold(
       backgroundColor: bgColor,
@@ -283,7 +302,7 @@ class _PhotoGalleryScreenState extends State<PhotoGalleryScreen> {
           ),
         ),
         title: Text(
-          'Ảnh món ăn',
+          context.watch<AppSettingsProvider>().strings.photoGalleryTitle,
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w800,
@@ -302,15 +321,18 @@ class _PhotoGalleryScreenState extends State<PhotoGalleryScreen> {
   }
 
   Widget _buildBody(Color cardBgColor, Color textColor, bool isDark) {
+    final strings = context.watch<AppSettingsProvider>().strings;
+    final columnCount = MediaQuery.sizeOf(context).width < 360 ? 2 : 3;
+    final gridDelegate = SliverGridDelegateWithFixedCrossAxisCount(
+      crossAxisCount: columnCount,
+      crossAxisSpacing: 8,
+      mainAxisSpacing: 8,
+      childAspectRatio: 0.85,
+    );
     if (_isLoadingInitial) {
       return GridView.builder(
         padding: const EdgeInsets.all(12),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          crossAxisSpacing: 8,
-          mainAxisSpacing: 8,
-          childAspectRatio: 0.85,
-        ),
+        gridDelegate: gridDelegate,
         itemCount: 15,
         itemBuilder: (_, __) => Container(
           decoration: BoxDecoration(
@@ -332,7 +354,7 @@ class _PhotoGalleryScreenState extends State<PhotoGalleryScreen> {
             const SizedBox(height: 12),
             ElevatedButton(
               onPressed: () => _loadInitialData(forceRefresh: true),
-              child: const Text('Thử lại'),
+              child: Text(strings.retry),
             ),
           ],
         ),
@@ -347,18 +369,20 @@ class _PhotoGalleryScreenState extends State<PhotoGalleryScreen> {
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: isDark ? const Color(0xFF1E1D25) : const Color(0xFFE2E8F0),
+                color:
+                    isDark ? const Color(0xFF1E1D25) : const Color(0xFFE2E8F0),
                 shape: BoxShape.circle,
               ),
               child: Icon(
                 Icons.photo_library_outlined,
                 size: 48,
-                color: isDark ? const Color(0xFF64748B) : const Color(0xFF94A3B8),
+                color:
+                    isDark ? const Color(0xFF64748B) : const Color(0xFF94A3B8),
               ),
             ),
             const SizedBox(height: 16),
             Text(
-              'Chưa có ảnh scan món ăn nào',
+              strings.noPhotosYet,
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -366,9 +390,9 @@ class _PhotoGalleryScreenState extends State<PhotoGalleryScreen> {
               ),
             ),
             const SizedBox(height: 6),
-            const Text(
-              'Hãy chụp ảnh món ăn của bạn để lưu lại bộ sưu tập!',
-              style: TextStyle(
+            Text(
+              strings.takePhotosPrompt,
+              style: const TextStyle(
                 fontSize: 13,
                 color: Color(0xFF64748B),
               ),
@@ -379,13 +403,15 @@ class _PhotoGalleryScreenState extends State<PhotoGalleryScreen> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: textColor,
                 foregroundColor: isDark ? Colors.black : Colors.white,
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
                 ),
               ),
               icon: const Icon(Icons.camera_alt_rounded, size: 18),
-              label: const Text('Scan món ăn ngay', style: TextStyle(fontWeight: FontWeight.bold)),
+              label: Text(strings.scanFoodNow,
+                  style: const TextStyle(fontWeight: FontWeight.bold)),
             ),
           ],
         ),
@@ -399,12 +425,7 @@ class _PhotoGalleryScreenState extends State<PhotoGalleryScreen> {
         SliverPadding(
           padding: const EdgeInsets.all(12),
           sliver: SliverGrid(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              crossAxisSpacing: 8,
-              mainAxisSpacing: 8,
-              childAspectRatio: 0.85,
-            ),
+            gridDelegate: gridDelegate,
             delegate: SliverChildBuilderDelegate(
               (context, index) {
                 final item = _items[index];
@@ -442,13 +463,15 @@ class _PhotoGalleryScreenState extends State<PhotoGalleryScreen> {
                                 filterQuality: FilterQuality.medium,
                                 errorBuilder: (_, __, ___) => Container(
                                   color: cardBgColor,
-                                  child: const Icon(Icons.restaurant, color: Colors.grey),
+                                  child: const Icon(Icons.restaurant,
+                                      color: Colors.grey),
                                 ),
                               )
                             else
                               Container(
                                 color: cardBgColor,
-                                child: const Icon(Icons.restaurant, color: Colors.grey),
+                                child: const Icon(Icons.restaurant,
+                                    color: Colors.grey),
                               ),
 
                             // 2. Bottom Soft Dark Gradient for text readability
@@ -491,7 +514,8 @@ class _PhotoGalleryScreenState extends State<PhotoGalleryScreen> {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Text(
-                                      '${item.totalCalo.round()} kcal',
+                                      strings.guidanceDishCalories(
+                                          item.totalCalo.round()),
                                       style: const TextStyle(
                                         color: Colors.white,
                                         fontSize: 11,

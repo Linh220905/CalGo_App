@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../l10n/app_strings.dart';
+import '../l10n/generated/app_localizations.dart';
 
 class AppSettingsProvider extends ChangeNotifier {
   static const String _kKeyThemeMode = 'app_theme_mode';
   static const String _kKeyLanguage = 'app_language';
+  static final supportedLanguageCodes = AppLocalizations.supportedLocales
+      .map((locale) => locale.languageCode)
+      .toSet();
 
   ThemeMode _themeMode = ThemeMode.light;
-  String _languageCode = 'vi'; // Mặc định: Tiếng Việt
+  String _languageCode = 'en';
 
   ThemeMode get themeMode => _themeMode;
   bool get isDarkMode => _themeMode == ThemeMode.dark;
   String get languageCode => _languageCode;
-  AppStrings get strings => AppStrings.of(_languageCode);
+  Locale get locale => Locale(_languageCode);
+  AppLocalizations get strings => lookupAppLocalizations(locale);
 
   AppSettingsProvider() {
     _loadFromPrefs();
@@ -26,8 +30,13 @@ class AppSettingsProvider extends ChangeNotifier {
       final isDark = prefs.getBool(_kKeyThemeMode) ?? false;
       _themeMode = isDark ? ThemeMode.dark : ThemeMode.light;
 
-      // Load Language (Default: 'vi')
-      _languageCode = prefs.getString(_kKeyLanguage) ?? 'vi';
+      // A saved choice is explicit. Otherwise follow the device language and
+      // fall back to the template locale when it is not supported.
+      final savedLanguage = prefs.getString(_kKeyLanguage);
+      _languageCode = _supportedOrFallback(
+        savedLanguage ??
+            WidgetsBinding.instance.platformDispatcher.locale.languageCode,
+      );
 
       notifyListeners();
     } catch (_) {}
@@ -44,6 +53,7 @@ class AppSettingsProvider extends ChangeNotifier {
   }
 
   Future<void> setLanguage(String code) async {
+    code = _supportedOrFallback(code);
     if (_languageCode == code) return;
     _languageCode = code;
     notifyListeners();
@@ -52,5 +62,9 @@ class AppSettingsProvider extends ChangeNotifier {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString(_kKeyLanguage, code);
     } catch (_) {}
+  }
+
+  String _supportedOrFallback(String code) {
+    return supportedLanguageCodes.contains(code) ? code : 'en';
   }
 }

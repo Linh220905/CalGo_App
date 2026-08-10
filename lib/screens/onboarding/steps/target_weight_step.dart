@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../models/onboarding_data.dart';
 import '../../../providers/onboarding_provider.dart';
+import '../../../providers/app_settings_provider.dart';
 import '../../../widgets/horizontal_ruler_picker.dart';
 
 class TargetWeightStep extends StatelessWidget {
@@ -9,6 +10,8 @@ class TargetWeightStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final settings = context.watch<AppSettingsProvider>();
+    final s = settings.strings;
     final provider = context.read<OnboardingProvider>();
     final goal = provider.data.goalType ?? GoalType.maintain;
     final initialCurrent =
@@ -26,8 +29,8 @@ class TargetWeightStep extends StatelessWidget {
     final initialDiff = initialTarget - initialCurrent;
     final initialIsLose = initialDiff < 0;
     final initialGoalLabel = initialDiff == 0
-        ? 'Duy trì vóc dáng'
-        : (initialIsLose ? 'Giảm cân' : 'Tăng cơ');
+        ? s.goalMaintainLabel
+        : (initialIsLose ? s.goalLoseLabel : s.goalGainLabel);
 
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
@@ -37,15 +40,15 @@ class TargetWeightStep extends StatelessWidget {
             Expanded(
               child: SingleChildScrollView(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const SizedBox(height: 8),
-                    const Text(
-                      'Cân nặng mục tiêu của bạn?',
+                    Text(
+                      s.targetWeightStepTitle,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.w800,
                         color: Color(0xFF0A0A0A),
@@ -54,10 +57,10 @@ class TargetWeightStep extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    const Text(
-                      'Điều này giúp xác định mục tiêu dinh dưỡng của bạn',
+                    Text(
+                      s.targetWeightDesc,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 14,
                         color: Color(0xFF71717A),
                       ),
@@ -80,8 +83,9 @@ class TargetWeightStep extends StatelessWidget {
                             : (initialIsLose
                                 ? Icons.trending_down_rounded
                                 : Icons.fitness_center_rounded),
+                        compact: true,
                         scrollHintText: goal == GoalType.maintain
-                            ? 'Mục tiêu duy trì bằng cân nặng hiện tại'
+                            ? s.goalMaintainHint
                             : '',
                         onChanged: (v) {
                           context.read<OnboardingProvider>().setTargetWeight(v);
@@ -107,10 +111,10 @@ class TargetWeightStep extends StatelessWidget {
                                 ? const Color(0xFF10B981)
                                 : const Color(0xFFF59E0B));
                         final statusText = diff == 0
-                            ? 'Mục tiêu giữ nguyên cân nặng'
+                            ? s.goalMaintainHint
                             : (isLose
-                                ? 'Mục tiêu giảm $absDiffStr kg'
-                                : 'Mục tiêu tăng $absDiffStr kg');
+                                ? s.goalLoseDiffText(absDiffStr)
+                                : s.goalGainDiffText(absDiffStr));
 
                         return Container(
                           width: double.infinity,
@@ -189,16 +193,16 @@ class TargetWeightStep extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
-                  child: const Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Tiếp tục',
-                        style: TextStyle(
+                        s.nextStepButton,
+                        style: const TextStyle(
                             fontSize: 17, fontWeight: FontWeight.w700),
                       ),
-                      SizedBox(width: 8),
-                      Icon(Icons.arrow_forward_rounded, size: 20),
+                      const SizedBox(width: 8),
+                      const Icon(Icons.arrow_forward_rounded, size: 20),
                     ],
                   ),
                 ),

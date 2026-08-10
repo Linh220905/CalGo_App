@@ -1,8 +1,11 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart'; // flutter pub add google_fonts
+import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:provider/provider.dart';
+import '../../../config/app_build_config.dart';
 import '../../../providers/app_settings_provider.dart';
+import '../../../providers/auth_provider.dart';
 import '../../../providers/onboarding_provider.dart';
 import '../../../providers/payment_provider.dart';
 import '../../../widgets/premium_ui.dart';
@@ -23,9 +26,6 @@ const _kBorder = Color(0xFFE6E6E6);
 const _kAccent = Color(0xFFFF6A3D);
 const _kAccentSoft = Color(0xFFFFF1EC);
 
-const _kWeeklyPrice = 29000;
-const _kMonthlyPrice = 59000;
-const _kAnnualPrice = 449000;
 const _kMonthlyPerWeek = 13600;
 const _kAnnualPerWeek = 8600;
 
@@ -74,6 +74,8 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
   _Plan _selectedPlan = _Plan.annual;
   bool _showClose = false;
   Timer? _closeTimer;
+  PaymentProvider? _payment;
+  bool _handledPremiumSuccess = false;
 
   @override
   void initState() {
@@ -83,15 +85,41 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
         setState(() => _showClose = true);
       }
     });
-    _closeTimer = Timer(const Duration(seconds: 5), () {
+    _closeTimer = Timer(const Duration(seconds: 2), () {
       if (mounted) setState(() => _showClose = true);
     });
   }
 
   @override
   void dispose() {
+    _payment?.removeListener(_onPaymentChanged);
     _closeTimer?.cancel();
     super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final payment = context.read<PaymentProvider>();
+    if (_payment == payment) return;
+    _payment?.removeListener(_onPaymentChanged);
+    _payment = payment..addListener(_onPaymentChanged);
+  }
+
+  void _onPaymentChanged() {
+    if (!mounted || widget.onboardingMode || _handledPremiumSuccess) return;
+    final plan = _toPremiumPlan(_selectedPlan);
+    if (_payment
+            ?.purchaseStates[PaymentProvider.productIdForPremiumPlan(plan)] !=
+        PurchaseState.purchased) {
+      return;
+    }
+    _handledPremiumSuccess = true;
+    context.read<AuthProvider>().refreshUser();
+    final s = context.read<AppSettingsProvider>().strings;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(s.premiumActivatedMessage)),
+    );
   }
 
   void _handleClose() {
@@ -105,55 +133,54 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
   }
 
   Future<void> _handlePrimaryAction() async {
-    if (widget.onboardingMode) {
-      context.read<OnboardingProvider>().nextStep();
-      return;
-    }
+    final payment = context.read<PaymentProvider>();
+    final s = context.read<AppSettingsProvider>().strings;
+    final started = await payment.buyPremium(_toPremiumPlan(_selectedPlan));
+    if (!mounted) return;
 
-    await showDialog<void>(
-      context: context,
-      builder: (dialogContext) => AlertDialog(
-        backgroundColor: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(24),
+    if (started) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(s.paymentProcessing)),
+      );
+    } else {
+      // If billing isn't ready or product SKUs aren't active in Play Console yet,
+      // allow user to proceed or show error details.
+      final errorMsg = payment.error ?? s.premiumPaymentFailed;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(errorMsg),
+          backgroundColor: Colors.redAccent,
+          action: widget.onboardingMode
+              ? SnackBarAction(
+                  label: s.continueLabel,
+                  textColor: Colors.white,
+                  onPressed: () {
+                    context.read<OnboardingProvider>().nextStep();
+                  },
+                )
+              : null,
         ),
-        title: const Text(
-          'Premium chưa mở thanh toán thử',
-          style: TextStyle(
-            fontSize: 19,
-            fontWeight: FontWeight.w800,
-            color: _kInk,
-          ),
-        ),
-        content: const Text(
-          'Các mã subscription tuần, tháng và năm chưa được cấu hình trên '
-          'Google Play. Bạn vẫn có thể kiểm tra luồng mua lượt quét ở màn '
-          'Gói lượt quét.',
-          style: TextStyle(
-            fontSize: 14,
-            height: 1.45,
-            color: _kMuted,
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext),
-            child: const Text(
-              'Đã hiểu',
-              style: TextStyle(
-                color: _kInk,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+      );
+    }
   }
+
+  PremiumPlan _toPremiumPlan(_Plan plan) => switch (plan) {
+        _Plan.weekly => PremiumPlan.weekly,
+        _Plan.monthly => PremiumPlan.monthly,
+        _Plan.annual => PremiumPlan.annual,
+      };
 
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
+    const testing = AppBuildConfig.isTesting;
+    final s = context.watch<AppSettingsProvider>().strings;
+    final payment = context.watch<PaymentProvider>();
+    final premiumState = payment.purchaseStates[
+        PaymentProvider.productIdForPremiumPlan(_toPremiumPlan(_selectedPlan))];
+    final buying =
+        payment.purchaseInProgress || premiumState == PurchaseState.loading;
+    final activated = testing || premiumState == PurchaseState.purchased;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -180,23 +207,38 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
                     _PricingRow(
                       selectedPlan: _selectedPlan,
                       onChanged: (p) => setState(() => _selectedPlan = p),
+                      testing: testing,
                     ),
                     const SizedBox(height: 16),
                     PremiumButton(
                       label: widget.onboardingMode
-                          ? 'Tiếp tục'
-                          : 'Đăng ký qua Google Play',
-                      onPressed: _handlePrimaryAction,
+                          ? testing
+                              ? s.continueFreePremium
+                              : s.continueLabel
+                          : testing
+                              ? s.premiumFreeUnlocked
+                              : activated
+                                  ? s.premiumActivated
+                                  : buying
+                                      ? s.processingShort
+                                      : s.subscribePremium,
+                      onPressed: widget.onboardingMode
+                          ? _handlePrimaryAction
+                          : testing || buying || activated
+                              ? () {}
+                              : _handlePrimaryAction,
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      widget.onboardingMode
-                          ? 'Bạn chưa bị tính phí ở bước này.'
-                          : 'Tự động gia hạn. Hủy bất cứ lúc nào.',
+                      testing
+                          ? s.premiumTestingNote
+                          : widget.onboardingMode
+                              ? s.premiumNoChargeNote
+                              : s.premiumAutoRenewNote,
                       style: _f(11, color: _kMuted, weight: FontWeight.w500),
                     ),
                     const SizedBox(height: 10),
-                    const _FooterLinks(),
+                    _FooterLinks(showBilling: !testing),
                   ],
                 ),
               ),
@@ -316,6 +358,7 @@ class _Headline extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = context.watch<AppSettingsProvider>().strings;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -325,13 +368,13 @@ class _Headline extends StatelessWidget {
             alignment: WrapAlignment.center,
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
-              Text('Thay đổi bản thân bắt đầu từ ',
+              Text(s.premiumHeadlineBefore,
                   style: _f(28, weight: FontWeight.w800, letterSpacing: -0.4)),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                 decoration: BoxDecoration(
                     color: _kAccent, borderRadius: BorderRadius.circular(6)),
-                child: Text('hôm nay',
+                child: Text(s.todayLower,
                     style: _f(28,
                         weight: FontWeight.w800,
                         color: Colors.white,
@@ -353,23 +396,23 @@ class _Headline extends StatelessWidget {
 class _ExperienceRow extends StatelessWidget {
   const _ExperienceRow();
 
-  static const _items = [
-    'Biết ngay lượng calo — quét AI không giới hạn',
-    'Mô tả món ăn bằng AI, không cần nhập tay',
-    'Phân tích dinh dưỡng chuyên sâu, không giới hạn',
-    'Theo dõi tiến trình cơ thể mỗi ngày',
-    'Được hỗ trợ ưu tiên bất cứ khi nào cần',
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final s = context.watch<AppSettingsProvider>().strings;
+    final items = [
+      s.premiumBenefitCalories,
+      s.premiumBenefitSuggestions,
+      s.premiumBenefitDescriptions,
+      s.premiumBenefitProgress,
+      s.premiumBenefitSupport,
+    ];
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
           width: 82,
           child: Text(
-            'Trải\nnghiệm\ncủa bạn',
+            s.yourExperience,
             style: _f(16,
                 weight: FontWeight.w800, height: 1.15, letterSpacing: -0.3),
           ),
@@ -379,7 +422,7 @@ class _ExperienceRow extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: _items
+            children: items
                 .map(
                   (t) => Padding(
                     padding: const EdgeInsets.only(bottom: 8),
@@ -426,19 +469,38 @@ class _ExperienceRow extends StatelessWidget {
 class _PricingRow extends StatelessWidget {
   final _Plan selectedPlan;
   final ValueChanged<_Plan> onChanged;
+  final bool testing;
 
-  const _PricingRow({required this.selectedPlan, required this.onChanged});
+  const _PricingRow({
+    required this.selectedPlan,
+    required this.onChanged,
+    required this.testing,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final s = context.watch<AppSettingsProvider>().strings;
+    final payment = context.watch<PaymentProvider>();
+    final loading = payment.initializing;
+    final weeklyProduct = payment.premiumProduct(PremiumPlan.weekly);
+    final monthlyProduct = payment.premiumProduct(PremiumPlan.monthly);
+    final annualProduct = payment.premiumProduct(PremiumPlan.annual);
+
+    String priceOf(ProductDetails? p, String fallback) {
+      if (testing) return s.free;
+      if (loading) return '...';
+      if (p?.price != null && p!.price.isNotEmpty) return p.price;
+      return fallback;
+    }
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Expanded(
           child: _PriceCard(
-            title: 'Tuần',
-            price: '${_fmt(_kWeeklyPrice)}đ',
-            note: 'thanh toán hàng tuần',
+            title: s.planWeek,
+            price: priceOf(weeklyProduct, '29.000đ'),
+            note: testing ? s.testingAccess : s.weeklyPayment,
             selected: selectedPlan == _Plan.weekly,
             highlighted: false,
             onTap: () => onChanged(_Plan.weekly),
@@ -447,21 +509,25 @@ class _PricingRow extends StatelessWidget {
         const SizedBox(width: 8),
         Expanded(
           child: _PriceCard(
-            title: 'Năm',
-            price: '${_fmt(_kAnnualPrice)}đ',
-            note: '${_fmt(_kAnnualPerWeek)}đ/tuần',
+            title: s.planYear,
+            price: priceOf(annualProduct, '449.000đ'),
+            note: testing
+                ? s.testingAccess
+                : '${_fmt(_kAnnualPerWeek)}đ/${s.weekUnit}',
             selected: selectedPlan == _Plan.annual,
             highlighted: true,
-            badge: 'Phổ biến nhất',
+            badge: s.popularMost,
             onTap: () => onChanged(_Plan.annual),
           ),
         ),
         const SizedBox(width: 8),
         Expanded(
           child: _PriceCard(
-            title: 'Tháng',
-            price: '${_fmt(_kMonthlyPrice)}đ',
-            note: '${_fmt(_kMonthlyPerWeek)}đ/tuần',
+            title: s.planMonth,
+            price: priceOf(monthlyProduct, '59.000đ'),
+            note: testing
+                ? s.testingAccess
+                : '${_fmt(_kMonthlyPerWeek)}đ/${s.weekUnit}',
             selected: selectedPlan == _Plan.monthly,
             highlighted: false,
             onTap: () => onChanged(_Plan.monthly),
@@ -561,9 +627,12 @@ class _PriceCard extends StatelessWidget {
 // ═══════════════════════════════════════════════════════════════
 
 class _FooterLinks extends StatelessWidget {
-  const _FooterLinks();
+  final bool showBilling;
+
+  const _FooterLinks({required this.showBilling});
 
   void _showInfoDialog(BuildContext context, String title, String body) {
+    final s = context.read<AppSettingsProvider>().strings;
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -578,8 +647,7 @@ class _FooterLinks extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('Đóng',
-                style: TextStyle(fontWeight: FontWeight.bold)),
+            child: Text(s.close, style: TextStyle(fontWeight: FontWeight.bold)),
           ),
         ],
       ),
@@ -608,33 +676,45 @@ class _FooterLinks extends StatelessWidget {
           ),
           child: Text(s.termsOfService, style: style),
         ),
-        Text('·', style: _f(10, color: _kMuted)),
-        GestureDetector(
-          onTap: () async {
-            final messenger = ScaffoldMessenger.of(context);
-            try {
-              final payment = context.read<PaymentProvider>();
-              final restored = await payment.restorePurchases();
-              messenger.showSnackBar(
-                SnackBar(
-                  content: Text(
-                    restored
-                        ? 'Đã kiểm tra khôi phục giao dịch.'
-                        : payment.error ??
-                            'Không thể khôi phục giao dịch Google Play.',
+        if (showBilling) ...[
+          Text('·', style: _f(10, color: _kMuted)),
+          GestureDetector(
+            onTap: () async {
+              final messenger = ScaffoldMessenger.of(context);
+              try {
+                final payment = context.read<PaymentProvider>();
+                final restored = await payment.restorePurchases();
+                messenger.showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      restored ? s.restoreChecked : s.restoreFailed,
+                    ),
+                    backgroundColor:
+                        restored ? const Color(0xFF111111) : Colors.redAccent,
                   ),
-                  backgroundColor:
-                      restored ? const Color(0xFF111111) : Colors.redAccent,
-                ),
+                );
+              } catch (e) {
+                messenger.showSnackBar(
+                  SnackBar(content: Text(s.restoreException(e.toString()))),
+                );
+              }
+            },
+            child: Text(s.restorePurchases, style: style),
+          ),
+          Text('·', style: _f(10, color: _kMuted)),
+          GestureDetector(
+            onTap: () async {
+              final opened = await context
+                  .read<PaymentProvider>()
+                  .openSubscriptionManagement();
+              if (!context.mounted || opened) return;
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(s.manageSubscriptionFailed)),
               );
-            } catch (e) {
-              messenger.showSnackBar(
-                SnackBar(content: Text('Restore failed: ${e.toString()}')),
-              );
-            }
-          },
-          child: Text(s.restorePurchases, style: style),
-        ),
+            },
+            child: Text(s.manageSubscription, style: style),
+          ),
+        ],
         Text('·', style: _f(10, color: _kMuted)),
         GestureDetector(
           onTap: () => _showInfoDialog(

@@ -1,9 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../services/api_service.dart';
 
-/// Google Play Billing wrapper.
+/// Store billing wrapper.
 ///
 /// Handles connection, product query, purchase flow, receipt verification.
 class GooglePlayPaymentService {
@@ -30,13 +31,13 @@ class GooglePlayPaymentService {
     try {
       _available = await _iap.isAvailable();
       if (!_available) {
-        _lastError = 'Google Play Billing chưa sẵn sàng trên thiết bị này.';
+        _lastError = 'paymentBillingUnavailable';
         debugPrint('[IAP] Google Play Billing not available');
         return false;
       }
     } catch (e) {
       _available = false;
-      _lastError = 'Không thể kết nối Google Play Billing.';
+      _lastError = 'paymentConnectionFailed';
       debugPrint('[IAP] Billing initialization error: $e');
       return false;
     }
@@ -49,7 +50,7 @@ class GooglePlayPaymentService {
   /// Query product details for given [productIds].
   Future<List<ProductDetails>> queryProducts(List<String> productIds) async {
     if (!_available) {
-      _lastError = 'Google Play Billing chưa sẵn sàng trên thiết bị này.';
+      _lastError = 'paymentBillingUnavailable';
       return [];
     }
 
@@ -57,35 +58,28 @@ class GooglePlayPaymentService {
       final response = await _iap.queryProductDetails(productIds.toSet());
 
       if (response.error != null) {
-        _lastError =
-            response.error?.message ?? 'Không thể tải sản phẩm Google Play.';
+        _lastError = 'paymentProductsLoadFailed';
         debugPrint('[IAP] Query products error: ${response.error}');
         return [];
       }
 
       if (response.productDetails.isEmpty) {
-        final missingIds = response.notFoundIDs.join(', ');
-        _lastError = missingIds.isEmpty
-            ? 'Chưa có sản phẩm Google Play nào khả dụng.'
-            : 'Không tìm thấy sản phẩm Google Play: $missingIds';
+        _lastError = 'paymentProductsUnavailable';
       } else {
-        _lastError = response.notFoundIDs.isEmpty
-            ? null
-            : 'Một số sản phẩm chưa được cấu hình: '
-                '${response.notFoundIDs.join(', ')}';
+        _lastError = null;
       }
       return response.productDetails;
     } catch (e) {
-      _lastError = 'Không thể tải sản phẩm từ Google Play.';
+      _lastError = 'paymentProductsLoadFailed';
       debugPrint('[IAP] Query products exception: $e');
       return [];
     }
   }
 
-  /// Start purchase flow for a [ProductDetails].
+  /// Start purchase flow for a consumable credit package.
   Future<bool> purchase(ProductDetails product) async {
     if (!_available) {
-      _lastError = 'Google Play Billing chưa sẵn sàng trên thiết bị này.';
+      _lastError = 'paymentBillingUnavailable';
       return false;
     }
 
@@ -94,17 +88,47 @@ class GooglePlayPaymentService {
     );
 
     try {
-      final result = await _iap.buyConsumable(purchaseParam: purchaseParam);
+      // Do not let the Flutter plugin auto-consume before the server has
+      // verified the purchase token and granted the credits.  The backend
+      // consumes the token after its idempotent credit commit.
+      final result = await _iap.buyConsumable(
+        purchaseParam: purchaseParam,
+        autoConsume: false,
+      );
       if (!result) {
-        _lastError = 'Google Play không thể mở giao diện thanh toán.';
+        _lastError = 'paymentOpenFailed';
       } else {
         _lastError = null;
       }
       debugPrint('[IAP] Purchase initiated: ${product.id} -> $result');
       return result;
     } catch (e) {
-      _lastError = 'Không thể mở giao diện thanh toán Google Play.';
+      _lastError = 'paymentOpenFailed';
       debugPrint('[IAP] Purchase error: $e');
+      return false;
+    }
+  }
+
+  /// Start an auto-renewable Premium subscription.  Subscriptions must not be
+  /// consumed: StoreKit / Play Billing owns their renewal lifecycle.
+  Future<bool> purchaseSubscription(ProductDetails product) async {
+    if (!_available) {
+      _lastError = 'paymentBillingUnavailable';
+      return false;
+    }
+    try {
+      final result = await _iap.buyNonConsumable(
+        purchaseParam: PurchaseParam(productDetails: product),
+      );
+      if (!result) {
+        _lastError = 'paymentOpenFailed';
+      } else {
+        _lastError = null;
+      }
+      return result;
+    } catch (e) {
+      _lastError = 'paymentOpenFailed';
+      debugPrint('[IAP] Subscription purchase error: $e');
       return false;
     }
   }
@@ -143,6 +167,45 @@ class GooglePlayPaymentService {
     }
   }
 
+  /// Verify a Premium entitlement on CalGo's server.  The server calls the
+  /// relevant Store API and is the only authority that grants Premium.
+  Future<bool> verifySubscription(PurchaseDetails purchase) async {
+    try {
+      final proof = _extractSubscriptionProof(purchase);
+      if (proof == null) {
+        _lastError = 'receiptUnavailable';
+        return false;
+      }
+      await _api.post('/subscriptions/store/verify', body: proof);
+      _lastError = null;
+      return true;
+    } catch (e) {
+      _lastError = 'subscriptionVerificationFailed';
+      debugPrint('[IAP] Verify subscription error: $e');
+      return false;
+    }
+  }
+
+  Map<String, dynamic>? _extractSubscriptionProof(PurchaseDetails purchase) {
+    final proof = purchase.verificationData.serverVerificationData;
+    if (proof.isEmpty) return null;
+    return {
+      'provider': defaultTargetPlatform == TargetPlatform.iOS
+          ? 'app_store'
+          : 'google_play',
+      'product_id': purchase.productID,
+      'purchase_token': proof,
+      'transaction_id': purchase.purchaseID,
+    };
+  }
+
+  /// Acknowledge a non-consumable purchase after server verification.
+  Future<void> complete(PurchaseDetails purchase) async {
+    if (purchase.pendingCompletePurchase) {
+      await _iap.completePurchase(purchase);
+    }
+  }
+
   /// Extract receipt data per platform.
   Map<String, dynamic>? _extractReceipt(PurchaseDetails purchase) {
     if (defaultTargetPlatform == TargetPlatform.android) {
@@ -159,7 +222,7 @@ class GooglePlayPaymentService {
   /// Restore previous purchases (for iOS App Store & Android Google Play Store compliance)
   Future<bool> restorePurchases() async {
     if (!_available) {
-      _lastError = 'Google Play Billing chưa sẵn sàng trên thiết bị này.';
+      _lastError = 'paymentBillingUnavailable';
       return false;
     }
     try {
@@ -167,7 +230,7 @@ class GooglePlayPaymentService {
       _lastError = null;
       return true;
     } catch (e) {
-      _lastError = 'Không thể khôi phục giao dịch Google Play.';
+      _lastError = 'paymentRestoreFailed';
       debugPrint('[IAP] Restore purchases error: $e');
       return false;
     }
@@ -177,6 +240,17 @@ class GooglePlayPaymentService {
   Future<bool> isPurchased(String productId) async {
     await restorePurchases();
     return false;
+  }
+
+  /// Opens the Store-owned subscription screen.  Cancellation is done there
+  /// so Store renewal and CalGo's entitlement cannot drift apart.
+  Future<bool> openSubscriptionManagement() async {
+    final uri = defaultTargetPlatform == TargetPlatform.iOS
+        ? Uri.parse('https://apps.apple.com/account/subscriptions')
+        : Uri.parse(
+            'https://play.google.com/store/account/subscriptions?package=com.calgo.calgo',
+          );
+    return launchUrl(uri, mode: LaunchMode.externalApplication);
   }
 
   void dispose() {

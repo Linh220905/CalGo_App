@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/onboarding_provider.dart';
+import '../../../providers/app_settings_provider.dart';
 
 class EmotionalScreenStep extends StatelessWidget {
   const EmotionalScreenStep({super.key});
@@ -13,6 +14,7 @@ class EmotionalScreenStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final d = context.watch<OnboardingProvider>().data;
+    final s = context.watch<AppSettingsProvider>().strings;
     final currentW = d.weightKg?.toStringAsFixed(0) ?? '--';
     final futureW = d.weightInOneYearNoChange?.toStringAsFixed(0) ?? '--';
     final diff = d.weightInOneYearNoChange != null && d.weightKg != null
@@ -50,8 +52,8 @@ class EmotionalScreenStep extends StatelessWidget {
                     delay: Duration(milliseconds: 200),
                   ),
                 ],
-                child: const Text(
-                  'Nếu tiếp tục ăn như hiện tại...',
+                child: Text(
+                  s.emotionalTitle,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 22,
@@ -76,8 +78,8 @@ class EmotionalScreenStep extends StatelessWidget {
                   ),
                 ],
                 child: _WeightCard(
-                  label: 'Hiện tại',
-                  weight: '$currentW kg',
+                  label: s.emotionalCurrent,
+                  weight: s.weightKgValue(currentW),
                 ),
               ),
               const SizedBox(height: 12),
@@ -109,9 +111,9 @@ class EmotionalScreenStep extends StatelessWidget {
                   ),
                 ],
                 child: _WeightCard(
-                  label: 'Sau 6 tháng',
-                  weight: '$futureW kg',
-                  subtitle: '+$diff kg',
+                  label: s.emotionalAfterSixMonths,
+                  weight: s.weightKgValue(futureW),
+                  subtitle: s.weightKgValue('+$diff'),
                   emphasized: true,
                 ),
               ),
@@ -130,13 +132,13 @@ class EmotionalScreenStep extends StatelessWidget {
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(color: _ink, width: 1.5),
                   ),
-                  child: const Row(
+                  child: Row(
                     children: [
                       Icon(Icons.info_outline_rounded, color: _ink, size: 20),
                       SizedBox(width: 12),
                       Expanded(
                         child: Text(
-                          'Bạn gần như vẫn ở cân nặng hiện tại.\nNhưng nếu theo CalGo, bạn có thể thay đổi.',
+                          s.emotionalStillWeight,
                           style: TextStyle(
                             fontSize: 13,
                             color: _ink,
@@ -169,7 +171,7 @@ class EmotionalScreenStep extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: () =>
                         context.read<OnboardingProvider>().nextStep(),
-                    child: const Text('Mình sẽ giúp bạn thay đổi'),
+                    child: Text(s.emotionalHelpChange),
                   ),
                 ),
               ),

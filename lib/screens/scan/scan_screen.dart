@@ -9,19 +9,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import '../../providers/app_settings_provider.dart';
-import '../../providers/auth_provider.dart';
-import '../../services/scan_service.dart';
-
-const List<String> _kAiMessages = [
-  'Đang nhận diện món ăn...',
-  'Đã nhận diện món ăn',
-  'Đang phân tích nguyên liệu...',
-  'Xác định thành phần dinh dưỡng...',
-  'Đang tính toán calories...',
-  'Ước lượng khẩu phần ăn...',
-  'AI đang tổng hợp kết quả...',
-  'Chuẩn bị báo cáo...',
-];
+import '../../providers/home_provider.dart';
+import '../../providers/scan_task_provider.dart';
 
 const Color _kScanGreen = Color(0xFF4ADE80);
 
@@ -47,7 +36,7 @@ class _ScanScreenState extends State<ScanScreen>
   bool _isCameraStarting = true;
   bool _isTakingPicture = false;
   bool _isAnalyzing = false;
-  int _aiMsgIndex = 0;
+  final int _aiMsgIndex = 0;
   Timer? _aiTimer;
   String? _errorMessage;
 
@@ -88,6 +77,7 @@ class _ScanScreenState extends State<ScanScreen>
 
   Future<void> _requestPermissionAndStartCamera() async {
     if (!mounted || _selectedImageFile != null) return;
+    final s = context.read<AppSettingsProvider>().strings;
 
     setState(() {
       _isCameraStarting = true;
@@ -104,8 +94,8 @@ class _ScanScreenState extends State<ScanScreen>
       setState(() {
         _isCameraStarting = false;
         _errorMessage = status.isPermanentlyDenied
-            ? 'Quyền Máy ảnh đã bị từ chối. Hãy mở Cài đặt và cấp quyền Máy ảnh cho CalGo!'
-            : 'CalGo cần quyền Máy ảnh để quét món ăn.';
+            ? s.cameraPermissionDenied
+            : s.cameraPermissionRequired;
       });
       return;
     }
@@ -113,7 +103,7 @@ class _ScanScreenState extends State<ScanScreen>
     try {
       final cameras = await availableCameras();
       if (cameras.isEmpty) {
-        throw CameraException('no_camera', 'Không tìm thấy camera');
+        throw CameraException('no_camera', s.noCamera);
       }
 
       final backCamera = cameras.firstWhere(
@@ -142,8 +132,7 @@ class _ScanScreenState extends State<ScanScreen>
       if (!mounted) return;
       setState(() {
         _isCameraStarting = false;
-        _errorMessage =
-            'Không thể khởi động camera. Vui lòng đóng màn hình và thử lại!';
+        _errorMessage = s.cameraStartFailed;
       });
     }
   }
@@ -181,24 +170,6 @@ class _ScanScreenState extends State<ScanScreen>
     );
   }
 
-  void _startAiStatusSequence() {
-    setState(() {
-      _isAnalyzing = true;
-      _aiMsgIndex = 0;
-      _errorMessage = null;
-    });
-
-    _aiTimer?.cancel();
-    _aiTimer = Timer.periodic(const Duration(milliseconds: 900), (timer) {
-      if (!mounted) return;
-      setState(() {
-        if (_aiMsgIndex < _kAiMessages.length - 1) {
-          _aiMsgIndex++;
-        }
-      });
-    });
-  }
-
   void _stopAiStatusSequence() {
     _aiTimer?.cancel();
     if (mounted) {
@@ -209,19 +180,26 @@ class _ScanScreenState extends State<ScanScreen>
   }
 
   Future<void> _analyzeImage(File file) async {
-    final scanService = context.read<ScanService>();
-    final authProvider = context.read<AuthProvider>();
     try {
       setState(() {
         _selectedImageFile = file;
       });
       final base64Str = await compute(_readAndEncodeImage, file.path);
-      _startAiStatusSequence();
-      final result = await scanService.scanMeal(base64Str);
-      _stopAiStatusSequence();
-      if (mounted) {
-        authProvider.refreshUser();
-        context.pushReplacement('/result/${result.id}');
+      if (!mounted) return;
+      final languageCode = context.read<AppSettingsProvider>().languageCode;
+      final started = context.read<ScanTaskProvider>().startScan(
+            imagePath: file.path,
+            base64Image: base64Str,
+            languageCode: languageCode,
+          );
+      if (started) {
+        context.read<HomeProvider>().showTodayForNewScan();
+        context.go('/home');
+      } else {
+        final s = context.read<AppSettingsProvider>().strings;
+        setState(() {
+          _errorMessage = s.scanInProgress;
+        });
       }
     } catch (e) {
       _handleScanError(e);
@@ -284,12 +262,12 @@ class _ScanScreenState extends State<ScanScreen>
 
   void _handleScanError(Object e) {
     _stopAiStatusSequence();
+    final s = context.read<AppSettingsProvider>().strings;
     final errStr = e.toString().toLowerCase();
     if (errStr.contains('401') || errStr.contains('unauthorized')) {
       if (mounted) {
         setState(() {
-          _errorMessage =
-              'Bạn chưa đăng nhập. Vui lòng đăng nhập bằng Google để sử dụng tính năng này!';
+          _errorMessage = s.notLoggedIn;
         });
       }
     } else if (errStr.contains('camera_access_denied') ||
@@ -297,8 +275,7 @@ class _ScanScreenState extends State<ScanScreen>
         errStr.contains('denied')) {
       if (mounted) {
         setState(() {
-          _errorMessage =
-              'Chưa được cấp quyền Máy ảnh. Vui lòng bật quyền Máy ảnh cho CalGo trong Cài đặt điện thoại!';
+          _errorMessage = s.cameraPermissionMissing;
         });
       }
     } else if (errStr.contains('insufficient_credits') ||
@@ -312,8 +289,7 @@ class _ScanScreenState extends State<ScanScreen>
         errStr.contains('connection')) {
       if (mounted) {
         setState(() {
-          _errorMessage =
-              'Kết nối mạng yếu hoặc quá thời gian chờ. Vui lòng kiểm tra lại 4G/Wi-Fi!';
+          _errorMessage = s.networkTimeout;
         });
       }
     } else {
@@ -323,8 +299,7 @@ class _ScanScreenState extends State<ScanScreen>
             .replaceAll('ApiException', '')
             .replaceAll('Exception:', '')
             .trim();
-        _errorMessage =
-            'Không thể phân tích ảnh ($cleanMsg). Vui lòng thử lại!';
+        _errorMessage = s.scanFailed(cleanMsg);
         setState(() {});
       }
     }
@@ -397,6 +372,16 @@ class _ScanScreenState extends State<ScanScreen>
   Widget build(BuildContext context) {
     final settings = context.watch<AppSettingsProvider>();
     final s = settings.strings;
+    final aiMessages = [
+      s.scanProcessingRecognizing,
+      s.scanProcessingRecognized,
+      s.scanProcessingIngredients,
+      s.scanProcessingNutrition,
+      s.scanProcessingCalories,
+      s.scanProcessingPortion,
+      s.scanProcessingSummary,
+      s.scanProcessingReport,
+    ];
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -517,48 +502,71 @@ class _ScanScreenState extends State<ScanScreen>
             ),
 
             // ── Instruction Text Header ────────────────────────
-            if (!_isAnalyzing)
-              Positioned(
-                top: 24,
-                left: 20,
-                right: 20,
-                child: Column(
-                  children: [
-                    Text(
-                      s.scanInstructionHeader,
-                      style: const TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        shadows: [Shadow(blurRadius: 8, color: Colors.black54)],
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      s.scanInstructionSub,
-                      style: TextStyle(
-                        fontSize: 13,
-                        color: Colors.white.withOpacity(0.75),
-                        shadows: const [
-                          Shadow(blurRadius: 6, color: Colors.black54)
-                        ],
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-              ),
-
-            // ── Top Navigation Bar (Close Button) ─────────────
             Positioned(
               top: 16,
               left: 16,
-              child: CircleAvatar(
-                backgroundColor: Colors.black.withOpacity(0.4),
-                child: IconButton(
-                  icon: const Icon(Icons.close_rounded, color: Colors.white),
-                  onPressed: () => context.pop(),
-                ),
+              right: 16,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: 48,
+                    height: 48,
+                    child: CircleAvatar(
+                      backgroundColor: Colors.black.withOpacity(0.4),
+                      child: IconButton(
+                        icon: const Icon(
+                          Icons.close_rounded,
+                          color: Colors.white,
+                        ),
+                        onPressed: () => context.pop(),
+                      ),
+                    ),
+                  ),
+                  if (!_isAnalyzing) ...[
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 6),
+                        child: Column(
+                          children: [
+                            Text(
+                              s.scanInstructionHeader,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                shadows: [
+                                  Shadow(
+                                    blurRadius: 8,
+                                    color: Colors.black54,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              s.scanInstructionSub,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 13,
+                                color: Colors.white.withOpacity(0.75),
+                                shadows: const [
+                                  Shadow(
+                                    blurRadius: 6,
+                                    color: Colors.black54,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 56),
+                  ],
+                ],
               ),
             ),
 
@@ -622,15 +630,18 @@ class _ScanScreenState extends State<ScanScreen>
                             ),
                           ),
                           const SizedBox(width: 10),
-                          AnimatedSwitcher(
-                            duration: const Duration(milliseconds: 300),
-                            child: Text(
-                              _kAiMessages[_aiMsgIndex],
-                              key: ValueKey<int>(_aiMsgIndex),
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
+                          Flexible(
+                            child: AnimatedSwitcher(
+                              duration: const Duration(milliseconds: 300),
+                              child: Text(
+                                aiMessages[_aiMsgIndex],
+                                key: ValueKey<int>(_aiMsgIndex),
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           ),

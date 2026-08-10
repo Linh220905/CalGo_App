@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -5,16 +7,23 @@ import 'services/api_service.dart';
 import 'services/onboarding_service.dart';
 import 'services/home_service.dart';
 import 'services/scan_service.dart';
+import 'services/notification_service.dart';
+import 'services/meal_guidance_service.dart';
 import 'providers/auth_provider.dart';
 import 'providers/onboarding_provider.dart';
 import 'providers/home_provider.dart';
 import 'providers/app_settings_provider.dart';
 import 'providers/payment_provider.dart';
+import 'providers/scan_task_provider.dart';
 import 'routes/app_router.dart';
 import 'theme/app_theme.dart';
+import 'l10n/generated/app_localizations.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  PaintingBinding.instance.imageCache.maximumSize = 100;
+  PaintingBinding.instance.imageCache.maximumSizeBytes = 100 * 1024 * 1024;
+
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
@@ -23,6 +32,22 @@ void main() {
   final onboardingProvider = OnboardingProvider(
     onboardingService: OnboardingService(apiService),
   );
+  final authProvider = AuthProvider(apiService);
+  final paymentProvider = PaymentProvider(apiService);
+  var restoredPaymentAuthScope = -1;
+  authProvider.addListener(() {
+    // queryPurchases/restore is needed after a cold start and after account
+    // switching so a renewed subscription refreshes the server entitlement.
+    if (authProvider.isAuthenticated &&
+        apiService.authScope != restoredPaymentAuthScope) {
+      restoredPaymentAuthScope = apiService.authScope;
+      unawaited(paymentProvider.restorePurchases());
+    }
+  });
+  // Start both bootstrap reads before the router is built. The router shows a
+  // neutral startup screen until they finish, never a persisted onboarding step.
+  unawaited(onboardingProvider.init());
+  unawaited(authProvider.tryRestore());
 
   runApp(
     MultiProvider(
@@ -30,20 +55,32 @@ void main() {
         Provider<ApiService>.value(value: apiService),
         ChangeNotifierProvider(create: (_) => AppSettingsProvider()),
         ChangeNotifierProvider(
-          create: (_) => AuthProvider(apiService)..tryRestore(),
+          create: (_) => authProvider,
         ),
         ChangeNotifierProvider.value(value: onboardingProvider),
         ChangeNotifierProvider(
-          create: (_) => HomeProvider(HomeService(apiService)),
+          create: (_) => HomeProvider(
+            HomeService(apiService),
+            MealGuidanceService(apiService),
+          ),
         ),
-        ChangeNotifierProvider(
-          create: (_) => PaymentProvider(apiService),
-        ),
+        ChangeNotifierProvider<PaymentProvider>.value(value: paymentProvider),
         Provider(create: (_) => ScanService(apiService)),
+        ChangeNotifierProvider(
+          create: (context) => ScanTaskProvider(context.read<ScanService>()),
+        ),
       ],
-      child: CalGoApp(router: createAppRouter(onboardingProvider)),
+      child:
+          CalGoApp(router: createAppRouter(onboardingProvider, authProvider)),
     ),
   );
+
+  // Timezone data for scheduled notifications is expensive to deserialize.
+  // Starting it before runApp blocked Flutter's first frame and exposed the
+  // plain Android launch background for several seconds.
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    unawaited(NotificationService.instance.init());
+  });
 }
 
 class CalGoApp extends StatelessWidget {
@@ -61,6 +98,13 @@ class CalGoApp extends StatelessWidget {
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,
           themeMode: settings.themeMode,
+          locale: settings.locale,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          builder: (context, child) => MediaQuery.withClampedTextScaling(
+            maxScaleFactor: 1.2,
+            child: child ?? const SizedBox.shrink(),
+          ),
           routerConfig: router,
         );
       },

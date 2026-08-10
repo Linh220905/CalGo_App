@@ -27,12 +27,18 @@ class OnboardingData {
   DietType? dietType;
   String? allergies;
   String? referralSource;
+  String? prepTimePreference;
+  String? budgetPreference;
+  String? nutritionPriority;
+  List<String> avoidFoods;
 
   // New onboarding fields
   List<String> pains;
   String? motivation;
   String? habitPattern;
   String? biggestChallenge;
+  String? trainingFrequency;
+  String? maintenanceFocus;
   bool? likedApp;
   String? accountMethod;
 
@@ -51,10 +57,16 @@ class OnboardingData {
     this.dietType,
     this.allergies,
     this.referralSource,
+    this.prepTimePreference,
+    this.budgetPreference,
+    this.nutritionPriority,
+    this.avoidFoods = const [],
     this.pains = const [],
     this.motivation,
     this.habitPattern,
     this.biggestChallenge,
+    this.trainingFrequency,
+    this.maintenanceFocus,
     this.likedApp,
     this.accountMethod,
   });
@@ -68,14 +80,6 @@ class OnboardingData {
     }
     final h = heightCm! / 100;
     return weightKg! / (h * h);
-  }
-
-  String get bmiCategory {
-    final b = bmi;
-    if (b < 18.5) return 'Gầy';
-    if (b < 23) return 'Bình thường';
-    if (b < 27.5) return 'Hơi thừa cân';
-    return 'Béo phì';
   }
 
   /// BMR — Mifflin-St Jeor
@@ -213,10 +217,16 @@ class OnboardingData {
     dietType = null;
     allergies = null;
     referralSource = null;
+    prepTimePreference = null;
+    budgetPreference = null;
+    nutritionPriority = null;
+    avoidFoods = [];
     pains = [];
     motivation = null;
     habitPattern = null;
     biggestChallenge = null;
+    trainingFrequency = null;
+    maintenanceFocus = null;
     likedApp = null;
     accountMethod = null;
   }
@@ -236,10 +246,17 @@ class OnboardingData {
         if (dietType != null) 'dietType': dietType!.name,
         if (allergies != null && allergies!.isNotEmpty) 'allergies': allergies,
         if (referralSource != null) 'referralSource': referralSource,
+        if (prepTimePreference != null)
+          'prepTimePreference': prepTimePreference,
+        if (budgetPreference != null) 'budgetPreference': budgetPreference,
+        if (nutritionPriority != null) 'nutritionPriority': nutritionPriority,
+        if (avoidFoods.isNotEmpty) 'avoidFoods': avoidFoods,
         if (pains.isNotEmpty) 'pains': pains,
         if (motivation != null) 'motivation': motivation,
         if (habitPattern != null) 'habitPattern': habitPattern,
         if (biggestChallenge != null) 'biggestChallenge': biggestChallenge,
+        if (trainingFrequency != null) 'trainingFrequency': trainingFrequency,
+        if (maintenanceFocus != null) 'maintenanceFocus': maintenanceFocus,
         if (likedApp != null) 'likedApp': likedApp,
         if (accountMethod != null) 'accountMethod': accountMethod,
       };

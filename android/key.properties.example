@@ -1,0 +1,8 @@
+# Copy this file to key.properties and fill in your private upload-key values.
+# Keep key.properties and the .jks/.keystore file outside git and back them up.
+storePassword=CHANGE_ME
+keyPassword=CHANGE_ME
+keyAlias=calgo-upload
+# Use an absolute path outside the repository, for example:
+# storeFile=/home/linh/secure-keys/calgo-upload-keystore.jks
+storeFile=/absolute/path/to/calgo-upload-keystore.jks

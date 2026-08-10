@@ -15,6 +15,7 @@ class HomeService {
   List<DiaryEntry>? _cachedEntries;
   Map<String, dynamic>? _cachedUser;
   DateTime? _cacheTime;
+  int? _cacheAuthScope;
 
   static const _cacheLifetime = Duration(seconds: 30);
 
@@ -22,6 +23,7 @@ class HomeService {
     _cachedEntries = null;
     _cachedUser = null;
     _cacheTime = null;
+    _cacheAuthScope = null;
   }
 
   Future<HomeDayData> getDayData(
@@ -31,11 +33,12 @@ class HomeService {
     final cacheFresh = _cacheTime != null &&
         DateTime.now().difference(_cacheTime!) < _cacheLifetime &&
         _cachedEntries != null &&
-        _cachedUser != null;
+        _cachedUser != null &&
+        _cacheAuthScope == _api.authScope;
 
     if (forceRefresh || !cacheFresh) {
       final responses = await Future.wait([
-        _api.get('/scan/history?limit=100&offset=0'),
+        _getAllHistory(),
         _api.get('/users/me'),
       ]);
       final history = responses[0] as List<dynamic>;
@@ -46,6 +49,7 @@ class HomeService {
         responses[1] as Map<String, dynamic>,
       );
       _cacheTime = DateTime.now();
+      _cacheAuthScope = _api.authScope;
     }
 
     final allEntries = _cachedEntries!;
@@ -79,6 +83,21 @@ class HomeService {
     });
 
     return HomeDayData(summary: summary, meals: meals);
+  }
+
+  Future<List<dynamic>> _getAllHistory() async {
+    const pageSize = 100;
+    var offset = 0;
+    final items = <dynamic>[];
+    while (true) {
+      final page =
+          await _api.get('/scan/history?limit=$pageSize&offset=$offset');
+      if (page is! List) break;
+      items.addAll(page);
+      if (page.length < pageSize) break;
+      offset += page.length;
+    }
+    return items;
   }
 
   String? _dateKey(DateTime? value) {

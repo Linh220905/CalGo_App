@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/onboarding_provider.dart';
+import '../../../providers/app_settings_provider.dart';
 import '../../../widgets/horizontal_ruler_picker.dart';
 
 class HeightStep extends StatelessWidget {
@@ -10,6 +11,8 @@ class HeightStep extends StatelessWidget {
   Widget build(BuildContext context) {
     final provider = context.watch<OnboardingProvider>();
     final height = provider.data.heightCm ?? 170.0;
+    final settings = context.watch<AppSettingsProvider>();
+    final s = settings.strings;
 
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
@@ -19,15 +22,15 @@ class HeightStep extends StatelessWidget {
             Expanded(
               child: SingleChildScrollView(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const SizedBox(height: 8),
-                    const Text(
-                      'Chiều cao của bạn là bao nhiêu?',
+                    Text(
+                      s.heightStepTitle,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.w800,
                         color: Color(0xFF0A0A0A),
@@ -35,10 +38,10 @@ class HeightStep extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    const Text(
-                      'Điều này giúp tính chỉ số BMI và nhu cầu calo chính xác',
+                    Text(
+                      s.heightStepDesc,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 14,
                         color: Color(0xFF71717A),
                       ),
@@ -53,8 +56,9 @@ class HeightStep extends StatelessWidget {
                       primaryUnit: 'cm',
                       secondaryUnit: 'ft',
                       conversionFactor: 0.0328084,
-                      headerTitle: 'Chiều cao hiện tại',
+                      headerTitle: s.currentHeightHeader,
                       headerIcon: Icons.straighten_rounded,
+                      compact: true,
                       onChanged: (v) {
                         context.read<OnboardingProvider>().setHeight(v);
                       },
@@ -81,16 +85,16 @@ class HeightStep extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
-                  child: const Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Tiếp tục',
-                        style: TextStyle(
+                        s.nextStepButton,
+                        style: const TextStyle(
                             fontSize: 17, fontWeight: FontWeight.w700),
                       ),
-                      SizedBox(width: 8),
-                      Icon(Icons.arrow_forward_rounded, size: 20),
+                      const SizedBox(width: 8),
+                      const Icon(Icons.arrow_forward_rounded, size: 20),
                     ],
                   ),
                 ),

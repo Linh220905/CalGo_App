@@ -1,3 +1,5 @@
+import java.io.FileInputStream
+
 plugins {
     id "com.android.application"
     id "kotlin-android"
@@ -5,12 +7,24 @@ plugins {
     id "dev.flutter.flutter-gradle-plugin"
 }
 
+def keystorePropertiesFile = rootProject.file("key.properties")
+def keystoreProperties = new Properties()
+def hasReleaseSigning = keystorePropertiesFile.exists()
+// Fall back to Google's official test App ID so the app does not crash
+// when AdMob has not been configured yet. Replace by setting the
+// CALGO_ADMOB_APP_ID environment variable before building.
+def admobAppId = System.getenv("CALGO_ADMOB_APP_ID") ?: "ca-app-pub-3940256099942544~3347511713"
+if (hasReleaseSigning) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
 android {
     namespace = "com.calgo.calgo"
-    compileSdk = 35
+    compileSdk = 36
     ndkVersion = "25.1.8937393"
 
     compileOptions {
+        coreLibraryDesugaringEnabled true
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
@@ -25,18 +39,68 @@ android {
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion
-        targetSdk = flutter.targetSdkVersion
+        // Google Play requires API 36 for updates starting 31 Aug 2026.
+        targetSdk = 36
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        multiDexEnabled = true
+        manifestPlaceholders["admobAppId"] = admobAppId
+    }
+
+    flavorDimensions += "environment"
+    productFlavors {
+        // AGP reserves flavor names starting with "test" for test variants.
+        // The user-facing build command remains `testing` via the helper
+        // script, while the Gradle-safe flavor is named `calgoTesting`.
+        calgoTesting {
+            dimension "environment"
+            versionNameSuffix "-testing"
+        }
+        production {
+            dimension "environment"
+        }
+    }
+
+    if (hasReleaseSigning) {
+        signingConfigs {
+            release {
+                keyAlias keystoreProperties['keyAlias']
+                keyPassword keystoreProperties['keyPassword']
+                storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+                storePassword keystoreProperties['storePassword']
+            }
+        }
     }
 
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.debug
+            // Keep debug builds usable on developer machines. The
+            // preReleaseBuild guard below prevents any release artifact from
+            // being produced until a real upload key is configured.
+            signingConfig = hasReleaseSigning ? signingConfigs.release : signingConfigs.debug
         }
     }
+
+}
+
+configurations.all {
+    resolutionStrategy {
+        force 'com.android.billingclient:billing:7.1.1'
+    }
+}
+
+tasks.matching { task -> task.name == "preReleaseBuild" }.configureEach {
+    doFirst {
+        if (!hasReleaseSigning) {
+            throw new GradleException(
+                "Missing android/key.properties. Configure a release upload key before building a release bundle."
+            )
+        }
+    }
+}
+
+dependencies {
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
 }
 
 flutter {

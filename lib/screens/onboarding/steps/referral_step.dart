@@ -1,155 +1,158 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import '../../../providers/app_settings_provider.dart';
 import '../../../providers/onboarding_provider.dart';
+import 'personalization_widgets.dart';
 
 class _ChannelItem {
   final String label;
   final IconData icon;
   final Color brandColor;
-  final Color bgColor;
+  final Color backgroundColor;
 
-  const _ChannelItem(this.label, this.icon, this.brandColor, this.bgColor);
+  const _ChannelItem(
+      this.label, this.icon, this.brandColor, this.backgroundColor);
 }
 
-class ReferralStep extends StatelessWidget {
+class ReferralStep extends StatefulWidget {
   const ReferralStep({super.key});
 
-  static const _channels = <_ChannelItem>[
-    _ChannelItem('TikTok', FontAwesomeIcons.tiktok, Color(0xFF000000),
-        Color(0xFFF1F5F9)),
-    _ChannelItem('Facebook', FontAwesomeIcons.facebook, Color(0xFF1877F2),
-        Color(0xFFEFF6FF)),
-    _ChannelItem('YouTube', FontAwesomeIcons.youtube, Color(0xFFFF0000),
-        Color(0xFFFEF2F2)),
-    _ChannelItem('Instagram', FontAwesomeIcons.instagram, Color(0xFFE4405F),
-        Color(0xFFFDF2F8)),
-    _ChannelItem('Threads', FontAwesomeIcons.threads, Color(0xFF000000),
-        Color(0xFFF8FAFC)),
-    _ChannelItem('LinkedIn', FontAwesomeIcons.linkedin, Color(0xFF0077B5),
-        Color(0xFFF0F9FF)),
-    _ChannelItem('X (Twitter)', FontAwesomeIcons.xTwitter, Color(0xFF1DA1F2),
-        Color(0xFFF0F9FF)),
-    _ChannelItem('Bạn bè giới thiệu', Icons.people_alt_rounded,
-        Color(0xFF22C55E), Color(0xFFF0FDF4)),
-    _ChannelItem(
-        'Khác', Icons.more_horiz_rounded, Color(0xFF6366F1), Color(0xFFEEF2FF)),
+  @override
+  State<ReferralStep> createState() => _ReferralStepState();
+}
+
+class _ReferralStepState extends State<ReferralStep> {
+  static const _channelIcons = <(IconData, Color, Color)>[
+    (FontAwesomeIcons.tiktok, Color(0xFF000000), Color(0xFFF1F5F9)),
+    (FontAwesomeIcons.facebook, Color(0xFF1877F2), Color(0xFFEFF6FF)),
+    (FontAwesomeIcons.youtube, Color(0xFFFF0000), Color(0xFFFEF2F2)),
+    (FontAwesomeIcons.instagram, Color(0xFFE4405F), Color(0xFFFDF2F8)),
+    (FontAwesomeIcons.threads, Color(0xFF000000), Color(0xFFF8FAFC)),
+    (FontAwesomeIcons.linkedin, Color(0xFF0077B5), Color(0xFFF0F9FF)),
+    (FontAwesomeIcons.xTwitter, Color(0xFF1DA1F2), Color(0xFFF0F9FF)),
+    (Icons.people_alt_rounded, Color(0xFF22C55E), Color(0xFFF0FDF4)),
+    (Icons.more_horiz_rounded, Color(0xFF6366F1), Color(0xFFEEF2FF)),
   ];
+
+  static const _channelNames = [
+    'TikTok',
+    'Facebook',
+    'YouTube',
+    'Instagram',
+    'Threads',
+    'LinkedIn'
+  ];
+
+  String? _selected;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFFFFFFF),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 20),
-                      const Text(
-                        'Bạn biết đến CalGo từ đâu?',
-                        style: TextStyle(
-                          fontSize: 26,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF0F172A),
-                          letterSpacing: -0.5,
-                        ),
-                      ),
-                      const SizedBox(height: 6),
-                      const Text(
-                        'Giúp chúng mình thấu hiểu hành trình của bạn',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Color(0xFF64748B),
-                        ),
-                      ),
-                      const SizedBox(height: 28),
-                      GridView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          childAspectRatio: 1.35,
-                          crossAxisSpacing: 12,
-                          mainAxisSpacing: 12,
-                        ),
-                        itemCount: _channels.length,
-                        itemBuilder: (ctx, i) {
-                          final item = _channels[i];
-                          return Material(
-                            color: Colors.transparent,
-                            child: InkWell(
-                              onTap: () {
-                                context
-                                    .read<OnboardingProvider>()
-                                    .setReferralSource(item.label);
-                                context.read<OnboardingProvider>().nextStep();
-                              },
-                              borderRadius: BorderRadius.circular(18),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(18),
-                                  border: Border.all(
-                                      color: const Color(0xFFF1F5F9),
-                                      width: 1.5),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withOpacity(0.03),
-                                      blurRadius: 10,
-                                      offset: const Offset(0, 4),
-                                    ),
-                                  ],
-                                ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      width: 44,
-                                      height: 44,
-                                      decoration: BoxDecoration(
-                                        color: item.bgColor,
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: Center(
-                                        child: FaIcon(
-                                          item.icon,
-                                          size: 22,
-                                          color: item.brandColor,
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(height: 10),
-                                    Text(
-                                      item.label,
-                                      style: const TextStyle(
-                                        fontSize: 13.5,
-                                        fontWeight: FontWeight.w600,
-                                        color: Color(0xFF1E293B),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                      const SizedBox(height: 24),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
+    final strings = context.watch<AppSettingsProvider>().strings;
+    final names = [
+      ..._channelNames,
+      strings.referralX,
+      strings.referralFriend,
+      strings.referralOther,
+    ];
+    final channels = List.generate(
+      names.length,
+      (index) => _ChannelItem(
+        names[index],
+        _channelIcons[index].$1,
+        _channelIcons[index].$2,
+        _channelIcons[index].$3,
       ),
     );
+
+    return OnboardingQuestionShell(
+      title: strings.referralStepTitle,
+      note: strings.referralStepSubtitle,
+      children: channels
+          .map((item) => _ReferralChoiceCard(
+                item: item,
+                selected: _selected == item.label,
+                onTap: () => setState(() => _selected = item.label),
+              ))
+          .toList(),
+      onNext: _selected == null
+          ? null
+          : () async {
+              final provider = context.read<OnboardingProvider>();
+              await provider.setReferralSource(_selected!);
+              if (context.mounted) await provider.nextStep();
+            },
+      nextLabel: strings.nextStepButton,
+    );
   }
+}
+
+class _ReferralChoiceCard extends StatelessWidget {
+  final _ChannelItem item;
+  final bool selected;
+  final VoidCallback onTap;
+
+  const _ReferralChoiceCard({
+    required this.item,
+    required this.selected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) => Padding(
+        padding: const EdgeInsets.only(bottom: 10),
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(18),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 180),
+            curve: Curves.easeOut,
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 13),
+            decoration: BoxDecoration(
+              color: selected ? const Color(0xFFFAFAFA) : Colors.white,
+              borderRadius: BorderRadius.circular(18),
+              border: Border.all(
+                color: selected
+                    ? const Color(0xFF111111)
+                    : const Color(0xFFECECEC),
+                width: selected ? 1.5 : 1,
+              ),
+            ),
+            child: Row(
+              children: [
+                Container(
+                  width: 38,
+                  height: 38,
+                  decoration: BoxDecoration(
+                    color: item.backgroundColor,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Center(
+                    child: item.icon.fontFamily == null
+                        ? Icon(item.icon, color: item.brandColor, size: 20)
+                        : FaIcon(item.icon, color: item.brandColor, size: 18),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(item.label,
+                      style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xFF111111))),
+                ),
+                if (selected)
+                  Container(
+                    width: 22,
+                    height: 22,
+                    decoration: const BoxDecoration(
+                        color: Color(0xFF111111), shape: BoxShape.circle),
+                    child:
+                        const Icon(Icons.check, color: Colors.white, size: 14),
+                  ),
+              ],
+            ),
+          ),
+        ),
+      );
 }

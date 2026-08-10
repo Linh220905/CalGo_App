@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import '../../../models/history_item.dart';
+import '../../../providers/app_settings_provider.dart';
 import '../../../utils/nutrition_calculator.dart';
 import '../../../widgets/swipeable_card.dart';
 import '../../../widgets/share_card_modal.dart';
@@ -19,6 +21,7 @@ class DayDetailBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final strings = context.watch<AppSettingsProvider>().strings;
     double totalCalo = 0;
     double totalCarb = 0;
     double totalProtein = 0;
@@ -31,19 +34,21 @@ class DayDetailBottomSheet extends StatelessWidget {
       totalFat += item.totalFat;
     }
 
-    return Container(
-      constraints: BoxConstraints(
-        maxHeight: MediaQuery.of(context).size.height * 0.75,
-      ),
-      decoration: const BoxDecoration(
-        color: Color(0xFF1E1E1E),
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-        border: Border(top: BorderSide(color: Color(0xFF2A2A2A))),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+    return SafeArea(
+      top: false,
+      child: Container(
+        constraints: BoxConstraints(
+          maxHeight: MediaQuery.of(context).size.height * 0.75,
+        ),
+        decoration: const BoxDecoration(
+          color: Color(0xFF1E1E1E),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+          border: Border(top: BorderSide(color: Color(0xFF2A2A2A))),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
           // Header
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 16, 16, 12),
@@ -63,7 +68,7 @@ class DayDetailBottomSheet extends StatelessWidget {
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      '${items.length} ${items.length > 1 ? 'bữa ăn' : 'bữa ăn'}',
+                      strings.mealCount(items.length),
                       style: const TextStyle(
                         fontSize: 12,
                         color: Color(0xFF737373),
@@ -93,23 +98,23 @@ class DayDetailBottomSheet extends StatelessWidget {
                 _MacroSummaryItem(
                   icon: Icons.local_fire_department_rounded,
                   color: const Color(0xFFF59E0B),
-                  text: '${totalCalo.round()} kcal',
+                  text: strings.guidanceDishCalories(totalCalo.round()),
                   isBold: true,
                 ),
                 const SizedBox(width: 16),
                 _MacroLabel(
                     label: 'C',
-                    value: '${totalCarb.round()}g',
+                    value: strings.gramsValue(totalCarb.round()),
                     color: const Color(0xFF60A5FA)),
                 const SizedBox(width: 14),
                 _MacroLabel(
                     label: 'P',
-                    value: '${totalProtein.round()}g',
+                    value: strings.gramsValue(totalProtein.round()),
                     color: const Color(0xFF4ADE80)),
                 const SizedBox(width: 14),
                 _MacroLabel(
                     label: 'F',
-                    value: '${totalFat.round()}g',
+                    value: strings.gramsValue(totalFat.round()),
                     color: const Color(0xFFFBBF24)),
               ],
             ),
@@ -131,7 +136,7 @@ class DayDetailBottomSheet extends StatelessWidget {
                 );
 
                 return SwipeableCard(
-                  confirmMessage: 'Bạn có muốn xóa món ăn này?',
+                  confirmMessage: strings.deleteMealConfirm,
                   onDelete: () => onDeleteMeal(item.id),
                   child: InkWell(
                     onTap: () {
@@ -217,19 +222,22 @@ class DayDetailBottomSheet extends StatelessWidget {
                                   children: [
                                     _MacroLabel(
                                         label: 'C',
-                                        value: '${item.totalCarb.round()}g',
+                                        value: strings
+                                            .gramsValue(item.totalCarb.round()),
                                         color: const Color(0xFF60A5FA),
                                         small: true),
                                     const SizedBox(width: 8),
                                     _MacroLabel(
                                         label: 'P',
-                                        value: '${item.totalProtein.round()}g',
+                                        value: strings.gramsValue(
+                                            item.totalProtein.round()),
                                         color: const Color(0xFF4ADE80),
                                         small: true),
                                     const SizedBox(width: 8),
                                     _MacroLabel(
                                         label: 'F',
-                                        value: '${item.totalFat.round()}g',
+                                        value: strings
+                                            .gramsValue(item.totalFat.round()),
                                         color: const Color(0xFFFBBF24),
                                         small: true),
                                   ],
@@ -265,7 +273,8 @@ class DayDetailBottomSheet extends StatelessWidget {
               },
             ),
           ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/onboarding_provider.dart';
+import '../../../providers/app_settings_provider.dart';
 import '../../../models/onboarding_data.dart';
 
 class GenderStep extends StatefulWidget {
@@ -15,6 +16,9 @@ class _GenderStepState extends State<GenderStep> {
 
   @override
   Widget build(BuildContext context) {
+    final settings = context.watch<AppSettingsProvider>();
+    final s = settings.strings;
+
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
       body: SafeArea(
@@ -26,15 +30,15 @@ class _GenderStepState extends State<GenderStep> {
                 child: SingleChildScrollView(
                   child: Column(children: [
                     const SizedBox(height: 24),
-                    const Text('Giới tính của bạn?',
-                        style: TextStyle(
+                    Text(s.genderStepTitle,
+                        style: const TextStyle(
                             fontSize: 28,
                             fontWeight: FontWeight.w700,
                             color: Color(0xFF111111))),
                     const SizedBox(height: 8),
-                    const Text('Để tính toán chính xác hơn',
+                    Text(s.genderStepSubtitle,
                         style:
-                            TextStyle(fontSize: 15, color: Color(0xFF7A7A7A))),
+                            const TextStyle(fontSize: 15, color: Color(0xFF7A7A7A))),
                     const SizedBox(height: 40),
                     Center(
                       child: SizedBox(
@@ -43,10 +47,10 @@ class _GenderStepState extends State<GenderStep> {
                             children: Gender.values.map((g) {
                           final sel = _selected == g;
                           final label = g == Gender.male
-                              ? 'Nam'
+                              ? s.genderMale
                               : g == Gender.female
-                                  ? 'Nữ'
-                                  : 'Khác';
+                                  ? s.genderFemale
+                                  : s.genderOther;
                           const genderIcons = [
                             Icons.male,
                             Icons.female,
@@ -94,9 +98,9 @@ class _GenderStepState extends State<GenderStep> {
                     disabledBackgroundColor: const Color(0xFFECECEC),
                     disabledForegroundColor: const Color(0xFFAAAAAA),
                   ),
-                  child: const Text('Tiếp theo',
+                  child: Text(s.nextStepButton,
                       style:
-                          TextStyle(fontSize: 17, fontWeight: FontWeight.w600)),
+                          const TextStyle(fontSize: 17, fontWeight: FontWeight.w600)),
                 ),
               ),
             ),

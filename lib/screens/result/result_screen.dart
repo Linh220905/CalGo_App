@@ -9,6 +9,7 @@ import '../../providers/home_provider.dart';
 import '../../config/api_config.dart';
 import '../../services/api_service.dart';
 import '../../widgets/share_card_modal.dart';
+import '../../l10n/generated/app_localizations.dart';
 
 class IngredientItem {
   String ten;
@@ -54,6 +55,55 @@ class IngredientItem {
       };
 }
 
+class DishDetailItem {
+  String name;
+  double weightG;
+  double calo;
+  double carb;
+  double protein;
+  double fat;
+  List<IngredientItem> ingredients;
+  bool expanded;
+
+  DishDetailItem({
+    required this.name,
+    required this.weightG,
+    required this.calo,
+    required this.carb,
+    required this.protein,
+    required this.fat,
+    this.ingredients = const [],
+    this.expanded = false,
+  });
+
+  factory DishDetailItem.fromJson(Map<String, dynamic> json) {
+    double number(String key) => (json[key] as num?)?.toDouble() ?? 0;
+    return DishDetailItem(
+      name: (json['name'] ?? json['ten_mon'] ?? '').toString(),
+      weightG: number('weight_g'),
+      calo: number('calo'),
+      carb: number('carb'),
+      protein: number('protein'),
+      fat: number('fat'),
+      ingredients: (json['ingredients'] as List? ?? const [])
+          .whereType<Map>()
+          .map((item) =>
+              IngredientItem.fromJson(Map<String, dynamic>.from(item)))
+          .toList(),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        'name': name,
+        'weight_g': weightG,
+        'calo': calo,
+        'carb': carb,
+        'protein': protein,
+        'fat': fat,
+        'ingredients': ingredients.map((item) => item.toJson()).toList(),
+      };
+}
+
 class ResultScreen extends StatefulWidget {
   final String id;
   const ResultScreen({super.key, required this.id});
@@ -68,13 +118,29 @@ class _ResultScreenState extends State<ResultScreen> {
   String? _error;
 
   String _monChinh = '';
+  int _dishCount = 0;
+  bool _hasDishCount = false;
+  List<String> _detectedDishes = [];
   String? _imageUrl;
   List<IngredientItem> _ingredients = [];
+  List<DishDetailItem> _dishDetails = [];
+  // Multi-dish responses hide the flattened ingredient list from clients, so
+  // keep the server-calculated totals for the result card.
+  double _apiTotalCalo = 0;
+  double _apiTotalCarb = 0;
+  double _apiTotalProtein = 0;
+  double _apiTotalFat = 0;
   String? _feedback; // 'like' | 'dislike'
 
   bool _showDetail = true;
   bool _editingDishName = false;
   final TextEditingController _dishNameController = TextEditingController();
+
+  // Multi-dish is determined only by the VLM dish count. Do not infer it from
+  // dish_details or punctuation in mon_chinh; old single-dish scans may have
+  // commas in their display name.
+  bool get _isMultiDish =>
+      _hasDishCount && (_dishCount > 1 || _detectedDishes.length > 1);
 
   // Feedback modal
   bool _showFeedbackModal = false;
@@ -96,6 +162,7 @@ class _ResultScreenState extends State<ResultScreen> {
   }
 
   Future<void> _fetchScanDetail() async {
+    final s = context.read<AppSettingsProvider>().strings;
     setState(() {
       _loading = true;
       _error = null;
@@ -103,12 +170,12 @@ class _ResultScreenState extends State<ResultScreen> {
 
     final mockDishes = <String, Map<String, dynamic>>{
       'pho_bo': {
-        'mon_chinh': 'Phở Bò Tái Nạm',
+        'mon_chinh': s.mockPhoTitle,
         'image_url':
             'https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?w=800&auto=format&fit=crop&q=80',
         'ingredients': [
           {
-            'ten': 'Bánh phở tươi',
+            'ten': s.mockPhoNoodles,
             'khoi_luong_gram': 150,
             'calo': 220,
             'carb': 48,
@@ -117,7 +184,7 @@ class _ResultScreenState extends State<ResultScreen> {
             'unit': 'g'
           },
           {
-            'ten': 'Thịt bò tái',
+            'ten': s.mockPhoRareBeef,
             'khoi_luong_gram': 80,
             'calo': 160,
             'carb': 0,
@@ -126,7 +193,7 @@ class _ResultScreenState extends State<ResultScreen> {
             'unit': 'g'
           },
           {
-            'ten': 'Thịt nạm bò',
+            'ten': s.mockPhoBrisket,
             'khoi_luong_gram': 50,
             'calo': 110,
             'carb': 0,
@@ -135,7 +202,7 @@ class _ResultScreenState extends State<ResultScreen> {
             'unit': 'g'
           },
           {
-            'ten': 'Nước dùng phở & Hành lá',
+            'ten': s.mockPhoBroth,
             'khoi_luong_gram': 300,
             'calo': 30,
             'carb': 2,
@@ -146,12 +213,12 @@ class _ResultScreenState extends State<ResultScreen> {
         ],
       },
       'com_tam': {
-        'mon_chinh': 'Cơm Tấm Sườn Bì Chả',
+        'mon_chinh': s.mockRiceTitle,
         'image_url':
             'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop&q=80',
         'ingredients': [
           {
-            'ten': 'Cơm tấm',
+            'ten': s.mockRice,
             'khoi_luong_gram': 180,
             'calo': 240,
             'carb': 52,
@@ -160,7 +227,7 @@ class _ResultScreenState extends State<ResultScreen> {
             'unit': 'g'
           },
           {
-            'ten': 'Sườn heo nướng',
+            'ten': s.mockGrilledPork,
             'khoi_luong_gram': 120,
             'calo': 310,
             'carb': 5,
@@ -169,7 +236,7 @@ class _ResultScreenState extends State<ResultScreen> {
             'unit': 'g'
           },
           {
-            'ten': 'Chả trứng hấp',
+            'ten': s.mockEggCake,
             'khoi_luong_gram': 60,
             'calo': 115,
             'carb': 3,
@@ -178,7 +245,7 @@ class _ResultScreenState extends State<ResultScreen> {
             'unit': 'g'
           },
           {
-            'ten': 'Trứng ốp la',
+            'ten': s.mockFriedEgg,
             'khoi_luong_gram': 50,
             'calo': 70,
             'carb': 0.5,
@@ -189,12 +256,12 @@ class _ResultScreenState extends State<ResultScreen> {
         ],
       },
       'salad': {
-        'mon_chinh': 'Salad Ức Gà Sốt Chanh Dây',
+        'mon_chinh': s.mockSaladTitle,
         'image_url':
             'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&auto=format&fit=crop&q=80',
         'ingredients': [
           {
-            'ten': 'Ức gà áp chảo',
+            'ten': s.mockChicken,
             'khoi_luong_gram': 150,
             'calo': 240,
             'carb': 0,
@@ -203,7 +270,7 @@ class _ResultScreenState extends State<ResultScreen> {
             'unit': 'g'
           },
           {
-            'ten': 'Xà lách & Cà chua chery',
+            'ten': s.mockSalad,
             'khoi_luong_gram': 120,
             'calo': 25,
             'carb': 5,
@@ -212,7 +279,7 @@ class _ResultScreenState extends State<ResultScreen> {
             'unit': 'g'
           },
           {
-            'ten': 'Sốt chanh dây',
+            'ten': s.mockPassionSauce,
             'khoi_luong_gram': 30,
             'calo': 115,
             'carb': 12,
@@ -231,6 +298,8 @@ class _ResultScreenState extends State<ResultScreen> {
         final mockData = mockDishes[widget.id] ?? mockDishes['pho_bo']!;
         final rawIngs = (mockData['ingredients'] as List? ?? []);
         _monChinh = mockData['mon_chinh'].toString();
+        _dishCount = 1;
+        _hasDishCount = true;
         _dishNameController.text = _monChinh;
         _imageUrl = mockData['image_url'] as String?;
         _ingredients = rawIngs
@@ -245,7 +314,28 @@ class _ResultScreenState extends State<ResultScreen> {
           ) as Map<String, dynamic>;
 
       final rawIngs = (data['ingredients'] as List? ?? []);
-      _monChinh = (data['mon_chinh'] ?? 'Món ăn').toString();
+      _monChinh = (data['mon_chinh'] ?? '').toString();
+      _detectedDishes = (data['dishes'] as List? ?? const [])
+          .map((item) => item.toString())
+          .where((name) => name.trim().isNotEmpty)
+          .toList();
+      _dishDetails = (data['dish_details'] as List? ?? const [])
+          .whereType<Map>()
+          .map((item) =>
+              DishDetailItem.fromJson(Map<String, dynamic>.from(item)))
+          .where((dish) => dish.name.trim().isNotEmpty)
+          .toList();
+      final rawDishCount = data['dish_count'];
+      _hasDishCount = rawDishCount is num;
+      // Older scan responses without dish_count must keep the legacy
+      // single-dish UI, even if other metadata contains multiple names.
+      _dishCount = _hasDishCount ? (rawDishCount as num).toInt() : 1;
+      // Older records only have dish names. They remain viewable, but new
+      // scans include dish_details with weight and nutrition per dish.
+      _apiTotalCalo = (data['total_calo'] as num?)?.toDouble() ?? 0;
+      _apiTotalCarb = (data['total_carb'] as num?)?.toDouble() ?? 0;
+      _apiTotalProtein = (data['total_protein'] as num?)?.toDouble() ?? 0;
+      _apiTotalFat = (data['total_fat'] as num?)?.toDouble() ?? 0;
       _dishNameController.text = _monChinh;
       _imageUrl = ApiConfig.resolveMediaUrl(data['image_url']);
       _feedback = data['scan_feedback'] as String?;
@@ -257,8 +347,7 @@ class _ResultScreenState extends State<ResultScreen> {
         context.read<AuthProvider>().refreshUser();
       }
     } catch (e) {
-      _error =
-          'Không thể tải kết quả phân tích (ID: ${widget.id}). Vui lòng thử lại!';
+      _error = 'resultLoadFailed';
     } finally {
       if (mounted) {
         setState(() {
@@ -268,11 +357,18 @@ class _ResultScreenState extends State<ResultScreen> {
     }
   }
 
-  double get _totalCalo => _ingredients.fold(0, (sum, item) => sum + item.calo);
-  double get _totalCarb => _ingredients.fold(0, (sum, item) => sum + item.carb);
-  double get _totalProtein =>
-      _ingredients.fold(0, (sum, item) => sum + item.protein);
-  double get _totalFat => _ingredients.fold(0, (sum, item) => sum + item.fat);
+  double get _totalCalo => _isMultiDish
+      ? _apiTotalCalo
+      : _ingredients.fold(0, (sum, item) => sum + item.calo);
+  double get _totalCarb => _isMultiDish
+      ? _apiTotalCarb
+      : _ingredients.fold(0, (sum, item) => sum + item.carb);
+  double get _totalProtein => _isMultiDish
+      ? _apiTotalProtein
+      : _ingredients.fold(0, (sum, item) => sum + item.protein);
+  double get _totalFat => _isMultiDish
+      ? _apiTotalFat
+      : _ingredients.fold(0, (sum, item) => sum + item.fat);
   int get _healthScore {
     if (_totalCalo <= 0) return 0;
     var score = 4;
@@ -313,6 +409,56 @@ class _ResultScreenState extends State<ResultScreen> {
       ing.protein = double.parse((ing.protein * ratio).toStringAsFixed(1));
       ing.fat = double.parse((ing.fat * ratio).toStringAsFixed(1));
     });
+  }
+
+  void _updateDishIngredientGram(
+      int dishIndex, int ingredientIndex, double newGram) {
+    if (newGram < 0) newGram = 0;
+    if (newGram > 2000) newGram = 2000;
+    setState(() {
+      final dish = _dishDetails[dishIndex];
+      final ingredient = dish.ingredients[ingredientIndex];
+      final oldGram =
+          ingredient.khoiLuongGram <= 0 ? 1 : ingredient.khoiLuongGram;
+      final ratio = newGram / oldGram;
+      ingredient.khoiLuongGram = newGram;
+      ingredient.calo *= ratio;
+      ingredient.carb *= ratio;
+      ingredient.protein *= ratio;
+      ingredient.fat *= ratio;
+      _recalculateDish(dish);
+      _recalculateMultiDishTotals();
+    });
+  }
+
+  void _removeDishIngredient(int dishIndex, int ingredientIndex) {
+    if (dishIndex < 0 || dishIndex >= _dishDetails.length) return;
+    final dish = _dishDetails[dishIndex];
+    if (ingredientIndex < 0 || ingredientIndex >= dish.ingredients.length) {
+      return;
+    }
+
+    setState(() {
+      dish.ingredients.removeAt(ingredientIndex);
+      _recalculateDish(dish);
+      _recalculateMultiDishTotals();
+    });
+  }
+
+  void _recalculateDish(DishDetailItem dish) {
+    dish.weightG =
+        dish.ingredients.fold(0, (sum, item) => sum + item.khoiLuongGram);
+    dish.calo = dish.ingredients.fold(0, (sum, item) => sum + item.calo);
+    dish.carb = dish.ingredients.fold(0, (sum, item) => sum + item.carb);
+    dish.protein = dish.ingredients.fold(0, (sum, item) => sum + item.protein);
+    dish.fat = dish.ingredients.fold(0, (sum, item) => sum + item.fat);
+  }
+
+  void _recalculateMultiDishTotals() {
+    _apiTotalCalo = _dishDetails.fold(0, (sum, dish) => sum + dish.calo);
+    _apiTotalCarb = _dishDetails.fold(0, (sum, dish) => sum + dish.carb);
+    _apiTotalProtein = _dishDetails.fold(0, (sum, dish) => sum + dish.protein);
+    _apiTotalFat = _dishDetails.fold(0, (sum, dish) => sum + dish.fat);
   }
 
   Future<void> _saveDishName() async {
@@ -395,7 +541,10 @@ class _ResultScreenState extends State<ResultScreen> {
           'total_carb': _totalCarb,
           'total_protein': _totalProtein,
           'total_fat': _totalFat,
-          'ingredients': _ingredients.map((ing) => ing.toJson()).toList(),
+          if (_isMultiDish)
+            'dish_details': _dishDetails.map((dish) => dish.toJson()).toList()
+          else
+            'ingredients': _ingredients.map((ing) => ing.toJson()).toList(),
         });
       }
     } catch (e) {
@@ -435,6 +584,7 @@ class _ResultScreenState extends State<ResultScreen> {
   @override
   Widget build(BuildContext context) {
     final settings = context.watch<AppSettingsProvider>();
+    final s = settings.strings;
     final isDark = settings.isDarkMode;
 
     final bgColor = isDark ? const Color(0xFF121116) : const Color(0xFFF8FAFC);
@@ -467,7 +617,7 @@ class _ResultScreenState extends State<ResultScreen> {
                 const Icon(Icons.error_outline_rounded,
                     size: 48, color: Color(0xFFEF4444)),
                 const SizedBox(height: 16),
-                Text(_error!,
+                Text(s.resultLoadFailed(widget.id),
                     textAlign: TextAlign.center,
                     style: TextStyle(color: textDark, fontSize: 15)),
                 const SizedBox(height: 20),
@@ -475,8 +625,8 @@ class _ResultScreenState extends State<ResultScreen> {
                   onPressed: () => context.go('/scan'),
                   style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF2563EB)),
-                  child: const Text('Quét lại',
-                      style: TextStyle(color: Colors.white)),
+                  child:
+                      Text(s.scanAgain, style: TextStyle(color: Colors.white)),
                 ),
               ],
             ),
@@ -489,7 +639,7 @@ class _ResultScreenState extends State<ResultScreen> {
       backgroundColor: bgColor,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: const Text('Dinh dưỡng',
+        title: Text(s.nutritionTitle,
             style: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.w700,
@@ -558,30 +708,32 @@ class _ResultScreenState extends State<ResultScreen> {
           ),
           child: Row(
             children: [
-              Expanded(
-                child: SizedBox(
-                  height: 52,
-                  child: OutlinedButton.icon(
-                    onPressed: () {
-                      setState(() => _showDetail = true);
-                      _openAddIngredientSheet();
-                    },
-                    style: OutlinedButton.styleFrom(
-                      side: BorderSide(color: textDark, width: 1.3),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18)),
+              if (!_isMultiDish) ...[
+                Expanded(
+                  child: SizedBox(
+                    height: 52,
+                    child: OutlinedButton.icon(
+                      onPressed: () {
+                        setState(() => _showDetail = true);
+                        _openAddIngredientSheet();
+                      },
+                      style: OutlinedButton.styleFrom(
+                        side: BorderSide(color: textDark, width: 1.3),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18)),
+                      ),
+                      icon: Icon(Icons.auto_fix_high_rounded,
+                          size: 18, color: textDark),
+                      label: Text(s.edit,
+                          style: TextStyle(
+                              color: textDark,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w800)),
                     ),
-                    icon: Icon(Icons.auto_fix_high_rounded,
-                        size: 18, color: textDark),
-                    label: Text('Chỉnh sửa',
-                        style: TextStyle(
-                            color: textDark,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w800)),
                   ),
                 ),
-              ),
-              const SizedBox(width: 10),
+                const SizedBox(width: 10),
+              ],
               Expanded(
                 child: SizedBox(
                   height: 52,
@@ -602,7 +754,7 @@ class _ResultScreenState extends State<ResultScreen> {
                               color: isDark ? Colors.black : Colors.white,
                             ),
                           )
-                        : Text('Xong',
+                        : Text(s.done,
                             style: TextStyle(
                                 color: isDark ? Colors.black : Colors.white,
                                 fontSize: 14,
@@ -623,7 +775,7 @@ class _ResultScreenState extends State<ResultScreen> {
                 // ── Full-width food hero ─────────────────────
                 SizedBox(
                   width: double.infinity,
-                  height: 310,
+                  height: 255,
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
@@ -657,42 +809,14 @@ class _ResultScreenState extends State<ResultScreen> {
                           ),
                         ),
                       ),
-                      // Share FAB on food image hero — matching web exactly
-                      Positioned(
-                        right: 16,
-                        bottom: 40,
-                        child: GestureDetector(
-                          onTap: _openShareCard,
-                          child: Container(
-                            width: 42,
-                            height: 42,
-                            decoration: BoxDecoration(
-                              color: const Color(0xFF2563EB),
-                              shape: BoxShape.circle,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.35),
-                                  blurRadius: 12,
-                                  offset: const Offset(0, 4),
-                                ),
-                              ],
-                            ),
-                            child: const Icon(
-                              Icons.share_rounded,
-                              color: Colors.white,
-                              size: 20,
-                            ),
-                          ),
-                        ),
-                      ),
                     ],
                   ),
                 ),
                 Transform.translate(
-                  offset: const Offset(0, -28),
+                  offset: const Offset(0, -18),
                   child: Container(
                     width: double.infinity,
-                    padding: const EdgeInsets.fromLTRB(20, 22, 20, 8),
+                    padding: const EdgeInsets.fromLTRB(18, 16, 18, 8),
                     decoration: BoxDecoration(
                       color: bgColor,
                       borderRadius:
@@ -700,35 +824,12 @@ class _ResultScreenState extends State<ResultScreen> {
                     ),
                     child: Column(
                       children: [
-                        Row(
-                          children: [
-                            Icon(Icons.bookmark_border_rounded,
-                                size: 20, color: textDark),
-                            const SizedBox(width: 10),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 5),
-                              decoration: BoxDecoration(
-                                color: isDark
-                                    ? const Color(0xFF2C2A34)
-                                    : const Color(0xFFF4F4F5),
-                                borderRadius: BorderRadius.circular(99),
-                              ),
-                              child: Text('Kết quả AI',
-                                  style: TextStyle(
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.w700,
-                                      color: textMuted)),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 14),
                         if (_editingDishName)
                           TextField(
                             controller: _dishNameController,
                             autofocus: true,
                             style: TextStyle(
-                                fontSize: 20,
+                                fontSize: 19,
                                 fontWeight: FontWeight.w800,
                                 color: textDark),
                             decoration: InputDecoration(
@@ -750,28 +851,28 @@ class _ResultScreenState extends State<ResultScreen> {
                                 child: Text(
                                   _monChinh,
                                   style: TextStyle(
-                                    fontSize: 22,
+                                    fontSize: 20,
                                     height: 1.12,
                                     fontWeight: FontWeight.w900,
                                     color: textDark,
-                                    letterSpacing: -0.6,
+                                    letterSpacing: -0.5,
                                   ),
                                 ),
                               ),
-                              const SizedBox(width: 12),
+                              const SizedBox(width: 10),
                               OutlinedButton.icon(
                                 onPressed: () =>
                                     setState(() => _editingDishName = true),
                                 style: OutlinedButton.styleFrom(
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 14, vertical: 9),
+                                      horizontal: 12, vertical: 7),
                                   side: BorderSide(color: borderColor),
                                   shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(14)),
+                                      borderRadius: BorderRadius.circular(12)),
                                 ),
                                 icon: Icon(Icons.edit_rounded,
-                                    size: 14, color: textDark),
-                                label: Text('Sửa',
+                                    size: 13, color: textDark),
+                                label: Text(s.edit,
                                     style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w800,
@@ -779,10 +880,12 @@ class _ResultScreenState extends State<ResultScreen> {
                               ),
                             ],
                           ),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 12),
+                        // ── Enlarged Calorie Card ────────────────
                         Container(
                           width: double.infinity,
-                          padding: const EdgeInsets.all(16),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 18, vertical: 16),
                           decoration: BoxDecoration(
                             color: cardBgColor,
                             borderRadius: BorderRadius.circular(18),
@@ -791,8 +894,8 @@ class _ResultScreenState extends State<ResultScreen> {
                           child: Row(
                             children: [
                               Container(
-                                width: 44,
-                                height: 44,
+                                width: 52,
+                                height: 52,
                                 decoration: BoxDecoration(
                                   color:
                                       const Color(0xFFF97316).withOpacity(0.12),
@@ -801,18 +904,20 @@ class _ResultScreenState extends State<ResultScreen> {
                                 child: const Icon(
                                     Icons.local_fire_department_rounded,
                                     color: Color(0xFFF97316),
-                                    size: 22),
+                                    size: 28),
                               ),
-                              const SizedBox(width: 14),
+                              const SizedBox(width: 16),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('Calories',
+                                  Text(s.caloriesLabel,
                                       style: TextStyle(
-                                          fontSize: 11, color: textMuted)),
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w600,
+                                          color: textMuted)),
                                   Text('${_totalCalo.round()}',
                                       style: TextStyle(
-                                          fontSize: 26,
+                                          fontSize: 30,
                                           height: 1.05,
                                           fontWeight: FontWeight.w900,
                                           color: textDark)),
@@ -822,6 +927,7 @@ class _ResultScreenState extends State<ResultScreen> {
                           ),
                         ),
                         const SizedBox(height: 10),
+                        // ── Enlarged Macro Cards ─────────────────
                         Row(
                           children: [
                             Expanded(
@@ -856,8 +962,10 @@ class _ResultScreenState extends State<ResultScreen> {
                           ],
                         ),
                         const SizedBox(height: 10),
+                        // ── Enlarged Health Score / Điểm sức khỏe Card ──────
                         Container(
-                          padding: const EdgeInsets.all(16),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 15),
                           decoration: BoxDecoration(
                             color: cardBgColor,
                             borderRadius: BorderRadius.circular(18),
@@ -865,8 +973,17 @@ class _ResultScreenState extends State<ResultScreen> {
                           ),
                           child: Row(
                             children: [
-                              const Icon(Icons.favorite_rounded,
-                                  color: Color(0xFFEC4899), size: 20),
+                              Container(
+                                width: 38,
+                                height: 38,
+                                decoration: BoxDecoration(
+                                  color:
+                                      const Color(0xFFEC4899).withOpacity(0.12),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: const Icon(Icons.favorite_rounded,
+                                    color: Color(0xFFEC4899), size: 20),
+                              ),
                               const SizedBox(width: 12),
                               Expanded(
                                 child: Column(
@@ -875,25 +992,25 @@ class _ResultScreenState extends State<ResultScreen> {
                                     Row(
                                       children: [
                                         Expanded(
-                                          child: Text('Điểm cân bằng',
+                                          child: Text(s.healthScore,
                                               style: TextStyle(
-                                                  fontSize: 13,
-                                                  fontWeight: FontWeight.w700,
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w800,
                                                   color: textDark)),
                                         ),
                                         Text('$_healthScore/10',
                                             style: TextStyle(
-                                                fontSize: 13,
+                                                fontSize: 15,
                                                 fontWeight: FontWeight.w900,
                                                 color: textDark)),
                                       ],
                                     ),
-                                    const SizedBox(height: 10),
+                                    const SizedBox(height: 8),
                                     ClipRRect(
                                       borderRadius: BorderRadius.circular(99),
                                       child: LinearProgressIndicator(
                                         value: _healthScore / 10,
-                                        minHeight: 5,
+                                        minHeight: 7,
                                         color: const Color(0xFF4ADE80),
                                         backgroundColor: borderColor,
                                       ),
@@ -904,22 +1021,27 @@ class _ResultScreenState extends State<ResultScreen> {
                             ],
                           ),
                         ),
-                        const SizedBox(height: 28),
+                        const SizedBox(height: 6),
+                        _MealGuidanceEntryCard(
+                          isDark: isDark,
+                          onTap: () => context.push('/meal-guidance'),
+                        ),
+                        const SizedBox(height: 6),
 
                         // ── Ingredient Detail Drawer (Swipe to Delete) ───────
                         if (_showDetail)
                           Container(
-                            padding: const EdgeInsets.all(18),
+                            padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
                             decoration: BoxDecoration(
                               color: cardBgColor,
-                              borderRadius: BorderRadius.circular(24),
+                              borderRadius: BorderRadius.circular(20),
                               border: Border.all(color: borderColor),
                               boxShadow: [
                                 BoxShadow(
                                   color: isDark
                                       ? const Color(0x33000000)
                                       : const Color(0x0A0F172A),
-                                  blurRadius: 16,
+                                  blurRadius: 12,
                                 ),
                               ],
                             ),
@@ -931,14 +1053,21 @@ class _ResultScreenState extends State<ResultScreen> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      'Thành phần món ăn',
+                                      _isMultiDish
+                                          ? s.dishesInPhoto
+                                          : s.ingredientsInDish,
                                       style: TextStyle(
-                                          fontSize: 15,
+                                          fontSize: 14,
                                           fontWeight: FontWeight.bold,
                                           color: textDark),
                                     ),
                                     Text(
-                                      '${_ingredients.length} nguyên liệu',
+                                      _isMultiDish
+                                          ? s.dishCount(_dishDetails.isNotEmpty
+                                              ? _dishDetails.length
+                                              : _detectedDishes.length)
+                                          : s.ingredientCount(
+                                              _ingredients.length),
                                       style: TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w500,
@@ -946,14 +1075,230 @@ class _ResultScreenState extends State<ResultScreen> {
                                     ),
                                   ],
                                 ),
-                                const SizedBox(height: 14),
+                                const SizedBox(height: 4),
                                 ListView.separated(
                                   shrinkWrap: true,
                                   physics: const NeverScrollableScrollPhysics(),
-                                  itemCount: _ingredients.length,
+                                  itemCount: _isMultiDish
+                                      ? (_dishDetails.isNotEmpty
+                                          ? _dishDetails.length
+                                          : _detectedDishes.length)
+                                      : _ingredients.length,
                                   separatorBuilder: (_, __) =>
-                                      Divider(height: 16, color: borderColor),
+                                      Divider(height: 6, color: borderColor),
                                   itemBuilder: (context, idx) {
+                                    if (_isMultiDish) {
+                                      final dish = _dishDetails.isNotEmpty
+                                          ? _dishDetails[idx]
+                                          : null;
+                                      return Column(
+                                        children: [
+                                          InkWell(
+                                            onTap: dish == null
+                                                ? null
+                                                : () => setState(() => dish
+                                                    .expanded = !dish.expanded),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 10),
+                                              child: Row(
+                                                children: [
+                                                  Expanded(
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          dish?.name ??
+                                                              _detectedDishes[
+                                                                  idx],
+                                                          style: TextStyle(
+                                                            fontSize: 14,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: textDark,
+                                                          ),
+                                                        ),
+                                                        if (dish != null)
+                                                          Text(
+                                                            s.guidanceDishCalories(
+                                                                dish.calo
+                                                                    .round()),
+                                                            style: TextStyle(
+                                                                fontSize: 12,
+                                                                color:
+                                                                    textMuted),
+                                                          ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  if (dish != null) ...[
+                                                    const SizedBox(width: 6),
+                                                    Icon(
+                                                      dish.expanded
+                                                          ? Icons.expand_less
+                                                          : Icons.expand_more,
+                                                      size: 20,
+                                                      color: textMuted,
+                                                    ),
+                                                  ],
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          if (dish != null &&
+                                              dish.expanded &&
+                                              dish.ingredients.isNotEmpty)
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 12, bottom: 8),
+                                              child: Column(
+                                                children: List.generate(
+                                                    dish.ingredients.length,
+                                                    (ingredientIndex) {
+                                                  final ingredient =
+                                                      dish.ingredients[
+                                                          ingredientIndex];
+                                                  return Dismissible(
+                                                    key: ValueKey(
+                                                        'dish_${idx}_${ingredient.ten}_$ingredientIndex'),
+                                                    direction: DismissDirection
+                                                        .endToStart,
+                                                    background: Container(
+                                                      alignment:
+                                                          Alignment.centerRight,
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              right: 16),
+                                                      decoration: BoxDecoration(
+                                                        color: const Color(
+                                                            0xFFEF4444),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(12),
+                                                      ),
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        children: [
+                                                          Text(s.deleteAction,
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontSize:
+                                                                      12)),
+                                                          SizedBox(width: 6),
+                                                          Icon(
+                                                              Icons
+                                                                  .delete_outline_rounded,
+                                                              color:
+                                                                  Colors.white,
+                                                              size: 18),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    onDismissed: (_) =>
+                                                        _removeDishIngredient(
+                                                            idx,
+                                                            ingredientIndex),
+                                                    child: Padding(
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                          vertical: 5),
+                                                      child: Row(
+                                                        children: [
+                                                          Expanded(
+                                                            child: Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                Text(
+                                                                    ingredient
+                                                                        .ten,
+                                                                    style: TextStyle(
+                                                                        fontSize:
+                                                                            13,
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .w700,
+                                                                        color:
+                                                                            textDark)),
+                                                                Text(
+                                                                    s.guidanceDishCalories(
+                                                                        ingredient
+                                                                            .calo
+                                                                            .round()),
+                                                                    style: TextStyle(
+                                                                        fontSize:
+                                                                            11,
+                                                                        color:
+                                                                            textMuted)),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          GestureDetector(
+                                                            onTap: () =>
+                                                                _updateDishIngredientGram(
+                                                                    idx,
+                                                                    ingredientIndex,
+                                                                    ingredient
+                                                                            .khoiLuongGram -
+                                                                        5),
+                                                            child: Icon(
+                                                                Icons
+                                                                    .remove_rounded,
+                                                                size: 18,
+                                                                color:
+                                                                    textDark),
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .symmetric(
+                                                                    horizontal:
+                                                                        8),
+                                                            child: Text(
+                                                                '${ingredient.khoiLuongGram.round()}g',
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        12,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w800,
+                                                                    color:
+                                                                        textDark)),
+                                                          ),
+                                                          GestureDetector(
+                                                            onTap: () =>
+                                                                _updateDishIngredientGram(
+                                                                    idx,
+                                                                    ingredientIndex,
+                                                                    ingredient
+                                                                            .khoiLuongGram +
+                                                                        5),
+                                                            child: Icon(
+                                                                Icons
+                                                                    .add_rounded,
+                                                                size: 18,
+                                                                color:
+                                                                    textDark),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  );
+                                                }),
+                                              ),
+                                            ),
+                                        ],
+                                      );
+                                    }
                                     final ing = _ingredients[idx];
                                     return Dismissible(
                                       key: ValueKey('${ing.ten}_$idx'),
@@ -967,10 +1312,10 @@ class _ResultScreenState extends State<ResultScreen> {
                                           borderRadius:
                                               BorderRadius.circular(14),
                                         ),
-                                        child: const Row(
+                                        child: Row(
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
-                                            Text('Xóa',
+                                            Text(s.deleteAction,
                                                 style: TextStyle(
                                                     color: Colors.white,
                                                     fontWeight: FontWeight.bold,
@@ -987,7 +1332,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                       },
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
-                                            vertical: 4),
+                                            vertical: 2),
                                         child: Row(
                                           children: [
                                             Expanded(
@@ -1002,110 +1347,115 @@ class _ResultScreenState extends State<ResultScreen> {
                                                               FontWeight.bold,
                                                           color: textDark)),
                                                   Text(
-                                                      '${ing.calo.round()} kcal',
+                                                      '${_isMultiDish ? '~' : ''}${s.guidanceDishCalories(ing.calo.round())}',
                                                       style: TextStyle(
                                                           fontSize: 12,
                                                           color: textMuted)),
                                                 ],
                                               ),
                                             ),
-                                            Row(
-                                              children: [
-                                                GestureDetector(
-                                                  onTap: () => _updateGram(idx,
-                                                      ing.khoiLuongGram - 5),
-                                                  child: Container(
-                                                    width: 32,
-                                                    height: 32,
-                                                    decoration: BoxDecoration(
-                                                      color: isDark
-                                                          ? const Color(
-                                                              0xFF2C2A34)
-                                                          : const Color(
-                                                              0xFFF1F5F9),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
+                                            if (!_isMultiDish)
+                                              Row(
+                                                children: [
+                                                  GestureDetector(
+                                                    onTap: () => _updateGram(
+                                                        idx,
+                                                        ing.khoiLuongGram - 5),
+                                                    child: Container(
+                                                      width: 32,
+                                                      height: 32,
+                                                      decoration: BoxDecoration(
+                                                        color: isDark
+                                                            ? const Color(
+                                                                0xFF2C2A34)
+                                                            : const Color(
+                                                                0xFFF1F5F9),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10),
+                                                      ),
+                                                      child: Icon(
+                                                          Icons.remove_rounded,
+                                                          size: 18,
+                                                          color: textDark),
                                                     ),
-                                                    child: Icon(
-                                                        Icons.remove_rounded,
-                                                        size: 18,
-                                                        color: textDark),
                                                   ),
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                      horizontal: 10),
-                                                  child: Text(
-                                                    '${ing.khoiLuongGram.round()}g',
-                                                    style: TextStyle(
-                                                        fontSize: 14,
-                                                        fontWeight:
-                                                            FontWeight.w900,
-                                                        color: textDark),
-                                                  ),
-                                                ),
-                                                GestureDetector(
-                                                  onTap: () => _updateGram(idx,
-                                                      ing.khoiLuongGram + 5),
-                                                  child: Container(
-                                                    width: 32,
-                                                    height: 32,
-                                                    decoration: BoxDecoration(
-                                                      color: isDark
-                                                          ? const Color(
-                                                              0xFF2C2A34)
-                                                          : const Color(
-                                                              0xFFF1F5F9),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
+                                                  Padding(
+                                                    padding: const EdgeInsets
+                                                        .symmetric(
+                                                        horizontal: 10),
+                                                    child: Text(
+                                                      '${ing.khoiLuongGram.round()}g',
+                                                      style: TextStyle(
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.w900,
+                                                          color: textDark),
                                                     ),
-                                                    child: Icon(
-                                                        Icons.add_rounded,
-                                                        size: 18,
-                                                        color: textDark),
                                                   ),
-                                                ),
-                                              ],
-                                            ),
+                                                  GestureDetector(
+                                                    onTap: () => _updateGram(
+                                                        idx,
+                                                        ing.khoiLuongGram + 5),
+                                                    child: Container(
+                                                      width: 32,
+                                                      height: 32,
+                                                      decoration: BoxDecoration(
+                                                        color: isDark
+                                                            ? const Color(
+                                                                0xFF2C2A34)
+                                                            : const Color(
+                                                                0xFFF1F5F9),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10),
+                                                      ),
+                                                      child: Icon(
+                                                          Icons.add_rounded,
+                                                          size: 18,
+                                                          color: textDark),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
                                           ],
                                         ),
                                       ),
                                     );
                                   },
                                 ),
-                                const SizedBox(height: 20),
-                                SizedBox(
-                                  width: double.infinity,
-                                  height: 48,
-                                  child: OutlinedButton.icon(
-                                    style: OutlinedButton.styleFrom(
-                                      side: BorderSide(
-                                          color: borderColor, width: 1.5),
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(16)),
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 16),
-                                    ),
-                                    onPressed: _openAddIngredientSheet,
-                                    icon: Icon(Icons.add_rounded,
-                                        size: 20, color: textDark),
-                                    label: Text(
-                                      'Thêm nguyên liệu',
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
-                                          color: textDark),
+                                if (!_isMultiDish) ...[
+                                  const SizedBox(height: 10),
+                                  SizedBox(
+                                    width: double.infinity,
+                                    height: 42,
+                                    child: OutlinedButton.icon(
+                                      style: OutlinedButton.styleFrom(
+                                        side: BorderSide(
+                                            color: borderColor, width: 1.5),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(14)),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 16),
+                                      ),
+                                      onPressed: _openAddIngredientSheet,
+                                      icon: Icon(Icons.add_rounded,
+                                          size: 18, color: textDark),
+                                      label: Text(
+                                        s.addIngredient,
+                                        style: TextStyle(
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.bold,
+                                            color: textDark),
+                                      ),
                                     ),
                                   ),
-                                ),
+                                ],
                               ],
                             ),
                           ),
-                        const SizedBox(height: 40),
+                        const SizedBox(height: 16),
                       ],
                     ),
                   ),
@@ -1133,14 +1483,14 @@ class _ResultScreenState extends State<ResultScreen> {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text('Cảm ơn bạn đã góp ý!',
+                          Text(s.feedbackThanks,
                               style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                   color: textDark)),
                           const SizedBox(height: 6),
                           Text(
-                            'AI scan chưa chính xác? Hãy cho chúng tôi biết chi tiết:',
+                            s.feedbackPrompt,
                             textAlign: TextAlign.center,
                             style: TextStyle(fontSize: 13, color: textMuted),
                           ),
@@ -1150,7 +1500,7 @@ class _ResultScreenState extends State<ResultScreen> {
                             maxLines: 3,
                             style: TextStyle(fontSize: 13, color: textDark),
                             decoration: InputDecoration(
-                              hintText: 'Ví dụ: Sai tên món, thiếu rau...',
+                              hintText: s.feedbackHint,
                               hintStyle:
                                   TextStyle(color: textMuted, fontSize: 12),
                               border: OutlineInputBorder(
@@ -1164,7 +1514,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                 child: TextButton(
                                   onPressed: () => setState(
                                       () => _showFeedbackModal = false),
-                                  child: Text('Bỏ qua',
+                                  child: Text(s.skip,
                                       style: TextStyle(color: textMuted)),
                                 ),
                               ),
@@ -1182,8 +1532,8 @@ class _ResultScreenState extends State<ResultScreen> {
                                       : _submitDislikeReason,
                                   child: Text(
                                       _submittingFeedback
-                                          ? 'Đang gửi...'
-                                          : 'Gửi góp ý',
+                                          ? s.sending
+                                          : s.sendFeedback,
                                       style:
                                           const TextStyle(color: Colors.white)),
                                 ),
@@ -1198,6 +1548,69 @@ class _ResultScreenState extends State<ResultScreen> {
               ),
             ),
         ],
+      ),
+    );
+  }
+}
+
+class _MealGuidanceEntryCard extends StatelessWidget {
+  final bool isDark;
+  final VoidCallback onTap;
+
+  const _MealGuidanceEntryCard({required this.isDark, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    final s = context.watch<AppSettingsProvider>().strings;
+    final background = isDark ? const Color(0xFF1E1D24) : Colors.white;
+    final text = isDark ? Colors.white : const Color(0xFF0F172A);
+    final muted = isDark ? const Color(0xFFA4A2AE) : const Color(0xFF64748B);
+    final border = isDark ? const Color(0xFF2E2D38) : const Color(0xFFE2E8F0);
+    return Material(
+      color: background,
+      borderRadius: BorderRadius.circular(16),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(16),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 13),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: border),
+          ),
+          child: Row(
+            children: [
+              Container(
+                width: 38,
+                height: 38,
+                decoration: BoxDecoration(
+                  color: isDark
+                      ? const Color(0xFF30303A)
+                      : const Color(0xFFF0F0F2),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Icon(Icons.auto_awesome_outlined, color: text, size: 19),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(s.guidanceScreenTitle,
+                        style: TextStyle(
+                            color: text,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w800)),
+                    const SizedBox(height: 2),
+                    Text(s.guidanceTodayShortSubtitle,
+                        style: TextStyle(color: muted, fontSize: 12)),
+                  ],
+                ),
+              ),
+              Icon(Icons.arrow_forward_rounded, color: text, size: 19),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -1220,12 +1633,13 @@ class _NutrientCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = context.watch<AppSettingsProvider>().strings;
     final textDark = isDark ? Colors.white : const Color(0xFF0F172A);
     final textMuted =
         isDark ? const Color(0xFF9A99A6) : const Color(0xFF64748B);
     final border = isDark ? const Color(0xFF2E2D38) : const Color(0xFFE2E8F0);
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 13),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
       decoration: BoxDecoration(
         color: isDark ? const Color(0xFF1E1D24) : Colors.white,
         borderRadius: BorderRadius.circular(17),
@@ -1233,19 +1647,23 @@ class _NutrientCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Icon(icon, size: 15, color: color),
-          const SizedBox(width: 7),
+          Icon(icon, size: 18, color: color),
+          const SizedBox(width: 6),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(label,
                     maxLines: 1,
-                    style: TextStyle(fontSize: 9, color: textMuted)),
-                Text('${value.round()}g',
+                    style: TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w600,
+                        color: textMuted)),
+                const SizedBox(height: 1),
+                Text(s.gramsValue(value.round()),
                     maxLines: 1,
                     style: TextStyle(
-                        fontSize: 14,
+                        fontSize: 16,
                         fontWeight: FontWeight.w900,
                         color: textDark)),
               ],
@@ -1278,88 +1696,89 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
   dynamic _selectedHit;
   double _weightG = 100;
 
-  static const List<Map<String, dynamic>> _fallbackIngredients = [
-    {
-      'name': 'Thịt bò tươi',
-      'calories_kcal': 200,
-      'protein_g': 26.0,
-      'carbs_g': 0.0,
-      'fat_g': 10.0,
-      'unit': 'g'
-    },
-    {
-      'name': 'Ức gà áp chảo',
-      'calories_kcal': 165,
-      'protein_g': 31.0,
-      'carbs_g': 0.0,
-      'fat_g': 3.6,
-      'unit': 'g'
-    },
-    {
-      'name': 'Trứng gà',
-      'calories_kcal': 155,
-      'protein_g': 13.0,
-      'carbs_g': 1.1,
-      'fat_g': 11.0,
-      'unit': 'quả'
-    },
-    {
-      'name': 'Bánh phở tươi',
-      'calories_kcal': 146,
-      'protein_g': 3.0,
-      'carbs_g': 32.0,
-      'fat_g': 0.7,
-      'unit': 'g'
-    },
-    {
-      'name': 'Cơm trắng',
-      'calories_kcal': 130,
-      'protein_g': 2.7,
-      'carbs_g': 28.0,
-      'fat_g': 0.3,
-      'unit': 'g'
-    },
-    {
-      'name': 'Bún tươi',
-      'calories_kcal': 110,
-      'protein_g': 1.7,
-      'carbs_g': 25.0,
-      'fat_g': 0.2,
-      'unit': 'g'
-    },
-    {
-      'name': 'Xà lách & Cà chua',
-      'calories_kcal': 20,
-      'protein_g': 1.2,
-      'carbs_g': 4.0,
-      'fat_g': 0.2,
-      'unit': 'g'
-    },
-    {
-      'name': 'Phô mai Cheddar',
-      'calories_kcal': 402,
-      'protein_g': 25.0,
-      'carbs_g': 1.3,
-      'fat_g': 33.0,
-      'unit': 'g'
-    },
-    {
-      'name': 'Sốt chanh dây',
-      'calories_kcal': 380,
-      'protein_g': 1.0,
-      'carbs_g': 40.0,
-      'fat_g': 25.0,
-      'unit': 'ml'
-    },
-    {
-      'name': 'Thịt nạc heo',
-      'calories_kcal': 242,
-      'protein_g': 27.0,
-      'carbs_g': 0.0,
-      'fat_g': 14.0,
-      'unit': 'g'
-    },
-  ];
+  static List<Map<String, dynamic>> _fallbackIngredients(AppLocalizations s) =>
+      [
+        {
+          'name': s.ingredientBeef,
+          'calories_kcal': 200,
+          'protein_g': 26.0,
+          'carbs_g': 0.0,
+          'fat_g': 10.0,
+          'unit': 'g'
+        },
+        {
+          'name': s.ingredientChicken,
+          'calories_kcal': 165,
+          'protein_g': 31.0,
+          'carbs_g': 0.0,
+          'fat_g': 3.6,
+          'unit': 'g'
+        },
+        {
+          'name': s.ingredientEgg,
+          'calories_kcal': 155,
+          'protein_g': 13.0,
+          'carbs_g': 1.1,
+          'fat_g': 11.0,
+          'unit': s.unitPiece
+        },
+        {
+          'name': s.ingredientRiceNoodles,
+          'calories_kcal': 146,
+          'protein_g': 3.0,
+          'carbs_g': 32.0,
+          'fat_g': 0.7,
+          'unit': 'g'
+        },
+        {
+          'name': s.ingredientRice,
+          'calories_kcal': 130,
+          'protein_g': 2.7,
+          'carbs_g': 28.0,
+          'fat_g': 0.3,
+          'unit': 'g'
+        },
+        {
+          'name': s.ingredientBun,
+          'calories_kcal': 110,
+          'protein_g': 1.7,
+          'carbs_g': 25.0,
+          'fat_g': 0.2,
+          'unit': 'g'
+        },
+        {
+          'name': s.ingredientSalad,
+          'calories_kcal': 20,
+          'protein_g': 1.2,
+          'carbs_g': 4.0,
+          'fat_g': 0.2,
+          'unit': 'g'
+        },
+        {
+          'name': s.ingredientCheddar,
+          'calories_kcal': 402,
+          'protein_g': 25.0,
+          'carbs_g': 1.3,
+          'fat_g': 33.0,
+          'unit': 'g'
+        },
+        {
+          'name': s.ingredientPassionSauce,
+          'calories_kcal': 380,
+          'protein_g': 1.0,
+          'carbs_g': 40.0,
+          'fat_g': 25.0,
+          'unit': 'ml'
+        },
+        {
+          'name': s.ingredientPork,
+          'calories_kcal': 242,
+          'protein_g': 27.0,
+          'carbs_g': 0.0,
+          'fat_g': 14.0,
+          'unit': 'g'
+        },
+      ];
 
   @override
   void initState() {
@@ -1384,6 +1803,8 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
 
   Future<void> _search(String q) async {
     final queryStr = q.trim();
+    final fallbackIngredients =
+        _fallbackIngredients(context.read<AppSettingsProvider>().strings);
     final requestId = ++_searchRequestId;
     setState(() => _searching = true);
 
@@ -1406,10 +1827,10 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
     if (mounted && requestId == _searchRequestId) {
       setState(() {
         if (queryStr.isEmpty) {
-          _searchResults = _fallbackIngredients;
+          _searchResults = fallbackIngredients;
         } else {
           final lower = queryStr.toLowerCase();
-          _searchResults = _fallbackIngredients.where((item) {
+          _searchResults = fallbackIngredients.where((item) {
             final name =
                 (item['name'] ?? item['ten'] ?? '').toString().toLowerCase();
             return name.contains(lower);
@@ -1422,8 +1843,9 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
 
   void _addSelectedIngredient() {
     final ratio = _weightG / 100.0;
+    final s = context.read<AppSettingsProvider>().strings;
     final item = IngredientItem(
-      ten: (_selectedHit['name'] ?? _selectedHit['ten'] ?? 'Thành phần mới')
+      ten: (_selectedHit['name'] ?? _selectedHit['ten'] ?? s.newIngredient)
           .toString(),
       khoiLuongGram: _weightG,
       calo:
@@ -1445,6 +1867,7 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
 
   @override
   Widget build(BuildContext context) {
+    final s = context.watch<AppSettingsProvider>().strings;
     final textDark = widget.isDark ? Colors.white : const Color(0xFF0F172A);
     final cardBg = widget.isDark ? const Color(0xFF212027) : Colors.white;
     final surface =
@@ -1490,9 +1913,7 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      _selectedHit == null
-                          ? 'Thêm nguyên liệu'
-                          : 'Chọn khẩu phần',
+                      _selectedHit == null ? s.addIngredient : s.choosePortion,
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w900,
@@ -1503,8 +1924,8 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
                     const SizedBox(height: 3),
                     Text(
                       _selectedHit == null
-                          ? 'Tìm trong thư viện dinh dưỡng'
-                          : 'Điều chỉnh khối lượng trước khi thêm',
+                          ? s.searchNutritionLibrary
+                          : s.adjustBeforeAdding,
                       style: TextStyle(fontSize: 12, color: textMuted),
                     ),
                   ],
@@ -1527,7 +1948,7 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
               autofocus: true,
               style: TextStyle(fontSize: 14, color: textDark),
               decoration: InputDecoration(
-                hintText: 'Tìm thịt bò, trứng, cơm...',
+                hintText: s.ingredientSearchHint,
                 hintStyle: TextStyle(color: textMuted),
                 prefixIcon:
                     Icon(Icons.search_rounded, size: 21, color: textMuted),
@@ -1589,7 +2010,7 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
                           ),
                           const SizedBox(height: 12),
                           Text(
-                            'Không tìm thấy nguyên liệu',
+                            s.ingredientNotFound,
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w700,
@@ -1598,7 +2019,7 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            'Thử một tên ngắn hoặc phổ biến hơn',
+                            s.ingredientSearchTip,
                             style: TextStyle(fontSize: 12, color: textMuted),
                           ),
                         ],
@@ -1653,7 +2074,7 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
                                         ),
                                         const SizedBox(height: 3),
                                         Text(
-                                          '$calories kcal / 100g',
+                                          s.caloriesPer100g(calories),
                                           style: TextStyle(
                                               fontSize: 11, color: textMuted),
                                         ),
@@ -1720,7 +2141,7 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
                               SizedBox(
                                 width: 120,
                                 child: Text(
-                                  '${_weightG.round()} g',
+                                  s.gramsValue(_weightG.round()),
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 30,
@@ -1748,7 +2169,7 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
                                       padding: EdgeInsets.only(
                                           left: grams == 50 ? 0 : 4),
                                       child: ChoiceChip(
-                                        label: Text('${grams}g'),
+                                        label: Text(s.gramsValue(grams)),
                                         selected: _weightG == grams,
                                         showCheckmark: false,
                                         onSelected: (_) => setState(
@@ -1813,9 +2234,9 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
                       onPressed: _addSelectedIngredient,
                       icon: const Icon(Icons.add_rounded,
                           color: Colors.white, size: 20),
-                      label: const Text(
-                        'Thêm nguyên liệu',
-                        style: TextStyle(
+                      label: Text(
+                        s.addIngredient,
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 14,
                           fontWeight: FontWeight.w800,
@@ -1883,6 +2304,7 @@ class _NutritionPreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = context.watch<AppSettingsProvider>().strings;
     final ratio = weightG / 100;
     final calories =
         ((hit['calories_kcal'] ?? hit['calo'] ?? 0) * ratio).round();
@@ -1907,7 +2329,7 @@ class _NutritionPreview extends StatelessWidget {
       child: Row(
         children: [
           _PreviewStat(
-              label: 'Năng lượng',
+              label: s.energyLabel,
               value: '$calories',
               unit: 'kcal',
               color: const Color(0xFFF97316),
@@ -1915,7 +2337,7 @@ class _NutritionPreview extends StatelessWidget {
               textMuted: textMuted),
           _PreviewDivider(color: border),
           _PreviewStat(
-              label: 'Protein',
+              label: s.proteinLabel,
               value: protein,
               unit: 'g',
               color: const Color(0xFF22C55E),
@@ -1923,7 +2345,7 @@ class _NutritionPreview extends StatelessWidget {
               textMuted: textMuted),
           _PreviewDivider(color: border),
           _PreviewStat(
-              label: 'Carbs',
+              label: s.carbsLabel,
               value: carbs,
               unit: 'g',
               color: const Color(0xFF3B82F6),
@@ -1931,7 +2353,7 @@ class _NutritionPreview extends StatelessWidget {
               textMuted: textMuted),
           _PreviewDivider(color: border),
           _PreviewStat(
-              label: 'Fat',
+              label: s.fatLabel,
               value: fat,
               unit: 'g',
               color: const Color(0xFFF59E0B),

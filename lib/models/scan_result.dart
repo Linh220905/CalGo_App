@@ -20,7 +20,7 @@ class Ingredient {
 
   factory Ingredient.fromJson(Map<String, dynamic> json) {
     return Ingredient(
-      ten: (json['ten'] ?? json['name'] ?? 'Không xác định').toString(),
+      ten: (json['ten'] ?? json['name'] ?? '').toString(),
       khoiLuongGram: (json['khoi_luong_gram'] as num?)?.toDouble() ??
           (json['khoiLuongGram'] as num?)?.toDouble() ??
           (json['weight_g'] as num?)?.toDouble() ??
@@ -44,6 +44,9 @@ class ScanResult {
   final double totalFat;
   final String? monChinh;
   final List<Ingredient> ingredients;
+  final String scanType;
+  final int dishCount;
+  final List<String> dishes;
 
   ScanResult({
     required this.id,
@@ -55,6 +58,9 @@ class ScanResult {
     this.totalFat = 0,
     this.monChinh,
     this.ingredients = const [],
+    this.scanType = 'single_dish',
+    this.dishCount = 1,
+    this.dishes = const [],
   });
 
   factory ScanResult.fromJson(Map<String, dynamic> json) {
@@ -76,6 +82,12 @@ class ScanResult {
           (json['totalFat'] as num?)?.toDouble() ??
           0,
       monChinh: (json['mon_chinh'] ?? json['monChinh'])?.toString(),
+      scanType: json['scan_type']?.toString() ?? 'single_dish',
+      dishCount: (json['dish_count'] as num?)?.toInt() ?? 1,
+      dishes: (json['dishes'] as List<dynamic>?)
+              ?.map((item) => item.toString())
+              .toList() ??
+          const [],
       ingredients: (json['ingredients'] as List<dynamic>?)
               ?.map((e) => Ingredient.fromJson(e as Map<String, dynamic>))
               .toList() ??

@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../providers/auth_provider.dart';
 import '../../widgets/social_auth_button.dart';
+import '../../widgets/language_selector.dart';
+import '../../providers/app_settings_provider.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   Future<void> _completeLoginAndNavigate(BuildContext context) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('onboarding_done', true);
+    final auth = context.read<AuthProvider>();
+    if (!auth.isAuthenticated) {
+      return;
+    }
     if (context.mounted) {
       context.go('/home');
     }
@@ -19,25 +22,42 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final auth = context.watch<AuthProvider>();
+    final s = context.watch<AppSettingsProvider>().strings;
 
     return Scaffold(
       backgroundColor: const Color(0xFFFAFAFB),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Column(
-            children: [
-              const Spacer(flex: 2),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final compact = constraints.maxHeight < 620;
+            return SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                child: Column(
+                  children: [
+              // ── Top Header Row with Language Selector ──
+              Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: const [
+                    LanguageSelectorButton(isDark: false),
+                  ],
+                ),
+              ),
+
+                    SizedBox(height: compact ? 16 : 44),
 
               // Logo & Title
               Column(
                 children: [
                   Image.asset(
-                    'assets/images/calgo_logo.png',
-                    height: 110,
+                    'assets/images/calgo_logo_wordmark.png',
+                          height: compact ? 76 : 110,
                     errorBuilder: (_, __, ___) => Container(
-                      width: 90,
-                      height: 90,
+                            width: compact ? 72 : 90,
+                            height: compact ? 72 : 90,
                       decoration: BoxDecoration(
                         color: const Color(0xFF22C55E).withOpacity(0.1),
                         shape: BoxShape.circle,
@@ -49,9 +69,9 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 24),
-                  const Text(
-                    'Chào mừng đến với CalGo',
+                        SizedBox(height: compact ? 14 : 24),
+                  Text(
+                    s.loginTitle,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 24,
@@ -61,8 +81,8 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  const Text(
-                    'Đăng nhập để đồng bộ dữ liệu dinh dưỡng của bạn',
+                  Text(
+                    s.loginSubtitle,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 14,
@@ -72,12 +92,12 @@ class LoginScreen extends StatelessWidget {
                 ],
               ),
 
-              const Spacer(flex: 3),
+                    SizedBox(height: compact ? 22 : 48),
 
               // Auth Buttons
               SocialAuthButton(
                 type: SocialAuthType.google,
-                label: 'Đăng nhập với Google',
+                label: s.loginGoogle,
                 isLoading: auth.loading,
                 onTap: () async {
                   final success =
@@ -87,7 +107,7 @@ class LoginScreen extends StatelessWidget {
                   } else if (auth.error != null && context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text('Đăng nhập thất bại: ${auth.error}'),
+                        content: Text(s.loginFailed(auth.error ?? '')),
                         backgroundColor: Colors.redAccent,
                       ),
                     );
@@ -95,32 +115,45 @@ class LoginScreen extends StatelessWidget {
                 },
               ),
 
-              const SizedBox(height: 14),
+                    SizedBox(height: compact ? 10 : 14),
 
               SocialAuthButton(
                 type: SocialAuthType.apple,
-                label: 'Đăng nhập với Apple',
-                onTap: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Tính năng Đăng nhập Apple sắp ra mắt!'),
-                      behavior: SnackBarBehavior.floating,
-                    ),
-                  );
+                label: s.loginApple,
+                isLoading: auth.loading,
+                onTap: () async {
+                  final success =
+                      await context.read<AuthProvider>().signInWithApple();
+                  if (success && context.mounted) {
+                    await _completeLoginAndNavigate(context);
+                  } else if (auth.error != null && context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(s.loginFailed(auth.error ?? '')),
+                        backgroundColor: Colors.redAccent,
+                      ),
+                    );
+                  }
                 },
               ),
 
-              const SizedBox(height: 20),
+                    SizedBox(height: compact ? 8 : 20),
 
               TextButton(
-                onPressed: () => _completeLoginAndNavigate(context),
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(s.loginRequired),
+                    ),
+                  );
+                },
                 style: TextButton.styleFrom(
                   foregroundColor: const Color(0xFF64748B),
                   padding:
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 ),
-                child: const Text(
-                  'Tiếp tục với tư cách Khách',
+                child: Text(
+                  s.loginRequiredButton,
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
@@ -128,9 +161,12 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
 
-              const Spacer(),
-            ],
-          ),
+                    SizedBox(height: compact ? 8 : 24),
+                  ],
+                ),
+              ),
+            );
+          },
         ),
       ),
     );

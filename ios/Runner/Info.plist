@@ -49,5 +49,18 @@
 	<string>CalGo cần quyền truy cập Camera để chụp ảnh món ăn và phân tích dinh dưỡng.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>CalGo cần quyền truy cập Thư viện ảnh để chọn ảnh món ăn phân tích dinh dưỡng.</string>
+	<key>GIDClientID</key>
+	<string>985323892414-cq0r7jaosveklll3cftiv9gbadqq2eff.apps.googleusercontent.com</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.985323892414-cq0r7jaosveklll3cftiv9gbadqq2eff</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>

@@ -1,0 +1,922 @@
+{
+  "@@locale": "ru",
+  "tabHome": "Домой",
+  "tabAnalytics": "Аналитика",
+  "tabSettings": "Настройки",
+  "today": "Сегодня",
+  "yesterday": "Вчера",
+  "caloriesLeft": "Калории остались",
+  "proteinLeft": "Белок остался",
+  "carbsLeft": "Углеводы ушли",
+  "fatsLeft": "Жиры ушли",
+  "recentlyUploaded": "Недавно загруженный",
+  "noMealsUploaded": "Еда еще не загружена",
+  "tapToScanMeal": "Сканируйте свой первый прием пищи с помощью AI",
+  "profileTitle": "Личный счет",
+  "creditsLabel": "Сканирование кредитов",
+  "scannedCountLabel": "Сканированные блюда",
+  "buyCredits": "Купить кредиты",
+  "statistics": "Статистика",
+  "calorieTarget": "Цель калорийности",
+  "notifications": "Уведомления",
+  "darkMode": "Темный режим",
+  "language": "Язык языка",
+  "languageDisplayName": "Русский",
+  "userGuide": "Руководство пользователя",
+  "customerSupport": "Поддержка клиентов",
+  "logout": "Выходи.",
+  "selectLanguageTitle": "Выберите язык",
+  "scanTitle": "Сканировать еду",
+  "scanInstructionHeader": "Храните пищу в раме",
+  "scanInstructionSub": "Обеспечить правильное освещение для точного распознавания AI",
+  "selectFromGallery": "Выбрать из галереи",
+  "outOfCreditsTitle": "Сканирование кредитов!",
+  "outOfCreditsMessage": "Вы использовали все свои кредиты сканирования. Продолжайте следить за питанием!",
+  "buyMore": "Купить больше",
+  "cancel": "отменить",
+  "pricingTitle": "Обновление и кредиты",
+  "pricingSubtitle": "Выберите лучший план для полной разблокировки возможностей AI",
+  "creditPacksTitle": "Сканирование кредитных пакетов",
+  "noExpiryBadge": "Без экспирации",
+  "popularBadge": "Популярный",
+  "subscriptionsTitle": "Подписки Pro",
+  "payButton": "Оплатить",
+  "privacyPolicy": "Политика конфиденциальности",
+  "termsOfService": "Условия обслуживания",
+  "deleteAccount": "Удалить аккаунт",
+  "openOnline": "Открыть онлайн",
+  "onlineGuide": "Онлайн гид",
+  "deleteAccountSubscriptionWarning": "Удаление учетной записи CalGo не отменяет подписку Google Play. Если у вас есть Премиум, отмените его отдельно в Google Play, чтобы избежать платы за продление.",
+  "restorePurchases": "Восстановить покупки",
+  "privacyPolicyContent": "Политика конфиденциальности CalGo (обновлено 5 августа 2026 года):\n\n1. Данные, которые мы собираем: электронная почта учетной записи, отображаемое имя, идентификатор входа в Google, информация о питании, фотографии еды, результаты сканирования, история еды, метаданные о покупке, диагностика приложения / устройства и предпочтения уведомлений.\n2. Как используются разрешения: доступ к камере и фотографии запрашивается только тогда, когда вы решите захватить или выбрать фотографию; уведомления используются только при включении.\n3. Как используются данные: для обеспечения анализа питания AI, синхронизации вашей учетной записи, обработки покупок Google Play, предотвращения злоупотреблений, обеспечения поддержки и повышения надежности. Фотографии могут обрабатываться нашим хостингом и поставщиками услуг AI.\n4. Обмен и безопасность: мы не продаем ваши личные данные или фотографии еды. Необходимые провайдеры, такие как хостинг, обработка AI, Google Sign-In и Google Play Billing, могут обрабатывать ограниченные данные. Мы используем HTTPS и средства управления доступом, но ни одна система не является полностью безопасной.\n5. Сохранение и удаление: данные учетной записи и история приема пищи удаляются при удалении вашей учетной записи, за исключением данных, которые должны быть сохранены для предотвращения мошенничества, споров или юридических обязательств. Резервное копирование может занять разумное время, чтобы истечь.\n6. Ваши права: удалите свою учетную запись в Профиле или посетите https://calgo.tech/delete-account. Для доступа, исправления или вопросов, свяжитесь с support@calgo.tech. Полная политика: https://calgo.tech/privacy.",
+  "termsOfServiceContent": "Условия обслуживания CalGo:\n\n1. Услуга и медицинский отказ от ответственности: результаты питания AI являются оценками только для справки и не заменяют профессиональную медицинскую консультацию. CalGo не является медицинским устройством.\n2. Платежи: кредитные пакеты являются одноразовыми цифровыми покупками. Премиальные еженедельные, ежемесячные и годовые планы - это автоматическое продление подписки Google Play, если она не будет отменена до следующего продления. Управлять или отменять на https://play.google.com/store/account/subscriptions.\n3. Возврат и удаление: Google Play обрабатывает биллинг Android и возврат средств. Удаление учетной записи CalGo не отменяет подписку Google Play.\n4. Контент и интеллектуальная собственность: вы сохраняете право собственности на загруженные фотографии; CalGo получает ограниченную лицензию на их обработку для предоставления и улучшения сервиса. CalGo владеет своим приложением, брендингом и программным обеспечением.\n5. Контакты: support@calgo.tech. Полный текст статьи: https://calgo.tech/terms.",
+  "deleteAccountConfirmMessage": "Вы уверены, что хотите навсегда удалить свою учетную запись CalGo и все данные журнала калорий? Это действие не может быть отменено.",
+  "historyTitle": "История еды",
+  "historySubtitle": "Ваше путешествие по питанию",
+  "mealsCountLabel": "Питание",
+  "streakDaysLabel": "полоса",
+  "kcalPerDay": "Ккал/день",
+  "proteinPerDay": "Белок/день",
+  "noMealsHistory": "Еда еще не зарегистрирована",
+  "scanFirstMealPrompt": "Сканируйте свой первый прием пищи, чтобы начать\nВаше путешествие по питанию",
+  "scanFirstMealButton": "Сканирование первой еды",
+  "deleteMealConfirm": "Вы хотите удалить эту еду?",
+  "cannotDeleteMeal": "Нельзя было отказаться от еды. Пожалуйста, попробуйте еще раз.",
+  "photoGalleryTitle": "Фотографии еды",
+  "noPhotosYet": "Фотографии еды пока нет",
+  "takePhotosPrompt": "Сфотографируйте свои блюда, чтобы создать свою коллекцию!",
+  "scanFoodNow": "Сканирование еды сейчас",
+  "welcomeTo": "Добро пожаловать",
+  "getStarted": "Начинай.",
+  "snapPhotoAiTitle": "Сделай фото. Пусть AI работает.",
+  "snapPhotoAiDesc": "AI автоматически распознает пищу и вычисляет калории за считанные секунды.",
+  "trackEasilyTitle": "Трек с легкостью.",
+  "trackEasilyDesc": "Отслеживайте калории, белок, углеводы и жир каждый день.",
+  "reachGoalsTitle": "Достигайте целей быстрее.",
+  "reachGoalsDesc": "Получите персонализированные цели и отслеживайте прогресс потери жира.",
+  "nextStepButton": "Далее",
+  "goalStepTitle": "Какова ваша цель?",
+  "goalStepSubtitle": "Помогает CalGo построить план, который подходит вам",
+  "goalLoseWeight": "Потеря веса",
+  "goalLoseWeightDesc": "Сжигать жир эффективно, тон тела",
+  "goalLoseWeightReason": "Это помогает нам построить план потери жира, который защищает мышцы и остается устойчивым.",
+  "goalGainMuscle": "Набрать мышцы",
+  "goalGainMuscleDesc": "Построить мышцы и увеличить силу",
+  "goalGainMuscleReason": "Это помогает нам построить план наращивания мышечной массы вокруг ваших тренировок и потребностей в белке.",
+  "goalMaintain": "Поддерживайте вес",
+  "goalMaintainDesc": "Держите свое сбалансированное тело",
+  "goalMaintainReason": "Это помогает нам построить сбалансированный план, который соответствует вашей жизни.",
+  "nameStepTitle": "Ваше имя...",
+  "nameStepHint": "Введите свое имя",
+  "demoStepTitle": "См. CalGo в действии",
+  "genderStepTitle": "Какой у тебя пол?",
+  "genderStepSubtitle": "Для точных расчетов",
+  "genderMale": "мужчина",
+  "genderFemale": "женщина",
+  "genderOther": "другой",
+  "ageStepTitle": "Сколько тебе лет?",
+  "heightStepTitle": "Какой у тебя рост?",
+  "weightStepTitle": "Каков ваш текущий вес?",
+  "targetWeightStepTitle": "Каков ваш целевой вес?",
+  "activityStepTitle": "Каков ваш уровень активности?",
+  "dietStepTitle": "Вы придерживаетесь какой-то конкретной диеты?",
+  "analysisTitle": "Анализ ваших данных...",
+  "accountStepTitle": "Создайте аккаунт, чтобы сохранить свой план",
+  "continueWithGoogle": "Продолжайте с Google",
+  "continueWithApple": "Продолжайте с Apple",
+  "heightStepDesc": "Помогает рассчитать BMI и точные потребности в калориях",
+  "weightStepDesc": "Помогает определить ваши индивидуальные цели питания",
+  "currentHeightHeader": "Текущая высота",
+  "currentWeightHeader": "Текущий вес",
+  "bmiIndexTitle": "Индекс BMI",
+  "bmiUnderweight": "недостаточный вес",
+  "bmiNormal": "нормальный",
+  "bmiOverweight": "избыточный вес",
+  "bmiObese": "тучный",
+  "targetWeightDesc": "Помогите установить ваши личные цели в области питания",
+  "goalMaintainLabel": "Поддерживать телосложение",
+  "goalLoseLabel": "Потеря веса",
+  "goalGainLabel": "Мышцы выигрывают",
+  "goalMaintainHint": "Цель равна вашему текущему весу.",
+  "goalLoseDiffText": "Цель: Потеря {kg} kg",
+  "@goalLoseDiffText": {
+    "description": "Localized UI text: goalLoseDiffText",
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      }
+    }
+  },
+  "goalGainDiffText": "Цель: Получить {kg} kg",
+  "@goalGainDiffText": {
+    "description": "Localized UI text: goalGainDiffText",
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      }
+    }
+  },
+  "paceStepTitle": "Пейс в неделю?",
+  "paceStepSubtitle": "Выберите комфортный тариф для вашего образа жизни",
+  "activityStepSubtitle": "Влияет на ваш ежедневный расход калорий",
+  "dietStepSubtitle": "CalGo рекомендует блюда, наиболее подходящие для вашего тела и целей.",
+  "socialProofTitle": "Что говорит сообщество о CalGo",
+  "socialProofSubtitle": "Аутентичные отзывы реальных участников",
+  "ratingTag": "5 ★ Рейтинг",
+  "referralStepTitle": "Как вы узнали о CalGo?",
+  "referralStepSubtitle": "Помогите нам понять ваше путешествие",
+  "referralFriend": "Рекомендация друзей",
+  "sportsStepTitle": "В какие виды спорта вы играете?",
+  "sportsStepSubtitle": "Выберите действия, которые вы делаете регулярно",
+  "accountStepSubtitle": "Безопасная информация и синхронизация личного прогресса",
+  "dataPrivacyNote": "Ваши данные строго зашифрованы и конфиденциальны",
+  "analysisHello": "Привет, {name}",
+  "@analysisHello": {
+    "description": "Localized UI text: analysisHello",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "analysisPlanReady": "Ваш план готов",
+  "dailyCalorieTargetTitle": "DAILY CALORIE TARGET",
+  "kcalPerDayUnit": "kcal/день",
+  "workoutLabel": "Тренировка",
+  "workoutDaysText": "{days} days",
+  "@workoutDaysText": {
+    "description": "Localized UI text: workoutDaysText",
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "perWeekText": "в неделю",
+  "yourJourneyTitle": "Твоё путешествие",
+  "journeyCurrent": "текущий",
+  "journeyTarget": "Цель",
+  "journeyTimeframe": "Сроки",
+  "weeksUnit": "{weeks} недели",
+  "@weeksUnit": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
+  "completedPercent": "{p}% завершен",
+  "@completedPercent": {
+    "description": "Localized UI text: completedPercent",
+    "placeholders": {
+      "p": {
+        "type": "int"
+      }
+    }
+  },
+  "loginTitle": "Добро пожаловать в CalGo",
+  "loginSubtitle": "Войдите, чтобы синхронизировать данные о питании",
+  "loginGoogle": "Продолжайте с Google",
+  "loginApple": "Продолжайте с Apple",
+  "loginFailed": "Провал регистрации: {error}",
+  "@loginFailed": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "appleComingSoon": "Скоро появится Apple Sign-In!",
+  "loginRequired": "Пожалуйста, войдите в Google, чтобы защитить и синхронизировать ваши данные.",
+  "loginRequiredButton": "Вход необходим для синхронизации данных",
+  "progressLabel": "Прогресс",
+  "dataLoadFailed": "Невозможность загрузки данных",
+  "deleteMealQuestion": "Вы хотите удалить эту еду?",
+  "deleteMealFailed": "Нельзя было отказаться от еды. Пожалуйста, попробуйте еще раз.",
+  "retry": "Попробуйте еще раз",
+  "mealTypeBreakfast": "Завтрак",
+  "mealTypeLunch": "обед",
+  "mealTypeDinner": "Ужин",
+  "mealTypeSnack": "Снек",
+  "greetingMorning": "Доброе утро.",
+  "greetingAfternoon": "Добрый день.",
+  "greetingEvening": "Добрый вечер.",
+  "aiCoachAlmostGoal": "Почти достиг своей цели! Продолжай!",
+  "aiCoachPlentyCalories": "Сегодня осталось много калорий. Ешьте хорошо!",
+  "aiCoachMomentum": "Поддерживайте хороший импульс!",
+  "mascotGoalTipWater": "Пейте глоток воды, чтобы освежиться!",
+  "mascotGoalTipSlow": "Медленно питаться и слушать свое тело — это здорово.",
+  "mascotGoalTipGreat": "Ты отлично справился сегодня",
+  "mascotGoalReached": "Калорийность достигнута сегодня! Сохранение этого темпа является верхним уровнем  ",
+  "mascotGuidanceIntro": "Я сегодня приготовила тебе вкусную еду. Нажмите, чтобы проверить их!",
+  "mascotGuidanceOpen": "Рекомендуемые блюда все еще находятся на экране предложений!",
+  "mascotGuidanceTipWater": "Вы выпили достаточно воды? Сделайте глоток, чтобы освежиться!",
+  "mascotGuidanceTipSlow": "Ешьте медленно, вы будете чувствовать себя сытым дольше!",
+  "mascotGuidanceOverTarget": "You are {calories} kcal over. I picked light meals for you!",
+  "@mascotGuidanceOverTarget": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "mascotGuidanceRemaining": "You need {calories} kcal more to hit your goal. Check out my picks!",
+  "@mascotGuidanceRemaining": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "mascotTipHydration": "Гидратировался, брат? Сделайте глоток воды, чтобы оставаться острым",
+  "mascotTipChew": "Жевать медленно, это помогает пищеварению и держит вас полным",
+  "mascotTipConsistency": "Последовательность каждый день создает отличное телосложение",
+  "mascotNoMeals": "Еще ничего не записал? Сфотографируйте еду, чтобы показать!",
+  "mascotOverTarget": "Над вашей целью около {calories} kcal сегодня. Не беспокойтесь, используйте легкий и высокий белок для следующего приема пищи!",
+  "@mascotOverTarget": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "mascotMissingCalories": "Still missing {calories} kcal today. Go grab something delicious!",
+  "@mascotMissingCalories": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "mascotOnTrack": "Безупречная дисциплина! Калории попали прямо в точку!",
+  "mealCount": "{count, plural, one {{count} приём пищи} few {{count} приёма пищи} many {{count} приёмов пищи} other {{count} приёма пищи}}",
+  "@mealCount": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "ingredientCount": "{count, plural, one {{count} ингредиент} few {{count} ингредиента} many {{count} ингредиентов} other {{count} ингредиента}}",
+  "@ingredientCount": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "dishCount": "{count, plural, one {{count} блюдо} few {{count} блюда} many {{count} блюд} other {{count} блюда}}",
+  "@dishCount": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "monthFallback": "Месяц {month}",
+  "@monthFallback": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "month": {
+        "type": "int"
+      }
+    }
+  },
+  "scanProcessingRecognizing": "Признавая свою еду...",
+  "scanProcessingRecognized": "Питание признано",
+  "scanProcessingIngredients": "Анализ ингредиентов...",
+  "scanProcessingNutrition": "Определение фактов о питании...",
+  "scanProcessingCalories": "Расчет калорий...",
+  "scanProcessingPortion": "Оценить размер порции...",
+  "scanProcessingSummary": "AI подводит итоги...",
+  "scanProcessingReport": "Подготовка доклада...",
+  "cameraPermissionDenied": "Разрешение камеры было отказано. Откройте настройки и предоставьте доступ к камере CalGo!",
+  "cameraPermissionRequired": "CalGo нуждается в разрешении камеры для сканирования еды.",
+  "noCamera": "Камера не найдена",
+  "cameraStartFailed": "Не удалось запустить камеру. Закройте экран и попробуйте еще раз!",
+  "scanInProgress": "Анализируется еще один прием пищи. Подождите минутку!",
+  "notLoggedIn": "Вы не подписаны. Войдите в Google, чтобы использовать эту функцию!",
+  "cameraPermissionMissing": "Разрешение камеры не включено. Разрешите доступ к камере CalGo в настройках телефона!",
+  "networkTimeout": "Сеть медленная или замедленная. Проверьте свою связь и попробуйте еще раз!",
+  "scanFailed": "Не удалось проанализировать фото ({error}). Пожалуйста, попробуйте еще раз!",
+  "@scanFailed": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "scanAgain": "Сканировать снова",
+  "nutritionTitle": "Питание",
+  "guidanceRecoverySubtitle": "Нежная корректировка",
+  "guidanceLoggedSubtitle": "На основе вашей последней еды",
+  "guidanceRefreshTooltip": "Новые предложения",
+  "guidanceCaloriesRemaining": "{calories} kcal remaining",
+  "@guidanceCaloriesRemaining": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "guidanceProteinRemaining": "{grams}g protein needed",
+  "@guidanceProteinRemaining": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "guidanceAlternativesTitle": "Выберите одно из этих блюд",
+  "guidanceOtherMeal": "Я планирую съесть что-нибудь еще.",
+  "guidanceSeeMore": "Увидеть больше",
+  "guidanceDisclaimer": "Предложения только для справки. Сканируйте фактическую еду, чтобы точно ее регистрировать.",
+  "guidanceFamiliarTag": "семейный",
+  "guidanceDishCalories": "{calories} kcal",
+  "@guidanceDishCalories": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "guidanceDishProtein": "{grams}g",
+  "@guidanceDishProtein": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "guidanceDishCarbs": "C {grams}g",
+  "@guidanceDishCarbs": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "guidancePrepTime": "{minutes} Мин",
+  "@guidancePrepTime": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "guidancePrice": "~{price}k",
+  "@guidancePrice": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "guidanceFitGreat": "Отличная посадка",
+  "guidanceFitAdjust": "Требуется корректировка",
+  "guidanceFitGood": "Хорошо подходит",
+  "guidanceAppleTitle": "Пусть Tao посчитает с вами",
+  "guidanceFirstScanAction": "Сканируйте свой первый прием пищи",
+  "guidanceAppleSuggestionTitle": "Предложения Tao",
+  "guidanceNextMealAction": "Сканируйте свой следующий прием пищи",
+  "guidanceGoalReachedTitle": "Сегодняшняя цель завершена!",
+  "guidanceScreenTitle": "Что вы должны есть?",
+  "guidanceUnavailableTitle": "Предложений пока нет",
+  "guidanceUnavailableMessage": "Попробуйте еще раз после сканирования еды.",
+  "guidanceScanMeal": "Сканировать еду",
+  "guidanceConsiderMeals": "Питание, чтобы рассмотреть",
+  "guidanceScanForAccuracy": "Сканировать для точной регистрации",
+  "guidanceSwapWith": "Или поменять его на",
+  "guidanceChangeSuggestion": "Предложение об изменении",
+  "guidancePremiumSwapTitle": "Изменение предложений - это премиум-функция",
+  "guidancePremiumSwapMessage": "Обновление до премиум-класса, чтобы изменить питание без ограничений в зависимости от ваших целей.",
+  "later": "Позже",
+  "upgradePremium": "Обновление до Premium",
+  "guidanceTodayTitle": "Личные предложения на сегодня",
+  "guidanceTodaySubtitle": "Выберите блюдо, которое соответствует вашим макросам, а затем сканируйте настоящую еду, прежде чем регистрировать ее.",
+  "guidanceScanRealMeal": "Сканировать настоящую еду",
+  "guidanceNextMealGoal": "Цель для вашей следующей еды",
+  "remainingLabel": "оставаться",
+  "proteinNeededLabel": "Белок нужен",
+  "familiarMacroLabel": "FAMILIAR · MACRO FIT",
+  "numberOneChoice": "Выбор номер 1",
+  "energyLabel": "энергия",
+  "familiarLabel": "семейный",
+  "dishTip": "Исполнитель: {adjustment}",
+  "@dishTip": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "adjustment": {
+        "type": "String"
+      }
+    }
+  },
+  "dishMacroSummary": "{calories} kcal · {protein}g protein",
+  "@dishMacroSummary": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      },
+      "protein": {
+        "type": "String"
+      }
+    }
+  },
+  "fitGoalGreat": "Отлично для вашей цели",
+  "fitGoalAdjust": "должны быть скорректированы",
+  "fitGoalGood": "Соответствует вашей цели",
+  "goalSpecificGainTitle": "Как часто вы тренируетесь каждую неделю?",
+  "goalSpecificGainNone": "Я еще не тренируюсь",
+  "goalSpecificGain12": "1-2 сессии",
+  "goalSpecificGain34": "3-4 сессии",
+  "goalSpecificGain5": "5+ сеансов",
+  "goalSpecificMaintainTitle": "Что наиболее важно для поддержания вашей формы?",
+  "goalSpecificStable": "Держите свой вес стабильным",
+  "goalSpecificBalanced": "Ешьте более сбалансированные блюда",
+  "goalSpecificHabits": "Построение долгосрочных привычек",
+  "goalSpecificWeekends": "Оставайтесь на трассе в выходные",
+  "goalSpecificLoseTitle": "Что делает потерю жира наиболее трудной для вас?",
+  "goalSpecificHunger": "Я часто голодаю",
+  "goalSpecificPortions": "Контроль порций",
+  "goalSpecificChoices": "Я не знаю, что есть",
+  "goalSpecificLogging": "Лесозаготовка кажется сложной",
+  "goalSpecificOvereat": "Я переедаю ночью",
+  "goalSpecificWeekendsHard": "Выходные – это сложно",
+  "avoidFoodsTitle": "У вас есть аллергия на какие-либо продукты или ингредиенты?",
+  "foodSeafood": "Морепродукты",
+  "foodRedMeat": "Красное мясо",
+  "foodEggs": "Яйца",
+  "foodDairy": "Молоко и сыр",
+  "foodFried": "Жареная еда",
+  "foodSpicy": "Острая еда",
+  "challengeTitle": "Что для тебя самое сложное?",
+  "challengeCalories": "Я не знаю калорий в моей еде.",
+  "challengeSweets": "Сопротивление сладостям",
+  "challengePortions": "Контроль порций",
+  "challengeBetweenMeals": "Проголодаться между приемами пищи",
+  "challengeCookingTime": "Не имея времени готовить",
+  "challengeMotivation": "Оставаться мотивированным",
+  "budgetTitle": "Каков ваш бюджет на один прием пищи?",
+  "budgetNote": "CalGo предлагает блюда, которые соответствуют вашим целям и бюджету.",
+  "budgetLow": "менее 30 000  Under",
+  "budgetLowNote": "Простые, простые в поиске блюда",
+  "budgetMid": "30 000-60 000 –",
+  "budgetMidNote": "Типичный бюджет на один прием пищи",
+  "budgetHigh": "60 000-100 000 –",
+  "budgetHighNote": "Больше места для качества",
+  "budgetAny": "Нет предела",
+  "budgetAnyNote": "Приоритетность целей в области питания",
+  "prepTitle": "Сколько времени нужно, чтобы приготовить один прием пищи?",
+  "prepNote": "CalGo просит, чтобы он мог предложить блюда, которые соответствуют вашему графику.",
+  "prepShort": "менее 10 минут",
+  "prepShortNote": "Быстро и удобно, когда занят",
+  "prepMedium": "10-20 минут",
+  "prepMediumNote": "Достаточно для простой еды",
+  "prepLong": "Более 20 минут",
+  "prepLongNote": "Больше времени для тщательной подготовки",
+  "prepAny": "Никаких предпочтений",
+  "prepAnyNote": "Пока это соответствует моим целям",
+  "nutritionPriorityTitle": "Что вы отдаете приоритет во время еды?",
+  "nutritionPriorityNote": "CalGo просит, чтобы он не давал вам общие предложения.",
+  "priorityProtein": "Высокий уровень белка",
+  "priorityProteinNote": "Поддерживает полноту и восстановление мышц",
+  "priorityLight": "Легкие калории",
+  "priorityLightNote": "Легко балансировать в течение дня",
+  "priorityBalanced": "сбалансированный",
+  "priorityBalancedNote": "Разумное сочетание калорий и макросов",
+  "priorityFilling": "Держите меня полным",
+  "priorityFillingNote": "Приоритет белка и достаточное количество углеводов",
+  "habitTitle": "Каковы ваши пищевые привычки?",
+  "habitNote": "CalGo предлагает блюда, которые соответствуют вашему образу жизни.",
+  "habitRegular": "Я ем регулярные, сбалансированные блюда.",
+  "habitSnacking": "Часто перекусываю",
+  "habitSkipBreakfast": "Я часто пропускаю завтрак",
+  "habitLateNight": "Я ем поздно ночью",
+  "habitEatingOut": "Я часто ем вне дома",
+  "habitCook": "Я готовлю дома",
+  "motivationTitle": "Что заставляет вас хотеть измениться?",
+  "motivationHealth": "Лучшее здоровье",
+  "motivationMuscle": "Наращивать мышцы",
+  "motivationClothes": "Лучше выглядеть в одежде",
+  "motivationWeight": "Потеря веса",
+  "motivationEnergy": "Почувствуйте себя здоровым и энергичным",
+  "motivationOther": "Другая причина",
+  "painTitle": "Ты когда-нибудь...",
+  "painNote": "Выберите вещи, которые вы испытали",
+  "painEatLess": "Ешьте очень мало, но не теряйте вес",
+  "painCardio": "Делайте много кардио",
+  "painGiveUp": "Сдаться через несколько дней",
+  "painUnknownCalories": "Я не знаю, сколько калорий я ем",
+  "painHungry": "Проголодаться на полпути",
+  "painStressEating": "Стрессовое питание",
+  "emotionalTitle": "Если вы продолжаете есть так же, как сейчас...",
+  "emotionalCurrent": "Теперь",
+  "emotionalAfterSixMonths": "Через 6 месяцев",
+  "emotionalStillWeight": "Вы можете оставаться на текущем весе. С CalGo вы можете измениться.",
+  "emotionalHelpChange": "Я помогу тебе измениться",
+  "referralX": "X (Твиттер)",
+  "referralOther": "другой",
+  "sportsRunning": "бегать",
+  "sportsCycling": "Велосипед",
+  "sportsSwimming": "купаться",
+  "sportsFootball": "Футбол",
+  "sportsBadminton": "Бадминтон",
+  "sportsBasketball": "баскетбол",
+  "sportsOther": "другой",
+  "durationTitle": "Когда вы хотите достичь своей цели?",
+  "durationNote": "Выберите временные рамки, которые кажутся вам правильными",
+  "dailyCalorieGoal": "Ежедневная цель калорийности",
+  "dailyCalorieGoalMessage": "Ваша текущая цель - {calories} kcal / день. Вы можете изменить его в настройках посадки или контактной поддержке.",
+  "@dailyCalorieGoalMessage": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "close": "Закрыть",
+  "reminderNotifications": "Напоминание уведомлений",
+  "reminderNotificationsEnabled": "Напоминания о еде и ежедневные уведомления об отслеживании калорий включены автоматически.",
+  "gotIt": "Понял.",
+  "userGuideTitle": "Как использовать CalGo",
+  "userGuideContent": "1. Tap Scan (+) для съемки или выбора фотографии еды.\n2. AI автоматически анализирует калории и питание.\n3. Редактируйте количество или добавляйте ингредиенты перед экономией.\n4. Просмотрите свою историю еды на вкладке «История».",
+  "great": "Великий",
+  "customerSupportMessage": "За помощью или отзывами о продукте напишите нам по адресу: support@calgo.tech",
+  "deleteAccountFailed": "Не удалось удалить аккаунт. Смотрите онлайн-руководство или контактную поддержку.",
+  "galleryLoadFailed": "Не удалось загрузить коллекцию фотографий",
+  "viewResult": "Посмотреть результаты",
+  "shareMemoryCard": "Share Memory Card",
+  "deletePhoto": "Удалить это фото",
+  "confirmDelete": "Подтвердить удаление",
+  "deletePhotoMessage": "Вы уверены, что хотите удалить фотографию еды \"{meal}\"?",
+  "@deletePhotoMessage": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "meal": {
+        "type": "String"
+      }
+    }
+  },
+  "mealDeleted": "Удаление еды из вашей коллекции",
+  "deleteFailed": "Не мог его удалить. Пожалуйста, попробуйте еще раз.",
+  "paymentProcessing": "Обработка платежей через Google Play...",
+  "paymentOpenFailed": "Не удалось открыть платеж Google Play. Пожалуйста, попробуйте еще раз.",
+  "errorWithDetails": "Ошибка: {error}",
+  "@errorWithDetails": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "packIncludes": "Включает сканирование питания {count} AI",
+  "@packIncludes": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "permanentCredits": "Сканирование никогда не заканчивается",
+  "testingFreeCredits": "Тестирование сборки: Премиум-сканирование бесплатно. Оплата Google Play не производится.",
+  "restoreSuccess": "Восстановление покупок проверено успешно!",
+  "restoreFailed": "Не удалось восстановить покупки Google Play.",
+  "restoreFailedWithDetails": "Восстановление провалилось: {error}",
+  "@restoreFailedWithDetails": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "moreScanCredits": "Купите больше сканов еды AI",
+  "shareCreateFailed": "Не удалось создать изображение карты. Пожалуйста, попробуйте еще раз!",
+  "shareExported": "Карта памяти успешно экспортируется!",
+  "shareResult": "Общий результат",
+  "shareNutritionLabel": "Изображение будет сохранено этикетками питания",
+  "saveImage": "Сохраните изображение",
+  "share": "Поделиться",
+  "resultLoadFailed": "Не удалось загрузить результат анализа (ID: {id}). Пожалуйста, попробуйте еще раз!",
+  "@resultLoadFailed": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "edit": "Редактировать",
+  "done": "Сделано",
+  "healthScore": "Оценка здоровья",
+  "dishesInPhoto": "Блюда на фото",
+  "ingredientsInDish": "ингредиенты",
+  "addIngredient": "Добавить ингредиент",
+  "feedbackThanks": "Спасибо за ваш отзыв!",
+  "feedbackPrompt": "Было ли сканирование AI неточным? Расскажите нам, что произошло:",
+  "feedbackHint": "Пример: неправильное название блюда, отсутствие овощей...",
+  "skip": "Пропустить",
+  "sending": "Отправить...",
+  "sendFeedback": "Отправить отзыв",
+  "newIngredient": "Новый ингредиент",
+  "choosePortion": "Выберите часть",
+  "searchNutritionLibrary": "Поисковая библиотека питания",
+  "adjustBeforeAdding": "Скорректируйте сумму перед добавлением",
+  "ingredientSearchHint": "Поиск говядины, яиц, риса...",
+  "ingredientNotFound": "Ингредиент не найден",
+  "ingredientSearchTip": "Попробуйте более короткое или более распространенное имя.",
+  "unitPiece": "кусок",
+  "defaultUserName": "ты",
+  "analyzingMessage1": "Анализ вашей информации о профиле...",
+  "analyzingMessage2": "Расчет ежедневных калорий...",
+  "analyzingMessage3": "Разработка индивидуальных целей...",
+  "analyzingMessage4": "Разработка стратегии питания...",
+  "analyzingMessage5": "Почти готов...",
+  "dietNormal": "Регулярное питание",
+  "dietClean": "Ешьте чисто",
+  "dietKeto": "Кето",
+  "dietLowCarb": "Низкий углевод",
+  "dietVegetarian": "вегетарианец",
+  "dietVegan": "веган",
+  "activitySedentary": "сидячий",
+  "activitySedentaryDesc": "Рабочий стол, небольшое движение",
+  "activityLight": "Легкая ходьба",
+  "activityLightDesc": "Движение света 1-2 раза в неделю",
+  "activityModerate": "Поезд 1-3 раза",
+  "activityModerateDesc": "Упражнения 1-3 дня/неделя",
+  "activityActive": "Поезд 4-5 раз",
+  "activityActiveDesc": "Упражнения 4-5 дней/неделя",
+  "activityVeryActive": "Ежедневный поезд",
+  "activityVeryActiveDesc": "Тяжелые упражнения каждый день",
+  "paceSlow": "Медленно — 0,25 kg/неделя",
+  "paceLight": "Свет — 0,5 kg/неделя (Популярный)",
+  "paceMedium": "Средний — 0,75 kg/неделя",
+  "paceHigh": "Высоко — 1 kg / неделя",
+  "paceHighest": "Самый высокий — 1,25-1,5 kg / неделя",
+  "weekUnit": "неделя",
+  "sportsGym": "гимн",
+  "sportsYoga": "йога",
+  "scanResultUnavailable": "Этот прием пищи не может быть проанализирован.",
+  "scanResultRetryHint": "Попробуйте сканировать его снова.",
+  "guidanceDishFat": "F {grams}g",
+  "@guidanceDishFat": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "ok": "Хорошо.",
+  "defaultProfileName": "Пользователь CalGo",
+  "premiumMembership": "Премиальное членство",
+  "creditsCount": "Кредиты {count}",
+  "@creditsCount": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "paymentMethods": "Оплата через Google Play / App Store",
+  "deleteAction": "Исключить",
+  "proteinLabel": "Протеин",
+  "onboardingSaveFailed": "Не удалось сохранить цель питания. Пожалуйста, попробуйте еще раз.",
+  "onboardingSaveNetworkFailed": "Не удалось сохранить цель питания. Проверьте свою связь и попробуйте еще раз.",
+  "googleSignInFailed": "Google не удалось зарегистрироваться: {error}",
+  "@googleSignInFailed": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "appleSignInPending": "Регистрация Apple все еще завершается. Пожалуйста, используйте Google сейчас.",
+  "firstScanTitle": "Готовы отсканировать свой первый прием пищи?",
+  "firstScanSubtitle": "Сканирование ниже, чтобы начать",
+  "scanLabel": "Скан",
+  "startScanning": "Начать сканирование",
+  "socialProofOneTag": "6.5 kg",
+  "socialProofOneTime": "2 дня назад",
+  "socialProofOneTitle": "Вьетнамская еда признана!",
+  "socialProofOneBody": "Раньше я боролся с отслеживанием pho и bun cha в зарубежных приложениях. CalGo точно распознает вьетнамские блюда и калории по фотографии. 10/10!",
+  "socialProofTwoTag": "Набрал 4 мышцы kg",
+  "socialProofTwoTime": "5 дней назад",
+  "socialProofTwoTitle": "Плавный пользовательский интерфейс и точный TDEE",
+  "socialProofTwoBody": "Отслеживание BMI и макропредложения подробно описаны. Я тренируюсь и отслеживаю калории каждый день, и мое тело выглядит сильнее через месяц.",
+  "socialProofThreeTag": "Поддерживаю свою форму",
+  "socialProofThreeTime": "1 неделю назад",
+  "socialProofThreeTitle": "Создание здоровых привычек питания",
+  "socialProofThreeBody": "Напоминания Tao восхитительны. Приложение никогда не подталкивает к экстремальным диетам, оно направляет меня к сбалансированному питанию.",
+  "premiumActivatedMessage": "Премиум активен. Наслаждайтесь едой!",
+  "premiumPaymentFailed": "Не удалось открыть премиум-платеж.",
+  "continueFreePremium": "• Бесплатная премия",
+  "continueLabel": "Продолжать",
+  "premiumFreeUnlocked": "Премиум разблокирован бесплатно",
+  "premiumActivated": "Премиум активируется",
+  "processingShort": "Обработка...",
+  "subscribePremium": "Подписаться на Premium",
+  "premiumTestingNote": "Тестирование сборки: Премиум бесплатный. Оплата не производится.",
+  "premiumNoChargeNote": "На этом этапе вам не будет предъявлено обвинение.",
+  "premiumAutoRenewNote": "Автообновление. Отменить в любое время.",
+  "premiumHeadlineBefore": "Изменения начинаются с",
+  "todayLower": "сегодня",
+  "yourExperience": "Твой\nопыт",
+  "premiumBenefitCalories": "Знайте свои калории мгновенно — неограниченное сканирование AI",
+  "premiumBenefitSuggestions": "Неограниченные предложения еды, адаптированные к вашей повседневной цели",
+  "premiumBenefitDescriptions": "Описание еды AI без ручного ввода",
+  "premiumBenefitProgress": "Следите за прогрессом вашего тела каждый день",
+  "premiumBenefitSupport": "Приоритетная поддержка, когда вам это нужно",
+  "planWeek": "Неделя",
+  "planYear": "Год",
+  "planMonth": "месяц",
+  "free": "бесплатно",
+  "weeklyPayment": "Еженедельный платеж",
+  "popularMost": "Самый популярный",
+  "testingAccess": "тестирование доступа",
+  "restoreChecked": "Реставрация покупок проверена.",
+  "restoreException": "Восстановление провалилось: {error}",
+  "@restoreException": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "manageSubscription": "Управление подпиской",
+  "manageSubscriptionFailed": "Не удалось открыть управление подпиской.",
+  "scanCreditsExhausted": "У тебя не осталось кредитов на сканирование.",
+  "networkRetry": "Связь медленная. Попробуй снова.",
+  "scanUnavailable": "Это изображение не может быть проанализировано.",
+  "notificationChannelName": "Ежедневные напоминания о еде",
+  "notificationChannelDescription": "Напоминания для сканирования завтрака, обеда и ужина с CalGo",
+  "notificationBreakfastTitle": "CalGo - Завтрак",
+  "notificationBreakfastBody": "Доброе утро! Не забудьте просканировать завтрак, чтобы у вас было достаточно энергии на день.",
+  "notificationLunchTitle": "CalGo - Обед",
+  "notificationLunchBody": "Это обеденный перерыв. Сканируйте свою еду в CalGo, чтобы точно отслеживать калории.",
+  "notificationDinnerTitle": "CalGo - Обед",
+  "notificationDinnerBody": "Ужин готов? Сканируйте его, чтобы оставаться на пути к своим целям.",
+  "notificationDirectChannel": "Прямые уведомления",
+  "caloriesLabel": "Калории",
+  "carbsLabel": "КАРБС",
+  "fatLabel": "жирный",
+  "guidanceTodayShortSubtitle": "Посмотреть предложения по сегодняшней цели",
+  "ingredientBeef": "Свежая говядина",
+  "ingredientChicken": "Щедрая куриная грудка",
+  "ingredientEgg": "яйцо",
+  "ingredientRiceNoodles": "Свежая лапша",
+  "ingredientRice": "Белый рис",
+  "ingredientBun": "Свежий рис Vermicelli",
+  "ingredientSalad": "салат и помидоры",
+  "ingredientCheddar": "Чеддарский сыр",
+  "ingredientPassionSauce": "Страстный фруктовый соус",
+  "ingredientPork": "бережливая свинина",
+  "mockPhoTitle": "Редкая говядина с брюшком",
+  "mockPhoNoodles": "Свежая лапша",
+  "mockPhoRareBeef": "Редкая говядина",
+  "mockPhoBrisket": "Говяжья коровка",
+  "mockPhoBroth": "Фо бульон и скальоны",
+  "mockRiceTitle": "Разбитый рис с жареной свининой, свиной кожей и яичным пирогом",
+  "mockRice": "Разбитый рис",
+  "mockGrilledPork": "Свиные ребра на гриле",
+  "mockEggCake": "Яичный торт",
+  "mockFriedEgg": "Жареное яйцо",
+  "mockSaladTitle": "Куриный салат со страстью фруктовая повязка",
+  "mockChicken": "Щедрая куриная грудка",
+  "mockSalad": "Латук и помидоры черри",
+  "mockPassionSauce": "Страсть фруктовая повязка",
+  "motivationAdviceLose": "You are only {remaining} kg from your goal. Small daily habits work better than extreme diets.",
+  "@motivationAdviceLose": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "remaining": {
+        "type": "String"
+      }
+    }
+  },
+  "motivationAdviceGain": "Ваша цель калорий оптимизирована для наращивания мышечной массы при ограничении избыточного жира.",
+  "motivationAdviceMaintain": "Ваш текущий вес находится в здоровом диапазоне. Давайте создадим привычки, которые помогут вам чувствовать себя лучше каждый день.",
+  "motivationAdviceDefault": "Достигните своей цели в области здоровья вместе с устойчивыми привычками.",
+  "taoAdviceLabel": "СОВЕТ ТАО",
+  "taoReminder": "Tao будет напоминать вам каждый день",
+  "packBasic": "Стартер",
+  "packPopular": "Популярный",
+  "packPremium": "Премиум",
+  "creditPackageSummary": "{count} Кредиты • {unit}",
+  "@creditPackageSummary": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "perScan": "/сканировать",
+  "caloriesValue": "{calories} kcal",
+  "@caloriesValue": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "caloriesPer100g": "{calories} kcal/100g",
+  "@caloriesPer100g": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "gramsValue": "{grams}g",
+  "@gramsValue": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "weightKgValue": "{weight} kg",
+  "@weightKgValue": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
+  "galleryMacroSummary": "{calories} kcal • C:{carbs}g P:{protein}g F:{fat}g",
+  "@galleryMacroSummary": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      },
+      "carbs": {
+        "type": "String"
+      },
+      "protein": {
+        "type": "String"
+      },
+      "fat": {
+        "type": "String"
+      }
+    }
+  },
+  "sharePayload": "{dish} · {calories} kcal | CalGo",
+  "@sharePayload": {
+    "placeholders": {
+      "dish": {
+        "type": "String"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  }
+}

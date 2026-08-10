@@ -108,21 +108,6 @@ class DiaryEntry {
     this.time,
   });
 
-  String get mealTypeLabel {
-    switch (mealType) {
-      case 'breakfast':
-        return 'Bữa sáng';
-      case 'lunch':
-        return 'Bữa trưa';
-      case 'dinner':
-        return 'Bữa tối';
-      case 'snack':
-        return 'Bữa phụ';
-      default:
-        return mealType;
-    }
-  }
-
   int get mealOrder {
     switch (mealType) {
       case 'breakfast':

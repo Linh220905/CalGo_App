@@ -55,7 +55,7 @@ class _SplashStepState extends State<SplashStep> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(28),
                     child: Image.asset(
-                      'assets/images/calgo_logo.png',
+                      'assets/images/calgo_logo_wordmark.png',
                       width: 100,
                       height: 100,
                       fit: BoxFit.cover,

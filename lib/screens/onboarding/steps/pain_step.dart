@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/onboarding_provider.dart';
+import '../../../providers/app_settings_provider.dart';
 
 class PainStep extends StatefulWidget {
   const PainStep({super.key});
@@ -12,17 +13,17 @@ class PainStep extends StatefulWidget {
 class _PainStepState extends State<PainStep> {
   final Set<String> _selected = {};
 
-  static const _items = [
-    'Ăn rất ít nhưng vẫn không giảm',
-    'Cardio rất nhiều',
-    'Bỏ cuộc sau vài ngày',
-    'Không biết mình ăn bao nhiêu calo',
-    'Hay bị đói giữa chừng',
-    'Ăn uống stress',
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final s = context.watch<AppSettingsProvider>().strings;
+    final items = [
+      s.painEatLess,
+      s.painCardio,
+      s.painGiveUp,
+      s.painUnknownCalories,
+      s.painHungry,
+      s.painStressEating,
+    ];
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
       body: SafeArea(
@@ -40,8 +41,8 @@ class _PainStepState extends State<PainStep> {
                       fit: BoxFit.contain,
                     ),
                     const SizedBox(height: 12),
-                    const Text(
-                      'Bạn đã từng...',
+                    Text(
+                      s.painTitle,
                       style: TextStyle(
                         fontSize: 26,
                         fontWeight: FontWeight.w700,
@@ -49,8 +50,8 @@ class _PainStepState extends State<PainStep> {
                       ),
                     ),
                     const SizedBox(height: 4),
-                    const Text(
-                      'Chọn những điều bạn từng gặp phải',
+                    Text(
+                      s.painNote,
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
@@ -58,7 +59,7 @@ class _PainStepState extends State<PainStep> {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    ..._items.map((item) {
+                    ...items.map((item) {
                       final sel = _selected.contains(item);
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 10),
@@ -152,9 +153,9 @@ class _PainStepState extends State<PainStep> {
                         borderRadius: BorderRadius.circular(18)),
                     elevation: 0,
                   ),
-                  child: const Text('Tiếp theo',
-                      style:
-                          TextStyle(fontSize: 17, fontWeight: FontWeight.w600)),
+                  child: Text(s.nextStepButton,
+                      style: const TextStyle(
+                          fontSize: 17, fontWeight: FontWeight.w600)),
                 ),
               ),
             ),

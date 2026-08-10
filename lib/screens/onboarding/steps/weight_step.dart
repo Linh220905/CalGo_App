@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/onboarding_provider.dart';
+import '../../../providers/app_settings_provider.dart';
+import '../../../l10n/generated/app_localizations.dart';
 import '../../../widgets/horizontal_ruler_picker.dart';
 
 const _kInk = Color(0xFF0A0A0A);
@@ -12,6 +14,8 @@ class WeightStep extends StatelessWidget {
   Widget build(BuildContext context) {
     final initialWeight =
         context.read<OnboardingProvider>().data.weightKg ?? 72.0;
+    final settings = context.watch<AppSettingsProvider>();
+    final s = settings.strings;
 
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
@@ -21,15 +25,15 @@ class WeightStep extends StatelessWidget {
             Expanded(
               child: SingleChildScrollView(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const SizedBox(height: 8),
-                    const Text(
-                      'Cân nặng của bạn là bao nhiêu?',
+                    Text(
+                      s.weightStepTitle,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.w800,
                         color: _kInk,
@@ -37,10 +41,10 @@ class WeightStep extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    const Text(
-                      'Điều này giúp xác định mục tiêu dinh dưỡng của bạn',
+                    Text(
+                      s.weightStepDesc,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 14,
                         color: Color(0xFF71717A),
                       ),
@@ -55,8 +59,9 @@ class WeightStep extends StatelessWidget {
                       primaryUnit: 'kg',
                       secondaryUnit: 'lb',
                       conversionFactor: 2.20462,
-                      headerTitle: 'Cân nặng hiện tại',
+                      headerTitle: s.currentWeightHeader,
                       headerIcon: Icons.monitor_weight_outlined,
+                      compact: true,
                       onChanged: (v) {
                         context.read<OnboardingProvider>().setWeight(v);
                       },
@@ -97,16 +102,16 @@ class WeightStep extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
-                  child: const Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Tiếp tục',
-                        style: TextStyle(
+                        s.nextStepButton,
+                        style: const TextStyle(
                             fontSize: 17, fontWeight: FontWeight.w700),
                       ),
-                      SizedBox(width: 8),
-                      Icon(Icons.arrow_forward_rounded, size: 20),
+                      const SizedBox(width: 8),
+                      const Icon(Icons.arrow_forward_rounded, size: 20),
                     ],
                   ),
                 ),
@@ -131,17 +136,18 @@ class _BmiCard extends StatelessWidget {
     return const Color(0xFFEF4444);
   }
 
-  String get _label {
-    if (bmi < 18.5) return 'Thiếu cân';
-    if (bmi < 23.0) return 'Bình thường';
-    if (bmi < 27.5) return 'Thừa cân';
-    return 'Béo phì';
+  String _getLabel(AppLocalizations s) {
+    if (bmi < 18.5) return s.bmiUnderweight;
+    if (bmi < 23.0) return s.bmiNormal;
+    if (bmi < 27.5) return s.bmiOverweight;
+    return s.bmiObese;
   }
 
   @override
   Widget build(BuildContext context) {
     final statusColor = _statusColor;
     final gaugePct = ((bmi - 12.0) / (35.0 - 12.0)).clamp(0.0, 1.0);
+    final s = context.watch<AppSettingsProvider>().strings;
 
     return Container(
       width: double.infinity,
@@ -162,10 +168,10 @@ class _BmiCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Row 1: BMI Header & Status Pill
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final titleRow = Row(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Container(
                     padding: const EdgeInsets.all(6),
@@ -180,18 +186,21 @@ class _BmiCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 8),
-                  const Text(
-                    'Chỉ số BMI',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFF475569),
+                  Flexible(
+                    child: Text(
+                      s.bmiIndexTitle,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: Color(0xFF475569),
+                      ),
                     ),
                   ),
                 ],
-              ),
-              // Status Pill
-              Container(
+              );
+              final statusPill = Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
@@ -210,18 +219,41 @@ class _BmiCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 6),
-                    Text(
-                      _label,
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700,
-                        color: statusColor,
+                    Flexible(
+                      child: Text(
+                        _getLabel(s),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                          color: statusColor,
+                        ),
                       ),
                     ),
                   ],
                 ),
-              ),
-            ],
+              );
+
+              if (constraints.maxWidth < 300) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    titleRow,
+                    const SizedBox(height: 8),
+                    statusPill,
+                  ],
+                );
+              }
+
+              return Row(
+                children: [
+                  Expanded(child: titleRow),
+                  const SizedBox(width: 8),
+                  Flexible(child: statusPill),
+                ],
+              );
+            },
           ),
 
           const SizedBox(height: 12),
@@ -311,29 +343,60 @@ class _BmiCard extends StatelessWidget {
                   const SizedBox(height: 10),
 
                   // Labels under track
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  Row(
                     children: [
-                      Text('Gầy',
-                          style: TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.w600,
-                              color: Color(0xFF94A3B8))),
-                      Text('Chuẩn',
-                          style: TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.w600,
-                              color: Color(0xFF94A3B8))),
-                      Text('Thừa cân',
-                          style: TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.w600,
-                              color: Color(0xFF94A3B8))),
-                      Text('Béo phì',
-                          style: TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.w600,
-                              color: Color(0xFF94A3B8))),
+                      Expanded(
+                        child: Text(
+                          s.bmiUnderweight,
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xFF94A3B8),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Text(
+                          s.bmiNormal,
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xFF94A3B8),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Text(
+                          s.bmiOverweight,
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xFF94A3B8),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Text(
+                          s.bmiObese,
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xFF94A3B8),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ],

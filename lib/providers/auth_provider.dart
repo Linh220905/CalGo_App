@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import '../models/user.dart';
 import '../services/auth_service.dart';
 import '../services/api_service.dart';
@@ -31,6 +32,8 @@ class AuthProvider extends ChangeNotifier {
         _user = null;
       }
     } catch (_) {
+      // A failed restore is an unauthenticated state, never another user's
+      // account or a fabricated local profile.
       _user = null;
     }
     _loading = false;
@@ -92,30 +95,45 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  Future<bool> loginWithDevEmail(String email) async {
+  Future<bool> signInWithApple() async {
     try {
       _loading = true;
       _error = null;
       notifyListeners();
-      final userData = await _authService.loginWithDevEmail(email);
-      _user = User.fromJson(userData);
-      _error = null;
-      _loading = false;
-      notifyListeners();
-      return true;
-    } catch (e) {
-      // Khi không có backend server chạy local, tự động mở phiên Dev làm việc
-      _user = User(
-        id: 'dev_user_01',
-        email: email.isNotEmpty ? email : 'dev@calgo.app',
-        name: email.split('@').first,
-        credits: 20,
-        subscriptionTier: 'pro',
+
+      final credential = await SignInWithApple.getAppleIDCredential(
+        scopes: [
+          AppleIDAuthorizationScopes.email,
+          AppleIDAuthorizationScopes.fullName,
+        ],
       );
-      _error = null;
+
+      final identityToken = credential.identityToken;
+      final authorizationCode = credential.authorizationCode;
+
+      if (identityToken != null && identityToken.isNotEmpty) {
+        final userData = await _authService.loginWithApple(
+          identityToken: identityToken,
+          authorizationCode: authorizationCode,
+          firstName: credential.givenName,
+          lastName: credential.familyName,
+        );
+        _user = User.fromJson(userData);
+        _error = null;
+        _loading = false;
+        notifyListeners();
+        return true;
+      }
+
       _loading = false;
       notifyListeners();
-      return true;
+      return false;
+    } catch (e) {
+      final errStr = e.toString();
+      _loading = false;
+      _error = errStr;
+      notifyListeners();
+      return false;
     }
   }
 
@@ -159,5 +177,18 @@ class AuthProvider extends ChangeNotifier {
     await _authService.logout();
     _user = null;
     notifyListeners();
+  }
+
+  Future<bool> deleteAccount() async {
+    try {
+      await _authService.deleteAccount();
+      _user = null;
+      notifyListeners();
+      return true;
+    } catch (e) {
+      _error = e.toString();
+      notifyListeners();
+      return false;
+    }
   }
 }

@@ -1,159 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
+import '../../config/app_build_config.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/app_settings_provider.dart';
-import '../../l10n/app_strings.dart';
+import '../../providers/onboarding_provider.dart';
+import '../../l10n/generated/app_localizations.dart';
+import '../../widgets/language_selector.dart';
 import '../onboarding/steps/premium_paywall_step.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
+  Future<void> _openLegalPage(String path) async {
+    final uri = Uri.parse('https://calgo.tech/$path');
+    await launchUrl(uri, mode: LaunchMode.externalApplication);
+  }
+
   void _showLanguageSelector(BuildContext context) {
-    final settings = context.read<AppSettingsProvider>();
-    final s = settings.strings;
-    final isDark = settings.isDarkMode;
-
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: isDark ? const Color(0xFF212027) : Colors.white,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-      ),
-      builder: (ctx) {
-        final languages = [
-          {
-            'code': 'vi',
-            'flag': '🇻🇳',
-            'name': 'Tiếng Việt',
-            'subtitle': 'Mặc định / Default'
-          },
-          {
-            'code': 'en',
-            'flag': '🇬🇧',
-            'name': 'English',
-            'subtitle': 'English'
-          },
-          {
-            'code': 'es',
-            'flag': '🇪🇸',
-            'name': 'Español',
-            'subtitle': 'Spanish'
-          },
-        ];
-
-        return SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
-                  child: Container(
-                    width: 40,
-                    height: 4,
-                    decoration: BoxDecoration(
-                      color: isDark
-                          ? const Color(0xFF3F3E48)
-                          : const Color(0xFFE2E8F0),
-                      borderRadius: BorderRadius.circular(2),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Text(
-                    s.selectLanguageTitle,
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: isDark ? Colors.white : const Color(0xFF0F172A),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 12),
-                ...languages.map((lang) {
-                  final isSelected = settings.languageCode == lang['code'];
-                  return InkWell(
-                    onTap: () {
-                      settings.setLanguage(lang['code']!);
-                      Navigator.pop(ctx);
-                    },
-                    borderRadius: BorderRadius.circular(16),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 12),
-                      margin: const EdgeInsets.symmetric(vertical: 4),
-                      decoration: BoxDecoration(
-                        color: isSelected
-                            ? (isDark
-                                ? const Color(0xFF2C2A34)
-                                : const Color(0xFFF1F5F9))
-                            : Colors.transparent,
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: Row(
-                        children: [
-                          Text(lang['flag']!,
-                              style: const TextStyle(fontSize: 24)),
-                          const SizedBox(width: 14),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  lang['name']!,
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600,
-                                    color: isDark
-                                        ? Colors.white
-                                        : const Color(0xFF0F172A),
-                                  ),
-                                ),
-                                Text(
-                                  lang['subtitle']!,
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: isDark
-                                        ? const Color(0xFF8E8D9A)
-                                        : const Color(0xFF64748B),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          if (isSelected)
-                            Icon(
-                              Icons.check_circle_rounded,
-                              color: isDark
-                                  ? Colors.white
-                                  : const Color(0xFF0F172A),
-                              size: 20,
-                            ),
-                        ],
-                      ),
-                    ),
-                  );
-                }),
-              ],
-            ),
-          ),
-        );
-      },
-    );
+    showLanguageSelectorModal(context);
   }
 
   void _showTargetDialog(BuildContext context, int currentTarget, bool isDark) {
+    final s = context.read<AppSettingsProvider>().strings;
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
+        scrollable: true,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         backgroundColor: isDark ? const Color(0xFF212027) : Colors.white,
         title: Text(
-          'Mục tiêu Calo hàng ngày',
+          s.dailyCalorieGoal,
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
@@ -161,7 +39,7 @@ class ProfileScreen extends StatelessWidget {
           ),
         ),
         content: Text(
-          'Mục tiêu hiện tại của bạn là $currentTarget kcal/ngày.\n\nBạn có thể thay đổi mục tiêu này trong cài đặt Onboarding hoặc liên hệ hỗ trợ.',
+          s.dailyCalorieGoalMessage(currentTarget),
           style: TextStyle(
             fontSize: 14,
             color: isDark ? const Color(0xFF8E8D9A) : const Color(0xFF64748B),
@@ -170,8 +48,7 @@ class ProfileScreen extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('Đóng',
-                style: TextStyle(fontWeight: FontWeight.bold)),
+            child: Text(s.close, style: TextStyle(fontWeight: FontWeight.bold)),
           ),
         ],
       ),
@@ -179,13 +56,15 @@ class ProfileScreen extends StatelessWidget {
   }
 
   void _showNotificationInfoDialog(BuildContext context, bool isDark) {
+    final s = context.read<AppSettingsProvider>().strings;
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
+        scrollable: true,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         backgroundColor: isDark ? const Color(0xFF212027) : Colors.white,
         title: Text(
-          'Thông báo nhắc nhở',
+          s.reminderNotifications,
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
@@ -193,7 +72,7 @@ class ProfileScreen extends StatelessWidget {
           ),
         ),
         content: Text(
-          'Thông báo nhắc bữa ăn và theo dõi lượng calo hằng ngày đã được bật tự động.',
+          s.reminderNotificationsEnabled,
           style: TextStyle(
             fontSize: 14,
             color: isDark ? const Color(0xFF8E8D9A) : const Color(0xFF64748B),
@@ -202,8 +81,7 @@ class ProfileScreen extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('Đã hiểu',
-                style: TextStyle(fontWeight: FontWeight.bold)),
+            child: Text(s.gotIt, style: TextStyle(fontWeight: FontWeight.bold)),
           ),
         ],
       ),
@@ -211,13 +89,15 @@ class ProfileScreen extends StatelessWidget {
   }
 
   void _showUserGuideDialog(BuildContext context, bool isDark) {
+    final s = context.read<AppSettingsProvider>().strings;
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
+        scrollable: true,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         backgroundColor: isDark ? const Color(0xFF212027) : Colors.white,
         title: Text(
-          'Hướng dẫn sử dụng CalGo',
+          s.userGuideTitle,
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
@@ -225,10 +105,7 @@ class ProfileScreen extends StatelessWidget {
           ),
         ),
         content: Text(
-          '1. Nhấn nút Scan (+) để chụp hoặc chọn ảnh món ăn.\n'
-          '2. AI sẽ tự động phân tích calo và dinh dưỡng.\n'
-          '3. Bạn có thể chỉnh sửa khối lượng hoặc thêm nguyên liệu trước khi lưu.\n'
-          '4. Xem lại lịch sử ăn uống tại tab Lịch sử.',
+          s.userGuideContent,
           style: TextStyle(
             fontSize: 14,
             height: 1.5,
@@ -238,8 +115,7 @@ class ProfileScreen extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('Tuyệt vời',
-                style: TextStyle(fontWeight: FontWeight.bold)),
+            child: Text(s.great, style: TextStyle(fontWeight: FontWeight.bold)),
           ),
         ],
       ),
@@ -247,13 +123,15 @@ class ProfileScreen extends StatelessWidget {
   }
 
   void _showSupportDialog(BuildContext context, bool isDark) {
+    final s = context.read<AppSettingsProvider>().strings;
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
+        scrollable: true,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         backgroundColor: isDark ? const Color(0xFF212027) : Colors.white,
         title: Text(
-          'Hỗ trợ khách hàng',
+          s.customerSupport,
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
@@ -261,7 +139,7 @@ class ProfileScreen extends StatelessWidget {
           ),
         ),
         content: Text(
-          'Nếu bạn cần hỗ trợ hoặc góp ý sản phẩm, vui lòng gửi email về:\n\nsupport@calgo.app',
+          s.customerSupportMessage,
           style: TextStyle(
             fontSize: 14,
             color: isDark ? const Color(0xFF8E8D9A) : const Color(0xFF64748B),
@@ -270,8 +148,7 @@ class ProfileScreen extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('Đóng',
-                style: TextStyle(fontWeight: FontWeight.bold)),
+            child: Text(s.close, style: TextStyle(fontWeight: FontWeight.bold)),
           ),
         ],
       ),
@@ -279,7 +156,7 @@ class ProfileScreen extends StatelessWidget {
   }
 
   void _showPrivacyPolicyDialog(
-      BuildContext context, AppStrings s, bool isDark) {
+      BuildContext context, AppLocalizations s, bool isDark) {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -305,16 +182,20 @@ class ProfileScreen extends StatelessWidget {
         ),
         actions: [
           TextButton(
+            onPressed: () => _openLegalPage('privacy'),
+            child: Text(s.openOnline),
+          ),
+          TextButton(
             onPressed: () => Navigator.pop(ctx),
             child:
-                const Text('OK', style: TextStyle(fontWeight: FontWeight.bold)),
+                Text(s.ok, style: const TextStyle(fontWeight: FontWeight.bold)),
           ),
         ],
       ),
     );
   }
 
-  void _showTermsDialog(BuildContext context, AppStrings s, bool isDark) {
+  void _showTermsDialog(BuildContext context, AppLocalizations s, bool isDark) {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -340,9 +221,13 @@ class ProfileScreen extends StatelessWidget {
         ),
         actions: [
           TextButton(
+            onPressed: () => _openLegalPage('terms'),
+            child: Text(s.openOnline),
+          ),
+          TextButton(
             onPressed: () => Navigator.pop(ctx),
             child:
-                const Text('OK', style: TextStyle(fontWeight: FontWeight.bold)),
+                Text(s.ok, style: const TextStyle(fontWeight: FontWeight.bold)),
           ),
         ],
       ),
@@ -350,31 +235,41 @@ class ProfileScreen extends StatelessWidget {
   }
 
   void _showDeleteAccountDialog(BuildContext context, AuthProvider authProvider,
-      AppStrings s, bool isDark) {
+      AppLocalizations s, bool isDark) {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
+        scrollable: true,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         backgroundColor: isDark ? const Color(0xFF212027) : Colors.white,
         title: Row(
           children: [
             const Icon(Icons.warning_amber_rounded, color: Color(0xFFEF4444)),
             const SizedBox(width: 8),
-            Text(s.deleteAccount,
+            Expanded(
+              child: Text(
+                s.deleteAccount,
                 style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFFEF4444))),
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFFEF4444),
+                ),
+              ),
+            ),
           ],
         ),
         content: Text(
-          s.deleteAccountConfirmMessage,
+          '${s.deleteAccountConfirmMessage}\n\n${s.deleteAccountSubscriptionWarning}',
           style: TextStyle(
             fontSize: 14,
             color: isDark ? const Color(0xFF8E8D9A) : const Color(0xFF64748B),
           ),
         ),
         actions: [
+          TextButton(
+            onPressed: () => _openLegalPage('delete-account'),
+            child: Text(s.onlineGuide),
+          ),
           TextButton(
             onPressed: () => Navigator.pop(ctx),
             child: Text(s.cancel,
@@ -383,9 +278,16 @@ class ProfileScreen extends StatelessWidget {
           ElevatedButton(
             onPressed: () async {
               Navigator.pop(ctx);
-              await authProvider.logout();
-              if (context.mounted) {
+              final deleted = await authProvider.deleteAccount();
+              if (deleted && context.mounted) {
                 context.go('/login');
+              } else if (context.mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(authProvider.error ?? s.deleteAccountFailed),
+                    backgroundColor: Colors.redAccent,
+                  ),
+                );
               }
             },
             style: ElevatedButton.styleFrom(
@@ -484,7 +386,8 @@ class ProfileScreen extends StatelessWidget {
                                   ),
                                 ),
                         ),
-                        if (user?.subscriptionTier != null)
+                        if (!AppBuildConfig.isTesting &&
+                            user?.hasPremiumAccess == true)
                           Positioned(
                             top: -2,
                             right: -2,
@@ -512,7 +415,7 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 12),
                     Text(
-                      user?.name ?? 'Người dùng CalGo',
+                      user?.name ?? s.defaultProfileName,
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -530,58 +433,7 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     ],
 
-                    const SizedBox(height: 20),
-                    Container(height: 1, color: Colors.white.withOpacity(0.15)),
                     const SizedBox(height: 16),
-
-                    // Stats Row
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Column(
-                          children: [
-                            Text(
-                              '${user?.credits ?? 0}',
-                              style: const TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                            Text(
-                              s.creditsLabel,
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.white.withOpacity(0.6),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Container(
-                            width: 1,
-                            height: 36,
-                            color: Colors.white.withOpacity(0.2)),
-                        Column(
-                          children: [
-                            Text(
-                              '${user?.totalScans ?? 0}',
-                              style: const TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                            Text(
-                              s.scannedCountLabel,
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.white.withOpacity(0.6),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
                   ],
                 ),
               ),
@@ -609,29 +461,30 @@ class ProfileScreen extends StatelessWidget {
                 clipBehavior: Clip.antiAlias,
                 child: Column(
                   children: [
-                    // Hàng 1: Gói thành viên Premium (SaaS)
-                    _buildMenuItem(
-                      icon: Icons.workspace_premium_outlined,
-                      label: 'Gói thành viên Premium',
-                      badge: 'PRO',
-                      isSpecialBadge: true,
-                      textColor: textColor,
-                      borderColor: borderColor,
-                      isDark: isDark,
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const PremiumPaywallStep()),
-                        );
-                      },
-                    ),
+                    if (!AppBuildConfig.isTesting)
+                      _buildMenuItem(
+                        icon: Icons.workspace_premium_outlined,
+                        label: s.premiumMembership,
+                        badge: 'PRO',
+                        isSpecialBadge: true,
+                        textColor: textColor,
+                        borderColor: borderColor,
+                        isDark: isDark,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const PremiumPaywallStep()),
+                          );
+                        },
+                      ),
 
                     // Hàng 2: Mua lượt quét (Credit Topup)
                     _buildMenuItem(
                       icon: Icons.bolt_outlined,
                       label: s.buyCredits,
-                      badge: '${user?.credits ?? 0} lượt',
+                      badge: s.creditsCount(user?.credits ?? 0),
                       textColor: textColor,
                       borderColor: borderColor,
                       isDark: isDark,
@@ -653,23 +506,14 @@ class ProfileScreen extends StatelessWidget {
                     _buildMenuItem(
                       icon: Icons.track_changes_outlined,
                       label: s.calorieTarget,
-                      badge: '${user?.dailyCalorieTarget.round() ?? 2000} kcal',
+                      badge: s.guidanceDishCalories(
+                          user?.dailyCalorieTarget.round() ?? 2000),
                       textColor: textColor,
                       borderColor: borderColor,
                       isDark: isDark,
                       onTap: () => _showTargetDialog(context,
                           user?.dailyCalorieTarget.round() ?? 2000, isDark),
                     ),
-
-                    if (user?.isDev == true)
-                      _buildMenuItem(
-                        icon: Icons.developer_mode_outlined,
-                        label: 'Dev Dashboard',
-                        textColor: textColor,
-                        borderColor: borderColor,
-                        isDark: isDark,
-                        onTap: () => context.push('/dev'),
-                      ),
 
                     // Thông báo
                     _buildMenuItem(
@@ -832,6 +676,74 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ),
               ),
+
+              // ── Reset Onboarding (Dev/Test) ───────────────────
+              ...[
+                const SizedBox(height: 12),
+                SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton.icon(
+                    onPressed: () async {
+                      final confirmed = await showDialog<bool>(
+                        context: context,
+                        builder: (ctx) => AlertDialog(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
+                          title: const Row(
+                            children: [
+                              Icon(Icons.refresh_rounded,
+                                  color: Color(0xFF7C3AED)),
+                              SizedBox(width: 8),
+                              Text('Reset Onboarding'),
+                            ],
+                          ),
+                          content: const Text(
+                            'This will clear all onboarding progress and restart the flow. For testing only.',
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(ctx, false),
+                              child: const Text('Cancel'),
+                            ),
+                            FilledButton(
+                              onPressed: () => Navigator.pop(ctx, true),
+                              style: FilledButton.styleFrom(
+                                backgroundColor: const Color(0xFF7C3AED),
+                              ),
+                              child: const Text('Reset'),
+                            ),
+                          ],
+                        ),
+                      );
+                      if (confirmed == true && context.mounted) {
+                        await context
+                            .read<OnboardingProvider>()
+                            .resetOnboarding();
+                        if (context.mounted) context.go('/onboarding');
+                      }
+                    },
+                    icon: const Icon(Icons.refresh_rounded,
+                        color: Color(0xFF7C3AED), size: 18),
+                    label: const Text(
+                      '🧪 Reset Onboarding',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF7C3AED),
+                        height: 1.2,
+                      ),
+                    ),
+                    style: OutlinedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      side: const BorderSide(color: Color(0xFFDDD6FE)),
+                      backgroundColor: const Color(0xFFF5F3FF),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ],
           ),
         ),

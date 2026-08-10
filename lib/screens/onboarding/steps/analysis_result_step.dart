@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/onboarding_provider.dart';
+import '../../../providers/app_settings_provider.dart';
+import '../../../l10n/generated/app_localizations.dart';
 import '../../../models/onboarding_data.dart';
 import '../../../widgets/premium_ui.dart';
 
@@ -72,13 +74,7 @@ class _AnalyzingPhaseState extends State<_AnalyzingPhase>
   int _messageIndex = 0;
   Timer? _messageTimer;
 
-  static const _messages = [
-    'Đang phân tích thông tin của bạn...',
-    'Đang tính toán nhu cầu calo...',
-    'Đang xây dựng mục tiêu phù hợp...',
-    'Đang tạo kế hoạch dinh dưỡng...',
-    'Sắp hoàn tất...',
-  ];
+  static const _messageCount = 5;
 
   @override
   void initState() {
@@ -109,7 +105,7 @@ class _AnalyzingPhaseState extends State<_AnalyzingPhase>
 
     // Cycle messages every 2s
     _messageTimer = Timer.periodic(const Duration(seconds: 2), (timer) {
-      if (mounted && _messageIndex < _messages.length - 1) {
+      if (mounted && _messageIndex < _messageCount - 1) {
         setState(() => _messageIndex++);
       }
     });
@@ -127,6 +123,19 @@ class _AnalyzingPhaseState extends State<_AnalyzingPhase>
 
   @override
   Widget build(BuildContext context) {
+    final settings = context.watch<AppSettingsProvider>();
+    final s = settings.strings;
+    final messages = [
+      s.analyzingMessage1,
+      s.analyzingMessage2,
+      s.analyzingMessage3,
+      s.analyzingMessage4,
+      s.analyzingMessage5,
+    ];
+    final currentMessage = _messageIndex < messages.length
+        ? messages[_messageIndex]
+        : messages.last;
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -181,7 +190,7 @@ class _AnalyzingPhaseState extends State<_AnalyzingPhase>
                     );
                   },
                   child: Text(
-                    _messages[_messageIndex],
+                    currentMessage,
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       fontSize: 16,
@@ -280,24 +289,35 @@ class _ResultPhase extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final d = context.watch<OnboardingProvider>().data;
-    final name = d.name ?? 'bạn';
+    final settings = context.watch<AppSettingsProvider>();
+    final s = settings.strings;
+    final name = d.name ?? s.defaultUserName;
     final kcal = d.targetCaloriesPerDay;
     final protein = d.targetProteinG;
     final carb = d.targetCarbG;
     final fat = d.targetFatG;
     final bmi = d.bmi;
-    final bmiCat = d.bmiCategory;
+    final bmiCat = bmi < 18.5
+        ? s.bmiUnderweight
+        : bmi < 23
+            ? s.bmiNormal
+            : bmi < 27.5
+                ? s.bmiOverweight
+                : s.bmiObese;
     final isHealthy = bmi >= 18.5 && bmi < 23;
-    final workoutDays = _workoutDays(d.activityLevel);
+    final workoutDays = _workoutDays(d.activityLevel, s);
 
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(20, 8, 20, 32),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+        child: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.fromLTRB(20, 8, 20, 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
               // ── Header ──
               Animate(
                 effects: const [
@@ -332,16 +352,16 @@ class _ResultPhase extends StatelessWidget {
                       icon: Icons.monitor_heart_outlined,
                       label: 'BMI',
                       value: bmi > 0 ? bmi.toStringAsFixed(1) : '--',
-                      tag: isHealthy ? 'Khỏe mạnh' : bmiCat,
+                      tag: isHealthy ? s.bmiNormal : bmiCat,
                     ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
                     child: _StatCard(
                       icon: Icons.fitness_center_rounded,
-                      label: 'Tập luyện',
+                      label: s.workoutLabel,
                       value: workoutDays,
-                      tag: 'mỗi tuần',
+                      tag: s.perWeekText,
                     ),
                   ),
                 ],
@@ -370,15 +390,22 @@ class _ResultPhase extends StatelessWidget {
               const SizedBox(height: 22),
 
               // ── Chữ ký ──
-              _TaoSignature().animate().fadeIn(duration: 450.ms, delay: 750.ms),
-              const SizedBox(height: 26),
-
-              PremiumButton(
-                label: 'Tiếp tục',
+                    _TaoSignature()
+                        .animate()
+                        .fadeIn(duration: 450.ms, delay: 750.ms),
+                    const SizedBox(height: 16),
+                  ],
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
+              child: PremiumButton(
+                label: s.nextStepButton,
                 onPressed: () => context.read<OnboardingProvider>().nextStep(),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -392,19 +419,19 @@ class _ResultPhase extends StatelessWidget {
     return 0;
   }
 
-  String _workoutDays(ActivityLevel? level) {
+  String _workoutDays(ActivityLevel? level, AppLocalizations s) {
     switch (level) {
       case ActivityLevel.sedentary:
-        return '2-3 ngày';
+        return s.workoutDaysText('2-3');
       case ActivityLevel.light:
       case ActivityLevel.moderate:
-        return '3-4 ngày';
+        return s.workoutDaysText('3-4');
       case ActivityLevel.active:
-        return '4-5 ngày';
+        return s.workoutDaysText('4-5');
       case ActivityLevel.veryActive:
-        return '5-6 ngày';
+        return s.workoutDaysText('5-6');
       default:
-        return '3-4 ngày';
+        return s.workoutDaysText('3-4');
     }
   }
 }
@@ -419,6 +446,8 @@ class _Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final settings = context.watch<AppSettingsProvider>();
+    final s = settings.strings;
     return Row(
       children: [
         Image.asset(
@@ -432,7 +461,7 @@ class _Header extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Xin chào, $name',
+                s.analysisHello(name),
                 style: const TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.w700,
@@ -441,9 +470,9 @@ class _Header extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 2),
-              const Text(
-                'Kế hoạch của bạn đã sẵn sàng',
-                style: TextStyle(fontSize: 14, color: _kMuted),
+              Text(
+                s.analysisPlanReady,
+                style: const TextStyle(fontSize: 14, color: _kMuted),
               ),
             ],
           ),
@@ -472,13 +501,16 @@ class _CalorieHeroCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final settings = context.watch<AppSettingsProvider>();
+    final s = settings.strings;
+
     return _FlatCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'MỤC TIÊU CALO HẰNG NGÀY',
-            style: TextStyle(
+          Text(
+            s.dailyCalorieTargetTitle,
+            style: const TextStyle(
               fontSize: 11,
               fontWeight: FontWeight.w700,
               color: _kMuted,
@@ -506,11 +538,11 @@ class _CalorieHeroCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 6),
-              const Padding(
-                padding: EdgeInsets.only(bottom: 6),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 6),
                 child: Text(
-                  'kcal / ngày',
-                  style: TextStyle(
+                  s.kcalPerDayUnit,
+                  style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
                     color: _kMuted,
@@ -660,13 +692,16 @@ class _ProgressCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final settings = context.watch<AppSettingsProvider>();
+    final s = settings.strings;
+
     return _FlatCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'HÀNH TRÌNH CỦA BẠN',
-            style: TextStyle(
+          Text(
+            s.yourJourneyTitle,
+            style: const TextStyle(
               fontSize: 11,
               fontWeight: FontWeight.w700,
               color: _kMuted,
@@ -679,16 +714,16 @@ class _ProgressCard extends StatelessWidget {
               Expanded(
                 child: _JourneyPoint(
                   icon: Icons.monitor_weight_outlined,
-                  label: 'Hiện tại',
-                  value: '${currentWeight.toStringAsFixed(0)} kg',
+                  label: s.journeyCurrent,
+                  value: s.weightKgValue(currentWeight.toStringAsFixed(0)),
                 ),
               ),
               const Icon(Icons.chevron_right_rounded, size: 16, color: _kMuted),
               Expanded(
                 child: _JourneyPoint(
                   icon: Icons.flag_outlined,
-                  label: 'Mục tiêu',
-                  value: '${targetWeight.toStringAsFixed(0)} kg',
+                  label: s.journeyTarget,
+                  value: s.weightKgValue(targetWeight.toStringAsFixed(0)),
                   emphasize: true,
                 ),
               ),
@@ -696,8 +731,8 @@ class _ProgressCard extends StatelessWidget {
               Expanded(
                 child: _JourneyPoint(
                   icon: Icons.schedule_rounded,
-                  label: 'Thời gian',
-                  value: '$weeks tuần',
+                  label: s.journeyTimeframe,
+                  value: s.weeksUnit(weeks),
                 ),
               ),
             ],
@@ -732,9 +767,9 @@ class _ProgressCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 10),
-              const Text(
-                '35% hoàn thành',
-                style: TextStyle(
+              Text(
+                s.completedPercent(35),
+                style: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
                   color: _kInk,
@@ -867,25 +902,22 @@ class _MotivationCard extends StatelessWidget {
 
   const _MotivationCard({required this.goalType, required this.remainingKg});
 
-  String get _message {
+  String _message(AppLocalizations s) {
     switch (goalType) {
       case GoalType.lose:
-        return 'Bạn chỉ còn cách mục tiêu ${remainingKg.toStringAsFixed(0)} kg. '
-            'Những thói quen nhỏ mỗi ngày sẽ hiệu quả hơn chế độ ăn kiêng khắc nghiệt.';
+        return s.motivationAdviceLose(remainingKg.toStringAsFixed(0));
       case GoalType.gain:
-        return 'Mục tiêu calo được tối ưu để xây dựng cơ bắp săn chắc, '
-            'đồng thời hạn chế tích tụ mỡ thừa.';
+        return s.motivationAdviceGain;
       case GoalType.maintain:
-        return 'Cân nặng hiện tại của bạn đã ở mức khỏe mạnh. '
-            'Hãy cùng xây dựng thói quen giúp bạn luôn cảm thấy tốt nhất mỗi ngày.';
+        return s.motivationAdviceMaintain;
       default:
-        return 'Hãy cùng nhau đạt được mục tiêu sức khỏe của bạn '
-            'với những thói quen bền vững.';
+        return s.motivationAdviceDefault;
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final s = context.watch<AppSettingsProvider>().strings;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(18),
@@ -896,8 +928,8 @@ class _MotivationCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'LỜI KHUYÊN TỪ TÁO',
+          Text(
+            s.taoAdviceLabel,
             style: TextStyle(
               fontSize: 10.5,
               fontWeight: FontWeight.w700,
@@ -907,7 +939,7 @@ class _MotivationCard extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           Text(
-            _message,
+            _message(s),
             style: const TextStyle(
               fontSize: 14.5,
               color: Colors.white,
@@ -928,6 +960,7 @@ class _MotivationCard extends StatelessWidget {
 class _TaoSignature extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final s = context.watch<AppSettingsProvider>().strings;
     return Center(
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -944,8 +977,8 @@ class _TaoSignature extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 8),
-          const Text(
-            'Táo sẽ nhắc bạn mỗi ngày',
+          Text(
+            s.taoReminder,
             style: TextStyle(
               fontSize: 12.5,
               fontWeight: FontWeight.w500,

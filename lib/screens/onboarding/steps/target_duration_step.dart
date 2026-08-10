@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/onboarding_provider.dart';
+import '../../../providers/app_settings_provider.dart';
 
 class TargetDurationStep extends StatefulWidget {
   const TargetDurationStep({super.key});
@@ -15,6 +16,7 @@ class _TargetDurationStepState extends State<TargetDurationStep> {
 
   @override
   Widget build(BuildContext context) {
+    final s = context.watch<AppSettingsProvider>().strings;
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
       body: SafeArea(
@@ -31,13 +33,13 @@ class _TargetDurationStepState extends State<TargetDurationStep> {
                     fit: BoxFit.contain,
                   ),
                   const SizedBox(height: 12),
-                  const Text('Bạn muốn đạt mục tiêu trong?',
+                  Text(s.durationTitle,
                       style: TextStyle(
                           fontSize: 28,
                           fontWeight: FontWeight.w700,
                           color: Color(0xFF111111))),
                   const SizedBox(height: 8),
-                  const Text('Chọn thời gian phù hợp với bạn',
+                  Text(s.durationNote,
                       style: TextStyle(fontSize: 15, color: Color(0xFF7A7A7A))),
                   const SizedBox(height: 32),
                   ...List.generate((_options.length + 1) ~/ 2, (row) {
@@ -49,7 +51,8 @@ class _TargetDurationStepState extends State<TargetDurationStep> {
                           Expanded(
                             child: _DurationCard(
                               weeks: _options[i],
-                              label: '${_options[i]} tuần',
+                              label: s.weeksUnit(_options[i]),
+                              unit: s.weekUnit,
                               selected: _options[i] == _weeks,
                               onTap: () => setState(() => _weeks = _options[i]),
                             ),
@@ -60,7 +63,8 @@ class _TargetDurationStepState extends State<TargetDurationStep> {
                             Expanded(
                               child: _DurationCard(
                                 weeks: _options[i + 1],
-                                label: '${_options[i + 1]} tuần',
+                                label: s.weeksUnit(_options[i + 1]),
+                                unit: s.weekUnit,
                                 selected: _options[i + 1] == _weeks,
                                 onTap: () =>
                                     setState(() => _weeks = _options[i + 1]),
@@ -90,9 +94,9 @@ class _TargetDurationStepState extends State<TargetDurationStep> {
                         borderRadius: BorderRadius.circular(18)),
                     elevation: 0,
                   ),
-                  child: const Text('Tiếp theo',
-                      style:
-                          TextStyle(fontSize: 17, fontWeight: FontWeight.w600)),
+                  child: Text(s.nextStepButton,
+                      style: const TextStyle(
+                          fontSize: 17, fontWeight: FontWeight.w600)),
                 ),
               ),
             ),
@@ -106,12 +110,14 @@ class _TargetDurationStepState extends State<TargetDurationStep> {
 class _DurationCard extends StatelessWidget {
   final int weeks;
   final String label;
+  final String unit;
   final bool selected;
   final VoidCallback onTap;
 
   const _DurationCard({
     required this.weeks,
     required this.label,
+    required this.unit,
     required this.selected,
     required this.onTap,
   });
@@ -148,7 +154,7 @@ class _DurationCard extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             Text(
-              'tuần',
+              unit,
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,

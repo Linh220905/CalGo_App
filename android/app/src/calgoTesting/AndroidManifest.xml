@@ -1,0 +1,10 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <application>
+        <!-- Ads are disabled in the testing flavor. Prevent the Mobile Ads
+             provider from requiring a production AdMob application ID. -->
+        <provider
+            android:name="com.google.android.gms.ads.MobileAdsInitProvider"
+            tools:node="remove" />
+    </application>
+</manifest>

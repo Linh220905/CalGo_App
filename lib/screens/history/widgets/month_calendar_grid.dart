@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import '../../../models/history_item.dart';
+import '../../../providers/app_settings_provider.dart';
 import '../../../utils/nutrition_calculator.dart';
+import '../../../utils/localized_date_utils.dart';
 
 class DayGroupData {
   final int date;
@@ -45,10 +48,12 @@ class MonthCalendarGrid extends StatelessWidget {
     required this.primaryTextColor,
   });
 
-  static const _weekdays = ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'];
-
   @override
   Widget build(BuildContext context) {
+    final strings = context.watch<AppSettingsProvider>().strings;
+    final weekdays = localizedWeekdays(
+      context.read<AppSettingsProvider>().languageCode,
+    );
     final daysCount = DateTime(year, month + 1, 0).day;
     final firstDayOfWeek = DateTime(year, month, 1).weekday % 7; // 0=Sun
 
@@ -81,22 +86,33 @@ class MonthCalendarGrid extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 10),
-              Text(
-                monthLabel,
-                style: GoogleFonts.beVietnamPro(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
-                  color: primaryTextColor,
-                  letterSpacing: -0.3,
+              Expanded(
+                flex: 3,
+                child: Text(
+                  monthLabel,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.beVietnamPro(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    color: primaryTextColor,
+                    letterSpacing: -0.3,
+                  ),
                 ),
               ),
-              const Spacer(),
-              Text(
-                '$totalMeals bữa',
-                style: GoogleFonts.beVietnamPro(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                  color: subtitleColor,
+              const SizedBox(width: 8),
+              Flexible(
+                flex: 2,
+                child: Text(
+                  strings.mealCount(totalMeals),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.end,
+                  style: GoogleFonts.beVietnamPro(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: subtitleColor,
+                  ),
                 ),
               ),
             ],
@@ -105,7 +121,7 @@ class MonthCalendarGrid extends StatelessWidget {
 
           // ── Weekday Labels ───────────────────────────
           Row(
-            children: _weekdays
+            children: weekdays
                 .map(
                   (d) => Expanded(
                     child: Text(

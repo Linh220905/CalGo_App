@@ -1,0 +1,922 @@
+{
+  "@@locale": "pt",
+  "tabHome": "Principal",
+  "tabAnalytics": "Análise",
+  "tabSettings": "Configurações",
+  "today": "Hoje",
+  "yesterday": "Ontem",
+  "caloriesLeft": "Calorias deixadas",
+  "proteinLeft": "Proteínas restantes",
+  "carbsLeft": "Carbonatos à esquerda",
+  "fatsLeft": "Gorduras à esquerda",
+  "recentlyUploaded": "Enviado recentemente",
+  "noMealsUploaded": "Nenhuma refeição enviada ainda",
+  "tapToScanMeal": "Toque para analisar a sua primeira refeição com IA",
+  "profileTitle": "Conta Pessoal",
+  "creditsLabel": "Digitalizar créditos",
+  "scannedCountLabel": "Refeições examinadas",
+  "buyCredits": "Comprar Créditos",
+  "statistics": "Estatísticas",
+  "calorieTarget": "Objetivo Calórico",
+  "notifications": "Notificação",
+  "darkMode": "Modo Escuro",
+  "language": "Língua",
+  "languageDisplayName": "Português",
+  "userGuide": "Guia do Usuário",
+  "customerSupport": "Suporte ao Cliente",
+  "logout": "Sair",
+  "selectLanguageTitle": "Selecionar idioma",
+  "scanTitle": "Refeição de Digitalização",
+  "scanInstructionHeader": "Manter a comida dentro da moldura",
+  "scanInstructionSub": "Assegurar a iluminação adequada para o reconhecimento preciso de IA",
+  "selectFromGallery": "Selecionar na Galeria",
+  "outOfCreditsTitle": "Fora de Scan Créditos!",
+  "outOfCreditsMessage": "Você usou todos os seus créditos de varredura. Aumentar para continuar a seguir a nutrição!",
+  "buyMore": "Comprar mais",
+  "cancel": "Cancelar",
+  "pricingTitle": "Actualizar & Créditos",
+  "pricingSubtitle": "Escolha o melhor plano para desbloquear capacidades completas de IA",
+  "creditPacksTitle": "Digitalizar pacotes de crédito",
+  "noExpiryBadge": "Sem expiração",
+  "popularBadge": "Popular",
+  "subscriptionsTitle": "Subscrições Pro",
+  "payButton": "Pague Agora",
+  "privacyPolicy": "Política de Privacidade",
+  "termsOfService": "Termos de serviço",
+  "deleteAccount": "Apagar conta",
+  "openOnline": "Abrir online",
+  "onlineGuide": "Guia online",
+  "deleteAccountSubscriptionWarning": "Excluir sua conta CalGo não cancela uma assinatura do Google Play. Se você tiver o Premium, cancele-o separadamente no Google Play para evitar uma taxa de renovação.",
+  "restorePurchases": "Restaurar compras",
+  "privacyPolicyContent": "Política de Privacidade CalGo (atualizada em 5 de agosto de 2026):\n\n1. Dados que coletamos: e-mail de conta, nome de exibição, identificador de login do Google, informações de nutrição, fotos de refeição, resultados de varredura, histórico de refeições, metadados de compra, diagnóstico de aplicativo/dispositivo e preferências de notificação.\n2. Como são usadas permissões: câmera e acesso a fotos são solicitados apenas quando você optar por capturar ou selecionar uma foto de refeição; as notificações são usadas apenas quando habilitado.\n3. Como os dados são usados: para fornecer análise nutricional de IA, sincronizar sua conta, processar compras do Google Play, prevenir abusos, fornecer suporte e melhorar a confiabilidade. As fotos podem ser processadas por nossos provedores de serviços de hospedagem e IA.\n4. Compartilhamento e segurança: não vendemos seus dados pessoais ou fotos de refeição. Os fornecedores necessários, como hospedagem, processamento de IA, Google Sign-In e Google Play Billing, podem processar dados limitados. Usamos HTTPS e controles de acesso, mas nenhum sistema é completamente seguro.\n5. Retenção e exclusão: dados de conta e histórico de refeições são excluídos quando você excluir sua conta, exceto dados que devem ser retidos para prevenção de fraudes, disputas ou obrigações legais. Os backups podem levar um tempo razoável para expirar.\n6. Seus direitos: excluir sua conta em Perfil ou visite https://calgo.tech/delete-account. Para acesso, correção ou perguntas, contate support@calgo.tech. Política completa: https://calgo.tech/privacy.",
+  "termsOfServiceContent": "Termos de serviço da CalGo:\n\n1. Serviço e dispensa médica: Os resultados nutricionais de IA são estimativas apenas para referência e não substituem o aconselhamento médico profissional. O CalGo não é um dispositivo médico.\n2. Pagamentos: os pacotes de crédito são compras digitais únicas. Planos premium semanais, mensais e anuais estão renovando automaticamente as assinaturas do Google Play, a menos que sejam cancelados antes da próxima renovação. Gerencie ou cancele em https://play.google.com/store/account/assinaturas.\n3. Reembolsos e exclusão: Google Play lida com cobranças e reembolsos Android. Excluir uma conta CalGo não cancela uma assinatura do Google Play.\n4. Conteúdo e propriedade intelectual: você mantém a propriedade de fotos carregadas; CalGo recebe uma licença limitada para processá-las para fornecer e melhorar o serviço. A CalGo possui seu aplicativo, marca e software.\n5. Contacto: support@calgo.tech. Termos completos: https://calgo.tech/terms.",
+  "deleteAccountConfirmMessage": "Tem certeza de que deseja excluir permanentemente sua conta CalGo e todos os dados de registro de calorias? Esta acção não pode ser desfeita.",
+  "historyTitle": "História da Refeição",
+  "historySubtitle": "A sua viagem nutricional",
+  "mealsCountLabel": "Refeições",
+  "streakDaysLabel": "Streak",
+  "kcalPerDay": "Kcal/dia",
+  "proteinPerDay": "Proteínas/dia",
+  "noMealsHistory": "Nenhuma refeição registrada ainda",
+  "scanFirstMealPrompt": "Analise sua primeira refeição para começar\na sua viagem nutricional",
+  "scanFirstMealButton": "Digitalizar a Primeira Refeição",
+  "deleteMealConfirm": "Queres apagar esta refeição?",
+  "cannotDeleteMeal": "Não foi possível apagar a refeição. Por favor, tente novamente.",
+  "photoGalleryTitle": "Fotos de Alimentos",
+  "noPhotosYet": "Ainda não há fotos de comida.",
+  "takePhotosPrompt": "Tire fotos de suas refeições para construir sua coleção!",
+  "scanFoodNow": "Escaneie o alimento agora",
+  "welcomeTo": "Bem- vindo a",
+  "getStarted": "Começar",
+  "snapPhotoAiTitle": "Tira uma foto. Deixa a IA trabalhar.",
+  "snapPhotoAiDesc": "A IA reconhece automaticamente alimentos e calcula calorias em segundos.",
+  "trackEasilyTitle": "Rastreie com facilidade.",
+  "trackEasilyDesc": "Rastreie calorias, proteínas, carboidratos e gordura todos os dias.",
+  "reachGoalsTitle": "Alcançar objetivos mais rápido.",
+  "reachGoalsDesc": "Obter alvos personalizados e acompanhar o progresso perda de gordura.",
+  "nextStepButton": "Próxima",
+  "goalStepTitle": "Qual é o teu objectivo?",
+  "goalStepSubtitle": "Ajuda a CalGo a construir um plano que se encaixe em você",
+  "goalLoseWeight": "Perde peso",
+  "goalLoseWeightDesc": "Queimar gordura de forma eficiente, corpo tom",
+  "goalLoseWeightReason": "Isso nos ajuda a construir um plano de perda de gordura que protege o músculo e permanece sustentável.",
+  "goalGainMuscle": "Ganhar Músculo",
+  "goalGainMuscleDesc": "Construir músculo e aumentar a força",
+  "goalGainMuscleReason": "Isso nos ajuda a construir um plano de ganho muscular em torno de suas necessidades de treinamento e proteína.",
+  "goalMaintain": "Manter o Peso",
+  "goalMaintainDesc": "Mantenha o seu físico equilibrado",
+  "goalMaintainReason": "Isso nos ajuda a construir um plano equilibrado que se encaixa em sua vida a longo prazo.",
+  "nameStepTitle": "O teu nome é...",
+  "nameStepHint": "Digite seu nome",
+  "demoStepTitle": "Veja CalGo em ação",
+  "genderStepTitle": "Qual é o seu sexo?",
+  "genderStepSubtitle": "Para cálculos precisos",
+  "genderMale": "Masculino",
+  "genderFemale": "Mulheres",
+  "genderOther": "Outros",
+  "ageStepTitle": "Quantos anos tens?",
+  "heightStepTitle": "Qual é a sua altura?",
+  "weightStepTitle": "Qual é o seu peso atual?",
+  "targetWeightStepTitle": "Qual é o seu peso alvo?",
+  "activityStepTitle": "Qual é o seu nível de atividade?",
+  "dietStepTitle": "Segue alguma dieta específica?",
+  "analysisTitle": "Analisando seus dados...",
+  "accountStepTitle": "Criar conta para salvar seu plano",
+  "continueWithGoogle": "Continuar com o Google",
+  "continueWithApple": "Continuar com a Apple",
+  "heightStepDesc": "Ajuda a calcular o IMC e necessidades calóricas precisas",
+  "weightStepDesc": "Ajuda a determinar seus objetivos de nutrição personalizados",
+  "currentHeightHeader": "Altura atual",
+  "currentWeightHeader": "Peso atual",
+  "bmiIndexTitle": "Índice de IMC",
+  "bmiUnderweight": "Subpeso",
+  "bmiNormal": "Normal",
+  "bmiOverweight": "Sobrepeso",
+  "bmiObese": "Obeso",
+  "targetWeightDesc": "Ajuda a definir seus objetivos nutricionais pessoais",
+  "goalMaintainLabel": "Manter o físico",
+  "goalLoseLabel": "Perda de peso",
+  "goalGainLabel": "Ganho muscular",
+  "goalMaintainHint": "Alvo igual ao seu peso atual",
+  "goalLoseDiffText": "Alvo: perder {kg} kg",
+  "@goalLoseDiffText": {
+    "description": "Localized UI text: goalLoseDiffText",
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      }
+    }
+  },
+  "goalGainDiffText": "Alvo: Ganhe {kg} kg",
+  "@goalGainDiffText": {
+    "description": "Localized UI text: goalGainDiffText",
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      }
+    }
+  },
+  "paceStepTitle": "Pace por semana?",
+  "paceStepSubtitle": "Escolha uma taxa confortável para o seu estilo de vida",
+  "activityStepSubtitle": "Afecta o seu gasto calórico diário",
+  "dietStepSubtitle": "CalGo recomenda refeições mais adequadas para o seu corpo e objetivos.",
+  "socialProofTitle": "O que a comunidade diz sobre CalGo",
+  "socialProofSubtitle": "Comentários autênticos de membros reais",
+  "ratingTag": "5★ Classificação",
+  "referralStepTitle": "Como soubeste do CalGo?",
+  "referralStepSubtitle": "Ajuda-nos a compreender a sua jornada",
+  "referralFriend": "Recomendação de amizade",
+  "sportsStepTitle": "Que desporto jogas?",
+  "sportsStepSubtitle": "Selecione atividades que você faz regularmente",
+  "accountStepSubtitle": "Informações seguras & sincronizar progresso pessoal",
+  "dataPrivacyNote": "Seus dados são estritamente criptografados e confidenciais",
+  "analysisHello": "Olá, {name}",
+  "@analysisHello": {
+    "description": "Localized UI text: analysisHello",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "analysisPlanReady": "O teu plano está pronto.",
+  "dailyCalorieTargetTitle": "ALVO DAILY CALORIE",
+  "kcalPerDayUnit": "kcal / dia",
+  "workoutLabel": "Exercício",
+  "workoutDaysText": "{days} dias",
+  "@workoutDaysText": {
+    "description": "Localized UI text: workoutDaysText",
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "perWeekText": "por semana",
+  "yourJourneyTitle": "SUA JORNAL",
+  "journeyCurrent": "Atual",
+  "journeyTarget": "Alvo",
+  "journeyTimeframe": "Prazo",
+  "weeksUnit": "{weeks} semanas",
+  "@weeksUnit": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
+  "completedPercent": "{p}% terminado",
+  "@completedPercent": {
+    "description": "Localized UI text: completedPercent",
+    "placeholders": {
+      "p": {
+        "type": "int"
+      }
+    }
+  },
+  "loginTitle": "Bem- vindo ao CalGo",
+  "loginSubtitle": "Inicie sessão para sincronizar os dados nutricionais",
+  "loginGoogle": "Continuar com o Google",
+  "loginApple": "Continuar com a Apple",
+  "loginFailed": "Falha ao iniciar sessão: {error}",
+  "@loginFailed": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "appleComingSoon": "A entrada da Apple está a chegar!",
+  "loginRequired": "Entre no Google para proteger e sincronizar seus dados.",
+  "loginRequiredButton": "O login é necessário para sincronizar os dados",
+  "progressLabel": "Progresso",
+  "dataLoadFailed": "Não foi possível carregar dados",
+  "deleteMealQuestion": "Queres apagar esta refeição?",
+  "deleteMealFailed": "Não foi possível apagar a refeição. Por favor, tente novamente.",
+  "retry": "Tenta outra vez.",
+  "mealTypeBreakfast": "Pequeno-almoço",
+  "mealTypeLunch": "Almoço",
+  "mealTypeDinner": "Jantar",
+  "mealTypeSnack": "Lanche",
+  "greetingMorning": "Bom dia.",
+  "greetingAfternoon": "Boa tarde.",
+  "greetingEvening": "Boa noite.",
+  "aiCoachAlmostGoal": "Quase atingiste o teu golo! Continua!",
+  "aiCoachPlentyCalories": "Restam muitas calorias hoje. Come bem!",
+  "aiCoachMomentum": "Continua o bom momento!",
+  "mascotGoalTipWater": "Beba um gole de água para se refrescar!",
+  "mascotGoalTipSlow": "Comer lentamente e ouvir o seu corpo é incrível.",
+  "mascotGoalTipGreat": "Estiveste muito bem hoje.",
+  "mascotGoalReached": "Meta calórica alcançada para hoje! Manter este ritmo é a camada de topo",
+  "mascotGuidanceIntro": "Escolhi boas refeições para ti hoje. Toque para verificá-los!",
+  "mascotGuidanceOpen": "Os pratos recomendados ainda estão na tela de sugestão!",
+  "mascotGuidanceTipWater": "Bebeste água suficiente? Tome um gole para refrescar!",
+  "mascotGuidanceTipSlow": "Coma devagar, você vai se sentir cheio por mais tempo!",
+  "mascotGuidanceOverTarget": "Você está {calories} kcal acabado. Escolhi refeições ligeiras para ti!",
+  "@mascotGuidanceOverTarget": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "mascotGuidanceRemaining": "Você precisa {calories} kcal mais para atingir o seu objetivo. Vejam as minhas escolhas!",
+  "@mascotGuidanceRemaining": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "mascotTipHydration": "Já hydrated, mano? Tome um gole de água para ficar afiado",
+  "mascotTipChew": "Mastigar lentamente, ajuda a digestão e mantém você cheio",
+  "mascotTipConsistency": "Coerência todos os dias constrói um grande físico",
+  "mascotNoMeals": "Ainda não registou nada? Tira uma foto de comida para me mostrares!",
+  "mascotOverTarget": "Sobre o seu alvo por cerca de {calories} kcal hoje. Não se preocupe, vá leve e alta proteína para sua próxima refeição!",
+  "@mascotOverTarget": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "mascotMissingCalories": "Ainda falta o {calories} kcal hoje. Vai buscar algo delicioso!",
+  "@mascotMissingCalories": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "mascotOnTrack": "Disciplina perfeita! As calorias batem em cheio!",
+  "mealCount": "{count, plural, =0 {Nenhuma refeição} =1 {1 refeição} other {{count} refeições}}",
+  "@mealCount": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "ingredientCount": "{count, plural, =0 {Nenhum ingrediente} =1 {1 ingrediente} other {{count} ingredientes}}",
+  "@ingredientCount": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "dishCount": "{count, plural, =1 {1 prato} other {{count} pratos}}",
+  "@dishCount": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "monthFallback": "Mês {month}",
+  "@monthFallback": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "month": {
+        "type": "int"
+      }
+    }
+  },
+  "scanProcessingRecognizing": "Reconhecer a sua refeição...",
+  "scanProcessingRecognized": "Refeição reconhecida",
+  "scanProcessingIngredients": "Analisando ingredientes...",
+  "scanProcessingNutrition": "Identificar os factos nutricionais...",
+  "scanProcessingCalories": "Calculando calorias...",
+  "scanProcessingPortion": "A estimar o tamanho da porção...",
+  "scanProcessingSummary": "A IA está a compilar o teu resultado...",
+  "scanProcessingReport": "Preparando relatório...",
+  "cameraPermissionDenied": "A permissão da câmara foi negada. Abra Configurações e permita o acesso da câmera para o CalGo!",
+  "cameraPermissionRequired": "O CalGo precisa de permissão para analisar as refeições.",
+  "noCamera": "Nenhuma câmera encontrada",
+  "cameraStartFailed": "Não foi possível ligar a câmara. Feche esta tela e tente novamente!",
+  "scanInProgress": "Outra refeição está sendo analisada. Por favor, esperem um momento!",
+  "notLoggedIn": "Não está inscrito. Inicie sessão com o Google para usar este recurso!",
+  "cameraPermissionMissing": "A permissão da câmera não está habilitada. Permitir o acesso da câmera para o CalGo nas configurações do telefone!",
+  "networkTimeout": "A rede é lenta ou cronometrada. Verifique sua conexão e tente novamente!",
+  "scanFailed": "Não foi possível analisar a foto ({error}). Por favor, tente novamente!",
+  "@scanFailed": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "scanAgain": "Analisar novamente",
+  "nutritionTitle": "Nutrição",
+  "guidanceRecoverySubtitle": "Um ajuste suave",
+  "guidanceLoggedSubtitle": "Baseado na sua última refeição",
+  "guidanceRefreshTooltip": "Novas sugestões",
+  "guidanceCaloriesRemaining": "{calories} kcal restante",
+  "@guidanceCaloriesRemaining": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "guidanceProteinRemaining": "{grams}g proteína necessária",
+  "@guidanceProteinRemaining": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "guidanceAlternativesTitle": "Ou escolher uma destas refeições",
+  "guidanceOtherMeal": "Planeio comer outra coisa.",
+  "guidanceSeeMore": "Ver mais",
+  "guidanceDisclaimer": "As sugestões são apenas para referência. Analise a refeição real para registrá-la com precisão.",
+  "guidanceFamiliarTag": "FAMILIAR",
+  "guidanceDishCalories": "{calories} kcal",
+  "@guidanceDishCalories": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "guidanceDishProtein": "P {grams}g",
+  "@guidanceDishProtein": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "guidanceDishCarbs": "C {grams}g",
+  "@guidanceDishCarbs": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "guidancePrepTime": "{minutes} min",
+  "@guidancePrepTime": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "guidancePrice": "~{price}k",
+  "@guidancePrice": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "guidanceFitGreat": "Grande ajuste",
+  "guidanceFitAdjust": "Necessita de ajustamento",
+  "guidanceFitGood": "Bom ajuste",
+  "guidanceAppleTitle": "Deixe Tao calcular com você",
+  "guidanceFirstScanAction": "Analise sua primeira refeição",
+  "guidanceAppleSuggestionTitle": "Sugestões de Tao",
+  "guidanceNextMealAction": "Analise a sua próxima refeição",
+  "guidanceGoalReachedTitle": "O objetivo de hoje está completo!",
+  "guidanceScreenTitle": "O que deve comer?",
+  "guidanceUnavailableTitle": "Sem sugestões ainda",
+  "guidanceUnavailableMessage": "Tente novamente depois de digitalizar uma refeição.",
+  "guidanceScanMeal": "Analisar uma refeição",
+  "guidanceConsiderMeals": "Refeições a considerar",
+  "guidanceScanForAccuracy": "Digitalizar para registrar com precisão",
+  "guidanceSwapWith": "Ou mudar com",
+  "guidanceChangeSuggestion": "Mudar sugestão",
+  "guidancePremiumSwapTitle": "Mudar sugestões é um recurso Premium",
+  "guidancePremiumSwapMessage": "Atualize para Premium para mudar sugestões de refeição sem limites com base em seus objetivos.",
+  "later": "Mais tarde.",
+  "upgradePremium": "Atualizar para Premium",
+  "guidanceTodayTitle": "Sugestões pessoais para hoje",
+  "guidanceTodaySubtitle": "Escolha uma refeição que se adapte às suas macros e, em seguida, verifique a verdadeira refeição antes de macioná-la.",
+  "guidanceScanRealMeal": "Analisar a verdadeira refeição",
+  "guidanceNextMealGoal": "OBJECTIVO PARA A PRÓXIMA COMIDA",
+  "remainingLabel": "Restante",
+  "proteinNeededLabel": "Proteínas necessárias",
+  "familiarMacroLabel": "FAMILIAR · MACRO FIT",
+  "numberOneChoice": "ESCOLHA NÚMERO 1",
+  "energyLabel": "ENERGIA",
+  "familiarLabel": "FAMILIAR",
+  "dishTip": "Dica: {adjustment}",
+  "@dishTip": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "adjustment": {
+        "type": "String"
+      }
+    }
+  },
+  "dishMacroSummary": "{calories} kcal · proteína {protein}g",
+  "@dishMacroSummary": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      },
+      "protein": {
+        "type": "String"
+      }
+    }
+  },
+  "fitGoalGreat": "Grande para o seu objetivo",
+  "fitGoalAdjust": "Deve ser ajustado",
+  "fitGoalGood": "Encaixa no seu objetivo",
+  "goalSpecificGainTitle": "Com que frequência treina cada semana?",
+  "goalSpecificGainNone": "Ainda não treino.",
+  "goalSpecificGain12": "1–2 sessões",
+  "goalSpecificGain34": "3-4 sessões",
+  "goalSpecificGain5": "5+ sessões",
+  "goalSpecificMaintainTitle": "O que mais importa para manter sua forma?",
+  "goalSpecificStable": "Mantém o meu peso estável",
+  "goalSpecificBalanced": "Coma refeições mais equilibradas",
+  "goalSpecificHabits": "Construir hábitos a longo prazo",
+  "goalSpecificWeekends": "Mantenha-se na pista nos fins de semana",
+  "goalSpecificLoseTitle": "O que torna a perda de gordura mais difícil para você?",
+  "goalSpecificHunger": "Fico com fome muitas vezes.",
+  "goalSpecificPortions": "Controlo das porções",
+  "goalSpecificChoices": "Não sei o que comer.",
+  "goalSpecificLogging": "O registo parece difícil",
+  "goalSpecificOvereat": "Comi demais à noite.",
+  "goalSpecificWeekendsHard": "Os fins de semana são difíceis",
+  "avoidFoodsTitle": "Você tem alergia a algum alimento ou ingredientes?",
+  "foodSeafood": "Frutos do mar",
+  "foodRedMeat": "Carne vermelha",
+  "foodEggs": "Ovos",
+  "foodDairy": "Leite e queijo",
+  "foodFried": "Alimentos fritos",
+  "foodSpicy": "Alimentos picantes",
+  "challengeTitle": "Qual é a parte mais difícil para ti?",
+  "challengeCalories": "Eu não sei as calorias na minha comida",
+  "challengeSweets": "Doces resistentes",
+  "challengePortions": "Controlo das porções",
+  "challengeBetweenMeals": "Ficar com fome entre as refeições",
+  "challengeCookingTime": "Não tenho tempo para cozinhar.",
+  "challengeMotivation": "Permanecer motivado",
+  "budgetTitle": "Qual é o seu orçamento para uma refeição?",
+  "budgetNote": "CalGo pede para que possa sugerir refeições que se encaixam em seus objetivos e orçamento.",
+  "budgetLow": "Menos de 30.000",
+  "budgetLowNote": "Refeições simples e fáceis de encontrar",
+  "budgetMid": "30.000–60.000",
+  "budgetMidNote": "Orçamento típico para uma refeição",
+  "budgetHigh": "60.000–100.000",
+  "budgetHighNote": "Mais espaço para qualidade",
+  "budgetAny": "Sem limite",
+  "budgetAnyNote": "Priorizar metas nutricionais",
+  "prepTitle": "Quanto tempo você tem para preparar uma refeição?",
+  "prepNote": "CalGo pede para que possa sugerir refeições que se encaixam na sua agenda.",
+  "prepShort": "Menos de 10 minutos",
+  "prepShortNote": "Rápido e conveniente quando ocupado",
+  "prepMedium": "10–20 minutos",
+  "prepMediumNote": "O suficiente para uma refeição simples",
+  "prepLong": "Mais de 20 minutos",
+  "prepLongNote": "Mais tempo para preparar cuidadosamente",
+  "prepAny": "Sem preferência",
+  "prepAnyNote": "Desde que se ajuste aos meus objectivos",
+  "nutritionPriorityTitle": "O que você prioriza em uma refeição?",
+  "nutritionPriorityNote": "O CalGo pede para que não lhe dê sugestões genéricas.",
+  "priorityProtein": "Proteínas elevadas",
+  "priorityProteinNote": "Suporta plenitude e recuperação muscular",
+  "priorityLight": "Calorias leves",
+  "priorityLightNote": "Fácil de equilibrar durante todo o dia",
+  "priorityBalanced": "Saldo",
+  "priorityBalancedNote": "Uma mistura sensata de calorias e macros",
+  "priorityFilling": "Mantém-me cheia.",
+  "priorityFillingNote": "Priorizar proteínas e carboidratos suficientes",
+  "habitTitle": "Quais são os seus hábitos alimentares?",
+  "habitNote": "CalGo pede para que possa sugerir refeições que se encaixam no seu estilo de vida.",
+  "habitRegular": "Eu como refeições regulares, equilibradas",
+  "habitSnacking": "Eu lanche com frequência.",
+  "habitSkipBreakfast": "Muitas vezes não tomo o pequeno-almoço.",
+  "habitLateNight": "Eu como tarde da noite.",
+  "habitEatingOut": "Eu como fora muitas vezes.",
+  "habitCook": "Eu cozinho em casa.",
+  "motivationTitle": "O que te faz querer mudar?",
+  "motivationHealth": "Melhor saúde",
+  "motivationMuscle": "Construir músculo",
+  "motivationClothes": "Fica melhor de roupa.",
+  "motivationWeight": "Perder peso",
+  "motivationEnergy": "Sinta-se saudável e energizado",
+  "motivationOther": "Outras razões",
+  "painTitle": "Alguma vez...",
+  "painNote": "Escolha as coisas que você experimentou",
+  "painEatLess": "Comer muito pouco, mas ainda não perder peso",
+  "painCardio": "Fazer muito cardio",
+  "painGiveUp": "Desista depois de alguns dias",
+  "painUnknownCalories": "Não sei quantas calorias como.",
+  "painHungry": "Fica com fome na metade",
+  "painStressEating": "Estresse alimentar",
+  "emotionalTitle": "Se continuares a comer como agora...",
+  "emotionalCurrent": "Agora.",
+  "emotionalAfterSixMonths": "Após 6 meses",
+  "emotionalStillWeight": "Pode ficar perto do seu peso atual. Com o CalGo, podes mudar.",
+  "emotionalHelpChange": "Vou ajudar-te a mudar.",
+  "referralX": "X (Twitter)",
+  "referralOther": "Outros",
+  "sportsRunning": "Em execução",
+  "sportsCycling": "Ciclismo",
+  "sportsSwimming": "Natação",
+  "sportsFootball": "Futebol",
+  "sportsBadminton": "Badminton",
+  "sportsBasketball": "Basquetebol",
+  "sportsOther": "Outros",
+  "durationTitle": "Quando queres atingir o teu objectivo?",
+  "durationNote": "Escolha um prazo que lhe pareça adequado",
+  "dailyCalorieGoal": "Objetivo diário da calorias",
+  "dailyCalorieGoalMessage": "Seu objetivo atual é {calories} kcal/dia. Você pode alterá-lo em configurações de onboarding ou suporte de contato.",
+  "@dailyCalorieGoalMessage": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "close": "Fechar",
+  "reminderNotifications": "Notificações de lembrete",
+  "reminderNotificationsEnabled": "Lembretes de refeições e notificações diárias de rastreamento de calorias foram habilitadas automaticamente.",
+  "gotIt": "Entendido.",
+  "userGuideTitle": "Como utilizar CalGo",
+  "userGuideContent": "1. Toque em Scan (+) para capturar ou selecionar uma foto de refeição.\n2. A IA analisa automaticamente calorias e nutrição.\n3. Editar quantidades ou adicionar ingredientes antes de salvar.\n4. Reveja seu histórico de refeições na aba História.",
+  "great": "Óptimo.",
+  "customerSupportMessage": "Para ajuda ou feedback do produto, envie um e-mail para: support@calgo.tech",
+  "deleteAccountFailed": "Não foi possível apagar a conta. Consulte o guia online ou o suporte de contato.",
+  "galleryLoadFailed": "Não foi possível carregar a coleção de fotos",
+  "viewResult": "Ver detalhes do resultado",
+  "shareMemoryCard": "Compartilhar cartão de memória",
+  "deletePhoto": "Apagar esta foto",
+  "confirmDelete": "Confirmar a exclusão",
+  "deletePhotoMessage": "Tem certeza de que deseja excluir a foto da refeição \"{meal}\"?",
+  "@deletePhotoMessage": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "meal": {
+        "type": "String"
+      }
+    }
+  },
+  "mealDeleted": "Refeição removida da sua coleção",
+  "deleteFailed": "Não foi possível apagar. Por favor, tente novamente.",
+  "paymentProcessing": "Processando pagamento através do Google Play...",
+  "paymentOpenFailed": "Não foi possível abrir o pagamento do Google Play. Por favor, tente novamente.",
+  "errorWithDetails": "Erro: {error}",
+  "@errorWithDetails": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "packIncludes": "Inclui {count} AI exames nutricionais",
+  "@packIncludes": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "permanentCredits": "As análises nunca expiram",
+  "testingFreeCredits": "Testando build: varreduras Premium são gratuitas. Nenhum pagamento do Google Play é feito.",
+  "restoreSuccess": "Restauração de compra verificada com sucesso!",
+  "restoreFailed": "Não foi possível restaurar as compras do Google Play.",
+  "restoreFailedWithDetails": "Falha na restauração: {error}",
+  "@restoreFailedWithDetails": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "moreScanCredits": "Compre mais escaneamentos de refeições de IA",
+  "shareCreateFailed": "Não foi possível criar a imagem da carta. Por favor, tente novamente!",
+  "shareExported": "Cartão de memória exportado com sucesso!",
+  "shareResult": "Compartilhar o resultado",
+  "shareNutritionLabel": "A imagem será salva com rótulos nutricionais",
+  "saveImage": "Gravar a imagem",
+  "share": "Partilha",
+  "resultLoadFailed": "Não foi possível carregar o resultado da análise (ID: {id}). Por favor, tente novamente!",
+  "@resultLoadFailed": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "edit": "Editar",
+  "done": "Feito",
+  "healthScore": "Escore de saúde",
+  "dishesInPhoto": "Pratos na foto",
+  "ingredientsInDish": "Ingredientes",
+  "addIngredient": "Adicionar ingrediente",
+  "feedbackThanks": "Obrigado pelo seu feedback!",
+  "feedbackPrompt": "O exame de IA foi impreciso? Conte-nos o que aconteceu.",
+  "feedbackHint": "Exemplo: nome do prato errado, legumes faltando...",
+  "skip": "Saltar",
+  "sending": "Enviando...",
+  "sendFeedback": "Enviar feedback",
+  "newIngredient": "Novo ingrediente",
+  "choosePortion": "Escolher porção",
+  "searchNutritionLibrary": "Pesquisar biblioteca de nutrição",
+  "adjustBeforeAdding": "Ajuste o valor antes de adicionar",
+  "ingredientSearchHint": "Procura carne, ovos, arroz...",
+  "ingredientNotFound": "Ingrediente não encontrado",
+  "ingredientSearchTip": "Tente um nome mais curto ou mais comum",
+  "unitPiece": "peça",
+  "defaultUserName": "você",
+  "analyzingMessage1": "Analisando as informações do seu perfil...",
+  "analyzingMessage2": "Calculando os alvos calóricos diários...",
+  "analyzingMessage3": "Projetando objetivos personalizados...",
+  "analyzingMessage4": "Construindo estratégia de nutrição...",
+  "analyzingMessage5": "Quase pronto...",
+  "dietNormal": "Comer regularmente",
+  "dietClean": "Comer Limpo",
+  "dietKeto": "Keto",
+  "dietLowCarb": "Carb baixo",
+  "dietVegetarian": "Vegetariano",
+  "dietVegan": "Vegan",
+  "activitySedentary": "Sedentário",
+  "activitySedentaryDesc": "Trabalho de secretária, pouco movimento",
+  "activityLight": "Caminhada leve",
+  "activityLightDesc": "Movimento leve 1-2 vezes/semana",
+  "activityModerate": "Comboio 1–3 vezes",
+  "activityModerateDesc": "Exercício 1–3 dias/semana",
+  "activityActive": "Comboio 4–5 vezes",
+  "activityActiveDesc": "Exercício 4–5 dias/semana",
+  "activityVeryActive": "Comboio diário",
+  "activityVeryActiveDesc": "Exercício duro todos os dias",
+  "paceSlow": "□ Devagar — 0,25 kg/semana",
+  "paceLight": "(Popular)",
+  "paceMedium": "Média — 0,75 kg/semana",
+  "paceHigh": "Alta – 1 kg/semana",
+  "paceHighest": "□ Maior — 1,25–1,5 kg/semana",
+  "weekUnit": "semana",
+  "sportsGym": "Ginásio",
+  "sportsYoga": "Yoga",
+  "scanResultUnavailable": "Esta refeição não pôde ser analisada",
+  "scanResultRetryHint": "Tente digitalizá-lo novamente.",
+  "guidanceDishFat": "F {grams}g",
+  "@guidanceDishFat": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "ok": "Está bem",
+  "defaultProfileName": "Usuário CalGo",
+  "premiumMembership": "Subscrição Premium",
+  "creditsCount": "Créditos {count}",
+  "@creditsCount": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "paymentMethods": "Pagamento através do Google Play / App Store",
+  "deleteAction": "Apagar",
+  "proteinLabel": "PROTEÍNA",
+  "onboardingSaveFailed": "Não conseguiu salvar seu objetivo nutricional. Por favor, tente novamente.",
+  "onboardingSaveNetworkFailed": "Não conseguiu salvar seu objetivo nutricional. Verifique sua conexão e tente novamente.",
+  "googleSignInFailed": "Falha na entrada do Google: {error}",
+  "@googleSignInFailed": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "appleSignInPending": "O registo da Apple ainda está a ser concluído. Por favor, use o Google por enquanto.",
+  "firstScanTitle": "Pronto para analisar a sua primeira refeição?",
+  "firstScanSubtitle": "Toque em Procurar abaixo para começar",
+  "scanLabel": "Digitalizar",
+  "startScanning": "Iniciar a digitalização",
+  "socialProofOneTag": "Perdido 6,5 kg",
+  "socialProofOneTime": "2 dias atrás",
+  "socialProofOneTitle": "O reconhecimento de comida vietnamita é perfeito!",
+  "socialProofOneBody": "Eu costumava lutar para rastrear pho e bun cha em aplicativos estrangeiros. CalGo reconhece pratos vietnamitas e calorias com precisão de uma foto. 10/10!",
+  "socialProofTwoTag": "Ganhar 4 kg de músculo",
+  "socialProofTwoTime": "5 dias atrás",
+  "socialProofTwoTitle": "UI suave e TDEE preciso",
+  "socialProofTwoBody": "O rastreamento do IMC e as sugestões macro são detalhados. Treino e rastreio calorias todos os dias, e o meu corpo parece mais forte depois de um mês.",
+  "socialProofThreeTag": "Mantive a minha forma",
+  "socialProofThreeTime": "1 semana atrás",
+  "socialProofThreeTitle": "Construir hábitos alimentares saudáveis",
+  "socialProofThreeBody": "As lembranças do Tao são adoráveis. O aplicativo nunca empurra dieta extrema; ele me guia para nutrição equilibrada.",
+  "premiumActivatedMessage": "O Premium está activo. Aproveitem as refeições!",
+  "premiumPaymentFailed": "Não foi possível abrir o pagamento Premium.",
+  "continueFreePremium": "Continuar · Free Premium",
+  "continueLabel": "Continuar",
+  "premiumFreeUnlocked": "Premium desbloqueado gratuitamente",
+  "premiumActivated": "Ativado Premium",
+  "processingShort": "Processando...",
+  "subscribePremium": "Subscrever o Premium",
+  "premiumTestingNote": "Testando build: Premium é gratuito. Nenhum pagamento é feito.",
+  "premiumNoChargeNote": "Você não será acusado neste passo.",
+  "premiumAutoRenewNote": "Auto-renova. Cancela quando quiseres.",
+  "premiumHeadlineBefore": "Mudar a partir de",
+  "todayLower": "hoje",
+  "yourExperience": "Sua\nexperiência",
+  "premiumBenefitCalories": "Conheça suas calorias instantaneamente — varreduras ilimitadas de IA",
+  "premiumBenefitSuggestions": "Ilimitados sugestões de refeições adaptadas ao seu objetivo diário",
+  "premiumBenefitDescriptions": "Descrições das refeições de IA sem entrada manual",
+  "premiumBenefitProgress": "Acompanhe seu progresso corporal todos os dias",
+  "premiumBenefitSupport": "Apoio prioritário sempre que necessário",
+  "planWeek": "Semana",
+  "planYear": "Ano",
+  "planMonth": "Mês",
+  "free": "Livre",
+  "weeklyPayment": "pagamento semanal",
+  "popularMost": "Mais populares",
+  "testingAccess": "teste de acesso",
+  "restoreChecked": "Restauração de compras verificada.",
+  "restoreException": "Falha na restauração: {error}",
+  "@restoreException": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "manageSubscription": "Gerenciar assinatura",
+  "manageSubscriptionFailed": "Não foi possível abrir o gerenciamento de assinatura.",
+  "scanCreditsExhausted": "Já não tens os créditos dos exames.",
+  "networkRetry": "A ligação é lenta. Tenta outra vez.",
+  "scanUnavailable": "Esta imagem não pôde ser analisada.",
+  "notificationChannelName": "Recomendações diárias de refeições",
+  "notificationChannelDescription": "Lembretes para digitalizar café da manhã, almoço e jantar com CalGo",
+  "notificationBreakfastTitle": "CalGo - Café da manhã",
+  "notificationBreakfastBody": "Bom dia! Lembre-se de escanear o café da manhã para que você tenha energia suficiente para o dia.",
+  "notificationLunchTitle": "CalGo - Almoço",
+  "notificationLunchBody": "É hora do almoço. Examine sua refeição no CalGo para rastrear as calorias com precisão.",
+  "notificationDinnerTitle": "CalGo - Jantar",
+  "notificationDinnerBody": "O jantar está pronto? Analise-o para ficar no caminho certo com seus objetivos.",
+  "notificationDirectChannel": "Notificações directas",
+  "caloriesLabel": "Calorias",
+  "carbsLabel": "CARBAS",
+  "fatLabel": "FAT",
+  "guidanceTodayShortSubtitle": "Veja sugestões para o objetivo de hoje",
+  "ingredientBeef": "Carne fresca",
+  "ingredientChicken": "Peito de frango pan-seado",
+  "ingredientEgg": "Ovos",
+  "ingredientRiceNoodles": "Massas alimentícias frescas",
+  "ingredientRice": "Arroz branco",
+  "ingredientBun": "Arroz fresco vermicelli",
+  "ingredientSalad": "Alfaces e tomate",
+  "ingredientCheddar": "Queijo cheddar",
+  "ingredientPassionSauce": "Molho de maracujá",
+  "ingredientPork": "Carne de porco magra",
+  "mockPhoTitle": "Rara carne pho com peito",
+  "mockPhoNoodles": "Massas alimentícias frescas",
+  "mockPhoRareBeef": "Carne de bovino rara",
+  "mockPhoBrisket": "Carne de bovino",
+  "mockPhoBroth": "Caldo e cebolinha Pho",
+  "mockRiceTitle": "Trincas de arroz com carne de porco grelhada, pele de porco e bolo de ovo",
+  "mockRice": "Trincas de arroz",
+  "mockGrilledPork": "Costeletas de porco grelhadas",
+  "mockEggCake": "Bolo de ovo cozido em vapor",
+  "mockFriedEgg": "Ovos fritos",
+  "mockSaladTitle": "Salada de frango com molho de maracujá",
+  "mockChicken": "Peito de frango pan-seado",
+  "mockSalad": "Alfaces e tomates de cereja",
+  "mockPassionSauce": "Apresto de maracujá",
+  "motivationAdviceLose": "Você está apenas {remaining} kg do seu objetivo. Pequenos hábitos diários funcionam melhor do que dietas extremas.",
+  "@motivationAdviceLose": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "remaining": {
+        "type": "String"
+      }
+    }
+  },
+  "motivationAdviceGain": "Seu objetivo calorial é otimizado para construir músculo magro, limitando o excesso de gordura.",
+  "motivationAdviceMaintain": "Seu peso atual está em uma faixa saudável. Criemos hábitos que o ajudem a se sentir melhor a cada dia.",
+  "motivationAdviceDefault": "Vamos alcançar sua meta de saúde juntamente com hábitos sustentáveis.",
+  "taoAdviceLabel": "DICA DA TAO",
+  "taoReminder": "Tao vai lembrar-te todos os dias",
+  "packBasic": "Iniciador",
+  "packPopular": "Popular",
+  "packPremium": "Prémio",
+  "creditPackageSummary": "Créditos {count} • {unit}",
+  "@creditPackageSummary": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "perScan": "/scan",
+  "caloriesValue": "{calories} kcal",
+  "@caloriesValue": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "caloriesPer100g": "{calories} kcal / 100g",
+  "@caloriesPer100g": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "gramsValue": "{grams}g",
+  "@gramsValue": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "weightKgValue": "{weight} kg",
+  "@weightKgValue": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
+  "galleryMacroSummary": "{calories} kcal • C:{carbs}g P:{protein}g F:{fat}g",
+  "@galleryMacroSummary": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      },
+      "carbs": {
+        "type": "String"
+      },
+      "protein": {
+        "type": "String"
+      },
+      "fat": {
+        "type": "String"
+      }
+    }
+  },
+  "sharePayload": "{dish} · {calories} kcal",
+  "@sharePayload": {
+    "placeholders": {
+      "dish": {
+        "type": "String"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  }
+}

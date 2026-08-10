@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/onboarding_provider.dart';
+import '../../../providers/app_settings_provider.dart';
+import '../../../l10n/generated/app_localizations.dart';
 import '../../../widgets/premium_ui.dart';
 
 class SocialProofStep extends StatelessWidget {
@@ -13,38 +15,50 @@ class SocialProofStep extends StatelessWidget {
       avatarColor: Color(0xFFE0F2FE),
       textColor: Color(0xFF0369A1),
       initials: 'MA',
-      tag: 'Giảm 6.5 kg',
-      time: '2 ngày trước',
-      title: 'Quét đồ ăn Việt Nam cực chuẩn!',
-      content:
-          'Trước đây mình dùng app ngoại tra phở, bún chả rất cực. CalGo chụp ảnh nhận diện món Việt chính xác từng gram calo luôn. 10/10!',
     ),
     (
       name: 'Hoàng Nam',
       avatarColor: Color(0xFFFEF3C7),
       textColor: Color(0xFFB45309),
       initials: 'HN',
-      tag: 'Tăng cơ 4 kg',
-      time: '5 ngày trước',
-      title: 'Giao diện mượt, tính TDEE sát thực tế',
-      content:
-          'Thước đo BMI và gợi ý macro rất chi tiết. Mình tập gym kết hợp theo dõi calo mỗi ngày, cơ thể săn chắc rõ rệt sau 1 tháng.',
     ),
     (
       name: 'Thu Phương',
       avatarColor: Color(0xFFFCE7F3),
       textColor: Color(0xFFBE185D),
       initials: 'TP',
-      tag: 'Duy trì vóc dáng',
-      time: '1 tuần trước',
-      title: 'Tạo thói quen ăn uống lành mạnh',
-      content:
-          'Linh vật Táo nhắc nhở đáng yêu lắm. App không hề ép ăn kiêng hà khắc mà hướng dẫn cân bằng dinh dưỡng thông minh.',
     ),
   ];
 
+  String _tag(int index, AppLocalizations s) => switch (index) {
+        0 => s.socialProofOneTag,
+        1 => s.socialProofTwoTag,
+        _ => s.socialProofThreeTag,
+      };
+
+  String _time(int index, AppLocalizations s) => switch (index) {
+        0 => s.socialProofOneTime,
+        1 => s.socialProofTwoTime,
+        _ => s.socialProofThreeTime,
+      };
+
+  String _title(int index, AppLocalizations s) => switch (index) {
+        0 => s.socialProofOneTitle,
+        1 => s.socialProofTwoTitle,
+        _ => s.socialProofThreeTitle,
+      };
+
+  String _content(int index, AppLocalizations s) => switch (index) {
+        0 => s.socialProofOneBody,
+        1 => s.socialProofTwoBody,
+        _ => s.socialProofThreeBody,
+      };
+
   @override
   Widget build(BuildContext context) {
+    final settings = context.watch<AppSettingsProvider>();
+    final s = settings.strings;
+
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
       body: SafeArea(
@@ -63,22 +77,23 @@ class SocialProofStep extends StatelessWidget {
                     duration: Duration(milliseconds: 500),
                   ),
                 ],
-                child: const Column(
+                child: Column(
                   children: [
                     Text(
-                      'Cộng đồng nói gì về CalGo?',
-                      style: TextStyle(
+                      s.socialProofTitle,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.w700,
                         color: Color(0xFF111111),
                         letterSpacing: -0.4,
                       ),
                     ),
-                    SizedBox(height: 6),
+                    const SizedBox(height: 6),
                     Text(
-                      'Đánh giá chân thực từ người trải nghiệm',
+                      s.socialProofSubtitle,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 14,
                         color: Color(0xFF71717A),
                         height: 1.3,
@@ -108,60 +123,86 @@ class SocialProofStep extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(color: const Color(0xFFEEEEEE)),
                   ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: Row(
-                          children: [
-                            const Text(
-                              '4.9',
-                              style: TextStyle(
-                                fontSize: 30,
-                                fontWeight: FontWeight.w800,
-                                color: Color(0xFF111111),
-                                height: 1.0,
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      final score = Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Text(
+                            '4.9',
+                            style: TextStyle(
+                              fontSize: 30,
+                              fontWeight: FontWeight.w800,
+                              color: Color(0xFF111111),
+                              height: 1.0,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: List.generate(
+                              5,
+                              (index) => const Icon(
+                                Icons.star_rounded,
+                                color: Color(0xFFFFB800),
+                                size: 20,
                               ),
                             ),
-                            const SizedBox(width: 8),
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: List.generate(
-                                5,
-                                (index) => const Icon(
-                                  Icons.star_rounded,
-                                  color: Color(0xFFFFB800),
-                                  size: 20,
+                          ),
+                        ],
+                      );
+                      final ratingBadge = Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 6,
+                        ),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF111111),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(
+                              Icons.verified_rounded,
+                              color: Colors.white,
+                              size: 14,
+                            ),
+                            const SizedBox(width: 4),
+                            Flexible(
+                              child: Text(
+                                s.ratingTag,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.white,
                                 ),
                               ),
                             ),
                           ],
                         ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 6),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF111111),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: const Row(
-                          mainAxisSize: MainAxisSize.min,
+                      );
+
+                      if (constraints.maxWidth < 300) {
+                        return Column(
                           children: [
-                            Icon(Icons.verified_rounded,
-                                color: Colors.white, size: 14),
-                            SizedBox(width: 4),
-                            Text(
-                              'Đánh giá 5★',
-                              style: TextStyle(
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.white),
-                            ),
+                            score,
+                            const SizedBox(height: 8),
+                            ratingBadge,
                           ],
-                        ),
-                      ),
-                    ],
+                        );
+                      }
+
+                      return Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Expanded(child: score),
+                          ratingBadge,
+                        ],
+                      );
+                    },
                   ),
                 ),
               ),
@@ -174,6 +215,10 @@ class SocialProofStep extends StatelessWidget {
                   child: Column(
                     children: List.generate(_reviews.length, (i) {
                       final item = _reviews[i];
+                      final tag = _tag(i, s);
+                      final time = _time(i, s);
+                      final title = _title(i, s);
+                      final content = _content(i, s);
                       return Animate(
                         effects: [
                           FadeEffect(
@@ -246,7 +291,7 @@ class SocialProofStep extends StatelessWidget {
                                         ),
                                         const SizedBox(height: 2),
                                         Text(
-                                          '${item.tag} • ${item.time}',
+                                          '$tag • $time',
                                           style: const TextStyle(
                                             fontSize: 11,
                                             fontWeight: FontWeight.w500,
@@ -271,7 +316,7 @@ class SocialProofStep extends StatelessWidget {
                               const SizedBox(height: 10),
                               // Review title
                               Text(
-                                item.title,
+                                title,
                                 style: const TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w700,
@@ -281,7 +326,7 @@ class SocialProofStep extends StatelessWidget {
                               const SizedBox(height: 4),
                               // Review text
                               Text(
-                                item.content,
+                                content,
                                 style: const TextStyle(
                                   fontSize: 13,
                                   color: Color(0xFF4B5563),
@@ -307,7 +352,7 @@ class SocialProofStep extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 12, top: 8),
                   child: PremiumButton(
-                    label: 'Tiếp tục',
+                    label: s.nextStepButton,
                     onPressed: () =>
                         context.read<OnboardingProvider>().nextStep(),
                   ),

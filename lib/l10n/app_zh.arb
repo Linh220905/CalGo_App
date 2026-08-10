@@ -1,0 +1,922 @@
+{
+  "@@locale": "zh",
+  "tabHome": "内容",
+  "tabAnalytics": "分析",
+  "tabSettings": "设置",
+  "today": "现在",
+  "yesterday": "昨日来",
+  "caloriesLeft": "剩卡路里数",
+  "proteinLeft": "左侧蛋白质",
+  "carbsLeft": "左边的碳化物",
+  "fatsLeft": "胖子离开了",
+  "recentlyUploaded": "最近上传的",
+  "noMealsUploaded": "还没有上传食物",
+  "tapToScanMeal": "和AI一起扫描你的第一餐",
+  "profileTitle": "个人账户",
+  "creditsLabel": "扫描信用",
+  "scannedCountLabel": "已扫描餐具",
+  "buyCredits": "购买信用",
+  "statistics": "统计",
+  "calorieTarget": "卡罗里目标",
+  "notifications": "通知",
+  "darkMode": "黑暗模式",
+  "language": "语言",
+  "languageDisplayName": "中文",
+  "userGuide": "用户指南",
+  "customerSupport": "客户支助",
+  "logout": "注销",
+  "selectLanguageTitle": "选择语言",
+  "scanTitle": "扫描用餐",
+  "scanInstructionHeader": "把食物放在框架之内",
+  "scanInstructionSub": "确保正确照明以准确识别AI",
+  "selectFromGallery": "从图片库中选择",
+  "outOfCreditsTitle": "扫描信贷!",
+  "outOfCreditsMessage": "你已经用完了你的扫描学分 继续追踪营养!",
+  "buyMore": "买更多",
+  "cancel": "取消",
+  "pricingTitle": "升级信用( C)",
+  "pricingSubtitle": "选择解锁全部 AI能力的最佳计划",
+  "creditPacksTitle": "扫描信用包",
+  "noExpiryBadge": "无过期",
+  "popularBadge": "大众",
+  "subscriptionsTitle": "主动订阅",
+  "payButton": "现在付钱",
+  "privacyPolicy": "隐私政策",
+  "termsOfService": "服务条件",
+  "deleteAccount": "删除账户",
+  "openOnline": "在线打开",
+  "onlineGuide": "在线指南",
+  "deleteAccountSubscriptionWarning": "删除您的 CalGo 账户不会取消 Google Play 订阅 。 如果您有Premium,请在Google Play中单独取消,以避免续费.",
+  "restorePurchases": "恢复购买",
+  "privacyPolicyContent": "CalGo 隐私政策(2026年8月5日更新):\n\n1. 联合国 我们收集的数据:账户电子邮件、显示名称、Google登录标识、登入营养信息、膳食相片、扫描结果、膳食历史、购买元数据、应用/设备诊断和通知偏好。\n2. 联合国 权限的使用方式: 仅在您选择抓取或选择食用相片时请求相机和相片访问; 仅在启用时才使用通知 。\n3个 如何使用数据:提供AI营养分析,同步您的账户,处理Google Play购买,防止滥用,提供支持并改进可靠性. 我们的东道主和AI服务提供者可以处理照片。\n4.四. 分享与安全:我们不出售你的个人资料或餐饮相片。 诸如托管、AI处理、Google Sign-In和Google Play Billing等必要的供应商可能处理有限的数据。 我们使用HTTPS和访问控制,但没有任何系统是完全安全的.\n5 (韩语). 保留和删除:删除账户时删除账户数据和餐饮历史,但必须保留用于预防欺诈、争议或法律义务的数据除外。 备份可能需要一段合理的时间才能到期。\n6. 国家 您的权利: 删除您在 Profile 中的账户或访问 https://calgo.tech/delete-account. 访问权限、 更正或询问, 请联系 support@calgo.tech 。 全面政策:https://calgo.tech/privacy.",
+  "termsOfServiceContent": "CalGo 服务条件:\n\n1. 联合国 服务和医疗免责声明:AI营养结果是仅供参考的估计,不取代专业医疗建议. CalGo不是医疗设备.\n2. 联合国 支付:信用卡包为一次性数字购买. 每周、每月和年度计划是自动续订的Google Play订阅,除非在下次续订前取消。 在 https://play.google.com/store/account/subscriptions. 管理或取消\n3个 退款并删除:Google Play处理Android计费和退款. 删除一个CalGo账户不会取消一个Google Play订阅.\n4.四. 内容和知识产权:您保留了上传照片的所有权;CalGo获得有限的许可证,可以处理照片以提供和改进服务。 CalGo拥有其应用,品牌和软件.\n5 (韩语). 联系人:support@calgo.tech. 全名:https://calgo.tech/terms.",
+  "deleteAccountConfirmMessage": "您确定要永久删除您的 CalGo 账户和所有卡路里日志数据吗 ? 这一行动是无法取消的。",
+  "historyTitle": "饮食历史",
+  "historySubtitle": "你的营养之旅",
+  "mealsCountLabel": "饭",
+  "streakDaysLabel": "断层",
+  "kcalPerDay": "Kcal/ 日数",
+  "proteinPerDay": "蛋白质/日",
+  "noMealsHistory": "还没有进餐记录",
+  "scanFirstMealPrompt": "扫描您的第一个开始餐\n你的营养之旅",
+  "scanFirstMealButton": "扫描第一餐",
+  "deleteMealConfirm": "您要删除这顿饭吗 ?",
+  "cannotDeleteMeal": "无法删除餐点 。 请再试一次。",
+  "photoGalleryTitle": "食品照片",
+  "noPhotosYet": "还没有食物扫描照片",
+  "takePhotosPrompt": "收集你吃饭的照片来建立你的收藏!",
+  "scanFoodNow": "现在扫描食物",
+  "welcomeTo": "欢迎光临",
+  "getStarted": "开始",
+  "snapPhotoAiTitle": "拍张相 让AI工作。",
+  "snapPhotoAiDesc": "AI自动识别出食物,并计算出几秒钟的卡路里.",
+  "trackEasilyTitle": "轻而易举地追踪",
+  "trackEasilyDesc": "跟踪热量,蛋白质,碳水化合物, 每天脂肪。",
+  "reachGoalsTitle": "更快到达目标。",
+  "reachGoalsDesc": "获取个性化目标,跟踪脂肪损失进展.",
+  "nextStepButton": "下一个",
+  "goalStepTitle": "你的目标是什么?",
+  "goalStepSubtitle": "帮助CalGo制定适合你的计划",
+  "goalLoseWeight": "减重",
+  "goalLoseWeightDesc": "烧得肥活活活的 有声体",
+  "goalLoseWeightReason": "这有助于我们建立肥胖损失计划,保护肌肉并保持可持续性。",
+  "goalGainMuscle": "增益肌肉",
+  "goalGainMuscleDesc": "锻炼肌肉并增强力量",
+  "goalGainMuscleReason": "帮助我们构建一个肌肉增殖计划 围绕你的训练和蛋白质需求。",
+  "goalMaintain": "保持重量",
+  "goalMaintainDesc": "保持体能平衡 保持体能平衡",
+  "goalMaintainReason": "这帮助我们建立一个适合你长期生活的平衡计划.",
+  "nameStepTitle": "你的名字是...",
+  "nameStepHint": "输入您的名字",
+  "demoStepTitle": "见CalGo行动",
+  "genderStepTitle": "你的性别是什么?",
+  "genderStepSubtitle": "用于准确计算",
+  "genderMale": "男性",
+  "genderFemale": "妇女",
+  "genderOther": "其它",
+  "ageStepTitle": "你几岁了?",
+  "heightStepTitle": "你的身高是怎样的?",
+  "weightStepTitle": "你现在的体重是多少?",
+  "targetWeightStepTitle": "你的目标重量是多少?",
+  "activityStepTitle": "你的活动水平是多少?",
+  "dietStepTitle": "你有具体饮食吗?",
+  "analysisTitle": "分析你的数据...",
+  "accountStepTitle": "创建账户以保存您的计划",
+  "continueWithGoogle": "继续谷歌",
+  "continueWithApple": "继续苹果",
+  "heightStepDesc": "帮助计算 BMI 和准确的卡路里需求",
+  "weightStepDesc": "帮助决定您的个性化营养目标",
+  "currentHeightHeader": "当前高度",
+  "currentWeightHeader": "当前重量",
+  "bmiIndexTitle": "BMI 指数",
+  "bmiUnderweight": "体重不足",
+  "bmiNormal": "常规",
+  "bmiOverweight": "超重",
+  "bmiObese": "肥胖",
+  "targetWeightDesc": "帮助您设定个人营养目标",
+  "goalMaintainLabel": "保持物理状态",
+  "goalLoseLabel": "重量损失",
+  "goalGainLabel": "肌肉增益",
+  "goalMaintainHint": "目标等于当前重量",
+  "goalLoseDiffText": "Target: Lose {kg} kg",
+  "@goalLoseDiffText": {
+    "description": "Localized UI text: goalLoseDiffText",
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      }
+    }
+  },
+  "goalGainDiffText": "Target: Gain {kg} kg",
+  "@goalGainDiffText": {
+    "description": "Localized UI text: goalGainDiffText",
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      }
+    }
+  },
+  "paceStepTitle": "每周花一分吗?",
+  "paceStepSubtitle": "选择舒适的生活方式",
+  "activityStepSubtitle": "影响你的日常卡路里开支",
+  "dietStepSubtitle": "CalGo推荐最适合你身体和目标的食物.",
+  "socialProofTitle": "社区对CalGo的描述",
+  "socialProofSubtitle": "真实成员的真实审查",
+  "ratingTag": "5- 评级",
+  "referralStepTitle": "你怎么听说CalGo的?",
+  "referralStepSubtitle": "帮助我们理解你的旅程",
+  "referralFriend": "朋友建议",
+  "sportsStepTitle": "你玩什么运动?",
+  "sportsStepSubtitle": "选择您经常进行的活动",
+  "accountStepSubtitle": "安全信息同步个人进展( S)",
+  "dataPrivacyNote": "您的数据是严格加密的和保密的",
+  "analysisHello": "Hello, {name}",
+  "@analysisHello": {
+    "description": "Localized UI text: analysisHello",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "analysisPlanReady": "你的计划准备好了",
+  "dailyCalorieTargetTitle": "DAILY CALORIE TARGET",
+  "kcalPerDayUnit": "kcal / 日数",
+  "workoutLabel": "解决",
+  "workoutDaysText": "{days} days",
+  "@workoutDaysText": {
+    "description": "Localized UI text: workoutDaysText",
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "perWeekText": "每周计算",
+  "yourJourneyTitle": "你的车",
+  "journeyCurrent": "当前",
+  "journeyTarget": "目标",
+  "journeyTimeframe": "时限",
+  "weeksUnit": "{weeks} weeks",
+  "@weeksUnit": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
+  "completedPercent": "{p}% completed",
+  "@completedPercent": {
+    "description": "Localized UI text: completedPercent",
+    "placeholders": {
+      "p": {
+        "type": "int"
+      }
+    }
+  },
+  "loginTitle": "欢迎来到CalGo",
+  "loginSubtitle": "签名以同步您的营养数据",
+  "loginGoogle": "继续谷歌",
+  "loginApple": "继续苹果",
+  "loginFailed": "Sign-in failed: {error}",
+  "@loginFailed": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "appleComingSoon": "苹果签到马上就来了!",
+  "loginRequired": "请与 Google 一起签名以保护和同步您的数据 。",
+  "loginRequiredButton": "需要签名才能同步数据",
+  "progressLabel": "进展",
+  "dataLoadFailed": "无法装入数据",
+  "deleteMealQuestion": "您要删除这顿饭吗 ?",
+  "deleteMealFailed": "无法删除餐点 。 请再试一次。",
+  "retry": "再试一次",
+  "mealTypeBreakfast": "早饭",
+  "mealTypeLunch": "午饭",
+  "mealTypeDinner": "晚饭",
+  "mealTypeSnack": "点心",
+  "greetingMorning": "Good",
+  "greetingAfternoon": "午安,你们好",
+  "greetingEvening": "边",
+  "aiCoachAlmostGoal": "差点射入你的入球! 继续走!",
+  "aiCoachPlentyCalories": "今天还剩很多卡路里 吃好点!",
+  "aiCoachMomentum": "保持良好势头!",
+  "mascotGoalTipWater": "喝口水保持清新!",
+  "mascotGoalTipSlow": "慢慢地吃下去 听听你的身体是真棒。",
+  "mascotGoalTipGreat": "你今天干得不错",
+  "mascotGoalReached": "今天卡罗里进球了! 保持这个速度是顶级的",
+  "mascotGuidanceIntro": "我今天给你选了点好吃的 来检查他们!",
+  "mascotGuidanceOpen": "推荐菜还在建议屏幕上!",
+  "mascotGuidanceTipWater": "你喝够了水吗? 喝一口来喝!",
+  "mascotGuidanceTipSlow": "慢慢吃,你会觉得饱了!",
+  "mascotGuidanceOverTarget": "你是{calories}kcal过来。 我为你选了点吃的!",
+  "@mascotGuidanceOverTarget": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "mascotGuidanceRemaining": "你需要{calories}kcal更多的击出你的入球。 看看我的选择!",
+  "@mascotGuidanceRemaining": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "mascotTipHydration": "喝水了吗,兄弟? 喝点水保持清醒",
+  "mascotTipChew": "慢慢地嚼 它能帮助消化 让你饱满",
+  "mascotTipConsistency": "每天的恒定 造就伟大的体能",
+  "mascotNoMeals": "还没登入吗? 拍张美食相给我看!",
+  "mascotOverTarget": "超过你的目标 大约{calories}今天kcal。 不要担心,去光和高蛋白 为你下顿饭!",
+  "@mascotOverTarget": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "mascotMissingCalories": "仍然失踪了{calories}kcal今天。 去拿点好吃的!",
+  "@mascotMissingCalories": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "mascotOnTrack": "无劳的纪律! 卡罗里射中了!",
+  "mealCount": "{count, plural, =0 {没有餐食} =1 {1 份餐食} other {{count} 份餐食}}",
+  "@mealCount": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "ingredientCount": "{count, plural, =0 {没有食材} =1 {1 种食材} other {{count} 种食材}}",
+  "@ingredientCount": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "dishCount": "{count, plural, =1 {1 道菜} other {{count} 道菜}}",
+  "@dishCount": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "monthFallback": "Month {month}",
+  "@monthFallback": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "month": {
+        "type": "int"
+      }
+    }
+  },
+  "scanProcessingRecognizing": "承认你的晚餐...",
+  "scanProcessingRecognized": "食品确认",
+  "scanProcessingIngredients": "分析成份...",
+  "scanProcessingNutrition": "识别营养事实...",
+  "scanProcessingCalories": "计算出卡路里...",
+  "scanProcessingPortion": "估计部分大小...",
+  "scanProcessingSummary": "AI正在整理你的结果...",
+  "scanProcessingReport": "正在准备报告...",
+  "cameraPermissionDenied": "摄像头的许可被拒绝。 打开设置并允许CalGo的相机访问!",
+  "cameraPermissionRequired": "CalGo需要相机许可扫描餐食.",
+  "noCamera": "没有找到相机",
+  "cameraStartFailed": "无法启动相机 。 关闭屏幕再试一次!",
+  "scanInProgress": "另一餐正在分析中。 请等一下!",
+  "notLoggedIn": "你没有签字 与 Google 签约使用此功能!",
+  "cameraPermissionMissing": "未启用相机权限 。 允许CalGo在电话设置中访问相机!",
+  "networkTimeout": "网络缓慢或超时. 检查你的连接,再试一次!",
+  "scanFailed": "Could not analyze the photo ({error}). Please try again!",
+  "@scanFailed": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "scanAgain": "再次扫描",
+  "nutritionTitle": "营养",
+  "guidanceRecoverySubtitle": "温柔的调整",
+  "guidanceLoggedSubtitle": "根据你最近一顿饭",
+  "guidanceRefreshTooltip": "新建议",
+  "guidanceCaloriesRemaining": "{calories} kcal remaining",
+  "@guidanceCaloriesRemaining": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "guidanceProteinRemaining": "{grams}g protein needed",
+  "@guidanceProteinRemaining": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "guidanceAlternativesTitle": "或选择其中的一餐",
+  "guidanceOtherMeal": "我打算吃点别的",
+  "guidanceSeeMore": "看见更多",
+  "guidanceDisclaimer": "建议仅供参考。 扫描实际的餐食以准确记录.",
+  "guidanceFamiliarTag": "法 利 尔",
+  "guidanceDishCalories": "{calories} kcal",
+  "@guidanceDishCalories": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "guidanceDishProtein": "P {grams}g",
+  "@guidanceDishProtein": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "guidanceDishCarbs": "C {grams}g",
+  "@guidanceDishCarbs": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "guidancePrepTime": "{minutes} min",
+  "@guidancePrepTime": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "guidancePrice": "~{price}k",
+  "@guidancePrice": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "guidanceFitGreat": "不错",
+  "guidanceFitAdjust": "需要调整",
+  "guidanceFitGood": "不错",
+  "guidanceAppleTitle": "让Tao跟你计算",
+  "guidanceFirstScanAction": "扫描你的一餐",
+  "guidanceAppleSuggestionTitle": "Tao的建议",
+  "guidanceNextMealAction": "扫描你的下顿饭",
+  "guidanceGoalReachedTitle": "今天的目标完成了!",
+  "guidanceScreenTitle": "你该吃什么?",
+  "guidanceUnavailableTitle": "还没有建议",
+  "guidanceUnavailableMessage": "扫描后再试一次",
+  "guidanceScanMeal": "扫描一顿饭",
+  "guidanceConsiderMeals": "供考虑的餐",
+  "guidanceScanForAccuracy": "扫描以准确日志",
+  "guidanceSwapWith": "或者换个位置",
+  "guidanceChangeSuggestion": "更改建议",
+  "guidancePremiumSwapTitle": "更改建议为 Premium 特性",
+  "guidancePremiumSwapMessage": "升级到Premium, 以根据您的目标, 不加限制地更改餐饮建议 。",
+  "later": "再见",
+  "upgradePremium": "升级到 Premium",
+  "guidanceTodayTitle": "今天的个人建议",
+  "guidanceTodaySubtitle": "选择适合您宏的一餐, 然后在登录前扫描真正的一餐 。",
+  "guidanceScanRealMeal": "扫描真餐",
+  "guidanceNextMealGoal": "下一个食物的目标",
+  "remainingLabel": "剩余",
+  "proteinNeededLabel": "需要蛋白质",
+  "familiarMacroLabel": "Familiar -- -- 地雷行动",
+  "numberOneChoice": "选取数字 1",
+  "energyLabel": "能源",
+  "familiarLabel": "法 利 尔",
+  "dishTip": "Tip: {adjustment}",
+  "@dishTip": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "adjustment": {
+        "type": "String"
+      }
+    }
+  },
+  "dishMacroSummary": "{calories} kcal · {protein}g protein",
+  "@dishMacroSummary": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      },
+      "protein": {
+        "type": "String"
+      }
+    }
+  },
+  "fitGoalGreat": "对你的目标有好处",
+  "fitGoalAdjust": "应作调整",
+  "fitGoalGood": "适合你的目标",
+  "goalSpecificGainTitle": "你每周训练多少次?",
+  "goalSpecificGainNone": "我还没有训练",
+  "goalSpecificGain12": "1至2届会议",
+  "goalSpecificGain34": "3-4届会议",
+  "goalSpecificGain5": "5会以上",
+  "goalSpecificMaintainTitle": "保持你的身材最重要的是什么?",
+  "goalSpecificStable": "保持我的体重稳定",
+  "goalSpecificBalanced": "吃得更平衡点",
+  "goalSpecificHabits": "建立长期习惯",
+  "goalSpecificWeekends": "周末继续走",
+  "goalSpecificLoseTitle": "什么让你的脂肪损失更难?",
+  "goalSpecificHunger": "我经常饿了",
+  "goalSpecificPortions": "光谱控制",
+  "goalSpecificChoices": "我不知道该吃什么",
+  "goalSpecificLogging": "伐木困难",
+  "goalSpecificOvereat": "我晚上吃过饭了",
+  "goalSpecificWeekendsHard": "周末很难过",
+  "avoidFoodsTitle": "你对食物或原料有过敏症吗?",
+  "foodSeafood": "海产食品",
+  "foodRedMeat": "红肉",
+  "foodEggs": "鸡蛋",
+  "foodDairy": "牛奶和奶酪",
+  "foodFried": "烧饭",
+  "foodSpicy": "辣点食物",
+  "challengeTitle": "你最难的是什么?",
+  "challengeCalories": "我不知道我食物中的热量",
+  "challengeSweets": "抗糖药",
+  "challengePortions": "光谱控制",
+  "challengeBetweenMeals": "吃饭之间饿了",
+  "challengeCookingTime": "没时间做饭了",
+  "challengeMotivation": "保持积极性",
+  "budgetTitle": "你一餐的预算是多少?",
+  "budgetNote": "CalGo问,这样它就可以建议适合你的目标和预算的餐.",
+  "budgetLow": "30 000人以下",
+  "budgetLowNote": "简单易得的饭",
+  "budgetMid": "30 000 - 60 000 ₫",
+  "budgetMidNote": "一餐的典型预算",
+  "budgetHigh": "6万-100 000 ₫",
+  "budgetHighNote": "增加质量空间",
+  "budgetAny": "无限制",
+  "budgetAnyNote": "优先考虑营养目标",
+  "prepTitle": "你准备一顿饭需要多少时间?",
+  "prepNote": "CalGo问,这样它就可以建议适合你日程的餐点.",
+  "prepShort": "不到10分钟",
+  "prepShortNote": "忙的时候要快又方便",
+  "prepMedium": "10至20分钟",
+  "prepMediumNote": "足够吃一顿了",
+  "prepLong": "20分钟以上",
+  "prepLongNote": "更多时间仔细准备",
+  "prepAny": "无偏好",
+  "prepAnyNote": "只要符合我的目标",
+  "nutritionPriorityTitle": "你吃什么优先级?",
+  "nutritionPriorityNote": "CalGo问,所以它不给你一般的建议。",
+  "priorityProtein": "高蛋白质",
+  "priorityProteinNote": "支持全身和肌肉恢复",
+  "priorityLight": "轻卡路里",
+  "priorityLightNote": "平稳的一天",
+  "priorityBalanced": "余额d",
+  "priorityBalancedNote": "热量和宏观的合理结合",
+  "priorityFilling": "让我饱满",
+  "priorityFillingNote": "优先考虑蛋白质和足够的碳水化合物",
+  "habitTitle": "你的饮食习惯是什么?",
+  "habitNote": "CalGo问,所以它可以建议适合你生活方式的膳食.",
+  "habitRegular": "我经常吃平衡的饭",
+  "habitSnacking": "我经常吃点心",
+  "habitSkipBreakfast": "我经常不吃早餐",
+  "habitLateNight": "我深夜吃饭",
+  "habitEatingOut": "我经常在外面吃东西",
+  "habitCook": "我在家做饭",
+  "motivationTitle": "是什么让你想要改变?",
+  "motivationHealth": "改善健康状况",
+  "motivationMuscle": "构建肌肉",
+  "motivationClothes": "穿上衣服好一点",
+  "motivationWeight": "减重",
+  "motivationEnergy": "感觉健康 充满活力",
+  "motivationOther": "其他原因",
+  "painTitle": "你有没有...",
+  "painNote": "选择你经历过的事情",
+  "painEatLess": "吃得很少,但还没减肥",
+  "painCardio": "做很多心电图",
+  "painGiveUp": "过几天就放弃了",
+  "painUnknownCalories": "不知道我吃了多少热量",
+  "painHungry": "吃饱了一半",
+  "painStressEating": "进食压力",
+  "emotionalTitle": "如果你现在继续吃的话...",
+  "emotionalCurrent": "现在",
+  "emotionalAfterSixMonths": "6个月后",
+  "emotionalStillWeight": "你可以留在你现在的体重。 用CalGo,你可以改变。",
+  "emotionalHelpChange": "我会帮你改变的",
+  "referralX": "X (转动)",
+  "referralOther": "其它",
+  "sportsRunning": "运行",
+  "sportsCycling": "自行车",
+  "sportsSwimming": "游泳",
+  "sportsFootball": "足球",
+  "sportsBadminton": "羽毛球",
+  "sportsBasketball": "篮球",
+  "sportsOther": "其它",
+  "durationTitle": "你想什么时候达到目的?",
+  "durationNote": "选择一个适合你的时间范围",
+  "dailyCalorieGoal": "每日卡罗里目标",
+  "dailyCalorieGoalMessage": "Your current goal is {calories} kcal/day. You can change it in onboarding settings or contact support.",
+  "@dailyCalorieGoalMessage": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "close": "关闭",
+  "reminderNotifications": "提醒通知",
+  "reminderNotificationsEnabled": "已自动启用餐后催复通知和每日卡路里跟踪通知。",
+  "gotIt": "明白了,我们走",
+  "userGuideTitle": "如何使用 CalGo",
+  "userGuideContent": "1. 联合国 Tap Scan (+) 来抓取或选择一张餐后相片.\n2. 联合国 AI自动分析热量和营养.\n3个 在保存前编辑数量或添加成分。\n4.四. 在历史标签中回顾你的饮食历史 。",
+  "great": "不错",
+  "customerSupportMessage": "需要帮助或产品反馈,请发电子邮件给我们:support@calgo.tech",
+  "deleteAccountFailed": "无法删除账户 。 见在线指南或联系人支持.",
+  "galleryLoadFailed": "无法装入相片收藏",
+  "viewResult": "查看结果细节",
+  "shareMemoryCard": "共享内存卡",
+  "deletePhoto": "删除此相片",
+  "confirmDelete": "确认删除",
+  "deletePhotoMessage": "Are you sure you want to delete the meal photo \"{meal}\"?",
+  "@deletePhotoMessage": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "meal": {
+        "type": "String"
+      }
+    }
+  },
+  "mealDeleted": "从你的收藏中取出食物",
+  "deleteFailed": "无法删除 。 请再试一次。",
+  "paymentProcessing": "通过Google Play处理付款...",
+  "paymentOpenFailed": "无法打开 Google Play 付款 。 请再试一次。",
+  "errorWithDetails": "Error: {error}",
+  "@errorWithDetails": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "packIncludes": "Includes {count} AI nutrition scans",
+  "@packIncludes": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "permanentCredits": "扫描从不过期",
+  "testingFreeCredits": "测试构建:Premium扫描是免费的. 没有支付Google Play。",
+  "restoreSuccess": "采购修复检查成功 !",
+  "restoreFailed": "无法恢复 Google Play 购买 。",
+  "restoreFailedWithDetails": "Restore failed: {error}",
+  "@restoreFailedWithDetails": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "moreScanCredits": "多买点AI餐扫瞄",
+  "shareCreateFailed": "无法创建卡片映像 。 请再试一次!",
+  "shareExported": "内存卡导出成功 !",
+  "shareResult": "共享结果",
+  "shareNutritionLabel": "图像会用营养标签保存",
+  "saveImage": "保存图像",
+  "share": "份额",
+  "resultLoadFailed": "Could not load the analysis result (ID: {id}). Please try again!",
+  "@resultLoadFailed": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "edit": "编辑",
+  "done": "完成",
+  "healthScore": "健康分数",
+  "dishesInPhoto": "照片上的碎片",
+  "ingredientsInDish": "成分",
+  "addIngredient": "添加成分",
+  "feedbackThanks": "谢谢你的反馈!",
+  "feedbackPrompt": "AI扫描不准确吗? 告诉我们发生了什么:",
+  "feedbackHint": "例:菜名错误,蔬菜缺失......",
+  "skip": "跳过",
+  "sending": "正在发送...",
+  "sendFeedback": "发送反馈",
+  "newIngredient": "新成分",
+  "choosePortion": "选择部分",
+  "searchNutritionLibrary": "搜索营养图书馆",
+  "adjustBeforeAdding": "在添加前调整金额",
+  "ingredientSearchHint": "搜牛肉,鸡蛋,米饭...",
+  "ingredientNotFound": "未找到组件",
+  "ingredientSearchTip": "尝试更短或更常见的名称",
+  "unitPiece": "块",
+  "defaultUserName": "你们",
+  "analyzingMessage1": "分析你的档案信息...",
+  "analyzingMessage2": "计算出每日热量目标...",
+  "analyzingMessage3": "设计个性化目标...",
+  "analyzingMessage4": "建立营养战略...",
+  "analyzingMessage5": "差不多准备好了...",
+  "dietNormal": "经常吃东西",
+  "dietClean": "吃干净",
+  "dietKeto": "胶东",
+  "dietLowCarb": "低碳化物",
+  "dietVegetarian": "植物学家",
+  "dietVegan": "维干",
+  "activitySedentary": "静态",
+  "activitySedentaryDesc": "服务台工作,动静不大",
+  "activityLight": "轻轻地走",
+  "activityLightDesc": "轻型运动1至2次/周",
+  "activityModerate": "1至3次列车",
+  "activityModerateDesc": "锻炼1至3天/周",
+  "activityActive": "4至5次火车",
+  "activityActiveDesc": "运动4至5天/周",
+  "activityVeryActive": "每日火车",
+  "activityVeryActiveDesc": "每天辛苦锻炼",
+  "paceSlow": "慢-0.25 kg/周",
+  "paceLight": "光-0.5 kg/周(平面)",
+  "paceMedium": "中 -- -- 0.75 kg/周",
+  "paceHigh": "* 高 -- -- 1kg/周",
+  "paceHighest": "* 最高——1.25-1.5kg/周",
+  "weekUnit": "星期内",
+  "sportsGym": "游戏",
+  "sportsYoga": "瑜伽语",
+  "scanResultUnavailable": "这顿饭无法分析",
+  "scanResultRetryHint": "再扫描一遍",
+  "guidanceDishFat": "F {grams}g",
+  "@guidanceDishFat": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "ok": "",
+  "defaultProfileName": "CalGo 用户",
+  "premiumMembership": "高级成员",
+  "creditsCount": "{count} credits",
+  "@creditsCount": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "paymentMethods": "通过Google Play / App Store 付款",
+  "deleteAction": "删除",
+  "proteinLabel": "尼加拉瓜",
+  "onboardingSaveFailed": "无法保存您的营养目标 。 请再试一次。",
+  "onboardingSaveNetworkFailed": "无法保存您的营养目标 。 检查你的连接,再试一次。",
+  "googleSignInFailed": "Google sign-in failed: {error}",
+  "@googleSignInFailed": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "appleSignInPending": "苹果签入仍在完成. 请使用谷歌目前。",
+  "firstScanTitle": "准备好扫描你的一餐了吗?",
+  "firstScanSubtitle": "下方扫描以启动",
+  "scanLabel": "扫描",
+  "startScanning": "开始扫描",
+  "socialProofOneTag": "6.5 kg损失",
+  "socialProofOneTime": "两天前",
+  "socialProofOneTitle": "越南食品识别就位!",
+  "socialProofOneBody": "我以前在外国的应用软件里 一直追踪到磷和包子 CalGo从一张照片中准确识别出越南菜肴和热量. 10点10分!",
+  "socialProofTwoTag": "获得4个kg肌肉",
+  "socialProofTwoTime": "5天前,我看见了",
+  "socialProofTwoTitle": "平滑 UI 和准确的 TDEE",
+  "socialProofTwoBody": "BMI跟踪和宏观建议详细. 我每天训练并跟踪卡路里 一个月后身体变强",
+  "socialProofThreeTag": "保持我的形状",
+  "socialProofThreeTime": "一个星期前",
+  "socialProofThreeTitle": "建立健康的饮食习惯",
+  "socialProofThreeBody": "Tao的提醒是可爱的。 这个应用从不推动极端的饮食; 它引导我走向平衡的营养。",
+  "premiumActivatedMessage": "Pre活出. 吃饱了!",
+  "premiumPaymentFailed": "无法打开 Primium 付款 。",
+  "continueFreePremium": "继续 !",
+  "continueLabel": "继续",
+  "premiumFreeUnlocked": "免费解锁的多米",
+  "premiumActivated": "启动",
+  "processingShort": "正在处理...",
+  "subscribePremium": "订阅到 Premium",
+  "premiumTestingNote": "测试构建:Premium是免费的. 没有付款。",
+  "premiumNoChargeNote": "这一步你不会被起诉的",
+  "premiumAutoRenewNote": "自动续报. 随时取消",
+  "premiumHeadlineBefore": "更改从",
+  "todayLower": "今天",
+  "yourExperience": "\n经历",
+  "premiumBenefitCalories": "立即了解你的热量 无限AI扫描",
+  "premiumBenefitSuggestions": "适合您日常目标的无限制餐饮建议",
+  "premiumBenefitDescriptions": "未经人工输入的 AI 膳食描述",
+  "premiumBenefitProgress": "每天跟踪身体进展",
+  "premiumBenefitSupport": "随时需要优先支持",
+  "planWeek": "周数",
+  "planYear": "年份",
+  "planMonth": "月数",
+  "free": "免费",
+  "weeklyPayment": "每周付款",
+  "popularMost": "最受欢迎",
+  "testingAccess": "测试访问",
+  "restoreChecked": "采购恢复检查。",
+  "restoreException": "Restore failed: {error}",
+  "@restoreException": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "manageSubscription": "管理订阅",
+  "manageSubscriptionFailed": "无法打开订阅管理 。",
+  "scanCreditsExhausted": "你没有扫描学分了",
+  "networkRetry": "相接为慢. 再试一次",
+  "scanUnavailable": "此图像无法分析 。",
+  "notificationChannelName": "每日餐后催复通知",
+  "notificationChannelDescription": "提醒大家扫描早餐 午餐和晚餐 与CalGo",
+  "notificationBreakfastTitle": "CalGo - 早餐",
+  "notificationBreakfastBody": "早,早,你们好 记得扫描早餐 这样你有足够的能量过日子",
+  "notificationLunchTitle": "CalGo - 午餐会",
+  "notificationLunchBody": "这是午餐时间。 扫描你用CalGo的餐食 准确跟踪卡路里。",
+  "notificationDinnerTitle": "CalGo - 晚饭",
+  "notificationDinnerBody": "晚餐准备好了吗? 扫描它以保持轨道 与你的目标。",
+  "notificationDirectChannel": "直接通知",
+  "caloriesLabel": "卡数",
+  "carbsLabel": "加勒比",
+  "fatLabel": "东帝汶",
+  "guidanceTodayShortSubtitle": "查看今天目标的建议",
+  "ingredientBeef": "新鲜牛肉",
+  "ingredientChicken": "泛海鸡胸",
+  "ingredientEgg": "鸡蛋",
+  "ingredientRiceNoodles": "新鲜的磷面",
+  "ingredientRice": "白米饭",
+  "ingredientBun": "新鲜米粉",
+  "ingredientSalad": "低调番茄( T)",
+  "ingredientCheddar": "切达干酪",
+  "ingredientPassionSauce": "激情果酱",
+  "ingredientPork": "瘦猪肉",
+  "mockPhoTitle": "稀有的牛肉和奶油",
+  "mockPhoNoodles": "新鲜的磷面",
+  "mockPhoRareBeef": "稀有牛肉",
+  "mockPhoBrisket": "牛肉饼",
+  "mockPhoBroth": "Pho 汤和call",
+  "mockRiceTitle": "烧出大米和烤猪肉、猪皮和鸡蛋蛋糕",
+  "mockRice": "断米饭",
+  "mockGrilledPork": "猪排",
+  "mockEggCake": "蒸鸡蛋蛋糕",
+  "mockFriedEgg": "煎鸡蛋",
+  "mockSaladTitle": "鸡肉沙拉和香味果酱",
+  "mockChicken": "泛海鸡胸",
+  "mockSalad": "樱桃番茄( S)",
+  "mockPassionSauce": "激情果酱",
+  "motivationAdviceLose": "你只有{remaining}kg从你的目标。 小的日常习惯比极端的饮食效果更好.",
+  "@motivationAdviceLose": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "remaining": {
+        "type": "String"
+      }
+    }
+  },
+  "motivationAdviceGain": "你的卡路里目标被优化 用来建立精致的肌肉 同时限制过量的脂肪",
+  "motivationAdviceMaintain": "你的体重在健康范围内 让我们建立习惯,帮助你 每天感觉最好的。",
+  "motivationAdviceDefault": "让我们以可持续的习惯实现你的健康目标。",
+  "taoAdviceLabel": "TAO的电话",
+  "taoReminder": "Tao每天都会提醒你",
+  "packBasic": "启动器",
+  "packPopular": "大众",
+  "packPremium": "ium",
+  "creditPackageSummary": "{count} credits • {unit}",
+  "@creditPackageSummary": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "perScan": "扫描",
+  "caloriesValue": "{calories} kcal",
+  "@caloriesValue": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "caloriesPer100g": "{calories} kcal / 100g",
+  "@caloriesPer100g": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "gramsValue": "{grams}g",
+  "@gramsValue": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "weightKgValue": "{weight} kg",
+  "@weightKgValue": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
+  "galleryMacroSummary": "{calories} kcal • C:{carbs}g P:{protein}g F:{fat}g",
+  "@galleryMacroSummary": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      },
+      "carbs": {
+        "type": "String"
+      },
+      "protein": {
+        "type": "String"
+      },
+      "fat": {
+        "type": "String"
+      }
+    }
+  },
+  "sharePayload": "🔥 {dish} · {calories} kcal | CalGo",
+  "@sharePayload": {
+    "placeholders": {
+      "dish": {
+        "type": "String"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  }
+}

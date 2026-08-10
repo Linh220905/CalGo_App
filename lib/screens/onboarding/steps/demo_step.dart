@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/onboarding_provider.dart';
+import '../../../providers/app_settings_provider.dart';
 
 class DemoStep extends StatelessWidget {
   const DemoStep({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final settings = context.watch<AppSettingsProvider>();
+    final s = settings.strings;
+
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
       body: SafeArea(
@@ -22,10 +26,10 @@ class DemoStep extends StatelessWidget {
                     effects: const [
                       FadeEffect(duration: Duration(milliseconds: 600)),
                     ],
-                    child: const Text(
-                      'Xem CalGo hoạt động',
+                    child: Text(
+                      s.demoStepTitle,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.w700,
                         color: Color(0xFF111111),
@@ -85,9 +89,9 @@ class DemoStep extends StatelessWidget {
                     ),
                     onPressed: () =>
                         context.read<OnboardingProvider>().nextStep(),
-                    child: const Text(
-                      'Tiếp theo',
-                      style: TextStyle(
+                    child: Text(
+                      s.nextStepButton,
+                      style: const TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w600,
                       ),

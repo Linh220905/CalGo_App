@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import '../../config/app_build_config.dart';
 import '../../providers/app_settings_provider.dart';
 import '../../providers/payment_provider.dart';
 import '../../services/api_service.dart';
-import '../onboarding/steps/premium_paywall_step.dart';
 
 class CreditPackageItem {
   final String id;
@@ -33,8 +33,8 @@ class CreditPackageItem {
 
   String get priceLabel =>
       '${priceVnd.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (m) => '${m[1]}.')}₫';
-  String get unitLabel =>
-      '${(priceVnd ~/ (creditAmount > 0 ? creditAmount : 1)).toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (m) => '${m[1]}.')}₫/lượt';
+  String get unitPriceLabel =>
+      '${(priceVnd ~/ (creditAmount > 0 ? creditAmount : 1)).toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (m) => '${m[1]}.')}₫';
 }
 
 class PricingScreen extends StatefulWidget {
@@ -47,31 +47,40 @@ class PricingScreen extends StatefulWidget {
 class _PricingScreenState extends State<PricingScreen> {
   bool _creatingPayment = false;
 
-  // Credit Packages list loaded instantly
-  List<CreditPackageItem> _payPacks = [
-    CreditPackageItem(
-        id: 'pkg_10',
-        name: 'Gói 10 lượt',
-        creditAmount: 10,
-        priceVnd: 49000,
-        popular: false),
-    CreditPackageItem(
-        id: 'pkg_30',
-        name: 'Gói 30 lượt',
-        creditAmount: 30,
-        priceVnd: 119000,
-        popular: true),
-    CreditPackageItem(
-        id: 'pkg_100',
-        name: 'Gói 100 lượt',
-        creditAmount: 100,
-        priceVnd: 299000,
-        popular: false),
-  ];
+  // Credit Packages list loaded instantly matching web backend
+  late List<CreditPackageItem> _payPacks;
+
+  String _storePriceLabel(CreditPackageItem pack) {
+    return context.read<PaymentProvider>().formattedPriceForCreditAmount(
+              pack.creditAmount,
+            ) ??
+        pack.priceLabel;
+  }
 
   @override
   void initState() {
     super.initState();
+    final s = context.read<AppSettingsProvider>().strings;
+    _payPacks = [
+      CreditPackageItem(
+          id: '9568d78d-9a8f-4ac7-94d0-ea3a7dc2d04d',
+          name: s.packBasic,
+          creditAmount: 10,
+          priceVnd: 10000,
+          popular: false),
+      CreditPackageItem(
+          id: 'f49d9e33-f605-496a-a0b7-5aed663068a7',
+          name: s.packPopular,
+          creditAmount: 25,
+          priceVnd: 20000,
+          popular: true),
+      CreditPackageItem(
+          id: '68d6aec7-ab65-4b96-a34a-4765e8e4a367',
+          name: s.packPremium,
+          creditAmount: 100,
+          priceVnd: 50000,
+          popular: false),
+    ];
     _fetchPackagesAsync();
   }
 
@@ -96,22 +105,25 @@ class _PricingScreenState extends State<PricingScreen> {
 
   Future<void> _processGooglePlayPurchase(
       String packageId, CreditPackageItem pack) async {
+    final s = context.read<AppSettingsProvider>().strings;
     setState(() => _creatingPayment = true);
     try {
       final payment = context.read<PaymentProvider>();
-      final ok = await payment.buyCredits(packageId);
+      final ok = await payment.buyCredits(
+        packageId,
+        creditAmount: pack.creditAmount,
+      );
       if (ok && mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Đang xử lý thanh toán qua Google Play...'),
+          SnackBar(
+            content: Text(s.paymentProcessing),
           ),
         );
       } else if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              payment.error ??
-                  'Không thể mở thanh toán Google Play. Vui lòng thử lại.',
+              s.paymentOpenFailed,
             ),
             backgroundColor: Colors.redAccent,
           ),
@@ -120,7 +132,7 @@ class _PricingScreenState extends State<PricingScreen> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Lỗi: ${e.toString()}')),
+          SnackBar(content: Text(s.errorWithDetails(e.toString()))),
         );
       }
     } finally {
@@ -187,7 +199,7 @@ class _PricingScreenState extends State<PricingScreen> {
 
                 // Title & Credits Info
                 Text(
-                  'Gói lượt quét: ${pack.name}',
+                  '${s.creditPacksTitle}: ${pack.name}',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -196,7 +208,7 @@ class _PricingScreenState extends State<PricingScreen> {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'Bao gồm ${pack.creditAmount} lượt quét dinh dưỡng AI',
+                  s.packIncludes(pack.creditAmount),
                   style: TextStyle(
                       fontSize: 13,
                       color: isDark
@@ -212,7 +224,7 @@ class _PricingScreenState extends State<PricingScreen> {
                   textBaseline: TextBaseline.alphabetic,
                   children: [
                     Text(
-                      pack.priceLabel,
+                      _storePriceLabel(pack),
                       style: TextStyle(
                         fontSize: 34,
                         fontWeight: FontWeight.w900,
@@ -237,101 +249,110 @@ class _PricingScreenState extends State<PricingScreen> {
                   ),
                   child: Column(
                     children: [
-                      _buildBenefitRow(
-                          '${pack.creditAmount} lượt quét món ăn bằng AI',
-                          isDark),
+                      _buildBenefitRow(s.moreScanCredits, isDark),
                       const SizedBox(height: 10),
-                      _buildBenefitRow(
-                          'Phân tích chi tiết Calories, Protein, Carbs, Fats',
-                          isDark),
+                      _buildBenefitRow(s.nutritionTitle, isDark),
                       const SizedBox(height: 10),
-                      _buildBenefitRow(
-                          'Lượt quét dùng vĩnh viễn, không giới hạn thời gian',
-                          isDark),
+                      _buildBenefitRow(s.permanentCredits, isDark),
                     ],
                   ),
                 ),
                 const SizedBox(height: 24),
 
-                // ── Google Play Pay Button ─────────────
-                SizedBox(
-                  width: double.infinity,
-                  height: 52,
-                  child: ElevatedButton.icon(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF22C55E),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16)),
-                      elevation: 2,
+                if (AppBuildConfig.isTesting) ...[
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(14),
+                    decoration: BoxDecoration(
+                      color: isDark
+                          ? const Color(0xFF202B24)
+                          : const Color(0xFFF0FDF4),
+                      borderRadius: BorderRadius.circular(14),
                     ),
-                    onPressed: () {
-                      Navigator.pop(ctx);
-                      _processGooglePlayPurchase(pack.id, pack);
-                    },
-                    icon: const Icon(Icons.smartphone_rounded,
-                        color: Colors.white, size: 20),
-                    label: Text(
-                      'Mua qua Google Play',
-                      style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
+                    child: Text(
+                      s.testingFreeCredits,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 12, height: 1.35),
                     ),
                   ),
-                ),
-                const SizedBox(height: 12),
-                Text(
-                  'Thanh toán qua Google Play / App Store',
-                  style: TextStyle(
-                      fontSize: 11,
-                      color: isDark
-                          ? const Color(0xFF8E8D9A)
-                          : const Color(0xFF94A3B8)),
-                ),
-                const SizedBox(height: 12),
-                TextButton(
-                  onPressed: () async {
-                    final messenger = ScaffoldMessenger.of(context);
-                    try {
-                      final payment = context.read<PaymentProvider>();
-                      final restored = await payment.restorePurchases();
-                      if (mounted && restored) {
-                        messenger.showSnackBar(
-                          const SnackBar(
-                              content: Text(
-                                  'Đã kiểm tra khôi phục giao dịch mua thành công!')),
-                        );
-                      } else if (mounted) {
-                        messenger.showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              payment.error ??
-                                  'Không thể khôi phục giao dịch Google Play.',
-                            ),
-                            backgroundColor: Colors.redAccent,
-                          ),
-                        );
-                      }
-                    } catch (e) {
-                      if (mounted) {
-                        messenger.showSnackBar(
-                          SnackBar(
-                              content:
-                                  Text('Khôi phục thất bại: ${e.toString()}')),
-                        );
-                      }
-                    }
-                  },
-                  child: Text(
-                    s.restorePurchases,
+                ] else ...[
+                  // ── Google Play Pay Button ─────────────
+                  SizedBox(
+                    width: double.infinity,
+                    height: 52,
+                    child: ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF22C55E),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16)),
+                        elevation: 2,
+                      ),
+                      onPressed: () {
+                        Navigator.pop(ctx);
+                        _processGooglePlayPurchase(pack.id, pack);
+                      },
+                      icon: const Icon(Icons.smartphone_rounded,
+                          color: Colors.white, size: 20),
+                      label: Text(
+                        s.payButton,
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    s.paymentMethods,
                     style: TextStyle(
-                        fontSize: 12,
-                        decoration: TextDecoration.underline,
+                        fontSize: 11,
                         color: isDark
                             ? const Color(0xFF8E8D9A)
-                            : const Color(0xFF64748B)),
+                            : const Color(0xFF94A3B8)),
                   ),
-                ),
+                  const SizedBox(height: 12),
+                  TextButton(
+                    onPressed: () async {
+                      final messenger = ScaffoldMessenger.of(context);
+                      try {
+                        final payment = context.read<PaymentProvider>();
+                        final restored = await payment.restorePurchases();
+                        if (mounted && restored) {
+                          messenger.showSnackBar(
+                            SnackBar(content: Text(s.restoreSuccess)),
+                          );
+                        } else if (mounted) {
+                          messenger.showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                s.restoreFailed,
+                              ),
+                              backgroundColor: Colors.redAccent,
+                            ),
+                          );
+                        }
+                      } catch (e) {
+                        if (mounted) {
+                          messenger.showSnackBar(
+                            SnackBar(
+                                content: Text(
+                                    s.restoreFailedWithDetails(e.toString()))),
+                          );
+                        }
+                      }
+                    },
+                    child: Text(
+                      s.restorePurchases,
+                      style: TextStyle(
+                          fontSize: 12,
+                          decoration: TextDecoration.underline,
+                          color: isDark
+                              ? const Color(0xFF8E8D9A)
+                              : const Color(0xFF64748B)),
+                    ),
+                  ),
+                ],
                 const SizedBox(height: 12),
               ],
             ),
@@ -361,20 +382,13 @@ class _PricingScreenState extends State<PricingScreen> {
     );
   }
 
-  void _openPremiumPaywallScreen() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const PremiumPaywallStep(
-          onboardingMode: false,
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final settings = context.watch<AppSettingsProvider>();
+    // Rebuild prices when Google Play product discovery completes. The store
+    // price is authoritative; backend VND values are only the offline UI
+    // fallback before Billing returns ProductDetails.
+    final payment = context.watch<PaymentProvider>();
     final isDark = settings.isDarkMode;
     final s = settings.strings;
 
@@ -430,7 +444,7 @@ class _PricingScreenState extends State<PricingScreen> {
                               ),
                             ),
                             Text(
-                              'Mua thêm lượt quét món ăn bằng AI',
+                              s.moreScanCredits,
                               style: TextStyle(fontSize: 13, color: textMuted),
                             ),
                           ],
@@ -441,31 +455,34 @@ class _PricingScreenState extends State<PricingScreen> {
                   const SizedBox(height: 24),
 
                   // ── ⚡ Section Header: Credit Packages ───────────────
-                  Row(
-                    children: [
-                      Container(
+                  LayoutBuilder(
+                    builder: (context, constraints) {
+                      final icon = Container(
                         width: 28,
                         height: 28,
                         decoration: BoxDecoration(
                           color: const Color(0xFFDBEAFE),
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        child: const Icon(Icons.bolt_rounded,
-                            color: Color(0xFF2563EB), size: 18),
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
+                        child: const Icon(
+                          Icons.bolt_rounded,
+                          color: Color(0xFF2563EB),
+                          size: 18,
+                        ),
+                      );
+                      final title = Text(
                         s.creditPacksTitle,
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
                           color: textDark,
                         ),
-                      ),
-                      const Spacer(),
-                      Container(
+                      );
+                      final badge = Container(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 3),
+                          horizontal: 10,
+                          vertical: 3,
+                        ),
                         decoration: BoxDecoration(
                           color: const Color(0xFFDBEAFE),
                           borderRadius: BorderRadius.circular(12),
@@ -478,8 +495,33 @@ class _PricingScreenState extends State<PricingScreen> {
                             color: Color(0xFF2563EB),
                           ),
                         ),
-                      ),
-                    ],
+                      );
+                      if (constraints.maxWidth < 340) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                icon,
+                                const SizedBox(width: 8),
+                                Expanded(child: title),
+                              ],
+                            ),
+                            const SizedBox(height: 8),
+                            Align(alignment: Alignment.centerRight, child: badge),
+                          ],
+                        );
+                      }
+                      return Row(
+                        children: [
+                          icon,
+                          const SizedBox(width: 8),
+                          Expanded(child: title),
+                          const SizedBox(width: 8),
+                          Flexible(child: badge),
+                        ],
+                      );
+                    },
                   ),
                   const SizedBox(height: 14),
 
@@ -488,7 +530,7 @@ class _PricingScreenState extends State<PricingScreen> {
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: _payPacks.length,
-                    separatorBuilder: (_, __) => const SizedBox(height: 14),
+                    separatorBuilder: (_, __) => const SizedBox(height: 18),
                     itemBuilder: (context, index) {
                       final pack = _payPacks[index];
 
@@ -497,19 +539,20 @@ class _PricingScreenState extends State<PricingScreen> {
                         children: [
                           InkWell(
                             onTap: () => _openPackModal(pack),
-                            borderRadius: BorderRadius.circular(16),
+                            borderRadius: BorderRadius.circular(20),
                             child: Container(
-                              padding: const EdgeInsets.all(16),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 18, vertical: 20),
                               decoration: BoxDecoration(
                                 color: cardBgColor,
-                                borderRadius: BorderRadius.circular(16),
+                                borderRadius: BorderRadius.circular(20),
                                 border: Border.all(
                                   color: pack.popular
                                       ? const Color(0xFF93C5FD)
                                       : (isDark
                                           ? const Color(0xFF2C2A34)
                                           : const Color(0xFFF1F5F9)),
-                                  width: pack.popular ? 1.8 : 1.0,
+                                  width: pack.popular ? 2.0 : 1.0,
                                 ),
                                 boxShadow: [
                                   BoxShadow(
@@ -526,16 +569,16 @@ class _PricingScreenState extends State<PricingScreen> {
                               child: Row(
                                 children: [
                                   Container(
-                                    width: 42,
-                                    height: 42,
+                                    width: 48,
+                                    height: 48,
                                     decoration: BoxDecoration(
                                       color: const Color(0xFFEFF6FF),
-                                      borderRadius: BorderRadius.circular(12),
+                                      borderRadius: BorderRadius.circular(14),
                                     ),
                                     child: const Icon(Icons.bolt_rounded,
-                                        color: Color(0xFF2563EB), size: 22),
+                                        color: Color(0xFF2563EB), size: 26),
                                   ),
-                                  const SizedBox(width: 14),
+                                  const SizedBox(width: 16),
                                   Expanded(
                                     child: Column(
                                       crossAxisAlignment:
@@ -544,16 +587,18 @@ class _PricingScreenState extends State<PricingScreen> {
                                         Text(
                                           pack.name,
                                           style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w800,
                                             color: textDark,
                                           ),
                                         ),
-                                        const SizedBox(height: 2),
+                                        const SizedBox(height: 3),
                                         Text(
-                                          '${pack.creditAmount} lượt • ${pack.unitLabel}',
+                                          s.creditPackageSummary(
+                                              pack.creditAmount,
+                                              '${pack.unitPriceLabel}${s.perScan}'),
                                           style: TextStyle(
-                                              fontSize: 12, color: textMuted),
+                                              fontSize: 13, color: textMuted),
                                         ),
                                       ],
                                     ),
@@ -561,16 +606,19 @@ class _PricingScreenState extends State<PricingScreen> {
                                   Row(
                                     children: [
                                       Text(
-                                        pack.priceLabel,
+                                        payment.formattedPriceForCreditAmount(
+                                              pack.creditAmount,
+                                            ) ??
+                                            pack.priceLabel,
                                         style: const TextStyle(
-                                          fontSize: 17,
+                                          fontSize: 19,
                                           fontWeight: FontWeight.w900,
                                           color: Color(0xFF2563EB),
                                         ),
                                       ),
                                       const SizedBox(width: 4),
                                       Icon(Icons.chevron_right_rounded,
-                                          color: textMuted, size: 20),
+                                          color: textMuted, size: 22),
                                     ],
                                   ),
                                 ],
@@ -582,10 +630,10 @@ class _PricingScreenState extends State<PricingScreen> {
                           if (pack.popular)
                             Positioned(
                               top: -10,
-                              right: 16,
+                              right: 20,
                               child: Container(
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 3),
+                                    horizontal: 12, vertical: 4),
                                 decoration: BoxDecoration(
                                   gradient: const LinearGradient(
                                     colors: [
@@ -604,7 +652,7 @@ class _PricingScreenState extends State<PricingScreen> {
                                 child: Text(
                                   s.popularBadge,
                                   style: const TextStyle(
-                                    fontSize: 10,
+                                    fontSize: 11,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,
                                   ),
@@ -615,78 +663,7 @@ class _PricingScreenState extends State<PricingScreen> {
                       );
                     },
                   ),
-                  const SizedBox(height: 32),
-
-                  // ── 👑 Premium Subscription Banner Card ─────────────
-                  InkWell(
-                    onTap: _openPremiumPaywallScreen,
-                    borderRadius: BorderRadius.circular(20),
-                    child: Container(
-                      padding: const EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [Color(0xFFFFFBEB), Color(0xFFFEF3C7)],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(
-                            color: const Color(0xFFFDE68A), width: 1.5),
-                        boxShadow: const [
-                          BoxShadow(
-                              color: Color(0x11F59E0B),
-                              blurRadius: 16,
-                              offset: Offset(0, 4)),
-                        ],
-                      ),
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 48,
-                            height: 48,
-                            decoration: BoxDecoration(
-                              color: const Color(0xFFF59E0B),
-                              borderRadius: BorderRadius.circular(14),
-                            ),
-                            child: const Icon(Icons.workspace_premium_rounded,
-                                color: Colors.white, size: 26),
-                          ),
-                          const SizedBox(width: 14),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Row(
-                                  children: [
-                                    Text(
-                                      'Gói thành viên Premium',
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold,
-                                        color: Color(0xFF78350F),
-                                      ),
-                                    ),
-                                    SizedBox(width: 6),
-                                    Icon(Icons.auto_awesome_rounded,
-                                        color: Color(0xFFD97706), size: 14),
-                                  ],
-                                ),
-                                const SizedBox(height: 2),
-                                const Text(
-                                  'Quét calo & phân tích dinh dưỡng không giới hạn',
-                                  style: TextStyle(
-                                      fontSize: 12, color: Color(0xFF92400E)),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const Icon(Icons.arrow_forward_ios_rounded,
-                              color: Color(0xFFD97706), size: 16),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 32),
+                  const SizedBox(height: 24),
                 ],
               ),
             ),

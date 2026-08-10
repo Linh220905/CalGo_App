@@ -1,0 +1,922 @@
+{
+  "@@locale": "ar",
+  "tabHome": "الرئيسية",
+  "tabAnalytics": "التحليل",
+  "tabSettings": "الترتيبات",
+  "today": "اليوم",
+  "yesterday": "أمس",
+  "caloriesLeft": "كاليسار",
+  "proteinLeft": "Protein left",
+  "carbsLeft": "Carbs left",
+  "fatsLeft": "السماد اليسار",
+  "recentlyUploaded": "تم تحميلها مؤخرا",
+  "noMealsUploaded": "لم يتم تحميل أي وجبة بعد",
+  "tapToScanMeal": "تابوت لمسح أول وجبة لك مع AI",
+  "profileTitle": "الحساب الشخصي",
+  "creditsLabel": "ائتمانات المسح",
+  "scannedCountLabel": "الوجبات المسحية",
+  "buyCredits": "شراء الائتمانات",
+  "statistics": "الإحصاءات",
+  "calorieTarget": "هدف كالوري",
+  "notifications": "الإخطارات",
+  "darkMode": "موديل الظلام",
+  "language": "اللغة",
+  "languageDisplayName": "العربية",
+  "userGuide": "دليل المستعملين",
+  "customerSupport": "دعم العملاء",
+  "logout": "Log Out",
+  "selectLanguageTitle": "اللغة المختارة",
+  "scanTitle": "الوجبات الخفيفة",
+  "scanInstructionHeader": "احتفظ بالطعام ضمن الإطار",
+  "scanInstructionSub": "تأكد من الإضاءة المناسبة للتعرف الدقيق باستخدام الذكاء الاصطناعي",
+  "selectFromGallery": "مختارة من Gallery",
+  "outOfCreditsTitle": "من إئتمانات الاسكان",
+  "outOfCreditsMessage": "لقد استعملت كل اموالك تقدموا لتتبع التغذية",
+  "buyMore": "اشتري المزيد",
+  "cancel": "إلغاء",
+  "pricingTitle": "زيادة الائتمانات",
+  "pricingSubtitle": "اختيار أفضل خطة لفتح كامل قدرات AI",
+  "creditPacksTitle": "الحزم الائتمانية الاسكانية",
+  "noExpiryBadge": "لا مفر",
+  "popularBadge": "الشعبية",
+  "subscriptionsTitle": "الاشتراكات المقدمة",
+  "payButton": "ادفع الآن",
+  "privacyPolicy": "سياسة الخصوصية",
+  "termsOfService": "مدة الخدمة",
+  "deleteAccount": "يحذف الحساب",
+  "openOnline": "مفتوح على الإنترنت",
+  "onlineGuide": "دليل الإنترنت",
+  "deleteAccountSubscriptionWarning": "إلغاء حسابك لـ (زيزفززز) لا يلغي اشتراك (زززفززز) إذا كان لديك بريميوم، إلغه بشكل منفصل في Google Play، لتجنب تهمة التجديد.",
+  "restorePurchases": "Restore Purchases",
+  "privacyPolicyContent": "CalGo Privacy Policy (updated 5 Aug 2026):\n\n1. Data we collect: account email, display name, Google sign-in identifier, onboarding nutrition information, meal photos, scan results, meal history, purchase metadata, app/device diagnostics and notification preferences.\n2. How permissions are used: camera and photo access are requested only when you choose to capture or select a meal photo; notifications are used only when enabled.\n3. How data is used: to provide AI nutrition analysis, sync your account, process Google Play purchases, prevent abuse, provide support and improve reliability. Photos may be processed by our hosting and AI service providers.\n4. Sharing and security: we do not sell your personal data or meal photos. Necessary providers such as hosting, AI processing, Google Sign-In and Google Play Billing may process limited data. We use HTTPS and access controls, but no system is completely secure.\n5. Retention and deletion: account data and meal history are deleted when you delete your account, except data that must be retained for fraud prevention, disputes or legal obligations. Backups may take a reasonable time to expire.\n6. Your rights: delete your account in Profile or visit https://calgo.tech/delete-account. For access, correction or questions, contact support@calgo.tech. Full policy: https://calgo.tech/privacy.",
+  "termsOfServiceContent": "شروط الخدمة:\n\n1 الخدمات والمطالبات الطبية: تعد النتائج التغذوية لززززفز تقديرات للمراجع فقط ولا تحل محل المشورة الطبية المهنية. CalGo ليس جهازا طبيا.\n2. المدفوعات: مجموعات الائتمان هي مشتريات رقمية لمرة واحدة. والخطط الأسبوعية والشهرية والسنوية للتجديد الآلي للاشتراكات من جانب زدز - ز - ه - 3 ز - ز - ز - ز - ما لم تلغ قبل التجديد المقبل. Manage or repeal at https://play.google.com/store/account/subscriptions.\n3 Refunds and deletion: Google Play handles Android billing and refunds. Deleting a CalGo, does not abolish a Google Play.\n4 Content and intellectual property: you retain ownership of uploaded photos; CalGoA receives a limited license to process them to provide and improve the service. CalGo تملك تطبيقه وعلامته وبرمجياته.\n5 Contact: support@calgo.tech. الشروط الكاملة: https://calgo.tech/terms.",
+  "deleteAccountConfirmMessage": "هل أنت متأكد من أنك تريد أن تحذف بشكل دائم حساب CalGo و جميع بيانات سجل السعرات الحرارية؟ هذا العمل لا يمكن أن يزول.",
+  "historyTitle": "تاريخ الوجبة",
+  "historySubtitle": "رحلة التغذية",
+  "mealsCountLabel": "الوجبات",
+  "streakDaysLabel": "Streak",
+  "kcalPerDay": "Kcal/day",
+  "proteinPerDay": "بروتين/يوم",
+  "noMealsHistory": "لم يتم تسجيل الوجبات بعد",
+  "scanFirstMealPrompt": "امسح وجبتك الأولى\nرحلة التغذية",
+  "scanFirstMealButton": "الوجبة الأولى",
+  "deleteMealConfirm": "هل تريد حذف هذه الوجبة؟",
+  "cannotDeleteMeal": "لا يمكن حذف الوجبة أرجوك حاول مرة أخرى",
+  "photoGalleryTitle": "Photos",
+  "noPhotosYet": "لا صور للمسح الغذائي بعد",
+  "takePhotosPrompt": "صور لوجباتكم لبناء مجموعتكم",
+  "scanFoodNow": "غذاء إسكاني الآن",
+  "welcomeTo": "مرحبا بكم في",
+  "getStarted": "ابدأ",
+  "snapPhotoAiTitle": "إلتقط صورة دع (زيز) يعمل",
+  "snapPhotoAiDesc": "AIA automatically recognizes food and calculates calories in seconds.",
+  "trackEasilyTitle": "تتابع بهدوء",
+  "trackEasilyDesc": "السعرات الحرارية، البروتين، الكاربين، الدهون كل يوم.",
+  "reachGoalsTitle": "الوصول إلى الأهداف أسرع.",
+  "reachGoalsDesc": "الحصول على أهداف شخصية وتتبع تقدم فقدان الدهون.",
+  "nextStepButton": "التالي",
+  "goalStepTitle": "ما هو هدفك؟",
+  "goalStepSubtitle": "مساعدة CalGoA بناء خطة تناسبك",
+  "goalLoseWeight": "Lose Weight",
+  "goalLoseWeightDesc": "حرق الدهون بكفاءة، نغمة الجسم",
+  "goalLoseWeightReason": "وهذا يساعدنا على وضع خطة لفقد الدهون تحمي العضلات وتبقي مستدامة.",
+  "goalGainMuscle": "Gain Muscle",
+  "goalGainMuscleDesc": "بناء العضلات وزيادة القوة",
+  "goalGainMuscleReason": "هذا يساعدنا على وضع خطة لجلب العضلات حول احتياجاتك من التدريب والبروتين",
+  "goalMaintain": "الحفاظ على الوزن",
+  "goalMaintainDesc": "حافظ على توازنك",
+  "goalMaintainReason": "هذا يساعدنا على بناء خطة متوازنة تناسب حياتك على المدى الطويل",
+  "nameStepTitle": "اسمك...",
+  "nameStepHint": "أدخل اسمك",
+  "demoStepTitle": "انظر CalGoA in Action",
+  "genderStepTitle": "ما هو جنسك؟",
+  "genderStepSubtitle": "للحسابات الدقيقة",
+  "genderMale": "الذكور",
+  "genderFemale": "الإناث",
+  "genderOther": "أخرى",
+  "ageStepTitle": "كم عمرك؟",
+  "heightStepTitle": "ما هو طولك؟",
+  "weightStepTitle": "ما هو وزنك الحالي؟",
+  "targetWeightStepTitle": "ما هو وزنك المستهدف؟",
+  "activityStepTitle": "ما مستوى نشاطك؟",
+  "dietStepTitle": "هل تتبع أي نظام غذائي محدد؟",
+  "analysisTitle": "تحليل بياناتك...",
+  "accountStepTitle": "إنشاء حساب لإنقاذ خطتك",
+  "continueWithGoogle": "استمر مع جوجل",
+  "continueWithApple": "أكمل مع (آبل)",
+  "heightStepDesc": "مساعدة في حساب BMI وحساب احتياجات السعرات الحرارية الدقيقة",
+  "weightStepDesc": "مساعدة في تحديد أهداف التغذية الشخصية",
+  "currentHeightHeader": "الوزن الحالي",
+  "currentWeightHeader": "الوزن الحالي",
+  "bmiIndexTitle": "BMI Index",
+  "bmiUnderweight": "نقص الوزن",
+  "bmiNormal": "المعيار",
+  "bmiOverweight": "الوزن الزائد",
+  "bmiObese": "Obese",
+  "targetWeightDesc": "مساعدة في تحديد أهدافك التغذوية الشخصية",
+  "goalMaintainLabel": "الحفاظ على الفيزياء",
+  "goalLoseLabel": "الخسائر في الوزن",
+  "goalGainLabel": "كسب الموسيقى",
+  "goalMaintainHint": "الهدف يساوي وزنك الحالي",
+  "goalLoseDiffText": "Target: Lose {kg} kg",
+  "@goalLoseDiffText": {
+    "description": "Localized UI text: goalLoseDiffText",
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      }
+    }
+  },
+  "goalGainDiffText": "Target: Gain {kg} kg",
+  "@goalGainDiffText": {
+    "description": "Localized UI text: goalGainDiffText",
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      }
+    }
+  },
+  "paceStepTitle": "قصر في الأسبوع؟",
+  "paceStepSubtitle": "اختر معدل مريح لنمط حياتك",
+  "activityStepSubtitle": "تأثير نفقات السعرات الحرارية اليومية",
+  "dietStepSubtitle": "CalGo يوصي وجبات أفضل تناسب جسدك وأهدافك.",
+  "socialProofTitle": "ما يقوله المجتمع عن زيزفز",
+  "socialProofSubtitle": "استعراضات دقيقة من الأعضاء الحقيقيين",
+  "ratingTag": "5ing Rating",
+  "referralStepTitle": "كيف سمعت عن زيزفزز؟",
+  "referralStepSubtitle": "ساعدنا على فهم رحلتك",
+  "referralFriend": "توصية الأصدقاء",
+  "sportsStepTitle": "أي رياضة تلعب؟",
+  "sportsStepSubtitle": "الأنشطة المختارة التي تقوم بها بانتظام",
+  "accountStepSubtitle": "ضمان المعلومات عن التقدم الشخصي المتزامن",
+  "dataPrivacyNote": "بياناتك مشفرة بشكل صارم",
+  "analysisHello": "Hello, {name}",
+  "@analysisHello": {
+    "description": "Localized UI text: analysisHello",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "analysisPlanReady": "خطتك جاهزة",
+  "dailyCalorieTargetTitle": "DAILY CALORIE TARGET",
+  "kcalPerDayUnit": "kcal / day",
+  "workoutLabel": "العمل",
+  "workoutDaysText": "{days} days",
+  "@workoutDaysText": {
+    "description": "Localized UI text: workoutDaysText",
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "perWeekText": "في الأسبوع",
+  "yourJourneyTitle": "حاكمتك",
+  "journeyCurrent": "الحالي",
+  "journeyTarget": "الهدف",
+  "journeyTimeframe": "الإطار الزمني",
+  "weeksUnit": "{weeks} weeks",
+  "@weeksUnit": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
+  "completedPercent": "{p}",
+  "@completedPercent": {
+    "description": "Localized UI text: completedPercent",
+    "placeholders": {
+      "p": {
+        "type": "int"
+      }
+    }
+  },
+  "loginTitle": "مرحبا بكم في CalGo",
+  "loginSubtitle": "وقع على مزامنة بيانات التغذية",
+  "loginGoogle": "استمر مع جوجل",
+  "loginApple": "أكمل مع (آبل)",
+  "loginFailed": "Sign-in failed: {error}",
+  "@loginFailed": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "appleComingSoon": "إشارة التفاح القادمة قريبا!",
+  "loginRequired": "يرجى التوقيع مع جوجل لحماية وتزامن البيانات الخاصة بك.",
+  "loginRequiredButton": "الإشارة مطلوبة لزامنة البيانات",
+  "progressLabel": "التقدم",
+  "dataLoadFailed": "عدم القدرة على تحميل البيانات",
+  "deleteMealQuestion": "هل تريد حذف هذه الوجبة؟",
+  "deleteMealFailed": "لا يمكن حذف الوجبة أرجوك حاول مرة أخرى",
+  "retry": "حاول مرة أخرى",
+  "mealTypeBreakfast": "الإفطار",
+  "mealTypeLunch": "الغداء",
+  "mealTypeDinner": "العشاء",
+  "mealTypeSnack": "وجبة خفيفة",
+  "greetingMorning": "صباح الخير",
+  "greetingAfternoon": "مساء الخير",
+  "greetingEvening": "مساء الخير",
+  "aiCoachAlmostGoal": "كدت أن تضرب هدفك استمر!",
+  "aiCoachPlentyCalories": "بقي الكثير من السعرات الحرارية اليوم كل جيدا!",
+  "aiCoachMomentum": "حافظ على الزخم الجيد!",
+  "mascotGoalTipWater": "اشرب رشفة من الماء ليبقى مستاء",
+  "mascotGoalTipSlow": "الأكل ببطء والاستماع إلى جسدك رائع",
+  "mascotGoalTipGreat": "لقد أبليت حسناً اليوم",
+  "mascotGoalReached": "هدف كالوري وصل اليوم الحفاظ على هذه الوتيرة هو أعلى مستوى",
+  "mascotGuidanceIntro": "لقد اخترت بعض الوجبات اللطيفة لك اليوم تابوت للتحقق منهم!",
+  "mascotGuidanceOpen": "الأطباق الموصى بها لا تزال في الشاشة",
+  "mascotGuidanceTipWater": "هل شربت ما يكفي من الماء؟ خذ رشفة لتنعش",
+  "mascotGuidanceTipSlow": "كُلْ ببطئ، أنت سَتَشْعرُ كامل أطول!",
+  "mascotGuidanceOverTarget": "You are {calories} kcal over. I picked light meals for you!",
+  "@mascotGuidanceOverTarget": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "mascotGuidanceRemaining": "You need {calories} kcal more to hit your goal. Check out my picks!",
+  "@mascotGuidanceRemaining": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "mascotTipHydration": "هاديء بعد يا أخي؟ خذ رشفة من الماء ليبقى حاداً",
+  "mascotTipChew": "المضغ ببطء، يساعد الحفر ويبقيك كاملة",
+  "mascotTipConsistency": "التناسق كل يوم يبني فيزياء عظيمة",
+  "mascotNoMeals": "ألم تسجل أي شيء بعد؟ إلتقطي صورة طعام لأريها لي",
+  "mascotOverTarget": "Over your target by about {calories} kcal today. No worries, go light and high protein for your next meal!",
+  "@mascotOverTarget": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "mascotMissingCalories": "Still missing {calories} kcal today. Go grab something delicious!",
+  "@mascotMissingCalories": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "mascotOnTrack": "إنضباط بلا حدود! الحاسبات وصلت للنقطة",
+  "mealCount": "{count, plural, =0 {لا وجبات} =1 {وجبة واحدة} =2 {وجبتان} few {{count} وجبات} other {{count} وجبة}}",
+  "@mealCount": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "ingredientCount": "{count, plural, =0 {لا مكونات} =1 {مكوّن واحد} =2 {مكوّنان} few {{count} مكونات} other {{count} مكوّن}}",
+  "@ingredientCount": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "dishCount": "{count, plural, =1 {طبق واحد} =2 {طبقان} few {{count} أطباق} other {{count} طبق}}",
+  "@dishCount": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "monthFallback": "Month {month}",
+  "@monthFallback": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "month": {
+        "type": "int"
+      }
+    }
+  },
+  "scanProcessingRecognizing": "....",
+  "scanProcessingRecognized": "الوجبات المعترف بها",
+  "scanProcessingIngredients": "تحليل المكونات...",
+  "scanProcessingNutrition": "تحديد حقائق التغذية",
+  "scanProcessingCalories": "حساب السعرات الحرارية",
+  "scanProcessingPortion": "تقدير حجم الجزء...",
+  "scanProcessingSummary": "AI هو تجميع نتائجك...",
+  "scanProcessingReport": "تقرير تحضيري",
+  "cameraPermissionDenied": "تم رفض الإذن بالكاميرا أفتحوا مواقع التصوير وأسمحوا بدخول الكاميرا إلى (ززفززز)",
+  "cameraPermissionRequired": "CalGo يحتاج إلى إذن من الكاميرا لمسح الوجبات.",
+  "noCamera": "لا توجد كاميرا",
+  "cameraStartFailed": "لا يمكن أن تبدأ الكاميرا. أغلق هذه الشاشة وحاول مرة أخرى",
+  "scanInProgress": "وجبة أخرى تم تحليلها انتظر لحظة من فضلك",
+  "notLoggedIn": "أنت غير موقّع في. وقع مع (جوجل) لتستخدم هذه الميزة",
+  "cameraPermissionMissing": "لا يسمح بالكاميرا (اسمحوا بدخول الكاميرا لـ (زززفزززز في مسلسلات الهاتف",
+  "networkTimeout": "الشبكة بطيئة أو موقوتة تحقق من اتصالك وحاول مرة أخرى!",
+  "scanFailed": "Could not analyze the photo ({error}). Please try again!",
+  "@scanFailed": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "scanAgain": "مسحة ثانية",
+  "nutritionTitle": "التغذية",
+  "guidanceRecoverySubtitle": "تعديل لطيف",
+  "guidanceLoggedSubtitle": "بناء على آخر وجبة لك",
+  "guidanceRefreshTooltip": "اقتراحات جديدة",
+  "guidanceCaloriesRemaining": "{calories} سعرة حرارية متبقية",
+  "@guidanceCaloriesRemaining": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "guidanceProteinRemaining": "{grams}g protein needed",
+  "@guidanceProteinRemaining": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "guidanceAlternativesTitle": "أو اختيار واحدة من هذه الوجبات",
+  "guidanceOtherMeal": "أخطط لأكل شيء آخر",
+  "guidanceSeeMore": "انظر أكثر",
+  "guidanceDisclaimer": "والاقتراحات للإحالة فقط. مسح الوجبة الفعلية لسجلها بدقة.",
+  "guidanceFamiliarTag": "FAMILIAR",
+  "guidanceDishCalories": "{calories} kcal",
+  "@guidanceDishCalories": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "guidanceDishProtein": "P {grams}g",
+  "@guidanceDishProtein": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "guidanceDishCarbs": "C {grams}g",
+  "@guidanceDishCarbs": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "guidancePrepTime": "{minutes} min",
+  "@guidancePrepTime": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "guidancePrice": "~{price}k",
+  "@guidancePrice": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "guidanceFitGreat": "رائع",
+  "guidanceFitAdjust": "تسوية الاحتياجات",
+  "guidanceFitGood": "جيد",
+  "guidanceAppleTitle": "دع (زي زيززز) يحاسبك",
+  "guidanceFirstScanAction": "مسح وجبتك الأولى",
+  "guidanceAppleSuggestionTitle": "اقتراحات زيزفزززز",
+  "guidanceNextMealAction": "مسح وجبتك التالية",
+  "guidanceGoalReachedTitle": "هدف اليوم مكتمل",
+  "guidanceScreenTitle": "ماذا يجب أن تأكل؟",
+  "guidanceUnavailableTitle": "لم تقدم اقتراحات بعد",
+  "guidanceUnavailableMessage": "حاول مرة أخرى بعد مسح وجبة.",
+  "guidanceScanMeal": "امسح وجبة",
+  "guidanceConsiderMeals": "وجبات للنظر",
+  "guidanceScanForAccuracy": "مسح للتسجيل بدقة",
+  "guidanceSwapWith": "أو تبديلها",
+  "guidanceChangeSuggestion": "اقتراح تغيير",
+  "guidancePremiumSwapTitle": "الاقتراحات المتغيرة هي سمة بريميوم",
+  "guidancePremiumSwapMessage": "ترتقي إلى (بريميوم) لتغيير اقتراحات الوجبات بدون حدود على أساس أهدافك",
+  "later": "لاحقا",
+  "upgradePremium": "أعلى إلى بريميوم",
+  "guidanceTodayTitle": "اقتراحات شخصية اليوم",
+  "guidanceTodaySubtitle": "اختر وجبة تناسبك، ثم مسح الوجبة الحقيقية قبل قطعها.",
+  "guidanceScanRealMeal": "مسح الوجبة الحقيقية",
+  "guidanceNextMealGoal": "جيد لوجبتك القادمة",
+  "remainingLabel": "البقاء",
+  "proteinNeededLabel": "Protein needed",
+  "familiarMacroLabel": "FAMILIAR ; MACRO FIT",
+  "numberOneChoice": "الرقم 1",
+  "energyLabel": "EnERGY",
+  "familiarLabel": "FAMILIAR",
+  "dishTip": "Tip: {adjustment}",
+  "@dishTip": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "adjustment": {
+        "type": "String"
+      }
+    }
+  },
+  "dishMacroSummary": "{calories} kcal · {protein}g protein",
+  "@dishMacroSummary": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      },
+      "protein": {
+        "type": "String"
+      }
+    }
+  },
+  "fitGoalGreat": "عظيم من أجل هدفك",
+  "fitGoalAdjust": "ينبغي تعديله",
+  "fitGoalGood": "هذا هو هدفك",
+  "goalSpecificGainTitle": "كم مرة تتدرب كل أسبوع؟",
+  "goalSpecificGainNone": "لم أتدرب بعد",
+  "goalSpecificGain12": "١-٢ الدورات",
+  "goalSpecificGain34": "٣-٤ دورات",
+  "goalSpecificGain5": "5 دورات+",
+  "goalSpecificMaintainTitle": "ما هو الأكثر أهمية للحفاظ على شكلك؟",
+  "goalSpecificStable": "أبقي وزني مستقراً",
+  "goalSpecificBalanced": "أكل وجبات أكثر توازنا",
+  "goalSpecificHabits": "بناء عادات طويلة الأجل",
+  "goalSpecificWeekends": "إبقوا على المسار في عطلة نهاية الأسبوع",
+  "goalSpecificLoseTitle": "ما الذي يجعل الخسارة الدهون أصعب بالنسبة لك؟",
+  "goalSpecificHunger": "أشعر بالجوع في كثير من الأحيان",
+  "goalSpecificPortions": "مراقبة الموانئ",
+  "goalSpecificChoices": "لا أعرف ماذا أتناول",
+  "goalSpecificLogging": "التعبئة تبدو صعبة",
+  "goalSpecificOvereat": "أبالغ في تناول الطعام ليلاً",
+  "goalSpecificWeekendsHard": "الأسابيع صعبة",
+  "avoidFoodsTitle": "هل لديك حساسية لأي طعام أو مكونات؟",
+  "foodSeafood": "الأغذية البحرية",
+  "foodRedMeat": "اللحم الأحمر",
+  "foodEggs": "البيض",
+  "foodDairy": "حليب الجبن",
+  "foodFried": "الغذاء المقلي",
+  "foodSpicy": "غذاء حار",
+  "challengeTitle": "ما هو أصعب جزء لك؟",
+  "challengeCalories": "أنا لا أعرف السعرات الحرارية في طعامي",
+  "challengeSweets": "إعادة الحلويات",
+  "challengePortions": "مراقبة الموانئ",
+  "challengeBetweenMeals": "الجوع بين الوجبات",
+  "challengeCookingTime": "لا يوجد وقت للطبخ",
+  "challengeMotivation": "البقاء بدافع",
+  "budgetTitle": "ما هي ميزانيتك لوجبة واحدة؟",
+  "budgetNote": "(زززفززز) يسأل حتى يمكنه اقتراح وجبات تناسب أهدافك وميزانيتك",
+  "budgetLow": "أقل من 000 30",
+  "budgetLowNote": "وجبات بسيطة، سهلة التكرير",
+  "budgetMid": "30,000-60,000₫",
+  "budgetMidNote": "الميزانية النموذجية لوجبة واحدة",
+  "budgetHigh": "60,000-100,000₫",
+  "budgetHighNote": "مجال أكثر للجودة",
+  "budgetAny": "لا حدود",
+  "budgetAnyNote": "أولويات أهداف التغذية",
+  "prepTitle": "كم من الوقت لديك لإعداد وجبة واحدة؟",
+  "prepNote": "(زيزفزززز) يسأل حتى يُمكنه اقتراح وجبات تناسب جدولك",
+  "prepShort": "أقل من 10 دقائق",
+  "prepShortNote": "سريعة ومريحة عندما تكون مشغولة",
+  "prepMedium": "10-20 دقيقة",
+  "prepMediumNote": "يكفي لتناول وجبة بسيطة",
+  "prepLong": "أكثر من 20 دقيقة",
+  "prepLongNote": "مزيد من الوقت للتحضير بعناية",
+  "prepAny": "لا تفضيل",
+  "prepAnyNote": "طالما أنها تناسب أهدافي",
+  "nutritionPriorityTitle": "ماذا تعطي الأولوية في وجبة؟",
+  "nutritionPriorityNote": "CalGo تسأل لذلك لا تعطيك اقتراحات عامة.",
+  "priorityProtein": "بروتين عالي",
+  "priorityProteinNote": "دعم الكمال واستعادة العضلات",
+  "priorityLight": "السعرات الحرارية الخفيفة",
+  "priorityLightNote": "من السهل تحقيق التوازن طوال اليوم",
+  "priorityBalanced": "الرصيد",
+  "priorityBalancedNote": "خليط حساس من السعرات الحرارية",
+  "priorityFilling": "أبقيني كاملة",
+  "priorityFillingNote": "أولوية البروتين والكربات الكافية",
+  "habitTitle": "ما هي عادات أكلك؟",
+  "habitNote": "(زززفزززز) يسأل حتى يُمكنه اقتراح وجبات تناسب أسلوب حياتك",
+  "habitRegular": "آكل وجبات عادية متوازنة",
+  "habitSnacking": "أنا آكل كثيراً",
+  "habitSkipBreakfast": "غالباً ما أفوت الفطور",
+  "habitLateNight": "أنا آكل متأخراً في الليل",
+  "habitEatingOut": "آكل كثيراً",
+  "habitCook": "أطبخ في المنزل",
+  "motivationTitle": "ما الذي يجعلكِ تريدين التغيير؟",
+  "motivationHealth": "تحسين الصحة",
+  "motivationMuscle": "بنى العضلات",
+  "motivationClothes": "تبدو أفضل في الملابس",
+  "motivationWeight": "فقدان الوزن",
+  "motivationEnergy": "يشعرون بصحة جيدة و متحمسون",
+  "motivationOther": "أسباب أخرى",
+  "painTitle": "هل سبق لك أن...",
+  "painNote": "اختر الأشياء التي واجهتها",
+  "painEatLess": "كُلْ قليلاً جداً لكن ما زالَ لا يَفْقدُ الوزنَ",
+  "painCardio": "تفعل الكثير من القلب",
+  "painGiveUp": "استسلم بعد بضعة أيام",
+  "painUnknownCalories": "لا أعرف كم السعرات الحرارية التي آكلها",
+  "painHungry": "الحصول على الجوع في منتصف الطريق",
+  "painStressEating": "الأكل",
+  "emotionalTitle": "إذا واصلت الأكل كما تفعل الآن...",
+  "emotionalCurrent": "الآن",
+  "emotionalAfterSixMonths": "بعد 6 أشهر",
+  "emotionalStillWeight": "يمكنك البقاء حول وزنك الحالي. مع زيزفزز، يمكنك أن تتغير.",
+  "emotionalHelpChange": "سأساعدك على التغيير",
+  "referralX": "X (Twitter)",
+  "referralOther": "أخرى",
+  "sportsRunning": "تشغيل",
+  "sportsCycling": "Cycling",
+  "sportsSwimming": "السباحة",
+  "sportsFootball": "كرة القدم",
+  "sportsBadminton": "Badminton",
+  "sportsBasketball": "كرة السلة",
+  "sportsOther": "أخرى",
+  "durationTitle": "متى تريد الوصول إلى هدفك؟",
+  "durationNote": "اختر الإطار الزمني الذي يشعرك بالراحة",
+  "dailyCalorieGoal": "دايلي كالوري",
+  "dailyCalorieGoalMessage": "Your current goal is {calories} kcal/day. You can change it in onboarding settings or contact support.",
+  "@dailyCalorieGoalMessage": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "close": "اقترب",
+  "reminderNotifications": "إخطارات تذكير",
+  "reminderNotificationsEnabled": "وتم بصورة تلقائية تمكين رسائل التذكير بالوجبات والإخطارات اليومية لتتبع السعرات الحرارية.",
+  "gotIt": "حصلت عليه",
+  "userGuideTitle": "How to use CalGo",
+  "userGuideContent": "1 Tap Scan (+) to capture or select a meal photo.\n2. AIA automatically analyzes calories and nutrition.\n3 يكمّل الإدويت أو يضيف المكونات قبل الادخار.\n4 راجعوا تاريخ الوجبة في كتاب التاريخ",
+  "great": "عظيم",
+  "customerSupportMessage": "من أجل المساعدة أو التغذية المرتدة للمنتجات، أرسل لنا البريد الإلكتروني: support@calgo.tech",
+  "deleteAccountFailed": "لا يمكن حذف الحساب See the online guide or contact support.",
+  "galleryLoadFailed": "لا يمكن تحميل مجموعة الصور",
+  "viewResult": "تفاصيل النتائج",
+  "shareMemoryCard": "شارة الذاكرة",
+  "deletePhoto": "تحذف هذه الصورة",
+  "confirmDelete": "الحذف",
+  "deletePhotoMessage": "Are you sure you want to delete the meal photo \"{meal}\"?",
+  "@deletePhotoMessage": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "meal": {
+        "type": "String"
+      }
+    }
+  },
+  "mealDeleted": "الوجبة أزيلت من مجموعتك",
+  "deleteFailed": "لا يمكن حذفه. أرجوك حاول مرة أخرى",
+  "paymentProcessing": "تجهيز الدفع من خلال Google Play...",
+  "paymentOpenFailed": "لم يكن بمقدوره فتح دفعة (زيز) أرجوك حاول مرة أخرى",
+  "errorWithDetails": "Error: {error}",
+  "@errorWithDetails": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "packIncludes": "Includes {count} AI nutrition scans",
+  "@packIncludes": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "permanentCredits": "الفحوصات لا تنتهي",
+  "testingFreeCredits": "بناء الاختبارات: المسح الرئوي مجاني. No Google Play, payment is made.",
+  "restoreSuccess": "إعادة الشراء تحققت بنجاح",
+  "restoreFailed": "لم أستطع إعادة شراء زيزفز",
+  "restoreFailedWithDetails": "Restore failed: {error}",
+  "@restoreFailedWithDetails": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "moreScanCredits": "اشترى المزيد من مسحات الوجبة من زيزفز",
+  "shareCreateFailed": "لا يمكن خلق صورة البطاقة. أرجوك حاول مرة أخرى",
+  "shareExported": "بطاقة الذاكرة تم تصديرها بنجاح",
+  "shareResult": "الحصة نتيجة",
+  "shareNutritionLabel": "سيتم حفظ الصورة بعلامات التغذية",
+  "saveImage": "الصورة",
+  "share": "Share",
+  "resultLoadFailed": "Could not load the analysis result (ID: {id}). Please try again!",
+  "@resultLoadFailed": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "edit": "Edit",
+  "done": "تم",
+  "healthScore": "النتيجة الصحية",
+  "dishesInPhoto": "تفكك في الصورة",
+  "ingredientsInDish": "المكونات",
+  "addIngredient": "إضافة عنصر",
+  "feedbackThanks": "شكراً على تعليقاتك",
+  "feedbackPrompt": "هل كان فحص زيزز زي غير دقيق؟ أخبرنا بما حدث:",
+  "feedbackHint": "اسم صحون خاطئ، خضروات مفقودة...",
+  "skip": "Skip",
+  "sending": "إرسال...",
+  "sendFeedback": "إرسال التعليقات",
+  "newIngredient": "عنصر جديد",
+  "choosePortion": "الجزء المخصص للاختيار",
+  "searchNutritionLibrary": "مكتبة التغذية البحثية",
+  "adjustBeforeAdding": "تعديل المبلغ قبل إضافة",
+  "ingredientSearchHint": "شحم البقر، البيض، الأرز...",
+  "ingredientNotFound": "المكون غير المكتشف",
+  "ingredientSearchTip": "جرب اسم أقصر أو أكثر شيوعاً",
+  "unitPiece": "قطعة",
+  "defaultUserName": "أنت",
+  "analyzingMessage1": "تحليل المعلومات الخاصة بك...",
+  "analyzingMessage2": "حساب أهداف السعرات الحرارية اليومية",
+  "analyzingMessage3": "تصميم أهداف شخصية",
+  "analyzingMessage4": "بناء استراتيجية التغذية",
+  "analyzingMessage5": "جاهز تقريباً...",
+  "dietNormal": "الأكل المنتظم",
+  "dietClean": "كل نظيف",
+  "dietKeto": "Keto",
+  "dietLowCarb": "كارب منخفض",
+  "dietVegetarian": "النباتات",
+  "dietVegan": "فيغان",
+  "activitySedentary": "الوثائق",
+  "activitySedentaryDesc": "عمل مكتبي، حركة صغيرة",
+  "activityLight": "الضوء يمشي",
+  "activityLightDesc": "حركة خفيفة ١-٢ مرة/أسبوع",
+  "activityModerate": "التدريب ١ - ٣ مرات",
+  "activityModerateDesc": "التمرين ١-٣ أيام/أسبوع",
+  "activityActive": "التدريب ٤-٥ مرات",
+  "activityActiveDesc": "التمرين ٤-٥ أيام/أسبوع",
+  "activityVeryActive": "التدريب اليومي",
+  "activityVeryActiveDesc": "التمارين الرياضية كل يوم",
+  "paceSlow": "بطيئة - 0.25 kg/week",
+  "paceLight": ") Light - 0.5 kg/week (Popular)",
+  "paceMedium": "متوسطة - 0.75 kg/week",
+  "paceHigh": "🔥 عالية - 1 kg/week",
+  "paceHighest": "أعلى - ١,٢٥ - ١,٥ زيزوزيز/أسبوع",
+  "weekUnit": "الأسبوع",
+  "sportsGym": "جيم",
+  "sportsYoga": "Yoga",
+  "scanResultUnavailable": "هذه الوجبة لا يمكن تحليلها",
+  "scanResultRetryHint": "حاول فحصه مرة أخرى",
+  "guidanceDishFat": "F {grams}g",
+  "@guidanceDishFat": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "ok": "حسنا",
+  "defaultProfileName": "CalGo",
+  "premiumMembership": "عضوية المرحلة التمهيدية",
+  "creditsCount": "{count} credits",
+  "@creditsCount": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "paymentMethods": "المدفوعات عن طريق Google Play/App Store",
+  "deleteAction": "تحذف",
+  "proteinLabel": "الحماية",
+  "onboardingSaveFailed": "لا يمكن إنقاذ هدف التغذية الخاص بك. أرجوك حاول مرة أخرى",
+  "onboardingSaveNetworkFailed": "لا يمكن إنقاذ هدف التغذية الخاص بك. تحقق من اتصالك وحاول مرة أخرى",
+  "googleSignInFailed": "Google sign-in failed: {error}",
+  "@googleSignInFailed": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "appleSignInPending": "لا تزال عملية تسجيل التفاح جارية. الرجاء استخدام جوجل الآن.",
+  "firstScanTitle": "مستعد لمسح وجبتك الأولى؟",
+  "firstScanSubtitle": "تاب Scan أسفل للبدء",
+  "scanLabel": "Scan",
+  "startScanning": "بدء المسح",
+  "socialProofOneTag": "Lost 6.5 kg",
+  "socialProofOneTime": "قبل يومين",
+  "socialProofOneTitle": "الفييتنامي للتعرّف على الطعام",
+  "socialProofOneBody": "I used to struggle tracking pho and bun cha in foreign apps. CalGo recognizes Vietnamese dishes and calories accurately from a photo. 10/10!",
+  "socialProofTwoTag": "Gained 4 kg",
+  "socialProofTwoTime": "قبل 5 أيام",
+  "socialProofTwoTitle": "Smooth UI and accurate TDEE",
+  "socialProofTwoBody": "The BMI, tracking and macro suggestions are detailed. أنا أدرب وأتعقب السعرات الحرارية كل يوم وجسدي يبدو أقوى بعد شهر",
+  "socialProofThreeTag": "حافظ على شكلي",
+  "socialProofThreeTime": "قبل أسبوع",
+  "socialProofThreeTitle": "بناء عادات صحية للأكل",
+  "socialProofThreeBody": "رسائل (زيزززززز) الرائعة التطبيق لا يدفع أبداً إلى الموت المتطرف، بل يرشدني نحو التغذية المتوازنة.",
+  "premiumActivatedMessage": "بريميوم نشط استمتعوا بوجبتكم",
+  "premiumPaymentFailed": "لا يمكن فتح دفع بريميوم",
+  "continueFreePremium": "الاستمرار في بريميوم مجاني",
+  "continueLabel": "استمر",
+  "premiumFreeUnlocked": "تم فتح بريميوم مجانا",
+  "premiumActivated": "تم تنشيط المرحلة التمهيدية",
+  "processingShort": "تجهيز...",
+  "subscribePremium": "Subscribe to Premium",
+  "premiumTestingNote": "بناء الاختبارات بريميوم حر لم يسدد أي مبلغ.",
+  "premiumNoChargeNote": "لن يتم اتهامك بهذه الخطوة",
+  "premiumAutoRenewNote": "تجديدات ألغي أي وقت",
+  "premiumHeadlineBefore": "التغيير يبدأ من",
+  "todayLower": "اليوم",
+  "yourExperience": "أنت\nالخبرة",
+  "premiumBenefitCalories": "اعرف السعرات الحرارية الخاصة بك على الفور",
+  "premiumBenefitSuggestions": "اقتراحات وجبة غير محدودة مصممة حسب هدفك اليومي",
+  "premiumBenefitDescriptions": "AI meal descriptions without manual entry",
+  "premiumBenefitProgress": "تتبع تقدم جسمك كل يوم",
+  "premiumBenefitSupport": "الدعم ذو الأولوية عندما تحتاجه",
+  "planWeek": "الأسبوع",
+  "planYear": "السنة",
+  "planMonth": "الشهر",
+  "free": "مجانا",
+  "weeklyPayment": "مدفوعات أسبوعية",
+  "popularMost": "الأكثر شعبية",
+  "testingAccess": "الوصول إلى الاختبار",
+  "restoreChecked": "تم فحص إعادة الشراء",
+  "restoreException": "Restore failed: {error}",
+  "@restoreException": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "manageSubscription": "الاشتراك في الخدمة",
+  "manageSubscriptionFailed": "لا يمكن فتح إدارة الاشتراك.",
+  "scanCreditsExhausted": "لم يتبقَ لديكَ أيّ إئتمان",
+  "networkRetry": "الاتصال بطيء حاول مرة أخرى",
+  "scanUnavailable": "هذه الصورة لا يمكن تحليلها",
+  "notificationChannelName": "التذكير اليومي بالوجبات",
+  "notificationChannelDescription": "Reminders to scan breakfast, food and dinner with CalGo",
+  "notificationBreakfastTitle": "CalGo - Breakfast",
+  "notificationBreakfastBody": "صباح الخير تذكر أن تمسح الإفطار لذا لديك طاقة كافية لهذا اليوم",
+  "notificationLunchTitle": "CalGo - Lunch",
+  "notificationLunchBody": "إنه إستراحة غداء قم بمسح وجبتك في زيزززز لتعقب السعرات الحرارية بدقة",
+  "notificationDinnerTitle": "CalGo - Dinner",
+  "notificationDinnerBody": "هل العشاء جاهز؟ إمسحه ليبقى على المسار مع أهدافك",
+  "notificationDirectChannel": "الإخطارات المباشرة",
+  "caloriesLabel": "الحسابات",
+  "carbsLabel": "CARBS",
+  "fatLabel": "FAT",
+  "guidanceTodayShortSubtitle": "عرض اقتراحات من أجل هدف اليوم",
+  "ingredientBeef": "لحم طازج",
+  "ingredientChicken": "ثدي الدجاج الملطخ",
+  "ingredientEgg": "البيض",
+  "ingredientRiceNoodles": "نويدات فوس طازجة",
+  "ingredientRice": "الأرز الأبيض",
+  "ingredientBun": "أرز طازج",
+  "ingredientSalad": "طماطم الخس",
+  "ingredientCheddar": "جبنة الجبن",
+  "ingredientPassionSauce": "صلصة الفاكهة",
+  "ingredientPork": "لحم الخنزير المقدد",
+  "mockPhoTitle": "شحم البقر الراقي مع بسكويت",
+  "mockPhoNoodles": "نويدات فوس طازجة",
+  "mockPhoRareBeef": "لحم مشوي",
+  "mockPhoBrisket": "برائحة لحم البقر",
+  "mockPhoBroth": "مهرجانات فو بروث",
+  "mockRiceTitle": "الأرز المكسور مع لحم الخنزير وجلود لحم الخنزير وكعكة البيض",
+  "mockRice": "الأرز المكسور",
+  "mockGrilledPork": "أضلاع لحم الخنزير المشوي",
+  "mockEggCake": "كعكة بيض مثبتة",
+  "mockFriedEgg": "البيض المقلي",
+  "mockSaladTitle": "سلطة الدجاج مع فاكهة الشغف",
+  "mockChicken": "ثدي الدجاج الملطخ",
+  "mockSalad": "طماطم الكرز",
+  "mockPassionSauce": "فطيرة الفاكهة",
+  "motivationAdviceLose": "You are only {remaining} kg from your goal. Small daily habits work better than extreme diets.",
+  "@motivationAdviceLose": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "remaining": {
+        "type": "String"
+      }
+    }
+  },
+  "motivationAdviceGain": "هدف السعرات الحرارية الخاص بك هو أمثل لبناء العضلات السائلة بينما الحد من فائض الدهون.",
+  "motivationAdviceMaintain": "وزنك الحالي في نطاق صحي لنبني عادات تساعدك على الشعور بأفضل ما لديك كل يوم",
+  "motivationAdviceDefault": "دعونا نصل إلى هدفك الصحي مع عادات مستدامة.",
+  "taoAdviceLabel": "TAO's TIP",
+  "taoReminder": "Tao will remind you every day",
+  "packBasic": "مبدئي",
+  "packPopular": "الشعبية",
+  "packPremium": "Premium",
+  "creditPackageSummary": "{count} credits • {unit}",
+  "@creditPackageSummary": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "perScan": "/",
+  "caloriesValue": "{calories} kcal",
+  "@caloriesValue": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "caloriesPer100g": "{calories} kcal / 100g",
+  "@caloriesPer100g": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "gramsValue": "{grams}g",
+  "@gramsValue": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "weightKgValue": "{weight} kg",
+  "@weightKgValue": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
+  "galleryMacroSummary": "{calories} kcal • C:{carbs}g P:{protein}g F:{fat}g",
+  "@galleryMacroSummary": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      },
+      "carbs": {
+        "type": "String"
+      },
+      "protein": {
+        "type": "String"
+      },
+      "fat": {
+        "type": "String"
+      }
+    }
+  },
+  "sharePayload": "🔥 {dish} · {calories} kcal | CalGo",
+  "@sharePayload": {
+    "placeholders": {
+      "dish": {
+        "type": "String"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  }
+}

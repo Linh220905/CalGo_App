@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../config/app_build_config.dart';
 import '../models/onboarding_data.dart';
 import '../services/onboarding_service.dart';
 import 'auth_provider.dart';
@@ -13,12 +14,13 @@ class OnboardingProvider extends ChangeNotifier {
   bool _loading = false;
   bool _initialized = false;
   bool _completed = false;
+  bool _testingOnboarding = false;
   String? _error;
   final OnboardingData data = OnboardingData();
   static const _stepKey = 'onboarding_step';
   static const _dataKey = 'onboarding_data';
   static const _versionKey = 'onboarding_version';
-  static const int _onboardingVersion = 2;
+  static const int _onboardingVersion = 8;
 
   OnboardingProvider({OnboardingService? onboardingService})
       : _onboardingService = onboardingService;
@@ -27,11 +29,14 @@ class OnboardingProvider extends ChangeNotifier {
   bool get loading => _loading;
   bool get initialized => _initialized;
   bool get isCompleted => _completed;
+  bool get isTestingOnboarding => _testingOnboarding;
   String? get error => _error;
   bool get isLastStep => _currentStep >= totalSteps - 1;
   double get progress => totalSteps > 0 ? (_currentStep + 1) / totalSteps : 0;
 
-  static const int totalSteps = 26; // 0..25
+  // The demo screen was removed. Testing releases still skip the Premium
+  // paywall, so Account and Home shift one slot earlier in both variants.
+  static const int totalSteps = AppBuildConfig.isTesting ? 23 : 24;
 
   Future<void> init() async {
     if (_initialized) return;
@@ -47,12 +52,15 @@ class OnboardingProvider extends ChangeNotifier {
     if (savedVersion == null) {
       await prefs.setInt(_versionKey, _onboardingVersion);
     } else if (savedVersion < _onboardingVersion) {
+      final wasCompleted = _completed;
       await prefs.remove(_stepKey);
       await prefs.remove(_dataKey);
-      await prefs.remove('onboarding_done');
       _currentStep = 0;
-      _completed = false;
+      _completed = wasCompleted;
       data.clear();
+      if (!wasCompleted) {
+        await prefs.remove('onboarding_done');
+      }
       await prefs.setInt(_versionKey, _onboardingVersion);
       _loading = false;
       _initialized = true;
@@ -91,9 +99,26 @@ class OnboardingProvider extends ChangeNotifier {
     await prefs.remove(_dataKey);
     await prefs.remove('onboarding_done');
     _completed = false;
+    _testingOnboarding = true;
     _currentStep = 1;
     data.clear();
     await prefs.setInt(_stepKey, 1);
+    notifyListeners();
+  }
+
+  /// Clears the in-memory completion step when the authenticated account does
+  /// not have onboarding completed. This prevents a previous account's local
+  /// completion step from rendering a blank onboarding screen for a new account.
+  void resetLocalProgressForIncompleteAccount() {
+    if (_currentStep < totalSteps && !_completed) return;
+    _currentStep = 0;
+    _completed = false;
+    data.clear();
+    SharedPreferences.getInstance().then((prefs) async {
+      await prefs.remove(_stepKey);
+      await prefs.remove(_dataKey);
+      await prefs.remove('onboarding_done');
+    });
     notifyListeners();
   }
 
@@ -146,8 +171,26 @@ class OnboardingProvider extends ChangeNotifier {
     if (json['habitPattern'] is String) {
       data.habitPattern = json['habitPattern'] as String;
     }
+    if (json['prepTimePreference'] is String) {
+      data.prepTimePreference = json['prepTimePreference'] as String;
+    }
+    if (json['budgetPreference'] is String) {
+      data.budgetPreference = json['budgetPreference'] as String;
+    }
+    if (json['nutritionPriority'] is String) {
+      data.nutritionPriority = json['nutritionPriority'] as String;
+    }
+    if (json['avoidFoods'] is List) {
+      data.avoidFoods = (json['avoidFoods'] as List).cast<String>();
+    }
     if (json['biggestChallenge'] is String) {
       data.biggestChallenge = json['biggestChallenge'] as String;
+    }
+    if (json['trainingFrequency'] is String) {
+      data.trainingFrequency = json['trainingFrequency'] as String;
+    }
+    if (json['maintenanceFocus'] is String) {
+      data.maintenanceFocus = json['maintenanceFocus'] as String;
     }
     if (json['likedApp'] is bool) {
       data.likedApp = json['likedApp'] as bool;
@@ -225,6 +268,7 @@ class OnboardingProvider extends ChangeNotifier {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setBool('onboarding_done', true);
       _completed = true;
+      _testingOnboarding = false;
       await prefs.setInt(_versionKey, _onboardingVersion);
       await prefs.remove(_stepKey);
       await prefs.remove(_dataKey);
@@ -233,8 +277,7 @@ class OnboardingProvider extends ChangeNotifier {
       return true;
     } catch (e) {
       debugPrint('Unable to complete onboarding: $e');
-      _error =
-          'Không thể lưu mục tiêu dinh dưỡng. Vui lòng kiểm tra mạng và thử lại.';
+      _error = 'onboardingSaveNetworkFailed';
       _loading = false;
       notifyListeners();
       return false;
@@ -344,8 +387,44 @@ class OnboardingProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> setPrepTimePreference(String v) async {
+    data.prepTimePreference = v;
+    await _persistData();
+    notifyListeners();
+  }
+
+  Future<void> setBudgetPreference(String v) async {
+    data.budgetPreference = v;
+    await _persistData();
+    notifyListeners();
+  }
+
+  Future<void> setNutritionPriority(String v) async {
+    data.nutritionPriority = v;
+    await _persistData();
+    notifyListeners();
+  }
+
+  Future<void> setAvoidFoods(List<String> v) async {
+    data.avoidFoods = v;
+    await _persistData();
+    notifyListeners();
+  }
+
   Future<void> setBiggestChallenge(String v) async {
     data.biggestChallenge = v;
+    await _persistData();
+    notifyListeners();
+  }
+
+  Future<void> setTrainingFrequency(String v) async {
+    data.trainingFrequency = v;
+    await _persistData();
+    notifyListeners();
+  }
+
+  Future<void> setMaintenanceFocus(String v) async {
+    data.maintenanceFocus = v;
     await _persistData();
     notifyListeners();
   }

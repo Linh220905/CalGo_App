@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/onboarding_provider.dart';
+import '../../../providers/app_settings_provider.dart';
 import '../../../models/onboarding_data.dart';
 
 class DietStep extends StatelessWidget {
   const DietStep({super.key});
 
-  static const _items = <(String, String, DietType)>[
-    ('🍽️', 'Ăn bình thường', DietType.normal),
-    ('🥗', 'Eat Clean', DietType.clean),
-    ('🥓', 'Keto', DietType.keto),
-    ('🌾', 'Low Carb', DietType.lowCarb),
-    ('🥦', 'Vegetarian', DietType.vegetarian),
-    ('🌱', 'Vegan', DietType.vegan),
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final settings = context.watch<AppSettingsProvider>();
+    final s = settings.strings;
+    final items = <(String, String, DietType)>[
+      ('🍽️', s.dietNormal, DietType.normal),
+      ('🥗', s.dietClean, DietType.clean),
+      ('🥓', s.dietKeto, DietType.keto),
+      ('🌾', s.dietLowCarb, DietType.lowCarb),
+      ('🥦', s.dietVegetarian, DietType.vegetarian),
+      ('🌱', s.dietVegan, DietType.vegan),
+    ];
+
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
       body: SafeArea(
@@ -28,19 +31,23 @@ class DietStep extends StatelessWidget {
                 child: SingleChildScrollView(
                   child: Column(children: [
                     const SizedBox(height: 16),
-                    const Text('Chế độ ăn của bạn?',
-                        style: TextStyle(
+                    Text(s.dietStepTitle,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
                             fontSize: 28,
                             fontWeight: FontWeight.w700,
                             color: Color(0xFF111111))),
                     const SizedBox(height: 8),
-                    const Text('Chọn chế độ ăn hiện tại',
-                        style:
-                            TextStyle(fontSize: 15, color: Color(0xFF7A7A7A))),
+                    Text(s.dietStepSubtitle,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                            fontSize: 14,
+                            height: 1.35,
+                            color: Color(0xFF7A7A7A))),
                     const SizedBox(height: 24),
                     Consumer<OnboardingProvider>(
                       builder: (context, provider, _) => Column(
-                        children: _items.map((e) {
+                        children: items.map((e) {
                           final (emoji, label, type) = e;
                           final sel = provider.data.dietType == type;
                           return Padding(
@@ -48,7 +55,6 @@ class DietStep extends StatelessWidget {
                             child: InkWell(
                               onTap: () {
                                 provider.setDietType(type);
-                                provider.nextStep();
                               },
                               borderRadius: BorderRadius.circular(18),
                               child: AnimatedContainer(
@@ -101,20 +107,24 @@ class DietStep extends StatelessWidget {
               child: SizedBox(
                 width: double.infinity,
                 height: 60,
-                child: ElevatedButton(
-                  onPressed: null,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF111111),
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18)),
-                    elevation: 0,
-                    disabledBackgroundColor: const Color(0xFFECECEC),
-                    disabledForegroundColor: const Color(0xFFAAAAAA),
+                child: Consumer<OnboardingProvider>(
+                  builder: (context, provider, _) => ElevatedButton(
+                    onPressed: provider.data.dietType == null
+                        ? null
+                        : () => provider.nextStep(),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF111111),
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18)),
+                      elevation: 0,
+                      disabledBackgroundColor: const Color(0xFFECECEC),
+                      disabledForegroundColor: const Color(0xFFAAAAAA),
+                    ),
+                    child: Text(s.nextStepButton,
+                        style: const TextStyle(
+                            fontSize: 17, fontWeight: FontWeight.w600)),
                   ),
-                  child: const Text('Tiếp theo',
-                      style:
-                          TextStyle(fontSize: 17, fontWeight: FontWeight.w600)),
                 ),
               ),
             ),

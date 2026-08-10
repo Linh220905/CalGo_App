@@ -18,6 +18,22 @@ class OnboardingService {
       'target_weight_kg': data.targetWeightKg!,
       'weekly_goal_kg':
           data.goalType == GoalType.maintain ? 0.0 : data.lossPerWeekKg!,
+      if (data.dietType != null) 'diet_type': data.dietType!.name,
+      if (data.habitPattern != null) 'habit_pattern': data.habitPattern,
+      if (data.prepTimePreference != null)
+        'prep_time_preference': data.prepTimePreference,
+      if (data.budgetPreference != null)
+        'budget_preference': data.budgetPreference,
+      if (data.nutritionPriority != null)
+        'nutrition_priority': data.nutritionPriority,
+      if (data.avoidFoods.isNotEmpty) 'avoid_foods': data.avoidFoods,
+      if (data.biggestChallenge != null)
+        'biggest_challenge': data.biggestChallenge,
+      if (data.trainingFrequency != null)
+        'training_frequency': data.trainingFrequency,
+      if (data.maintenanceFocus != null)
+        'maintenance_focus': data.maintenanceFocus,
+      if (data.referralSource != null) 'referral_source': data.referralSource,
     };
 
     final res = await _api.post('/users/onboarding', body: payload);

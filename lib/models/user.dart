@@ -1,3 +1,5 @@
+import '../config/app_build_config.dart';
+
 class User {
   final String id;
   final String? email;
@@ -24,6 +26,12 @@ class User {
     this.dailyCalorieTarget = 2000,
     this.subscriptionTier,
   });
+
+  /// Testing builds keep Premium entitlement enabled for QA/API coverage, but
+  /// hide Premium entry points from testers. Server-side test accounts should
+  /// still be marked is_dev so protected API operations are also available.
+  bool get hasPremiumAccess =>
+      AppBuildConfig.premiumFreeForTesting || subscriptionTier != null || isDev;
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
