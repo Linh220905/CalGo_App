@@ -34,6 +34,7 @@ void main() {
   );
   final authProvider = AuthProvider(apiService);
   final paymentProvider = PaymentProvider(apiService);
+  paymentProvider.setCreditsVerifiedCallback(authProvider.refreshUser);
   var restoredPaymentAuthScope = -1;
   authProvider.addListener(() {
     // queryPurchases/restore is needed after a cold start and after account

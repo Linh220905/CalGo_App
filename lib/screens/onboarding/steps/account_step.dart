@@ -98,7 +98,7 @@ class AccountStep extends StatelessWidget {
               SocialAuthButton(
                 type: SocialAuthType.google,
                 label: s.continueWithGoogle,
-                isLoading: auth.loading,
+                isLoading: auth.googleLoading,
                 onTap: () async {
                   final authProvider = context.read<AuthProvider>();
                   final homeProvider = context.read<HomeProvider>();
@@ -138,12 +138,14 @@ class AccountStep extends StatelessWidget {
               SocialAuthButton(
                 type: SocialAuthType.apple,
                 label: s.continueWithApple,
-                isLoading: auth.loading,
+                isLoading: auth.appleLoading,
                 onTap: () async {
                   final authProvider = context.read<AuthProvider>();
                   final success = await authProvider.signInWithApple();
                   if (success && context.mounted) {
-                    await context.read<OnboardingProvider>().completeOnboarding();
+                    await context
+                        .read<OnboardingProvider>()
+                        .completeOnboarding();
                     if (context.mounted) {
                       context.go('/home');
                     }

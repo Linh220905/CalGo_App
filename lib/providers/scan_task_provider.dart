@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 
+import '../services/api_service.dart';
 import '../services/scan_service.dart';
 
 enum ScanTaskStatus { analyzing, failed, completed }
@@ -23,6 +24,12 @@ class ScanTask {
   int progress = 6;
   String? resultId;
   String? errorMessage;
+  int? errorStatusCode;
+  String? errorDetail;
+
+  bool get isUnrecognizedFood =>
+      errorStatusCode == 422 &&
+      (errorDetail ?? '').toLowerCase().contains('chưa phân tích rõ món ăn');
 }
 
 /// Keeps one scan alive while the camera page is closed.  It intentionally
@@ -69,6 +76,8 @@ class ScanTaskProvider extends ChangeNotifier {
     task.status = ScanTaskStatus.analyzing;
     task.progress = 6;
     task.errorMessage = null;
+    task.errorStatusCode = null;
+    task.errorDetail = null;
     _startProgress(task);
     notifyListeners();
     unawaited(_run(task));
@@ -99,12 +108,24 @@ class ScanTaskProvider extends ChangeNotifier {
       task.status = ScanTaskStatus.completed;
       task.progress = 100;
       task.resultId = result.id;
+    } on ApiException catch (error) {
+      if (!identical(_task, task) || task.authScope != _scanService.authScope) {
+        return;
+      }
+      task.status = ScanTaskStatus.failed;
+      task.errorStatusCode = error.statusCode;
+      task.errorDetail = error.message;
+      task.errorMessage = _friendlyError(error);
+      debugPrint(
+        'Scan request failed: HTTP ${error.statusCode}; detail=${error.message}',
+      );
     } catch (error) {
       if (!identical(_task, task) || task.authScope != _scanService.authScope) {
         return;
       }
       task.status = ScanTaskStatus.failed;
       task.errorMessage = _friendlyError(error);
+      debugPrint('Scan request failed: ${error.runtimeType}');
     }
     _progressTimer?.cancel();
     notifyListeners();
@@ -131,8 +152,13 @@ class ScanTaskProvider extends ChangeNotifier {
 
   String _friendlyError(Object error) {
     final value = error.toString().toLowerCase();
+    final statusCode = error is ApiException ? error.statusCode : null;
+    final detail = error is ApiException ? error.message.toLowerCase() : value;
     if (value.contains('insufficient_credits') || value.contains('402')) {
       return 'scanCreditsExhausted';
+    }
+    if (statusCode == 422 && detail.contains('chưa phân tích rõ món ăn')) {
+      return 'scanUnrecognizedFood';
     }
     if (value.contains('timeout') ||
         value.contains('socketexception') ||

@@ -107,7 +107,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: GestureDetector(
                                   onTap: onMascotTap,
                                   child: Row(
-                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: [
                                       Animate(
                                         onPlay: (controller) =>
@@ -123,8 +124,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ),
                                         ],
                                         child: SizedBox(
-                                          width: 54,
-                                          height: 54,
+                                          width: 50,
+                                          height: 50,
                                           child: ClipRect(
                                             child: Image.asset(
                                               hp.mascotAsset,
@@ -134,7 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               errorBuilder: (_, __, ___) =>
                                                   const Icon(
                                                 Icons.emoji_nature_rounded,
-                                                size: 40,
+                                                size: 38,
                                                 color: Color(0xFF22C55E),
                                               ),
                                             ),
@@ -142,7 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ),
                                       ),
                                       const SizedBox(width: 4),
-                                      Flexible(
+                                      Expanded(
                                         child: MascotSpeechBubble(
                                           message: hp.getMascotGenZMessage(s),
                                           onTap: onMascotTap,
@@ -773,6 +774,7 @@ class _PendingScanCard extends StatefulWidget {
 class _PendingScanCardState extends State<_PendingScanCard>
     with SingleTickerProviderStateMixin {
   late final AnimationController _shimmerController;
+  bool _retakeDialogShown = false;
 
   @override
   void initState() {
@@ -781,6 +783,78 @@ class _PendingScanCardState extends State<_PendingScanCard>
       vsync: this,
       duration: const Duration(milliseconds: 1250),
     )..repeat();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _maybeShowUnrecognizedFoodDialog();
+    });
+  }
+
+  @override
+  void didUpdateWidget(covariant _PendingScanCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.task.status != ScanTaskStatus.failed) {
+      _retakeDialogShown = false;
+    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _maybeShowUnrecognizedFoodDialog();
+    });
+  }
+
+  void _maybeShowUnrecognizedFoodDialog() {
+    if (!mounted ||
+        _retakeDialogShown ||
+        !widget.task.isUnrecognizedFood ||
+        ModalRoute.of(context)?.isCurrent != true) {
+      return;
+    }
+    _retakeDialogShown = true;
+    final settings = context.read<AppSettingsProvider>();
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogContext) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22)),
+        backgroundColor:
+            settings.isDarkMode ? const Color(0xFF212027) : Colors.white,
+        title: Text(
+          'Chưa nhận diện rõ món ăn',
+          style: TextStyle(
+            fontSize: 19,
+            fontWeight: FontWeight.w800,
+            color: settings.isDarkMode ? Colors.white : const Color(0xFF0F172A),
+          ),
+        ),
+        content: Text(
+          'Vui lòng chụp lại ảnh món ăn rõ ràng hơn nhé.',
+          style: TextStyle(
+            fontSize: 14,
+            height: 1.35,
+            color: settings.isDarkMode
+                ? const Color(0xFFB7B5C2)
+                : const Color(0xFF64748B),
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            child: const Text('Đóng'),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFF2563EB),
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+            onPressed: () {
+              Navigator.of(dialogContext).pop();
+              if (mounted) context.push('/scan');
+            },
+            child: const Text('Chụp lại'),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -909,15 +983,19 @@ class _FailedScanContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final s = context.watch<AppSettingsProvider>().strings;
     final message = switch (error) {
-      'scanCreditsExhausted' => s.scanCreditsExhausted,
+      'scanCreditsExhausted' => s.outOfCreditsMessage,
       'networkRetry' => s.networkRetry,
       'scanUnavailable' => s.scanUnavailable,
+      'scanUnrecognizedFood' => 'Vui lòng chụp lại ảnh món ăn rõ ràng hơn nhé.',
       _ => s.scanResultRetryHint,
     };
+    final title = error == 'scanUnrecognizedFood'
+        ? 'Chưa nhận diện rõ món ăn'
+        : s.scanResultUnavailable;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(s.scanResultUnavailable,
+        Text(title,
             style: TextStyle(
                 fontSize: 15, fontWeight: FontWeight.bold, color: textDark)),
         const SizedBox(height: 6),

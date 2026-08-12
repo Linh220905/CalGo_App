@@ -15,63 +15,68 @@ class MascotSpeechBubble extends StatelessWidget {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
-    final bubbleBg = isDark ? const Color(0xFF2C2A34) : Colors.white;
+    final bubbleBg = isDark ? const Color(0xFF24232B) : Colors.white;
     final textColor =
-        isDark ? const Color(0xFFF1F5F9) : const Color(0xFF0F172A);
+        isDark ? const Color(0xFFF8FAFC) : const Color(0xFF0F172A);
     final borderColor =
-        isDark ? const Color(0xFF3F3C4B) : const Color(0xFFE2E8F0);
+        isDark ? const Color(0xFF373544) : const Color(0xFFE2E8F0);
 
     return GestureDetector(
       onTap: onTap,
       child: Stack(
         clipBehavior: Clip.none,
-        alignment: Alignment.centerLeft,
+        alignment: Alignment.topLeft,
         children: [
           // Tail pointing to mascot (left side)
           Positioned(
             left: -6,
-            top: 14,
+            top: 18,
             child: CustomPaint(
-              size: const Size(8, 10),
+              size: const Size(7, 10),
               painter: _BubbleTailPainter(
                 color: bubbleBg,
                 borderColor: borderColor,
               ),
             ),
           ),
-          // Main Bubble Container
+          // Main Bubble Container - Fixed height 64px for rock-solid UI stability
           Container(
             width: double.infinity,
-            height: 54,
+            height: 64,
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            constraints: const BoxConstraints(maxWidth: 220),
             decoration: BoxDecoration(
               color: bubbleBg,
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(16),
                 topRight: Radius.circular(16),
                 bottomRight: Radius.circular(16),
-                bottomLeft: Radius.circular(4),
+                bottomLeft: Radius.circular(5),
               ),
               border: Border.all(color: borderColor, width: 1),
               boxShadow: [
                 BoxShadow(
-                  color:
-                      isDark ? Colors.black26 : Colors.black.withOpacity(0.06),
-                  blurRadius: 8,
+                  color: isDark
+                      ? const Color(0x40000000)
+                      : const Color(0x0C0F172A),
+                  blurRadius: 10,
                   offset: const Offset(0, 3),
                 ),
               ],
             ),
-            child: Text(
-              message,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w700,
-                color: textColor,
-                height: 1.3,
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Text(
+                  message,
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color: textColor,
+                    height: 1.34,
+                    letterSpacing: -0.1,
+                  ),
+                ),
               ),
             ),
           ),

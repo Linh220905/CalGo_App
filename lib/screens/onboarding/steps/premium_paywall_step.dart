@@ -1,14 +1,20 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart'; // flutter pub add google_fonts
-import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../config/app_build_config.dart';
 import '../../../providers/app_settings_provider.dart';
 import '../../../providers/auth_provider.dart';
+import '../../../providers/home_provider.dart';
 import '../../../providers/onboarding_provider.dart';
 import '../../../providers/payment_provider.dart';
+import '../../../widgets/social_auth_button.dart';
 import '../../../widgets/premium_ui.dart';
+import '../../../services/trial_notification_service.dart';
+import 'post_premium_quiz_dialog.dart';
 
 // ═══════════════════════════════════════════════════════════════
 // CONFIG — điền link ảnh nền tại đây
@@ -25,20 +31,6 @@ const _kBorder = Color(0xFFE6E6E6);
 // Một chút màu — cam ấm, dùng tiết chế cho các điểm nhấn quan trọng
 const _kAccent = Color(0xFFFF6A3D);
 const _kAccentSoft = Color(0xFFFFF1EC);
-
-const _kMonthlyPerWeek = 13600;
-const _kAnnualPerWeek = 8600;
-
-String _fmt(int v) {
-  final s = v.toString();
-  final buf = StringBuffer();
-  for (int i = 0; i < s.length; i++) {
-    final posFromEnd = s.length - i;
-    buf.write(s[i]);
-    if (posFromEnd > 1 && posFromEnd % 3 == 1) buf.write('.');
-  }
-  return buf.toString();
-}
 
 // Font riêng cho toàn màn hình — khác với font hệ thống mặc định
 TextStyle _f(
@@ -72,10 +64,16 @@ class PremiumPaywallStep extends StatefulWidget {
 
 class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
   _Plan _selectedPlan = _Plan.annual;
+  bool _enableFreeTrial = true;
   bool _showClose = false;
+  bool _hasShownDownsell = false;
   Timer? _closeTimer;
   PaymentProvider? _payment;
   bool _handledPremiumSuccess = false;
+  bool _finishingPurchase = false;
+  bool _quizCompleted = false;
+  bool _trialNotificationScheduled = false;
+  String? _lastShownPaymentError;
 
   @override
   void initState() {
@@ -107,22 +105,108 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
   }
 
   void _onPaymentChanged() {
-    if (!mounted || widget.onboardingMode || _handledPremiumSuccess) return;
-    final plan = _toPremiumPlan(_selectedPlan);
+    if (!mounted) return;
+    final paymentError = _payment?.error;
+    final state = _payment?.purchaseStates.values
+        .where((value) => value == PurchaseState.error)
+        .isNotEmpty;
+    if (state == true &&
+        paymentError != null &&
+        paymentError != _lastShownPaymentError) {
+      _lastShownPaymentError = paymentError;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Google Play đã nhận giao dịch nhưng máy chủ chưa xác minh được. '
+              'Vui lòng thử Khôi phục giao dịch sau khi cập nhật máy chủ.',
+            ),
+            backgroundColor: Colors.redAccent,
+          ),
+        );
+      });
+    }
+    if (_handledPremiumSuccess) return;
+    final plan =
+        _payment?.activePremiumOffer?.plan ?? _toPremiumPlan(_selectedPlan);
     if (_payment
             ?.purchaseStates[PaymentProvider.productIdForPremiumPlan(plan)] !=
         PurchaseState.purchased) {
       return;
     }
     _handledPremiumSuccess = true;
-    context.read<AuthProvider>().refreshUser();
-    final s = context.read<AppSettingsProvider>().strings;
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(s.premiumActivatedMessage)),
-    );
+    unawaited(_handlePremiumSuccess());
+  }
+
+  Future<void> _handlePremiumSuccess() async {
+    if (_finishingPurchase) return;
+    setState(() => _finishingPurchase = true);
+    final auth = context.read<AuthProvider>();
+    final payment = context.read<PaymentProvider>();
+
+    final verification = payment.lastSubscriptionVerification;
+    final isTrial = verification?['is_trial'] == true;
+    final verifiedTrialDays = (verification?['trial_days'] as num?)?.toInt();
+    final trialDays =
+        verifiedTrialDays ?? payment.activePremiumOffer?.trialDays ?? 0;
+    if (isTrial && trialDays > 0 && !_trialNotificationScheduled) {
+      await TrialNotificationService.instance
+          .scheduleTrialSequence(trialDays: trialDays);
+      _trialNotificationScheduled = true;
+    }
+
+    if (!mounted) return;
+    if (!_quizCompleted) {
+      // Purchase updates can be replayed whenever the Premium page is opened.
+      // Do not show the personalization quiz again after it was completed on
+      // this device/account.
+      _quizCompleted = true;
+      final accountId = auth.user?.id;
+      final alreadyCompleted = await context
+          .read<OnboardingProvider>()
+          .hasPremiumCustomization(accountId: accountId);
+      if (!alreadyCompleted) {
+        await _triggerPostPurchaseQuiz();
+      }
+    }
+    if (!mounted) return;
+
+    if (widget.onboardingMode) {
+      final onboarding = context.read<OnboardingProvider>();
+      final home = context.read<HomeProvider>();
+      final saved = await onboarding.completeOnboarding(
+        authProvider: auth,
+        homeProvider: home,
+      );
+      if (!mounted) return;
+      if (!saved) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Không thể lưu hồ sơ. Vui lòng thử lại.'),
+            backgroundColor: Colors.redAccent,
+          ),
+        );
+        setState(() => _finishingPurchase = false);
+        return;
+      }
+      await home.loadToday(forceRefresh: true);
+      if (mounted) context.go('/home');
+      return;
+    }
+
+    if (Navigator.canPop(context)) Navigator.pop(context);
   }
 
   void _handleClose() {
+    if (!_hasShownDownsell) {
+      _showWinbackDownsellDialog();
+      return;
+    }
+    _proceedClose();
+  }
+
+  void _proceedClose() {
     if (Navigator.canPop(context)) {
       Navigator.pop(context);
     } else {
@@ -132,10 +216,235 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
     }
   }
 
-  Future<void> _handlePrimaryAction() async {
+  void _showWinbackDownsellDialog() {
+    setState(() => _hasShownDownsell = true);
     final payment = context.read<PaymentProvider>();
+    final winback = payment.premiumOfferWithTag(PremiumPlan.annual, 'winback');
+    if (winback == null) {
+      _proceedClose();
+      return;
+    }
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        contentPadding: const EdgeInsets.all(22),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              decoration: BoxDecoration(
+                color: Colors.red.shade50,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Text(
+                '🔥 ƯU ĐÃI DÀNH RIÊNG',
+                style:
+                    _f(10.5, weight: FontWeight.w800, color: Colors.redAccent),
+              ),
+            ),
+            const SizedBox(height: 12),
+            Text(
+              'Chờ chút! Tiếp tục với gói ${winback.recurringPrice}/năm',
+              textAlign: TextAlign.center,
+              style: _f(18, weight: FontWeight.w800, letterSpacing: -0.3),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Mức giá và điều kiện ưu đãi được xác nhận trực tiếp bởi cửa hàng.',
+              textAlign: TextAlign.center,
+              style: _f(12.5, color: _kMuted, height: 1.35),
+            ),
+            const SizedBox(height: 20),
+            SizedBox(
+              width: double.infinity,
+              height: 48,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(ctx);
+                  setState(() {
+                    _selectedPlan = _Plan.annual;
+                    _enableFreeTrial = winback.hasFreeTrial;
+                  });
+                  _handlePrimaryAction(selectedOffer: winback);
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: _kAccent,
+                  foregroundColor: Colors.white,
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                ),
+                child: Text(
+                  'Đăng ký ${winback.recurringPrice}/năm',
+                  style: _f(14, weight: FontWeight.w800, color: Colors.white),
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(ctx);
+                _proceedClose();
+              },
+              child: Text(
+                'Bỏ qua ưu đãi',
+                style: _f(12, color: _kMuted, weight: FontWeight.w600),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<void> _triggerPostPurchaseQuiz() {
+    return PostPremiumQuizDialog.show(
+      context,
+      onCompleted: () async {},
+    );
+  }
+
+  Future<bool> _ensureAuthenticated() async {
+    final auth = context.read<AuthProvider>();
+    if (auth.isAuthenticated) return true;
+
+    final result = await showModalBottomSheet<bool>(
+      context: context,
+      isScrollControlled: true,
+      isDismissible: false,
+      enableDrag: false,
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+      ),
+      builder: (sheetContext) {
+        var googleBusy = false;
+        var appleBusy = false;
+        String? error;
+        return StatefulBuilder(
+          builder: (context, setSheetState) {
+            Future<void> signIn(String method) async {
+              if (googleBusy || appleBusy) return;
+              setSheetState(() {
+                if (method == 'google') {
+                  googleBusy = true;
+                } else {
+                  appleBusy = true;
+                }
+                error = null;
+              });
+              final provider = context.read<AuthProvider>();
+              final success = method == 'google'
+                  ? await provider.signInWithGoogle()
+                  : await provider.signInWithApple();
+              if (!sheetContext.mounted) return;
+              if (!success) {
+                setSheetState(() {
+                  if (method == 'google') {
+                    googleBusy = false;
+                  } else {
+                    appleBusy = false;
+                  }
+                  error = provider.error ?? 'Đăng nhập không thành công.';
+                });
+                return;
+              }
+              await context.read<OnboardingProvider>().setAccountMethod(method);
+              if (sheetContext.mounted) Navigator.pop(sheetContext, true);
+            }
+
+            final showApple = defaultTargetPlatform == TargetPlatform.iOS ||
+                defaultTargetPlatform == TargetPlatform.macOS;
+            return SafeArea(
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(
+                  22,
+                  18,
+                  22,
+                  MediaQuery.of(context).viewInsets.bottom + 22,
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      'Lưu Premium vào tài khoản của bạn',
+                      textAlign: TextAlign.center,
+                      style: _f(21, weight: FontWeight.w800),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      'Đăng nhập một lần để xác minh giao dịch và đồng bộ kế hoạch cá nhân hóa.',
+                      textAlign: TextAlign.center,
+                      style: _f(12.5, color: _kMuted, height: 1.4),
+                    ),
+                    const SizedBox(height: 20),
+                    SocialAuthButton(
+                      type: SocialAuthType.google,
+                      label: 'Tiếp tục với Google',
+                      isLoading: googleBusy,
+                      onTap: () => signIn('google'),
+                    ),
+                    if (showApple) ...[
+                      const SizedBox(height: 12),
+                      SocialAuthButton(
+                        type: SocialAuthType.apple,
+                        label: 'Tiếp tục với Apple',
+                        isLoading: appleBusy,
+                        onTap: () => signIn('apple'),
+                      ),
+                    ],
+                    if (error != null) ...[
+                      const SizedBox(height: 10),
+                      Text(
+                        error!,
+                        textAlign: TextAlign.center,
+                        style: _f(11.5, color: Colors.redAccent),
+                      ),
+                    ],
+                    const SizedBox(height: 8),
+                    TextButton(
+                      onPressed: googleBusy || appleBusy
+                          ? null
+                          : () => Navigator.pop(sheetContext, false),
+                      child: const Text('Để sau'),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+    if (!mounted) return false;
+    return result == true && auth.isAuthenticated;
+  }
+
+  Future<void> _handlePrimaryAction({PremiumOffer? selectedOffer}) async {
+    final payment = context.read<PaymentProvider>();
+    final auth = context.read<AuthProvider>();
     final s = context.read<AppSettingsProvider>().strings;
-    final started = await payment.buyPremium(_toPremiumPlan(_selectedPlan));
+    const testing = AppBuildConfig.isTesting;
+
+    if (testing) {
+      await _triggerPostPurchaseQuiz();
+      return;
+    }
+
+    if (!await _ensureAuthenticated() || !mounted) return;
+    final plan = _toPremiumPlan(_selectedPlan);
+    final preferTrial = selectedOffer?.hasFreeTrial ??
+        (_enableFreeTrial && payment.hasTrialOffer(plan));
+    final started = await payment.buyPremium(
+      plan,
+      preferFreeTrial: preferTrial,
+      selectedOffer: selectedOffer,
+      applicationUserName: auth.user?.id,
+    );
     if (!mounted) return;
 
     if (started) {
@@ -143,22 +452,11 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
         SnackBar(content: Text(s.paymentProcessing)),
       );
     } else {
-      // If billing isn't ready or product SKUs aren't active in Play Console yet,
-      // allow user to proceed or show error details.
       final errorMsg = payment.error ?? s.premiumPaymentFailed;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(errorMsg),
           backgroundColor: Colors.redAccent,
-          action: widget.onboardingMode
-              ? SnackBarAction(
-                  label: s.continueLabel,
-                  textColor: Colors.white,
-                  onPressed: () {
-                    context.read<OnboardingProvider>().nextStep();
-                  },
-                )
-              : null,
         ),
       );
     }
@@ -170,6 +468,34 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
         _Plan.annual => PremiumPlan.annual,
       };
 
+  int _currentTrialDays(PaymentProvider payment) {
+    if (!_enableFreeTrial) return 0;
+    if (AppBuildConfig.isTesting) {
+      return _selectedPlan == _Plan.annual ? 7 : 3;
+    }
+    return payment
+            .premiumOffer(
+              _toPremiumPlan(_selectedPlan),
+              preferFreeTrial: true,
+            )
+            ?.trialDays ??
+        0;
+  }
+
+  String _getButtonLabel(
+    String fallback,
+    String testingLabel,
+    PaymentProvider payment,
+  ) {
+    const testing = AppBuildConfig.isTesting;
+    if (testing) return testingLabel;
+    final days = _currentTrialDays(payment);
+    if (_enableFreeTrial && days > 0) {
+      return 'Dùng thử $days ngày miễn phí';
+    }
+    return 'Đăng ký Premium ngay';
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
@@ -178,9 +504,16 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
     final payment = context.watch<PaymentProvider>();
     final premiumState = payment.purchaseStates[
         PaymentProvider.productIdForPremiumPlan(_toPremiumPlan(_selectedPlan))];
-    final buying =
-        payment.purchaseInProgress || premiumState == PurchaseState.loading;
+    final buying = _finishingPurchase ||
+        payment.purchaseInProgress ||
+        premiumState == PurchaseState.loading ||
+        premiumState == PurchaseState.pending ||
+        premiumState == PurchaseState.verifying;
     final activated = testing || premiumState == PurchaseState.purchased;
+    final trialDays = _currentTrialDays(payment);
+    final trialAvailable =
+        testing || payment.hasTrialOffer(_toPremiumPlan(_selectedPlan));
+    final trialEnabled = _enableFreeTrial && trialAvailable && trialDays > 0;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -189,13 +522,13 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
           child: Column(
             children: [
               SizedBox(
-                height: (screenHeight * 0.28).clamp(200.0, 260.0),
+                height: (screenHeight * 0.26).clamp(190.0, 240.0),
                 child: _HeroSection(
                   showClose: _showClose,
                   onClose: _handleClose,
                 ),
               ),
-              const SizedBox(height: 14),
+              const SizedBox(height: 12),
               Padding(
                 padding: const EdgeInsets.fromLTRB(18, 0, 18, 24),
                 child: Column(
@@ -204,41 +537,77 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
                     const SizedBox(height: 12),
                     const _ExperienceRow(),
                     const SizedBox(height: 14),
+
+                    // Free Trial Toggle Row
+                    if (trialAvailable) ...[
+                      _FreeTrialToggleRow(
+                        enabled: trialEnabled,
+                        onChanged: (v) => setState(() => _enableFreeTrial = v),
+                        trialDays: trialDays,
+                      ),
+                      const SizedBox(height: 12),
+                    ],
+
                     _PricingRow(
                       selectedPlan: _selectedPlan,
+                      enableFreeTrial: _enableFreeTrial,
                       onChanged: (p) => setState(() => _selectedPlan = p),
                       testing: testing,
                     ),
+
+                    if (trialEnabled) ...[
+                      const SizedBox(height: 14),
+                      _VisualPaymentTimeline(trialDays: trialDays),
+                    ],
+
                     const SizedBox(height: 16),
                     PremiumButton(
                       label: widget.onboardingMode
                           ? testing
                               ? s.continueFreePremium
-                              : s.continueLabel
+                              : activated
+                                  ? _quizCompleted
+                                      ? 'Hoàn tất thiết lập'
+                                      : s.premiumActivated
+                                  : buying
+                                      ? s.processingShort
+                                      : _getButtonLabel(
+                                          s.continueLabel,
+                                          s.continueFreePremium,
+                                          payment,
+                                        )
                           : testing
                               ? s.premiumFreeUnlocked
                               : activated
                                   ? s.premiumActivated
                                   : buying
                                       ? s.processingShort
-                                      : s.subscribePremium,
-                      onPressed: widget.onboardingMode
-                          ? _handlePrimaryAction
-                          : testing || buying || activated
-                              ? () {}
-                              : _handlePrimaryAction,
+                                      : _getButtonLabel(
+                                          s.subscribePremium,
+                                          s.premiumFreeUnlocked,
+                                          payment,
+                                        ),
+                      loading: buying,
+                      onPressed: buying
+                          ? null
+                          : activated && widget.onboardingMode
+                              ? _handlePremiumSuccess
+                              : activated
+                                  ? null
+                                  : () => _handlePrimaryAction(),
                     ),
                     const SizedBox(height: 10),
                     Text(
                       testing
                           ? s.premiumTestingNote
-                          : widget.onboardingMode
-                              ? s.premiumNoChargeNote
+                          : trialEnabled
+                              ? 'Không tính phí hôm nay. Hủy bất kỳ lúc nào trong cài đặt App Store / Google Play.'
                               : s.premiumAutoRenewNote,
+                      textAlign: TextAlign.center,
                       style: _f(11, color: _kMuted, weight: FontWeight.w500),
                     ),
                     const SizedBox(height: 10),
-                    _FooterLinks(showBilling: !testing),
+                    const _FooterLinks(showBilling: !testing),
                   ],
                 ),
               ),
@@ -468,11 +837,13 @@ class _ExperienceRow extends StatelessWidget {
 
 class _PricingRow extends StatelessWidget {
   final _Plan selectedPlan;
+  final bool enableFreeTrial;
   final ValueChanged<_Plan> onChanged;
   final bool testing;
 
   const _PricingRow({
     required this.selectedPlan,
+    required this.enableFreeTrial,
     required this.onChanged,
     required this.testing,
   });
@@ -482,15 +853,37 @@ class _PricingRow extends StatelessWidget {
     final s = context.watch<AppSettingsProvider>().strings;
     final payment = context.watch<PaymentProvider>();
     final loading = payment.initializing;
-    final weeklyProduct = payment.premiumProduct(PremiumPlan.weekly);
-    final monthlyProduct = payment.premiumProduct(PremiumPlan.monthly);
-    final annualProduct = payment.premiumProduct(PremiumPlan.annual);
+    final weeklyOffer = payment.premiumOffer(
+      PremiumPlan.weekly,
+      preferFreeTrial:
+          enableFreeTrial && payment.hasTrialOffer(PremiumPlan.weekly),
+    );
+    final monthlyOffer = payment.premiumOffer(
+      PremiumPlan.monthly,
+      preferFreeTrial:
+          enableFreeTrial && payment.hasTrialOffer(PremiumPlan.monthly),
+    );
+    final annualOffer = payment.premiumOffer(
+      PremiumPlan.annual,
+      preferFreeTrial:
+          enableFreeTrial && payment.hasTrialOffer(PremiumPlan.annual),
+    );
 
-    String priceOf(ProductDetails? p, String fallback) {
+    String priceOf(PremiumOffer? offer) {
       if (testing) return s.free;
       if (loading) return '...';
-      if (p?.price != null && p!.price.isNotEmpty) return p.price;
-      return fallback;
+      if (offer != null && offer.recurringPrice.isNotEmpty) {
+        return offer.recurringPrice;
+      }
+      return 'Không khả dụng';
+    }
+
+    String trialNote(PremiumOffer? offer, String paidNote) {
+      if (testing) return s.testingAccess;
+      if (enableFreeTrial && offer?.hasFreeTrial == true) {
+        return 'Thử ${offer!.trialDays} ngày \$0';
+      }
+      return paidNote;
     }
 
     return Row(
@@ -499,8 +892,8 @@ class _PricingRow extends StatelessWidget {
         Expanded(
           child: _PriceCard(
             title: s.planWeek,
-            price: priceOf(weeklyProduct, '29.000đ'),
-            note: testing ? s.testingAccess : s.weeklyPayment,
+            price: priceOf(weeklyOffer),
+            note: trialNote(weeklyOffer, s.weeklyPayment),
             selected: selectedPlan == _Plan.weekly,
             highlighted: false,
             onTap: () => onChanged(_Plan.weekly),
@@ -510,13 +903,13 @@ class _PricingRow extends StatelessWidget {
         Expanded(
           child: _PriceCard(
             title: s.planYear,
-            price: priceOf(annualProduct, '449.000đ'),
-            note: testing
-                ? s.testingAccess
-                : '${_fmt(_kAnnualPerWeek)}đ/${s.weekUnit}',
+            price: priceOf(annualOffer),
+            note: trialNote(annualOffer, 'Thanh toán mỗi năm'),
             selected: selectedPlan == _Plan.annual,
             highlighted: true,
-            badge: s.popularMost,
+            badge: enableFreeTrial && annualOffer?.hasFreeTrial == true
+                ? 'THỬ ${annualOffer!.trialDays} NGÀY \$0'
+                : s.popularMost,
             onTap: () => onChanged(_Plan.annual),
           ),
         ),
@@ -524,16 +917,183 @@ class _PricingRow extends StatelessWidget {
         Expanded(
           child: _PriceCard(
             title: s.planMonth,
-            price: priceOf(monthlyProduct, '59.000đ'),
-            note: testing
-                ? s.testingAccess
-                : '${_fmt(_kMonthlyPerWeek)}đ/${s.weekUnit}',
+            price: priceOf(monthlyOffer),
+            note: trialNote(monthlyOffer, 'Thanh toán mỗi tháng'),
             selected: selectedPlan == _Plan.monthly,
             highlighted: false,
+            badge: enableFreeTrial && monthlyOffer?.hasFreeTrial == true
+                ? 'THỬ ${monthlyOffer!.trialDays} NGÀY \$0'
+                : null,
             onTap: () => onChanged(_Plan.monthly),
           ),
         ),
       ],
+    );
+  }
+}
+
+class _FreeTrialToggleRow extends StatelessWidget {
+  final bool enabled;
+  final ValueChanged<bool> onChanged;
+  final int trialDays;
+
+  const _FreeTrialToggleRow({
+    required this.enabled,
+    required this.onChanged,
+    required this.trialDays,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+      decoration: BoxDecoration(
+        color: enabled ? _kAccentSoft : _kSurface,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: enabled ? _kAccent.withOpacity(0.4) : _kBorder,
+        ),
+      ),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(6),
+            decoration: BoxDecoration(
+              color: enabled ? _kAccent : _kMuted,
+              shape: BoxShape.circle,
+            ),
+            child:
+                const Icon(Icons.bolt_rounded, size: 16, color: Colors.white),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  enabled
+                      ? 'Dùng thử $trialDays ngày miễn phí'
+                      : 'Bật thử miễn phí $trialDays ngày',
+                  style: _f(13, weight: FontWeight.w700, color: _kInk),
+                ),
+                Text(
+                  enabled
+                      ? 'Không mất tiền hôm nay, nhắc trước 24h'
+                      : 'Thanh toán trực tiếp ngay khi đăng ký',
+                  style: _f(10.5, color: _kMuted),
+                ),
+              ],
+            ),
+          ),
+          Switch.adaptive(
+            value: enabled,
+            onChanged: onChanged,
+            activeColor: _kAccent,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _VisualPaymentTimeline extends StatelessWidget {
+  final int trialDays;
+
+  const _VisualPaymentTimeline({required this.trialDays});
+
+  @override
+  Widget build(BuildContext context) {
+    final reminderDay = trialDays > 1 ? trialDays - 1 : 1;
+
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: _kSurface,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: _kBorder),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Lịch trình thanh toán dùng thử:',
+            style: _f(11.5, weight: FontWeight.w700, color: _kInk),
+          ),
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              _buildTimelineStep(
+                icon: Icons.lock_open_rounded,
+                title: 'Hôm nay',
+                sub: 'Mở khóa \$0',
+                active: true,
+              ),
+              _buildConnector(),
+              _buildTimelineStep(
+                icon: Icons.notifications_active_rounded,
+                title: 'Ngày $reminderDay',
+                sub: 'Push nhắc nhở',
+                active: false,
+              ),
+              _buildConnector(),
+              _buildTimelineStep(
+                icon: Icons.credit_card_rounded,
+                title: 'Ngày $trialDays',
+                sub: 'Bắt đầu tính phí',
+                active: false,
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTimelineStep({
+    required IconData icon,
+    required String title,
+    required String sub,
+    required bool active,
+  }) {
+    return Expanded(
+      child: Column(
+        children: [
+          Container(
+            width: 28,
+            height: 28,
+            decoration: BoxDecoration(
+              color: active ? _kAccent : Colors.white,
+              shape: BoxShape.circle,
+              border: Border.all(color: active ? _kAccent : _kBorder),
+            ),
+            child: Icon(
+              icon,
+              size: 14,
+              color: active ? Colors.white : _kMuted,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            title,
+            textAlign: TextAlign.center,
+            style: _f(10.5, weight: FontWeight.w700, color: _kInk),
+          ),
+          Text(
+            sub,
+            textAlign: TextAlign.center,
+            style: _f(9.5, color: _kMuted),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildConnector() {
+    return Container(
+      width: 16,
+      height: 1,
+      margin: const EdgeInsets.only(bottom: 18),
+      color: _kBorder,
     );
   }
 }
@@ -631,26 +1191,10 @@ class _FooterLinks extends StatelessWidget {
 
   const _FooterLinks({required this.showBilling});
 
-  void _showInfoDialog(BuildContext context, String title, String body) {
-    final s = context.read<AppSettingsProvider>().strings;
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: Text(title,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-        content: SingleChildScrollView(
-          child: Text(body,
-              style: const TextStyle(
-                  fontSize: 13, height: 1.5, color: Color(0xFF64748B))),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: Text(s.close, style: TextStyle(fontWeight: FontWeight.bold)),
-          ),
-        ],
-      ),
+  Future<void> _openLegalPage(String path) {
+    return launchUrl(
+      Uri.parse('https://calgo.tech/$path'),
+      mode: LaunchMode.externalApplication,
     );
   }
 
@@ -669,11 +1213,7 @@ class _FooterLinks extends StatelessWidget {
       runSpacing: 2,
       children: [
         GestureDetector(
-          onTap: () => _showInfoDialog(
-            context,
-            s.termsOfService,
-            s.termsOfServiceContent,
-          ),
+          onTap: () => _openLegalPage('terms'),
           child: Text(s.termsOfService, style: style),
         ),
         if (showBilling) ...[
@@ -717,11 +1257,7 @@ class _FooterLinks extends StatelessWidget {
         ],
         Text('·', style: _f(10, color: _kMuted)),
         GestureDetector(
-          onTap: () => _showInfoDialog(
-            context,
-            s.privacyPolicy,
-            s.privacyPolicyContent,
-          ),
+          onTap: () => _openLegalPage('privacy'),
           child: Text(s.privacyPolicy, style: style),
         ),
       ],

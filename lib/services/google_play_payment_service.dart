@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../config/iap_ids.dart';
 import '../services/api_service.dart';
 
 /// Store billing wrapper.
@@ -111,14 +112,22 @@ class GooglePlayPaymentService {
 
   /// Start an auto-renewable Premium subscription.  Subscriptions must not be
   /// consumed: StoreKit / Play Billing owns their renewal lifecycle.
-  Future<bool> purchaseSubscription(ProductDetails product) async {
+  Future<bool> purchaseSubscription(
+    ProductDetails product, {
+    String? applicationUserName,
+  }) async {
     if (!_available) {
       _lastError = 'paymentBillingUnavailable';
       return false;
     }
     try {
       final result = await _iap.buyNonConsumable(
-        purchaseParam: PurchaseParam(productDetails: product),
+        purchaseParam: PurchaseParam(
+          productDetails: product,
+          // CalGo user IDs are random UUIDs rather than PII. Passing the ID
+          // associates the Store transaction with the signed-in app account.
+          applicationUserName: applicationUserName,
+        ),
       );
       if (!result) {
         _lastError = 'paymentOpenFailed';
@@ -152,50 +161,153 @@ class GooglePlayPaymentService {
   /// Send purchase receipt to backend for verification + credit grant.
   Future<bool> verifyReceipt(PurchaseDetails purchase) async {
     try {
+      if (!_api.hasAccessToken) {
+        _lastError = 'authenticationRequired';
+        debugPrint(
+            '[IAP] Verify receipt rejected: product=${purchase.productID} status=no-auth');
+        return false;
+      }
+
+      if (defaultTargetPlatform == TargetPlatform.iOS) {
+        return _verifyAppStoreCreditReceipt(purchase);
+      }
+
       final receiptData = _extractReceipt(purchase);
       if (receiptData == null) return false;
 
-      await _api.post('/payments/google-play/verify', body: {
-        'product_id': purchase.productID,
-        'purchase_token': receiptData['purchaseToken'],
-        'order_id': purchase.purchaseID,
-      });
+      if (!IapIds.creditProducts.values.contains(purchase.productID)) {
+        _lastError = 'paymentProductNotFound';
+        debugPrint(
+            '[IAP] Verify receipt rejected: product=${purchase.productID}');
+        return false;
+      }
+
+      final productId = (receiptData['product_id'] as String?)?.trim();
+      final purchaseToken = (receiptData['purchase_token'] as String?)?.trim();
+      if (productId == null ||
+          productId.isEmpty ||
+          purchaseToken == null ||
+          purchaseToken.isEmpty) {
+        _lastError = 'receiptUnavailable';
+        debugPrint(
+            '[IAP] Verify receipt rejected: product=${purchase.productID}');
+        return false;
+      }
+
+      final orderId = (receiptData['order_id'] as String?)?.trim();
+      final body = <String, dynamic>{
+        'product_id': productId,
+        'purchase_token': purchaseToken,
+        if (orderId != null && orderId.isNotEmpty) 'order_id': orderId,
+      };
+      final response = await _api.post(
+        '/payments/google-play/verify',
+        body: body,
+      );
+      final creditsAdded =
+          response is Map<String, dynamic> ? response['credits_added'] : null;
+      if (response is! Map<String, dynamic> ||
+          response['success'] != true ||
+          creditsAdded is! num ||
+          creditsAdded < 0) {
+        _lastError = 'receiptVerificationFailed';
+        debugPrint(
+          '[IAP] Verify receipt failed: product=$productId status=200',
+        );
+        return false;
+      }
+      _lastError = null;
+      debugPrint(
+        '[IAP] Verify receipt success: product=$productId status=200',
+      );
       return true;
     } catch (e) {
-      debugPrint('[IAP] Verify receipt error: $e');
+      _lastError = 'receiptVerificationFailed';
+      final status = e is ApiException ? e.statusCode : 'network';
+      debugPrint(
+          '[IAP] Verify receipt failed: product=${purchase.productID} status=$status');
       return false;
     }
+  }
+
+  Future<bool> _verifyAppStoreCreditReceipt(PurchaseDetails purchase) async {
+    final transactionId = purchase.purchaseID?.trim();
+    if (transactionId == null || transactionId.isEmpty) {
+      _lastError = 'receiptUnavailable';
+      return false;
+    }
+
+    final response = await _api.post(
+      '/payments/app-store/verify',
+      body: {
+        'product_id': purchase.productID,
+        'transaction_id': transactionId,
+      },
+    );
+    final creditsAdded =
+        response is Map<String, dynamic> ? response['credits_added'] : null;
+    if (response is! Map<String, dynamic> ||
+        response['success'] != true ||
+        creditsAdded is! num ||
+        creditsAdded < 0) {
+      _lastError = 'receiptVerificationFailed';
+      debugPrint(
+        '[IAP] App Store credit verification failed: '
+        'product=${purchase.productID} status=200',
+      );
+      return false;
+    }
+    _lastError = null;
+    debugPrint(
+      '[IAP] App Store credit verified: product=${purchase.productID} status=200',
+    );
+    return true;
   }
 
   /// Verify a Premium entitlement on CalGo's server.  The server calls the
   /// relevant Store API and is the only authority that grants Premium.
-  Future<bool> verifySubscription(PurchaseDetails purchase) async {
+  Future<Map<String, dynamic>?> verifySubscription(
+    PurchaseDetails purchase,
+  ) async {
     try {
       final proof = _extractSubscriptionProof(purchase);
       if (proof == null) {
         _lastError = 'receiptUnavailable';
-        return false;
+        return null;
       }
-      await _api.post('/subscriptions/store/verify', body: proof);
+      final response =
+          await _api.post('/subscriptions/store/verify', body: proof);
+      if (response is! Map<String, dynamic> || response['success'] != true) {
+        _lastError = 'subscriptionVerificationFailed';
+        return null;
+      }
       _lastError = null;
-      return true;
+      return response;
     } catch (e) {
       _lastError = 'subscriptionVerificationFailed';
       debugPrint('[IAP] Verify subscription error: $e');
-      return false;
+      return null;
     }
   }
 
   Map<String, dynamic>? _extractSubscriptionProof(PurchaseDetails purchase) {
-    final proof = purchase.verificationData.serverVerificationData;
+    final transactionId = purchase.purchaseID?.trim();
+    if (defaultTargetPlatform == TargetPlatform.iOS) {
+      if (transactionId == null || transactionId.isEmpty) return null;
+      return {
+        'provider': 'app_store',
+        'product_id': purchase.productID,
+        'transaction_id': transactionId,
+      };
+    }
+    final proof = purchase.verificationData.serverVerificationData.trim();
     if (proof.isEmpty) return null;
     return {
-      'provider': defaultTargetPlatform == TargetPlatform.iOS
-          ? 'app_store'
-          : 'google_play',
+      'provider': 'google_play',
       'product_id': purchase.productID,
       'purchase_token': proof,
-      'transaction_id': purchase.purchaseID,
+      if (transactionId != null && transactionId.isNotEmpty)
+        'transaction_id': transactionId,
     };
   }
 
@@ -213,7 +325,8 @@ class GooglePlayPaymentService {
       return {
         'product_id': purchase.productID,
         'purchase_token': androidPurchase.billingClientPurchase.purchaseToken,
-        'order_id': purchase.purchaseID,
+        if (purchase.purchaseID != null && purchase.purchaseID!.isNotEmpty)
+          'order_id': purchase.purchaseID,
       };
     }
     return null;

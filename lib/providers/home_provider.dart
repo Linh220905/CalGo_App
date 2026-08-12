@@ -96,14 +96,20 @@ class HomeProvider extends ChangeNotifier {
         guidance.isAvailable &&
         guidance.recommendations.isNotEmpty) {
       if (!_hasViewedMealGuidance) {
-        return s.mascotGuidanceIntro;
+        return guidance.forecast?.mascotForecastNote.isNotEmpty == true
+            ? guidance.forecast!.mascotForecastNote
+            : s.mascotGuidanceIntro;
       }
       if (_mascotClickIndex == 3) {
         return s.mascotGuidanceOpen;
       }
       if (_mascotClickIndex > 0) {
+        if (_mascotClickIndex == 1 &&
+            guidance.forecast?.mascotForecastNote.isNotEmpty == true) {
+          return guidance.forecast!.mascotForecastNote;
+        }
         final tips = [s.mascotGuidanceTipWater, s.mascotGuidanceTipSlow];
-        return tips[_mascotClickIndex - 1];
+        return tips[(_mascotClickIndex - 1) % tips.length];
       }
       final target =
           _summary.targetCalories > 0 ? _summary.targetCalories : 2000;

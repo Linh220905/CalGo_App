@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -5,7 +6,6 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../config/app_build_config.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/app_settings_provider.dart';
-import '../../providers/onboarding_provider.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../widgets/language_selector.dart';
 import '../onboarding/steps/premium_paywall_step.dart';
@@ -16,6 +16,17 @@ class ProfileScreen extends StatelessWidget {
   Future<void> _openLegalPage(String path) async {
     final uri = Uri.parse('https://calgo.tech/$path');
     await launchUrl(uri, mode: LaunchMode.externalApplication);
+  }
+
+  String _legalContentForPlatform(String content) {
+    if (defaultTargetPlatform != TargetPlatform.iOS) return content;
+    return content
+        .replaceAll('Google Play', 'App Store')
+        .replaceAll('Android', 'iOS')
+        .replaceAll(
+          'https://play.google.com/store/account/subscriptions',
+          'https://apps.apple.com/account/subscriptions',
+        );
   }
 
   void _showLanguageSelector(BuildContext context) {
@@ -172,7 +183,7 @@ class ProfileScreen extends StatelessWidget {
         ),
         content: SingleChildScrollView(
           child: Text(
-            s.privacyPolicyContent,
+            _legalContentForPlatform(s.privacyPolicyContent),
             style: TextStyle(
               fontSize: 13,
               height: 1.5,
@@ -211,7 +222,7 @@ class ProfileScreen extends StatelessWidget {
         ),
         content: SingleChildScrollView(
           child: Text(
-            s.termsOfServiceContent,
+            _legalContentForPlatform(s.termsOfServiceContent),
             style: TextStyle(
               fontSize: 13,
               height: 1.5,
@@ -259,7 +270,7 @@ class ProfileScreen extends StatelessWidget {
           ],
         ),
         content: Text(
-          '${s.deleteAccountConfirmMessage}\n\n${s.deleteAccountSubscriptionWarning}',
+          '${s.deleteAccountConfirmMessage}\n\n${_legalContentForPlatform(s.deleteAccountSubscriptionWarning)}',
           style: TextStyle(
             fontSize: 14,
             color: isDark ? const Color(0xFF8E8D9A) : const Color(0xFF64748B),
@@ -676,74 +687,6 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ),
               ),
-
-              // ── Reset Onboarding (Dev/Test) ───────────────────
-              ...[
-                const SizedBox(height: 12),
-                SizedBox(
-                  width: double.infinity,
-                  child: OutlinedButton.icon(
-                    onPressed: () async {
-                      final confirmed = await showDialog<bool>(
-                        context: context,
-                        builder: (ctx) => AlertDialog(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20)),
-                          title: const Row(
-                            children: [
-                              Icon(Icons.refresh_rounded,
-                                  color: Color(0xFF7C3AED)),
-                              SizedBox(width: 8),
-                              Text('Reset Onboarding'),
-                            ],
-                          ),
-                          content: const Text(
-                            'This will clear all onboarding progress and restart the flow. For testing only.',
-                          ),
-                          actions: [
-                            TextButton(
-                              onPressed: () => Navigator.pop(ctx, false),
-                              child: const Text('Cancel'),
-                            ),
-                            FilledButton(
-                              onPressed: () => Navigator.pop(ctx, true),
-                              style: FilledButton.styleFrom(
-                                backgroundColor: const Color(0xFF7C3AED),
-                              ),
-                              child: const Text('Reset'),
-                            ),
-                          ],
-                        ),
-                      );
-                      if (confirmed == true && context.mounted) {
-                        await context
-                            .read<OnboardingProvider>()
-                            .resetOnboarding();
-                        if (context.mounted) context.go('/onboarding');
-                      }
-                    },
-                    icon: const Icon(Icons.refresh_rounded,
-                        color: Color(0xFF7C3AED), size: 18),
-                    label: const Text(
-                      '🧪 Reset Onboarding',
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF7C3AED),
-                        height: 1.2,
-                      ),
-                    ),
-                    style: OutlinedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                      side: const BorderSide(color: Color(0xFFDDD6FE)),
-                      backgroundColor: const Color(0xFFF5F3FF),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
             ],
           ),
         ),

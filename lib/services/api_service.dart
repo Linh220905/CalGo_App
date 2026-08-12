@@ -28,6 +28,7 @@ class ApiService {
   /// Changes whenever the signed-in account changes. Services use this to
   /// keep short-lived caches from ever crossing account boundaries.
   int get authScope => _authScope;
+  bool get hasAccessToken => _accessToken?.trim().isNotEmpty == true;
 
   Future<dynamic> get(String path) async {
     final requestKey = '${_accessToken ?? ''}\n$path';

@@ -9,7 +9,10 @@ class AuthProvider extends ChangeNotifier {
   final AuthService _authService;
   User? _user;
   bool _loading = false;
+  bool _googleLoading = false;
+  bool _appleLoading = false;
   String? _error;
+  int _restoreGeneration = 0;
 
   static const String _googleWebClientId =
       '985323892414-cq0r7jaosveklll3cftiv9gbadqq2eff.apps.googleusercontent.com';
@@ -18,25 +21,30 @@ class AuthProvider extends ChangeNotifier {
 
   User? get user => _user;
   bool get loading => _loading;
+  bool get googleLoading => _googleLoading;
+  bool get appleLoading => _appleLoading;
   String? get error => _error;
   bool get isAuthenticated => _user != null;
 
   Future<void> tryRestore() async {
+    final generation = ++_restoreGeneration;
     _loading = true;
     notifyListeners();
     try {
       final userData = await _authService.tryRestore();
+      if (generation != _restoreGeneration) return;
       if (userData != null) {
         _user = User.fromJson(userData);
       } else {
         _user = null;
       }
     } catch (_) {
+      if (generation != _restoreGeneration) return;
       // A failed restore is an unauthenticated state, never another user's
       // account or a fabricated local profile.
       _user = null;
     }
-    _loading = false;
+    _loading = _googleLoading || _appleLoading;
     notifyListeners();
   }
 
@@ -53,22 +61,12 @@ class AuthProvider extends ChangeNotifier {
   Future<void> refreshUser() => tryRestore();
 
   Future<bool> signInWithGoogle() async {
+    _beginSocialLoading('google');
     try {
-      _loading = true;
-      _error = null;
-      notifyListeners();
+      final googleSignIn = _googleSignIn();
 
-      final GoogleSignIn googleSignIn = GoogleSignIn(
-        serverClientId: _googleWebClientId,
-        scopes: ['email', 'profile'],
-      );
-
-      // Force Google Account picker modal by signing out local session first
-      try {
-        await googleSignIn.signOut();
-      } catch (_) {}
-
-      final GoogleSignInAccount? account = await googleSignIn.signIn();
+      final GoogleSignInAccount? account =
+          await googleSignIn.signIn().timeout(const Duration(seconds: 45));
       if (account != null) {
         final GoogleSignInAuthentication auth = await account.authentication;
         final idToken = auth.idToken ?? auth.accessToken;
@@ -77,30 +75,22 @@ class AuthProvider extends ChangeNotifier {
           final userData = await _authService.loginWithGoogle(idToken);
           _user = User.fromJson(userData);
           _error = null;
-          _loading = false;
-          notifyListeners();
           return true;
         }
       }
-
-      _loading = false;
-      notifyListeners();
       return false;
     } catch (e) {
       final errStr = e.toString();
-      _loading = false;
       _error = errStr;
-      notifyListeners();
       return false;
+    } finally {
+      _endSocialLoading('google');
     }
   }
 
   Future<bool> signInWithApple() async {
+    _beginSocialLoading('apple');
     try {
-      _loading = true;
-      _error = null;
-      notifyListeners();
-
       final credential = await SignInWithApple.getAppleIDCredential(
         scopes: [
           AppleIDAuthorizationScopes.email,
@@ -120,21 +110,37 @@ class AuthProvider extends ChangeNotifier {
         );
         _user = User.fromJson(userData);
         _error = null;
-        _loading = false;
-        notifyListeners();
         return true;
       }
-
-      _loading = false;
-      notifyListeners();
       return false;
     } catch (e) {
       final errStr = e.toString();
-      _loading = false;
       _error = errStr;
-      notifyListeners();
       return false;
+    } finally {
+      _endSocialLoading('apple');
     }
+  }
+
+  void _beginSocialLoading(String provider) {
+    if (provider == 'google') {
+      _googleLoading = true;
+    } else {
+      _appleLoading = true;
+    }
+    _loading = true;
+    _error = null;
+    notifyListeners();
+  }
+
+  void _endSocialLoading(String provider) {
+    if (provider == 'google') {
+      _googleLoading = false;
+    } else {
+      _appleLoading = false;
+    }
+    _loading = _googleLoading || _appleLoading;
+    notifyListeners();
   }
 
   Future<bool> loginWithGoogle(String idToken) async {
@@ -174,10 +180,26 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<void> logout() async {
+    // Clear the plugin's active Google session as well as CalGo's API tokens.
+    // Otherwise the next signIn() can silently return the previous Google
+    // account instead of opening the account picker.
+    _restoreGeneration++;
     await _authService.logout();
+    try {
+      await _googleSignIn().signOut();
+    } catch (_) {
+      // API logout still succeeded; a stale Google plugin session must not
+      // block leaving the account.
+    }
     _user = null;
+    _loading = _googleLoading || _appleLoading;
     notifyListeners();
   }
+
+  GoogleSignIn _googleSignIn() => GoogleSignIn(
+        serverClientId: _googleWebClientId,
+        scopes: ['email', 'profile'],
+      );
 
   Future<bool> deleteAccount() async {
     try {

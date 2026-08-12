@@ -46,6 +46,8 @@ class PricingScreen extends StatefulWidget {
 
 class _PricingScreenState extends State<PricingScreen> {
   bool _creatingPayment = false;
+  PaymentProvider? _payment;
+  String? _lastPurchaseMessage;
 
   // Credit Packages list loaded instantly matching web backend
   late List<CreditPackageItem> _payPacks;
@@ -82,6 +84,50 @@ class _PricingScreenState extends State<PricingScreen> {
           popular: false),
     ];
     _fetchPackagesAsync();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final payment = context.read<PaymentProvider>();
+    if (_payment == payment) return;
+    _payment?.removeListener(_onPaymentChanged);
+    _payment = payment..addListener(_onPaymentChanged);
+  }
+
+  @override
+  void dispose() {
+    _payment?.removeListener(_onPaymentChanged);
+    super.dispose();
+  }
+
+  void _onPaymentChanged() {
+    if (!mounted) return;
+    final payment = _payment;
+    if (payment == null) return;
+    final creditStates = payment.purchaseStates.entries.where(
+      (entry) => entry.key.startsWith('credit_'),
+    );
+    final purchased =
+        creditStates.any((entry) => entry.value == PurchaseState.purchased);
+    final failed =
+        creditStates.any((entry) => entry.value == PurchaseState.error);
+    final message = purchased
+        ? 'Đã xác minh và cộng lượt quét vào tài khoản.'
+        : failed
+            ? 'Cửa hàng đã nhận giao dịch nhưng máy chủ chưa cộng lượt. Vui lòng thử Khôi phục giao dịch sau khi cập nhật backend.'
+            : null;
+    if (message == null || message == _lastPurchaseMessage) return;
+    _lastPurchaseMessage = message;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(message),
+          backgroundColor: failed ? Colors.redAccent : null,
+        ),
+      );
+    });
   }
 
   Future<void> _fetchPackagesAsync() async {
@@ -508,7 +554,8 @@ class _PricingScreenState extends State<PricingScreen> {
                               ],
                             ),
                             const SizedBox(height: 8),
-                            Align(alignment: Alignment.centerRight, child: badge),
+                            Align(
+                                alignment: Alignment.centerRight, child: badge),
                           ],
                         );
                       }

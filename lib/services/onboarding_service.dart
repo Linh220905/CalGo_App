@@ -52,4 +52,17 @@ class OnboardingService {
       await _api.patch('/users/me', body: {'has_completed_onboarding': true});
     } catch (_) {}
   }
+
+  Future<Map<String, dynamic>> savePremiumPreferences(
+    Map<String, dynamic> preferences,
+  ) async {
+    final response = await _api.patch(
+      '/users/preferences/premium',
+      body: preferences,
+    );
+    if (response is! Map<String, dynamic>) {
+      throw StateError('Invalid premium preferences response');
+    }
+    return response;
+  }
 }

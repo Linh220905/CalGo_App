@@ -75,12 +75,55 @@ class MealGuidanceSummary {
       );
 }
 
+class ProgressForecast {
+  final String goalType;
+  final double? currentWeightKg;
+  final double? targetWeightKg;
+  final int? projectedDaysToGoal;
+  final double? projectedWeeksToGoal;
+  final String? projectedGoalDate;
+  final double? projectedWeeklyRateKg;
+  final String forecastMessage;
+  final String mascotForecastNote;
+  final String statusTag;
+
+  const ProgressForecast({
+    required this.goalType,
+    this.currentWeightKg,
+    this.targetWeightKg,
+    this.projectedDaysToGoal,
+    this.projectedWeeksToGoal,
+    this.projectedGoalDate,
+    this.projectedWeeklyRateKg,
+    required this.forecastMessage,
+    required this.mascotForecastNote,
+    required this.statusTag,
+  });
+
+  factory ProgressForecast.fromJson(Map<String, dynamic> json) =>
+      ProgressForecast(
+        goalType: json['goal_type']?.toString() ?? 'lose',
+        currentWeightKg: (json['current_weight_kg'] as num?)?.toDouble(),
+        targetWeightKg: (json['target_weight_kg'] as num?)?.toDouble(),
+        projectedDaysToGoal: (json['projected_days_to_goal'] as num?)?.toInt(),
+        projectedWeeksToGoal:
+            (json['projected_weeks_to_goal'] as num?)?.toDouble(),
+        projectedGoalDate: json['projected_goal_date']?.toString(),
+        projectedWeeklyRateKg:
+            (json['projected_weekly_rate_kg'] as num?)?.toDouble(),
+        forecastMessage: json['forecast_message']?.toString() ?? '',
+        mascotForecastNote: json['mascot_forecast_note']?.toString() ?? '',
+        statusTag: json['status_tag']?.toString() ?? '',
+      );
+}
+
 class MealGuidance {
   final String state;
   final String title;
   final String message;
   final String mascotState;
   final MealGuidanceSummary? summary;
+  final ProgressForecast? forecast;
   final List<MealGuidanceDish> recommendations;
   final bool generatedWithLlm;
   final int llmCallsRemaining;
@@ -92,6 +135,7 @@ class MealGuidance {
     required this.message,
     required this.mascotState,
     required this.summary,
+    this.forecast,
     required this.recommendations,
     required this.generatedWithLlm,
     required this.llmCallsRemaining,
@@ -120,6 +164,9 @@ class MealGuidance {
       summary: json['summary'] is Map<String, dynamic>
           ? MealGuidanceSummary.fromJson(
               json['summary'] as Map<String, dynamic>)
+          : null,
+      forecast: json['forecast'] is Map<String, dynamic>
+          ? ProgressForecast.fromJson(json['forecast'] as Map<String, dynamic>)
           : null,
       recommendations: rawRecommendations is List
           ? rawRecommendations

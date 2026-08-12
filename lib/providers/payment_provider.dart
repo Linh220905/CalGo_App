@@ -1,15 +1,122 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import '../config/app_build_config.dart';
 import '../config/iap_ids.dart';
 import '../services/google_play_payment_service.dart';
 import '../services/api_service.dart';
 
 /// Purchase state per product.
-enum PurchaseState { idle, loading, purchased, error }
+enum PurchaseState {
+  idle,
+  loading,
+  pending,
+  verifying,
+  purchased,
+  canceled,
+  error,
+}
 
 enum PremiumPlan { weekly, monthly, annual }
+
+/// One concrete Store offer. Google Play may return several entries with the
+/// same product ID (base plan, free trial, win-back, etc.), so a subscription
+/// catalog must never be flattened into a product-ID-only map.
+class PremiumOffer {
+  final PremiumPlan plan;
+  final ProductDetails product;
+  final String? basePlanId;
+  final String? offerId;
+  final List<String> offerTags;
+  final bool hasFreeTrial;
+  final int trialDays;
+  final String recurringPrice;
+
+  const PremiumOffer({
+    required this.plan,
+    required this.product,
+    required this.basePlanId,
+    required this.offerId,
+    required this.offerTags,
+    required this.hasFreeTrial,
+    required this.trialDays,
+    required this.recurringPrice,
+  });
+
+  factory PremiumOffer.fromProduct(
+    PremiumPlan plan,
+    ProductDetails product,
+  ) {
+    if (product is! GooglePlayProductDetails ||
+        product.subscriptionIndex == null) {
+      return PremiumOffer(
+        plan: plan,
+        product: product,
+        basePlanId: null,
+        offerId: null,
+        offerTags: const [],
+        hasFreeTrial: false,
+        trialDays: 0,
+        recurringPrice: product.price,
+      );
+    }
+
+    final offers = product.productDetails.subscriptionOfferDetails;
+    final index = product.subscriptionIndex!;
+    if (offers == null || index < 0 || index >= offers.length) {
+      return PremiumOffer(
+        plan: plan,
+        product: product,
+        basePlanId: null,
+        offerId: null,
+        offerTags: const [],
+        hasFreeTrial: false,
+        trialDays: 0,
+        recurringPrice: product.price,
+      );
+    }
+
+    final details = offers[index];
+    final freePhases = details.pricingPhases
+        .where((phase) => phase.priceAmountMicros == 0)
+        .toList();
+    final paidPhases = details.pricingPhases
+        .where((phase) => phase.priceAmountMicros > 0)
+        .toList();
+    final recurring =
+        paidPhases.isNotEmpty ? paidPhases.last.formattedPrice : product.price;
+    final trialDays = freePhases.fold<int>(
+      0,
+      (days, phase) =>
+          days + _periodDays(phase.billingPeriod) * phase.billingCycleCount,
+    );
+
+    return PremiumOffer(
+      plan: plan,
+      product: product,
+      basePlanId: details.basePlanId,
+      offerId: details.offerId,
+      offerTags: List.unmodifiable(details.offerTags),
+      hasFreeTrial: freePhases.isNotEmpty,
+      trialDays: trialDays,
+      recurringPrice: recurring,
+    );
+  }
+
+  static int _periodDays(String period) {
+    final match = RegExp(r'^P(\d+)([DWMY])$').firstMatch(period);
+    if (match == null) return 0;
+    final value = int.tryParse(match.group(1) ?? '') ?? 0;
+    return switch (match.group(2)) {
+      'D' => value,
+      'W' => value * 7,
+      'M' => value * 30,
+      'Y' => value * 365,
+      _ => 0,
+    };
+  }
+}
 
 /// Payment state — single source of truth for IAP in the app.
 class PaymentProvider extends ChangeNotifier {
@@ -21,9 +128,15 @@ class PaymentProvider extends ChangeNotifier {
   bool _purchaseInProgress = false;
   late final Future<void> _initialization;
   StreamSubscription<List<PurchaseDetails>>? _purchaseSubscription;
+  Future<void> Function()? _onCreditsVerified;
 
   /// Map of product ID → ProductDetails from Google Play.
   Map<String, ProductDetails> _products = {};
+
+  /// Every eligible Premium offer returned by the Store, grouped by plan.
+  Map<PremiumPlan, List<PremiumOffer>> _premiumOffers = {};
+  PremiumOffer? _activePremiumOffer;
+  Map<String, dynamic>? _lastSubscriptionVerification;
 
   /// Map of package ID → purchase state (for UI binding).
   Map<String, PurchaseState> _purchaseStates = {};
@@ -35,6 +148,16 @@ class PaymentProvider extends ChangeNotifier {
   bool get billingEnabled => AppBuildConfig.googlePlayBillingEnabled;
   bool get premiumFreeForTesting => AppBuildConfig.premiumFreeForTesting;
   Map<String, ProductDetails> get products => Map.unmodifiable(_products);
+  Map<PremiumPlan, List<PremiumOffer>> get premiumOffers => Map.unmodifiable(
+        _premiumOffers.map(
+          (plan, offers) => MapEntry(plan, List.unmodifiable(offers)),
+        ),
+      );
+  PremiumOffer? get activePremiumOffer => _activePremiumOffer;
+  Map<String, dynamic>? get lastSubscriptionVerification =>
+      _lastSubscriptionVerification == null
+          ? null
+          : Map.unmodifiable(_lastSubscriptionVerification!);
   Map<String, PurchaseState> get purchaseStates =>
       Map.unmodifiable(_purchaseStates);
   GooglePlayPaymentService get paymentService => _paymentService;
@@ -46,11 +169,61 @@ class PaymentProvider extends ChangeNotifier {
       };
 
   ProductDetails? premiumProduct(PremiumPlan plan) =>
-      _products[productIdForPremiumPlan(plan)];
+      premiumOffer(plan, preferFreeTrial: false)?.product;
+
+  PremiumOffer? premiumOffer(
+    PremiumPlan plan, {
+    required bool preferFreeTrial,
+  }) {
+    final offers = _premiumOffers[plan] ?? const <PremiumOffer>[];
+    if (offers.isEmpty) return null;
+    // Weekly Premium never has a free-trial offer. Keep this guard in the
+    // client even if a stale/misconfigured Play Console offer is returned.
+    if (plan == PremiumPlan.weekly) {
+      for (final offer in offers) {
+        if (!offer.hasFreeTrial) return offer;
+      }
+      return null;
+    }
+    if (preferFreeTrial) {
+      for (final offer in offers) {
+        if (offer.hasFreeTrial) return offer;
+      }
+      return null;
+    }
+    for (final offer in offers) {
+      if (!offer.hasFreeTrial && offer.offerId == null) return offer;
+    }
+    for (final offer in offers) {
+      if (!offer.hasFreeTrial) return offer;
+    }
+    return offers.first;
+  }
+
+  bool hasTrialOffer(PremiumPlan plan) =>
+      (_premiumOffers[plan] ?? const <PremiumOffer>[])
+          .any((offer) => offer.hasFreeTrial);
+
+  PremiumOffer? premiumOfferWithTag(PremiumPlan plan, String tag) {
+    final normalized = tag.trim().toLowerCase();
+    for (final offer in _premiumOffers[plan] ?? const <PremiumOffer>[]) {
+      if (offer.offerId?.toLowerCase() == normalized ||
+          offer.offerTags.any((value) => value.toLowerCase() == normalized)) {
+        return offer;
+      }
+    }
+    return null;
+  }
 
   PaymentProvider(ApiService api) {
     _paymentService = GooglePlayPaymentService(api);
     _initialization = billingEnabled ? _init() : _disableForTesting();
+  }
+
+  /// Called after the server has committed a credit top-up so the signed-in
+  /// user model (and every credits badge) reflects the new balance.
+  void setCreditsVerifiedCallback(Future<void> Function() callback) {
+    _onCreditsVerified = callback;
   }
 
   Future<void> _disableForTesting() async {
@@ -97,8 +270,23 @@ class PaymentProvider extends ChangeNotifier {
     final details = await _paymentService.queryProducts(ids);
 
     _products = {};
+    _premiumOffers = {
+      for (final plan in PremiumPlan.values) plan: <PremiumOffer>[],
+    };
     for (final d in details) {
-      _products[d.id] = d;
+      final plan = _premiumPlanForProductId(d.id);
+      if (plan == null) {
+        _products[d.id] = d;
+        continue;
+      }
+      final offer = PremiumOffer.fromProduct(plan, d);
+      _premiumOffers[plan]!.add(offer);
+      // Preserve the old product lookup for callers outside Premium. Prefer a
+      // regular base plan over an introductory offer when both are returned.
+      final existing = _products[d.id];
+      if (existing == null || (!offer.hasFreeTrial && offer.offerId == null)) {
+        _products[d.id] = d;
+      }
     }
 
     _purchaseStates = {};
@@ -114,7 +302,12 @@ class PaymentProvider extends ChangeNotifier {
 
   /// Begins an auto-renewable Premium purchase. Completion is delivered by
   /// the Store purchase stream and verified server-side before UI success.
-  Future<bool> buyPremium(PremiumPlan plan) async {
+  Future<bool> buyPremium(
+    PremiumPlan plan, {
+    required bool preferFreeTrial,
+    String? applicationUserName,
+    PremiumOffer? selectedOffer,
+  }) async {
     await _initialization;
     if (!billingEnabled) return false;
     if (!_ready) {
@@ -124,19 +317,28 @@ class PaymentProvider extends ChangeNotifier {
     }
 
     final sku = productIdForPremiumPlan(plan);
-    final product = _products[sku];
-    if (product == null) {
-      _error = _paymentService.lastError ?? 'paymentPackageUnavailable';
+    final offer = selectedOffer?.plan == plan
+        ? selectedOffer
+        : premiumOffer(plan, preferFreeTrial: preferFreeTrial);
+    if (offer == null) {
+      _error = preferFreeTrial
+          ? 'paymentTrialUnavailable'
+          : (_paymentService.lastError ?? 'paymentPackageUnavailable');
       notifyListeners();
       return false;
     }
 
     _purchaseState(sku, PurchaseState.loading);
     _purchaseInProgress = true;
+    _activePremiumOffer = offer;
+    _lastSubscriptionVerification = null;
     _error = null;
     notifyListeners();
 
-    final started = await _paymentService.purchaseSubscription(product);
+    final started = await _paymentService.purchaseSubscription(
+      offer.product,
+      applicationUserName: applicationUserName,
+    );
     if (!started) {
       _purchaseState(sku, PurchaseState.idle);
       _purchaseInProgress = false;
@@ -201,8 +403,14 @@ class PaymentProvider extends ChangeNotifier {
       _error = 'purchaseFailed';
       _purchaseInProgress = false;
       notifyListeners();
+    } else if (purchase.status == PurchaseStatus.pending) {
+      _purchaseState(sku, PurchaseState.pending);
+      _error = 'purchasePending';
+      _purchaseInProgress = false;
+      notifyListeners();
     } else if (purchase.status == PurchaseStatus.canceled) {
-      _purchaseState(sku, PurchaseState.idle);
+      _purchaseState(sku, PurchaseState.canceled);
+      _error = null;
       _purchaseInProgress = false;
       notifyListeners();
     }
@@ -220,12 +428,25 @@ class PaymentProvider extends ChangeNotifier {
       // completePurchase is still safe and clears any pending client-side
       // transaction state; Android returns OK for an already acknowledged
       // purchase.
-      await _paymentService.complete(purchase);
+      try {
+        await _paymentService.complete(purchase);
+      } catch (error) {
+        // Server-side credit grant is authoritative; Play cleanup can be
+        // retried from the purchase stream/restore path.
+        debugPrint('[IAP] Credit completePurchase cleanup failed: $error');
+      }
+      try {
+        await _onCreditsVerified?.call();
+      } catch (error) {
+        // The purchase is already committed server-side. A refresh failure
+        // must not turn a successful top-up into a client-side error.
+        debugPrint('[IAP] Credit balance refresh failed: $error');
+      }
       _purchaseState(sku, PurchaseState.purchased);
       _error = null;
     } else {
       _purchaseState(sku, PurchaseState.error);
-      _error = 'receiptVerificationFailed';
+      _error = _paymentService.lastError ?? 'receiptVerificationFailed';
     }
 
     _purchaseInProgress = false;
@@ -234,11 +455,25 @@ class PaymentProvider extends ChangeNotifier {
 
   Future<void> _verifySubscription(PurchaseDetails purchase) async {
     final sku = purchase.productID;
-    final verified = await _paymentService.verifySubscription(purchase);
-    if (verified) {
-      await _paymentService.complete(purchase);
+    _purchaseState(sku, PurchaseState.verifying);
+    _purchaseInProgress = true;
+    notifyListeners();
+    final verification = await _paymentService.verifySubscription(purchase);
+    if (verification != null) {
+      _lastSubscriptionVerification = verification;
       _purchaseState(sku, PurchaseState.purchased);
       _error = null;
+      _purchaseInProgress = false;
+      // The server has already verified and granted the entitlement. Clearing
+      // the local Play transaction is cleanup and must not block the success
+      // UI if Play reports an already-acknowledged transaction here.
+      notifyListeners();
+      try {
+        await _paymentService.complete(purchase);
+      } catch (error) {
+        debugPrint('[IAP] completePurchase cleanup failed: $error');
+      }
+      return;
     } else {
       _purchaseState(sku, PurchaseState.error);
       _error = _paymentService.lastError ?? 'subscriptionVerificationFailed';
@@ -267,6 +502,13 @@ class PaymentProvider extends ChangeNotifier {
           orElse: () => reversed.first,
         )
         .key;
+  }
+
+  PremiumPlan? _premiumPlanForProductId(String productId) {
+    for (final plan in PremiumPlan.values) {
+      if (productIdForPremiumPlan(plan) == productId) return plan;
+    }
+    return null;
   }
 
   String? priceOf(String packageId) {

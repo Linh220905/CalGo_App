@@ -1,7 +1,7 @@
 name: calgo
 description: "CAL.ai - Food recognition & calorie estimation app"
 publish_to: 'none'
-version: 1.0.4+5
+version: 1.0.5+17
 
 environment:
   sdk: ^3.5.0
@@ -29,8 +29,10 @@ dependencies:
   fl_chart: ^0.69.2
   font_awesome_flutter: ^10.6.0
   url_launcher: ^6.3.1
+  # Dart 3.5/Flutter hiện tại chỉ tương thích Android implementation 0.4.0.
+  # Plugin này đã dùng Google Play Billing 7.1.1 ở bên trong.
   in_app_purchase: ^3.2.0
-  in_app_purchase_android: ^0.4.0
+  in_app_purchase_android: 0.4.0
   google_mobile_ads: ^5.1.0
   share_plus: ^10.0.0
   path_provider: ^2.1.5

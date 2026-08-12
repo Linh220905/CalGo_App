@@ -20,6 +20,7 @@ class OnboardingProvider extends ChangeNotifier {
   static const _stepKey = 'onboarding_step';
   static const _dataKey = 'onboarding_data';
   static const _versionKey = 'onboarding_version';
+  static const _premiumCustomizationKey = 'premium_meal_customization';
   static const int _onboardingVersion = 8;
 
   OnboardingProvider({OnboardingService? onboardingService})
@@ -438,6 +439,68 @@ class OnboardingProvider extends ChangeNotifier {
   Future<void> setAccountMethod(String v) async {
     data.accountMethod = v;
     await _persistData();
+    notifyListeners();
+  }
+
+  String _premiumCustomizationStorageKey(String? accountId) {
+    final normalized = accountId?.trim();
+    if (normalized == null || normalized.isEmpty) {
+      return _premiumCustomizationKey;
+    }
+    return '${_premiumCustomizationKey}_$normalized';
+  }
+
+  /// Returns whether the post-purchase personalization quiz has already been
+  /// completed for this account on this device.
+  ///
+  /// Older builds stored one unscoped key.  Migrate that key to the current
+  /// account on first read so an existing user is not asked the quiz again,
+  /// while future account switches remain isolated.
+  Future<bool> hasPremiumCustomization({String? accountId}) async {
+    final prefs = await SharedPreferences.getInstance();
+    final scopedKey = _premiumCustomizationStorageKey(accountId);
+
+    bool isValid(String? raw) {
+      if (raw == null || raw.isEmpty) return false;
+      try {
+        final decoded = jsonDecode(raw);
+        if (decoded is! Map) return false;
+        return decoded['meal_pattern'] is String &&
+            decoded['variety_preference'] is String &&
+            decoded['assistant_priority'] is String;
+      } catch (_) {
+        return false;
+      }
+    }
+
+    if (isValid(prefs.getString(scopedKey))) return true;
+    if (scopedKey == _premiumCustomizationKey) {
+      return isValid(prefs.getString(_premiumCustomizationKey));
+    }
+
+    // One-time migration from the pre-account-scoped key.
+    final legacy = prefs.getString(_premiumCustomizationKey);
+    if (!isValid(legacy)) return false;
+    await prefs.setString(scopedKey, legacy!);
+    await prefs.remove(_premiumCustomizationKey);
+    return true;
+  }
+
+  Future<void> saveMealCustomization(
+    Map<String, dynamic> customization, {
+    String? accountId,
+  }) async {
+    // Keep the answers locally before the network write.  A temporary backend
+    // outage must not erase the user's choices or trap the post-purchase flow.
+    final prefs = await SharedPreferences.getInstance();
+    final scopedKey = _premiumCustomizationStorageKey(accountId);
+    await prefs.setString(scopedKey, jsonEncode(customization));
+    if (scopedKey != _premiumCustomizationKey) {
+      await prefs.remove(_premiumCustomizationKey);
+    }
+    if (_onboardingService != null && !AppBuildConfig.isTesting) {
+      await _onboardingService.savePremiumPreferences(customization);
+    }
     notifyListeners();
   }
 }
