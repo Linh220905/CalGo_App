@@ -15,8 +15,15 @@ class MainShell extends StatefulWidget {
   State<MainShell> createState() => _MainShellState();
 }
 
-class _MainShellState extends State<MainShell> {
+class _MainShellState extends State<MainShell> with WidgetsBindingObserver {
   ScanTaskProvider? _scanTasks;
+  DateTime? _pausedDate;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
 
   @override
   void didChangeDependencies() {
@@ -30,8 +37,32 @@ class _MainShellState extends State<MainShell> {
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _scanTasks?.removeListener(_openCompletedScan);
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused ||
+        state == AppLifecycleState.inactive) {
+      _pausedDate = DateTime.now();
+    } else if (state == AppLifecycleState.resumed) {
+      // Proactively rotate/refresh the access token in background when app resumes
+      context.read<AuthProvider>().refreshTokenSilently();
+
+      // BUG 1 fix: detect midnight crossing — reset Home to today so the
+      // calorie tracker never shows yesterday's data after an overnight pause.
+      final now = DateTime.now();
+      final paused = _pausedDate;
+      if (paused != null &&
+          (now.year != paused.year ||
+              now.month != paused.month ||
+              now.day != paused.day)) {
+        context.read<HomeProvider>().showTodayForNewScan();
+      }
+      _pausedDate = null;
+    }
   }
 
   void _openCompletedScan() {

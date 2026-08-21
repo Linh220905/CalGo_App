@@ -8,6 +8,11 @@ class ApiService {
   final http.Client _client = http.Client();
   final Map<String, Future<dynamic>> _inFlightGets = {};
 
+  /// Called when a 401 is received on any request. Should attempt to refresh
+  /// the access token and call [setToken] with the new value. Return true if
+  /// the refresh succeeded, false if the session is irrecoverably expired.
+  Future<bool> Function()? refreshCallback;
+
   Map<String, String> _headers() {
     final headers = <String, String>{
       'Content-Type': 'application/json',
@@ -40,6 +45,16 @@ class ApiService {
               headers: _headers(),
             )
             .timeout(ApiConfig.timeout);
+        if (response.statusCode == 401 && await _tryRefresh()) {
+          // Retry once with the new token.
+          final retried = await _client
+              .get(
+                Uri.parse('${ApiConfig.baseUrl}$path'),
+                headers: _headers(),
+              )
+              .timeout(ApiConfig.timeout);
+          return _handleResponse(retried);
+        }
         return _handleResponse(response);
       } finally {
         _inFlightGets.remove(requestKey);
@@ -55,6 +70,16 @@ class ApiService {
           body: body != null ? jsonEncode(body) : null,
         )
         .timeout(ApiConfig.timeout);
+    if (response.statusCode == 401 && path != '/auth/refresh' && await _tryRefresh()) {
+      final retried = await _client
+          .post(
+            Uri.parse('${ApiConfig.baseUrl}$path'),
+            headers: _headers(),
+            body: body != null ? jsonEncode(body) : null,
+          )
+          .timeout(ApiConfig.timeout);
+      return _handleResponse(retried);
+    }
     return _handleResponse(response);
   }
 
@@ -66,6 +91,16 @@ class ApiService {
           body: body != null ? jsonEncode(body) : null,
         )
         .timeout(ApiConfig.timeout);
+    if (response.statusCode == 401 && await _tryRefresh()) {
+      final retried = await _client
+          .patch(
+            Uri.parse('${ApiConfig.baseUrl}$path'),
+            headers: _headers(),
+            body: body != null ? jsonEncode(body) : null,
+          )
+          .timeout(ApiConfig.timeout);
+      return _handleResponse(retried);
+    }
     return _handleResponse(response);
   }
 
@@ -76,7 +111,28 @@ class ApiService {
           headers: _headers(),
         )
         .timeout(ApiConfig.timeout);
+    if (response.statusCode == 401 && await _tryRefresh()) {
+      final retried = await _client
+          .delete(
+            Uri.parse('${ApiConfig.baseUrl}$path'),
+            headers: _headers(),
+          )
+          .timeout(ApiConfig.timeout);
+      return _handleResponse(retried);
+    }
     return _handleResponse(response);
+  }
+
+  /// Attempts a silent token refresh. Returns true and updates the in-memory
+  /// token if successful; returns false when there is nothing to refresh.
+  Future<bool> _tryRefresh() async {
+    final cb = refreshCallback;
+    if (cb == null) return false;
+    try {
+      return await cb();
+    } catch (_) {
+      return false;
+    }
   }
 
   dynamic _handleResponse(http.Response response) {

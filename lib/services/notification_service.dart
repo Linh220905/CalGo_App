@@ -118,8 +118,11 @@ class NotificationService {
       iOS: iosDetails,
     );
 
-    // Cancel existing scheduled notifications to avoid duplicates
-    await _notificationsPlugin.cancelAll();
+    // Cancel only the daily meal reminders (101-103) to avoid clobbering
+    // trial sequence notifications (201-203) or other scheduled pushes.
+    for (final id in [101, 102, 103]) {
+      await _notificationsPlugin.cancel(id);
+    }
 
     // 1. Sáng (07:30)
     await _scheduleDailyNotification(

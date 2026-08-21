@@ -24,6 +24,10 @@ class GooglePlayPaymentService {
 
   GooglePlayPaymentService(this._api);
 
+  /// Expose the underlying API client for retry operations that need to call
+  /// backend endpoints directly (e.g. pending purchase re-verification).
+  ApiService get api => _api;
+
   /// Initialize connection to Google Play Billing.
   Future<bool> init() async {
     if (_initialized) return _available;

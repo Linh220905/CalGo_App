@@ -29,6 +29,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   String? _loadedUserId;
   Timer? _mascotMessageTimer;
+  bool _reloadScheduled = false;
 
   @override
   void initState() {
@@ -62,9 +63,11 @@ class _HomeScreenState extends State<HomeScreen> {
         isDark ? const Color(0xFF2C2A34) : const Color(0xFFE2E8F0);
 
     final currentUserId = auth.user?.id ?? 'guest';
-    if (!auth.loading && _loadedUserId != currentUserId) {
+    if (!auth.loading && _loadedUserId != currentUserId && !_reloadScheduled) {
       _loadedUserId = currentUserId;
+      _reloadScheduled = true;
       WidgetsBinding.instance.addPostFrameCallback((_) {
+        _reloadScheduled = false;
         if (mounted) {
           context.read<HomeProvider>().loadToday(forceRefresh: true);
           unawaited(context.read<ScanService>().preloadHistoryImages(context));
@@ -452,6 +455,7 @@ class _CalorieCardSection extends StatelessWidget {
     final pct = s.caloriesProgress;
 
     return CalAiHeroCard(
+      caloriesConsumed: s.consumedCalories,
       caloriesLeft: remaining,
       targetCalories: target,
       progress: pct,
@@ -485,11 +489,13 @@ class _MacroCardsSection extends StatelessWidget {
           child: CalAiMacroCard(
             title: strings.gramsValue(proteinG.round()),
             subtitle: strings.proteinLeft,
+            consumed: proteinG.round(),
+            target: targetProtein.round(),
             progress: (proteinG / targetProtein).clamp(0.0, 1.0),
             color: _kProteinColor,
             trackColor: const Color(0xFFFEE2E2),
             bgIconColor: const Color(0xFFFEF2F2),
-            icon: Icons.flash_on_rounded, // ⚡ Tia sét
+            icon: Icons.flash_on_rounded,
           ),
         ),
         const SizedBox(width: 10),
@@ -498,11 +504,13 @@ class _MacroCardsSection extends StatelessWidget {
           child: CalAiMacroCard(
             title: strings.gramsValue(carbG.round()),
             subtitle: strings.carbsLeft,
+            consumed: carbG.round(),
+            target: targetCarb.round(),
             progress: (carbG / targetCarb).clamp(0.0, 1.0),
             color: _kCarbColor,
             trackColor: const Color(0xFFFEF3C7),
             bgIconColor: const Color(0xFFFFFBEB),
-            icon: Icons.grain_rounded, // 🌾 Lúa mạch
+            icon: Icons.grain_rounded,
           ),
         ),
         const SizedBox(width: 10),
@@ -511,11 +519,13 @@ class _MacroCardsSection extends StatelessWidget {
           child: CalAiMacroCard(
             title: strings.gramsValue(fatG.round()),
             subtitle: strings.fatsLeft,
+            consumed: fatG.round(),
+            target: targetFat.round(),
             progress: (fatG / targetFat).clamp(0.0, 1.0),
             color: _kFatColor,
             trackColor: const Color(0xFFDBEAFE),
             bgIconColor: const Color(0xFFEFF6FF),
-            icon: Icons.pie_chart_rounded, // 🥑 Chất béo
+            icon: Icons.pie_chart_rounded,
           ),
         ),
       ],

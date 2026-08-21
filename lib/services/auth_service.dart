@@ -96,6 +96,50 @@ class AuthService {
     await _clearToken();
   }
 
+  Future<bool>? _inFlightRefresh;
+
+  /// Silently refreshes the access token using the stored refresh token.
+  /// Does NOT update user state or notify listeners — it only rotates the
+  /// in-memory token so the next API call succeeds.
+  /// Returns true if a new token was obtained, false otherwise.
+  Future<bool> refreshTokenSilently() async {
+    if (_inFlightRefresh != null) {
+      return await _inFlightRefresh!;
+    }
+
+    _inFlightRefresh = () async {
+      final refreshToken = await _storage.read(key: _refreshTokenKey);
+      if (refreshToken == null || refreshToken.isEmpty) return false;
+      try {
+        final res = await _api.post('/auth/refresh', body: {
+          'refresh_token': refreshToken,
+        });
+        if (res is! Map<String, dynamic>) return false;
+        final accessToken =
+            res['access_token'] as String? ?? res['accessToken'] as String?;
+        if (accessToken == null || accessToken.isEmpty) return false;
+        await _saveTokens(
+          accessToken,
+          refreshToken: res['refresh_token'] as String? ??
+              res['refreshToken'] as String? ??
+              refreshToken,
+        );
+        return true;
+      } catch (error) {
+        if (_isInvalidSession(error)) {
+          await _clearToken();
+        }
+        return false;
+      }
+    }();
+
+    try {
+      return await _inFlightRefresh!;
+    } finally {
+      _inFlightRefresh = null;
+    }
+  }
+
   Future<Map<String, dynamic>?> tryRestore() async {
     final token = await getToken();
     final refreshToken = await _storage.read(key: _refreshTokenKey);

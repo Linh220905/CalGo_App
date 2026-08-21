@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../config/app_build_config.dart';
 import '../config/iap_ids.dart';
 import '../services/google_play_payment_service.dart';
@@ -43,6 +45,33 @@ class PremiumOffer {
     required this.trialDays,
     required this.recurringPrice,
   });
+
+  /// Approximate weekly cost derived from the store's raw price micros.
+  /// Returns null when the raw price is unavailable (loading or not discovered).
+  String? get weeklyPrice {
+    final rawMicros = product.rawPrice;
+    if (rawMicros <= 0) return null;
+    final currencySymbol = product.currencyCode;
+    double weeklyAmount;
+    switch (plan) {
+      case PremiumPlan.weekly:
+        weeklyAmount = rawMicros;
+        break;
+      case PremiumPlan.monthly:
+        weeklyAmount = rawMicros / 4.33;
+        break;
+      case PremiumPlan.annual:
+        weeklyAmount = rawMicros / 52;
+        break;
+    }
+    // Format: if >= 1000 show as e.g. "23.1k" else as integer
+    if (weeklyAmount >= 1000) {
+      final k = weeklyAmount / 1000;
+      final formatted = k >= 10 ? k.toStringAsFixed(0) : k.toStringAsFixed(1);
+      return '~${formatted}k\u00a0$currencySymbol';
+    }
+    return '~${weeklyAmount.round()}\u00a0$currencySymbol';
+  }
 
   factory PremiumOffer.fromProduct(
     PremiumPlan plan,
@@ -424,6 +453,7 @@ class PaymentProvider extends ChangeNotifier {
     final verified = await _paymentService.verifyReceipt(purchase);
 
     if (verified) {
+      await _clearPendingPurchase();
       // The backend verifies, commits credits, and consumes the token. Calling
       // completePurchase is still safe and clears any pending client-side
       // transaction state; Android returns OK for an already acknowledged
@@ -445,6 +475,9 @@ class PaymentProvider extends ChangeNotifier {
       _purchaseState(sku, PurchaseState.purchased);
       _error = null;
     } else {
+      // Persist for retry on next cold start so a transient auth failure
+      // does not permanently lose a paid purchase.
+      await _savePendingPurchase(purchase);
       _purchaseState(sku, PurchaseState.error);
       _error = _paymentService.lastError ?? 'receiptVerificationFailed';
     }
@@ -464,6 +497,7 @@ class PaymentProvider extends ChangeNotifier {
       _purchaseState(sku, PurchaseState.purchased);
       _error = null;
       _purchaseInProgress = false;
+      await _clearPendingPurchase();
       // The server has already verified and granted the entitlement. Clearing
       // the local Play transaction is cleanup and must not block the success
       // UI if Play reports an already-acknowledged transaction here.
@@ -475,6 +509,9 @@ class PaymentProvider extends ChangeNotifier {
       }
       return;
     } else {
+      // Persist for retry on next cold start so a transient auth failure
+      // does not permanently lose a paid purchase.
+      await _savePendingPurchase(purchase);
       _purchaseState(sku, PurchaseState.error);
       _error = _paymentService.lastError ?? 'subscriptionVerificationFailed';
     }
@@ -557,6 +594,94 @@ class PaymentProvider extends ChangeNotifier {
   void clearError() {
     _error = null;
     notifyListeners();
+  }
+
+  // ── Pending purchase persistence ────────────────────────────────────────
+  static const _pendingPurchaseKey = 'pending_purchase_verification';
+
+  Future<void> _savePendingPurchase(PurchaseDetails purchase) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final data = {
+        'product_id': purchase.productID,
+        'purchase_id': purchase.purchaseID,
+        'verification_data':
+            purchase.verificationData.serverVerificationData,
+        'is_subscription': IapIds.isPremiumProduct(purchase.productID),
+        'saved_at': DateTime.now().toIso8601String(),
+      };
+      await prefs.setString(_pendingPurchaseKey, jsonEncode(data));
+      debugPrint('[IAP] Saved pending purchase for retry: ${purchase.productID}');
+    } catch (e) {
+      debugPrint('[IAP] Failed to save pending purchase: $e');
+    }
+  }
+
+  Future<void> _clearPendingPurchase() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.remove(_pendingPurchaseKey);
+    } catch (_) {}
+  }
+
+  /// Called after a successful auth restore. Retries any purchase verification
+  /// that failed on a previous session due to an expired token.
+  Future<void> retryPendingPurchaseVerification() async {
+    await _initialization;
+    if (!billingEnabled || !_ready) return;
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final raw = prefs.getString(_pendingPurchaseKey);
+      if (raw == null || raw.isEmpty) return;
+      final data = jsonDecode(raw) as Map<String, dynamic>;
+      final productId = data['product_id'] as String?;
+      final purchaseToken = data['verification_data'] as String?;
+      final isSub = data['is_subscription'] as bool? ?? false;
+      if (productId == null || purchaseToken == null) {
+        await _clearPendingPurchase();
+        return;
+      }
+      debugPrint('[IAP] Retrying pending verification: $productId');
+
+      if (isSub) {
+        final result = await _paymentService.api.post(
+          '/subscriptions/store/verify',
+          body: {
+            'provider': defaultTargetPlatform == TargetPlatform.iOS
+                ? 'app_store'
+                : 'google_play',
+            'product_id': productId,
+            'purchase_token': purchaseToken,
+          },
+        );
+        if (result is Map<String, dynamic> && result['success'] == true) {
+          _lastSubscriptionVerification = result;
+          _purchaseState(productId, PurchaseState.purchased);
+          await _clearPendingPurchase();
+          debugPrint('[IAP] Pending subscription verified successfully');
+          notifyListeners();
+        }
+      } else {
+        final result = await _paymentService.api.post(
+          '/payments/google-play/verify',
+          body: {
+            'product_id': productId,
+            'purchase_token': purchaseToken,
+          },
+        );
+        if (result is Map<String, dynamic> && result['success'] == true) {
+          await _clearPendingPurchase();
+          try {
+            await _onCreditsVerified?.call();
+          } catch (_) {}
+          _purchaseState(productId, PurchaseState.purchased);
+          debugPrint('[IAP] Pending credit purchase verified successfully');
+          notifyListeners();
+        }
+      }
+    } catch (e) {
+      debugPrint('[IAP] Pending purchase retry failed: $e');
+    }
   }
 
   @override

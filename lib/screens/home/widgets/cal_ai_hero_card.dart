@@ -4,12 +4,14 @@ import 'package:provider/provider.dart';
 import '../../../providers/app_settings_provider.dart';
 
 class CalAiHeroCard extends StatelessWidget {
+  final int caloriesConsumed;
   final int caloriesLeft;
   final int targetCalories;
   final double progress;
 
   const CalAiHeroCard({
     super.key,
+    required this.caloriesConsumed,
     required this.caloriesLeft,
     required this.targetCalories,
     required this.progress,
@@ -64,13 +66,37 @@ class CalAiHeroCard extends StatelessWidget {
                   height: 1.0,
                 ),
               ),
-              const SizedBox(height: 6),
+              const SizedBox(height: 4),
               Text(
                 s.caloriesLeft,
                 style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w500,
                   color: textMuted,
+                ),
+              ),
+              const SizedBox(height: 6),
+              // "consumed / target kcal" fraction
+              RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: '$caloriesConsumed',
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w700,
+                        color: textDark,
+                      ),
+                    ),
+                    TextSpan(
+                      text: ' / $targetCalories kcal',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                        color: textMuted,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

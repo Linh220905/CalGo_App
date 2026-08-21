@@ -33,6 +33,9 @@ void main() {
     onboardingService: OnboardingService(apiService),
   );
   final authProvider = AuthProvider(apiService);
+  // Wire the silent-refresh interceptor. Any 401 from any service will trigger
+  // a background token rotation + retry without user interaction.
+  apiService.refreshCallback = authProvider.refreshTokenSilently;
   final paymentProvider = PaymentProvider(apiService);
   paymentProvider.setCreditsVerifiedCallback(authProvider.refreshUser);
   var restoredPaymentAuthScope = -1;
@@ -43,6 +46,9 @@ void main() {
         apiService.authScope != restoredPaymentAuthScope) {
       restoredPaymentAuthScope = apiService.authScope;
       unawaited(paymentProvider.restorePurchases());
+      // BUG 4 fix: retry any purchase whose server-side verification failed
+      // in a previous session due to an expired auth token.
+      unawaited(paymentProvider.retryPendingPurchaseVerification());
     }
   });
   // Start both bootstrap reads before the router is built. The router shows a

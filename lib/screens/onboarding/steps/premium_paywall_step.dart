@@ -468,18 +468,31 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
         _Plan.annual => PremiumPlan.annual,
       };
 
+  /// Known trial days per plan (business configuration).
+  /// Play Store is the authoritative source; these are the fallback when
+  /// billing hasn't loaded yet or the trial offer hasn't been returned.
+  static int _knownTrialDays(_Plan plan) => switch (plan) {
+        _Plan.weekly => 0, // Weekly never has a trial
+        _Plan.monthly => 3,
+        _Plan.annual => 7,
+      };
+
   int _currentTrialDays(PaymentProvider payment) {
     if (!_enableFreeTrial) return 0;
     if (AppBuildConfig.isTesting) {
-      return _selectedPlan == _Plan.annual ? 7 : 3;
+      return _knownTrialDays(_selectedPlan);
     }
-    return payment
-            .premiumOffer(
-              _toPremiumPlan(_selectedPlan),
-              preferFreeTrial: true,
-            )
-            ?.trialDays ??
-        0;
+    // Play Store is authoritative — use its value when available.
+    final storeDays = payment
+        .premiumOffer(
+          _toPremiumPlan(_selectedPlan),
+          preferFreeTrial: true,
+        )
+        ?.trialDays;
+    if (storeDays != null && storeDays > 0) return storeDays;
+    // Fallback to known configuration so the UI never shows "0 days"
+    // while Billing is still initializing.
+    return _knownTrialDays(_selectedPlan);
   }
 
   String _getButtonLabel(
@@ -511,8 +524,11 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
         premiumState == PurchaseState.verifying;
     final activated = testing || premiumState == PurchaseState.purchased;
     final trialDays = _currentTrialDays(payment);
+    // Weekly plan never has a trial. Monthly and annual always do — show
+    // the toggle even before Play Store billing has confirmed the offer
+    // (it falls back to known trial days above).
     final trialAvailable =
-        testing || payment.hasTrialOffer(_toPremiumPlan(_selectedPlan));
+        testing || _selectedPlan != _Plan.weekly;
     final trialEnabled = _enableFreeTrial && trialAvailable && trialDays > 0;
 
     return Scaffold(
@@ -886,6 +902,17 @@ class _PricingRow extends StatelessWidget {
       return paidNote;
     }
 
+    String weeklyOf(PremiumOffer? offer, _Plan plan) {
+      if (testing) {
+        return switch (plan) {
+          _Plan.weekly => '~29k / tuần',
+          _Plan.monthly => '~11k / tuần',
+          _Plan.annual => '~9k / tuần',
+        };
+      }
+      return offer?.weeklyPrice != null ? '${offer!.weeklyPrice} / tuần' : '';
+    }
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -894,6 +921,7 @@ class _PricingRow extends StatelessWidget {
             title: s.planWeek,
             price: priceOf(weeklyOffer),
             note: trialNote(weeklyOffer, s.weeklyPayment),
+            weeklyLabel: weeklyOf(weeklyOffer, _Plan.weekly),
             selected: selectedPlan == _Plan.weekly,
             highlighted: false,
             onTap: () => onChanged(_Plan.weekly),
@@ -905,10 +933,12 @@ class _PricingRow extends StatelessWidget {
             title: s.planYear,
             price: priceOf(annualOffer),
             note: trialNote(annualOffer, 'Thanh toán mỗi năm'),
+            weeklyLabel: weeklyOf(annualOffer, _Plan.annual),
             selected: selectedPlan == _Plan.annual,
             highlighted: true,
-            badge: enableFreeTrial && annualOffer?.hasFreeTrial == true
-                ? 'THỬ ${annualOffer!.trialDays} NGÀY \$0'
+            badge: enableFreeTrial &&
+                    (annualOffer?.hasFreeTrial == true || testing)
+                ? 'THỬ ${testing ? 7 : annualOffer!.trialDays} NGÀY \$0'
                 : s.popularMost,
             onTap: () => onChanged(_Plan.annual),
           ),
@@ -919,6 +949,7 @@ class _PricingRow extends StatelessWidget {
             title: s.planMonth,
             price: priceOf(monthlyOffer),
             note: trialNote(monthlyOffer, 'Thanh toán mỗi tháng'),
+            weeklyLabel: weeklyOf(monthlyOffer, _Plan.monthly),
             selected: selectedPlan == _Plan.monthly,
             highlighted: false,
             badge: enableFreeTrial && monthlyOffer?.hasFreeTrial == true
@@ -1102,6 +1133,7 @@ class _PriceCard extends StatelessWidget {
   final String title;
   final String price;
   final String note;
+  final String weeklyLabel;
   final bool selected;
   final bool highlighted;
   final String? badge;
@@ -1111,6 +1143,7 @@ class _PriceCard extends StatelessWidget {
     required this.title,
     required this.price,
     required this.note,
+    required this.weeklyLabel,
     required this.selected,
     required this.highlighted,
     required this.onTap,
@@ -1161,6 +1194,19 @@ class _PriceCard extends StatelessWidget {
                   style: _f(9.5,
                       color: _kMuted, height: 1.25, weight: FontWeight.w500),
                 ),
+                if (weeklyLabel.isNotEmpty) ...[
+                  const SizedBox(height: 4),
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      weeklyLabel,
+                      maxLines: 1,
+                      style: _f(9,
+                          color: _kAccent,
+                          weight: FontWeight.w700),
+                    ),
+                  ),
+                ],
               ],
             ),
           ),

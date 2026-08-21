@@ -60,6 +60,11 @@ class AuthProvider extends ChangeNotifier {
 
   Future<void> refreshUser() => tryRestore();
 
+  /// Silently refreshes the access token in the background (no loading state,
+  /// no UI change). Used as the ApiService.refreshCallback interceptor so that
+  /// any in-flight request that hits a 401 can retry without forcing re-login.
+  Future<bool> refreshTokenSilently() => _authService.refreshTokenSilently();
+
   Future<bool> signInWithGoogle() async {
     _beginSocialLoading('google');
     try {

@@ -6,6 +6,8 @@ import '../../../providers/app_settings_provider.dart';
 class CalAiMacroCard extends StatelessWidget {
   final String title;
   final String subtitle;
+  final int consumed;
+  final int target;
   final double progress;
   final Color color;
   final Color trackColor;
@@ -16,6 +18,8 @@ class CalAiMacroCard extends StatelessWidget {
     super.key,
     required this.title,
     required this.subtitle,
+    required this.consumed,
+    required this.target,
     required this.progress,
     required this.color,
     required this.trackColor,
@@ -72,6 +76,30 @@ class CalAiMacroCard extends StatelessWidget {
               fontSize: 12,
               fontWeight: FontWeight.w500,
               color: textMuted,
+            ),
+          ),
+          const SizedBox(height: 3),
+          // Fraction: consumed / target
+          RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: '${consumed}g',
+                  style: TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w700,
+                    color: color,
+                  ),
+                ),
+                TextSpan(
+                  text: ' / ${target}g',
+                  style: TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w400,
+                    color: textMuted,
+                  ),
+                ),
+              ],
             ),
           ),
           const SizedBox(height: 16),
