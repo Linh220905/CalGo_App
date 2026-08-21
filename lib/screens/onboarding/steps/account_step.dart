@@ -104,6 +104,11 @@ class AccountStep extends StatelessWidget {
                   final homeProvider = context.read<HomeProvider>();
                   final success = await authProvider.signInWithGoogle();
                   if (success && context.mounted) {
+                    if (authProvider.user?.hasCompletedOnboarding == true) {
+                      await homeProvider.loadToday(forceRefresh: true);
+                      if (context.mounted) context.go('/home');
+                      return;
+                    }
                     await provider.setAccountMethod('google');
                     final saved = await provider.completeOnboarding(
                       authProvider: authProvider,
@@ -145,6 +150,14 @@ class AccountStep extends StatelessWidget {
                   final onboarding = context.read<OnboardingProvider>();
                   final success = await authProvider.signInWithApple();
                   if (success && context.mounted) {
+                    // An existing account may enter this screen after a
+                    // token refresh. Never overwrite its saved nutrition
+                    // target with the local onboarding defaults.
+                    if (authProvider.user?.hasCompletedOnboarding == true) {
+                      await homeProvider.loadToday(forceRefresh: true);
+                      if (context.mounted) context.go('/home');
+                      return;
+                    }
                     await onboarding.setAccountMethod('apple');
                     final saved = await onboarding.completeOnboarding(
                       authProvider: authProvider,

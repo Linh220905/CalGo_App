@@ -49,6 +49,8 @@
 	<string>CalGo cần quyền truy cập Camera để chụp ảnh món ăn và phân tích dinh dưỡng.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>CalGo cần quyền truy cập Thư viện ảnh để chọn ảnh món ăn phân tích dinh dưỡng.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>CalGo cần quyền lưu ảnh món ăn và kết quả phân tích vào Thư viện ảnh.</string>
 	<!-- Google Mobile Ads iOS test application ID. Replace with the production
 	     AdMob app ID (ca-app-pub-...~...) before releasing real ads. -->
 	<key>GADApplicationIdentifier</key>

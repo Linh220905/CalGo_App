@@ -14,6 +14,7 @@ import '../../../providers/payment_provider.dart';
 import '../../../widgets/social_auth_button.dart';
 import '../../../widgets/premium_ui.dart';
 import '../../../services/trial_notification_service.dart';
+import '../../../services/analytics_service.dart';
 import 'post_premium_quiz_dialog.dart';
 
 // ═══════════════════════════════════════════════════════════════
@@ -52,10 +53,12 @@ enum _Plan { weekly, annual, monthly }
 
 class PremiumPaywallStep extends StatefulWidget {
   final bool onboardingMode;
+  final String source;
 
   const PremiumPaywallStep({
     super.key,
     this.onboardingMode = true,
+    this.source = 'onboarding',
   });
 
   @override
@@ -81,6 +84,15 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted && Navigator.canPop(context)) {
         setState(() => _showClose = true);
+      }
+      if (mounted) {
+        // This is deliberately best-effort. Before AccountStep there is no
+        // auth token yet, so AnalyticsService queues the event and flushes it
+        // immediately after the user signs in.
+        final analytics = context.read<AnalyticsService?>();
+        if (analytics != null) {
+          unawaited(analytics.trackPaywallViewed(source: widget.source));
+        }
       }
     });
     _closeTimer = Timer(const Duration(seconds: 2), () {
@@ -146,6 +158,21 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
     final payment = context.read<PaymentProvider>();
 
     final verification = payment.lastSubscriptionVerification;
+    final offer = payment.activePremiumOffer;
+    final analytics = context.read<AnalyticsService?>();
+    if (analytics != null && verification?['is_restored'] != true) {
+      unawaited(analytics.trackPremiumPurchased(
+        source: widget.source,
+        productId: verification?['product_id'] as String? ??
+            offer?.product.id ??
+            PaymentProvider.productIdForPremiumPlan(
+              offer?.plan ?? _toPremiumPlan(_selectedPlan),
+            ),
+        plan: (offer?.plan ?? _toPremiumPlan(_selectedPlan)).name,
+        price: offer?.product.rawPrice,
+        currency: offer?.product.currencyCode,
+      ));
+    }
     final isTrial = verification?['is_trial'] == true;
     final verifiedTrialDays = (verification?['trial_days'] as num?)?.toInt();
     final trialDays =
@@ -527,8 +554,7 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
     // Weekly plan never has a trial. Monthly and annual always do — show
     // the toggle even before Play Store billing has confirmed the offer
     // (it falls back to known trial days above).
-    final trialAvailable =
-        testing || _selectedPlan != _Plan.weekly;
+    final trialAvailable = testing || _selectedPlan != _Plan.weekly;
     final trialEnabled = _enableFreeTrial && trialAvailable && trialDays > 0;
 
     return Scaffold(
@@ -1201,9 +1227,7 @@ class _PriceCard extends StatelessWidget {
                     child: Text(
                       weeklyLabel,
                       maxLines: 1,
-                      style: _f(9,
-                          color: _kAccent,
-                          weight: FontWeight.w700),
+                      style: _f(9, color: _kAccent, weight: FontWeight.w700),
                     ),
                   ),
                 ],

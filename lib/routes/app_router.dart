@@ -104,8 +104,9 @@ GoRouter createAppRouter(OnboardingProvider onboarding, AuthProvider auth) =>
         if (!AppBuildConfig.isTesting)
           GoRoute(
             path: '/premium',
-            builder: (context, state) => const PremiumPaywallStep(
+            builder: (context, state) => PremiumPaywallStep(
               onboardingMode: false,
+              source: state.uri.queryParameters['source'] ?? 'profile',
             ),
           ),
         ShellRoute(

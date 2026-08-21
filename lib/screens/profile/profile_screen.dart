@@ -485,8 +485,10 @@ class ProfileScreen extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    const PremiumPaywallStep()),
+                                builder: (context) => const PremiumPaywallStep(
+                                      onboardingMode: false,
+                                      source: 'profile',
+                                    )),
                           );
                         },
                       ),

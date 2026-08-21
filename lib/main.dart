@@ -8,6 +8,7 @@ import 'services/onboarding_service.dart';
 import 'services/home_service.dart';
 import 'services/scan_service.dart';
 import 'services/notification_service.dart';
+import 'services/analytics_service.dart';
 import 'services/meal_guidance_service.dart';
 import 'providers/auth_provider.dart';
 import 'providers/onboarding_provider.dart';
@@ -29,8 +30,10 @@ void main() {
   ]);
 
   final apiService = ApiService();
+  final analyticsService = AnalyticsService(apiService);
   final onboardingProvider = OnboardingProvider(
     onboardingService: OnboardingService(apiService),
+    analyticsService: analyticsService,
   );
   final authProvider = AuthProvider(apiService);
   // Wire the silent-refresh interceptor. Any 401 from any service will trigger
@@ -39,7 +42,14 @@ void main() {
   final paymentProvider = PaymentProvider(apiService);
   paymentProvider.setCreditsVerifiedCallback(authProvider.refreshUser);
   var restoredPaymentAuthScope = -1;
+  var trackedFirstOpenAuthScope = -1;
   authProvider.addListener(() {
+    if (authProvider.isAuthenticated &&
+        apiService.authScope != trackedFirstOpenAuthScope) {
+      trackedFirstOpenAuthScope = apiService.authScope;
+      unawaited(analyticsService.trackAppFirstOpen());
+      unawaited(analyticsService.flushPending());
+    }
     // queryPurchases/restore is needed after a cold start and after account
     // switching so a renewed subscription refreshes the server entitlement.
     if (authProvider.isAuthenticated &&
@@ -60,6 +70,7 @@ void main() {
     MultiProvider(
       providers: [
         Provider<ApiService>.value(value: apiService),
+        Provider<AnalyticsService>.value(value: analyticsService),
         ChangeNotifierProvider(create: (_) => AppSettingsProvider()),
         ChangeNotifierProvider(
           create: (_) => authProvider,

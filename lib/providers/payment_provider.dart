@@ -488,12 +488,20 @@ class PaymentProvider extends ChangeNotifier {
 
   Future<void> _verifySubscription(PurchaseDetails purchase) async {
     final sku = purchase.productID;
+    final initiatedInThisSession = _purchaseInProgress;
     _purchaseState(sku, PurchaseState.verifying);
     _purchaseInProgress = true;
     notifyListeners();
     final verification = await _paymentService.verifySubscription(purchase);
     if (verification != null) {
-      _lastSubscriptionVerification = verification;
+      // Keep purchase-vs-restore provenance for analytics. Restoring an
+      // existing entitlement must not be counted as a new purchase.
+      _lastSubscriptionVerification = {
+        ...verification,
+        'product_id': purchase.productID,
+        'is_restored': purchase.status == PurchaseStatus.restored ||
+            !initiatedInThisSession,
+      };
       _purchaseState(sku, PurchaseState.purchased);
       _error = null;
       _purchaseInProgress = false;
@@ -605,13 +613,13 @@ class PaymentProvider extends ChangeNotifier {
       final data = {
         'product_id': purchase.productID,
         'purchase_id': purchase.purchaseID,
-        'verification_data':
-            purchase.verificationData.serverVerificationData,
+        'verification_data': purchase.verificationData.serverVerificationData,
         'is_subscription': IapIds.isPremiumProduct(purchase.productID),
         'saved_at': DateTime.now().toIso8601String(),
       };
       await prefs.setString(_pendingPurchaseKey, jsonEncode(data));
-      debugPrint('[IAP] Saved pending purchase for retry: ${purchase.productID}');
+      debugPrint(
+          '[IAP] Saved pending purchase for retry: ${purchase.productID}');
     } catch (e) {
       debugPrint('[IAP] Failed to save pending purchase: $e');
     }

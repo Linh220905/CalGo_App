@@ -1,14 +1,17 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../config/app_build_config.dart';
 import '../models/onboarding_data.dart';
 import '../services/onboarding_service.dart';
+import '../services/analytics_service.dart';
 import 'auth_provider.dart';
 import 'home_provider.dart';
 
 class OnboardingProvider extends ChangeNotifier {
   final OnboardingService? _onboardingService;
+  final AnalyticsService? _analyticsService;
 
   int _currentStep = 0;
   bool _loading = false;
@@ -23,8 +26,11 @@ class OnboardingProvider extends ChangeNotifier {
   static const _premiumCustomizationKey = 'premium_meal_customization';
   static const int _onboardingVersion = 9;
 
-  OnboardingProvider({OnboardingService? onboardingService})
-      : _onboardingService = onboardingService;
+  OnboardingProvider({
+    OnboardingService? onboardingService,
+    AnalyticsService? analyticsService,
+  })  : _onboardingService = onboardingService,
+        _analyticsService = analyticsService;
 
   int get currentStep => _currentStep;
   bool get loading => _loading;
@@ -275,6 +281,9 @@ class OnboardingProvider extends ChangeNotifier {
       await prefs.remove(_dataKey);
       _loading = false;
       notifyListeners();
+      // The backend deduplicates this event per user. Keep tracking outside
+      // the save/route-critical path so analytics cannot block onboarding.
+      unawaited(_analyticsService?.trackOnboardingCompleted());
       return true;
     } catch (e) {
       debugPrint('Unable to complete onboarding: $e');

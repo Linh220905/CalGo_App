@@ -74,7 +74,9 @@ class AuthProvider extends ChangeNotifier {
           await googleSignIn.signIn().timeout(const Duration(seconds: 45));
       if (account != null) {
         final GoogleSignInAuthentication auth = await account.authentication;
-        final idToken = auth.idToken ?? auth.accessToken;
+        // The API verifies a Google OpenID Connect ID token. An OAuth access
+        // token is not interchangeable and causes the backend to return 401.
+        final idToken = auth.idToken;
 
         if (idToken != null && idToken.isNotEmpty) {
           final userData = await _authService.loginWithGoogle(idToken);
@@ -82,6 +84,7 @@ class AuthProvider extends ChangeNotifier {
           _error = null;
           return true;
         }
+        throw StateError('Google ID token is unavailable');
       }
       return false;
     } catch (e) {
