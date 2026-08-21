@@ -21,7 +21,7 @@ class OnboardingProvider extends ChangeNotifier {
   static const _dataKey = 'onboarding_data';
   static const _versionKey = 'onboarding_version';
   static const _premiumCustomizationKey = 'premium_meal_customization';
-  static const int _onboardingVersion = 8;
+  static const int _onboardingVersion = 9;
 
   OnboardingProvider({OnboardingService? onboardingService})
       : _onboardingService = onboardingService;
@@ -37,7 +37,7 @@ class OnboardingProvider extends ChangeNotifier {
 
   // The demo screen was removed. Testing releases still skip the Premium
   // paywall, so Account and Home shift one slot earlier in both variants.
-  static const int totalSteps = AppBuildConfig.isTesting ? 23 : 24;
+  static const int totalSteps = AppBuildConfig.isTesting ? 22 : 23;
 
   Future<void> init() async {
     if (_initialized) return;

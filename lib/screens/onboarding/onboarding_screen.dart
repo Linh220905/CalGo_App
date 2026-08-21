@@ -26,7 +26,6 @@ import 'steps/nutrition_priority_step.dart';
 import 'steps/avoid_foods_step.dart';
 import 'steps/referral_step.dart';
 import 'steps/analysis_result_step.dart';
-import 'steps/social_proof_step.dart';
 import 'steps/premium_paywall_step.dart';
 import 'steps/account_step.dart';
 import 'steps/home_step.dart';
@@ -154,16 +153,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       case 19:
         return AnalysisResultStep(key: key);
       case 20:
-        return SocialProofStep(key: key);
-      case 21:
         return AppBuildConfig.isTesting
             ? AccountStep(key: key)
             : PremiumPaywallStep(key: key);
-      case 22:
+      case 21:
         return AppBuildConfig.isTesting
             ? HomeStep(key: key)
             : AccountStep(key: key);
-      case 23:
+      case 22:
         return HomeStep(key: key);
       default:
         return SizedBox.shrink(key: key);

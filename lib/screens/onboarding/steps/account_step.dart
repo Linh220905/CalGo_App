@@ -141,13 +141,29 @@ class AccountStep extends StatelessWidget {
                 isLoading: auth.appleLoading,
                 onTap: () async {
                   final authProvider = context.read<AuthProvider>();
+                  final homeProvider = context.read<HomeProvider>();
+                  final onboarding = context.read<OnboardingProvider>();
                   final success = await authProvider.signInWithApple();
                   if (success && context.mounted) {
-                    await context
-                        .read<OnboardingProvider>()
-                        .completeOnboarding();
-                    if (context.mounted) {
+                    await onboarding.setAccountMethod('apple');
+                    final saved = await onboarding.completeOnboarding(
+                      authProvider: authProvider,
+                      homeProvider: homeProvider,
+                    );
+                    if (saved && context.mounted) {
+                      await homeProvider.loadToday(forceRefresh: true);
                       context.go('/home');
+                    } else if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            onboarding.error == 'onboardingSaveNetworkFailed'
+                                ? s.onboardingSaveNetworkFailed
+                                : s.onboardingSaveFailed,
+                          ),
+                          backgroundColor: Colors.redAccent,
+                        ),
+                      );
                     }
                   } else if (authProvider.error != null && context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
