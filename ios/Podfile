@@ -1,6 +1,9 @@
 # CocoaPods integration for the Flutter iOS target.
 platform :ios, '13.0'
 
+# Required by AppCheckCore when CocoaPods integrates Swift pods as static libraries.
+use_modular_headers!
+
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
 
 project 'Runner', {
