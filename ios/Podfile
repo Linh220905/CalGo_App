@@ -1,5 +1,5 @@
 # CocoaPods integration for the Flutter iOS target.
-platform :ios, '13.0'
+platform :ios, '15.5'
 
 # Required by AppCheckCore when CocoaPods integrates Swift pods as static libraries.
 use_modular_headers!
@@ -46,9 +46,9 @@ post_install do |installer|
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
 
-    # permission_handler requires these compile-time flags for iOS permission
-    # requests to be compiled into the plugin.
+    # Force minimum deployment target for pods to 15.5 to satisfy mobile_scanner
     target.build_configurations.each do |config|
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.5'
       config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= [
         '$(inherited)',
         'PERMISSION_CAMERA=1',
