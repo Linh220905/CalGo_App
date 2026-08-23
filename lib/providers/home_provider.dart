@@ -96,18 +96,12 @@ class HomeProvider extends ChangeNotifier {
         guidance.isAvailable &&
         guidance.recommendations.isNotEmpty) {
       if (!_hasViewedMealGuidance) {
-        return guidance.forecast?.mascotForecastNote.isNotEmpty == true
-            ? guidance.forecast!.mascotForecastNote
-            : s.mascotGuidanceIntro;
+        return s.mascotGuidanceIntro;
       }
       if (_mascotClickIndex == 3) {
         return s.mascotGuidanceOpen;
       }
       if (_mascotClickIndex > 0) {
-        if (_mascotClickIndex == 1 &&
-            guidance.forecast?.mascotForecastNote.isNotEmpty == true) {
-          return guidance.forecast!.mascotForecastNote;
-        }
         final tips = [s.mascotGuidanceTipWater, s.mascotGuidanceTipSlow];
         return tips[(_mascotClickIndex - 1) % tips.length];
       }
@@ -150,18 +144,26 @@ class HomeProvider extends ChangeNotifier {
     return s.mascotOnTrack;
   }
 
-  String get mascotAsset {
+  String mascotAssetForTheme(bool isDark) {
     switch (_mealGuidance?.mascotState) {
       case 'thinking':
       case 'hungry_for_data':
-        return 'assets/images/apple_mascot/apple_thinking.png';
+        return isDark
+            ? 'assets/images/apple_mascot/apple_thinking_dark.png'
+            : 'assets/images/apple_mascot/apple_thinking.png';
       case 'recovery':
       case 'gentle_warning':
-        return 'assets/images/apple_mascot/apple_sad.png';
+        return isDark
+            ? 'assets/images/apple_mascot/apple_sad_dark.png'
+            : 'assets/images/apple_mascot/apple_sad.png';
       case 'encouraging':
       case 'celebrating':
-        return 'assets/images/apple_mascot/apple_happy.png';
+        return isDark
+            ? 'assets/images/apple_mascot/apple_happy_dark.png'
+            : 'assets/images/apple_mascot/apple_happy.png';
       default:
+        // This source already has a transparent background and is safe on
+        // both themes.
         return 'assets/images/apple_mascot/apple_hello.png';
     }
   }

@@ -25,6 +25,17 @@ class ScanService {
     return ScanResult.fromJson(res as Map<String, dynamic>);
   }
 
+  Future<ScanResult> scanBarcode(String barcode) async {
+    final res = await _api.post('/barcode/lookup', body: {
+      'barcode': barcode,
+    });
+    _historyCache.clear();
+    _historyCacheTime = null;
+    _historyCacheAuthScope = null;
+    return ScanResult.fromJson(res as Map<String, dynamic>);
+  }
+
+
   Future<List<HistoryItem>> getHistory({
     int limit = 20,
     int offset = 0,

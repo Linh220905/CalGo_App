@@ -131,6 +131,8 @@ class _ResultScreenState extends State<ResultScreen> {
   double _apiTotalProtein = 0;
   double _apiTotalFat = 0;
   String? _feedback; // 'like' | 'dislike'
+  bool _suggestBarcode = false;
+  String? _tipBarcode;
 
   bool _showDetail = true;
   bool _editingDishName = false;
@@ -339,6 +341,8 @@ class _ResultScreenState extends State<ResultScreen> {
       _dishNameController.text = _monChinh;
       _imageUrl = ApiConfig.resolveMediaUrl(data['image_url']);
       _feedback = data['scan_feedback'] as String?;
+      _suggestBarcode = data['suggest_barcode'] == true;
+      _tipBarcode = data['tip_barcode'] as String?;
       _ingredients = rawIngs
           .map((e) => IngredientItem.fromJson(e as Map<String, dynamic>))
           .toList();
@@ -1026,6 +1030,15 @@ class _ResultScreenState extends State<ResultScreen> {
                           isDark: isDark,
                           onTap: () => context.push('/meal-guidance'),
                         ),
+                        if (_suggestBarcode || _tipBarcode != null) ...[
+                          const SizedBox(height: 6),
+                          _BarcodeTipCard(
+                            isDark: isDark,
+                            tipText: _tipBarcode ??
+                                "Với thực phẩm đóng gói/hộp, bạn hãy thử Quét mã vạch để tra cứu dinh dưỡng chuẩn 100% nhé!",
+                            onTap: () => context.push('/barcode-scan'),
+                          ),
+                        ],
                         const SizedBox(height: 6),
 
                         // ── Ingredient Detail Drawer (Swipe to Delete) ───────
@@ -2420,3 +2433,90 @@ class _PreviewStat extends StatelessWidget {
     );
   }
 }
+
+class _BarcodeTipCard extends StatelessWidget {
+  final bool isDark;
+  final String tipText;
+  final VoidCallback onTap;
+
+  const _BarcodeTipCard({
+    required this.isDark,
+    required this.tipText,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final bgColor = isDark ? const Color(0xFF1E293B) : const Color(0xFFF0FDF4);
+    final borderColor =
+        isDark ? const Color(0xFF334155) : const Color(0xFFBBF7D0);
+    final textColor = isDark ? Colors.white : const Color(0xFF0F172A);
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: bgColor,
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: borderColor),
+      ),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: const Color(0xFF22C55E).withOpacity(0.15),
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(
+              Icons.qr_code_scanner_rounded,
+              color: Color(0xFF22C55E),
+              size: 22,
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  tipText,
+                  style: TextStyle(
+                    fontSize: 13,
+                    height: 1.3,
+                    fontWeight: FontWeight.w600,
+                    color: textColor,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                InkWell(
+                  onTap: onTap,
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        "Quét mã vạch ngay",
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF22C55E),
+                        ),
+                      ),
+                      SizedBox(width: 4),
+                      Icon(
+                        Icons.arrow_forward_rounded,
+                        size: 14,
+                        color: Color(0xFF22C55E),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+

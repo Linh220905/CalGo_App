@@ -11,6 +11,7 @@ import '../screens/history/history_screen.dart';
 import '../screens/profile/profile_screen.dart';
 import '../screens/onboarding/onboarding_screen.dart';
 import '../screens/scan/scan_screen.dart';
+import '../screens/scan/barcode_scan_screen.dart';
 import '../screens/pricing/pricing_screen.dart';
 import '../screens/onboarding/steps/premium_paywall_step.dart';
 import '../screens/gallery/gallery_screen.dart';
@@ -88,6 +89,10 @@ GoRouter createAppRouter(OnboardingProvider onboarding, AuthProvider auth) =>
         GoRoute(
           path: '/scan',
           builder: (context, state) => const ScanScreen(),
+        ),
+        GoRoute(
+          path: '/barcode-scan',
+          builder: (context, state) => const BarcodeScanScreen(),
         ),
         GoRoute(
           path: '/pricing',

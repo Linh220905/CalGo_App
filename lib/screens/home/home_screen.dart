@@ -131,7 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           height: 50,
                                           child: ClipRect(
                                             child: Image.asset(
-                                              hp.mascotAsset,
+                                              hp.mascotAssetForTheme(isDark),
                                               fit: BoxFit.cover,
                                               alignment: Alignment.center,
                                               cacheWidth: 128,

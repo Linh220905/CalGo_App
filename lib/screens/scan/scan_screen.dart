@@ -332,6 +332,10 @@ class _ScanScreenState extends State<ScanScreen>
     }
   }
 
+  void _openBarcodeScanner() {
+    context.push('/barcode-scan');
+  }
+
   void _handleScanError(Object e) {
     _stopAiStatusSequence();
     final s = context.read<AppSettingsProvider>().strings;
@@ -760,7 +764,16 @@ class _ScanScreenState extends State<ScanScreen>
                             ),
                           ),
 
-                          const SizedBox(width: 52), // Balancing spacing
+                          // Barcode Scan Button
+                          GestureDetector(
+                            onTap: _openBarcodeScanner,
+                            child: CircleAvatar(
+                              radius: 26,
+                              backgroundColor: Colors.white.withOpacity(0.18),
+                              child: const Icon(Icons.qr_code_scanner_rounded,
+                                  color: Colors.white, size: 24),
+                            ),
+                          ),
                         ],
                       ),
                     ],

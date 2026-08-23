@@ -84,7 +84,6 @@ class ProgressForecast {
   final String? projectedGoalDate;
   final double? projectedWeeklyRateKg;
   final String forecastMessage;
-  final String mascotForecastNote;
   final String statusTag;
 
   const ProgressForecast({
@@ -96,7 +95,6 @@ class ProgressForecast {
     this.projectedGoalDate,
     this.projectedWeeklyRateKg,
     required this.forecastMessage,
-    required this.mascotForecastNote,
     required this.statusTag,
   });
 
@@ -112,7 +110,6 @@ class ProgressForecast {
         projectedWeeklyRateKg:
             (json['projected_weekly_rate_kg'] as num?)?.toDouble(),
         forecastMessage: json['forecast_message']?.toString() ?? '',
-        mascotForecastNote: json['mascot_forecast_note']?.toString() ?? '',
         statusTag: json['status_tag']?.toString() ?? '',
       );
 }
