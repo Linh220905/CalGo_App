@@ -146,6 +146,23 @@ class OnboardingData {
     return rawTarget < minimum ? minimum : rawTarget;
   }
 
+  /// Whether the current draft contains explicit answers for every input used
+  /// to calculate the nutrition target. This lets account linking distinguish
+  /// a real, freshly completed onboarding from empty/default local state.
+  bool get hasCompleteNutritionProfile =>
+      gender != null &&
+      age != null &&
+      age! > 0 &&
+      heightCm != null &&
+      heightCm! > 0 &&
+      weightKg != null &&
+      weightKg! > 0 &&
+      goalType != null &&
+      targetWeightKg != null &&
+      targetWeightKg! > 0 &&
+      activityLevel != null &&
+      (goalType == GoalType.maintain || lossPerWeekKg != null);
+
   double get targetProteinG {
     final calories = targetCaloriesPerDay;
     if (calories <= 0 || weightKg == null || weightKg! <= 0) return 0;

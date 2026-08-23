@@ -57,6 +57,8 @@
 	<string>ca-app-pub-3940256099942544~1458002511</string>
 	<key>GIDClientID</key>
 	<string>985323892414-vasqth1jns0c9kb5t0bej7ubgdb4k7sk.apps.googleusercontent.com</string>
+	<key>GIDServerClientID</key>
+	<string>985323892414-cq0r7jaosveklll3cftiv9gbadqq2eff.apps.googleusercontent.com</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>

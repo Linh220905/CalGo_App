@@ -31,11 +31,15 @@ class _ScanScreenState extends State<ScanScreen>
   final ImagePicker _picker = ImagePicker();
   late AnimationController _scanAnimationController;
   CameraController? _cameraController;
+  Completer<void>? _cameraResumeCompleter;
 
   File? _selectedImageFile;
   bool _isCameraStarting = true;
+  bool _cameraStartInProgress = false;
+  bool _cameraStartAgain = false;
   bool _isTakingPicture = false;
   bool _isAnalyzing = false;
+  int _cameraLifecycleGeneration = 0;
   final int _aiMsgIndex = 0;
   Timer? _aiTimer;
   String? _errorMessage;
@@ -56,6 +60,9 @@ class _ScanScreenState extends State<ScanScreen>
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    if (!(_cameraResumeCompleter?.isCompleted ?? true)) {
+      _cameraResumeCompleter!.complete();
+    }
     _cameraController?.dispose();
     _scanAnimationController.dispose();
     _aiTimer?.cancel();
@@ -64,43 +71,74 @@ class _ScanScreenState extends State<ScanScreen>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      if (!(_cameraResumeCompleter?.isCompleted ?? true)) {
+        _cameraResumeCompleter!.complete();
+      }
+      _cameraResumeCompleter = null;
+      if (_selectedImageFile == null) {
+        _requestPermissionAndStartCamera();
+      }
+      return;
+    }
+
     if (state == AppLifecycleState.inactive ||
-        state == AppLifecycleState.paused) {
+        state == AppLifecycleState.paused ||
+        state == AppLifecycleState.hidden ||
+        state == AppLifecycleState.detached) {
+      _cameraLifecycleGeneration++;
       final controller = _cameraController;
       _cameraController = null;
-      controller?.dispose();
-    } else if (state == AppLifecycleState.resumed &&
-        _selectedImageFile == null) {
-      _requestPermissionAndStartCamera();
+      if (controller != null) {
+        controller.dispose();
+      }
     }
   }
 
   Future<void> _requestPermissionAndStartCamera() async {
     if (!mounted || _selectedImageFile != null) return;
-    final s = context.read<AppSettingsProvider>().strings;
-
-    setState(() {
-      _isCameraStarting = true;
-      _errorMessage = null;
-    });
-
-    var status = await Permission.camera.status;
-    if (!status.isGranted) {
-      status = await Permission.camera.request();
-    }
-
-    if (!mounted) return;
-    if (!status.isGranted) {
-      setState(() {
-        _isCameraStarting = false;
-        _errorMessage = status.isPermanentlyDenied
-            ? s.cameraPermissionDenied
-            : s.cameraPermissionRequired;
-      });
+    if (_cameraStartInProgress) {
+      // The iOS permission sheet triggers an inactive -> resumed lifecycle
+      // cycle. Remember the resumed request instead of starting a competing
+      // CameraController initialization.
+      _cameraStartAgain = true;
       return;
     }
 
+    _cameraStartInProgress = true;
+    _cameraStartAgain = false;
+    final s = context.read<AppSettingsProvider>().strings;
+
     try {
+      setState(() {
+        _isCameraStarting = true;
+        _errorMessage = null;
+      });
+
+      var status = await Permission.camera.status;
+      if (!status.isGranted) {
+        status = await Permission.camera.request();
+      }
+
+      if (!mounted) return;
+      if (!status.isGranted) {
+        _cameraStartAgain = false;
+        setState(() {
+          _isCameraStarting = false;
+          _errorMessage = status.isPermanentlyDenied
+              ? s.cameraPermissionDenied
+              : s.cameraPermissionRequired;
+        });
+        return;
+      }
+
+      // Do not initialize AVFoundation while the permission sheet still has
+      // the app inactive. didChangeAppLifecycleState completes this wait as
+      // soon as iOS reports that the current screen has resumed.
+      await _waitUntilCameraCanStart();
+      if (!mounted || _selectedImageFile != null) return;
+      final lifecycleGeneration = _cameraLifecycleGeneration;
+
       final cameras = await availableCameras();
       if (cameras.isEmpty) {
         throw CameraException('no_camera', s.noCamera);
@@ -118,8 +156,12 @@ class _ScanScreenState extends State<ScanScreen>
       );
       await controller.initialize();
 
-      if (!mounted || _selectedImageFile != null) {
+      if (!mounted ||
+          _selectedImageFile != null ||
+          lifecycleGeneration != _cameraLifecycleGeneration ||
+          !_isAppResumed) {
         await controller.dispose();
+        _cameraStartAgain = true;
         return;
       }
 
@@ -128,13 +170,43 @@ class _ScanScreenState extends State<ScanScreen>
         _cameraController = controller;
         _isCameraStarting = false;
       });
+      _cameraStartAgain = false;
     } catch (_) {
       if (!mounted) return;
       setState(() {
         _isCameraStarting = false;
         _errorMessage = s.cameraStartFailed;
       });
+    } finally {
+      _cameraStartInProgress = false;
+      final shouldRestart = _cameraStartAgain &&
+          mounted &&
+          _selectedImageFile == null &&
+          _cameraController == null &&
+          _isAppResumed;
+      _cameraStartAgain = false;
+      if (shouldRestart) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _requestPermissionAndStartCamera();
+        });
+      }
     }
+  }
+
+  bool get _isAppResumed {
+    final state = WidgetsBinding.instance.lifecycleState;
+    return state == null || state == AppLifecycleState.resumed;
+  }
+
+  Future<void> _waitUntilCameraCanStart() async {
+    if (!_isAppResumed) {
+      final completer = _cameraResumeCompleter ??= Completer<void>();
+      await completer.future;
+    }
+    if (!mounted) return;
+    // Let the permission sheet disappear and the resumed frame settle before
+    // asking the native camera plugin to create its capture session.
+    await WidgetsBinding.instance.endOfFrame;
   }
 
   Widget _buildCameraPreview() {

@@ -784,7 +784,6 @@ class _PendingScanCard extends StatefulWidget {
 class _PendingScanCardState extends State<_PendingScanCard>
     with SingleTickerProviderStateMixin {
   late final AnimationController _shimmerController;
-  bool _retakeDialogShown = false;
 
   @override
   void initState() {
@@ -801,9 +800,6 @@ class _PendingScanCardState extends State<_PendingScanCard>
   @override
   void didUpdateWidget(covariant _PendingScanCard oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.task.status != ScanTaskStatus.failed) {
-      _retakeDialogShown = false;
-    }
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _maybeShowUnrecognizedFoodDialog();
     });
@@ -811,12 +807,11 @@ class _PendingScanCardState extends State<_PendingScanCard>
 
   void _maybeShowUnrecognizedFoodDialog() {
     if (!mounted ||
-        _retakeDialogShown ||
         !widget.task.isUnrecognizedFood ||
         ModalRoute.of(context)?.isCurrent != true) {
       return;
     }
-    _retakeDialogShown = true;
+    if (!widget.task.takeUnrecognizedFoodAlert()) return;
     final settings = context.read<AppSettingsProvider>();
     showDialog<void>(
       context: context,

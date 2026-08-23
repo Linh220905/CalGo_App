@@ -16,6 +16,8 @@ class AuthProvider extends ChangeNotifier {
 
   static const String _googleWebClientId =
       '985323892414-cq0r7jaosveklll3cftiv9gbadqq2eff.apps.googleusercontent.com';
+  static const String _googleIosClientId =
+      '985323892414-vasqth1jns0c9kb5t0bej7ubgdb4k7sk.apps.googleusercontent.com';
 
   AuthProvider(ApiService api) : _authService = AuthService(api);
 
@@ -205,6 +207,12 @@ class AuthProvider extends ChangeNotifier {
   }
 
   GoogleSignIn _googleSignIn() => GoogleSignIn(
+        // google_sign_in_ios needs both IDs when the project does not ship a
+        // GoogleService-Info.plist. Without clientId, serverClientId is not
+        // applied and iOS returns a token for the wrong audience.
+        clientId: !kIsWeb && defaultTargetPlatform == TargetPlatform.iOS
+            ? _googleIosClientId
+            : null,
         serverClientId: _googleWebClientId,
         scopes: ['email', 'profile'],
       );

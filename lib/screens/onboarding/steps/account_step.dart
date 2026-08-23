@@ -104,7 +104,8 @@ class AccountStep extends StatelessWidget {
                   final homeProvider = context.read<HomeProvider>();
                   final success = await authProvider.signInWithGoogle();
                   if (success && context.mounted) {
-                    if (authProvider.user?.hasCompletedOnboarding == true) {
+                    if (authProvider.user?.hasCompletedOnboarding == true &&
+                        !provider.data.hasCompleteNutritionProfile) {
                       await homeProvider.loadToday(forceRefresh: true);
                       if (context.mounted) context.go('/home');
                       return;
@@ -150,10 +151,12 @@ class AccountStep extends StatelessWidget {
                   final onboarding = context.read<OnboardingProvider>();
                   final success = await authProvider.signInWithApple();
                   if (success && context.mounted) {
-                    // An existing account may enter this screen after a
-                    // token refresh. Never overwrite its saved nutrition
-                    // target with the local onboarding defaults.
-                    if (authProvider.user?.hasCompletedOnboarding == true) {
+                    // Preserve an existing profile only when this device has
+                    // no complete onboarding draft. If the user just answered
+                    // every question, persist those answers so a legacy Apple
+                    // account cannot keep its old 1,500 kcal placeholder.
+                    if (authProvider.user?.hasCompletedOnboarding == true &&
+                        !onboarding.data.hasCompleteNutritionProfile) {
                       await homeProvider.loadToday(forceRefresh: true);
                       if (context.mounted) context.go('/home');
                       return;
@@ -165,7 +168,7 @@ class AccountStep extends StatelessWidget {
                     );
                     if (saved && context.mounted) {
                       await homeProvider.loadToday(forceRefresh: true);
-                      context.go('/home');
+                      if (context.mounted) context.go('/home');
                     } else if (context.mounted) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(

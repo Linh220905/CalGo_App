@@ -26,10 +26,23 @@ class ScanTask {
   String? errorMessage;
   int? errorStatusCode;
   String? errorDetail;
+  bool _unrecognizedFoodAlertHandled = false;
 
   bool get isUnrecognizedFood =>
       errorStatusCode == 422 &&
       (errorDetail ?? '').toLowerCase().contains('chưa phân tích rõ món ăn');
+
+  /// Returns true only once for each failed scan attempt so rebuilding Home
+  /// after a tab change cannot reopen an alert the user already dismissed.
+  bool takeUnrecognizedFoodAlert() {
+    if (!isUnrecognizedFood || _unrecognizedFoodAlertHandled) return false;
+    _unrecognizedFoodAlertHandled = true;
+    return true;
+  }
+
+  void resetUnrecognizedFoodAlert() {
+    _unrecognizedFoodAlertHandled = false;
+  }
 }
 
 /// Keeps one scan alive while the camera page is closed.  It intentionally
@@ -78,6 +91,7 @@ class ScanTaskProvider extends ChangeNotifier {
     task.errorMessage = null;
     task.errorStatusCode = null;
     task.errorDetail = null;
+    task.resetUnrecognizedFoodAlert();
     _startProgress(task);
     notifyListeners();
     unawaited(_run(task));

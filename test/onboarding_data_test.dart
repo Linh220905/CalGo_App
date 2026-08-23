@@ -72,6 +72,47 @@ void main() {
     });
   });
 
+  group('OnboardingData.hasCompleteNutritionProfile', () {
+    test('is false for empty or partially restored drafts', () {
+      final data = OnboardingData(
+        gender: Gender.male,
+        age: 30,
+        heightCm: 175,
+      );
+
+      expect(data.hasCompleteNutritionProfile, isFalse);
+    });
+
+    test('is true when weight-loss target inputs are explicit', () {
+      final data = OnboardingData(
+        gender: Gender.male,
+        age: 30,
+        heightCm: 175,
+        weightKg: 80,
+        goalType: GoalType.lose,
+        targetWeightKg: 72,
+        lossPerWeekKg: 0.5,
+        activityLevel: ActivityLevel.moderate,
+      );
+
+      expect(data.hasCompleteNutritionProfile, isTrue);
+    });
+
+    test('maintain goal does not require a weekly weight change', () {
+      final data = OnboardingData(
+        gender: Gender.female,
+        age: 28,
+        heightCm: 162,
+        weightKg: 58,
+        goalType: GoalType.maintain,
+        targetWeightKg: 58,
+        activityLevel: ActivityLevel.light,
+      );
+
+      expect(data.hasCompleteNutritionProfile, isTrue);
+    });
+  });
+
   testWidgets('ruler persists its visible initial value without scrolling',
       (tester) async {
     double? selectedValue;
