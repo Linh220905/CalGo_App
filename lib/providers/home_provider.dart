@@ -279,10 +279,10 @@ class HomeProvider extends ChangeNotifier {
 
   /// A newly scanned meal always belongs to today. Move Home back from a
   /// historical date before showing its optimistic loading card.
-  void showTodayForNewScan() {
+  Future<void> showTodayForNewScan() async {
     final now = DateTime.now();
     _selectedDate = DateTime(now.year, now.month, now.day);
-    unawaited(loadToday(forceRefresh: true));
+    await loadToday(forceRefresh: true);
   }
 
   Future<void> refreshMealGuidance() async {

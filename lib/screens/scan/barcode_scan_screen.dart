@@ -57,10 +57,10 @@ class _BarcodeScanScreenState extends State<BarcodeScanScreen> {
     } catch (e) {
       if (!mounted) return;
 
-      String errorMsg = "Không tìm thấy thông tin cho mã vạch này";
+      String errorMsg = "Chưa tìm thấy dữ liệu cho mã vạch này. Bạn hãy thử chụp trực tiếp ảnh món ăn nhé! 📸";
       final eStr = e.toString().toLowerCase();
-      if (eStr.contains("404") || eStr.contains("không có trong")) {
-        errorMsg = "Mã vạch chưa có trong cơ sở dữ liệu (Open Food Facts)";
+      if (eStr.contains("404") || eStr.contains("không tìm thấy") || eStr.contains("chưa có")) {
+        errorMsg = "Chưa tìm thấy dữ liệu cho mã vạch này. Bạn hãy thử chụp trực tiếp ảnh món ăn nhé! 📸";
       }
 
       ScaffoldMessenger.of(context).showSnackBar(

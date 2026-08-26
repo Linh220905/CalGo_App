@@ -8,6 +8,7 @@ import '../../providers/auth_provider.dart';
 import '../../providers/home_provider.dart';
 import '../../config/api_config.dart';
 import '../../services/api_service.dart';
+import '../../services/scan_service.dart';
 import '../../widgets/share_card_modal.dart';
 import '../../l10n/generated/app_localizations.dart';
 
@@ -398,6 +399,52 @@ class _ResultScreenState extends State<ResultScreen> {
     );
   }
 
+  Future<void> _confirmAndDeleteMeal() async {
+    final s = context.read<AppSettingsProvider>().strings;
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(s.confirmDelete),
+        content: Text(s.deletePhotoMessage(_monChinh)),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: Text(s.cancel),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            style: TextButton.styleFrom(foregroundColor: Colors.redAccent),
+            child: Text(s.deleteAction),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed == true && mounted) {
+      final scanService = context.read<ScanService>();
+      final homeProvider = context.read<HomeProvider>();
+      final messenger = ScaffoldMessenger.of(context);
+      try {
+        await scanService.deleteScan(widget.id);
+        try {
+          await homeProvider.loadToday(forceRefresh: true);
+        } catch (_) {}
+        if (mounted) {
+          messenger.showSnackBar(
+            SnackBar(content: Text(s.mealDeleted)),
+          );
+          context.go('/home');
+        }
+      } catch (_) {
+        if (mounted) {
+          messenger.showSnackBar(
+            SnackBar(content: Text(s.deleteFailed)),
+          );
+        }
+      }
+    }
+  }
+
   void _updateGram(int index, double newGram) {
     if (newGram < 0) newGram = 0;
     if (newGram > 2000) newGram = 2000;
@@ -694,6 +741,22 @@ class _ResultScreenState extends State<ResultScreen> {
                 _feedback == 'like'
                     ? Icons.bookmark_rounded
                     : Icons.bookmark_border_rounded,
+                color: Colors.white,
+                size: 19,
+              ),
+            ),
+          ),
+          IconButton(
+            onPressed: _confirmAndDeleteMeal,
+            icon: Container(
+              width: 38,
+              height: 38,
+              decoration: BoxDecoration(
+                color: Colors.redAccent.withOpacity(0.35),
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.delete_outline_rounded,
                 color: Colors.white,
                 size: 19,
               ),

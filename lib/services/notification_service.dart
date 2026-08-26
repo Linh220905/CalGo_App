@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -98,10 +99,30 @@ class NotificationService {
     return granted;
   }
 
+  /// Schedule daily meal reminders customized for user's gender, goal & name
   Future<void> scheduleDailyMealReminders() async {
     if (!_initialized) return;
 
     final s = await _strings();
+    final prefs = await SharedPreferences.getInstance();
+    final lang = prefs.getString('app_language') ??
+        WidgetsBinding.instance.platformDispatcher.locale.languageCode;
+
+    // Load stored onboarding profile data if present
+    String? name;
+    String? gender;
+    String? goalType;
+    final jsonStr = prefs.getString('onboarding_data');
+    if (jsonStr != null) {
+      try {
+        final decoded = jsonDecode(jsonStr);
+        if (decoded is Map<String, dynamic>) {
+          name = decoded['name'] as String?;
+          gender = decoded['gender'] as String?;
+          goalType = decoded['goalType'] as String?;
+        }
+      } catch (_) {}
+    }
 
     final androidDetails = AndroidNotificationDetails(
       'calgo_daily_reminders',
@@ -111,24 +132,57 @@ class NotificationService {
       priority: Priority.high,
     );
 
-    const iosDetails = DarwinNotificationDetails();
+    const iosDetails = DarwinNotificationDetails(
+      presentAlert: true,
+      presentBadge: true,
+      presentSound: true,
+    );
 
     final details = NotificationDetails(
       android: androidDetails,
       iOS: iosDetails,
     );
 
-    // Cancel only the daily meal reminders (101-103) to avoid clobbering
-    // trial sequence notifications (201-203) or other scheduled pushes.
+    // Cancel existing meal reminders (101-103)
     for (final id in [101, 102, 103]) {
       await _notificationsPlugin.cancel(id);
     }
 
+    final bf = _buildMotivationalContent(
+      mealType: 'breakfast',
+      name: name,
+      gender: gender,
+      goalType: goalType,
+      lang: lang,
+      fallbackTitle: s.notificationBreakfastTitle,
+      fallbackBody: s.notificationBreakfastBody,
+    );
+
+    final lu = _buildMotivationalContent(
+      mealType: 'lunch',
+      name: name,
+      gender: gender,
+      goalType: goalType,
+      lang: lang,
+      fallbackTitle: s.notificationLunchTitle,
+      fallbackBody: s.notificationLunchBody,
+    );
+
+    final dn = _buildMotivationalContent(
+      mealType: 'dinner',
+      name: name,
+      gender: gender,
+      goalType: goalType,
+      lang: lang,
+      fallbackTitle: s.notificationDinnerTitle,
+      fallbackBody: s.notificationDinnerBody,
+    );
+
     // 1. Sáng (07:30)
     await _scheduleDailyNotification(
       id: 101,
-      title: s.notificationBreakfastTitle,
-      body: s.notificationBreakfastBody,
+      title: bf['title']!,
+      body: bf['body']!,
       hour: 7,
       minute: 30,
       details: details,
@@ -137,8 +191,8 @@ class NotificationService {
     // 2. Trưa (12:00)
     await _scheduleDailyNotification(
       id: 102,
-      title: s.notificationLunchTitle,
-      body: s.notificationLunchBody,
+      title: lu['title']!,
+      body: lu['body']!,
       hour: 12,
       minute: 0,
       details: details,
@@ -147,15 +201,103 @@ class NotificationService {
     // 3. Tối (18:30)
     await _scheduleDailyNotification(
       id: 103,
-      title: s.notificationDinnerTitle,
-      body: s.notificationDinnerBody,
+      title: dn['title']!,
+      body: dn['body']!,
       hour: 18,
       minute: 30,
       details: details,
     );
 
     debugPrint(
-        'Successfully scheduled 3 daily meal reminders (07:30, 12:00, 18:30)');
+        'Successfully scheduled personalized daily meal reminders (07:30, 12:00, 18:30)');
+  }
+
+  Map<String, String> _buildMotivationalContent({
+    required String mealType,
+    required String? name,
+    required String? gender,
+    required String? goalType,
+    required String lang,
+    required String fallbackTitle,
+    required String fallbackBody,
+  }) {
+    if (lang != 'vi') {
+      return {'title': fallbackTitle, 'body': fallbackBody};
+    }
+
+    final isFemale = gender == 'female';
+    final isMale = gender == 'male';
+    final isLose = goalType == 'lose';
+    final isGain = goalType == 'gain';
+
+    final displayName = (name != null && name.trim().isNotEmpty)
+        ? name.trim()
+        : null;
+
+    String salutation;
+    if (displayName != null) {
+      salutation = '$displayName ơi ✨';
+    } else if (isFemale) {
+      salutation = 'Chào cô gái ✨';
+    } else if (isMale) {
+      salutation = 'Chào bạn 🔥';
+    } else {
+      salutation = 'Chào bạn ✨';
+    }
+
+    if (mealType == 'breakfast') {
+      if (isLose) {
+        return {
+          'title': 'CalGo • Năng Lượng Buổi Sáng 🌅',
+          'body': '$salutation Nạp bữa sáng thanh nhẹ, đủ đạm để kích hoạt đốt mỡ & tràn đầy năng lượng hôm nay nhé!',
+        };
+      } else if (isGain) {
+        return {
+          'title': 'CalGo • Bữa Sáng Tăng Cơ 💪',
+          'body': '$salutation Nạp bữa sáng giàu protein & năng lượng để nuôi dưỡng cơ bắp săn chắc hôm nay nào!',
+        };
+      } else {
+        return {
+          'title': 'CalGo • Chào Ngày Mới 🌅',
+          'body': '$salutation Một bữa sáng cân bằng dinh dưỡng sẽ giúp bạn duy trì vóc dáng & sức khỏe suốt ngày dài!',
+        };
+      }
+    } else if (mealType == 'lunch') {
+      if (isLose) {
+        return {
+          'title': 'CalGo • Giờ Nghỉ Trưa 🥗',
+          'body': '$salutation Đến giờ ăn trưa rồi! Mở CalGo quét món ăn để duy trì kỷ luật & giữ eo thon gọn nhé!',
+        };
+      } else if (isGain) {
+        return {
+          'title': 'CalGo • Nạp Đạm Bữa Trưa 🥩',
+          'body': '$salutation Đến giờ nạp năng lượng rồi! Quét bữa trưa với CalGo để đảm bảo đủ đạm cho cơ bắp nhé!',
+        };
+      } else {
+        return {
+          'title': 'CalGo • Bữa Trưa Khỏe Mạnh 🍱',
+          'body': '$salutation Giờ nghỉ trưa rồi nè! Nhớ chụp hình món ăn để CalGo giúp bạn theo dõi dinh dưỡng nhé!',
+        };
+      }
+    } else {
+      // dinner
+      if (isLose) {
+        return {
+          'title': 'CalGo • Tổng Kết Ngày 🌙',
+          'body': '$salutation Quét bữa tối nhẹ nhàng để chốt mục tiêu giảm mỡ thành công rực rỡ hôm nay nhé!',
+        };
+      } else if (isGain) {
+        return {
+          'title': 'CalGo • Chốt Calo Tối 🏋️',
+          'body': '$salutation Chụp hình bữa tối để CalGo giúp bạn chốt chỉ số protein & năng lượng phục hồi cơ trọn vẹn!',
+        };
+      } else {
+        return {
+          'title': 'CalGo • Bữa Tối Ấm Cúng 🌙',
+          'body': '$salutation Buổi tối vui vẻ! Nhớ quét bữa tối để chốt nhật ký calo trọn vẹn hôm nay cùng CalGo nhé!',
+        };
+      }
+    }
   }
 
   Future<void> _scheduleDailyNotification({
@@ -211,7 +353,11 @@ class NotificationService {
     );
     final details = NotificationDetails(
       android: androidDetails,
-      iOS: DarwinNotificationDetails(),
+      iOS: const DarwinNotificationDetails(
+        presentAlert: true,
+        presentBadge: true,
+        presentSound: true,
+      ),
     );
     await _notificationsPlugin.show(
       DateTime.now().millisecondsSinceEpoch ~/ 1000,
@@ -221,3 +367,4 @@ class NotificationService {
     );
   }
 }
+

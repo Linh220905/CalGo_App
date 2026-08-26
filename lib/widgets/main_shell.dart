@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +19,11 @@ class MainShell extends StatefulWidget {
 
 class _MainShellState extends State<MainShell> with WidgetsBindingObserver {
   ScanTaskProvider? _scanTasks;
-  DateTime? _pausedDate;
+  DateTime _lastKnownDay = _dayOnly(DateTime.now());
+  bool _resumeRefreshInFlight = false;
+
+  static DateTime _dayOnly(DateTime value) =>
+      DateTime(value.year, value.month, value.day);
 
   @override
   void initState() {
@@ -44,24 +50,40 @@ class _MainShellState extends State<MainShell> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.paused ||
-        state == AppLifecycleState.inactive) {
-      _pausedDate = DateTime.now();
-    } else if (state == AppLifecycleState.resumed) {
-      // Proactively rotate/refresh the access token in background when app resumes
-      context.read<AuthProvider>().refreshTokenSilently();
+    if (state == AppLifecycleState.resumed) {
+      unawaited(_refreshSessionAndHome());
+    }
+  }
 
-      // BUG 1 fix: detect midnight crossing — reset Home to today so the
-      // calorie tracker never shows yesterday's data after an overnight pause.
-      final now = DateTime.now();
-      final paused = _pausedDate;
-      if (paused != null &&
-          (now.year != paused.year ||
-              now.month != paused.month ||
-              now.day != paused.day)) {
-        context.read<HomeProvider>().showTodayForNewScan();
+  Future<void> _refreshSessionAndHome() async {
+    if (_resumeRefreshInFlight || !mounted) return;
+    _resumeRefreshInFlight = true;
+
+    try {
+      final auth = context.read<AuthProvider>();
+      if (!auth.isAuthenticated) return;
+
+      final today = _dayOnly(DateTime.now());
+      final crossedDayBoundary = today != _lastKnownDay;
+      _lastKnownDay = today;
+
+      // Refresh first. HomeService must not race a stale access token while
+      // reloading the dashboard after an overnight iOS suspension.
+      await auth.refreshTokenSilently();
+      if (!mounted || !auth.isAuthenticated) return;
+
+      final home = context.read<HomeProvider>();
+      if (crossedDayBoundary) {
+        // A new calendar day always starts with today's diary, not the date
+        // the user was viewing before the app went into the background.
+        await home.showTodayForNewScan();
+      } else {
+        // Also refresh same-day resumes so a scan completed on another route
+        // or server-side changes are reflected when the app is reopened.
+        await home.loadToday(forceRefresh: true);
       }
-      _pausedDate = null;
+    } finally {
+      _resumeRefreshInFlight = false;
     }
   }
 
