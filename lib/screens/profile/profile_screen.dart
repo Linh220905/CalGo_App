@@ -512,7 +512,7 @@ class ProfileScreen extends StatelessWidget {
                       textColor: textColor,
                       borderColor: borderColor,
                       isDark: isDark,
-                      onTap: () => context.go('/history'),
+                      onTap: () => context.push('/stats'),
                     ),
 
                     // Mục tiêu Calo

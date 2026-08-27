@@ -15,6 +15,8 @@ import '../../widgets/mascot_speech_bubble.dart';
 import '../../utils/localized_date_utils.dart';
 import 'widgets/cal_ai_hero_card.dart';
 import 'widgets/cal_ai_macro_card.dart';
+import '../recap/daily_recap_screen.dart';
+import '../../models/gamification.dart';
 
 const _kProteinColor = Color(0xFFFF5C5C);
 const _kCarbColor = Color(0xFFF59E0B);
@@ -61,6 +63,8 @@ class _HomeScreenState extends State<HomeScreen> {
     final textDark = isDark ? Colors.white : const Color(0xFF0F172A);
     final borderColor =
         isDark ? const Color(0xFF2C2A34) : const Color(0xFFE2E8F0);
+    final textMuted =
+        isDark ? const Color(0xFF8E8D9A) : const Color(0xFF64748B);
 
     final currentUserId = auth.user?.id ?? 'guest';
     if (!auth.loading && _loadedUserId != currentUserId && !_reloadScheduled) {
@@ -244,7 +248,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           // ── 3 Macro Cards (Protein, Carbs, Fats) ──
                           _MacroCardsSection(),
 
-                          const SizedBox(height: 28),
+                          const SizedBox(height: 14),
+
+                          // ── Daily Recap Banner (Quick Access) ──────
+                          if (hp.entries.isNotEmpty) ...[
+                            _DailyRecapBanner(isDark: isDark, cardBg: cardBgColor, border: borderColor, textDark: textDark, textMuted: textMuted),
+                            const SizedBox(height: 14),
+                          ],
+
+                          const SizedBox(height: 14),
 
                           // ── Recently Uploaded Section ──────────
                           Text(
@@ -1146,3 +1158,90 @@ class _ErrorView extends StatelessWidget {
         ),
       );
 }
+
+class _DailyRecapBanner extends StatelessWidget {
+  final bool isDark;
+  final Color cardBg, border, textDark, textMuted;
+
+  const _DailyRecapBanner({
+    required this.isDark,
+    required this.cardBg,
+    required this.border,
+    required this.textDark,
+    required this.textMuted,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: cardBg,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: border),
+        boxShadow: [
+          BoxShadow(
+            color: isDark ? const Color(0x22000000) : const Color(0x0A0F172A),
+            blurRadius: 16,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(20),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(20),
+          onTap: () {
+            showDailyRecap(context, recap: DailyRecap.stub());
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            child: Row(
+              children: [
+                Container(
+                  width: 42,
+                  height: 42,
+                  decoration: BoxDecoration(
+                    color: isDark ? const Color(0xFF1E293B) : const Color(0xFFF0FDF4),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: const Icon(Icons.auto_awesome_rounded, color: Color(0xFF22C55E), size: 22),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Tổng kết ngày & AI Coach',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: textDark,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        'Xem đánh giá dinh dưỡng & nhận EXP',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: textMuted,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Icon(
+                  Icons.chevron_right_rounded,
+                  color: textMuted,
+                  size: 20,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+

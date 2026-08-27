@@ -64,6 +64,8 @@ class TrialNotificationService {
         channelDescription: 'Thông báo nhắc nhở và minh bạch thời gian dùng thử Premium',
         importance: Importance.high,
         priority: Priority.high,
+        icon: '@mipmap/ic_launcher',
+        largeIcon: DrawableResourceAndroidBitmap('@mipmap/ic_launcher'),
       );
       const iosDetails = DarwinNotificationDetails();
       const details = NotificationDetails(android: androidDetails, iOS: iosDetails);
