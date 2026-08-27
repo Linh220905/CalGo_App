@@ -7,6 +7,8 @@ import '../providers/app_settings_provider.dart';
 import '../providers/auth_provider.dart';
 import '../providers/home_provider.dart';
 import '../providers/scan_task_provider.dart';
+import '../providers/gamification_provider.dart';
+import '../widgets/exp_gain_toast.dart';
 import 'ad_banner.dart';
 
 class MainShell extends StatefulWidget {
@@ -21,6 +23,7 @@ class _MainShellState extends State<MainShell> with WidgetsBindingObserver {
   ScanTaskProvider? _scanTasks;
   DateTime _lastKnownDay = _dayOnly(DateTime.now());
   bool _resumeRefreshInFlight = false;
+  bool _rewardDisplayScheduled = false;
 
   static DateTime _dayOnly(DateTime value) =>
       DateTime(value.year, value.month, value.day);
@@ -91,12 +94,44 @@ class _MainShellState extends State<MainShell> with WidgetsBindingObserver {
     final task = _scanTasks?.completedTask;
     final resultId = task?.resultId;
     if (!mounted || task == null || resultId == null) return;
+    final expEarned = task.expEarned;
     _scanTasks!.consumeCompleted(task.id);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       context.read<AuthProvider>().refreshUser();
       context.read<HomeProvider>().loadToday(forceRefresh: true);
       context.push('/result/$resultId');
+      // Keep the reward pending while Result is on screen. MainShell will
+      // consume it only after the user returns to Home.
+      if (expEarned > 0) {
+        context.read<GamificationProvider>().registerScanReward(expEarned);
+        unawaited(context.read<GamificationProvider>().refresh());
+      }
+      unawaited(context.read<GamificationProvider>().refreshRecap());
+    });
+  }
+
+  void _showPendingRewardWhenHomeIsVisible(String location, bool isDark) {
+    if (location != '/home') {
+      _rewardDisplayScheduled = false;
+      return;
+    }
+    if (_rewardDisplayScheduled) return;
+    _rewardDisplayScheduled = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _rewardDisplayScheduled = false;
+      if (!mounted || GoRouterState.of(context).matchedLocation != '/home') {
+        return;
+      }
+      final exp = context.read<GamificationProvider>().takePendingScanReward();
+      if (exp <= 0) return;
+      final mascot = context.read<HomeProvider>().mascotAssetForTheme(isDark);
+      showExpGainToast(
+        context,
+        exp: exp,
+        reason: 'Quét món ăn',
+        mascotAsset: mascot,
+      );
     });
   }
 
@@ -106,6 +141,7 @@ class _MainShellState extends State<MainShell> with WidgetsBindingObserver {
     final settings = context.watch<AppSettingsProvider>();
     final isDark = settings.isDarkMode;
     final s = settings.strings;
+    _showPendingRewardWhenHomeIsVisible(location, isDark);
 
     int currentIndex;
     switch (location) {
@@ -113,8 +149,10 @@ class _MainShellState extends State<MainShell> with WidgetsBindingObserver {
         currentIndex = 0;
       case '/history':
         currentIndex = 1;
-      case '/profile':
+      case '/stats':
         currentIndex = 2;
+      case '/profile':
+        currentIndex = 3;
       default:
         currentIndex = 0; // Default to Home
     }
@@ -157,6 +195,8 @@ class _MainShellState extends State<MainShell> with WidgetsBindingObserver {
                   case 1:
                     context.go('/history');
                   case 2:
+                    context.go('/stats');
+                  case 3:
                     context.go('/profile');
                 }
               },
@@ -166,8 +206,12 @@ class _MainShellState extends State<MainShell> with WidgetsBindingObserver {
                   label: s.tabHome,
                 ),
                 BottomNavigationBarItem(
+                  icon: const Icon(Icons.history_rounded),
+                  label: s.historyTitle,
+                ),
+                BottomNavigationBarItem(
                   icon: const Icon(Icons.bar_chart_rounded),
-                  label: s.tabAnalytics,
+                  label: s.statistics,
                 ),
                 BottomNavigationBarItem(
                   icon: const Icon(Icons.settings_rounded),

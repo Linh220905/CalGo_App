@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:provider/provider.dart';
 
 import '../../services/scan_service.dart';
+import '../../providers/gamification_provider.dart';
 
 const Color _kScanGreen = Color(0xFF22C55E);
 
@@ -53,14 +56,24 @@ class _BarcodeScanScreenState extends State<BarcodeScanScreen> {
       final result = await scanService.scanBarcode(barcodeStr.trim());
 
       if (!mounted) return;
+      if (result.expEarned > 0) {
+        context
+            .read<GamificationProvider>()
+            .registerScanReward(result.expEarned);
+      }
+      unawaited(context.read<GamificationProvider>().refreshRecap());
       context.go('/result/${result.id}');
     } catch (e) {
       if (!mounted) return;
 
-      String errorMsg = "Chưa tìm thấy dữ liệu cho mã vạch này. Bạn hãy thử chụp trực tiếp ảnh món ăn nhé! 📸";
+      String errorMsg =
+          "Chưa tìm thấy dữ liệu cho mã vạch này. Bạn hãy thử chụp trực tiếp ảnh món ăn nhé! 📸";
       final eStr = e.toString().toLowerCase();
-      if (eStr.contains("404") || eStr.contains("không tìm thấy") || eStr.contains("chưa có")) {
-        errorMsg = "Chưa tìm thấy dữ liệu cho mã vạch này. Bạn hãy thử chụp trực tiếp ảnh món ăn nhé! 📸";
+      if (eStr.contains("404") ||
+          eStr.contains("không tìm thấy") ||
+          eStr.contains("chưa có")) {
+        errorMsg =
+            "Chưa tìm thấy dữ liệu cho mã vạch này. Bạn hãy thử chụp trực tiếp ảnh món ăn nhé! 📸";
       }
 
       ScaffoldMessenger.of(context).showSnackBar(
@@ -99,7 +112,8 @@ class _BarcodeScanScreenState extends State<BarcodeScanScreen> {
               children: [
                 // Top Bar
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -111,7 +125,8 @@ class _BarcodeScanScreenState extends State<BarcodeScanScreen> {
                             color: Colors.black.withOpacity(0.5),
                             shape: BoxShape.circle,
                           ),
-                          child: const Icon(Icons.arrow_back, color: Colors.white, size: 20),
+                          child: const Icon(Icons.arrow_back,
+                              color: Colors.white, size: 20),
                         ),
                       ),
                       const Text(
@@ -196,16 +211,19 @@ class _BarcodeScanScreenState extends State<BarcodeScanScreen> {
                   child: GestureDetector(
                     onTap: () => context.pop(),
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 12),
                       decoration: BoxDecoration(
                         color: Colors.white.withOpacity(0.2),
                         borderRadius: BorderRadius.circular(24),
-                        border: Border.all(color: Colors.white.withOpacity(0.3)),
+                        border:
+                            Border.all(color: Colors.white.withOpacity(0.3)),
                       ),
                       child: const Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(Icons.camera_alt_outlined, color: Colors.white, size: 20),
+                          Icon(Icons.camera_alt_outlined,
+                              color: Colors.white, size: 20),
                           SizedBox(width: 8),
                           Text(
                             "Chuyển sang chụp ảnh món",

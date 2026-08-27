@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../models/gamification.dart';
+import 'achievement_badge.dart';
 
 Future<void> showBadgeUnlockModal(BuildContext context, Achievement badge) {
   HapticFeedback.vibrate();
@@ -19,14 +20,16 @@ class _BadgeUnlockDialog extends StatefulWidget {
   State<_BadgeUnlockDialog> createState() => _BadgeUnlockDialogState();
 }
 
-class _BadgeUnlockDialogState extends State<_BadgeUnlockDialog> with SingleTickerProviderStateMixin {
+class _BadgeUnlockDialogState extends State<_BadgeUnlockDialog>
+    with SingleTickerProviderStateMixin {
   late final AnimationController _ctrl;
   late final Animation<double> _scale;
 
   @override
   void initState() {
     super.initState();
-    _ctrl = AnimationController(vsync: this, duration: const Duration(milliseconds: 600));
+    _ctrl = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 600));
     _scale = CurvedAnimation(parent: _ctrl, curve: Curves.elasticOut);
     _ctrl.forward();
   }
@@ -42,7 +45,8 @@ class _BadgeUnlockDialogState extends State<_BadgeUnlockDialog> with SingleTicke
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final cardBg = isDark ? const Color(0xFF212027) : Colors.white;
     final textDark = isDark ? Colors.white : const Color(0xFF0F172A);
-    final textMuted = isDark ? const Color(0xFF8E8D9A) : const Color(0xFF64748B);
+    final textMuted =
+        isDark ? const Color(0xFF8E8D9A) : const Color(0xFF64748B);
 
     return ScaleTransition(
       scale: _scale,
@@ -54,15 +58,12 @@ class _BadgeUnlockDialogState extends State<_BadgeUnlockDialog> with SingleTicke
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(14),
               decoration: const BoxDecoration(
                 color: Color(0xFFFEF3C7),
                 shape: BoxShape.circle,
               ),
-              child: Text(
-                widget.badge.icon,
-                style: const TextStyle(fontSize: 48),
-              ),
+              child: AchievementBadge(id: widget.badge.id, size: 62),
             ),
             const SizedBox(height: 16),
             Text(
@@ -96,13 +97,17 @@ class _BadgeUnlockDialogState extends State<_BadgeUnlockDialog> with SingleTicke
               child: ElevatedButton(
                 onPressed: () => Navigator.pop(context),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: isDark ? Colors.white : const Color(0xFF0F172A),
-                  foregroundColor: isDark ? const Color(0xFF0F172A) : Colors.white,
+                  backgroundColor:
+                      isDark ? Colors.white : const Color(0xFF0F172A),
+                  foregroundColor:
+                      isDark ? const Color(0xFF0F172A) : Colors.white,
                   padding: const EdgeInsets.symmetric(vertical: 12),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14)),
                   elevation: 0,
                 ),
-                child: const Text('Tuyệt vời!', style: TextStyle(fontWeight: FontWeight.bold)),
+                child: const Text('Tuyệt vời!',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
               ),
             ),
           ],

@@ -1,7 +1,7 @@
 name: calgo
 description: "CAL.ai - Food recognition & calorie estimation app"
 publish_to: 'none'
-version: 1.0.5+25
+version: 1.0.5+26
 
 environment:
   sdk: ^3.5.0
@@ -53,6 +53,7 @@ flutter:
 
   assets:
     - assets/images/tao/
+    - assets/images/badges/
     - assets/images/apple_mascot/
     - assets/images/calgo_logo_wordmark.png
     - assets/images/CalGo.png

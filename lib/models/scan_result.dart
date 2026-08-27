@@ -47,6 +47,7 @@ class ScanResult {
   final String scanType;
   final int dishCount;
   final List<String> dishes;
+  final int expEarned;
 
   ScanResult({
     required this.id,
@@ -61,6 +62,7 @@ class ScanResult {
     this.scanType = 'single_dish',
     this.dishCount = 1,
     this.dishes = const [],
+    this.expEarned = 0,
   });
 
   factory ScanResult.fromJson(Map<String, dynamic> json) {
@@ -88,6 +90,7 @@ class ScanResult {
               ?.map((item) => item.toString())
               .toList() ??
           const [],
+      expEarned: (json['exp_earned'] as num?)?.toInt() ?? 0,
       ingredients: (json['ingredients'] as List<dynamic>?)
               ?.map((e) => Ingredient.fromJson(e as Map<String, dynamic>))
               .toList() ??

@@ -1,9 +1,11 @@
 import 'dart:math' as math;
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '../../providers/app_settings_provider.dart';
+import '../../providers/gamification_provider.dart';
 import '../../models/gamification.dart';
 
 // ── Color constants matching CalGo design system ─────────────────
@@ -26,6 +28,66 @@ Future<void> showDailyRecap(
     useSafeArea: true,
     builder: (_) => DailyRecapSheet(recap: recap, onFinish: onFinish),
   );
+}
+
+/// Route target used by the 22:00 notification. The sheet remains available
+/// from Home, while this page gives notification taps a stable destination.
+class DailyRecapPage extends StatefulWidget {
+  const DailyRecapPage({super.key});
+
+  @override
+  State<DailyRecapPage> createState() => _DailyRecapPageState();
+}
+
+class _DailyRecapPageState extends State<DailyRecapPage> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        unawaited(context.read<GamificationProvider>().refreshRecap());
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final settings = context.watch<AppSettingsProvider>();
+    final gamification = context.watch<GamificationProvider>();
+    final textColor =
+        settings.isDarkMode ? Colors.white : const Color(0xFF0F172A);
+
+    return Scaffold(
+      backgroundColor: settings.isDarkMode
+          ? const Color(0xFF141318)
+          : const Color(0xFFFAFAFB),
+      appBar: AppBar(
+        title: const Text('Tổng kết cuối ngày'),
+        foregroundColor: textColor,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+      body: gamification.recapLoading && gamification.recap == null
+          ? const Center(child: CircularProgressIndicator())
+          : gamification.recap == null
+              ? Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(28),
+                    child: Text(
+                      'Tổng kết sẽ sẵn sàng sau 22:00, khi bạn đã có dữ liệu quét trong ngày.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: textColor, fontSize: 15),
+                    ),
+                  ),
+                )
+              : DailyRecapSheet(
+                  recap: gamification.recap!,
+                  onFinish: () {
+                    unawaited(gamification.finishRecap());
+                  },
+                ),
+    );
+  }
 }
 
 class DailyRecapSheet extends StatefulWidget {
@@ -80,7 +142,8 @@ class _DailyRecapSheetState extends State<DailyRecapSheet>
     final cardBg = isDark ? const Color(0xFF212027) : Colors.white;
     final border = isDark ? const Color(0xFF2C2A34) : const Color(0xFFE2E8F0);
     final textDark = isDark ? Colors.white : const Color(0xFF0F172A);
-    final textMuted = isDark ? const Color(0xFF8E8D9A) : const Color(0xFF64748B);
+    final textMuted =
+        isDark ? const Color(0xFF8E8D9A) : const Color(0xFF64748B);
 
     return AnimatedBuilder(
       animation: _entryCtrl,
@@ -88,7 +151,8 @@ class _DailyRecapSheetState extends State<DailyRecapSheet>
         position: Tween<Offset>(
           begin: const Offset(0, 0.05),
           end: Offset.zero,
-        ).animate(CurvedAnimation(parent: _entryCtrl, curve: Curves.easeOutCubic)),
+        ).animate(
+            CurvedAnimation(parent: _entryCtrl, curve: Curves.easeOutCubic)),
         child: FadeTransition(opacity: _entryCtrl, child: child),
       ),
       child: Container(
@@ -137,50 +201,99 @@ class _DailyRecapSheetState extends State<DailyRecapSheet>
                               const SizedBox(height: 2),
                               Text(
                                 '${recap.mealCount} bữa đã ghi',
-                                style: TextStyle(fontSize: 13, color: textMuted),
+                                style:
+                                    TextStyle(fontSize: 13, color: textMuted),
                               ),
                             ],
                           ),
                         ),
                         // EXP badge
-                        _ExpBadge(expAnim: _expAnim, exp: recap.expEarned, isDark: isDark),
+                        _ExpBadge(
+                            expAnim: _expAnim,
+                            exp: recap.expEarned,
+                            isDark: isDark),
                       ],
                     ),
 
                     const SizedBox(height: 20),
 
                     // ── Calorie Ring Card ────────────────────────
-                    _CaloRingCard(recap: recap, isDark: isDark, cardBg: cardBg, border: border, textDark: textDark, textMuted: textMuted),
+                    _CaloRingCard(
+                        recap: recap,
+                        isDark: isDark,
+                        cardBg: cardBg,
+                        border: border,
+                        textDark: textDark,
+                        textMuted: textMuted),
 
                     const SizedBox(height: 12),
 
                     // ── Macro Row ────────────────────────────────
                     Row(
                       children: [
-                        _MacroBar(label: 'Protein', pct: recap.proteinPct, color: _kProteinColor, isDark: isDark, cardBg: cardBg, border: border, textDark: textDark, textMuted: textMuted),
+                        _MacroBar(
+                            label: 'Protein',
+                            pct: recap.proteinPct,
+                            color: _kProteinColor,
+                            isDark: isDark,
+                            cardBg: cardBg,
+                            border: border,
+                            textDark: textDark,
+                            textMuted: textMuted),
                         const SizedBox(width: 8),
-                        _MacroBar(label: 'Carbs', pct: recap.carbPct, color: _kCarbColor, isDark: isDark, cardBg: cardBg, border: border, textDark: textDark, textMuted: textMuted),
+                        _MacroBar(
+                            label: 'Carbs',
+                            pct: recap.carbPct,
+                            color: _kCarbColor,
+                            isDark: isDark,
+                            cardBg: cardBg,
+                            border: border,
+                            textDark: textDark,
+                            textMuted: textMuted),
                         const SizedBox(width: 8),
-                        _MacroBar(label: 'Chất béo', pct: recap.fatPct, color: _kFatColor, isDark: isDark, cardBg: cardBg, border: border, textDark: textDark, textMuted: textMuted),
+                        _MacroBar(
+                            label: 'Chất béo',
+                            pct: recap.fatPct,
+                            color: _kFatColor,
+                            isDark: isDark,
+                            cardBg: cardBg,
+                            border: border,
+                            textDark: textDark,
+                            textMuted: textMuted),
                       ],
                     ),
 
                     // ── AI Comment ───────────────────────────────
                     if (recap.aiComment != null) ...[
                       const SizedBox(height: 16),
-                      _AiCommentCard(comment: recap.aiComment!, isDark: isDark, cardBg: cardBg, border: border, textDark: textDark, textMuted: textMuted),
+                      _AiCommentCard(
+                          comment: recap.aiComment!,
+                          isDark: isDark,
+                          cardBg: cardBg,
+                          border: border,
+                          textDark: textDark,
+                          textMuted: textMuted),
                     ],
 
                     // ── Tomorrow Tip ─────────────────────────────
                     if (recap.tomorrowTip != null) ...[
                       const SizedBox(height: 10),
-                      _TomorrowTipCard(tip: recap.tomorrowTip!, isDark: isDark, cardBg: cardBg, border: border, textMuted: textMuted),
+                      _TomorrowTipCard(
+                          tip: recap.tomorrowTip!,
+                          isDark: isDark,
+                          cardBg: cardBg,
+                          border: border,
+                          textMuted: textMuted),
                     ],
 
                     const SizedBox(height: 24),
 
                     // ── Action Buttons ───────────────────────────
-                    _ActionButtons(recap: recap, isDark: isDark, textDark: textDark, onFinish: widget.onFinish),
+                    _ActionButtons(
+                        recap: recap,
+                        isDark: isDark,
+                        textDark: textDark,
+                        onFinish: widget.onFinish),
                   ],
                 ),
               ),
@@ -198,7 +311,8 @@ class _ExpBadge extends StatelessWidget {
   final int exp;
   final bool isDark;
 
-  const _ExpBadge({required this.expAnim, required this.exp, required this.isDark});
+  const _ExpBadge(
+      {required this.expAnim, required this.exp, required this.isDark});
 
   @override
   Widget build(BuildContext context) {
@@ -214,7 +328,8 @@ class _ExpBadge extends StatelessWidget {
               color: isDark ? const Color(0xFF0D2B14) : const Color(0xFFF0FDF4),
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
-                color: isDark ? const Color(0xFF166534) : const Color(0xFFBBF7D0),
+                color:
+                    isDark ? const Color(0xFF166534) : const Color(0xFFBBF7D0),
               ),
             ),
             child: Column(
@@ -268,7 +383,8 @@ class _CaloRingCard extends StatelessWidget {
         : isDark
             ? Colors.white
             : const Color(0xFF0F172A);
-    final trackColor = isDark ? const Color(0xFF2C2A34) : const Color(0xFFE2E8F0);
+    final trackColor =
+        isDark ? const Color(0xFF2C2A34) : const Color(0xFFE2E8F0);
 
     return Container(
       padding: const EdgeInsets.all(20),
@@ -295,7 +411,8 @@ class _CaloRingCard extends StatelessWidget {
               children: [
                 CustomPaint(
                   size: const Size(80, 80),
-                  painter: _RingPainter(progress: pct, color: ringColor, trackColor: trackColor),
+                  painter: _RingPainter(
+                      progress: pct, color: ringColor, trackColor: trackColor),
                 ),
                 Icon(
                   Icons.local_fire_department_rounded,
@@ -365,7 +482,8 @@ class _MacroBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final clamped = pct.clamp(0.0, 100.0);
-    final trackColor = isDark ? const Color(0xFF2C2A34) : const Color(0xFFF1F5F9);
+    final trackColor =
+        isDark ? const Color(0xFF2C2A34) : const Color(0xFFF1F5F9);
 
     return Expanded(
       child: Container(
@@ -441,7 +559,8 @@ class _AiCommentCard extends StatelessWidget {
               color: isDark ? const Color(0xFF2C2A34) : const Color(0xFFF1F5F9),
               borderRadius: BorderRadius.circular(10),
             ),
-            child: const Icon(Icons.auto_awesome_rounded, size: 18, color: Color(0xFF8B5CF6)),
+            child: const Icon(Icons.auto_awesome_rounded,
+                size: 18, color: Color(0xFF8B5CF6)),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -491,7 +610,8 @@ class _TomorrowTipCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bgTip = isDark ? const Color(0xFF1C1A10) : const Color(0xFFFFFBEB);
-    final borderTip = isDark ? const Color(0xFF3D3510) : const Color(0xFFFDE68A);
+    final borderTip =
+        isDark ? const Color(0xFF3D3510) : const Color(0xFFFDE68A);
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -574,7 +694,8 @@ class _ActionButtons extends StatelessWidget {
               backgroundColor: btnBg,
               foregroundColor: btnFg,
               padding: const EdgeInsets.symmetric(vertical: 15),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(18)),
               elevation: 0,
             ),
           ),
@@ -602,9 +723,12 @@ class _ActionButtons extends StatelessWidget {
                 style: OutlinedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 12),
                   side: BorderSide(
-                    color: isDark ? const Color(0xFF2C2A34) : const Color(0xFFE2E8F0),
+                    color: isDark
+                        ? const Color(0xFF2C2A34)
+                        : const Color(0xFFE2E8F0),
                   ),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14)),
                 ),
               ),
             ),
@@ -628,9 +752,12 @@ class _ActionButtons extends StatelessWidget {
                 style: OutlinedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 12),
                   side: BorderSide(
-                    color: isDark ? const Color(0xFF2C2A34) : const Color(0xFFE2E8F0),
+                    color: isDark
+                        ? const Color(0xFF2C2A34)
+                        : const Color(0xFFE2E8F0),
                   ),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14)),
                 ),
               ),
             ),
@@ -647,7 +774,8 @@ class _RingPainter extends CustomPainter {
   final Color color;
   final Color trackColor;
 
-  _RingPainter({required this.progress, required this.color, required this.trackColor});
+  _RingPainter(
+      {required this.progress, required this.color, required this.trackColor});
 
   @override
   void paint(Canvas canvas, Size size) {

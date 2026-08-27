@@ -36,9 +36,13 @@ class GamificationStatus {
     return GamificationStatus(
       exp: (json['exp'] as num?)?.toInt() ?? 0,
       level: (json['level'] as num?)?.toInt() ?? 1,
-      expToNextLevel: (json['exp_to_next_level'] as num?)?.toInt() ?? 100,
+      expToNextLevel: (json['exp_to_next_level'] as num?)?.toInt() ??
+          (json['next_level_exp'] as num?)?.toInt() ??
+          100,
       expInCurrentLevel: (json['exp_in_current_level'] as num?)?.toInt() ?? 0,
-      streakDays: (json['streak_days'] as num?)?.toInt() ?? 0,
+      streakDays: (json['streak_days'] as num?)?.toInt() ??
+          (json['streak'] as num?)?.toInt() ??
+          0,
       totalScans: (json['total_scans'] as num?)?.toInt() ?? 0,
       scansToday: (json['scans_today'] as num?)?.toInt() ?? 0,
       levelProgress: (json['level_progress'] as num?)?.toDouble() ?? 0.0,
@@ -105,7 +109,8 @@ class Achievement {
   }
 
   double get progress {
-    if (progressTarget == null || progressTarget == 0) return unlocked ? 1.0 : 0.0;
+    if (progressTarget == null || progressTarget == 0)
+      return unlocked ? 1.0 : 0.0;
     return ((progressCurrent ?? 0) / progressTarget!).clamp(0.0, 1.0);
   }
 }
@@ -141,7 +146,8 @@ class DailyRecap {
     this.unlockedBadges = const [],
   });
 
-  double get caloPct => targetCalo > 0 ? (totalCalo / targetCalo).clamp(0.0, 1.5) : 0.0;
+  double get caloPct =>
+      targetCalo > 0 ? (totalCalo / targetCalo).clamp(0.0, 1.5) : 0.0;
   int get caloPercentDisplay => (caloPct * 100).round();
 
   factory DailyRecap.fromJson(Map<String, dynamic> json) {
@@ -165,24 +171,6 @@ class DailyRecap {
       unlockedBadges: badges,
     );
   }
-
-  // Stub for local preview / skeleton state
-  factory DailyRecap.stub() => const DailyRecap(
-        dateKey: '2026-08-26',
-        totalCalo: 1650,
-        targetCalo: 2100,
-        proteinPct: 88,
-        carbPct: 75,
-        fatPct: 90,
-        mealCount: 3,
-        waterLiters: 1.5,
-        isFinished: false,
-        expEarned: 35,
-        aiComment:
-            'Hôm nay bạn đã ghi đủ 3 bữa và đạt 92% mục tiêu protein. Bạn còn thiếu khoảng 18g protein.',
-        tomorrowTip:
-            'Ngày mai hãy thêm trứng, sữa chua Hy Lạp hoặc ức gà vào bữa sáng để bù đắp lượng protein còn thiếu nhé!',
-      );
 }
 
 class WeeklyStats {
@@ -205,13 +193,19 @@ class WeeklyStats {
   });
 
   factory WeeklyStats.fromJson(Map<String, dynamic> json) {
-    final points = (json['daily_points'] as List<dynamic>? ?? [])
-        .whereType<Map<String, dynamic>>()
+    final rawPoints = json['daily_points'] ?? json['daily_breakdown'];
+    final points = (rawPoints is List ? rawPoints : const <dynamic>[])
+        .whereType<Map>()
+        .map((p) => Map<String, dynamic>.from(p))
         .map((p) => DayCaloriePoint.fromJson(p))
         .toList();
     return WeeklyStats(
-      avgCalo: (json['avg_calo'] as num?)?.toDouble() ?? 0,
-      avgProtein: (json['avg_protein'] as num?)?.toDouble() ?? 0,
+      avgCalo: (json['avg_calo'] as num?)?.toDouble() ??
+          (json['avg_calo_daily'] as num?)?.toDouble() ??
+          0,
+      avgProtein: (json['avg_protein'] as num?)?.toDouble() ??
+          (json['avg_protein_daily'] as num?)?.toDouble() ??
+          0,
       avgCarb: (json['avg_carb'] as num?)?.toDouble() ?? 0,
       avgFat: (json['avg_fat'] as num?)?.toDouble() ?? 0,
       daysLogged: (json['days_logged'] as num?)?.toInt() ?? 0,
@@ -238,10 +232,81 @@ class DayCaloriePoint {
 
   factory DayCaloriePoint.fromJson(Map<String, dynamic> json) {
     return DayCaloriePoint(
-      dateKey: json['date_key'] as String? ?? '',
-      calo: (json['calo'] as num?)?.toInt() ?? 0,
+      dateKey: (json['date_key'] ?? json['date'] ?? '').toString(),
+      calo: (json['calo'] as num?)?.toInt() ??
+          (json['calories'] as num?)?.toInt() ??
+          0,
       target: (json['target'] as num?)?.toInt() ?? 2000,
-      hasLog: json['has_log'] as bool? ?? false,
+      hasLog: json['has_log'] as bool? ?? json['logged'] as bool? ?? false,
     );
   }
+}
+
+class MonthlyStats {
+  final double adherencePercent;
+  final int loggedDays;
+  final int totalDays;
+  final int streakDays;
+  final List<DayLogPoint> days;
+
+  const MonthlyStats({
+    required this.adherencePercent,
+    required this.loggedDays,
+    required this.totalDays,
+    required this.streakDays,
+    required this.days,
+  });
+
+  factory MonthlyStats.fromJson(Map<String, dynamic> json) {
+    final raw = json['matrix'];
+    return MonthlyStats(
+      adherencePercent: (json['adherence_pct'] as num?)?.toDouble() ?? 0,
+      loggedDays: (json['logged_days_count'] as num?)?.toInt() ?? 0,
+      totalDays: (json['total_days'] as num?)?.toInt() ?? 30,
+      streakDays: (json['streak'] as num?)?.toInt() ?? 0,
+      days: (raw is List ? raw : const <dynamic>[])
+          .whereType<Map>()
+          .map((item) => DayLogPoint.fromJson(Map<String, dynamic>.from(item)))
+          .toList(),
+    );
+  }
+}
+
+class DayLogPoint {
+  final String dateKey;
+  final bool logged;
+  final int scanCount;
+
+  const DayLogPoint({
+    required this.dateKey,
+    required this.logged,
+    this.scanCount = 0,
+  });
+
+  factory DayLogPoint.fromJson(Map<String, dynamic> json) => DayLogPoint(
+        dateKey: (json['date'] ?? json['date_key'] ?? '').toString(),
+        logged: json['logged'] as bool? ?? json['has_log'] as bool? ?? false,
+        scanCount: (json['scan_count'] as num?)?.toInt() ?? 0,
+      );
+}
+
+class GoalForecast {
+  final double currentWeight;
+  final double targetWeight;
+  final double estimatedWeeks;
+  final String display;
+
+  const GoalForecast({
+    required this.currentWeight,
+    required this.targetWeight,
+    required this.estimatedWeeks,
+    required this.display,
+  });
+
+  factory GoalForecast.fromJson(Map<String, dynamic> json) => GoalForecast(
+        currentWeight: (json['current_weight_kg'] as num?)?.toDouble() ?? 0,
+        targetWeight: (json['target_weight_kg'] as num?)?.toDouble() ?? 0,
+        estimatedWeeks: (json['estimated_weeks'] as num?)?.toDouble() ?? 0,
+        display: (json['estimated_weeks_display'] ?? '').toString(),
+      );
 }

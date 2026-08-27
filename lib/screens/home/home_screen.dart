@@ -10,6 +10,8 @@ import '../../providers/auth_provider.dart';
 import '../../providers/app_settings_provider.dart';
 import '../../services/scan_service.dart';
 import '../../providers/scan_task_provider.dart';
+import '../../providers/gamification_provider.dart';
+import '../../services/notification_service.dart';
 import '../../widgets/swipeable_card.dart';
 import '../../widgets/mascot_speech_bubble.dart';
 import '../../utils/localized_date_utils.dart';
@@ -32,6 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String? _loadedUserId;
   Timer? _mascotMessageTimer;
   bool _reloadScheduled = false;
+  String? _lastRecapSyncKey;
 
   @override
   void initState() {
@@ -81,6 +84,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Consumer<HomeProvider>(
       builder: (context, hp, _) {
+        final gamification = context.watch<GamificationProvider>();
+        _syncRecapFeatures(hp);
         void onMascotTap() {
           if (hp.mascotOpensMealGuidance) {
             context.push('/meal-guidance');
@@ -251,8 +256,17 @@ class _HomeScreenState extends State<HomeScreen> {
                           const SizedBox(height: 14),
 
                           // ── Daily Recap Banner (Quick Access) ──────
-                          if (hp.entries.isNotEmpty) ...[
-                            _DailyRecapBanner(isDark: isDark, cardBg: cardBgColor, border: borderColor, textDark: textDark, textMuted: textMuted),
+                          if (gamification.recap != null &&
+                              _isToday(hp.selectedDate) &&
+                              hp.entries.isNotEmpty) ...[
+                            _DailyRecapBanner(
+                              recap: gamification.recap!,
+                              isDark: isDark,
+                              cardBg: cardBgColor,
+                              border: borderColor,
+                              textDark: textDark,
+                              textMuted: textMuted,
+                            ),
                             const SizedBox(height: 14),
                           ],
 
@@ -293,6 +307,36 @@ class _HomeScreenState extends State<HomeScreen> {
         );
       },
     );
+  }
+
+  void _syncRecapFeatures(HomeProvider hp) {
+    if (!hp.hasLoaded) return;
+    final now = DateTime.now();
+    final dayKey =
+        '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}';
+    final selectedDayKey =
+        '${hp.selectedDate.year}-${hp.selectedDate.month}-${hp.selectedDate.day}';
+    final syncKey = '$dayKey:$selectedDayKey:${hp.entries.isNotEmpty}';
+    if (_lastRecapSyncKey == syncKey) return;
+    _lastRecapSyncKey = syncKey;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      if (_isToday(hp.selectedDate)) {
+        unawaited(
+          NotificationService.instance.scheduleDailyRecapNotification(
+            hasMeals: hp.entries.isNotEmpty,
+          ),
+        );
+      }
+      unawaited(context.read<GamificationProvider>().refreshRecap());
+    });
+  }
+
+  bool _isToday(DateTime value) {
+    final now = DateTime.now();
+    return value.year == now.year &&
+        value.month == now.month &&
+        value.day == now.day;
   }
 }
 
@@ -1160,10 +1204,12 @@ class _ErrorView extends StatelessWidget {
 }
 
 class _DailyRecapBanner extends StatelessWidget {
+  final DailyRecap recap;
   final bool isDark;
   final Color cardBg, border, textDark, textMuted;
 
   const _DailyRecapBanner({
+    required this.recap,
     required this.isDark,
     required this.cardBg,
     required this.border,
@@ -1192,7 +1238,13 @@ class _DailyRecapBanner extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(20),
           onTap: () {
-            showDailyRecap(context, recap: DailyRecap.stub());
+            showDailyRecap(
+              context,
+              recap: recap,
+              onFinish: () {
+                unawaited(context.read<GamificationProvider>().finishRecap());
+              },
+            );
           },
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
@@ -1202,10 +1254,13 @@ class _DailyRecapBanner extends StatelessWidget {
                   width: 42,
                   height: 42,
                   decoration: BoxDecoration(
-                    color: isDark ? const Color(0xFF1E293B) : const Color(0xFFF0FDF4),
+                    color: isDark
+                        ? const Color(0xFF1E293B)
+                        : const Color(0xFFF0FDF4),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Icon(Icons.auto_awesome_rounded, color: Color(0xFF22C55E), size: 22),
+                  child: const Icon(Icons.auto_awesome_rounded,
+                      color: Color(0xFF22C55E), size: 22),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
@@ -1244,4 +1299,3 @@ class _DailyRecapBanner extends StatelessWidget {
     );
   }
 }
-

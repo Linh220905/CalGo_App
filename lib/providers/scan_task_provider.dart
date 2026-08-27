@@ -23,6 +23,7 @@ class ScanTask {
   ScanTaskStatus status = ScanTaskStatus.analyzing;
   int progress = 6;
   String? resultId;
+  int expEarned = 0;
   String? errorMessage;
   int? errorStatusCode;
   String? errorDetail;
@@ -122,6 +123,7 @@ class ScanTaskProvider extends ChangeNotifier {
       task.status = ScanTaskStatus.completed;
       task.progress = 100;
       task.resultId = result.id;
+      task.expEarned = result.expEarned;
     } on ApiException catch (error) {
       if (!identical(_task, task) || task.authScope != _scanService.authScope) {
         return;

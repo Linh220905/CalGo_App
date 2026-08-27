@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 
-void showExpGainToast(BuildContext context, {required int exp, required String reason}) {
+void showExpGainToast(
+  BuildContext context, {
+  required int exp,
+  required String reason,
+  String? mascotAsset,
+}) {
   final overlay = Overlay.of(context);
   late OverlayEntry entry;
   bool removed = false;
@@ -9,6 +14,7 @@ void showExpGainToast(BuildContext context, {required int exp, required String r
     builder: (context) => _ExpToastWidget(
       exp: exp,
       reason: reason,
+      mascotAsset: mascotAsset,
       onDismissed: () {
         if (!removed) {
           removed = true;
@@ -26,11 +32,13 @@ void showExpGainToast(BuildContext context, {required int exp, required String r
 class _ExpToastWidget extends StatefulWidget {
   final int exp;
   final String reason;
+  final String? mascotAsset;
   final VoidCallback onDismissed;
 
   const _ExpToastWidget({
     required this.exp,
     required this.reason,
+    this.mascotAsset,
     required this.onDismissed,
   });
 
@@ -38,7 +46,8 @@ class _ExpToastWidget extends StatefulWidget {
   State<_ExpToastWidget> createState() => _ExpToastWidgetState();
 }
 
-class _ExpToastWidgetState extends State<_ExpToastWidget> with SingleTickerProviderStateMixin {
+class _ExpToastWidgetState extends State<_ExpToastWidget>
+    with SingleTickerProviderStateMixin {
   late final AnimationController _ctrl;
   late final Animation<double> _fade;
   late final Animation<Offset> _slide;
@@ -46,7 +55,8 @@ class _ExpToastWidgetState extends State<_ExpToastWidget> with SingleTickerProvi
   @override
   void initState() {
     super.initState();
-    _ctrl = AnimationController(vsync: this, duration: const Duration(milliseconds: 2400));
+    _ctrl = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 2400));
     _fade = CurvedAnimation(
       parent: _ctrl,
       curve: const Interval(0.0, 0.2, curve: Curves.easeOut),
@@ -88,9 +98,12 @@ class _ExpToastWidgetState extends State<_ExpToastWidget> with SingleTickerProvi
             color: Colors.transparent,
             child: Center(
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                 decoration: BoxDecoration(
-                  color: isDark ? const Color(0xFF166534) : const Color(0xFF22C55E),
+                  color: isDark
+                      ? const Color(0xFF166534)
+                      : const Color(0xFF22C55E),
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: const [
                     BoxShadow(
@@ -103,7 +116,17 @@ class _ExpToastWidgetState extends State<_ExpToastWidget> with SingleTickerProvi
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(Icons.bolt_rounded, color: Colors.white, size: 18),
+                    if (widget.mascotAsset != null) ...[
+                      Image.asset(
+                        widget.mascotAsset!,
+                        width: 30,
+                        height: 30,
+                        fit: BoxFit.contain,
+                      ),
+                      const SizedBox(width: 6),
+                    ],
+                    const Icon(Icons.bolt_rounded,
+                        color: Colors.white, size: 18),
                     const SizedBox(width: 6),
                     Text(
                       '+${widget.exp} EXP',

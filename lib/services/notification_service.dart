@@ -13,6 +13,11 @@ class NotificationService {
   final FlutterLocalNotificationsPlugin _notificationsPlugin =
       FlutterLocalNotificationsPlugin();
   bool _initialized = false;
+  bool? _recapHasMeals;
+
+  /// The app router is wired by main.dart so a notification tap can deep-link
+  /// into the actual recap screen instead of only writing a debug log.
+  static void Function(String? payload)? onNotificationTap;
 
   Future<AppLocalizations> _strings() async {
     final prefs = await SharedPreferences.getInstance();
@@ -62,12 +67,22 @@ class NotificationService {
       initSettings,
       onDidReceiveNotificationResponse: (details) {
         debugPrint('Notification clicked: ${details.payload}');
+        onNotificationTap?.call(details.payload);
       },
     );
+
+    final launchDetails =
+        await _notificationsPlugin.getNotificationAppLaunchDetails();
+    if (launchDetails?.didNotificationLaunchApp == true) {
+      onNotificationTap?.call(launchDetails?.notificationResponse?.payload);
+    }
 
     _initialized = true;
     await requestPermission();
     await scheduleDailyMealReminders();
+    await scheduleDailyRecapNotification(
+      hasMeals: _recapHasMeals ?? false,
+    );
   }
 
   Future<bool> requestPermission() async {
@@ -214,6 +229,52 @@ class NotificationService {
         'Successfully scheduled personalized daily meal reminders (07:30, 12:00, 18:30)');
   }
 
+  /// Schedule a one-shot 22:00 reminder only for a day on which the user has
+  /// actually scanned food. It is deliberately not a repeating notification:
+  /// Home refreshes this flag each day and cancels it when there are no scans.
+  Future<void> scheduleDailyRecapNotification({required bool hasMeals}) async {
+    _recapHasMeals = hasMeals;
+    if (!_initialized) return;
+
+    if (!hasMeals) {
+      await _notificationsPlugin.cancel(104);
+      return;
+    }
+
+    final s = await _strings();
+    final lang = WidgetsBinding.instance.platformDispatcher.locale.languageCode;
+    final details = NotificationDetails(
+      android: AndroidNotificationDetails(
+        'calgo_daily_recap',
+        s.notificationChannelName,
+        channelDescription: s.notificationChannelDescription,
+        importance: Importance.high,
+        priority: Priority.high,
+        icon: '@mipmap/ic_launcher',
+        largeIcon: const DrawableResourceAndroidBitmap('@mipmap/ic_launcher'),
+      ),
+      iOS: const DarwinNotificationDetails(
+        presentAlert: true,
+        presentBadge: true,
+        presentSound: true,
+      ),
+    );
+
+    await _notificationsPlugin.cancel(104);
+    await _scheduleDailyNotification(
+      id: 104,
+      title: lang == 'vi' ? 'CalGo • Tổng kết ngày' : 'CalGo • Daily recap',
+      body: lang == 'vi'
+          ? 'Báo cáo dinh dưỡng hôm nay đã sẵn sàng. Nhấn để xem cùng CalGo nhé!'
+          : 'Your nutrition recap is ready. Tap to review it with CalGo!',
+      hour: 22,
+      minute: 0,
+      details: details,
+      payload: 'daily_recap',
+      repeatDaily: false,
+    );
+  }
+
   Map<String, String> _buildMotivationalContent({
     required String mealType,
     required String? name,
@@ -232,9 +293,8 @@ class NotificationService {
     final isLose = goalType == 'lose';
     final isGain = goalType == 'gain';
 
-    final displayName = (name != null && name.trim().isNotEmpty)
-        ? name.trim()
-        : null;
+    final displayName =
+        (name != null && name.trim().isNotEmpty) ? name.trim() : null;
 
     String salutation;
     if (displayName != null) {
@@ -251,34 +311,40 @@ class NotificationService {
       if (isLose) {
         return {
           'title': 'CalGo • Năng Lượng Buổi Sáng 🌅',
-          'body': '$salutation Nạp bữa sáng thanh nhẹ, đủ đạm để kích hoạt đốt mỡ & tràn đầy năng lượng hôm nay nhé!',
+          'body':
+              '$salutation Nạp bữa sáng thanh nhẹ, đủ đạm để kích hoạt đốt mỡ & tràn đầy năng lượng hôm nay nhé!',
         };
       } else if (isGain) {
         return {
           'title': 'CalGo • Bữa Sáng Tăng Cơ 💪',
-          'body': '$salutation Nạp bữa sáng giàu protein & năng lượng để nuôi dưỡng cơ bắp săn chắc hôm nay nào!',
+          'body':
+              '$salutation Nạp bữa sáng giàu protein & năng lượng để nuôi dưỡng cơ bắp săn chắc hôm nay nào!',
         };
       } else {
         return {
           'title': 'CalGo • Chào Ngày Mới 🌅',
-          'body': '$salutation Một bữa sáng cân bằng dinh dưỡng sẽ giúp bạn duy trì vóc dáng & sức khỏe suốt ngày dài!',
+          'body':
+              '$salutation Một bữa sáng cân bằng dinh dưỡng sẽ giúp bạn duy trì vóc dáng & sức khỏe suốt ngày dài!',
         };
       }
     } else if (mealType == 'lunch') {
       if (isLose) {
         return {
           'title': 'CalGo • Giờ Nghỉ Trưa 🥗',
-          'body': '$salutation Đến giờ ăn trưa rồi! Mở CalGo quét món ăn để duy trì kỷ luật & giữ eo thon gọn nhé!',
+          'body':
+              '$salutation Đến giờ ăn trưa rồi! Mở CalGo quét món ăn để duy trì kỷ luật & giữ eo thon gọn nhé!',
         };
       } else if (isGain) {
         return {
           'title': 'CalGo • Nạp Đạm Bữa Trưa 🥩',
-          'body': '$salutation Đến giờ nạp năng lượng rồi! Quét bữa trưa với CalGo để đảm bảo đủ đạm cho cơ bắp nhé!',
+          'body':
+              '$salutation Đến giờ nạp năng lượng rồi! Quét bữa trưa với CalGo để đảm bảo đủ đạm cho cơ bắp nhé!',
         };
       } else {
         return {
           'title': 'CalGo • Bữa Trưa Khỏe Mạnh 🍱',
-          'body': '$salutation Giờ nghỉ trưa rồi nè! Nhớ chụp hình món ăn để CalGo giúp bạn theo dõi dinh dưỡng nhé!',
+          'body':
+              '$salutation Giờ nghỉ trưa rồi nè! Nhớ chụp hình món ăn để CalGo giúp bạn theo dõi dinh dưỡng nhé!',
         };
       }
     } else {
@@ -286,17 +352,20 @@ class NotificationService {
       if (isLose) {
         return {
           'title': 'CalGo • Tổng Kết Ngày 🌙',
-          'body': '$salutation Quét bữa tối nhẹ nhàng để chốt mục tiêu giảm mỡ thành công rực rỡ hôm nay nhé!',
+          'body':
+              '$salutation Quét bữa tối nhẹ nhàng để chốt mục tiêu giảm mỡ thành công rực rỡ hôm nay nhé!',
         };
       } else if (isGain) {
         return {
           'title': 'CalGo • Chốt Calo Tối 🏋️',
-          'body': '$salutation Chụp hình bữa tối để CalGo giúp bạn chốt chỉ số protein & năng lượng phục hồi cơ trọn vẹn!',
+          'body':
+              '$salutation Chụp hình bữa tối để CalGo giúp bạn chốt chỉ số protein & năng lượng phục hồi cơ trọn vẹn!',
         };
       } else {
         return {
           'title': 'CalGo • Bữa Tối Ấm Cúng 🌙',
-          'body': '$salutation Buổi tối vui vẻ! Nhớ quét bữa tối để chốt nhật ký calo trọn vẹn hôm nay cùng CalGo nhé!',
+          'body':
+              '$salutation Buổi tối vui vẻ! Nhớ quét bữa tối để chốt nhật ký calo trọn vẹn hôm nay cùng CalGo nhé!',
         };
       }
     }
@@ -309,6 +378,8 @@ class NotificationService {
     required int hour,
     required int minute,
     required NotificationDetails details,
+    String? payload,
+    bool repeatDaily = true,
   }) async {
     try {
       final now = tz.TZDateTime.now(tz.local);
@@ -334,7 +405,8 @@ class NotificationService {
         androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
-        matchDateTimeComponents: DateTimeComponents.time,
+        payload: payload,
+        matchDateTimeComponents: repeatDaily ? DateTimeComponents.time : null,
       );
     } catch (e) {
       debugPrint('Error scheduling notification $id ($hour:$minute): $e');
@@ -371,4 +443,3 @@ class NotificationService {
     );
   }
 }
-

@@ -16,6 +16,7 @@ import 'providers/home_provider.dart';
 import 'providers/app_settings_provider.dart';
 import 'providers/payment_provider.dart';
 import 'providers/scan_task_provider.dart';
+import 'providers/gamification_provider.dart';
 import 'routes/app_router.dart';
 import 'theme/app_theme.dart';
 import 'l10n/generated/app_localizations.dart';
@@ -65,6 +66,10 @@ void main() {
   // neutral startup screen until they finish, never a persisted onboarding step.
   unawaited(onboardingProvider.init());
   unawaited(authProvider.tryRestore());
+  final router = createAppRouter(onboardingProvider, authProvider);
+  NotificationService.onNotificationTap = (payload) {
+    if (payload == 'daily_recap') router.go('/recap');
+  };
 
   runApp(
     MultiProvider(
@@ -87,9 +92,11 @@ void main() {
         ChangeNotifierProvider(
           create: (context) => ScanTaskProvider(context.read<ScanService>()),
         ),
+        ChangeNotifierProvider(
+          create: (context) => GamificationProvider(context.read<ApiService>()),
+        ),
       ],
-      child:
-          CalGoApp(router: createAppRouter(onboardingProvider, authProvider)),
+      child: CalGoApp(router: router),
     ),
   );
 
