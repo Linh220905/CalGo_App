@@ -537,13 +537,16 @@ class _MacroCardsSection extends StatelessWidget {
     final proteinG = s.proteinG.toDouble();
     final carbG = s.carbG.toDouble();
     final fatG = s.fatG.toDouble();
+    final proteinLeft = (targetProtein - proteinG).clamp(0.0, targetProtein);
+    final carbLeft = (targetCarb - carbG).clamp(0.0, targetCarb);
+    final fatLeft = (targetFat - fatG).clamp(0.0, targetFat);
 
     return Row(
       children: [
         // Protein
         Expanded(
           child: CalAiMacroCard(
-            title: strings.gramsValue(proteinG.round()),
+            title: strings.gramsValue(proteinLeft.round()),
             subtitle: strings.proteinLeft,
             consumed: proteinG.round(),
             target: targetProtein.round(),
@@ -558,7 +561,7 @@ class _MacroCardsSection extends StatelessWidget {
         // Carbs
         Expanded(
           child: CalAiMacroCard(
-            title: strings.gramsValue(carbG.round()),
+            title: strings.gramsValue(carbLeft.round()),
             subtitle: strings.carbsLeft,
             consumed: carbG.round(),
             target: targetCarb.round(),
@@ -573,7 +576,7 @@ class _MacroCardsSection extends StatelessWidget {
         // Fats
         Expanded(
           child: CalAiMacroCard(
-            title: strings.gramsValue(fatG.round()),
+            title: strings.gramsValue(fatLeft.round()),
             subtitle: strings.fatsLeft,
             consumed: fatG.round(),
             target: targetFat.round(),

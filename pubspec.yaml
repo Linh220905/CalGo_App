@@ -4,7 +4,8 @@ publish_to: 'none'
 version: 1.0.6+27
 
 environment:
-  sdk: ^3.12.0
+  # The build environment currently provides Dart 3.9.0.
+  sdk: ^3.9.0
 
 dependencies:
   flutter:
@@ -29,9 +30,10 @@ dependencies:
   fl_chart: ^0.69.2
   font_awesome_flutter: ^11.0.0
   url_launcher: ^6.3.1
-  # Billing Library 8 is required for Play updates after 31 Aug 2026.
-  in_app_purchase: ^3.3.0
-  in_app_purchase_android: ^0.5.3
+  # Keep the billing plugins compatible with the current Dart 3.9 build image.
+  # Upgrade these together with the build image when moving to Dart 3.12+.
+  in_app_purchase: 3.2.3
+  in_app_purchase_android: 0.4.0
   google_mobile_ads: ^5.1.0
   share_plus: ^10.0.0
   path_provider: ^2.1.5
