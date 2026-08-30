@@ -1,5 +1,5 @@
+// ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -42,7 +42,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get noMealsUploaded => 'Pas encore de repas téléchargés';
 
   @override
-  String get tapToScanMeal => 'Appuyez sur pour scanner votre premier repas avec AI';
+  String get tapToScanMeal =>
+      'Appuyez sur pour scanner votre premier repas avec AI';
 
   @override
   String get profileTitle => 'Compte personnel';
@@ -93,7 +94,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get scanInstructionHeader => 'Conserver les aliments dans le cadre';
 
   @override
-  String get scanInstructionSub => 'Assurer un éclairage approprié pour une reconnaissance précise de AI';
+  String get scanInstructionSub =>
+      'Assurer un éclairage approprié pour une reconnaissance précise de AI';
 
   @override
   String get selectFromGallery => 'Sélectionner dans la galerie';
@@ -102,7 +104,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get outOfCreditsTitle => 'Hors des crédits de numérisation !';
 
   @override
-  String get outOfCreditsMessage => 'Vous avez utilisé tous vos crédits de numérisation. Compléter pour continuer à suivre la nutrition!';
+  String get outOfCreditsMessage =>
+      'Vous avez utilisé tous vos crédits de numérisation. Compléter pour continuer à suivre la nutrition!';
 
   @override
   String get buyMore => 'Acheter plus';
@@ -114,7 +117,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get pricingTitle => 'Mise à jour et crédits';
 
   @override
-  String get pricingSubtitle => 'Choose the best plan to unlock full AI capabilities';
+  String get pricingSubtitle =>
+      'Choose the best plan to unlock full AI capabilities';
 
   @override
   String get creditPacksTitle => 'Scanner les paquets de crédit';
@@ -147,19 +151,23 @@ class AppLocalizationsFr extends AppLocalizations {
   String get onlineGuide => 'Guide en ligne';
 
   @override
-  String get deleteAccountSubscriptionWarning => 'Supprimer votre compte CalGo n\'annule pas un abonnement Google Play. Si vous avez Premium, annulez-le séparément dans Google Play pour éviter les frais de renouvellement.';
+  String get deleteAccountSubscriptionWarning =>
+      'Supprimer votre compte CalGo n\'annule pas un abonnement Google Play. Si vous avez Premium, annulez-le séparément dans Google Play pour éviter les frais de renouvellement.';
 
   @override
   String get restorePurchases => 'Restaurer les achats';
 
   @override
-  String get privacyPolicyContent => 'CalGo Politique de confidentialité (mise à jour le 5 août 2026) :\n\n1. Données que nous recueillons : e-mail de compte, nom d\'affichage, identifiant de connexion Google, informations nutritionnelles à bord, photos de repas, résultats d\'analyse, historique de repas, métadonnées d\'achat, diagnostics d\'applications/dispositifs et préférences de notification.\n2. Comment les permissions sont utilisées : l\'accès à la caméra et à la photo n\'est demandé que lorsque vous choisissez de capturer ou de sélectionner une photo de repas; les notifications ne sont utilisées que si elles sont activées.\n3. Comment les données sont utilisées: pour fournir une analyse nutritionnelle AI, synchroniser votre compte, traiter les achats Google Play, prévenir les abus, fournir du soutien et améliorer la fiabilité. Les photos peuvent être traitées par nos fournisseurs d\'hébergement et de services AI.\n4. Partage et sécurité : nous ne vendons pas vos données personnelles ni vos photos de repas. Les fournisseurs nécessaires tels que l\'hébergement, le traitement AI, la connexion Google et la facturation Google Play peuvent traiter des données limitées. Nous utilisons HTTPS et les contrôles d\'accès, mais aucun système n\'est complètement sécurisé.\n5. Conservation et suppression : les données du compte et l\'historique des repas sont supprimés lorsque vous supprimez votre compte, sauf les données qui doivent être conservées pour la prévention de la fraude, les litiges ou les obligations légales. Les sauvegardes peuvent prendre un temps raisonnable pour expirer.\n6. Vos droits: supprimez votre compte dans Profil ou visitez https://calgo.tech/delete-account. Pour accéder, corriger ou poser des questions, contactez support@calgo.tech. Politique complète: https://calgo.tech/privacy.';
+  String get privacyPolicyContent =>
+      'CalGo Politique de confidentialité (mise à jour le 5 août 2026) :\n\n1. Données que nous recueillons : e-mail de compte, nom d\'affichage, identifiant de connexion Google, informations nutritionnelles à bord, photos de repas, résultats d\'analyse, historique de repas, métadonnées d\'achat, diagnostics d\'applications/dispositifs et préférences de notification.\n2. Comment les permissions sont utilisées : l\'accès à la caméra et à la photo n\'est demandé que lorsque vous choisissez de capturer ou de sélectionner une photo de repas; les notifications ne sont utilisées que si elles sont activées.\n3. Comment les données sont utilisées: pour fournir une analyse nutritionnelle AI, synchroniser votre compte, traiter les achats Google Play, prévenir les abus, fournir du soutien et améliorer la fiabilité. Les photos peuvent être traitées par nos fournisseurs d\'hébergement et de services AI.\n4. Partage et sécurité : nous ne vendons pas vos données personnelles ni vos photos de repas. Les fournisseurs nécessaires tels que l\'hébergement, le traitement AI, la connexion Google et la facturation Google Play peuvent traiter des données limitées. Nous utilisons HTTPS et les contrôles d\'accès, mais aucun système n\'est complètement sécurisé.\n5. Conservation et suppression : les données du compte et l\'historique des repas sont supprimés lorsque vous supprimez votre compte, sauf les données qui doivent être conservées pour la prévention de la fraude, les litiges ou les obligations légales. Les sauvegardes peuvent prendre un temps raisonnable pour expirer.\n6. Vos droits: supprimez votre compte dans Profil ou visitez https://calgo.tech/delete-account. Pour accéder, corriger ou poser des questions, contactez support@calgo.tech. Politique complète: https://calgo.tech/privacy.';
 
   @override
-  String get termsOfServiceContent => 'Conditions d\'utilisation :\n\n1. Service et avertissement médical: Les résultats nutritionnels de AI sont des estimations pour référence seulement et ne remplacent pas les conseils médicaux professionnels. CalGo n\'est pas un dispositif médical.\n2. Paiements: les packs de crédit sont des achats numériques uniques. Les régimes de primes hebdomadaires, mensuelles et annuelles sont des abonnements au renouvellement automatique de Google Play sauf annulation avant le prochain renouvellement. Gérer ou annuler à https://play.google.com/store/account/subscriptions.\n3. Remboursements et suppressions: Google Play gère la facturation et les remboursements Android. Supprimer un compte CalGo n\'annule pas un abonnement Google Play.\n4. Contenu et propriété intellectuelle: vous conservez la propriété des photos téléchargées; CalGo reçoit une licence limitée pour les traiter afin de fournir et d\'améliorer le service. CalGo possède son application, sa marque et son logiciel.\n5. Contact: support@calgo.tech. Durée totale: https://calgo.tech/terms.';
+  String get termsOfServiceContent =>
+      'Conditions d\'utilisation :\n\n1. Service et avertissement médical: Les résultats nutritionnels de AI sont des estimations pour référence seulement et ne remplacent pas les conseils médicaux professionnels. CalGo n\'est pas un dispositif médical.\n2. Paiements: les packs de crédit sont des achats numériques uniques. Les régimes de primes hebdomadaires, mensuelles et annuelles sont des abonnements au renouvellement automatique de Google Play sauf annulation avant le prochain renouvellement. Gérer ou annuler à https://play.google.com/store/account/subscriptions.\n3. Remboursements et suppressions: Google Play gère la facturation et les remboursements Android. Supprimer un compte CalGo n\'annule pas un abonnement Google Play.\n4. Contenu et propriété intellectuelle: vous conservez la propriété des photos téléchargées; CalGo reçoit une licence limitée pour les traiter afin de fournir et d\'améliorer le service. CalGo possède son application, sa marque et son logiciel.\n5. Contact: support@calgo.tech. Durée totale: https://calgo.tech/terms.';
 
   @override
-  String get deleteAccountConfirmMessage => 'Voulez-vous vraiment supprimer définitivement votre compte CalGo et toutes les données du journal des calories ? Cette action ne peut être annulée.';
+  String get deleteAccountConfirmMessage =>
+      'Voulez-vous vraiment supprimer définitivement votre compte CalGo et toutes les données du journal des calories ? Cette action ne peut être annulée.';
 
   @override
   String get historyTitle => 'Historique des repas';
@@ -183,7 +191,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get noMealsHistory => 'Pas encore de repas enregistrés';
 
   @override
-  String get scanFirstMealPrompt => 'Scannez votre premier repas pour commencer\nvotre voyage nutrition';
+  String get scanFirstMealPrompt =>
+      'Scannez votre premier repas pour commencer\nvotre voyage nutrition';
 
   @override
   String get scanFirstMealButton => 'Scanner le premier repas';
@@ -192,7 +201,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get deleteMealConfirm => 'Voulez-vous supprimer ce repas?';
 
   @override
-  String get cannotDeleteMeal => 'Impossible de supprimer le repas. Veuillez réessayer.';
+  String get cannotDeleteMeal =>
+      'Impossible de supprimer le repas. Veuillez réessayer.';
 
   @override
   String get photoGalleryTitle => 'Photos des aliments';
@@ -201,7 +211,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get noPhotosYet => 'Pas encore de photos de scan alimentaire';
 
   @override
-  String get takePhotosPrompt => 'Snap photos de vos repas pour construire votre collection!';
+  String get takePhotosPrompt =>
+      'Snap photos de vos repas pour construire votre collection!';
 
   @override
   String get scanFoodNow => 'Scanner la nourriture maintenant';
@@ -216,19 +227,22 @@ class AppLocalizationsFr extends AppLocalizations {
   String get snapPhotoAiTitle => 'Lancez une photo. Laissez agir AI.';
 
   @override
-  String get snapPhotoAiDesc => 'AI reconnaît automatiquement les aliments et calcule les calories en quelques secondes.';
+  String get snapPhotoAiDesc =>
+      'AI reconnaît automatiquement les aliments et calcule les calories en quelques secondes.';
 
   @override
   String get trackEasilyTitle => 'Suivez facilement.';
 
   @override
-  String get trackEasilyDesc => 'Suivre les calories, les protéines, les glucides et les graisses chaque jour.';
+  String get trackEasilyDesc =>
+      'Suivre les calories, les protéines, les glucides et les graisses chaque jour.';
 
   @override
   String get reachGoalsTitle => 'Atteindre les objectifs plus rapidement.';
 
   @override
-  String get reachGoalsDesc => 'Obtenez des cibles personnalisées et suivre les progrès de la perte de graisse.';
+  String get reachGoalsDesc =>
+      'Obtenez des cibles personnalisées et suivre les progrès de la perte de graisse.';
 
   @override
   String get nextStepButton => 'Suivant';
@@ -237,16 +251,19 @@ class AppLocalizationsFr extends AppLocalizations {
   String get goalStepTitle => 'Quel est votre but ?';
 
   @override
-  String get goalStepSubtitle => 'Aide CalGo à construire un plan qui vous convient';
+  String get goalStepSubtitle =>
+      'Aide CalGo à construire un plan qui vous convient';
 
   @override
   String get goalLoseWeight => 'Perdre du poids';
 
   @override
-  String get goalLoseWeightDesc => 'Brûler la graisse efficacement, tonifier le corps';
+  String get goalLoseWeightDesc =>
+      'Brûler la graisse efficacement, tonifier le corps';
 
   @override
-  String get goalLoseWeightReason => 'Cela nous aide à construire un plan de perte de graisse qui protège les muscles et reste durable.';
+  String get goalLoseWeightReason =>
+      'Cela nous aide à construire un plan de perte de graisse qui protège les muscles et reste durable.';
 
   @override
   String get goalGainMuscle => 'Gain musculaire';
@@ -255,7 +272,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get goalGainMuscleDesc => 'Construire le muscle et augmenter la force';
 
   @override
-  String get goalGainMuscleReason => 'Cela nous aide à construire un plan de gain musculaire autour de vos besoins d\'entraînement et de protéines.';
+  String get goalGainMuscleReason =>
+      'Cela nous aide à construire un plan de gain musculaire autour de vos besoins d\'entraînement et de protéines.';
 
   @override
   String get goalMaintain => 'Maintenir le poids';
@@ -264,7 +282,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get goalMaintainDesc => 'Gardez votre physique équilibré';
 
   @override
-  String get goalMaintainReason => 'Cela nous aide à construire un plan équilibré qui convient à votre vie à long terme.';
+  String get goalMaintainReason =>
+      'Cela nous aide à construire un plan équilibré qui convient à votre vie à long terme.';
 
   @override
   String get nameStepTitle => 'Votre nom est...';
@@ -321,10 +340,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get continueWithApple => 'Continuer avec Apple';
 
   @override
-  String get heightStepDesc => 'Aide à calculer BMI et les besoins en calories précises';
+  String get heightStepDesc =>
+      'Aide à calculer BMI et les besoins en calories précises';
 
   @override
-  String get weightStepDesc => 'Aide à déterminer vos objectifs nutritionnels personnalisés';
+  String get weightStepDesc =>
+      'Aide à déterminer vos objectifs nutritionnels personnalisés';
 
   @override
   String get currentHeightHeader => 'Hauteur actuelle';
@@ -348,7 +369,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get bmiObese => 'Obèse';
 
   @override
-  String get targetWeightDesc => 'Aide à définir vos objectifs nutritionnels personnels';
+  String get targetWeightDesc =>
+      'Aide à définir vos objectifs nutritionnels personnels';
 
   @override
   String get goalMaintainLabel => 'Maintenir le physique';
@@ -376,13 +398,16 @@ class AppLocalizationsFr extends AppLocalizations {
   String get paceStepTitle => 'Pace par semaine ?';
 
   @override
-  String get paceStepSubtitle => 'Choisissez un tarif confortable pour votre style de vie';
+  String get paceStepSubtitle =>
+      'Choisissez un tarif confortable pour votre style de vie';
 
   @override
-  String get activityStepSubtitle => 'Affecte vos dépenses quotidiennes en calories';
+  String get activityStepSubtitle =>
+      'Affecte vos dépenses quotidiennes en calories';
 
   @override
-  String get dietStepSubtitle => 'CalGo recommande des repas mieux adaptés à votre corps et objectifs.';
+  String get dietStepSubtitle =>
+      'CalGo recommande des repas mieux adaptés à votre corps et objectifs.';
 
   @override
   String get socialProofTitle => 'Ce que la communauté dit sur CalGo';
@@ -406,13 +431,16 @@ class AppLocalizationsFr extends AppLocalizations {
   String get sportsStepTitle => 'Quel sport jouez-vous ?';
 
   @override
-  String get sportsStepSubtitle => 'Sélectionnez des activités que vous faites régulièrement';
+  String get sportsStepSubtitle =>
+      'Sélectionnez des activités que vous faites régulièrement';
 
   @override
-  String get accountStepSubtitle => 'Sécuriser les informations et synchroniser les progrès personnels';
+  String get accountStepSubtitle =>
+      'Sécuriser les informations et synchroniser les progrès personnels';
 
   @override
-  String get dataPrivacyNote => 'Vos données sont strictement cryptées et confidentielles';
+  String get dataPrivacyNote =>
+      'Vos données sont strictement cryptées et confidentielles';
 
   @override
   String analysisHello(String name) {
@@ -465,7 +493,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get loginTitle => 'Bienvenue à CalGo';
 
   @override
-  String get loginSubtitle => 'Connectez-vous pour synchroniser vos données nutritionnelles';
+  String get loginSubtitle =>
+      'Connectez-vous pour synchroniser vos données nutritionnelles';
 
   @override
   String get loginGoogle => 'Continuer avec Google';
@@ -482,10 +511,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get appleComingSoon => 'L\'inscription de la pomme arrive bientôt !';
 
   @override
-  String get loginRequired => 'Veuillez vous connecter avec Google pour protéger et synchroniser vos données.';
+  String get loginRequired =>
+      'Veuillez vous connecter avec Google pour protéger et synchroniser vos données.';
 
   @override
-  String get loginRequiredButton => 'Connexion nécessaire pour synchroniser les données';
+  String get loginRequiredButton =>
+      'Connexion nécessaire pour synchroniser les données';
 
   @override
   String get progressLabel => 'Progrès accomplis';
@@ -497,7 +528,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get deleteMealQuestion => 'Voulez-vous supprimer ce repas?';
 
   @override
-  String get deleteMealFailed => 'Impossible de supprimer le repas. Veuillez réessayer.';
+  String get deleteMealFailed =>
+      'Impossible de supprimer le repas. Veuillez réessayer.';
 
   @override
   String get retry => 'Essaie encore';
@@ -527,34 +559,42 @@ class AppLocalizationsFr extends AppLocalizations {
   String get aiCoachAlmostGoal => 'Presque atteint votre but! Continuez !';
 
   @override
-  String get aiCoachPlentyCalories => 'Il reste beaucoup de calories aujourd\'hui. Mangez bien !';
+  String get aiCoachPlentyCalories =>
+      'Il reste beaucoup de calories aujourd\'hui. Mangez bien !';
 
   @override
   String get aiCoachMomentum => 'Maintenez le bon élan !';
 
   @override
-  String get mascotGoalTipWater => 'Buvez une gorgée d\'eau pour rester rafraîchi!';
+  String get mascotGoalTipWater =>
+      'Buvez une gorgée d\'eau pour rester rafraîchi!';
 
   @override
-  String get mascotGoalTipSlow => 'Manger lentement et écouter votre corps est génial.';
+  String get mascotGoalTipSlow =>
+      'Manger lentement et écouter votre corps est génial.';
 
   @override
   String get mascotGoalTipGreat => 'Tu as bien fait aujourd\'hui.';
 
   @override
-  String get mascotGoalReached => 'Objectif calorique atteint pour aujourd\'hui ! Garder ce rythme est le niveau supérieur';
+  String get mascotGoalReached =>
+      'Objectif calorique atteint pour aujourd\'hui ! Garder ce rythme est le niveau supérieur';
 
   @override
-  String get mascotGuidanceIntro => 'J\'ai pris de bons repas pour toi aujourd\'hui. Tapez pour les voir !';
+  String get mascotGuidanceIntro =>
+      'J\'ai pris de bons repas pour toi aujourd\'hui. Tapez pour les voir !';
 
   @override
-  String get mascotGuidanceOpen => 'Les plats recommandés sont toujours dans l\'écran de suggestion!';
+  String get mascotGuidanceOpen =>
+      'Les plats recommandés sont toujours dans l\'écran de suggestion!';
 
   @override
-  String get mascotGuidanceTipWater => 'Vous avez bu assez d\'eau ? Prenez une gorgée pour vous rafraîchir !';
+  String get mascotGuidanceTipWater =>
+      'Vous avez bu assez d\'eau ? Prenez une gorgée pour vous rafraîchir !';
 
   @override
-  String get mascotGuidanceTipSlow => 'Mangez lentement, vous vous sentirez plein plus longtemps!';
+  String get mascotGuidanceTipSlow =>
+      'Mangez lentement, vous vous sentirez plein plus longtemps!';
 
   @override
   String mascotGuidanceOverTarget(int calories) {
@@ -567,16 +607,20 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get mascotTipHydration => 'Hydraté, mon frère ? Prenez une gorgée d\'eau pour rester vif';
+  String get mascotTipHydration =>
+      'Hydraté, mon frère ? Prenez une gorgée d\'eau pour rester vif';
 
   @override
-  String get mascotTipChew => 'Mâchez lentement, il aide à la digestion et vous garde plein';
+  String get mascotTipChew =>
+      'Mâchez lentement, il aide à la digestion et vous garde plein';
 
   @override
-  String get mascotTipConsistency => 'La cohérence chaque jour construit un grand physique';
+  String get mascotTipConsistency =>
+      'La cohérence chaque jour construit un grand physique';
 
   @override
-  String get mascotNoMeals => 'Vous n\'avez encore rien enregistré ? Snap une photo de nourriture pour me montrer !';
+  String get mascotNoMeals =>
+      'Vous n\'avez encore rien enregistré ? Snap une photo de nourriture pour me montrer !';
 
   @override
   String mascotOverTarget(int calories) {
@@ -589,7 +633,8 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get mascotOnTrack => 'Une discipline parfaite ! Calories frappe à droite !';
+  String get mascotOnTrack =>
+      'Une discipline parfaite ! Calories frappe à droite !';
 
   @override
   String mealCount(int count) {
@@ -656,28 +701,34 @@ class AppLocalizationsFr extends AppLocalizations {
   String get scanProcessingReport => 'Préparation du rapport...';
 
   @override
-  String get cameraPermissionDenied => 'La permission de la caméra a été refusée. Ouvrez les paramètres et permettre l\'accès à la caméra pour CalGo!';
+  String get cameraPermissionDenied =>
+      'La permission de la caméra a été refusée. Ouvrez les paramètres et permettre l\'accès à la caméra pour CalGo!';
 
   @override
-  String get cameraPermissionRequired => 'CalGo a besoin de la permission de la caméra pour scanner les repas.';
+  String get cameraPermissionRequired =>
+      'CalGo a besoin de la permission de la caméra pour scanner les repas.';
 
   @override
   String get noCamera => 'Aucune caméra trouvée';
 
   @override
-  String get cameraStartFailed => 'Impossible de démarrer la caméra. Fermez cet écran et essayez encore !';
+  String get cameraStartFailed =>
+      'Impossible de démarrer la caméra. Fermez cet écran et essayez encore !';
 
   @override
   String get scanInProgress => 'Un autre repas est analysé. Attendez !';
 
   @override
-  String get notLoggedIn => 'Vous n\'êtes pas connecté. Connectez-vous avec Google pour utiliser cette fonctionnalité!';
+  String get notLoggedIn =>
+      'Vous n\'êtes pas connecté. Connectez-vous avec Google pour utiliser cette fonctionnalité!';
 
   @override
-  String get cameraPermissionMissing => 'La permission de la caméra n\'est pas activée. Permettre l\'accès à la caméra pour CalGo dans les paramètres du téléphone!';
+  String get cameraPermissionMissing =>
+      'La permission de la caméra n\'est pas activée. Permettre l\'accès à la caméra pour CalGo dans les paramètres du téléphone!';
 
   @override
-  String get networkTimeout => 'Le réseau est lent ou chronométré. Vérifiez votre connexion et essayez encore!';
+  String get networkTimeout =>
+      'Le réseau est lent ou chronométré. Vérifiez votre connexion et essayez encore!';
 
   @override
   String scanFailed(String error) {
@@ -719,7 +770,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get guidanceSeeMore => 'Voir plus';
 
   @override
-  String get guidanceDisclaimer => 'Les suggestions sont à titre de référence seulement. Scannez le repas réel pour l\'enregistrer avec précision.';
+  String get guidanceDisclaimer =>
+      'Les suggestions sont à titre de référence seulement. Scannez le repas réel pour l\'enregistrer avec précision.';
 
   @override
   String get guidanceFamiliarTag => 'FAMILIAR';
@@ -771,7 +823,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get guidanceNextMealAction => 'Scannez votre prochain repas';
 
   @override
-  String get guidanceGoalReachedTitle => 'L\'objectif d\'aujourd\'hui est terminé !';
+  String get guidanceGoalReachedTitle =>
+      'L\'objectif d\'aujourd\'hui est terminé !';
 
   @override
   String get guidanceScreenTitle => 'Que devriez-vous manger ?';
@@ -780,7 +833,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get guidanceUnavailableTitle => 'Pas encore de suggestions';
 
   @override
-  String get guidanceUnavailableMessage => 'Essayez encore après avoir balayé un repas.';
+  String get guidanceUnavailableMessage =>
+      'Essayez encore après avoir balayé un repas.';
 
   @override
   String get guidanceScanMeal => 'Scanner un repas';
@@ -789,7 +843,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get guidanceConsiderMeals => 'Repas à considérer';
 
   @override
-  String get guidanceScanForAccuracy => 'Scanner pour enregistrer avec précision';
+  String get guidanceScanForAccuracy =>
+      'Scanner pour enregistrer avec précision';
 
   @override
   String get guidanceSwapWith => 'Ou changez-le avec';
@@ -798,10 +853,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get guidanceChangeSuggestion => 'Proposition de modification';
 
   @override
-  String get guidancePremiumSwapTitle => 'Changer les suggestions est une fonctionnalité Premium';
+  String get guidancePremiumSwapTitle =>
+      'Changer les suggestions est une fonctionnalité Premium';
 
   @override
-  String get guidancePremiumSwapMessage => 'Mettez à niveau vers Premium pour changer les suggestions de repas sans limites en fonction de vos objectifs.';
+  String get guidancePremiumSwapMessage =>
+      'Mettez à niveau vers Premium pour changer les suggestions de repas sans limites en fonction de vos objectifs.';
 
   @override
   String get later => 'Plus tard';
@@ -810,10 +867,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get upgradePremium => 'Mise à niveau vers Premium';
 
   @override
-  String get guidanceTodayTitle => 'Propositions personnelles pour aujourd\'hui';
+  String get guidanceTodayTitle =>
+      'Propositions personnelles pour aujourd\'hui';
 
   @override
-  String get guidanceTodaySubtitle => 'Choisissez un repas qui correspond à vos macros, puis scannez le vrai repas avant de l\'enregistrer.';
+  String get guidanceTodaySubtitle =>
+      'Choisissez un repas qui correspond à vos macros, puis scannez le vrai repas avant de l\'enregistrer.';
 
   @override
   String get guidanceScanRealMeal => 'Scanner le vrai repas';
@@ -859,7 +918,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get fitGoalGood => 'Convient à votre objectif';
 
   @override
-  String get goalSpecificGainTitle => 'Combien de fois vous entraînez-vous chaque semaine ?';
+  String get goalSpecificGainTitle =>
+      'Combien de fois vous entraînez-vous chaque semaine ?';
 
   @override
   String get goalSpecificGainNone => 'Je ne m\'entraîne pas encore.';
@@ -874,7 +934,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get goalSpecificGain5 => '5+ sessions';
 
   @override
-  String get goalSpecificMaintainTitle => 'Qu\'est-ce qui compte le plus pour maintenir votre forme?';
+  String get goalSpecificMaintainTitle =>
+      'Qu\'est-ce qui compte le plus pour maintenir votre forme?';
 
   @override
   String get goalSpecificStable => 'Garder mon poids stable';
@@ -889,7 +950,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get goalSpecificWeekends => 'Restez sur la bonne voie les week-ends';
 
   @override
-  String get goalSpecificLoseTitle => 'Qu\'est-ce qui rend la perte de graisse plus difficile pour vous?';
+  String get goalSpecificLoseTitle =>
+      'Qu\'est-ce qui rend la perte de graisse plus difficile pour vous?';
 
   @override
   String get goalSpecificHunger => 'J\'ai souvent faim.';
@@ -910,7 +972,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get goalSpecificWeekendsHard => 'Les week-ends sont difficiles';
 
   @override
-  String get avoidFoodsTitle => 'Avez-vous des allergies aux aliments ou aux ingrédients?';
+  String get avoidFoodsTitle =>
+      'Avez-vous des allergies aux aliments ou aux ingrédients?';
 
   @override
   String get foodSeafood => 'Produits de la mer';
@@ -934,7 +997,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get challengeTitle => 'Quel est le plus dur pour vous ?';
 
   @override
-  String get challengeCalories => 'Je ne connais pas les calories dans mes aliments';
+  String get challengeCalories =>
+      'Je ne connais pas les calories dans mes aliments';
 
   @override
   String get challengeSweets => 'Des bonbons résistants';
@@ -955,7 +1019,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get budgetTitle => 'Quel est votre budget pour un repas ?';
 
   @override
-  String get budgetNote => 'CalGo demande donc il peut suggérer des repas qui correspondent à vos objectifs et budget.';
+  String get budgetNote =>
+      'CalGo demande donc il peut suggérer des repas qui correspondent à vos objectifs et budget.';
 
   @override
   String get budgetLow => 'Moins de 30 000';
@@ -985,7 +1050,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get prepTitle => 'Combien de temps faut-il pour préparer un repas ?';
 
   @override
-  String get prepNote => 'CalGo demande donc il peut suggérer des repas qui correspondent à votre horaire.';
+  String get prepNote =>
+      'CalGo demande donc il peut suggérer des repas qui correspondent à votre horaire.';
 
   @override
   String get prepShort => 'Moins de 10 minutes';
@@ -1012,16 +1078,19 @@ class AppLocalizationsFr extends AppLocalizations {
   String get prepAnyNote => 'Tant qu\'il correspond à mes objectifs';
 
   @override
-  String get nutritionPriorityTitle => 'Quelle est votre priorité dans un repas?';
+  String get nutritionPriorityTitle =>
+      'Quelle est votre priorité dans un repas?';
 
   @override
-  String get nutritionPriorityNote => 'CalGo demande donc il ne vous donne pas de suggestions génériques.';
+  String get nutritionPriorityNote =>
+      'CalGo demande donc il ne vous donne pas de suggestions génériques.';
 
   @override
   String get priorityProtein => 'Protéines élevées';
 
   @override
-  String get priorityProteinNote => 'Soutient la plénitude et la récupération musculaire';
+  String get priorityProteinNote =>
+      'Soutient la plénitude et la récupération musculaire';
 
   @override
   String get priorityLight => 'Calories légères';
@@ -1033,19 +1102,22 @@ class AppLocalizationsFr extends AppLocalizations {
   String get priorityBalanced => 'Solde';
 
   @override
-  String get priorityBalancedNote => 'Un mélange raisonnable de calories et de macros';
+  String get priorityBalancedNote =>
+      'Un mélange raisonnable de calories et de macros';
 
   @override
   String get priorityFilling => 'Garde-moi plein';
 
   @override
-  String get priorityFillingNote => 'Privilégier les protéines et suffisamment de glucides';
+  String get priorityFillingNote =>
+      'Privilégier les protéines et suffisamment de glucides';
 
   @override
   String get habitTitle => 'Quelles sont vos habitudes alimentaires?';
 
   @override
-  String get habitNote => 'CalGo demande donc il peut suggérer des repas qui correspondent à votre style de vie.';
+  String get habitNote =>
+      'CalGo demande donc il peut suggérer des repas qui correspondent à votre style de vie.';
 
   @override
   String get habitRegular => 'Je mange des repas réguliers et équilibrés';
@@ -1102,7 +1174,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get painGiveUp => 'Abandonner après quelques jours';
 
   @override
-  String get painUnknownCalories => 'Je ne sais pas combien de calories je mange';
+  String get painUnknownCalories =>
+      'Je ne sais pas combien de calories je mange';
 
   @override
   String get painHungry => 'On a faim à mi-chemin';
@@ -1120,7 +1193,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get emotionalAfterSixMonths => 'Après 6 mois';
 
   @override
-  String get emotionalStillWeight => 'Vous pouvez rester autour de votre poids actuel. Avec CalGo, vous pouvez changer.';
+  String get emotionalStillWeight =>
+      'Vous pouvez rester autour de votre poids actuel. Avec CalGo, vous pouvez changer.';
 
   @override
   String get emotionalHelpChange => 'Je vais t\'aider à changer.';
@@ -1173,7 +1247,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get reminderNotifications => 'Notifications de rappel';
 
   @override
-  String get reminderNotificationsEnabled => 'Les rappels de repas et les notifications quotidiennes de suivi des calories ont été activés automatiquement.';
+  String get reminderNotificationsEnabled =>
+      'Les rappels de repas et les notifications quotidiennes de suivi des calories ont été activés automatiquement.';
 
   @override
   String get gotIt => 'Compris.';
@@ -1182,19 +1257,23 @@ class AppLocalizationsFr extends AppLocalizations {
   String get userGuideTitle => 'Comment utiliser CalGo';
 
   @override
-  String get userGuideContent => '1. Appuyez sur Scan (+) pour capturer ou sélectionner une photo de repas.\n2. AI analyse automatiquement les calories et la nutrition.\n3. Modifier les quantités ou ajouter des ingrédients avant d\'économiser.\n4. Passez en revue votre historique de repas dans l\'onglet Histoire.';
+  String get userGuideContent =>
+      '1. Appuyez sur Scan (+) pour capturer ou sélectionner une photo de repas.\n2. AI analyse automatiquement les calories et la nutrition.\n3. Modifier les quantités ou ajouter des ingrédients avant d\'économiser.\n4. Passez en revue votre historique de repas dans l\'onglet Histoire.';
 
   @override
   String get great => 'Génial';
 
   @override
-  String get customerSupportMessage => 'Pour obtenir de l\'aide ou des commentaires, envoyez-nous un courriel à: support@calgo.tech';
+  String get customerSupportMessage =>
+      'Pour obtenir de l\'aide ou des commentaires, envoyez-nous un courriel à: support@calgo.tech';
 
   @override
-  String get deleteAccountFailed => 'Impossible de supprimer le compte. Consultez le guide en ligne ou le support de contact.';
+  String get deleteAccountFailed =>
+      'Impossible de supprimer le compte. Consultez le guide en ligne ou le support de contact.';
 
   @override
-  String get galleryLoadFailed => 'Impossible de charger la collection de photos';
+  String get galleryLoadFailed =>
+      'Impossible de charger la collection de photos';
 
   @override
   String get viewResult => 'Voir les détails du résultat';
@@ -1223,7 +1302,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get paymentProcessing => 'Traitement des paiements par Google Play...';
 
   @override
-  String get paymentOpenFailed => 'Impossible d\'ouvrir le paiement Google Play. Veuillez réessayer.';
+  String get paymentOpenFailed =>
+      'Impossible d\'ouvrir le paiement Google Play. Veuillez réessayer.';
 
   @override
   String errorWithDetails(String error) {
@@ -1239,13 +1319,16 @@ class AppLocalizationsFr extends AppLocalizations {
   String get permanentCredits => 'Les balayages n\'expirent jamais';
 
   @override
-  String get testingFreeCredits => 'Construction d\'essais : les scans Premium sont gratuits. Aucun paiement n\'est effectué.';
+  String get testingFreeCredits =>
+      'Construction d\'essais : les scans Premium sont gratuits. Aucun paiement n\'est effectué.';
 
   @override
-  String get restoreSuccess => 'La restauration d\'achat a été vérifiée avec succès!';
+  String get restoreSuccess =>
+      'La restauration d\'achat a été vérifiée avec succès!';
 
   @override
-  String get restoreFailed => 'Impossible de restaurer les achats de Google Play.';
+  String get restoreFailed =>
+      'Impossible de restaurer les achats de Google Play.';
 
   @override
   String restoreFailedWithDetails(String error) {
@@ -1256,7 +1339,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get moreScanCredits => 'Acheter plus de analyses de repas AI';
 
   @override
-  String get shareCreateFailed => 'Impossible de créer l\'image de carte. Veuillez réessayer !';
+  String get shareCreateFailed =>
+      'Impossible de créer l\'image de carte. Veuillez réessayer !';
 
   @override
   String get shareExported => 'Carte mémoire exportée avec succès!';
@@ -1265,7 +1349,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get shareResult => 'Résultat';
 
   @override
-  String get shareNutritionLabel => 'L\'image sera sauvegardée avec des étiquettes nutritionnelles';
+  String get shareNutritionLabel =>
+      'L\'image sera sauvegardée avec des étiquettes nutritionnelles';
 
   @override
   String get saveImage => 'Enregistrer l\'image';
@@ -1300,10 +1385,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get feedbackThanks => 'Merci pour vos commentaires!';
 
   @override
-  String get feedbackPrompt => 'Le scan AI est-il inexact ? Dites-nous ce qui s\'est passé :';
+  String get feedbackPrompt =>
+      'Le scan AI est-il inexact ? Dites-nous ce qui s\'est passé :';
 
   @override
-  String get feedbackHint => 'Exemple: mauvais nom de plat, légumes manquants...';
+  String get feedbackHint =>
+      'Exemple: mauvais nom de plat, légumes manquants...';
 
   @override
   String get skip => 'Sauter';
@@ -1342,10 +1429,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get defaultUserName => 'vous';
 
   @override
-  String get analyzingMessage1 => 'Analyser les informations de votre profil...';
+  String get analyzingMessage1 =>
+      'Analyser les informations de votre profil...';
 
   @override
-  String get analyzingMessage2 => 'Calcul des cibles quotidiennes de calories...';
+  String get analyzingMessage2 =>
+      'Calcul des cibles quotidiennes de calories...';
 
   @override
   String get analyzingMessage3 => 'Concevoir des objectifs personnalisés...';
@@ -1463,10 +1552,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get proteinLabel => 'PROTEINE';
 
   @override
-  String get onboardingSaveFailed => 'Impossible de sauver votre objectif nutritionnel. Veuillez réessayer.';
+  String get onboardingSaveFailed =>
+      'Impossible de sauver votre objectif nutritionnel. Veuillez réessayer.';
 
   @override
-  String get onboardingSaveNetworkFailed => 'Impossible de sauver votre objectif nutritionnel. Vérifiez votre connexion et essayez à nouveau.';
+  String get onboardingSaveNetworkFailed =>
+      'Impossible de sauver votre objectif nutritionnel. Vérifiez votre connexion et essayez à nouveau.';
 
   @override
   String googleSignInFailed(String error) {
@@ -1474,7 +1565,8 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get appleSignInPending => 'La connexion Apple est toujours en cours. Veuillez utiliser Google pour le moment.';
+  String get appleSignInPending =>
+      'La connexion Apple est toujours en cours. Veuillez utiliser Google pour le moment.';
 
   @override
   String get firstScanTitle => 'Prêt à scanner votre premier repas ?';
@@ -1495,10 +1587,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get socialProofOneTime => 'Il y a 2 jours';
 
   @override
-  String get socialProofOneTitle => 'La reconnaissance de la nourriture vietnamienne est au rendez-vous !';
+  String get socialProofOneTitle =>
+      'La reconnaissance de la nourriture vietnamienne est au rendez-vous !';
 
   @override
-  String get socialProofOneBody => 'J\'avais l\'habitude de lutter contre le suivi des pho et des bun cha dans les applications étrangères. CalGo reconnaît les plats vietnamiens et les calories avec précision à partir d\'une photo. 10/10 !';
+  String get socialProofOneBody =>
+      'J\'avais l\'habitude de lutter contre le suivi des pho et des bun cha dans les applications étrangères. CalGo reconnaît les plats vietnamiens et les calories avec précision à partir d\'une photo. 10/10 !';
 
   @override
   String get socialProofTwoTag => '4 muscles kg';
@@ -1510,7 +1604,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get socialProofTwoTitle => 'UI lisse et précision TDEE';
 
   @override
-  String get socialProofTwoBody => 'Le suivi BMI et les suggestions macro sont détaillés. Je forme et suit les calories chaque jour, et mon corps semble plus fort après un mois.';
+  String get socialProofTwoBody =>
+      'Le suivi BMI et les suggestions macro sont détaillés. Je forme et suit les calories chaque jour, et mon corps semble plus fort après un mois.';
 
   @override
   String get socialProofThreeTag => 'J\'ai gardé ma forme';
@@ -1522,13 +1617,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get socialProofThreeTitle => 'Bâtir des habitudes alimentaires saines';
 
   @override
-  String get socialProofThreeBody => 'Les rappels de Tao sont adorables. L\'application ne pousse jamais l\'alimentation extrême; elle me guide vers une nutrition équilibrée.';
+  String get socialProofThreeBody =>
+      'Les rappels de Tao sont adorables. L\'application ne pousse jamais l\'alimentation extrême; elle me guide vers une nutrition équilibrée.';
 
   @override
   String get premiumActivatedMessage => 'Premium est actif. Bon appétit !';
 
   @override
-  String get premiumPaymentFailed => 'Impossible d\'ouvrir le paiement Premium.';
+  String get premiumPaymentFailed =>
+      'Impossible d\'ouvrir le paiement Premium.';
 
   @override
   String get continueFreePremium => 'Continuer · Prime gratuite';
@@ -1549,7 +1646,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get subscribePremium => 'Abonnez-vous à Premium';
 
   @override
-  String get premiumTestingNote => 'Construction d\'essais : Premium est gratuit. Aucun paiement n\'est effectué.';
+  String get premiumTestingNote =>
+      'Construction d\'essais : Premium est gratuit. Aucun paiement n\'est effectué.';
 
   @override
   String get premiumNoChargeNote => 'Vous ne serez pas inculpé à cette étape.';
@@ -1567,19 +1665,24 @@ class AppLocalizationsFr extends AppLocalizations {
   String get yourExperience => 'Votre\nexpérience';
 
   @override
-  String get premiumBenefitCalories => 'Connaître vos calories instantanément — illimité AI scans';
+  String get premiumBenefitCalories =>
+      'Connaître vos calories instantanément — illimité AI scans';
 
   @override
-  String get premiumBenefitSuggestions => 'Des suggestions de repas illimités adaptées à votre objectif quotidien';
+  String get premiumBenefitSuggestions =>
+      'Des suggestions de repas illimités adaptées à votre objectif quotidien';
 
   @override
-  String get premiumBenefitDescriptions => 'Description des repas AI sans entrée manuelle';
+  String get premiumBenefitDescriptions =>
+      'Description des repas AI sans entrée manuelle';
 
   @override
-  String get premiumBenefitProgress => 'Suivre les progrès de votre corps chaque jour';
+  String get premiumBenefitProgress =>
+      'Suivre les progrès de votre corps chaque jour';
 
   @override
-  String get premiumBenefitSupport => 'Soutien prioritaire lorsque vous en avez besoin';
+  String get premiumBenefitSupport =>
+      'Soutien prioritaire lorsque vous en avez besoin';
 
   @override
   String get planWeek => 'Semaine';
@@ -1614,7 +1717,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get manageSubscription => 'Gérer l\'abonnement';
 
   @override
-  String get manageSubscriptionFailed => 'Impossible d\'ouvrir la gestion des abonnements.';
+  String get manageSubscriptionFailed =>
+      'Impossible d\'ouvrir la gestion des abonnements.';
 
   @override
   String get scanCreditsExhausted => 'Il ne vous reste plus de crédits.';
@@ -1629,25 +1733,29 @@ class AppLocalizationsFr extends AppLocalizations {
   String get notificationChannelName => 'Rappels quotidiens de repas';
 
   @override
-  String get notificationChannelDescription => 'Rappels de scanner le petit déjeuner, le déjeuner et le dîner avec CalGo';
+  String get notificationChannelDescription =>
+      'Rappels de scanner le petit déjeuner, le déjeuner et le dîner avec CalGo';
 
   @override
-  String get notificationBreakfastTitle => 'CalGo - Petit déjeuner';
+  String get notificationBreakfastTitle => 'CalGo Petit déjeuner';
 
   @override
-  String get notificationBreakfastBody => 'Bonjour ! Rappelez-vous de scanner le petit déjeuner afin que vous ayez assez d\'énergie pour la journée.';
+  String get notificationBreakfastBody =>
+      'Bonjour. Pensez à scanner le petit déjeuner afin d\'avoir assez d\'énergie pour la journée.';
 
   @override
-  String get notificationLunchTitle => 'CalGo - Déjeuner';
+  String get notificationLunchTitle => 'CalGo Déjeuner';
 
   @override
-  String get notificationLunchBody => 'C\'est la pause déjeuner. Scannez votre repas en CalGo pour suivre les calories avec précision.';
+  String get notificationLunchBody =>
+      'C\'est la pause déjeuner. Scannez votre repas en CalGo pour suivre les calories avec précision.';
 
   @override
-  String get notificationDinnerTitle => 'CalGo - Dîner';
+  String get notificationDinnerTitle => 'CalGo Dîner';
 
   @override
-  String get notificationDinnerBody => 'Le dîner est prêt ? Scannez-le pour rester sur la bonne voie avec vos objectifs.';
+  String get notificationDinnerBody =>
+      'Quand le dîner est prêt, scannez-le pour rester sur la bonne voie avec vos objectifs.';
 
   @override
   String get notificationDirectChannel => 'Notifications directes';
@@ -1662,7 +1770,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get fatLabel => 'FAT';
 
   @override
-  String get guidanceTodayShortSubtitle => 'Voir les suggestions pour l\'objectif d\'aujourd\'hui';
+  String get guidanceTodayShortSubtitle =>
+      'Voir les suggestions pour l\'objectif d\'aujourd\'hui';
 
   @override
   String get ingredientBeef => 'Viande bovine fraîche';
@@ -1710,7 +1819,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get mockPhoBroth => 'Pho bouillon & pétoncles';
 
   @override
-  String get mockRiceTitle => 'Riz cassé avec porc grillé, peau de porc et gâteau aux œufs';
+  String get mockRiceTitle =>
+      'Riz cassé avec porc grillé, peau de porc et gâteau aux œufs';
 
   @override
   String get mockRice => 'Riz cassé';
@@ -1725,7 +1835,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get mockFriedEgg => 'Oeufs frits';
 
   @override
-  String get mockSaladTitle => 'Salade de poulet avec vinaigrette de fruits passion';
+  String get mockSaladTitle =>
+      'Salade de poulet avec vinaigrette de fruits passion';
 
   @override
   String get mockChicken => 'Poitrine de poulet panachée';
@@ -1742,13 +1853,16 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get motivationAdviceGain => 'Votre objectif calorique est optimisé pour construire le muscle maigre tout en limitant l\'excès de graisse.';
+  String get motivationAdviceGain =>
+      'Votre objectif calorique est optimisé pour construire le muscle maigre tout en limitant l\'excès de graisse.';
 
   @override
-  String get motivationAdviceMaintain => 'Votre poids actuel est dans une gamme saine. Laissez-nous construire des habitudes qui vous aident à sentir votre meilleur chaque jour.';
+  String get motivationAdviceMaintain =>
+      'Votre poids actuel est dans une gamme saine. Laissez-nous construire des habitudes qui vous aident à sentir votre meilleur chaque jour.';
 
   @override
-  String get motivationAdviceDefault => 'Atteindre votre objectif de santé avec des habitudes durables.';
+  String get motivationAdviceDefault =>
+      'Atteindre votre objectif de santé avec des habitudes durables.';
 
   @override
   String get taoAdviceLabel => 'LE CONSEIL DE TAO';
@@ -1794,7 +1908,12 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String galleryMacroSummary(int calories, String carbs, String protein, String fat) {
+  String galleryMacroSummary(
+    int calories,
+    String carbs,
+    String protein,
+    String fat,
+  ) {
     return '$calories kcal • C:${carbs}g P:${protein}g F:${fat}g';
   }
 

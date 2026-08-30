@@ -70,7 +70,8 @@ import 'app_localizations_zh.dart';
 /// be consistent with the languages listed in the AppLocalizations.supportedLocales
 /// property.
 abstract class AppLocalizations {
-  AppLocalizations(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+  AppLocalizations(String locale)
+    : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -78,7 +79,8 @@ abstract class AppLocalizations {
     return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
 
-  static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
+  static const LocalizationsDelegate<AppLocalizations> delegate =
+      _AppLocalizationsDelegate();
 
   /// A list of this localizations delegate along with the default localizations
   /// delegates.
@@ -90,12 +92,13 @@ abstract class AppLocalizations {
   /// Additional delegates can be added by appending to this list in
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
-  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
-    delegate,
-    GlobalMaterialLocalizations.delegate,
-    GlobalCupertinoLocalizations.delegate,
-    GlobalWidgetsLocalizations.delegate,
-  ];
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
+      <LocalizationsDelegate<dynamic>>[
+        delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ];
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
@@ -108,7 +111,7 @@ abstract class AppLocalizations {
     Locale('pt'),
     Locale('ru'),
     Locale('vi'),
-    Locale('zh')
+    Locale('zh'),
   ];
 
   /// No description provided for @tabHome.
@@ -1194,7 +1197,7 @@ abstract class AppLocalizations {
   /// No description provided for @mascotTipHydration.
   ///
   /// In en, this message translates to:
-  /// **'Hydrated yet, bro? Take a sip of water to stay sharp'**
+  /// **'Hydrated yet? Take a sip of water to stay sharp ✨'**
   String get mascotTipHydration;
 
   /// No description provided for @mascotTipChew.
@@ -3180,19 +3183,19 @@ abstract class AppLocalizations {
   /// No description provided for @notificationBreakfastTitle.
   ///
   /// In en, this message translates to:
-  /// **'CalGo - Breakfast'**
+  /// **'CalGo Breakfast'**
   String get notificationBreakfastTitle;
 
   /// No description provided for @notificationBreakfastBody.
   ///
   /// In en, this message translates to:
-  /// **'Good morning! Remember to scan breakfast so you have enough energy for the day.'**
+  /// **'Good morning. Remember to scan breakfast so you have enough energy for the day.'**
   String get notificationBreakfastBody;
 
   /// No description provided for @notificationLunchTitle.
   ///
   /// In en, this message translates to:
-  /// **'CalGo - Lunch'**
+  /// **'CalGo Lunch'**
   String get notificationLunchTitle;
 
   /// No description provided for @notificationLunchBody.
@@ -3204,13 +3207,13 @@ abstract class AppLocalizations {
   /// No description provided for @notificationDinnerTitle.
   ///
   /// In en, this message translates to:
-  /// **'CalGo - Dinner'**
+  /// **'CalGo Dinner'**
   String get notificationDinnerTitle;
 
   /// No description provided for @notificationDinnerBody.
   ///
   /// In en, this message translates to:
-  /// **'Is dinner ready? Scan it to stay on track with your goals.'**
+  /// **'When dinner is ready, scan it to stay on track with your goals.'**
   String get notificationDinnerBody;
 
   /// No description provided for @notificationDirectChannel.
@@ -3481,7 +3484,12 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'{calories} kcal • C:{carbs}g P:{protein}g F:{fat}g'**
-  String galleryMacroSummary(int calories, String carbs, String protein, String fat);
+  String galleryMacroSummary(
+    int calories,
+    String carbs,
+    String protein,
+    String fat,
+  );
 
   /// No description provided for @sharePayload.
   ///
@@ -3490,7 +3498,8 @@ abstract class AppLocalizations {
   String sharePayload(String dish, int calories);
 }
 
-class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
+class _AppLocalizationsDelegate
+    extends LocalizationsDelegate<AppLocalizations> {
   const _AppLocalizationsDelegate();
 
   @override
@@ -3499,33 +3508,52 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
   }
 
   @override
-  bool isSupported(Locale locale) => <String>['ar', 'bn', 'en', 'es', 'fr', 'hi', 'pt', 'ru', 'vi', 'zh'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>[
+    'ar',
+    'bn',
+    'en',
+    'es',
+    'fr',
+    'hi',
+    'pt',
+    'ru',
+    'vi',
+    'zh',
+  ].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
 }
 
 AppLocalizations lookupAppLocalizations(Locale locale) {
-
-
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'ar': return AppLocalizationsAr();
-    case 'bn': return AppLocalizationsBn();
-    case 'en': return AppLocalizationsEn();
-    case 'es': return AppLocalizationsEs();
-    case 'fr': return AppLocalizationsFr();
-    case 'hi': return AppLocalizationsHi();
-    case 'pt': return AppLocalizationsPt();
-    case 'ru': return AppLocalizationsRu();
-    case 'vi': return AppLocalizationsVi();
-    case 'zh': return AppLocalizationsZh();
+    case 'ar':
+      return AppLocalizationsAr();
+    case 'bn':
+      return AppLocalizationsBn();
+    case 'en':
+      return AppLocalizationsEn();
+    case 'es':
+      return AppLocalizationsEs();
+    case 'fr':
+      return AppLocalizationsFr();
+    case 'hi':
+      return AppLocalizationsHi();
+    case 'pt':
+      return AppLocalizationsPt();
+    case 'ru':
+      return AppLocalizationsRu();
+    case 'vi':
+      return AppLocalizationsVi();
+    case 'zh':
+      return AppLocalizationsZh();
   }
 
   throw FlutterError(
     'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
     'an issue with the localizations generation tool. Please file an issue '
     'on GitHub with a reproducible sample app and the gen-l10n configuration '
-    'that was used.'
+    'that was used.',
   );
 }

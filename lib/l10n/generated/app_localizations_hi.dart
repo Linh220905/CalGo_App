@@ -1,5 +1,5 @@
+// ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -42,7 +42,8 @@ class AppLocalizationsHi extends AppLocalizations {
   String get noMealsUploaded => 'अभी तक कोई भोजन अपलोड नहीं हुआ';
 
   @override
-  String get tapToScanMeal => 'AI के साथ अपना पहला भोजन स्कैन करने के लिए टैप करें';
+  String get tapToScanMeal =>
+      'AI के साथ अपना पहला भोजन स्कैन करने के लिए टैप करें';
 
   @override
   String get profileTitle => 'व्यक्तिगत खाता';
@@ -93,7 +94,8 @@ class AppLocalizationsHi extends AppLocalizations {
   String get scanInstructionHeader => 'फ्रेम के भीतर भोजन रखें';
 
   @override
-  String get scanInstructionSub => 'सटीक AI मान्यता के लिए उचित प्रकाश व्यवस्था सुनिश्चित करें';
+  String get scanInstructionSub =>
+      'सटीक AI मान्यता के लिए उचित प्रकाश व्यवस्था सुनिश्चित करें';
 
   @override
   String get selectFromGallery => 'गैलरी';
@@ -102,7 +104,8 @@ class AppLocalizationsHi extends AppLocalizations {
   String get outOfCreditsTitle => 'स्कैन क्रेडिट से बाहर!';
 
   @override
-  String get outOfCreditsMessage => 'आपने अपने सभी स्कैन क्रेडिट का इस्तेमाल किया है। शीर्ष पोषण ट्रैकिंग जारी रखने के लिए!';
+  String get outOfCreditsMessage =>
+      'आपने अपने सभी स्कैन क्रेडिट का इस्तेमाल किया है। शीर्ष पोषण ट्रैकिंग जारी रखने के लिए!';
 
   @override
   String get buyMore => 'खरीदें';
@@ -114,7 +117,8 @@ class AppLocalizationsHi extends AppLocalizations {
   String get pricingTitle => 'अपग्रेड और क्रेडिट';
 
   @override
-  String get pricingSubtitle => 'पूर्ण AI क्षमताओं को अनलॉक करने के लिए सबसे अच्छी योजना चुनें';
+  String get pricingSubtitle =>
+      'पूर्ण AI क्षमताओं को अनलॉक करने के लिए सबसे अच्छी योजना चुनें';
 
   @override
   String get creditPacksTitle => 'क्रेडिट पैकेज स्कैन करें';
@@ -147,19 +151,23 @@ class AppLocalizationsHi extends AppLocalizations {
   String get onlineGuide => 'ऑनलाइन गाइड';
 
   @override
-  String get deleteAccountSubscriptionWarning => 'Deleting your CalGo account does not cancel a Google Play subscription. If you have Premium, cancel it separately in Google Play to avoid a renewal charge.';
+  String get deleteAccountSubscriptionWarning =>
+      'Deleting your CalGo account does not cancel a Google Play subscription. If you have Premium, cancel it separately in Google Play to avoid a renewal charge.';
 
   @override
   String get restorePurchases => 'खरीद पुनर्स्थापना';
 
   @override
-  String get privacyPolicyContent => 'CalGo गोपनीयता नीति (5 अगस्त 2026):\n\n1. डेटा हम एकत्र करते हैं: खाता ईमेल, प्रदर्शन नाम, गूगल साइन-इन पहचानकर्ता, ऑनबोर्डिंग पोषण जानकारी, भोजन फोटो, स्कैन परिणाम, भोजन इतिहास, खरीद मेटाडाटा, ऐप / डिवाइस निदान और अधिसूचना वरीयता।\n2. कैसे अनुमतियों का उपयोग किया जाता है: कैमरा और फोटो एक्सेस केवल तभी अनुरोध किया जाता है जब आप भोजन फोटो को कैप्चर या चयन करना चुनते हैं; सक्षम होने पर केवल अधिसूचनाओं का उपयोग किया जाता है।\n3. कैसे डेटा का उपयोग किया जाता है: AI पोषण विश्लेषण प्रदान करने के लिए, अपने खाते को सिंक करें, Google Play खरीद की प्रक्रिया करें, दुरुपयोग को रोकें, समर्थन प्रदान करें और विश्वसनीयता में सुधार करें। हमारे होस्टिंग और AI सेवा प्रदाताओं द्वारा तस्वीरें संसाधित की जा सकती हैं।\n4. शेयरिंग और सुरक्षा: हम आपके व्यक्तिगत डेटा या भोजन की तस्वीरें नहीं बेचते हैं। होस्टिंग, AI प्रसंस्करण, Google साइन-इन और Google Play बिलिंग जैसे आवश्यक प्रदाता सीमित डेटा की प्रक्रिया कर सकते हैं। हम आईटीटी और एक्सेस कंट्रोल का उपयोग करते हैं, लेकिन कोई सिस्टम पूरी तरह सुरक्षित नहीं है।\n5. प्रतिधारण और हटाने: खाता डेटा और भोजन इतिहास जब आप अपने खाते को हटा देते हैं, तो हटा दिया जाता है। बैकअप समय समाप्त करने के लिए एक उचित समय ले सकता है।\n6. आपके अधिकार: प्रोफ़ाइल में अपने खाते को हटा दें या https://calgo.tech/delete-account. पर पहुंच, सुधार या प्रश्न के लिए, support@calgo.tech से संपर्क करें। पूर्ण नीति: https://calgo.tech/privacy.';
+  String get privacyPolicyContent =>
+      'CalGo गोपनीयता नीति (5 अगस्त 2026):\n\n1. डेटा हम एकत्र करते हैं: खाता ईमेल, प्रदर्शन नाम, गूगल साइन-इन पहचानकर्ता, ऑनबोर्डिंग पोषण जानकारी, भोजन फोटो, स्कैन परिणाम, भोजन इतिहास, खरीद मेटाडाटा, ऐप / डिवाइस निदान और अधिसूचना वरीयता।\n2. कैसे अनुमतियों का उपयोग किया जाता है: कैमरा और फोटो एक्सेस केवल तभी अनुरोध किया जाता है जब आप भोजन फोटो को कैप्चर या चयन करना चुनते हैं; सक्षम होने पर केवल अधिसूचनाओं का उपयोग किया जाता है।\n3. कैसे डेटा का उपयोग किया जाता है: AI पोषण विश्लेषण प्रदान करने के लिए, अपने खाते को सिंक करें, Google Play खरीद की प्रक्रिया करें, दुरुपयोग को रोकें, समर्थन प्रदान करें और विश्वसनीयता में सुधार करें। हमारे होस्टिंग और AI सेवा प्रदाताओं द्वारा तस्वीरें संसाधित की जा सकती हैं।\n4. शेयरिंग और सुरक्षा: हम आपके व्यक्तिगत डेटा या भोजन की तस्वीरें नहीं बेचते हैं। होस्टिंग, AI प्रसंस्करण, Google साइन-इन और Google Play बिलिंग जैसे आवश्यक प्रदाता सीमित डेटा की प्रक्रिया कर सकते हैं। हम आईटीटी और एक्सेस कंट्रोल का उपयोग करते हैं, लेकिन कोई सिस्टम पूरी तरह सुरक्षित नहीं है।\n5. प्रतिधारण और हटाने: खाता डेटा और भोजन इतिहास जब आप अपने खाते को हटा देते हैं, तो हटा दिया जाता है। बैकअप समय समाप्त करने के लिए एक उचित समय ले सकता है।\n6. आपके अधिकार: प्रोफ़ाइल में अपने खाते को हटा दें या https://calgo.tech/delete-account. पर पहुंच, सुधार या प्रश्न के लिए, support@calgo.tech से संपर्क करें। पूर्ण नीति: https://calgo.tech/privacy.';
 
   @override
-  String get termsOfServiceContent => 'CalGo Terms of Service:\n\n1. Service and medical disclaimer: AI nutrition results are estimates for reference only and do not replace professional medical advice. CalGo is not a medical device.\n2. Payments: credit packs are one-time digital purchases. Premium weekly, monthly and annual plans are auto-renewing Google Play subscriptions unless cancelled before the next renewal. Manage or cancel at https://play.google.com/store/account/subscriptions.\n3. Refunds and deletion: Google Play handles Android billing and refunds. Deleting a CalGo account does not cancel a Google Play subscription.\n4. Content and intellectual property: you retain ownership of uploaded photos; CalGo receives a limited license to process them to provide and improve the service. CalGo owns its app, branding and software.\n5. Contact: support@calgo.tech. Full terms: https://calgo.tech/terms.';
+  String get termsOfServiceContent =>
+      'CalGo Terms of Service:\n\n1. Service and medical disclaimer: AI nutrition results are estimates for reference only and do not replace professional medical advice. CalGo is not a medical device.\n2. Payments: credit packs are one-time digital purchases. Premium weekly, monthly and annual plans are auto-renewing Google Play subscriptions unless cancelled before the next renewal. Manage or cancel at https://play.google.com/store/account/subscriptions.\n3. Refunds and deletion: Google Play handles Android billing and refunds. Deleting a CalGo account does not cancel a Google Play subscription.\n4. Content and intellectual property: you retain ownership of uploaded photos; CalGo receives a limited license to process them to provide and improve the service. CalGo owns its app, branding and software.\n5. Contact: support@calgo.tech. Full terms: https://calgo.tech/terms.';
 
   @override
-  String get deleteAccountConfirmMessage => 'क्या आप अपने CalGo खाते और सभी कैलोरी लॉग डेटा को स्थायी रूप से हटाना चाहते हैं? यह कार्रवाई नहीं की जा सकती है।';
+  String get deleteAccountConfirmMessage =>
+      'क्या आप अपने CalGo खाते और सभी कैलोरी लॉग डेटा को स्थायी रूप से हटाना चाहते हैं? यह कार्रवाई नहीं की जा सकती है।';
 
   @override
   String get historyTitle => 'भोजन इतिहास';
@@ -183,7 +191,8 @@ class AppLocalizationsHi extends AppLocalizations {
   String get noMealsHistory => 'अभी तक कोई भोजन लॉग नहीं है';
 
   @override
-  String get scanFirstMealPrompt => 'शुरू करने के लिए अपना पहला भोजन स्कैन करें\nआपका पोषण यात्रा';
+  String get scanFirstMealPrompt =>
+      'शुरू करने के लिए अपना पहला भोजन स्कैन करें\nआपका पोषण यात्रा';
 
   @override
   String get scanFirstMealButton => 'स्कैन फर्स्ट मील';
@@ -192,7 +201,8 @@ class AppLocalizationsHi extends AppLocalizations {
   String get deleteMealConfirm => 'क्या आप इस भोजन को हटाना चाहते हैं?';
 
   @override
-  String get cannotDeleteMeal => 'भोजन को नष्ट नहीं कर सकता। फिर से प्रयास करें।';
+  String get cannotDeleteMeal =>
+      'भोजन को नष्ट नहीं कर सकता। फिर से प्रयास करें।';
 
   @override
   String get photoGalleryTitle => 'खाद्य तस्वीरें';
@@ -201,7 +211,8 @@ class AppLocalizationsHi extends AppLocalizations {
   String get noPhotosYet => 'अभी तक कोई खाद्य स्कैन फोटो नहीं';
 
   @override
-  String get takePhotosPrompt => 'अपने संग्रह के निर्माण के लिए अपने भोजन की तस्वीर!';
+  String get takePhotosPrompt =>
+      'अपने संग्रह के निर्माण के लिए अपने भोजन की तस्वीर!';
 
   @override
   String get scanFoodNow => 'अब भोजन स्कैन करें';
@@ -216,19 +227,22 @@ class AppLocalizationsHi extends AppLocalizations {
   String get snapPhotoAiTitle => 'तस्वीर AI कार्य करते हैं।';
 
   @override
-  String get snapPhotoAiDesc => 'AI स्वचालित रूप से भोजन को पहचानता है और सेकंड में कैलोरी की गणना करता है।';
+  String get snapPhotoAiDesc =>
+      'AI स्वचालित रूप से भोजन को पहचानता है और सेकंड में कैलोरी की गणना करता है।';
 
   @override
   String get trackEasilyTitle => 'आसानी से ट्रैक करें।';
 
   @override
-  String get trackEasilyDesc => 'प्रत्येक दिन कैलोरी, प्रोटीन, कार्बोहाइड्रेट और वसा को ट्रैक करें।';
+  String get trackEasilyDesc =>
+      'प्रत्येक दिन कैलोरी, प्रोटीन, कार्बोहाइड्रेट और वसा को ट्रैक करें।';
 
   @override
   String get reachGoalsTitle => 'तेजी से लक्ष्य तक पहुंचें।';
 
   @override
-  String get reachGoalsDesc => 'व्यक्तिगत लक्ष्य प्राप्त करें और वसा हानि की प्रगति को ट्रैक करें।';
+  String get reachGoalsDesc =>
+      'व्यक्तिगत लक्ष्य प्राप्त करें और वसा हानि की प्रगति को ट्रैक करें।';
 
   @override
   String get nextStepButton => 'अगला';
@@ -237,7 +251,8 @@ class AppLocalizationsHi extends AppLocalizations {
   String get goalStepTitle => 'आपका लक्ष्य क्या है?';
 
   @override
-  String get goalStepSubtitle => 'CalGo एक ऐसी योजना बनाने में मदद करता है जो आपको फिट बैठता है';
+  String get goalStepSubtitle =>
+      'CalGo एक ऐसी योजना बनाने में मदद करता है जो आपको फिट बैठता है';
 
   @override
   String get goalLoseWeight => 'वजन घटाना';
@@ -246,7 +261,8 @@ class AppLocalizationsHi extends AppLocalizations {
   String get goalLoseWeightDesc => 'कुशलतापूर्वक जलाना, टोन बॉडी';
 
   @override
-  String get goalLoseWeightReason => 'यह हमें एक वसा हानि योजना बनाने में मदद करता है जो मांसपेशी की रक्षा करता है और टिकाऊ रहता है।';
+  String get goalLoseWeightReason =>
+      'यह हमें एक वसा हानि योजना बनाने में मदद करता है जो मांसपेशी की रक्षा करता है और टिकाऊ रहता है।';
 
   @override
   String get goalGainMuscle => 'मांसपेशी लाभ';
@@ -255,7 +271,8 @@ class AppLocalizationsHi extends AppLocalizations {
   String get goalGainMuscleDesc => 'मांसपेशियों का निर्माण और ताकत बढ़ाने';
 
   @override
-  String get goalGainMuscleReason => 'यह हमें अपने प्रशिक्षण और प्रोटीन की जरूरतों के आसपास एक मांसपेशी लाभ योजना बनाने में मदद करता है।';
+  String get goalGainMuscleReason =>
+      'यह हमें अपने प्रशिक्षण और प्रोटीन की जरूरतों के आसपास एक मांसपेशी लाभ योजना बनाने में मदद करता है।';
 
   @override
   String get goalMaintain => 'वजन बनाए रखें';
@@ -264,7 +281,8 @@ class AppLocalizationsHi extends AppLocalizations {
   String get goalMaintainDesc => 'अपने संतुलित काया रखें';
 
   @override
-  String get goalMaintainReason => 'यह हमें एक संतुलित योजना बनाने में मदद करता है जो आपके जीवन को लंबे समय तक फिट बैठता है।';
+  String get goalMaintainReason =>
+      'यह हमें एक संतुलित योजना बनाने में मदद करता है जो आपके जीवन को लंबे समय तक फिट बैठता है।';
 
   @override
   String get nameStepTitle => 'आपका नाम है...';
@@ -321,10 +339,12 @@ class AppLocalizationsHi extends AppLocalizations {
   String get continueWithApple => 'सेब के साथ जारी';
 
   @override
-  String get heightStepDesc => 'BMI और सटीक कैलोरी जरूरतों की गणना करने में मदद करता है';
+  String get heightStepDesc =>
+      'BMI और सटीक कैलोरी जरूरतों की गणना करने में मदद करता है';
 
   @override
-  String get weightStepDesc => 'अपने व्यक्तिगत पोषण लक्ष्यों को निर्धारित करने में मदद करता है';
+  String get weightStepDesc =>
+      'अपने व्यक्तिगत पोषण लक्ष्यों को निर्धारित करने में मदद करता है';
 
   @override
   String get currentHeightHeader => 'वर्तमान ऊंचाई';
@@ -348,7 +368,8 @@ class AppLocalizationsHi extends AppLocalizations {
   String get bmiObese => 'ओबी';
 
   @override
-  String get targetWeightDesc => 'अपने व्यक्तिगत पोषण लक्ष्य निर्धारित करने में मदद करता है';
+  String get targetWeightDesc =>
+      'अपने व्यक्तिगत पोषण लक्ष्य निर्धारित करने में मदद करता है';
 
   @override
   String get goalMaintainLabel => 'शरीर सौष्ठव';
@@ -379,10 +400,12 @@ class AppLocalizationsHi extends AppLocalizations {
   String get paceStepSubtitle => 'अपनी जीवनशैली के लिए एक आरामदायक दर चुनें';
 
   @override
-  String get activityStepSubtitle => 'अपने दैनिक कैलोरी व्यय को प्रभावित करता है';
+  String get activityStepSubtitle =>
+      'अपने दैनिक कैलोरी व्यय को प्रभावित करता है';
 
   @override
-  String get dietStepSubtitle => 'CalGo अपने शरीर और लक्ष्यों के लिए सबसे उपयुक्त भोजन की सिफारिश करता है।';
+  String get dietStepSubtitle =>
+      'CalGo अपने शरीर और लक्ष्यों के लिए सबसे उपयुक्त भोजन की सिफारिश करता है।';
 
   @override
   String get socialProofTitle => 'CalGo के बारे में समुदाय क्या कहता है';
@@ -482,10 +505,12 @@ class AppLocalizationsHi extends AppLocalizations {
   String get appleComingSoon => 'एप्पल साइन-इन जल्द ही आ रहा है!';
 
   @override
-  String get loginRequired => 'कृपया अपने डेटा की रक्षा और सिंक करने के लिए गूगल के साथ साइन इन करें।';
+  String get loginRequired =>
+      'कृपया अपने डेटा की रक्षा और सिंक करने के लिए गूगल के साथ साइन इन करें।';
 
   @override
-  String get loginRequiredButton => 'डेटा को सिंक करने के लिए साइन इन करना आवश्यक है';
+  String get loginRequiredButton =>
+      'डेटा को सिंक करने के लिए साइन इन करना आवश्यक है';
 
   @override
   String get progressLabel => 'प्रगति';
@@ -497,7 +522,8 @@ class AppLocalizationsHi extends AppLocalizations {
   String get deleteMealQuestion => 'क्या आप इस भोजन को हटाना चाहते हैं?';
 
   @override
-  String get deleteMealFailed => 'भोजन को नष्ट नहीं कर सकता। फिर से प्रयास करें।';
+  String get deleteMealFailed =>
+      'भोजन को नष्ट नहीं कर सकता। फिर से प्रयास करें।';
 
   @override
   String get retry => 'फिर से कोशिश करो';
@@ -536,25 +562,31 @@ class AppLocalizationsHi extends AppLocalizations {
   String get mascotGoalTipWater => 'ताजा रहने के लिए पानी की एक चुटकी पीना!';
 
   @override
-  String get mascotGoalTipSlow => 'धीरे-धीरे भोजन करना और अपने शरीर को सुनना भयानक है।';
+  String get mascotGoalTipSlow =>
+      'धीरे-धीरे भोजन करना और अपने शरीर को सुनना भयानक है।';
 
   @override
   String get mascotGoalTipGreat => 'आपने आज बहुत अच्छा किया';
 
   @override
-  String get mascotGoalReached => 'Calorie लक्ष्य आज के लिए पहुंच गया! इस गति को रखना शीर्ष स्तरीय है';
+  String get mascotGoalReached =>
+      'Calorie लक्ष्य आज के लिए पहुंच गया! इस गति को रखना शीर्ष स्तरीय है';
 
   @override
-  String get mascotGuidanceIntro => 'मैंने आज आपके लिए कुछ अच्छा भोजन लिया। उन्हें जांचने के लिए टैप करें!';
+  String get mascotGuidanceIntro =>
+      'मैंने आज आपके लिए कुछ अच्छा भोजन लिया। उन्हें जांचने के लिए टैप करें!';
 
   @override
-  String get mascotGuidanceOpen => 'अनुशंसित व्यंजन अभी भी सुझाव स्क्रीन में हैं!';
+  String get mascotGuidanceOpen =>
+      'अनुशंसित व्यंजन अभी भी सुझाव स्क्रीन में हैं!';
 
   @override
-  String get mascotGuidanceTipWater => 'क्या आप पर्याप्त पानी पीते हैं? ताज़ा करने के लिए एक sip है!';
+  String get mascotGuidanceTipWater =>
+      'क्या आप पर्याप्त पानी पीते हैं? ताज़ा करने के लिए एक sip है!';
 
   @override
-  String get mascotGuidanceTipSlow => 'धीरे-धीरे खाओ, आप लंबे समय तक पूर्ण महसूस करेंगे!';
+  String get mascotGuidanceTipSlow =>
+      'धीरे-धीरे खाओ, आप लंबे समय तक पूर्ण महसूस करेंगे!';
 
   @override
   String mascotGuidanceOverTarget(int calories) {
@@ -567,16 +599,19 @@ class AppLocalizationsHi extends AppLocalizations {
   }
 
   @override
-  String get mascotTipHydration => 'अभी तक Hydrated, bro? तेज रहने के लिए पानी की एक चुटकी लें';
+  String get mascotTipHydration =>
+      'अभी तक Hydrated, bro? तेज रहने के लिए पानी की एक चुटकी लें';
 
   @override
-  String get mascotTipChew => 'धीरे-धीरे, यह पाचन में मदद करता है और आपको पूर्ण रखता है';
+  String get mascotTipChew =>
+      'धीरे-धीरे, यह पाचन में मदद करता है और आपको पूर्ण रखता है';
 
   @override
   String get mascotTipConsistency => 'हर दिन संगतता एक महान काया बनाता है';
 
   @override
-  String get mascotNoMeals => 'अभी तक कुछ लॉग नहीं है? मुझे दिखाने के लिए एक खाद्य फोटो स्नैप करें!';
+  String get mascotNoMeals =>
+      'अभी तक कुछ लॉग नहीं है? मुझे दिखाने के लिए एक खाद्य फोटो स्नैप करें!';
 
   @override
   String mascotOverTarget(int calories) {
@@ -656,28 +691,35 @@ class AppLocalizationsHi extends AppLocalizations {
   String get scanProcessingReport => 'रिपोर्ट तैयार करना...';
 
   @override
-  String get cameraPermissionDenied => 'कैमरा अनुमति को अस्वीकार कर दिया गया था। ओपन सेटिंग्स और CalGo के लिए कैमरा एक्सेस की अनुमति!';
+  String get cameraPermissionDenied =>
+      'कैमरा अनुमति को अस्वीकार कर दिया गया था। ओपन सेटिंग्स और CalGo के लिए कैमरा एक्सेस की अनुमति!';
 
   @override
-  String get cameraPermissionRequired => 'CalGo को भोजन को स्कैन करने के लिए कैमरा अनुमति की आवश्यकता होती है।';
+  String get cameraPermissionRequired =>
+      'CalGo को भोजन को स्कैन करने के लिए कैमरा अनुमति की आवश्यकता होती है।';
 
   @override
   String get noCamera => 'कोई कैमरा नहीं मिला';
 
   @override
-  String get cameraStartFailed => 'कैमरा शुरू नहीं हो सका। इस स्क्रीन को बंद करें और फिर से कोशिश करें!';
+  String get cameraStartFailed =>
+      'कैमरा शुरू नहीं हो सका। इस स्क्रीन को बंद करें और फिर से कोशिश करें!';
 
   @override
-  String get scanInProgress => 'अन्य भोजन का विश्लेषण किया जा रहा है। कृपया एक पल प्रतीक्षा करें!';
+  String get scanInProgress =>
+      'अन्य भोजन का विश्लेषण किया जा रहा है। कृपया एक पल प्रतीक्षा करें!';
 
   @override
-  String get notLoggedIn => 'आप में हस्ताक्षर नहीं कर रहे हैं। गूगल के साथ इस सुविधा का उपयोग करने के लिए साइन इन करें!';
+  String get notLoggedIn =>
+      'आप में हस्ताक्षर नहीं कर रहे हैं। गूगल के साथ इस सुविधा का उपयोग करने के लिए साइन इन करें!';
 
   @override
-  String get cameraPermissionMissing => 'कैमरा अनुमति सक्षम नहीं है। फोन सेटिंग्स में CalGo के लिए कैमरा एक्सेस की अनुमति दें!';
+  String get cameraPermissionMissing =>
+      'कैमरा अनुमति सक्षम नहीं है। फोन सेटिंग्स में CalGo के लिए कैमरा एक्सेस की अनुमति दें!';
 
   @override
-  String get networkTimeout => 'नेटवर्क धीमा या समयबद्ध है। अपने कनेक्शन की जाँच करें और फिर से प्रयास करें!';
+  String get networkTimeout =>
+      'नेटवर्क धीमा या समयबद्ध है। अपने कनेक्शन की जाँच करें और फिर से प्रयास करें!';
 
   @override
   String scanFailed(String error) {
@@ -719,7 +761,8 @@ class AppLocalizationsHi extends AppLocalizations {
   String get guidanceSeeMore => 'और देखें';
 
   @override
-  String get guidanceDisclaimer => 'सुझाव केवल संदर्भ के लिए हैं। इसे सही ढंग से लॉग करने के लिए वास्तविक भोजन को स्कैन करें।';
+  String get guidanceDisclaimer =>
+      'सुझाव केवल संदर्भ के लिए हैं। इसे सही ढंग से लॉग करने के लिए वास्तविक भोजन को स्कैन करें।';
 
   @override
   String get guidanceFamiliarTag => 'फैमिलियर';
@@ -780,7 +823,8 @@ class AppLocalizationsHi extends AppLocalizations {
   String get guidanceUnavailableTitle => 'अभी तक कोई सुझाव नहीं';
 
   @override
-  String get guidanceUnavailableMessage => 'भोजन को स्कैन करने के बाद फिर से कोशिश करें।';
+  String get guidanceUnavailableMessage =>
+      'भोजन को स्कैन करने के बाद फिर से कोशिश करें।';
 
   @override
   String get guidanceScanMeal => 'भोजन स्कैन करें';
@@ -801,7 +845,8 @@ class AppLocalizationsHi extends AppLocalizations {
   String get guidancePremiumSwapTitle => 'परिवर्तन सुझाव एक प्रीमियम सुविधा है';
 
   @override
-  String get guidancePremiumSwapMessage => 'अपने लक्ष्यों के आधार पर सीमा के बिना भोजन सुझाव बदलने के लिए प्रीमियम में अपग्रेड करें।';
+  String get guidancePremiumSwapMessage =>
+      'अपने लक्ष्यों के आधार पर सीमा के बिना भोजन सुझाव बदलने के लिए प्रीमियम में अपग्रेड करें।';
 
   @override
   String get later => 'बाद में';
@@ -813,7 +858,8 @@ class AppLocalizationsHi extends AppLocalizations {
   String get guidanceTodayTitle => 'आज के लिए व्यक्तिगत सुझाव';
 
   @override
-  String get guidanceTodaySubtitle => 'एक ऐसा भोजन चुनें जो आपके मैक्रो फिट बैठता है, फिर इसे लॉग करने से पहले वास्तविक भोजन को स्कैन करें।';
+  String get guidanceTodaySubtitle =>
+      'एक ऐसा भोजन चुनें जो आपके मैक्रो फिट बैठता है, फिर इसे लॉग करने से पहले वास्तविक भोजन को स्कैन करें।';
 
   @override
   String get guidanceScanRealMeal => 'वास्तविक भोजन को स्कैन करें';
@@ -874,7 +920,8 @@ class AppLocalizationsHi extends AppLocalizations {
   String get goalSpecificGain5 => '5+ सत्र';
 
   @override
-  String get goalSpecificMaintainTitle => 'आपके आकार को बनाए रखने के लिए क्या मायने रखता है?';
+  String get goalSpecificMaintainTitle =>
+      'आपके आकार को बनाए रखने के लिए क्या मायने रखता है?';
 
   @override
   String get goalSpecificStable => 'मेरा वजन स्थिर रखें';
@@ -910,7 +957,8 @@ class AppLocalizationsHi extends AppLocalizations {
   String get goalSpecificWeekendsHard => 'सप्ताहांत मुश्किल है';
 
   @override
-  String get avoidFoodsTitle => 'क्या आपके पास किसी भी खाद्य पदार्थ या पदार्थ से एलर्जी है?';
+  String get avoidFoodsTitle =>
+      'क्या आपके पास किसी भी खाद्य पदार्थ या पदार्थ से एलर्जी है?';
 
   @override
   String get foodSeafood => 'समुद्री भोजन';
@@ -955,7 +1003,8 @@ class AppLocalizationsHi extends AppLocalizations {
   String get budgetTitle => 'एक भोजन के लिए आपका बजट क्या है?';
 
   @override
-  String get budgetNote => 'CalGo पूछता है तो यह भोजन सुझाव दे सकता है जो आपके लक्ष्यों और बजट को फिट करता है।';
+  String get budgetNote =>
+      'CalGo पूछता है तो यह भोजन सुझाव दे सकता है जो आपके लक्ष्यों और बजट को फिट करता है।';
 
   @override
   String get budgetLow => '30,000';
@@ -985,7 +1034,8 @@ class AppLocalizationsHi extends AppLocalizations {
   String get prepTitle => 'कितना समय आपको एक भोजन तैयार करना है?';
 
   @override
-  String get prepNote => 'CalGo पूछता है तो यह भोजन सुझाव दे सकता है जो आपके शेड्यूल को फिट करता है।';
+  String get prepNote =>
+      'CalGo पूछता है तो यह भोजन सुझाव दे सकता है जो आपके शेड्यूल को फिट करता है।';
 
   @override
   String get prepShort => '10 मिनट';
@@ -1012,16 +1062,19 @@ class AppLocalizationsHi extends AppLocalizations {
   String get prepAnyNote => 'जब तक यह मेरे लक्ष्यों को फिट बैठता है';
 
   @override
-  String get nutritionPriorityTitle => 'क्या आप भोजन में प्राथमिकता प्राप्त करते हैं?';
+  String get nutritionPriorityTitle =>
+      'क्या आप भोजन में प्राथमिकता प्राप्त करते हैं?';
 
   @override
-  String get nutritionPriorityNote => 'CalGo पूछता है तो यह आपको सामान्य सुझाव नहीं देता है।';
+  String get nutritionPriorityNote =>
+      'CalGo पूछता है तो यह आपको सामान्य सुझाव नहीं देता है।';
 
   @override
   String get priorityProtein => 'उच्च प्रोटीन';
 
   @override
-  String get priorityProteinNote => 'पूर्णता और मांसपेशी वसूली का समर्थन करता है';
+  String get priorityProteinNote =>
+      'पूर्णता और मांसपेशी वसूली का समर्थन करता है';
 
   @override
   String get priorityLight => 'हल्की कैलोरी';
@@ -1039,13 +1092,15 @@ class AppLocalizationsHi extends AppLocalizations {
   String get priorityFilling => 'मुझे पूर्ण रखें';
 
   @override
-  String get priorityFillingNote => 'प्रोटीन और पर्याप्त कार्बोहाइड्रेट को प्राथमिकता दें';
+  String get priorityFillingNote =>
+      'प्रोटीन और पर्याप्त कार्बोहाइड्रेट को प्राथमिकता दें';
 
   @override
   String get habitTitle => 'आपकी आदत क्या है?';
 
   @override
-  String get habitNote => 'CalGo पूछता है तो यह भोजन सुझाव दे सकता है जो आपकी जीवनशैली को फिट करता है।';
+  String get habitNote =>
+      'CalGo पूछता है तो यह भोजन सुझाव दे सकता है जो आपकी जीवनशैली को फिट करता है।';
 
   @override
   String get habitRegular => 'मैं नियमित, संतुलित भोजन खाता हूँ';
@@ -1102,7 +1157,8 @@ class AppLocalizationsHi extends AppLocalizations {
   String get painGiveUp => 'कुछ दिनों के बाद देना';
 
   @override
-  String get painUnknownCalories => 'मैं कितनी कैलोरी खाने के बारे में नहीं जानता';
+  String get painUnknownCalories =>
+      'मैं कितनी कैलोरी खाने के बारे में नहीं जानता';
 
   @override
   String get painHungry => 'के माध्यम से भूख आधे रास्ते जाओ';
@@ -1120,7 +1176,8 @@ class AppLocalizationsHi extends AppLocalizations {
   String get emotionalAfterSixMonths => '6 महीने बाद';
 
   @override
-  String get emotionalStillWeight => 'आप अपने वर्तमान वजन के आसपास रह सकते हैं। CalGo के साथ, आप बदल सकते हैं।';
+  String get emotionalStillWeight =>
+      'आप अपने वर्तमान वजन के आसपास रह सकते हैं। CalGo के साथ, आप बदल सकते हैं।';
 
   @override
   String get emotionalHelpChange => 'मैं आपकी मदद करेगा';
@@ -1173,7 +1230,8 @@ class AppLocalizationsHi extends AppLocalizations {
   String get reminderNotifications => 'अनुस्मारक सूचनाएं';
 
   @override
-  String get reminderNotificationsEnabled => 'भोजन अनुस्मारक और दैनिक कैलोरी ट्रैकिंग अधिसूचनाओं को स्वचालित रूप से सक्षम किया गया है।';
+  String get reminderNotificationsEnabled =>
+      'भोजन अनुस्मारक और दैनिक कैलोरी ट्रैकिंग अधिसूचनाओं को स्वचालित रूप से सक्षम किया गया है।';
 
   @override
   String get gotIt => 'यह';
@@ -1182,16 +1240,19 @@ class AppLocalizationsHi extends AppLocalizations {
   String get userGuideTitle => 'CalGo का उपयोग कैसे करें';
 
   @override
-  String get userGuideContent => '1. एक भोजन तस्वीर को पकड़ने या चुनने के लिए स्कैन (+) को टैप करें।\n2. AI स्वचालित रूप से कैलोरी और पोषण का विश्लेषण करता है।\n3. बचत से पहले मात्रा संपादित करें या सामग्री जोड़ें।\n4. इतिहास टैब में अपने भोजन इतिहास की समीक्षा करें।';
+  String get userGuideContent =>
+      '1. एक भोजन तस्वीर को पकड़ने या चुनने के लिए स्कैन (+) को टैप करें।\n2. AI स्वचालित रूप से कैलोरी और पोषण का विश्लेषण करता है।\n3. बचत से पहले मात्रा संपादित करें या सामग्री जोड़ें।\n4. इतिहास टैब में अपने भोजन इतिहास की समीक्षा करें।';
 
   @override
   String get great => 'महान';
 
   @override
-  String get customerSupportMessage => 'मदद या उत्पाद प्रतिक्रिया के लिए, हमें ईमेल करें: support@calgo.tech';
+  String get customerSupportMessage =>
+      'मदद या उत्पाद प्रतिक्रिया के लिए, हमें ईमेल करें: support@calgo.tech';
 
   @override
-  String get deleteAccountFailed => 'खाते को हटा नहीं सकता। ऑनलाइन गाइड या संपर्क समर्थन देखें।';
+  String get deleteAccountFailed =>
+      'खाते को हटा नहीं सकता। ऑनलाइन गाइड या संपर्क समर्थन देखें।';
 
   @override
   String get galleryLoadFailed => 'फोटो संग्रह लोड नहीं कर सकता';
@@ -1220,10 +1281,12 @@ class AppLocalizationsHi extends AppLocalizations {
   String get deleteFailed => 'इसे हटा नहीं सकता। फिर से प्रयास करें।';
 
   @override
-  String get paymentProcessing => 'Google Play के माध्यम से प्रसंस्करण भुगतान ...';
+  String get paymentProcessing =>
+      'Google Play के माध्यम से प्रसंस्करण भुगतान ...';
 
   @override
-  String get paymentOpenFailed => 'Google Play भुगतान नहीं खोल सका। फिर से प्रयास करें।';
+  String get paymentOpenFailed =>
+      'Google Play भुगतान नहीं खोल सका। फिर से प्रयास करें।';
 
   @override
   String errorWithDetails(String error) {
@@ -1239,7 +1302,8 @@ class AppLocalizationsHi extends AppLocalizations {
   String get permanentCredits => 'स्कैन कभी समाप्त नहीं';
 
   @override
-  String get testingFreeCredits => 'Testing build: Premium scans are free. No Google Play payment is made.';
+  String get testingFreeCredits =>
+      'Testing build: Premium scans are free. No Google Play payment is made.';
 
   @override
   String get restoreSuccess => 'खरीदी बहाली सफलतापूर्वक जांच!';
@@ -1463,10 +1527,12 @@ class AppLocalizationsHi extends AppLocalizations {
   String get proteinLabel => 'प्रोटीन';
 
   @override
-  String get onboardingSaveFailed => 'अपने पोषण लक्ष्य को नहीं बचा सकता। फिर से प्रयास करें।';
+  String get onboardingSaveFailed =>
+      'अपने पोषण लक्ष्य को नहीं बचा सकता। फिर से प्रयास करें।';
 
   @override
-  String get onboardingSaveNetworkFailed => 'अपने पोषण लक्ष्य को नहीं बचा सकता। अपने कनेक्शन की जाँच करें और फिर से प्रयास करें।';
+  String get onboardingSaveNetworkFailed =>
+      'अपने पोषण लक्ष्य को नहीं बचा सकता। अपने कनेक्शन की जाँच करें और फिर से प्रयास करें।';
 
   @override
   String googleSignInFailed(String error) {
@@ -1474,7 +1540,8 @@ class AppLocalizationsHi extends AppLocalizations {
   }
 
   @override
-  String get appleSignInPending => 'एप्पल साइन-इन अभी भी पूरा किया जा रहा है। अब Google का उपयोग करें।';
+  String get appleSignInPending =>
+      'एप्पल साइन-इन अभी भी पूरा किया जा रहा है। अब Google का उपयोग करें।';
 
   @override
   String get firstScanTitle => 'अपने पहले भोजन को स्कैन करने के लिए तैयार?';
@@ -1498,7 +1565,8 @@ class AppLocalizationsHi extends AppLocalizations {
   String get socialProofOneTitle => 'वियतनामी खाद्य मान्यता पर स्पॉट है!';
 
   @override
-  String get socialProofOneBody => 'मैं विदेशी क्षुधा में pho और bun cha ट्रैकिंग संघर्ष करने के लिए इस्तेमाल किया। CalGo एक तस्वीर से सही ढंग से वियतनामी व्यंजनों और कैलोरी को पहचानता है। 10/10!';
+  String get socialProofOneBody =>
+      'मैं विदेशी क्षुधा में pho और bun cha ट्रैकिंग संघर्ष करने के लिए इस्तेमाल किया। CalGo एक तस्वीर से सही ढंग से वियतनामी व्यंजनों और कैलोरी को पहचानता है। 10/10!';
 
   @override
   String get socialProofTwoTag => 'प्राप्त 4 kg मांसपेशी';
@@ -1510,7 +1578,8 @@ class AppLocalizationsHi extends AppLocalizations {
   String get socialProofTwoTitle => 'चिकना यूआई और सटीक TDEE';
 
   @override
-  String get socialProofTwoBody => 'BMI ट्रैकिंग और मैक्रो सुझाव विस्तृत हैं। मैं हर दिन कैलोरी को प्रशिक्षित और ट्रैक करता हूं, और मेरा शरीर एक महीने के बाद मजबूत दिखता है।';
+  String get socialProofTwoBody =>
+      'BMI ट्रैकिंग और मैक्रो सुझाव विस्तृत हैं। मैं हर दिन कैलोरी को प्रशिक्षित और ट्रैक करता हूं, और मेरा शरीर एक महीने के बाद मजबूत दिखता है।';
 
   @override
   String get socialProofThreeTag => 'मेरे आकार को बनाए रखा';
@@ -1522,10 +1591,12 @@ class AppLocalizationsHi extends AppLocalizations {
   String get socialProofThreeTitle => 'स्वस्थ भोजन आदतों का निर्माण';
 
   @override
-  String get socialProofThreeBody => 'Tao की याद दिलाने वाले आराध्य हैं। यह ऐप कभी चरम आहार को धक्का नहीं देता है; यह मुझे संतुलित पोषण की दिशा में मार्गदर्शन करता है।';
+  String get socialProofThreeBody =>
+      'Tao की याद दिलाने वाले आराध्य हैं। यह ऐप कभी चरम आहार को धक्का नहीं देता है; यह मुझे संतुलित पोषण की दिशा में मार्गदर्शन करता है।';
 
   @override
-  String get premiumActivatedMessage => 'प्रीमियम सक्रिय है। अपने भोजन का आनंद लें!';
+  String get premiumActivatedMessage =>
+      'प्रीमियम सक्रिय है। अपने भोजन का आनंद लें!';
 
   @override
   String get premiumPaymentFailed => 'प्रीमियम भुगतान नहीं खोल सकता।';
@@ -1549,7 +1620,8 @@ class AppLocalizationsHi extends AppLocalizations {
   String get subscribePremium => 'प्रीमियम की सदस्यता लें';
 
   @override
-  String get premiumTestingNote => 'परीक्षण निर्माण: प्रीमियम मुफ्त है। कोई भुगतान नहीं किया जाता है।';
+  String get premiumTestingNote =>
+      'परीक्षण निर्माण: प्रीमियम मुफ्त है। कोई भुगतान नहीं किया जाता है।';
 
   @override
   String get premiumNoChargeNote => 'इस कदम पर आपको शुल्क नहीं लिया जाएगा।';
@@ -1567,19 +1639,23 @@ class AppLocalizationsHi extends AppLocalizations {
   String get yourExperience => 'आपका\nअनुभव';
 
   @override
-  String get premiumBenefitCalories => 'तुरंत अपनी कैलोरी जानें - असीमित AI स्कैन';
+  String get premiumBenefitCalories =>
+      'तुरंत अपनी कैलोरी जानें - असीमित AI स्कैन';
 
   @override
-  String get premiumBenefitSuggestions => 'अपने दैनिक लक्ष्य के अनुरूप असीमित भोजन सुझाव';
+  String get premiumBenefitSuggestions =>
+      'अपने दैनिक लक्ष्य के अनुरूप असीमित भोजन सुझाव';
 
   @override
-  String get premiumBenefitDescriptions => 'मैनुअल प्रविष्टि के बिना AI भोजन विवरण';
+  String get premiumBenefitDescriptions =>
+      'मैनुअल प्रविष्टि के बिना AI भोजन विवरण';
 
   @override
   String get premiumBenefitProgress => 'हर दिन अपने शरीर की प्रगति ट्रैक करें';
 
   @override
-  String get premiumBenefitSupport => 'जब भी आपको इसकी आवश्यकता होती है तो प्राथमिकता समर्थन';
+  String get premiumBenefitSupport =>
+      'जब भी आपको इसकी आवश्यकता होती है तो प्राथमिकता समर्थन';
 
   @override
   String get planWeek => 'सप्ताह';
@@ -1629,25 +1705,29 @@ class AppLocalizationsHi extends AppLocalizations {
   String get notificationChannelName => 'दैनिक भोजन अनुस्मारक';
 
   @override
-  String get notificationChannelDescription => 'CalGo के साथ नाश्ते, दोपहर के भोजन और रात्रिभोज को स्कैन करने के लिए अनुस्मारक';
+  String get notificationChannelDescription =>
+      'CalGo के साथ नाश्ते, दोपहर के भोजन और रात्रिभोज को स्कैन करने के लिए अनुस्मारक';
 
   @override
-  String get notificationBreakfastTitle => 'CalGo - नाश्ता';
+  String get notificationBreakfastTitle => 'CalGo नाश्ता';
 
   @override
-  String get notificationBreakfastBody => 'शुभ सुबह! नाश्ते को स्कैन करने के लिए याद रखें ताकि आपके पास दिन के लिए पर्याप्त ऊर्जा हो।';
+  String get notificationBreakfastBody =>
+      'शुभ सुबह। नाश्ते को स्कैन करना याद रखें ताकि आपके पास दिन के लिए पर्याप्त ऊर्जा हो।';
 
   @override
-  String get notificationLunchTitle => 'CalGo - दोपहर का भोजन';
+  String get notificationLunchTitle => 'CalGo दोपहर का भोजन';
 
   @override
-  String get notificationLunchBody => 'यह लंच ब्रेक है। CalGo में अपना भोजन सटीक रूप से कैलोरी ट्रैक करने के लिए स्कैन करें।';
+  String get notificationLunchBody =>
+      'यह लंच ब्रेक है। CalGo में अपना भोजन सटीक रूप से कैलोरी ट्रैक करने के लिए स्कैन करें।';
 
   @override
-  String get notificationDinnerTitle => 'CalGo - डिनर';
+  String get notificationDinnerTitle => 'CalGo डिनर';
 
   @override
-  String get notificationDinnerBody => 'क्या रात्रिभोज तैयार है? इसे अपने लक्ष्यों के साथ ट्रैक पर रखने के लिए स्कैन करें।';
+  String get notificationDinnerBody =>
+      'रात्रिभोज तैयार होने पर इसे अपने लक्ष्यों के साथ ट्रैक पर रखने के लिए स्कैन करें।';
 
   @override
   String get notificationDirectChannel => 'प्रत्यक्ष सूचनाएं';
@@ -1710,7 +1790,8 @@ class AppLocalizationsHi extends AppLocalizations {
   String get mockPhoBroth => 'Pho broth & scallions';
 
   @override
-  String get mockRiceTitle => 'ग्रील्ड पोर्क, पोर्क स्किन और अंडे केक के साथ टूटी हुई चावल';
+  String get mockRiceTitle =>
+      'ग्रील्ड पोर्क, पोर्क स्किन और अंडे केक के साथ टूटी हुई चावल';
 
   @override
   String get mockRice => 'ब्रोकन चावल';
@@ -1742,13 +1823,16 @@ class AppLocalizationsHi extends AppLocalizations {
   }
 
   @override
-  String get motivationAdviceGain => 'आपका कैलोरी लक्ष्य अतिरिक्त वसा को सीमित करते समय दुबला मांसपेशी बनाने के लिए अनुकूलित किया गया है।';
+  String get motivationAdviceGain =>
+      'आपका कैलोरी लक्ष्य अतिरिक्त वसा को सीमित करते समय दुबला मांसपेशी बनाने के लिए अनुकूलित किया गया है।';
 
   @override
-  String get motivationAdviceMaintain => 'आपका वर्तमान वजन एक स्वस्थ रेंज में है। आइए हम उन आदतों का निर्माण करते हैं जो हर दिन आपकी मदद करते हैं।';
+  String get motivationAdviceMaintain =>
+      'आपका वर्तमान वजन एक स्वस्थ रेंज में है। आइए हम उन आदतों का निर्माण करते हैं जो हर दिन आपकी मदद करते हैं।';
 
   @override
-  String get motivationAdviceDefault => 'आइए हम अपने स्वास्थ्य लक्ष्य को एक साथ स्थायी आदतों के साथ रखते हैं।';
+  String get motivationAdviceDefault =>
+      'आइए हम अपने स्वास्थ्य लक्ष्य को एक साथ स्थायी आदतों के साथ रखते हैं।';
 
   @override
   String get taoAdviceLabel => 'TAO की TIP';
@@ -1794,7 +1878,12 @@ class AppLocalizationsHi extends AppLocalizations {
   }
 
   @override
-  String galleryMacroSummary(int calories, String carbs, String protein, String fat) {
+  String galleryMacroSummary(
+    int calories,
+    String carbs,
+    String protein,
+    String fat,
+  ) {
     return '$calories kcal • C: ${carbs}G P: ${protein}G F: ${fat}G';
   }
 

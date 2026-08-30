@@ -7,7 +7,7 @@ import 'personalization_widgets.dart';
 
 class _ChannelItem {
   final String label;
-  final IconData icon;
+  final Object icon;
   final Color brandColor;
   final Color backgroundColor;
 
@@ -23,7 +23,7 @@ class ReferralStep extends StatefulWidget {
 }
 
 class _ReferralStepState extends State<ReferralStep> {
-  static const _channelIcons = <(IconData, Color, Color)>[
+  static const _channelIcons = <(Object, Color, Color)>[
     (FontAwesomeIcons.tiktok, Color(0xFF000000), Color(0xFFF1F5F9)),
     (FontAwesomeIcons.facebook, Color(0xFF1877F2), Color(0xFFEFF6FF)),
     (FontAwesomeIcons.youtube, Color(0xFFFF0000), Color(0xFFFEF2F2)),
@@ -128,9 +128,11 @@ class _ReferralChoiceCard extends StatelessWidget {
                     shape: BoxShape.circle,
                   ),
                   child: Center(
-                    child: item.icon.fontFamily == null
-                        ? Icon(item.icon, color: item.brandColor, size: 20)
-                        : FaIcon(item.icon, color: item.brandColor, size: 18),
+                    child: item.icon is FaIconData
+                        ? FaIcon(item.icon as FaIconData,
+                            color: item.brandColor, size: 18)
+                        : Icon(item.icon as IconData,
+                            color: item.brandColor, size: 20),
                   ),
                 ),
                 const SizedBox(width: 12),

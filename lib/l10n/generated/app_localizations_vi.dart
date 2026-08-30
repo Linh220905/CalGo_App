@@ -1,5 +1,5 @@
+// ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -93,7 +93,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get scanInstructionHeader => 'Giữ món ăn trong khung hình';
 
   @override
-  String get scanInstructionSub => 'Đảm bảo đủ ánh sáng để AI nhận diện chính xác';
+  String get scanInstructionSub =>
+      'Đảm bảo đủ ánh sáng để AI nhận diện chính xác';
 
   @override
   String get selectFromGallery => 'Chọn từ thư viện';
@@ -102,7 +103,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get outOfCreditsTitle => 'Hết lượt quét!';
 
   @override
-  String get outOfCreditsMessage => 'Bạn đã hết lượt quét. Mua thêm lượt để tiếp tục theo dõi dinh dưỡng nhé!';
+  String get outOfCreditsMessage =>
+      'Bạn đã hết lượt quét. Mua thêm lượt để tiếp tục theo dõi dinh dưỡng nhé!';
 
   @override
   String get buyMore => 'Mua ngay';
@@ -147,19 +149,23 @@ class AppLocalizationsVi extends AppLocalizations {
   String get onlineGuide => 'Hướng dẫn online';
 
   @override
-  String get deleteAccountSubscriptionWarning => 'Xóa tài khoản CalGo không tự hủy subscription Google Play. Nếu đang đăng ký Premium, hãy hủy riêng trong Google Play để tránh bị gia hạn.';
+  String get deleteAccountSubscriptionWarning =>
+      'Xóa tài khoản CalGo không tự hủy subscription Google Play. Nếu đang đăng ký Premium, hãy hủy riêng trong Google Play để tránh bị gia hạn.';
 
   @override
   String get restorePurchases => 'Khôi phục mua hàng';
 
   @override
-  String get privacyPolicyContent => 'Chính sách bảo mật CalGo (cập nhật ngày 05/08/2026):\n\n1. Dữ liệu thu thập: email, tên hiển thị, mã đăng nhập Google, thông tin cá nhân hóa dinh dưỡng trong onboarding, ảnh món ăn, kết quả phân tích, lịch sử bữa ăn, mã và trạng thái giao dịch, dữ liệu kỹ thuật và lựa chọn thông báo.\n2. Quyền thiết bị: camera và thư viện ảnh chỉ được dùng khi bạn chủ động chụp hoặc chọn ảnh món ăn; thông báo chỉ dùng khi bạn bật quyền.\n3. Mục đích sử dụng: cung cấp phân tích dinh dưỡng AI, đồng bộ tài khoản, xử lý giao dịch Google Play, chống lạm dụng, hỗ trợ khách hàng và cải thiện độ ổn định. Ảnh có thể được xử lý bởi nhà cung cấp máy chủ và AI cần thiết.\n4. Chia sẻ và bảo mật: CalGo không bán dữ liệu cá nhân hoặc ảnh món ăn. Nhà cung cấp hosting, AI, Google Sign-In và Google Play Billing có thể xử lý dữ liệu giới hạn để cung cấp dịch vụ. Chúng tôi dùng HTTPS và kiểm soát truy cập, nhưng không hệ thống nào an toàn tuyệt đối.\n5. Lưu trữ và xóa: dữ liệu tài khoản và lịch sử được xóa khi bạn xóa tài khoản, trừ dữ liệu cần giữ để chống gian lận, xử lý tranh chấp hoặc đáp ứng pháp luật. Bản sao lưu có thể cần thời gian hợp lý để hết hạn.\n6. Quyền của bạn: xóa tài khoản trong mục Cá nhân hoặc truy cập https://calgo.tech/delete-account. Yêu cầu truy cập, chỉnh sửa hoặc thắc mắc: support@calgo.tech. Bản đầy đủ: https://calgo.tech/privacy.';
+  String get privacyPolicyContent =>
+      'Chính sách bảo mật CalGo (cập nhật ngày 05/08/2026):\n\n1. Dữ liệu thu thập: email, tên hiển thị, mã đăng nhập Google, thông tin cá nhân hóa dinh dưỡng trong onboarding, ảnh món ăn, kết quả phân tích, lịch sử bữa ăn, mã và trạng thái giao dịch, dữ liệu kỹ thuật và lựa chọn thông báo.\n2. Quyền thiết bị: camera và thư viện ảnh chỉ được dùng khi bạn chủ động chụp hoặc chọn ảnh món ăn; thông báo chỉ dùng khi bạn bật quyền.\n3. Mục đích sử dụng: cung cấp phân tích dinh dưỡng AI, đồng bộ tài khoản, xử lý giao dịch Google Play, chống lạm dụng, hỗ trợ khách hàng và cải thiện độ ổn định. Ảnh có thể được xử lý bởi nhà cung cấp máy chủ và AI cần thiết.\n4. Chia sẻ và bảo mật: CalGo không bán dữ liệu cá nhân hoặc ảnh món ăn. Nhà cung cấp hosting, AI, Google Sign-In và Google Play Billing có thể xử lý dữ liệu giới hạn để cung cấp dịch vụ. Chúng tôi dùng HTTPS và kiểm soát truy cập, nhưng không hệ thống nào an toàn tuyệt đối.\n5. Lưu trữ và xóa: dữ liệu tài khoản và lịch sử được xóa khi bạn xóa tài khoản, trừ dữ liệu cần giữ để chống gian lận, xử lý tranh chấp hoặc đáp ứng pháp luật. Bản sao lưu có thể cần thời gian hợp lý để hết hạn.\n6. Quyền của bạn: xóa tài khoản trong mục Cá nhân hoặc truy cập https://calgo.tech/delete-account. Yêu cầu truy cập, chỉnh sửa hoặc thắc mắc: support@calgo.tech. Bản đầy đủ: https://calgo.tech/privacy.';
 
   @override
-  String get termsOfServiceContent => 'Điều khoản sử dụng CalGo:\n\n1. Dịch vụ và miễn trừ y tế: kết quả dinh dưỡng AI chỉ là ước tính tham khảo, không thay thế tư vấn, chẩn đoán hay điều trị y khoa. CalGo không phải thiết bị y tế.\n2. Thanh toán: gói credit là giao dịch mua kỹ thuật số một lần. Gói Premium tuần, tháng và năm là subscription Google Play tự động gia hạn, trừ khi bạn hủy trước kỳ gia hạn tiếp theo. Quản lý/hủy tại https://play.google.com/store/account/subscriptions.\n3. Hoàn tiền và xóa tài khoản: Google Play xử lý thanh toán/hoàn tiền Android. Xóa tài khoản CalGo không tự hủy subscription Google Play.\n4. Nội dung và sở hữu trí tuệ: bạn vẫn sở hữu ảnh đã tải lên; CalGo có quyền giới hạn để xử lý ảnh nhằm cung cấp và cải thiện dịch vụ. CalGo sở hữu ứng dụng, thương hiệu và phần mềm.\n5. Liên hệ: support@calgo.tech. Điều khoản đầy đủ: https://calgo.tech/terms.';
+  String get termsOfServiceContent =>
+      'Điều khoản sử dụng CalGo:\n\n1. Dịch vụ và miễn trừ y tế: kết quả dinh dưỡng AI chỉ là ước tính tham khảo, không thay thế tư vấn, chẩn đoán hay điều trị y khoa. CalGo không phải thiết bị y tế.\n2. Thanh toán: gói credit là giao dịch mua kỹ thuật số một lần. Gói Premium tuần, tháng và năm là subscription Google Play tự động gia hạn, trừ khi bạn hủy trước kỳ gia hạn tiếp theo. Quản lý/hủy tại https://play.google.com/store/account/subscriptions.\n3. Hoàn tiền và xóa tài khoản: Google Play xử lý thanh toán/hoàn tiền Android. Xóa tài khoản CalGo không tự hủy subscription Google Play.\n4. Nội dung và sở hữu trí tuệ: bạn vẫn sở hữu ảnh đã tải lên; CalGo có quyền giới hạn để xử lý ảnh nhằm cung cấp và cải thiện dịch vụ. CalGo sở hữu ứng dụng, thương hiệu và phần mềm.\n5. Liên hệ: support@calgo.tech. Điều khoản đầy đủ: https://calgo.tech/terms.';
 
   @override
-  String get deleteAccountConfirmMessage => 'Bạn có chắc chắn muốn xóa tài khoản CalGo và toàn bộ dữ liệu nhật ký calo của mình không?\n\nHành động này không thể hoàn tác.';
+  String get deleteAccountConfirmMessage =>
+      'Bạn có chắc chắn muốn xóa tài khoản CalGo và toàn bộ dữ liệu nhật ký calo của mình không?\n\nHành động này không thể hoàn tác.';
 
   @override
   String get historyTitle => 'Nhật Ký Ăn Uống';
@@ -183,7 +189,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get noMealsHistory => 'Chưa có bữa ăn nào';
 
   @override
-  String get scanFirstMealPrompt => 'Quét bữa ăn đầu tiên để bắt đầu\nhành trình dinh dưỡng của bạn';
+  String get scanFirstMealPrompt =>
+      'Quét bữa ăn đầu tiên để bắt đầu\nhành trình dinh dưỡng của bạn';
 
   @override
   String get scanFirstMealButton => 'Quét bữa ăn đầu tiên';
@@ -201,7 +208,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get noPhotosYet => 'Chưa có ảnh scan món ăn nào';
 
   @override
-  String get takePhotosPrompt => 'Hãy chụp ảnh món ăn của bạn để lưu lại bộ sưu tập!';
+  String get takePhotosPrompt =>
+      'Hãy chụp ảnh món ăn của bạn để lưu lại bộ sưu tập!';
 
   @override
   String get scanFoodNow => 'Scan món ăn ngay';
@@ -216,19 +224,22 @@ class AppLocalizationsVi extends AppLocalizations {
   String get snapPhotoAiTitle => 'Chụp ảnh. Để AI lo.';
 
   @override
-  String get snapPhotoAiDesc => 'AI tự động nhận diện món ăn và tính calo trong vài giây.';
+  String get snapPhotoAiDesc =>
+      'AI tự động nhận diện món ăn và tính calo trong vài giây.';
 
   @override
   String get trackEasilyTitle => 'Theo dõi dễ dàng.';
 
   @override
-  String get trackEasilyDesc => 'Theo dõi calo, protein, carb và chất béo mỗi ngày.';
+  String get trackEasilyDesc =>
+      'Theo dõi calo, protein, carb và chất béo mỗi ngày.';
 
   @override
   String get reachGoalsTitle => 'Đạt mục tiêu nhanh hơn.';
 
   @override
-  String get reachGoalsDesc => 'Nhận mục tiêu cá nhân hóa và theo dõi tiến trình giảm mỡ.';
+  String get reachGoalsDesc =>
+      'Nhận mục tiêu cá nhân hóa và theo dõi tiến trình giảm mỡ.';
 
   @override
   String get nextStepButton => 'Tiếp theo';
@@ -246,7 +257,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get goalLoseWeightDesc => 'Đốt mỡ hiệu quả, săn chắc cơ thể';
 
   @override
-  String get goalLoseWeightReason => 'Giúp CalGo xây lộ trình giảm mỡ phù hợp, ưu tiên giữ cơ và dễ duy trì.';
+  String get goalLoseWeightReason =>
+      'Giúp CalGo xây lộ trình giảm mỡ phù hợp, ưu tiên giữ cơ và dễ duy trì.';
 
   @override
   String get goalGainMuscle => 'Tăng cơ';
@@ -255,7 +267,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get goalGainMuscleDesc => 'Tăng cơ, tăng sức mạnh';
 
   @override
-  String get goalGainMuscleReason => 'Giúp CalGo xây lộ trình tăng cơ theo lịch tập, năng lượng và protein của bạn.';
+  String get goalGainMuscleReason =>
+      'Giúp CalGo xây lộ trình tăng cơ theo lịch tập, năng lượng và protein của bạn.';
 
   @override
   String get goalMaintain => 'Duy trì';
@@ -264,7 +277,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get goalMaintainDesc => 'Giữ vóc dáng cân đối';
 
   @override
-  String get goalMaintainReason => 'Giúp CalGo xây lộ trình cân bằng, phù hợp với cuộc sống lâu dài của bạn.';
+  String get goalMaintainReason =>
+      'Giúp CalGo xây lộ trình cân bằng, phù hợp với cuộc sống lâu dài của bạn.';
 
   @override
   String get nameStepTitle => 'Tên của bạn là...';
@@ -321,10 +335,12 @@ class AppLocalizationsVi extends AppLocalizations {
   String get continueWithApple => 'Đăng nhập với Apple';
 
   @override
-  String get heightStepDesc => 'Điều này giúp tính chỉ số BMI và nhu cầu calo chính xác';
+  String get heightStepDesc =>
+      'Điều này giúp tính chỉ số BMI và nhu cầu calo chính xác';
 
   @override
-  String get weightStepDesc => 'Điều này giúp xác định mục tiêu dinh dưỡng của bạn';
+  String get weightStepDesc =>
+      'Điều này giúp xác định mục tiêu dinh dưỡng của bạn';
 
   @override
   String get currentHeightHeader => 'Chiều cao hiện tại';
@@ -348,7 +364,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get bmiObese => 'Béo phì';
 
   @override
-  String get targetWeightDesc => 'Điều này giúp xác định mục tiêu dinh dưỡng của bạn';
+  String get targetWeightDesc =>
+      'Điều này giúp xác định mục tiêu dinh dưỡng của bạn';
 
   @override
   String get goalMaintainLabel => 'Duy trì vóc dáng';
@@ -382,7 +399,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get activityStepSubtitle => 'Ảnh hưởng đến lượng calo tiêu thụ';
 
   @override
-  String get dietStepSubtitle => 'CalGo hỏi để gợi ý món phù hợp với cơ thể và mục tiêu của bạn.';
+  String get dietStepSubtitle =>
+      'CalGo hỏi để gợi ý món phù hợp với cơ thể và mục tiêu của bạn.';
 
   @override
   String get socialProofTitle => 'Cộng đồng nói gì về CalGo?';
@@ -397,7 +415,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get referralStepTitle => 'Bạn biết đến CalGo từ đâu?';
 
   @override
-  String get referralStepSubtitle => 'Giúp chúng mình thấu hiểu hành trình của bạn';
+  String get referralStepSubtitle =>
+      'Giúp chúng mình thấu hiểu hành trình của bạn';
 
   @override
   String get referralFriend => 'Bạn bè giới thiệu';
@@ -409,7 +428,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get sportsStepSubtitle => 'Chọn môn bạn thường tập';
 
   @override
-  String get accountStepSubtitle => 'Bảo mật thông tin & đồng bộ tiến trình cá nhân';
+  String get accountStepSubtitle =>
+      'Bảo mật thông tin & đồng bộ tiến trình cá nhân';
 
   @override
   String get dataPrivacyNote => 'Dữ liệu của bạn được bảo mật tuyệt đối';
@@ -482,7 +502,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get appleComingSoon => 'Tính năng Đăng nhập Apple sắp ra mắt!';
 
   @override
-  String get loginRequired => 'Vui lòng đăng nhập Google để bảo vệ và đồng bộ dữ liệu.';
+  String get loginRequired =>
+      'Vui lòng đăng nhập Google để bảo vệ và đồng bộ dữ liệu.';
 
   @override
   String get loginRequiredButton => 'Đăng nhập là cần thiết để đồng bộ dữ liệu';
@@ -527,7 +548,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get aiCoachAlmostGoal => 'Sắp đạt mục tiêu rồi! Cố lên!';
 
   @override
-  String get aiCoachPlentyCalories => 'Hôm nay còn nhiều năng lượng. Ăn uống lành mạnh nhé!';
+  String get aiCoachPlentyCalories =>
+      'Hôm nay còn nhiều năng lượng. Ăn uống lành mạnh nhé!';
 
   @override
   String get aiCoachMomentum => 'Hãy duy trì đà này nhé!';
@@ -536,22 +558,26 @@ class AppLocalizationsVi extends AppLocalizations {
   String get mascotGoalTipWater => 'Làm ngụm nước cho tỉnh táo nha!';
 
   @override
-  String get mascotGoalTipSlow => 'Ăn chậm và lắng nghe cơ thể là quá chuẩn rồi.';
+  String get mascotGoalTipSlow =>
+      'Ăn chậm và lắng nghe cơ thể là quá chuẩn rồi.';
 
   @override
   String get mascotGoalTipGreat => 'Hôm nay mình làm tốt lắm đó ✨';
 
   @override
-  String get mascotGoalReached => 'Đủ mục tiêu calo hôm nay rồi nha! Giữ nhịp này là quá đỉnh ✨';
+  String get mascotGoalReached =>
+      'Đủ mục tiêu calo hôm nay rồi nha! Giữ nhịp này là quá đỉnh ✨';
 
   @override
-  String get mascotGuidanceIntro => 'Tớ lựa sẵn vài món hợp với hôm nay nè. Bấm vào xem thử ha!';
+  String get mascotGuidanceIntro =>
+      'Tớ lựa sẵn vài món hợp với hôm nay nè. Bấm vào xem thử ha!';
 
   @override
   String get mascotGuidanceOpen => 'Mấy món tớ chọn vẫn nằm ở màn gợi ý nha!';
 
   @override
-  String get mascotGuidanceTipWater => 'Uống đủ nước chưa nè? Làm một ngụm cho tỉnh táo ha!';
+  String get mascotGuidanceTipWater =>
+      'Uống đủ nước chưa nè? Làm một ngụm cho tỉnh táo ha!';
 
   @override
   String get mascotGuidanceTipSlow => 'Ăn chậm chậm thôi nha, no lâu hơn đó!';
@@ -567,16 +593,20 @@ class AppLocalizationsVi extends AppLocalizations {
   }
 
   @override
-  String get mascotTipHydration => 'Uống đủ nước chưa đấy bro, làm ngụm nước cho tỉnh táo nào';
+  String get mascotTipHydration =>
+      'Uống đủ nước chưa đấy, làm ngụm nước cho tỉnh táo nào ✨';
 
   @override
-  String get mascotTipChew => 'Ăn chậm chậm thôi nghen, vừa tốt cho dạ dày vừa no lâu';
+  String get mascotTipChew =>
+      'Ăn chậm chậm thôi nghen, vừa tốt cho dạ dày vừa no lâu';
 
   @override
-  String get mascotTipConsistency => 'Mỗi ngày kỷ luật một xíu là dáng đẹp ngay thôi mà';
+  String get mascotTipConsistency =>
+      'Mỗi ngày kỷ luật một xíu là dáng đẹp ngay thôi mà';
 
   @override
-  String get mascotNoMeals => 'Chưa nạp gì đúng không bro? Chụp cái hình món ăn cho tui xem với';
+  String get mascotNoMeals =>
+      'Chưa nạp gì đúng không nè? Chụp cái hình món ăn cho Táo xem với 🍎';
 
   @override
   String mascotOverTarget(int calories) {
@@ -589,7 +619,8 @@ class AppLocalizationsVi extends AppLocalizations {
   }
 
   @override
-  String get mascotOnTrack => 'Out trình kỷ luật luôn, calo chuẩn đét không lệch phát nào';
+  String get mascotOnTrack =>
+      'Out trình kỷ luật luôn, calo chuẩn đét không lệch phát nào';
 
   @override
   String mealCount(int count) {
@@ -656,28 +687,34 @@ class AppLocalizationsVi extends AppLocalizations {
   String get scanProcessingReport => 'Chuẩn bị báo cáo...';
 
   @override
-  String get cameraPermissionDenied => 'Quyền Máy ảnh đã bị từ chối. Hãy mở Cài đặt và cấp quyền Máy ảnh cho CalGo!';
+  String get cameraPermissionDenied =>
+      'Quyền Máy ảnh đã bị từ chối. Hãy mở Cài đặt và cấp quyền Máy ảnh cho CalGo!';
 
   @override
-  String get cameraPermissionRequired => 'CalGo cần quyền Máy ảnh để quét món ăn.';
+  String get cameraPermissionRequired =>
+      'CalGo cần quyền Máy ảnh để quét món ăn.';
 
   @override
   String get noCamera => 'Không tìm thấy camera';
 
   @override
-  String get cameraStartFailed => 'Không thể khởi động camera. Vui lòng đóng màn hình và thử lại!';
+  String get cameraStartFailed =>
+      'Không thể khởi động camera. Vui lòng đóng màn hình và thử lại!';
 
   @override
   String get scanInProgress => 'Một món khác đang được phân tích. Chờ xíu nha!';
 
   @override
-  String get notLoggedIn => 'Bạn chưa đăng nhập. Vui lòng đăng nhập bằng Google để sử dụng tính năng này!';
+  String get notLoggedIn =>
+      'Bạn chưa đăng nhập. Vui lòng đăng nhập bằng Google để sử dụng tính năng này!';
 
   @override
-  String get cameraPermissionMissing => 'Chưa được cấp quyền Máy ảnh. Vui lòng bật quyền Máy ảnh cho CalGo trong Cài đặt điện thoại!';
+  String get cameraPermissionMissing =>
+      'Chưa được cấp quyền Máy ảnh. Vui lòng bật quyền Máy ảnh cho CalGo trong Cài đặt điện thoại!';
 
   @override
-  String get networkTimeout => 'Kết nối mạng yếu hoặc quá thời gian chờ. Vui lòng kiểm tra lại 4G/Wi-Fi!';
+  String get networkTimeout =>
+      'Kết nối mạng yếu hoặc quá thời gian chờ. Vui lòng kiểm tra lại 4G/Wi-Fi!';
 
   @override
   String scanFailed(String error) {
@@ -719,7 +756,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get guidanceSeeMore => 'Xem thêm';
 
   @override
-  String get guidanceDisclaimer => 'Gợi ý chỉ để tham khảo. Hãy scan món thực tế để ghi nhật ký chính xác.';
+  String get guidanceDisclaimer =>
+      'Gợi ý chỉ để tham khảo. Hãy scan món thực tế để ghi nhật ký chính xác.';
 
   @override
   String get guidanceFamiliarTag => 'QUEN';
@@ -780,7 +818,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get guidanceUnavailableTitle => 'Chưa có gợi ý';
 
   @override
-  String get guidanceUnavailableMessage => 'Hãy thử lại sau khi bạn quét món ăn.';
+  String get guidanceUnavailableMessage =>
+      'Hãy thử lại sau khi bạn quét món ăn.';
 
   @override
   String get guidanceScanMeal => 'Quét món ăn';
@@ -801,7 +840,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get guidancePremiumSwapTitle => 'Đổi gợi ý là tính năng Premium';
 
   @override
-  String get guidancePremiumSwapMessage => 'Nâng cấp Premium để đổi gợi ý món ăn không giới hạn theo mục tiêu của bạn.';
+  String get guidancePremiumSwapMessage =>
+      'Nâng cấp Premium để đổi gợi ý món ăn không giới hạn theo mục tiêu của bạn.';
 
   @override
   String get later => 'Để sau';
@@ -813,7 +853,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get guidanceTodayTitle => 'Gợi ý riêng cho hôm nay';
 
   @override
-  String get guidanceTodaySubtitle => 'Chọn món hợp macro, rồi scan món thật trước khi ghi.';
+  String get guidanceTodaySubtitle =>
+      'Chọn món hợp macro, rồi scan món thật trước khi ghi.';
 
   @override
   String get guidanceScanRealMeal => 'Scan món thực tế';
@@ -874,7 +915,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get goalSpecificGain5 => '5 buổi trở lên';
 
   @override
-  String get goalSpecificMaintainTitle => 'Điều gì quan trọng nhất khi bạn duy trì vóc dáng?';
+  String get goalSpecificMaintainTitle =>
+      'Điều gì quan trọng nhất khi bạn duy trì vóc dáng?';
 
   @override
   String get goalSpecificStable => 'Giữ cân nặng ổn định';
@@ -955,7 +997,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get budgetTitle => 'Ngân sách cho 1 món ăn của bạn?';
 
   @override
-  String get budgetNote => 'CalGo hỏi để gợi ý món hợp mục tiêu và túi tiền của bạn.';
+  String get budgetNote =>
+      'CalGo hỏi để gợi ý món hợp mục tiêu và túi tiền của bạn.';
 
   @override
   String get budgetLow => 'Dưới 30.000đ';
@@ -1015,7 +1058,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get nutritionPriorityTitle => 'Bạn ưu tiên gì trong bữa ăn?';
 
   @override
-  String get nutritionPriorityNote => 'CalGo hỏi để không đưa cho bạn những gợi ý chung chung.';
+  String get nutritionPriorityNote =>
+      'CalGo hỏi để không đưa cho bạn những gợi ý chung chung.';
 
   @override
   String get priorityProtein => 'Giàu protein';
@@ -1045,7 +1089,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get habitTitle => 'Thói quen ăn uống của bạn?';
 
   @override
-  String get habitNote => 'CalGo hỏi để chọn những món dễ duy trì với nhịp sống của bạn.';
+  String get habitNote =>
+      'CalGo hỏi để chọn những món dễ duy trì với nhịp sống của bạn.';
 
   @override
   String get habitRegular => 'Ăn đúng bữa, khoa học';
@@ -1120,7 +1165,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get emotionalAfterSixMonths => 'Sau 6 tháng';
 
   @override
-  String get emotionalStillWeight => 'Bạn gần như vẫn ở cân nặng hiện tại. Nhưng nếu theo CalGo, bạn có thể thay đổi.';
+  String get emotionalStillWeight =>
+      'Bạn gần như vẫn ở cân nặng hiện tại. Nhưng nếu theo CalGo, bạn có thể thay đổi.';
 
   @override
   String get emotionalHelpChange => 'Mình sẽ giúp bạn thay đổi';
@@ -1173,7 +1219,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get reminderNotifications => 'Thông báo nhắc nhở';
 
   @override
-  String get reminderNotificationsEnabled => 'Thông báo nhắc bữa ăn và theo dõi lượng calo hằng ngày đã được bật tự động.';
+  String get reminderNotificationsEnabled =>
+      'Thông báo nhắc bữa ăn và theo dõi lượng calo hằng ngày đã được bật tự động.';
 
   @override
   String get gotIt => 'Đã hiểu';
@@ -1182,16 +1229,19 @@ class AppLocalizationsVi extends AppLocalizations {
   String get userGuideTitle => 'Hướng dẫn sử dụng CalGo';
 
   @override
-  String get userGuideContent => '1. Nhấn nút Scan (+) để chụp hoặc chọn ảnh món ăn.\n2. AI sẽ tự động phân tích calo và dinh dưỡng.\n3. Bạn có thể chỉnh sửa khối lượng hoặc thêm nguyên liệu trước khi lưu.\n4. Xem lại lịch sử ăn uống tại tab Lịch sử.';
+  String get userGuideContent =>
+      '1. Nhấn nút Scan (+) để chụp hoặc chọn ảnh món ăn.\n2. AI sẽ tự động phân tích calo và dinh dưỡng.\n3. Bạn có thể chỉnh sửa khối lượng hoặc thêm nguyên liệu trước khi lưu.\n4. Xem lại lịch sử ăn uống tại tab Lịch sử.';
 
   @override
   String get great => 'Tuyệt vời';
 
   @override
-  String get customerSupportMessage => 'Nếu bạn cần hỗ trợ hoặc góp ý sản phẩm, vui lòng gửi email về: support@calgo.tech';
+  String get customerSupportMessage =>
+      'Nếu bạn cần hỗ trợ hoặc góp ý sản phẩm, vui lòng gửi email về: support@calgo.tech';
 
   @override
-  String get deleteAccountFailed => 'Không thể xoá tài khoản. Vui lòng xem hướng dẫn online hoặc liên hệ hỗ trợ.';
+  String get deleteAccountFailed =>
+      'Không thể xoá tài khoản. Vui lòng xem hướng dẫn online hoặc liên hệ hỗ trợ.';
 
   @override
   String get galleryLoadFailed => 'Không thể tải bộ sưu tập ảnh';
@@ -1223,7 +1273,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get paymentProcessing => 'Đang xử lý thanh toán qua Google Play...';
 
   @override
-  String get paymentOpenFailed => 'Không thể mở thanh toán Google Play. Vui lòng thử lại.';
+  String get paymentOpenFailed =>
+      'Không thể mở thanh toán Google Play. Vui lòng thử lại.';
 
   @override
   String errorWithDetails(String error) {
@@ -1236,13 +1287,16 @@ class AppLocalizationsVi extends AppLocalizations {
   }
 
   @override
-  String get permanentCredits => 'Lượt quét dùng vĩnh viễn, không giới hạn thời gian';
+  String get permanentCredits =>
+      'Lượt quét dùng vĩnh viễn, không giới hạn thời gian';
 
   @override
-  String get testingFreeCredits => 'Bản testing: lượt quét Premium được mở miễn phí. Không có thanh toán Google Play.';
+  String get testingFreeCredits =>
+      'Bản testing: lượt quét Premium được mở miễn phí. Không có thanh toán Google Play.';
 
   @override
-  String get restoreSuccess => 'Đã kiểm tra khôi phục giao dịch mua thành công!';
+  String get restoreSuccess =>
+      'Đã kiểm tra khôi phục giao dịch mua thành công!';
 
   @override
   String get restoreFailed => 'Không thể khôi phục giao dịch Google Play.';
@@ -1300,7 +1354,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get feedbackThanks => 'Cảm ơn bạn đã góp ý!';
 
   @override
-  String get feedbackPrompt => 'AI scan chưa chính xác? Hãy cho chúng tôi biết chi tiết:';
+  String get feedbackPrompt =>
+      'AI scan chưa chính xác? Hãy cho chúng tôi biết chi tiết:';
 
   @override
   String get feedbackHint => 'Ví dụ: Sai tên món, thiếu rau...';
@@ -1463,10 +1518,12 @@ class AppLocalizationsVi extends AppLocalizations {
   String get proteinLabel => 'PROTEIN';
 
   @override
-  String get onboardingSaveFailed => 'Không thể lưu mục tiêu dinh dưỡng. Vui lòng thử lại.';
+  String get onboardingSaveFailed =>
+      'Không thể lưu mục tiêu dinh dưỡng. Vui lòng thử lại.';
 
   @override
-  String get onboardingSaveNetworkFailed => 'Không thể lưu mục tiêu dinh dưỡng. Vui lòng kiểm tra mạng và thử lại.';
+  String get onboardingSaveNetworkFailed =>
+      'Không thể lưu mục tiêu dinh dưỡng. Vui lòng kiểm tra mạng và thử lại.';
 
   @override
   String googleSignInFailed(String error) {
@@ -1474,7 +1531,8 @@ class AppLocalizationsVi extends AppLocalizations {
   }
 
   @override
-  String get appleSignInPending => 'Đăng nhập Apple đang được hoàn thiện. Vui lòng dùng Google.';
+  String get appleSignInPending =>
+      'Đăng nhập Apple đang được hoàn thiện. Vui lòng dùng Google.';
 
   @override
   String get firstScanTitle => 'Thử quét bữa ăn đầu tiên nhé!';
@@ -1498,7 +1556,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get socialProofOneTitle => 'Quét đồ ăn Việt Nam cực chuẩn!';
 
   @override
-  String get socialProofOneBody => 'Trước đây mình dùng app ngoại tra phở, bún chả rất cực. CalGo chụp ảnh nhận diện món Việt chính xác từng gram calo luôn. 10/10!';
+  String get socialProofOneBody =>
+      'Trước đây mình dùng app ngoại tra phở, bún chả rất cực. CalGo chụp ảnh nhận diện món Việt chính xác từng gram calo luôn. 10/10!';
 
   @override
   String get socialProofTwoTag => 'Tăng cơ 4 kg';
@@ -1510,7 +1569,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get socialProofTwoTitle => 'Giao diện mượt, tính TDEE sát thực tế';
 
   @override
-  String get socialProofTwoBody => 'Thước đo BMI và gợi ý macro rất chi tiết. Mình tập gym kết hợp theo dõi calo mỗi ngày, cơ thể săn chắc rõ rệt sau 1 tháng.';
+  String get socialProofTwoBody =>
+      'Thước đo BMI và gợi ý macro rất chi tiết. Mình tập gym kết hợp theo dõi calo mỗi ngày, cơ thể săn chắc rõ rệt sau 1 tháng.';
 
   @override
   String get socialProofThreeTag => 'Duy trì vóc dáng';
@@ -1522,10 +1582,12 @@ class AppLocalizationsVi extends AppLocalizations {
   String get socialProofThreeTitle => 'Tạo thói quen ăn uống lành mạnh';
 
   @override
-  String get socialProofThreeBody => 'Linh vật Táo nhắc nhở đáng yêu lắm. App không hề ép ăn kiêng hà khắc mà hướng dẫn cân bằng dinh dưỡng thông minh.';
+  String get socialProofThreeBody =>
+      'Linh vật Táo nhắc nhở đáng yêu lắm. App không hề ép ăn kiêng hà khắc mà hướng dẫn cân bằng dinh dưỡng thông minh.';
 
   @override
-  String get premiumActivatedMessage => 'Premium đã được kích hoạt. Chúc bạn ăn ngon!';
+  String get premiumActivatedMessage =>
+      'Premium đã được kích hoạt. Chúc bạn ăn ngon!';
 
   @override
   String get premiumPaymentFailed => 'Không thể mở thanh toán Premium.';
@@ -1549,7 +1611,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get subscribePremium => 'Đăng ký Premium';
 
   @override
-  String get premiumTestingNote => 'Bản testing: Premium được mở miễn phí. Không có thanh toán.';
+  String get premiumTestingNote =>
+      'Bản testing: Premium được mở miễn phí. Không có thanh toán.';
 
   @override
   String get premiumNoChargeNote => 'Bạn chưa bị tính phí ở bước này.';
@@ -1567,13 +1630,16 @@ class AppLocalizationsVi extends AppLocalizations {
   String get yourExperience => 'Trải\nnghiệm\ncủa bạn';
 
   @override
-  String get premiumBenefitCalories => 'Biết ngay lượng calo — quét AI không giới hạn';
+  String get premiumBenefitCalories =>
+      'Biết ngay lượng calo — quét AI không giới hạn';
 
   @override
-  String get premiumBenefitSuggestions => 'Đổi gợi ý món ăn không giới hạn theo mục tiêu mỗi ngày';
+  String get premiumBenefitSuggestions =>
+      'Đổi gợi ý món ăn không giới hạn theo mục tiêu mỗi ngày';
 
   @override
-  String get premiumBenefitDescriptions => 'Mô tả món ăn bằng AI, không cần nhập tay';
+  String get premiumBenefitDescriptions =>
+      'Mô tả món ăn bằng AI, không cần nhập tay';
 
   @override
   String get premiumBenefitProgress => 'Theo dõi tiến trình cơ thể mỗi ngày';
@@ -1629,25 +1695,29 @@ class AppLocalizationsVi extends AppLocalizations {
   String get notificationChannelName => 'Nhắc nhở bữa ăn hàng ngày';
 
   @override
-  String get notificationChannelDescription => 'Thông báo nhắc nhở quét calo bữa sáng, trưa, tối từ CalGo';
+  String get notificationChannelDescription =>
+      'Thông báo nhắc nhở quét calo bữa sáng, trưa, tối từ CalGo';
 
   @override
-  String get notificationBreakfastTitle => 'CalGo - Bữa Sáng';
+  String get notificationBreakfastTitle => 'CalGo Bữa sáng';
 
   @override
-  String get notificationBreakfastBody => 'Chào buổi sáng bro, đừng quên quét hình bữa sáng để nạp đủ năng lượng cho ngày mới nhé';
+  String get notificationBreakfastBody =>
+      'Chào buổi sáng. Hãy chụp ảnh bữa sáng để theo dõi calo cho ngày hôm nay.';
 
   @override
-  String get notificationLunchTitle => 'CalGo - Bữa Trưa';
+  String get notificationLunchTitle => 'CalGo Bữa trưa';
 
   @override
-  String get notificationLunchBody => 'Giờ nghỉ trưa rồi nè bro, mở CalGo quét món trưa để theo dõi calo chuẩn đét nhé';
+  String get notificationLunchBody =>
+      'Đến giờ ăn trưa. Hãy chụp ảnh món ăn để theo dõi calo cho hôm nay.';
 
   @override
-  String get notificationDinnerTitle => 'CalGo - Bữa Tối';
+  String get notificationDinnerTitle => 'CalGo Bữa tối';
 
   @override
-  String get notificationDinnerBody => 'Bữa tối đã sẵn sàng chưa bro, chụp hình quét calo để giữ kỷ luật dáng đẹp nào';
+  String get notificationDinnerBody =>
+      'Đến giờ ăn tối. Hãy chụp ảnh món ăn để hoàn thành nhật ký calo hôm nay.';
 
   @override
   String get notificationDirectChannel => 'Thông báo trực tiếp';
@@ -1742,13 +1812,16 @@ class AppLocalizationsVi extends AppLocalizations {
   }
 
   @override
-  String get motivationAdviceGain => 'Mục tiêu calo được tối ưu để xây dựng cơ bắp săn chắc, đồng thời hạn chế tích tụ mỡ thừa.';
+  String get motivationAdviceGain =>
+      'Mục tiêu calo được tối ưu để xây dựng cơ bắp săn chắc, đồng thời hạn chế tích tụ mỡ thừa.';
 
   @override
-  String get motivationAdviceMaintain => 'Cân nặng hiện tại của bạn đã ở mức khỏe mạnh. Hãy cùng xây dựng thói quen giúp bạn luôn cảm thấy tốt nhất mỗi ngày.';
+  String get motivationAdviceMaintain =>
+      'Cân nặng hiện tại của bạn đã ở mức khỏe mạnh. Hãy cùng xây dựng thói quen giúp bạn luôn cảm thấy tốt nhất mỗi ngày.';
 
   @override
-  String get motivationAdviceDefault => 'Hãy cùng nhau đạt được mục tiêu sức khỏe của bạn với những thói quen bền vững.';
+  String get motivationAdviceDefault =>
+      'Hãy cùng nhau đạt được mục tiêu sức khỏe của bạn với những thói quen bền vững.';
 
   @override
   String get taoAdviceLabel => 'LỜI KHUYÊN TỪ TÁO';
@@ -1794,7 +1867,12 @@ class AppLocalizationsVi extends AppLocalizations {
   }
 
   @override
-  String galleryMacroSummary(int calories, String carbs, String protein, String fat) {
+  String galleryMacroSummary(
+    int calories,
+    String carbs,
+    String protein,
+    String fat,
+  ) {
     return '$calories kcal • C:${carbs}g P:${protein}g F:${fat}g';
   }
 

@@ -1,5 +1,5 @@
+// ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -147,19 +147,23 @@ class AppLocalizationsZh extends AppLocalizations {
   String get onlineGuide => '在线指南';
 
   @override
-  String get deleteAccountSubscriptionWarning => '删除您的 CalGo 账户不会取消 Google Play 订阅 。 如果您有Premium,请在Google Play中单独取消,以避免续费.';
+  String get deleteAccountSubscriptionWarning =>
+      '删除您的 CalGo 账户不会取消 Google Play 订阅 。 如果您有Premium,请在Google Play中单独取消,以避免续费.';
 
   @override
   String get restorePurchases => '恢复购买';
 
   @override
-  String get privacyPolicyContent => 'CalGo 隐私政策(2026年8月5日更新):\n\n1. 联合国 我们收集的数据:账户电子邮件、显示名称、Google登录标识、登入营养信息、膳食相片、扫描结果、膳食历史、购买元数据、应用/设备诊断和通知偏好。\n2. 联合国 权限的使用方式: 仅在您选择抓取或选择食用相片时请求相机和相片访问; 仅在启用时才使用通知 。\n3个 如何使用数据:提供AI营养分析,同步您的账户,处理Google Play购买,防止滥用,提供支持并改进可靠性. 我们的东道主和AI服务提供者可以处理照片。\n4.四. 分享与安全:我们不出售你的个人资料或餐饮相片。 诸如托管、AI处理、Google Sign-In和Google Play Billing等必要的供应商可能处理有限的数据。 我们使用HTTPS和访问控制,但没有任何系统是完全安全的.\n5 (韩语). 保留和删除:删除账户时删除账户数据和餐饮历史,但必须保留用于预防欺诈、争议或法律义务的数据除外。 备份可能需要一段合理的时间才能到期。\n6. 国家 您的权利: 删除您在 Profile 中的账户或访问 https://calgo.tech/delete-account. 访问权限、 更正或询问, 请联系 support@calgo.tech 。 全面政策:https://calgo.tech/privacy.';
+  String get privacyPolicyContent =>
+      'CalGo 隐私政策(2026年8月5日更新):\n\n1. 联合国 我们收集的数据:账户电子邮件、显示名称、Google登录标识、登入营养信息、膳食相片、扫描结果、膳食历史、购买元数据、应用/设备诊断和通知偏好。\n2. 联合国 权限的使用方式: 仅在您选择抓取或选择食用相片时请求相机和相片访问; 仅在启用时才使用通知 。\n3个 如何使用数据:提供AI营养分析,同步您的账户,处理Google Play购买,防止滥用,提供支持并改进可靠性. 我们的东道主和AI服务提供者可以处理照片。\n4.四. 分享与安全:我们不出售你的个人资料或餐饮相片。 诸如托管、AI处理、Google Sign-In和Google Play Billing等必要的供应商可能处理有限的数据。 我们使用HTTPS和访问控制,但没有任何系统是完全安全的.\n5 (韩语). 保留和删除:删除账户时删除账户数据和餐饮历史,但必须保留用于预防欺诈、争议或法律义务的数据除外。 备份可能需要一段合理的时间才能到期。\n6. 国家 您的权利: 删除您在 Profile 中的账户或访问 https://calgo.tech/delete-account. 访问权限、 更正或询问, 请联系 support@calgo.tech 。 全面政策:https://calgo.tech/privacy.';
 
   @override
-  String get termsOfServiceContent => 'CalGo 服务条件:\n\n1. 联合国 服务和医疗免责声明:AI营养结果是仅供参考的估计,不取代专业医疗建议. CalGo不是医疗设备.\n2. 联合国 支付:信用卡包为一次性数字购买. 每周、每月和年度计划是自动续订的Google Play订阅,除非在下次续订前取消。 在 https://play.google.com/store/account/subscriptions. 管理或取消\n3个 退款并删除:Google Play处理Android计费和退款. 删除一个CalGo账户不会取消一个Google Play订阅.\n4.四. 内容和知识产权:您保留了上传照片的所有权;CalGo获得有限的许可证,可以处理照片以提供和改进服务。 CalGo拥有其应用,品牌和软件.\n5 (韩语). 联系人:support@calgo.tech. 全名:https://calgo.tech/terms.';
+  String get termsOfServiceContent =>
+      'CalGo 服务条件:\n\n1. 联合国 服务和医疗免责声明:AI营养结果是仅供参考的估计,不取代专业医疗建议. CalGo不是医疗设备.\n2. 联合国 支付:信用卡包为一次性数字购买. 每周、每月和年度计划是自动续订的Google Play订阅,除非在下次续订前取消。 在 https://play.google.com/store/account/subscriptions. 管理或取消\n3个 退款并删除:Google Play处理Android计费和退款. 删除一个CalGo账户不会取消一个Google Play订阅.\n4.四. 内容和知识产权:您保留了上传照片的所有权;CalGo获得有限的许可证,可以处理照片以提供和改进服务。 CalGo拥有其应用,品牌和软件.\n5 (韩语). 联系人:support@calgo.tech. 全名:https://calgo.tech/terms.';
 
   @override
-  String get deleteAccountConfirmMessage => '您确定要永久删除您的 CalGo 账户和所有卡路里日志数据吗 ? 这一行动是无法取消的。';
+  String get deleteAccountConfirmMessage =>
+      '您确定要永久删除您的 CalGo 账户和所有卡路里日志数据吗 ? 这一行动是无法取消的。';
 
   @override
   String get historyTitle => '饮食历史';
@@ -1182,7 +1186,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get userGuideTitle => '如何使用 CalGo';
 
   @override
-  String get userGuideContent => '1. 联合国 Tap Scan (+) 来抓取或选择一张餐后相片.\n2. 联合国 AI自动分析热量和营养.\n3个 在保存前编辑数量或添加成分。\n4.四. 在历史标签中回顾你的饮食历史 。';
+  String get userGuideContent =>
+      '1. 联合国 Tap Scan (+) 来抓取或选择一张餐后相片.\n2. 联合国 AI自动分析热量和营养.\n3个 在保存前编辑数量或添加成分。\n4.四. 在历史标签中回顾你的饮食历史 。';
 
   @override
   String get great => '不错';
@@ -1498,7 +1503,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get socialProofOneTitle => '越南食品识别就位!';
 
   @override
-  String get socialProofOneBody => '我以前在外国的应用软件里 一直追踪到磷和包子 CalGo从一张照片中准确识别出越南菜肴和热量. 10点10分!';
+  String get socialProofOneBody =>
+      '我以前在外国的应用软件里 一直追踪到磷和包子 CalGo从一张照片中准确识别出越南菜肴和热量. 10点10分!';
 
   @override
   String get socialProofTwoTag => '获得4个kg肌肉';
@@ -1632,22 +1638,22 @@ class AppLocalizationsZh extends AppLocalizations {
   String get notificationChannelDescription => '提醒大家扫描早餐 午餐和晚餐 与CalGo';
 
   @override
-  String get notificationBreakfastTitle => 'CalGo - 早餐';
+  String get notificationBreakfastTitle => 'CalGo 早餐';
 
   @override
-  String get notificationBreakfastBody => '早,早,你们好 记得扫描早餐 这样你有足够的能量过日子';
+  String get notificationBreakfastBody => '早上好。记得扫描早餐，这样你有足够的能量开始一天。';
 
   @override
-  String get notificationLunchTitle => 'CalGo - 午餐会';
+  String get notificationLunchTitle => 'CalGo 午餐';
 
   @override
   String get notificationLunchBody => '这是午餐时间。 扫描你用CalGo的餐食 准确跟踪卡路里。';
 
   @override
-  String get notificationDinnerTitle => 'CalGo - 晚饭';
+  String get notificationDinnerTitle => 'CalGo 晚餐';
 
   @override
-  String get notificationDinnerBody => '晚餐准备好了吗? 扫描它以保持轨道 与你的目标。';
+  String get notificationDinnerBody => '晚餐准备好后扫描它，继续朝着你的目标前进。';
 
   @override
   String get notificationDirectChannel => '直接通知';
@@ -1794,7 +1800,12 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String galleryMacroSummary(int calories, String carbs, String protein, String fat) {
+  String galleryMacroSummary(
+    int calories,
+    String carbs,
+    String protein,
+    String fat,
+  ) {
     return '$calories kcal • C:${carbs}g P:${protein}g F:${fat}g';
   }
 

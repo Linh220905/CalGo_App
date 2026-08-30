@@ -436,6 +436,8 @@ class _MonthGrid extends StatelessWidget {
     final firstDate = DateTime.tryParse(days.first.dateKey);
     final leading = firstDate == null ? 0 : firstDate.weekday - 1;
     final weekCount = ((leading + days.length) / 7).ceil();
+    final gridWidth = weekCount * 21.0;
+    final labelColor = dark ? Colors.white54 : Colors.black45;
 
     Color cellColor(int scanCount) {
       if (scanCount <= 0) return empty;
@@ -444,57 +446,96 @@ class _MonthGrid extends StatelessWidget {
       return const Color(0xFF15803D);
     }
 
+    Widget monthLabel(int week) {
+      final index = week * 7 - leading;
+      if (index < 0 || index >= days.length) return const SizedBox.shrink();
+      final date = DateTime.tryParse(days[index].dateKey);
+      if (date == null || (date.day > 7 && week != 0)) {
+        return const SizedBox.shrink();
+      }
+      return Text(
+        '${date.day}/${date.month}',
+        style: TextStyle(color: labelColor, fontSize: 9),
+      );
+    }
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
           width: 26,
-          height: 7 * 16 + 6 * 5,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              Text('T2', style: TextStyle(fontSize: 9)),
-              Text('T4', style: TextStyle(fontSize: 9)),
-              Text('T6', style: TextStyle(fontSize: 9)),
+            children: [
+              const SizedBox(height: 15),
+              ...['T2', '', 'T4', '', 'T6', '', 'CN'].map(
+                (label) => SizedBox(
+                  height: 21,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(label,
+                        style: TextStyle(color: labelColor, fontSize: 9)),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
         Expanded(
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: List.generate(7, (weekday) {
-                return Row(
-                  children: List.generate(weekCount, (week) {
-                    final index = week * 7 + weekday - leading;
-                    final point =
-                        index >= 0 && index < days.length ? days[index] : null;
-                    final scanCount = point?.scanCount ?? 0;
-                    return Padding(
-                      padding: const EdgeInsets.only(right: 5, bottom: 5),
-                      child: Tooltip(
-                        message: point == null
-                            ? ''
-                            : '${point.dateKey}: $scanCount lần quét',
-                        child: SizedBox(
-                          width: 16,
-                          height: 16,
-                          child: DecoratedBox(
-                            decoration: BoxDecoration(
-                              color: point == null
-                                  ? Colors.transparent
-                                  : cellColor(scanCount),
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                          ),
+            child: SizedBox(
+              width: gridWidth,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 15,
+                    child: Row(
+                      children: List.generate(
+                        weekCount,
+                        (week) => SizedBox(
+                          width: 21,
+                          child: monthLabel(week),
                         ),
+                      ),
+                    ),
+                  ),
+                  ...List.generate(7, (weekday) {
+                    return SizedBox(
+                      height: 21,
+                      child: Row(
+                        children: List.generate(weekCount, (week) {
+                          final index = week * 7 + weekday - leading;
+                          final point = index >= 0 && index < days.length
+                              ? days[index]
+                              : null;
+                          final scanCount = point?.scanCount ?? 0;
+                          return Padding(
+                            padding: const EdgeInsets.only(right: 5, bottom: 5),
+                            child: Tooltip(
+                              message: point == null
+                                  ? ''
+                                  : '${point.dateKey}: $scanCount lần quét',
+                              child: SizedBox(
+                                width: 16,
+                                height: 16,
+                                child: DecoratedBox(
+                                  decoration: BoxDecoration(
+                                    color: point == null
+                                        ? Colors.transparent
+                                        : cellColor(scanCount),
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        }),
                       ),
                     );
                   }),
-                );
-              }),
+                ],
+              ),
             ),
           ),
         ),

@@ -111,7 +111,7 @@ class _MainShellState extends State<MainShell> with WidgetsBindingObserver {
     });
   }
 
-  void _showPendingRewardWhenHomeIsVisible(String location, bool isDark) {
+  void _showPendingRewardWhenHomeIsVisible(String location) {
     if (location != '/home') {
       _rewardDisplayScheduled = false;
       return;
@@ -125,12 +125,10 @@ class _MainShellState extends State<MainShell> with WidgetsBindingObserver {
       }
       final exp = context.read<GamificationProvider>().takePendingScanReward();
       if (exp <= 0) return;
-      final mascot = context.read<HomeProvider>().mascotAssetForTheme(isDark);
-      showExpGainToast(
+      showExpGainPrompt(
         context,
         exp: exp,
         reason: 'Quét món ăn',
-        mascotAsset: mascot,
       );
     });
   }
@@ -141,7 +139,7 @@ class _MainShellState extends State<MainShell> with WidgetsBindingObserver {
     final settings = context.watch<AppSettingsProvider>();
     final isDark = settings.isDarkMode;
     final s = settings.strings;
-    _showPendingRewardWhenHomeIsVisible(location, isDark);
+    _showPendingRewardWhenHomeIsVisible(location);
 
     int currentIndex;
     switch (location) {

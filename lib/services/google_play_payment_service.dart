@@ -88,9 +88,7 @@ class GooglePlayPaymentService {
       return false;
     }
 
-    final purchaseParam = PurchaseParam(
-      productDetails: product,
-    );
+    final purchaseParam = PurchaseParam(productDetails: product);
 
     try {
       // Do not let the Flutter plugin auto-consume before the server has
@@ -151,8 +149,8 @@ class GooglePlayPaymentService {
     if (purchase.productID.contains('subscription')) return false;
 
     if (defaultTargetPlatform == TargetPlatform.android) {
-      final androidAddition =
-          _iap.getPlatformAddition<InAppPurchaseAndroidPlatformAddition>();
+      final androidAddition = _iap
+          .getPlatformAddition<InAppPurchaseAndroidPlatformAddition>();
       final androidPurchase = purchase as GooglePlayPurchaseDetails;
       await androidAddition.consumePurchase(androidPurchase);
       debugPrint('[IAP] Consumed: ${purchase.productID}');
@@ -168,12 +166,13 @@ class GooglePlayPaymentService {
       if (!_api.hasAccessToken) {
         _lastError = 'authenticationRequired';
         debugPrint(
-            '[IAP] Verify receipt rejected: product=${purchase.productID} status=no-auth');
+          '[IAP] Verify receipt rejected: product=${purchase.productID} status=no-auth',
+        );
         return false;
       }
 
       if (defaultTargetPlatform == TargetPlatform.iOS) {
-        return _verifyAppStoreCreditReceipt(purchase);
+        return await _verifyAppStoreCreditReceipt(purchase);
       }
 
       final receiptData = _extractReceipt(purchase);
@@ -182,7 +181,8 @@ class GooglePlayPaymentService {
       if (!IapIds.creditProducts.values.contains(purchase.productID)) {
         _lastError = 'paymentProductNotFound';
         debugPrint(
-            '[IAP] Verify receipt rejected: product=${purchase.productID}');
+          '[IAP] Verify receipt rejected: product=${purchase.productID}',
+        );
         return false;
       }
 
@@ -194,7 +194,8 @@ class GooglePlayPaymentService {
           purchaseToken.isEmpty) {
         _lastError = 'receiptUnavailable';
         debugPrint(
-            '[IAP] Verify receipt rejected: product=${purchase.productID}');
+          '[IAP] Verify receipt rejected: product=${purchase.productID}',
+        );
         return false;
       }
 
@@ -208,8 +209,9 @@ class GooglePlayPaymentService {
         '/payments/google-play/verify',
         body: body,
       );
-      final creditsAdded =
-          response is Map<String, dynamic> ? response['credits_added'] : null;
+      final creditsAdded = response is Map<String, dynamic>
+          ? response['credits_added']
+          : null;
       if (response is! Map<String, dynamic> ||
           response['success'] != true ||
           creditsAdded is! num ||
@@ -221,15 +223,14 @@ class GooglePlayPaymentService {
         return false;
       }
       _lastError = null;
-      debugPrint(
-        '[IAP] Verify receipt success: product=$productId status=200',
-      );
+      debugPrint('[IAP] Verify receipt success: product=$productId status=200');
       return true;
     } catch (e) {
       _lastError = 'receiptVerificationFailed';
       final status = e is ApiException ? e.statusCode : 'network';
       debugPrint(
-          '[IAP] Verify receipt failed: product=${purchase.productID} status=$status');
+        '[IAP] Verify receipt failed: product=${purchase.productID} status=$status',
+      );
       return false;
     }
   }
@@ -243,13 +244,11 @@ class GooglePlayPaymentService {
 
     final response = await _api.post(
       '/payments/app-store/verify',
-      body: {
-        'product_id': purchase.productID,
-        'transaction_id': transactionId,
-      },
+      body: {'product_id': purchase.productID, 'transaction_id': transactionId},
     );
-    final creditsAdded =
-        response is Map<String, dynamic> ? response['credits_added'] : null;
+    final creditsAdded = response is Map<String, dynamic>
+        ? response['credits_added']
+        : null;
     if (response is! Map<String, dynamic> ||
         response['success'] != true ||
         creditsAdded is! num ||
@@ -279,8 +278,10 @@ class GooglePlayPaymentService {
         _lastError = 'receiptUnavailable';
         return null;
       }
-      final response =
-          await _api.post('/subscriptions/store/verify', body: proof);
+      final response = await _api.post(
+        '/subscriptions/store/verify',
+        body: proof,
+      );
       if (response is! Map<String, dynamic> || response['success'] != true) {
         _lastError = 'subscriptionVerificationFailed';
         return null;
