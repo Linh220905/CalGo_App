@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -8,6 +7,7 @@ import '../config/app_build_config.dart';
 import '../config/iap_ids.dart';
 import '../services/google_play_payment_service.dart';
 import '../services/api_service.dart';
+import '../utils/payment_platform.dart';
 
 /// Purchase state per product.
 enum PurchaseState {
@@ -644,8 +644,12 @@ class PaymentProvider extends ChangeNotifier {
       final data = jsonDecode(raw) as Map<String, dynamic>;
       final productId = data['product_id'] as String?;
       final purchaseToken = data['verification_data'] as String?;
+      final transactionId = data['purchase_id'] as String?;
       final isSub = data['is_subscription'] as bool? ?? false;
-      if (productId == null || purchaseToken == null) {
+      if (productId == null ||
+          (isAppleBillingPlatform
+              ? transactionId == null
+              : purchaseToken == null)) {
         await _clearPendingPurchase();
         return;
       }
@@ -655,11 +659,12 @@ class PaymentProvider extends ChangeNotifier {
         final result = await _paymentService.api.post(
           '/subscriptions/store/verify',
           body: {
-            'provider': defaultTargetPlatform == TargetPlatform.iOS
-                ? 'app_store'
-                : 'google_play',
+            'provider': isAppleBillingPlatform ? 'app_store' : 'google_play',
             'product_id': productId,
-            'purchase_token': purchaseToken,
+            if (isAppleBillingPlatform)
+              'transaction_id': transactionId
+            else
+              'purchase_token': purchaseToken,
           },
         );
         if (result is Map<String, dynamic> && result['success'] == true) {
@@ -670,11 +675,17 @@ class PaymentProvider extends ChangeNotifier {
           notifyListeners();
         }
       } else {
+        final endpoint = isAppleBillingPlatform
+            ? '/payments/app-store/verify'
+            : '/payments/google-play/verify';
         final result = await _paymentService.api.post(
-          '/payments/google-play/verify',
+          endpoint,
           body: {
             'product_id': productId,
-            'purchase_token': purchaseToken,
+            if (isAppleBillingPlatform)
+              'transaction_id': transactionId
+            else
+              'purchase_token': purchaseToken,
           },
         );
         if (result is Map<String, dynamic> && result['success'] == true) {

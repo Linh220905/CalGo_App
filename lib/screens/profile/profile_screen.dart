@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -8,6 +7,7 @@ import '../../providers/auth_provider.dart';
 import '../../providers/app_settings_provider.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../widgets/language_selector.dart';
+import '../../utils/payment_platform.dart';
 import '../onboarding/steps/premium_paywall_step.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -19,14 +19,7 @@ class ProfileScreen extends StatelessWidget {
   }
 
   String _legalContentForPlatform(String content) {
-    if (defaultTargetPlatform != TargetPlatform.iOS) return content;
-    return content
-        .replaceAll('Google Play', 'App Store')
-        .replaceAll('Android', 'iOS')
-        .replaceAll(
-          'https://play.google.com/store/account/subscriptions',
-          'https://apps.apple.com/account/subscriptions',
-        );
+    return paymentCopyForPlatform(content);
   }
 
   void _showLanguageSelector(BuildContext context) {

@@ -15,6 +15,7 @@ import '../../../widgets/social_auth_button.dart';
 import '../../../widgets/premium_ui.dart';
 import '../../../services/trial_notification_service.dart';
 import '../../../services/analytics_service.dart';
+import '../../../utils/payment_platform.dart';
 import 'post_premium_quiz_dialog.dart';
 
 // ═══════════════════════════════════════════════════════════════
@@ -129,11 +130,11 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
+          SnackBar(
+            content: Text(paymentCopyForPlatform(
               'Google Play đã nhận giao dịch nhưng máy chủ chưa xác minh được. '
               'Vui lòng thử Khôi phục giao dịch sau khi cập nhật máy chủ.',
-            ),
+            )),
             backgroundColor: Colors.redAccent,
           ),
         );
@@ -476,7 +477,7 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
 
     if (started) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(s.paymentProcessing)),
+        SnackBar(content: Text(paymentCopyForPlatform(s.paymentProcessing))),
       );
     } else {
       final errorMsg = payment.error ?? s.premiumPaymentFailed;
@@ -643,7 +644,8 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
                       testing
                           ? s.premiumTestingNote
                           : trialEnabled
-                              ? 'Không tính phí hôm nay. Hủy bất kỳ lúc nào trong cài đặt App Store / Google Play.'
+                              ? paymentCopyForPlatform(
+                                  'Không tính phí hôm nay. Hủy bất kỳ lúc nào trong cài đặt App Store / Google Play.')
                               : s.premiumAutoRenewNote,
                       textAlign: TextAlign.center,
                       style: _f(11, color: _kMuted, weight: FontWeight.w500),
@@ -1297,7 +1299,9 @@ class _FooterLinks extends StatelessWidget {
                 messenger.showSnackBar(
                   SnackBar(
                     content: Text(
-                      restored ? s.restoreChecked : s.restoreFailed,
+                      restored
+                          ? paymentCopyForPlatform(s.restoreChecked)
+                          : paymentCopyForPlatform(s.restoreFailed),
                     ),
                     backgroundColor:
                         restored ? const Color(0xFF111111) : Colors.redAccent,
@@ -1305,7 +1309,10 @@ class _FooterLinks extends StatelessWidget {
                 );
               } catch (e) {
                 messenger.showSnackBar(
-                  SnackBar(content: Text(s.restoreException(e.toString()))),
+                  SnackBar(
+                    content: Text(
+                        paymentCopyForPlatform(s.restoreException(e.toString()))),
+                  ),
                 );
               }
             },

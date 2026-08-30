@@ -8,7 +8,6 @@ import '../../providers/auth_provider.dart';
 import '../../providers/home_provider.dart';
 import '../../config/api_config.dart';
 import '../../services/api_service.dart';
-import '../../services/scan_service.dart';
 import '../../widgets/share_card_modal.dart';
 import '../../l10n/generated/app_localizations.dart';
 
@@ -399,52 +398,6 @@ class _ResultScreenState extends State<ResultScreen> {
     );
   }
 
-  Future<void> _confirmAndDeleteMeal() async {
-    final s = context.read<AppSettingsProvider>().strings;
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(s.confirmDelete),
-        content: Text(s.deletePhotoMessage(_monChinh)),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx, false),
-            child: Text(s.cancel),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(ctx, true),
-            style: TextButton.styleFrom(foregroundColor: Colors.redAccent),
-            child: Text(s.deleteAction),
-          ),
-        ],
-      ),
-    );
-
-    if (confirmed == true && mounted) {
-      final scanService = context.read<ScanService>();
-      final homeProvider = context.read<HomeProvider>();
-      final messenger = ScaffoldMessenger.of(context);
-      try {
-        await scanService.deleteScan(widget.id);
-        try {
-          await homeProvider.loadToday(forceRefresh: true);
-        } catch (_) {}
-        if (mounted) {
-          messenger.showSnackBar(
-            SnackBar(content: Text(s.mealDeleted)),
-          );
-          context.go('/home');
-        }
-      } catch (_) {
-        if (mounted) {
-          messenger.showSnackBar(
-            SnackBar(content: Text(s.deleteFailed)),
-          );
-        }
-      }
-    }
-  }
-
   void _updateGram(int index, double newGram) {
     if (newGram < 0) newGram = 0;
     if (newGram > 2000) newGram = 2000;
@@ -536,7 +489,10 @@ class _ResultScreenState extends State<ResultScreen> {
     if (_feedback == type) {
       setState(() => _feedback = null);
       try {
-        await api.patch('/scan/${widget.id}', body: {'scan_feedback': null});
+        await api.patch('/scan/${widget.id}', body: {
+          'scan_feedback': null,
+          'scan_feedback_reason': null,
+        });
       } catch (_) {}
       return;
     }
@@ -544,9 +500,13 @@ class _ResultScreenState extends State<ResultScreen> {
     if (type == 'like') {
       setState(() => _feedback = 'like');
       try {
-        await api.patch('/scan/${widget.id}', body: {'scan_feedback': 'like'});
+        await api.patch('/scan/${widget.id}', body: {
+          'scan_feedback': 'like',
+          'scan_feedback_reason': null,
+        });
       } catch (_) {}
     } else {
+      _feedbackReasonController.clear();
       setState(() {
         _feedback = 'dislike';
         _showFeedbackModal = true;
@@ -729,6 +689,7 @@ class _ResultScreenState extends State<ResultScreen> {
             ),
           ),
           IconButton(
+            tooltip: 'Thích',
             onPressed: () => _handleFeedback('like'),
             icon: Container(
               width: 38,
@@ -739,24 +700,27 @@ class _ResultScreenState extends State<ResultScreen> {
               ),
               child: Icon(
                 _feedback == 'like'
-                    ? Icons.bookmark_rounded
-                    : Icons.bookmark_border_rounded,
+                    ? Icons.thumb_up_rounded
+                    : Icons.thumb_up_outlined,
                 color: Colors.white,
                 size: 19,
               ),
             ),
           ),
           IconButton(
-            onPressed: _confirmAndDeleteMeal,
+            tooltip: 'Không thích',
+            onPressed: () => _handleFeedback('dislike'),
             icon: Container(
               width: 38,
               height: 38,
               decoration: BoxDecoration(
-                color: Colors.redAccent.withOpacity(0.35),
+                color: Colors.black.withOpacity(0.24),
                 shape: BoxShape.circle,
               ),
-              child: const Icon(
-                Icons.delete_outline_rounded,
+              child: Icon(
+                _feedback == 'dislike'
+                    ? Icons.thumb_down_rounded
+                    : Icons.thumb_down_outlined,
                 color: Colors.white,
                 size: 19,
               ),
@@ -1588,8 +1552,11 @@ class _ResultScreenState extends State<ResultScreen> {
                             children: [
                               Expanded(
                                 child: TextButton(
-                                  onPressed: () => setState(
-                                      () => _showFeedbackModal = false),
+                                  // A dislike is useful even without a written
+                                  // reason, so persist it when the user skips.
+                                  onPressed: _submittingFeedback
+                                      ? null
+                                      : _submitDislikeReason,
                                   child: Text(s.skip,
                                       style: TextStyle(color: textMuted)),
                                 ),
@@ -1877,11 +1844,64 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
     );
   }
 
+  static String _normalizeSearchText(String value) {
+    var normalized = value.toLowerCase();
+    const replacements = <String, String>{
+      'à': 'a', 'á': 'a', 'ả': 'a', 'ã': 'a', 'ạ': 'a',
+      'ă': 'a', 'ằ': 'a', 'ắ': 'a', 'ẳ': 'a', 'ẵ': 'a', 'ặ': 'a',
+      'â': 'a', 'ầ': 'a', 'ấ': 'a', 'ẩ': 'a', 'ẫ': 'a', 'ậ': 'a',
+      'è': 'e', 'é': 'e', 'ẻ': 'e', 'ẽ': 'e', 'ẹ': 'e',
+      'ê': 'e', 'ề': 'e', 'ế': 'e', 'ể': 'e', 'ễ': 'e', 'ệ': 'e',
+      'ì': 'i', 'í': 'i', 'ỉ': 'i', 'ĩ': 'i', 'ị': 'i',
+      'ò': 'o', 'ó': 'o', 'ỏ': 'o', 'õ': 'o', 'ọ': 'o',
+      'ô': 'o', 'ồ': 'o', 'ố': 'o', 'ổ': 'o', 'ỗ': 'o', 'ộ': 'o',
+      'ơ': 'o', 'ờ': 'o', 'ớ': 'o', 'ở': 'o', 'ỡ': 'o', 'ợ': 'o',
+      'ù': 'u', 'ú': 'u', 'ủ': 'u', 'ũ': 'u', 'ụ': 'u',
+      'ư': 'u', 'ừ': 'u', 'ứ': 'u', 'ử': 'u', 'ữ': 'u', 'ự': 'u',
+      'ỳ': 'y', 'ý': 'y', 'ỷ': 'y', 'ỹ': 'y', 'ỵ': 'y',
+      'đ': 'd',
+    };
+    for (final replacement in replacements.entries) {
+      normalized = normalized.replaceAll(replacement.key, replacement.value);
+    }
+    return normalized.trim();
+  }
+
+  List<Map<String, dynamic>> _fallbackMatches(
+      String query, List<Map<String, dynamic>> fallbackIngredients) {
+    final normalizedQuery = _normalizeSearchText(query);
+    if (normalizedQuery.isEmpty) return fallbackIngredients;
+
+    return fallbackIngredients.where((item) {
+      final name = _normalizeSearchText(
+          (item['name'] ?? item['ten'] ?? '').toString());
+      return name.contains(normalizedQuery);
+    }).toList();
+  }
+
+  List<dynamic> _mergeFallbackMatches(
+      String query, List<dynamic> apiItems, List<Map<String, dynamic>> fallback) {
+    if (query.isEmpty) return apiItems;
+
+    final localMatches = _fallbackMatches(query, fallback);
+    final apiNames = apiItems
+        .map((item) =>
+            (item is Map ? item['name'] ?? item['ten'] : '').toString())
+        .map(_normalizeSearchText)
+        .toSet();
+    return [
+      ...localMatches.where((item) =>
+          !apiNames.contains(_normalizeSearchText(item['name'].toString()))),
+      ...apiItems,
+    ];
+  }
+
   Future<void> _search(String q) async {
     final queryStr = q.trim();
     final fallbackIngredients =
         _fallbackIngredients(context.read<AppSettingsProvider>().strings);
     final requestId = ++_searchRequestId;
+    if (!mounted) return;
     setState(() => _searching = true);
 
     final api = context.read<ApiService>();
@@ -1892,7 +1912,8 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
         final itemsList = res['items'] as List;
         if (mounted && requestId == _searchRequestId) {
           setState(() {
-            _searchResults = itemsList;
+            _searchResults = _mergeFallbackMatches(
+                queryStr, itemsList, fallbackIngredients);
             _searching = false;
           });
         }
@@ -1905,12 +1926,7 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
         if (queryStr.isEmpty) {
           _searchResults = fallbackIngredients;
         } else {
-          final lower = queryStr.toLowerCase();
-          _searchResults = fallbackIngredients.where((item) {
-            final name =
-                (item['name'] ?? item['ten'] ?? '').toString().toLowerCase();
-            return name.contains(lower);
-          }).toList();
+          _searchResults = _fallbackMatches(queryStr, fallbackIngredients);
         }
         _searching = false;
       });
@@ -2582,4 +2598,3 @@ class _BarcodeTipCard extends StatelessWidget {
     );
   }
 }
-

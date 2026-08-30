@@ -104,6 +104,15 @@ GoRouter createAppRouter(OnboardingProvider onboarding, AuthProvider auth) =>
           path: '/gallery',
           builder: (context, state) => const PhotoGalleryScreen(),
         ),
+        // Result is a full-screen detail page. Keep it outside the Home
+        // Shell so opening a saved photo from Gallery does not rebuild the
+        // shell and fall back to the Home tab.
+        GoRoute(
+          path: '/result/:id',
+          builder: (context, state) => ResultScreen(
+            id: state.pathParameters['id']!,
+          ),
+        ),
         GoRoute(
           path: '/meal-guidance',
           builder: (context, state) => const MealGuidanceScreen(),
@@ -138,12 +147,6 @@ GoRouter createAppRouter(OnboardingProvider onboarding, AuthProvider auth) =>
             GoRoute(
               path: '/profile',
               builder: (context, state) => const ProfileScreen(),
-            ),
-            GoRoute(
-              path: '/result/:id',
-              builder: (context, state) => ResultScreen(
-                id: state.pathParameters['id']!,
-              ),
             ),
           ],
         ),

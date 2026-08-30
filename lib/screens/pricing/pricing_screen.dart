@@ -5,6 +5,7 @@ import '../../config/app_build_config.dart';
 import '../../providers/app_settings_provider.dart';
 import '../../providers/payment_provider.dart';
 import '../../services/api_service.dart';
+import '../../utils/payment_platform.dart';
 
 class CreditPackageItem {
   final String id;
@@ -149,7 +150,7 @@ class _PricingScreenState extends State<PricingScreen> {
     } catch (_) {}
   }
 
-  Future<void> _processGooglePlayPurchase(
+  Future<void> _processStorePurchase(
       String packageId, CreditPackageItem pack) async {
     final s = context.read<AppSettingsProvider>().strings;
     setState(() => _creatingPayment = true);
@@ -162,14 +163,14 @@ class _PricingScreenState extends State<PricingScreen> {
       if (ok && mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(s.paymentProcessing),
+            content: Text(paymentCopyForPlatform(s.paymentProcessing)),
           ),
         );
       } else if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              s.paymentOpenFailed,
+              paymentCopyForPlatform(s.paymentOpenFailed),
             ),
             backgroundColor: Colors.redAccent,
           ),
@@ -316,7 +317,7 @@ class _PricingScreenState extends State<PricingScreen> {
                       borderRadius: BorderRadius.circular(14),
                     ),
                     child: Text(
-                      s.testingFreeCredits,
+                      paymentCopyForPlatform(s.testingFreeCredits),
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 12, height: 1.35),
                     ),
@@ -335,7 +336,7 @@ class _PricingScreenState extends State<PricingScreen> {
                       ),
                       onPressed: () {
                         Navigator.pop(ctx);
-                        _processGooglePlayPurchase(pack.id, pack);
+                        _processStorePurchase(pack.id, pack);
                       },
                       icon: const Icon(Icons.smartphone_rounded,
                           color: Colors.white, size: 20),
@@ -350,7 +351,7 @@ class _PricingScreenState extends State<PricingScreen> {
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    s.paymentMethods,
+                    paymentCopyForPlatform(s.paymentMethods),
                     style: TextStyle(
                         fontSize: 11,
                         color: isDark
@@ -366,13 +367,16 @@ class _PricingScreenState extends State<PricingScreen> {
                         final restored = await payment.restorePurchases();
                         if (mounted && restored) {
                           messenger.showSnackBar(
-                            SnackBar(content: Text(s.restoreSuccess)),
+                            SnackBar(
+                              content: Text(
+                                  paymentCopyForPlatform(s.restoreSuccess)),
+                            ),
                           );
                         } else if (mounted) {
                           messenger.showSnackBar(
                             SnackBar(
                               content: Text(
-                                s.restoreFailed,
+                                paymentCopyForPlatform(s.restoreFailed),
                               ),
                               backgroundColor: Colors.redAccent,
                             ),
@@ -382,8 +386,8 @@ class _PricingScreenState extends State<PricingScreen> {
                         if (mounted) {
                           messenger.showSnackBar(
                             SnackBar(
-                                content: Text(
-                                    s.restoreFailedWithDetails(e.toString()))),
+                                content: Text(paymentCopyForPlatform(
+                                    s.restoreFailedWithDetails(e.toString())))),
                           );
                         }
                       }
