@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'tao_widget.dart';
 
 void showExpGainPrompt(
   BuildContext context, {
@@ -96,10 +95,15 @@ class _ExpToastWidgetState extends State<_ExpToastWidget>
             ),
             child: Row(
               children: [
-                const SizedBox(
+                SizedBox(
                   width: 52,
                   height: 52,
-                  child: TaoWidget(expression: TaoExpression.happy, size: 52),
+                  child: Image.asset(
+                    'assets/images/apple_mascot/apple_happy_transparent.png',
+                    width: 52,
+                    height: 52,
+                    fit: BoxFit.contain,
+                  ),
                 ),
                 const SizedBox(width: 8),
                 Expanded(

@@ -3,7 +3,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 import '../../providers/app_settings_provider.dart';
 import '../../providers/gamification_provider.dart';
 import '../../models/gamification.dart';
@@ -26,7 +28,11 @@ Future<void> showDailyRecap(
     isScrollControlled: true,
     backgroundColor: Colors.transparent,
     useSafeArea: true,
-    builder: (_) => DailyRecapSheet(recap: recap, onFinish: onFinish),
+    builder: (_) => DailyRecapSheet(
+      recap: recap,
+      onFinish: onFinish,
+      isModal: true,
+    ),
   );
 }
 
@@ -82,6 +88,7 @@ class _DailyRecapPageState extends State<DailyRecapPage> {
                 )
               : DailyRecapSheet(
                   recap: gamification.recap!,
+                  isModal: false,
                   onFinish: () {
                     unawaited(gamification.finishRecap());
                   },
@@ -93,8 +100,14 @@ class _DailyRecapPageState extends State<DailyRecapPage> {
 class DailyRecapSheet extends StatefulWidget {
   final DailyRecap recap;
   final VoidCallback? onFinish;
+  final bool isModal;
 
-  const DailyRecapSheet({super.key, required this.recap, this.onFinish});
+  const DailyRecapSheet({
+    super.key,
+    required this.recap,
+    this.onFinish,
+    this.isModal = true,
+  });
 
   @override
   State<DailyRecapSheet> createState() => _DailyRecapSheetState();
@@ -293,6 +306,7 @@ class _DailyRecapSheetState extends State<DailyRecapSheet>
                         recap: recap,
                         isDark: isDark,
                         textDark: textDark,
+                        isModal: widget.isModal,
                         onFinish: widget.onFinish),
                   ],
                 ),
@@ -660,14 +674,65 @@ class _ActionButtons extends StatelessWidget {
   final DailyRecap recap;
   final bool isDark;
   final Color textDark;
+  final bool isModal;
   final VoidCallback? onFinish;
 
   const _ActionButtons({
     required this.recap,
     required this.isDark,
     required this.textDark,
+    required this.isModal,
     this.onFinish,
   });
+
+  void _finish(BuildContext context) {
+    HapticFeedback.mediumImpact();
+    onFinish?.call();
+    if (isModal) {
+      Navigator.of(context).pop();
+    } else {
+      context.go('/home');
+    }
+  }
+
+  Future<void> _shareRecap(BuildContext context) async {
+    final recapText = [
+      'CalGo – Tổng kết ngày ${recap.dateKey}',
+      '🔥 ${recap.totalCalo}/${recap.targetCalo} kcal',
+      '🥩 Protein: ${recap.proteinPct.round()}%',
+      '🍚 Carbs: ${recap.carbPct.round()}%',
+      '🥑 Chất béo: ${recap.fatPct.round()}%',
+      '🍽️ ${recap.mealCount} bữa đã ghi',
+    ].join('\n');
+
+    final renderObject = context.findRenderObject();
+    final box = renderObject is RenderBox && renderObject.hasSize
+        ? renderObject
+        : null;
+    final sharePositionOrigin = box == null
+        ? null
+        : box.localToGlobal(Offset.zero) & box.size;
+
+    try {
+      await Share.share(
+        recapText,
+        sharePositionOrigin: sharePositionOrigin,
+      );
+    } catch (error) {
+      debugPrint('Unable to share daily recap: $error');
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Không thể mở bảng chia sẻ.')),
+        );
+      }
+    }
+  }
+
+  void _openStats(BuildContext context) {
+    final router = GoRouter.of(context);
+    if (isModal) Navigator.of(context).pop();
+    router.go('/stats');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -681,9 +746,7 @@ class _ActionButtons extends StatelessWidget {
           width: double.infinity,
           child: ElevatedButton.icon(
             onPressed: () {
-              HapticFeedback.mediumImpact();
-              Navigator.pop(context);
-              onFinish?.call();
+              _finish(context);
             },
             icon: const Icon(Icons.check_circle_outline_rounded, size: 18),
             label: const Text(
@@ -707,10 +770,7 @@ class _ActionButtons extends StatelessWidget {
           children: [
             Expanded(
               child: OutlinedButton.icon(
-                onPressed: () {
-                  Navigator.pop(context);
-                  // Navigate to stats
-                },
+                onPressed: () => _openStats(context),
                 icon: Icon(Icons.bar_chart_rounded, size: 16, color: textDark),
                 label: Text(
                   'Báo cáo',
@@ -737,8 +797,7 @@ class _ActionButtons extends StatelessWidget {
               child: OutlinedButton.icon(
                 onPressed: () {
                   HapticFeedback.lightImpact();
-                  Navigator.pop(context);
-                  // Share logic
+                  _shareRecap(context);
                 },
                 icon: Icon(Icons.share_outlined, size: 16, color: textDark),
                 label: Text(

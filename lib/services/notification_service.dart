@@ -13,6 +13,7 @@ class NotificationService {
   final FlutterLocalNotificationsPlugin _notificationsPlugin =
       FlutterLocalNotificationsPlugin();
   bool _initialized = false;
+  Future<void>? _initializationFuture;
   bool? _recapHasMeals;
 
   /// The app router is wired by main.dart so a notification tap can deep-link
@@ -35,8 +36,25 @@ class NotificationService {
     return lookupAppLocalizations(Locale(code));
   }
 
-  Future<void> init() async {
-    if (_initialized) return;
+  Future<void> init() {
+    if (_initialized) return Future.value();
+    return _initializationFuture ??= _initialize();
+  }
+
+  Future<void> _initialize() async {
+    try {
+      await _initializeInternal();
+    } catch (e, stackTrace) {
+      // Allow a later app resume to retry if iOS temporarily rejected a
+      // platform-channel call while the app was starting.
+      _initialized = false;
+      debugPrint('Notification initialization error: $e\n$stackTrace');
+    } finally {
+      _initializationFuture = null;
+    }
+  }
+
+  Future<void> _initializeInternal() async {
 
     try {
       tz.initializeTimeZones();
@@ -78,11 +96,20 @@ class NotificationService {
     }
 
     _initialized = true;
-    await requestPermission();
+    final permissionGranted = await requestPermission();
+    debugPrint('Notification permission granted: $permissionGranted');
     await scheduleDailyMealReminders();
     await scheduleDailyRecapNotification(
       hasMeals: _recapHasMeals ?? false,
     );
+  }
+
+  /// Rebuilds the daily schedule when the app returns from the background.
+  /// This recovers from a failed first initialization and keeps the next
+  /// lunch reminder available after an iOS restore/update.
+  Future<void> ensureDailyMealRemindersScheduled() async {
+    await init();
+    await scheduleDailyMealReminders();
   }
 
   Future<bool> requestPermission() async {
@@ -153,6 +180,8 @@ class NotificationService {
       presentAlert: true,
       presentBadge: true,
       presentSound: true,
+      presentBanner: true,
+      presentList: true,
     );
 
     final details = NotificationDetails(
@@ -257,6 +286,8 @@ class NotificationService {
         presentAlert: true,
         presentBadge: true,
         presentSound: true,
+        presentBanner: true,
+        presentList: true,
       ),
     );
 
@@ -433,6 +464,8 @@ class NotificationService {
         presentAlert: true,
         presentBadge: true,
         presentSound: true,
+        presentBanner: true,
+        presentList: true,
       ),
     );
     await _notificationsPlugin.show(

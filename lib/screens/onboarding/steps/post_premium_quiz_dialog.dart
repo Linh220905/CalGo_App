@@ -18,22 +18,18 @@ TextStyle _f(
   Color color = _kInk,
   double? height,
   double? letterSpacing,
-}) =>
-    GoogleFonts.plusJakartaSans(
-      fontSize: size,
-      fontWeight: weight,
-      color: color,
-      height: height,
-      letterSpacing: letterSpacing,
-    );
+}) => GoogleFonts.plusJakartaSans(
+  fontSize: size,
+  fontWeight: weight,
+  color: color,
+  height: height,
+  letterSpacing: letterSpacing,
+);
 
 class PostPremiumQuizDialog extends StatefulWidget {
   final Future<void> Function() onCompleted;
 
-  const PostPremiumQuizDialog({
-    super.key,
-    required this.onCompleted,
-  });
+  const PostPremiumQuizDialog({super.key, required this.onCompleted});
 
   static Future<void> show(
     BuildContext context, {
@@ -44,7 +40,7 @@ class PostPremiumQuizDialog extends StatefulWidget {
       isScrollControlled: true,
       isDismissible: false,
       backgroundColor: Colors.transparent,
-      barrierColor: Colors.black.withOpacity(0.6),
+      barrierColor: Colors.black.withValues(alpha: 0.6),
       enableDrag: false,
       builder: (ctx) => PostPremiumQuizDialog(onCompleted: onCompleted),
     );
@@ -67,48 +63,41 @@ class _PostPremiumQuizDialogState extends State<PostPremiumQuizDialog> {
   final List<Map<String, dynamic>> _q1Options = [
     {
       'value': 'three_meals',
-      'emoji': '🥣',
       'title': '3 Bữa chính',
-      'desc': 'Sáng - Trưa - Tối chuẩn mực, dễ kiểm soát'
+      'desc': 'Sáng - Trưa - Tối chuẩn mực, dễ kiểm soát',
     },
     {
       'value': 'three_plus_snack',
-      'emoji': '🥗',
       'title': '3 Bữa chính + 1 Bữa phụ',
-      'desc': 'Có thêm snack nhẹ chống đói buổi chiều'
+      'desc': 'Có thêm snack nhẹ chống đói buổi chiều',
     },
     {
       'value': 'intermittent_fasting_16_8',
-      'emoji': '🥑',
       'title': '2 Bữa chính (Intermittent Fasting)',
-      'desc': 'Theo chế độ nhịn ăn gián đoạn 16:8'
+      'desc': 'Theo chế độ nhịn ăn gián đoạn 16:8',
     },
     {
       'value': 'four_five_small',
-      'emoji': '🍱',
       'title': '4 - 5 Bữa nhỏ',
-      'desc': 'Chia nhỏ năng lượng đều đặn trong ngày'
+      'desc': 'Chia nhỏ năng lượng đều đặn trong ngày',
     },
   ];
 
   final List<Map<String, dynamic>> _q2Options = [
     {
       'value': 'repeat_simple',
-      'emoji': '🔁',
       'title': 'Lặp lại tối giản',
-      'desc': 'Nấu 1 lần ăn 2-3 bữa, tiết kiệm thời gian'
+      'desc': 'Nấu 1 lần ăn 2-3 bữa, tiết kiệm thời gian',
     },
     {
       'value': 'rotate_daily',
-      'emoji': '🎲',
       'title': 'Đổi món liên tục',
-      'desc': 'Mỗi ngày 1 thực đơn mới, không lo ngán'
+      'desc': 'Mỗi ngày 1 thực đơn mới, không lo ngán',
     },
     {
       'value': 'vietnamese_local',
-      'emoji': '🛒',
       'title': 'Ưu tiên món ăn Việt',
-      'desc': 'Nguyên liệu dễ tìm ở chợ & siêu thị Việt'
+      'desc': 'Nguyên liệu dễ tìm ở chợ & siêu thị Việt',
     },
   ];
 
@@ -116,67 +105,58 @@ class _PostPremiumQuizDialogState extends State<PostPremiumQuizDialog> {
       context.read<OnboardingProvider>().data.goalType ?? GoalType.maintain;
 
   List<Map<String, dynamic>> get _q3Options => switch (_goal) {
-        GoalType.lose => [
-            {
-              'value': 'satiety',
-              'emoji': '🥗',
-              'title': 'No lâu, ít calo',
-              'desc': 'Ưu tiên protein, rau và món ít dầu để dễ giữ thâm hụt'
-            },
-            {
-              'value': 'calorie_fit',
-              'emoji': '🎯',
-              'title': 'Khớp calo còn lại',
-              'desc': 'Chọn khẩu phần sát ngân sách calo của từng bữa'
-            },
-            {
-              'value': 'smart_swap',
-              'emoji': '💡',
-              'title': 'Thay món thông minh',
-              'desc': 'Gợi ý món nhẹ hơn khi hôm nay đã ăn hơi nhiều'
-            },
-          ],
-        GoalType.gain => [
-            {
-              'value': 'high_protein_low_fat',
-              'emoji': '💪',
-              'title': 'Nhiều protein, ít fat',
-              'desc': 'Ưu tiên đạm nạc để hỗ trợ tăng cơ mà không đội mỡ'
-            },
-            {
-              'value': 'training_fuel',
-              'emoji': '🏋️',
-              'title': 'Nhiên liệu tập luyện',
-              'desc': 'Cân bằng protein và carb cho buổi tập, phục hồi'
-            },
-            {
-              'value': 'calorie_surplus',
-              'emoji': '🍚',
-              'title': 'Đủ calo tăng cân',
-              'desc': 'Chia bữa dễ ăn để đạt mức calo dư mỗi ngày'
-            },
-          ],
-        GoalType.maintain => [
-            {
-              'value': 'balanced_macros',
-              'emoji': '⚖️',
-              'title': 'Cân bằng macro',
-              'desc': 'Giữ protein, carb và fat ổn định qua từng ngày'
-            },
-            {
-              'value': 'weight_stability',
-              'emoji': '🎯',
-              'title': 'Giữ cân ổn định',
-              'desc': 'Ưu tiên món khớp mức calo duy trì hiện tại'
-            },
-            {
-              'value': 'flexible_weekends',
-              'emoji': '🎉',
-              'title': 'Linh hoạt cuối tuần',
-              'desc': 'Cân lại các bữa sau khi có một bữa ăn thoải mái'
-            },
-          ],
-      };
+    GoalType.lose => [
+      {
+        'value': 'satiety',
+        'title': 'No lâu, ít calo',
+        'desc': 'Ưu tiên protein, rau và món ít dầu để dễ giữ thâm hụt',
+      },
+      {
+        'value': 'calorie_fit',
+        'title': 'Khớp calo còn lại',
+        'desc': 'Chọn khẩu phần sát ngân sách calo của từng bữa',
+      },
+      {
+        'value': 'smart_swap',
+        'title': 'Thay món thông minh',
+        'desc': 'Gợi ý món nhẹ hơn khi hôm nay đã ăn hơi nhiều',
+      },
+    ],
+    GoalType.gain => [
+      {
+        'value': 'high_protein_low_fat',
+        'title': 'Nhiều protein, ít fat',
+        'desc': 'Ưu tiên đạm nạc để hỗ trợ tăng cơ mà không đội mỡ',
+      },
+      {
+        'value': 'training_fuel',
+        'title': 'Nhiên liệu tập luyện',
+        'desc': 'Cân bằng protein và carb cho buổi tập, phục hồi',
+      },
+      {
+        'value': 'calorie_surplus',
+        'title': 'Đủ calo tăng cân',
+        'desc': 'Chia bữa dễ ăn để đạt mức calo dư mỗi ngày',
+      },
+    ],
+    GoalType.maintain => [
+      {
+        'value': 'balanced_macros',
+        'title': 'Cân bằng macro',
+        'desc': 'Giữ protein, carb và fat ổn định qua từng ngày',
+      },
+      {
+        'value': 'weight_stability',
+        'title': 'Giữ cân ổn định',
+        'desc': 'Ưu tiên món khớp mức calo duy trì hiện tại',
+      },
+      {
+        'value': 'flexible_weekends',
+        'title': 'Linh hoạt cuối tuần',
+        'desc': 'Cân lại các bữa sau khi có một bữa ăn thoải mái',
+      },
+    ],
+  };
 
   @override
   void didChangeDependencies() {
@@ -266,43 +246,12 @@ class _PostPremiumQuizDialogState extends State<PostPremiumQuizDialog> {
           ),
         ),
         const SizedBox(height: 18),
-        Center(
-          child: Padding(
-            padding: const EdgeInsets.only(bottom: 8),
-            child: Image.asset(
-              'assets/images/apple_mascot/apple_thinking.png',
-              height: 78,
-              fit: BoxFit.contain,
-            ),
+        Align(
+          alignment: Alignment.centerRight,
+          child: Text(
+            'Bước ${_currentStep + 1} / 3',
+            style: _f(12, weight: FontWeight.w600, color: _kMuted),
           ),
-        ),
-
-        // Step Indicator & Tag
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-              decoration: BoxDecoration(
-                color: _kAccentSoft,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Row(
-                children: [
-                  const Icon(Icons.star_rounded, size: 14, color: _kAccent),
-                  const SizedBox(width: 4),
-                  Text(
-                    'Cá nhân hóa Premium',
-                    style: _f(11, weight: FontWeight.w700, color: _kAccent),
-                  ),
-                ],
-              ),
-            ),
-            Text(
-              'Bước ${_currentStep + 1} / 3',
-              style: _f(12, weight: FontWeight.w600, color: _kMuted),
-            ),
-          ],
         ),
         const SizedBox(height: 12),
 
@@ -326,20 +275,20 @@ class _PostPremiumQuizDialogState extends State<PostPremiumQuizDialog> {
           ),
           const SizedBox(height: 6),
           Text(
-            'Bạn muốn AI phân bổ lượng Calo hàng ngày theo mấy bữa?',
+            'Bạn muốn chia lượng Calo hằng ngày thành mấy bữa?',
             style: _f(13, color: _kMuted, height: 1.35),
           ),
           const SizedBox(height: 18),
-          ..._q1Options.asMap().entries.map((entry) => _buildOptionCard(
-                index: entry.key,
-                selected: _selectedMealPattern == entry.value['value'],
-                emoji: entry.value['emoji']!,
-                title: entry.value['title']!,
-                desc: entry.value['desc']!,
-                onTap: () => setState(
-                  () => _selectedMealPattern = entry.value['value']!,
-                ),
-              )),
+          ..._q1Options.asMap().entries.map(
+            (entry) => _buildOptionCard(
+              index: entry.key,
+              selected: _selectedMealPattern == entry.value['value'],
+              title: entry.value['title']!,
+              desc: entry.value['desc']!,
+              onTap: () =>
+                  setState(() => _selectedMealPattern = entry.value['value']!),
+            ),
+          ),
         ] else if (_currentStep == 1) ...[
           Text(
             'Mức độ linh hoạt thực đơn',
@@ -347,41 +296,41 @@ class _PostPremiumQuizDialogState extends State<PostPremiumQuizDialog> {
           ),
           const SizedBox(height: 6),
           Text(
-            'AI nên ưu tiên gợi ý thực đơn theo phong cách nào?',
+            'Bạn thích thực đơn được gợi ý như thế nào?',
             style: _f(13, color: _kMuted, height: 1.35),
           ),
           const SizedBox(height: 18),
-          ..._q2Options.asMap().entries.map((entry) => _buildOptionCard(
-                index: entry.key,
-                selected: _selectedVariety == entry.value['value'],
-                emoji: entry.value['emoji']!,
-                title: entry.value['title']!,
-                desc: entry.value['desc']!,
-                onTap: () => setState(
-                  () => _selectedVariety = entry.value['value']!,
-                ),
-              )),
+          ..._q2Options.asMap().entries.map(
+            (entry) => _buildOptionCard(
+              index: entry.key,
+              selected: _selectedVariety == entry.value['value'],
+              title: entry.value['title']!,
+              desc: entry.value['desc']!,
+              onTap: () =>
+                  setState(() => _selectedVariety = entry.value['value']!),
+            ),
+          ),
         ] else ...[
           Text(
-            'Mục tiêu đồng hành Premium',
+            'Mục tiêu ăn uống của bạn',
             style: _f(22, weight: FontWeight.w800, letterSpacing: -0.4),
           ),
           const SizedBox(height: 6),
           Text(
-            'Bạn muốn AI trợ lý tập trung hỗ trợ tính năng nào nhất?',
+            'Bạn muốn ưu tiên điều gì trong kế hoạch ăn uống?',
             style: _f(13, color: _kMuted, height: 1.35),
           ),
           const SizedBox(height: 18),
-          ..._q3Options.asMap().entries.map((entry) => _buildOptionCard(
-                index: entry.key,
-                selected: _selectedPriority == entry.value['value'],
-                emoji: entry.value['emoji']!,
-                title: entry.value['title']!,
-                desc: entry.value['desc']!,
-                onTap: () => setState(
-                  () => _selectedPriority = entry.value['value']!,
-                ),
-              )),
+          ..._q3Options.asMap().entries.map(
+            (entry) => _buildOptionCard(
+              index: entry.key,
+              selected: _selectedPriority == entry.value['value'],
+              title: entry.value['title']!,
+              desc: entry.value['desc']!,
+              onTap: () =>
+                  setState(() => _selectedPriority = entry.value['value']!),
+            ),
+          ),
         ],
 
         const SizedBox(height: 20),
@@ -436,9 +385,6 @@ class _PostPremiumQuizDialogState extends State<PostPremiumQuizDialog> {
                   _currentStep == 2 ? 'Hoàn tất & Tạo thực đơn' : 'Tiếp tục',
                   style: _f(15, weight: FontWeight.w700, color: Colors.white),
                 ),
-                const SizedBox(width: 8),
-                const Icon(Icons.arrow_forward_rounded,
-                    size: 18, color: Colors.white),
               ],
             ),
           ),
@@ -450,7 +396,6 @@ class _PostPremiumQuizDialogState extends State<PostPremiumQuizDialog> {
   Widget _buildOptionCard({
     required int index,
     required bool selected,
-    required String emoji,
     required String title,
     required String desc,
     required VoidCallback onTap,
@@ -472,18 +417,6 @@ class _PostPremiumQuizDialogState extends State<PostPremiumQuizDialog> {
           ),
           child: Row(
             children: [
-              Container(
-                width: 42,
-                height: 42,
-                decoration: BoxDecoration(
-                  color: selected ? Colors.white : _kSurface,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Center(
-                  child: Text(emoji, style: const TextStyle(fontSize: 20)),
-                ),
-              ),
-              const SizedBox(width: 14),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -493,10 +426,7 @@ class _PostPremiumQuizDialogState extends State<PostPremiumQuizDialog> {
                       style: _f(14, weight: FontWeight.w700, color: _kInk),
                     ),
                     const SizedBox(height: 2),
-                    Text(
-                      desc,
-                      style: _f(11.5, color: _kMuted, height: 1.25),
-                    ),
+                    Text(desc, style: _f(11.5, color: _kMuted, height: 1.25)),
                   ],
                 ),
               ),
@@ -514,7 +444,14 @@ class _PostPremiumQuizDialogState extends State<PostPremiumQuizDialog> {
                   ),
                 ),
                 child: selected
-                    ? const Icon(Icons.check, size: 14, color: Colors.white)
+                    ? Container(
+                        width: 8,
+                        height: 8,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: _kInk,
+                        ),
+                      )
                     : null,
               ),
             ],
@@ -551,7 +488,7 @@ class _PostPremiumQuizDialogState extends State<PostPremiumQuizDialog> {
           ),
           const SizedBox(height: 24),
           Text(
-            'AI CalGo đang thiết lập thực đơn...',
+            'CalGo đang thiết lập thực đơn...',
             textAlign: TextAlign.center,
             style: _f(20, weight: FontWeight.w800, letterSpacing: -0.3),
           ),
@@ -572,11 +509,8 @@ class _PostPremiumQuizDialogState extends State<PostPremiumQuizDialog> {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(Icons.check_circle_rounded,
-                    size: 16, color: Colors.green),
-                const SizedBox(width: 6),
                 Text(
-                  'Đã kích hoạt trợ lý AI thành công',
+                  'Đang hoàn tất thiết lập',
                   style: _f(11.5, weight: FontWeight.w600, color: _kInk),
                 ),
               ],

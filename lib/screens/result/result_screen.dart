@@ -45,14 +45,14 @@ class IngredientItem {
   }
 
   Map<String, dynamic> toJson() => {
-        'ten': ten,
-        'khoi_luong_gram': khoiLuongGram,
-        'calo': calo,
-        'carb': carb,
-        'protein': protein,
-        'fat': fat,
-        'unit': unit,
-      };
+    'ten': ten,
+    'khoi_luong_gram': khoiLuongGram,
+    'calo': calo,
+    'carb': carb,
+    'protein': protein,
+    'fat': fat,
+    'unit': unit,
+  };
 }
 
 class DishDetailItem {
@@ -87,21 +87,22 @@ class DishDetailItem {
       fat: number('fat'),
       ingredients: (json['ingredients'] as List? ?? const [])
           .whereType<Map>()
-          .map((item) =>
-              IngredientItem.fromJson(Map<String, dynamic>.from(item)))
+          .map(
+            (item) => IngredientItem.fromJson(Map<String, dynamic>.from(item)),
+          )
           .toList(),
     );
   }
 
   Map<String, dynamic> toJson() => {
-        'name': name,
-        'weight_g': weightG,
-        'calo': calo,
-        'carb': carb,
-        'protein': protein,
-        'fat': fat,
-        'ingredients': ingredients.map((item) => item.toJson()).toList(),
-      };
+    'name': name,
+    'weight_g': weightG,
+    'calo': calo,
+    'carb': carb,
+    'protein': protein,
+    'fat': fat,
+    'ingredients': ingredients.map((item) => item.toJson()).toList(),
+  };
 }
 
 class ResultScreen extends StatefulWidget {
@@ -183,7 +184,7 @@ class _ResultScreenState extends State<ResultScreen> {
             'carb': 48,
             'protein': 4.5,
             'fat': 1.0,
-            'unit': 'g'
+            'unit': 'g',
           },
           {
             'ten': s.mockPhoRareBeef,
@@ -192,7 +193,7 @@ class _ResultScreenState extends State<ResultScreen> {
             'carb': 0,
             'protein': 21.0,
             'fat': 8.0,
-            'unit': 'g'
+            'unit': 'g',
           },
           {
             'ten': s.mockPhoBrisket,
@@ -201,7 +202,7 @@ class _ResultScreenState extends State<ResultScreen> {
             'carb': 0,
             'protein': 11.0,
             'fat': 7.0,
-            'unit': 'g'
+            'unit': 'g',
           },
           {
             'ten': s.mockPhoBroth,
@@ -210,7 +211,7 @@ class _ResultScreenState extends State<ResultScreen> {
             'carb': 2,
             'protein': 1.5,
             'fat': 1.0,
-            'unit': 'ml'
+            'unit': 'ml',
           },
         ],
       },
@@ -226,7 +227,7 @@ class _ResultScreenState extends State<ResultScreen> {
             'carb': 52,
             'protein': 4.5,
             'fat': 1.0,
-            'unit': 'g'
+            'unit': 'g',
           },
           {
             'ten': s.mockGrilledPork,
@@ -235,7 +236,7 @@ class _ResultScreenState extends State<ResultScreen> {
             'carb': 5,
             'protein': 24.0,
             'fat': 21.0,
-            'unit': 'g'
+            'unit': 'g',
           },
           {
             'ten': s.mockEggCake,
@@ -244,7 +245,7 @@ class _ResultScreenState extends State<ResultScreen> {
             'carb': 3,
             'protein': 7.0,
             'fat': 8.0,
-            'unit': 'g'
+            'unit': 'g',
           },
           {
             'ten': s.mockFriedEgg,
@@ -253,7 +254,7 @@ class _ResultScreenState extends State<ResultScreen> {
             'carb': 0.5,
             'protein': 6.0,
             'fat': 5.0,
-            'unit': 'g'
+            'unit': 'g',
           },
         ],
       },
@@ -269,7 +270,7 @@ class _ResultScreenState extends State<ResultScreen> {
             'carb': 0,
             'protein': 36.0,
             'fat': 4.5,
-            'unit': 'g'
+            'unit': 'g',
           },
           {
             'ten': s.mockSalad,
@@ -278,7 +279,7 @@ class _ResultScreenState extends State<ResultScreen> {
             'carb': 5,
             'protein': 1.8,
             'fat': 0.3,
-            'unit': 'g'
+            'unit': 'g',
           },
           {
             'ten': s.mockPassionSauce,
@@ -287,7 +288,7 @@ class _ResultScreenState extends State<ResultScreen> {
             'carb': 12,
             'protein': 0.5,
             'fat': 7.5,
-            'unit': 'g'
+            'unit': 'g',
           },
         ],
       },
@@ -311,9 +312,11 @@ class _ResultScreenState extends State<ResultScreen> {
       }
 
       final api = context.read<ApiService>();
-      final data = await api.get('/scan/${widget.id}').timeout(
-            const Duration(seconds: 10),
-          ) as Map<String, dynamic>;
+      final data =
+          await api
+                  .get('/scan/${widget.id}')
+                  .timeout(const Duration(seconds: 10))
+              as Map<String, dynamic>;
 
       final rawIngs = (data['ingredients'] as List? ?? []);
       _monChinh = (data['mon_chinh'] ?? '').toString();
@@ -323,8 +326,9 @@ class _ResultScreenState extends State<ResultScreen> {
           .toList();
       _dishDetails = (data['dish_details'] as List? ?? const [])
           .whereType<Map>()
-          .map((item) =>
-              DishDetailItem.fromJson(Map<String, dynamic>.from(item)))
+          .map(
+            (item) => DishDetailItem.fromJson(Map<String, dynamic>.from(item)),
+          )
           .where((dish) => dish.name.trim().isNotEmpty)
           .toList();
       final rawDishCount = data['dish_count'];
@@ -416,14 +420,18 @@ class _ResultScreenState extends State<ResultScreen> {
   }
 
   void _updateDishIngredientGram(
-      int dishIndex, int ingredientIndex, double newGram) {
+    int dishIndex,
+    int ingredientIndex,
+    double newGram,
+  ) {
     if (newGram < 0) newGram = 0;
     if (newGram > 2000) newGram = 2000;
     setState(() {
       final dish = _dishDetails[dishIndex];
       final ingredient = dish.ingredients[ingredientIndex];
-      final oldGram =
-          ingredient.khoiLuongGram <= 0 ? 1 : ingredient.khoiLuongGram;
+      final oldGram = ingredient.khoiLuongGram <= 0
+          ? 1
+          : ingredient.khoiLuongGram;
       final ratio = newGram / oldGram;
       ingredient.khoiLuongGram = newGram;
       ingredient.calo *= ratio;
@@ -450,8 +458,10 @@ class _ResultScreenState extends State<ResultScreen> {
   }
 
   void _recalculateDish(DishDetailItem dish) {
-    dish.weightG =
-        dish.ingredients.fold(0, (sum, item) => sum + item.khoiLuongGram);
+    dish.weightG = dish.ingredients.fold(
+      0,
+      (sum, item) => sum + item.khoiLuongGram,
+    );
     dish.calo = dish.ingredients.fold(0, (sum, item) => sum + item.calo);
     dish.carb = dish.ingredients.fold(0, (sum, item) => sum + item.carb);
     dish.protein = dish.ingredients.fold(0, (sum, item) => sum + item.protein);
@@ -489,10 +499,10 @@ class _ResultScreenState extends State<ResultScreen> {
     if (_feedback == type) {
       setState(() => _feedback = null);
       try {
-        await api.patch('/scan/${widget.id}', body: {
-          'scan_feedback': null,
-          'scan_feedback_reason': null,
-        });
+        await api.patch(
+          '/scan/${widget.id}',
+          body: {'scan_feedback': null, 'scan_feedback_reason': null},
+        );
       } catch (_) {}
       return;
     }
@@ -500,10 +510,10 @@ class _ResultScreenState extends State<ResultScreen> {
     if (type == 'like') {
       setState(() => _feedback = 'like');
       try {
-        await api.patch('/scan/${widget.id}', body: {
-          'scan_feedback': 'like',
-          'scan_feedback_reason': null,
-        });
+        await api.patch(
+          '/scan/${widget.id}',
+          body: {'scan_feedback': 'like', 'scan_feedback_reason': null},
+        );
       } catch (_) {}
     } else {
       _feedbackReasonController.clear();
@@ -518,10 +528,13 @@ class _ResultScreenState extends State<ResultScreen> {
     setState(() => _submittingFeedback = true);
     final api = context.read<ApiService>();
     try {
-      await api.patch('/scan/${widget.id}', body: {
-        'scan_feedback': 'dislike',
-        'scan_feedback_reason': _feedbackReasonController.text.trim(),
-      });
+      await api.patch(
+        '/scan/${widget.id}',
+        body: {
+          'scan_feedback': 'dislike',
+          'scan_feedback_reason': _feedbackReasonController.text.trim(),
+        },
+      );
     } catch (_) {}
     if (mounted) {
       setState(() {
@@ -546,17 +559,20 @@ class _ResultScreenState extends State<ResultScreen> {
           !widget.id.startsWith('salad') &&
           widget.id != 'demo' &&
           widget.id != 'mock') {
-        await api.patch('/scan/${widget.id}', body: {
-          'mon_chinh': newName,
-          'total_calo': _totalCalo.round(),
-          'total_carb': _totalCarb,
-          'total_protein': _totalProtein,
-          'total_fat': _totalFat,
-          if (_isMultiDish)
-            'dish_details': _dishDetails.map((dish) => dish.toJson()).toList()
-          else
-            'ingredients': _ingredients.map((ing) => ing.toJson()).toList(),
-        });
+        await api.patch(
+          '/scan/${widget.id}',
+          body: {
+            'mon_chinh': newName,
+            'total_calo': _totalCalo.round(),
+            'total_carb': _totalCarb,
+            'total_protein': _totalProtein,
+            'total_fat': _totalFat,
+            if (_isMultiDish)
+              'dish_details': _dishDetails.map((dish) => dish.toJson()).toList()
+            else
+              'ingredients': _ingredients.map((ing) => ing.toJson()).toList(),
+          },
+        );
       }
     } catch (e) {
       debugPrint('Error saving scan results: $e');
@@ -579,6 +595,7 @@ class _ResultScreenState extends State<ResultScreen> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
+      useSafeArea: true,
       backgroundColor: Colors.transparent,
       builder: (ctx) => _AddIngredientModal(
         isDark: isDark,
@@ -601,16 +618,19 @@ class _ResultScreenState extends State<ResultScreen> {
     final bgColor = isDark ? const Color(0xFF121116) : const Color(0xFFF8FAFC);
     final cardBgColor = isDark ? const Color(0xFF1E1D24) : Colors.white;
     final textDark = isDark ? Colors.white : const Color(0xFF0F172A);
-    final textMuted =
-        isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B);
-    final borderColor =
-        isDark ? const Color(0xFF2E2D38) : const Color(0xFFE2E8F0);
+    final textMuted = isDark
+        ? const Color(0xFF94A3B8)
+        : const Color(0xFF64748B);
+    final borderColor = isDark
+        ? const Color(0xFF2E2D38)
+        : const Color(0xFFE2E8F0);
     if (_loading) {
       return Scaffold(
         backgroundColor: bgColor,
         body: Center(
           child: CircularProgressIndicator(
-              color: isDark ? Colors.white : const Color(0xFF2563EB)),
+            color: isDark ? Colors.white : const Color(0xFF2563EB),
+          ),
         ),
       );
     }
@@ -625,19 +645,27 @@ class _ResultScreenState extends State<ResultScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.error_outline_rounded,
-                    size: 48, color: Color(0xFFEF4444)),
+                const Icon(
+                  Icons.error_outline_rounded,
+                  size: 48,
+                  color: Color(0xFFEF4444),
+                ),
                 const SizedBox(height: 16),
-                Text(s.resultLoadFailed(widget.id),
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: textDark, fontSize: 15)),
+                Text(
+                  s.resultLoadFailed(widget.id),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: textDark, fontSize: 15),
+                ),
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () => context.go('/scan'),
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF2563EB)),
-                  child:
-                      Text(s.scanAgain, style: TextStyle(color: Colors.white)),
+                    backgroundColor: const Color(0xFF2563EB),
+                  ),
+                  child: Text(
+                    s.scanAgain,
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ],
             ),
@@ -650,11 +678,14 @@ class _ResultScreenState extends State<ResultScreen> {
       backgroundColor: bgColor,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text(s.nutritionTitle,
-            style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w700,
-                color: Colors.white)),
+        title: Text(
+          s.nutritionTitle,
+          style: TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.w700,
+            color: Colors.white,
+          ),
+        ),
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
@@ -666,8 +697,11 @@ class _ResultScreenState extends State<ResultScreen> {
               color: Colors.black.withOpacity(0.24),
               shape: BoxShape.circle,
             ),
-            child: const Icon(Icons.arrow_back_rounded,
-                color: Colors.white, size: 20),
+            child: const Icon(
+              Icons.arrow_back_rounded,
+              color: Colors.white,
+              size: 20,
+            ),
           ),
           onPressed: () => context.pop(),
         ),
@@ -751,15 +785,22 @@ class _ResultScreenState extends State<ResultScreen> {
                       style: OutlinedButton.styleFrom(
                         side: BorderSide(color: textDark, width: 1.3),
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18)),
+                          borderRadius: BorderRadius.circular(18),
+                        ),
                       ),
-                      icon: Icon(Icons.auto_fix_high_rounded,
-                          size: 18, color: textDark),
-                      label: Text(s.edit,
-                          style: TextStyle(
-                              color: textDark,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w800)),
+                      icon: Icon(
+                        Icons.auto_fix_high_rounded,
+                        size: 18,
+                        color: textDark,
+                      ),
+                      label: Text(
+                        s.edit,
+                        style: TextStyle(
+                          color: textDark,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -771,10 +812,12 @@ class _ResultScreenState extends State<ResultScreen> {
                   child: ElevatedButton(
                     onPressed: _saving ? null : _confirmSave,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor:
-                          isDark ? Colors.white : const Color(0xFF0F172A),
+                      backgroundColor: isDark
+                          ? Colors.white
+                          : const Color(0xFF0F172A),
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18)),
+                        borderRadius: BorderRadius.circular(18),
+                      ),
                     ),
                     child: _saving
                         ? SizedBox(
@@ -785,11 +828,14 @@ class _ResultScreenState extends State<ResultScreen> {
                               color: isDark ? Colors.black : Colors.white,
                             ),
                           )
-                        : Text(s.done,
+                        : Text(
+                            s.done,
                             style: TextStyle(
-                                color: isDark ? Colors.black : Colors.white,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w800)),
+                              color: isDark ? Colors.black : Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
                   ),
                 ),
               ),
@@ -820,16 +866,22 @@ class _ResultScreenState extends State<ResultScreen> {
                                 color: isDark
                                     ? const Color(0xFF292832)
                                     : const Color(0xFFEFF3F2),
-                                child: Icon(Icons.restaurant_rounded,
-                                    size: 56, color: textMuted),
+                                child: Icon(
+                                  Icons.restaurant_rounded,
+                                  size: 56,
+                                  color: textMuted,
+                                ),
                               ),
                             )
                           : Container(
                               color: isDark
                                   ? const Color(0xFF292832)
                                   : const Color(0xFFEFF3F2),
-                              child: Icon(Icons.restaurant_rounded,
-                                  size: 56, color: textMuted),
+                              child: Icon(
+                                Icons.restaurant_rounded,
+                                size: 56,
+                                color: textMuted,
+                              ),
                             ),
                       const DecoratedBox(
                         decoration: BoxDecoration(
@@ -850,8 +902,9 @@ class _ResultScreenState extends State<ResultScreen> {
                     padding: const EdgeInsets.fromLTRB(18, 16, 18, 8),
                     decoration: BoxDecoration(
                       color: bgColor,
-                      borderRadius:
-                          const BorderRadius.vertical(top: Radius.circular(28)),
+                      borderRadius: const BorderRadius.vertical(
+                        top: Radius.circular(28),
+                      ),
                     ),
                     child: Column(
                       children: [
@@ -860,17 +913,21 @@ class _ResultScreenState extends State<ResultScreen> {
                             controller: _dishNameController,
                             autofocus: true,
                             style: TextStyle(
-                                fontSize: 19,
-                                fontWeight: FontWeight.w800,
-                                color: textDark),
+                              fontSize: 19,
+                              fontWeight: FontWeight.w800,
+                              color: textDark,
+                            ),
                             decoration: InputDecoration(
                               suffixIcon: IconButton(
                                 onPressed: _saveDishName,
-                                icon: const Icon(Icons.check_rounded,
-                                    color: Color(0xFF16A34A)),
+                                icon: const Icon(
+                                  Icons.check_rounded,
+                                  color: Color(0xFF16A34A),
+                                ),
                               ),
                               border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(14)),
+                                borderRadius: BorderRadius.circular(14),
+                              ),
                             ),
                             onSubmitted: (_) => _saveDishName(),
                           )
@@ -896,18 +953,27 @@ class _ResultScreenState extends State<ResultScreen> {
                                     setState(() => _editingDishName = true),
                                 style: OutlinedButton.styleFrom(
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 12, vertical: 7),
+                                    horizontal: 12,
+                                    vertical: 7,
+                                  ),
                                   side: BorderSide(color: borderColor),
                                   shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12)),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
                                 ),
-                                icon: Icon(Icons.edit_rounded,
-                                    size: 13, color: textDark),
-                                label: Text(s.edit,
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w800,
-                                        color: textDark)),
+                                icon: Icon(
+                                  Icons.edit_rounded,
+                                  size: 13,
+                                  color: textDark,
+                                ),
+                                label: Text(
+                                  s.edit,
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w800,
+                                    color: textDark,
+                                  ),
+                                ),
                               ),
                             ],
                           ),
@@ -916,7 +982,9 @@ class _ResultScreenState extends State<ResultScreen> {
                         Container(
                           width: double.infinity,
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 18, vertical: 16),
+                            horizontal: 18,
+                            vertical: 16,
+                          ),
                           decoration: BoxDecoration(
                             color: cardBgColor,
                             borderRadius: BorderRadius.circular(18),
@@ -928,30 +996,38 @@ class _ResultScreenState extends State<ResultScreen> {
                                 width: 52,
                                 height: 52,
                                 decoration: BoxDecoration(
-                                  color:
-                                      const Color(0xFFF97316).withOpacity(0.12),
+                                  color: const Color(
+                                    0xFFF97316,
+                                  ).withOpacity(0.12),
                                   shape: BoxShape.circle,
                                 ),
                                 child: const Icon(
-                                    Icons.local_fire_department_rounded,
-                                    color: Color(0xFFF97316),
-                                    size: 28),
+                                  Icons.local_fire_department_rounded,
+                                  color: Color(0xFFF97316),
+                                  size: 28,
+                                ),
                               ),
                               const SizedBox(width: 16),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(s.caloriesLabel,
-                                      style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w600,
-                                          color: textMuted)),
-                                  Text('${_totalCalo.round()}',
-                                      style: TextStyle(
-                                          fontSize: 30,
-                                          height: 1.05,
-                                          fontWeight: FontWeight.w900,
-                                          color: textDark)),
+                                  Text(
+                                    s.caloriesLabel,
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600,
+                                      color: textMuted,
+                                    ),
+                                  ),
+                                  Text(
+                                    '${_totalCalo.round()}',
+                                    style: TextStyle(
+                                      fontSize: 30,
+                                      height: 1.05,
+                                      fontWeight: FontWeight.w900,
+                                      color: textDark,
+                                    ),
+                                  ),
                                 ],
                               ),
                             ],
@@ -996,7 +1072,9 @@ class _ResultScreenState extends State<ResultScreen> {
                         // ── Enlarged Health Score / Điểm sức khỏe Card ──────
                         Container(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 15),
+                            horizontal: 16,
+                            vertical: 15,
+                          ),
                           decoration: BoxDecoration(
                             color: cardBgColor,
                             borderRadius: BorderRadius.circular(18),
@@ -1008,12 +1086,16 @@ class _ResultScreenState extends State<ResultScreen> {
                                 width: 38,
                                 height: 38,
                                 decoration: BoxDecoration(
-                                  color:
-                                      const Color(0xFFEC4899).withOpacity(0.12),
+                                  color: const Color(
+                                    0xFFEC4899,
+                                  ).withOpacity(0.12),
                                   shape: BoxShape.circle,
                                 ),
-                                child: const Icon(Icons.favorite_rounded,
-                                    color: Color(0xFFEC4899), size: 20),
+                                child: const Icon(
+                                  Icons.favorite_rounded,
+                                  color: Color(0xFFEC4899),
+                                  size: 20,
+                                ),
                               ),
                               const SizedBox(width: 12),
                               Expanded(
@@ -1023,17 +1105,23 @@ class _ResultScreenState extends State<ResultScreen> {
                                     Row(
                                       children: [
                                         Expanded(
-                                          child: Text(s.healthScore,
-                                              style: TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w800,
-                                                  color: textDark)),
-                                        ),
-                                        Text('$_healthScore/10',
+                                          child: Text(
+                                            s.healthScore,
                                             style: TextStyle(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.w900,
-                                                color: textDark)),
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w800,
+                                              color: textDark,
+                                            ),
+                                          ),
+                                        ),
+                                        Text(
+                                          '$_healthScore/10',
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w900,
+                                            color: textDark,
+                                          ),
+                                        ),
                                       ],
                                     ),
                                     const SizedBox(height: 8),
@@ -1061,7 +1149,8 @@ class _ResultScreenState extends State<ResultScreen> {
                           const SizedBox(height: 6),
                           _BarcodeTipCard(
                             isDark: isDark,
-                            tipText: _tipBarcode ??
+                            tipText:
+                                _tipBarcode ??
                                 "Với thực phẩm đóng gói/hộp, bạn hãy thử Quét mã vạch để tra cứu dinh dưỡng chuẩn 100% nhé!",
                             onTap: () => context.push('/barcode-scan'),
                           ),
@@ -1097,21 +1186,26 @@ class _ResultScreenState extends State<ResultScreen> {
                                           ? s.dishesInPhoto
                                           : s.ingredientsInDish,
                                       style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
-                                          color: textDark),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                        color: textDark,
+                                      ),
                                     ),
                                     Text(
                                       _isMultiDish
-                                          ? s.dishCount(_dishDetails.isNotEmpty
-                                              ? _dishDetails.length
-                                              : _detectedDishes.length)
+                                          ? s.dishCount(
+                                              _dishDetails.isNotEmpty
+                                                  ? _dishDetails.length
+                                                  : _detectedDishes.length,
+                                            )
                                           : s.ingredientCount(
-                                              _ingredients.length),
+                                              _ingredients.length,
+                                            ),
                                       style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w500,
-                                          color: textMuted),
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500,
+                                        color: textMuted,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -1121,8 +1215,8 @@ class _ResultScreenState extends State<ResultScreen> {
                                   physics: const NeverScrollableScrollPhysics(),
                                   itemCount: _isMultiDish
                                       ? (_dishDetails.isNotEmpty
-                                          ? _dishDetails.length
-                                          : _detectedDishes.length)
+                                            ? _dishDetails.length
+                                            : _detectedDishes.length)
                                       : _ingredients.length,
                                   separatorBuilder: (_, __) =>
                                       Divider(height: 6, color: borderColor),
@@ -1136,12 +1230,15 @@ class _ResultScreenState extends State<ResultScreen> {
                                           InkWell(
                                             onTap: dish == null
                                                 ? null
-                                                : () => setState(() => dish
-                                                    .expanded = !dish.expanded),
+                                                : () => setState(
+                                                    () => dish.expanded =
+                                                        !dish.expanded,
+                                                  ),
                                             child: Padding(
                                               padding:
                                                   const EdgeInsets.symmetric(
-                                                      vertical: 10),
+                                                    vertical: 10,
+                                                  ),
                                               child: Row(
                                                 children: [
                                                   Expanded(
@@ -1152,8 +1249,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                                       children: [
                                                         Text(
                                                           dish?.name ??
-                                                              _detectedDishes[
-                                                                  idx],
+                                                              _detectedDishes[idx],
                                                           style: TextStyle(
                                                             fontSize: 14,
                                                             fontWeight:
@@ -1164,12 +1260,12 @@ class _ResultScreenState extends State<ResultScreen> {
                                                         if (dish != null)
                                                           Text(
                                                             s.guidanceDishCalories(
-                                                                dish.calo
-                                                                    .round()),
+                                                              dish.calo.round(),
+                                                            ),
                                                             style: TextStyle(
-                                                                fontSize: 12,
-                                                                color:
-                                                                    textMuted),
+                                                              fontSize: 12,
+                                                              color: textMuted,
+                                                            ),
                                                           ),
                                                       ],
                                                     ),
@@ -1193,17 +1289,19 @@ class _ResultScreenState extends State<ResultScreen> {
                                               dish.ingredients.isNotEmpty)
                                             Padding(
                                               padding: const EdgeInsets.only(
-                                                  left: 12, bottom: 8),
+                                                left: 12,
+                                                bottom: 8,
+                                              ),
                                               child: Column(
-                                                children: List.generate(
-                                                    dish.ingredients.length,
-                                                    (ingredientIndex) {
-                                                  final ingredient =
-                                                      dish.ingredients[
-                                                          ingredientIndex];
+                                                children: List.generate(dish.ingredients.length, (
+                                                  ingredientIndex,
+                                                ) {
+                                                  final ingredient = dish
+                                                      .ingredients[ingredientIndex];
                                                   return Dismissible(
                                                     key: ValueKey(
-                                                        'dish_${idx}_${ingredient.ten}_$ingredientIndex'),
+                                                      'dish_${idx}_${ingredient.ten}_$ingredientIndex',
+                                                    ),
                                                     direction: DismissDirection
                                                         .endToStart,
                                                     background: Container(
@@ -1211,45 +1309,52 @@ class _ResultScreenState extends State<ResultScreen> {
                                                           Alignment.centerRight,
                                                       padding:
                                                           const EdgeInsets.only(
-                                                              right: 16),
+                                                            right: 16,
+                                                          ),
                                                       decoration: BoxDecoration(
                                                         color: const Color(
-                                                            0xFFEF4444),
+                                                          0xFFEF4444,
+                                                        ),
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(12),
+                                                            BorderRadius.circular(
+                                                              12,
+                                                            ),
                                                       ),
                                                       child: Row(
                                                         mainAxisSize:
                                                             MainAxisSize.min,
                                                         children: [
-                                                          Text(s.deleteAction,
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  fontSize:
-                                                                      12)),
-                                                          SizedBox(width: 6),
-                                                          Icon(
-                                                              Icons
-                                                                  .delete_outline_rounded,
+                                                          Text(
+                                                            s.deleteAction,
+                                                            style: TextStyle(
                                                               color:
                                                                   Colors.white,
-                                                              size: 18),
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              fontSize: 12,
+                                                            ),
+                                                          ),
+                                                          SizedBox(width: 6),
+                                                          Icon(
+                                                            Icons
+                                                                .delete_outline_rounded,
+                                                            color: Colors.white,
+                                                            size: 18,
+                                                          ),
                                                         ],
                                                       ),
                                                     ),
                                                     onDismissed: (_) =>
                                                         _removeDishIngredient(
-                                                            idx,
-                                                            ingredientIndex),
+                                                          idx,
+                                                          ingredientIndex,
+                                                        ),
                                                     child: Padding(
-                                                      padding: const EdgeInsets
-                                                          .symmetric(
-                                                          vertical: 5),
+                                                      padding:
+                                                          const EdgeInsets.symmetric(
+                                                            vertical: 5,
+                                                          ),
                                                       child: Row(
                                                         children: [
                                                           Expanded(
@@ -1259,75 +1364,80 @@ class _ResultScreenState extends State<ResultScreen> {
                                                                       .start,
                                                               children: [
                                                                 Text(
-                                                                    ingredient
-                                                                        .ten,
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            13,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .w700,
-                                                                        color:
-                                                                            textDark)),
+                                                                  ingredient
+                                                                      .ten,
+                                                                  style: TextStyle(
+                                                                    fontSize:
+                                                                        13,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w700,
+                                                                    color:
+                                                                        textDark,
+                                                                  ),
+                                                                ),
                                                                 Text(
-                                                                    s.guidanceDishCalories(
-                                                                        ingredient
-                                                                            .calo
-                                                                            .round()),
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            11,
-                                                                        color:
-                                                                            textMuted)),
+                                                                  s.guidanceDishCalories(
+                                                                    ingredient
+                                                                        .calo
+                                                                        .round(),
+                                                                  ),
+                                                                  style: TextStyle(
+                                                                    fontSize:
+                                                                        11,
+                                                                    color:
+                                                                        textMuted,
+                                                                  ),
+                                                                ),
                                                               ],
                                                             ),
                                                           ),
                                                           GestureDetector(
                                                             onTap: () =>
                                                                 _updateDishIngredientGram(
-                                                                    idx,
-                                                                    ingredientIndex,
-                                                                    ingredient
-                                                                            .khoiLuongGram -
-                                                                        5),
+                                                                  idx,
+                                                                  ingredientIndex,
+                                                                  ingredient
+                                                                          .khoiLuongGram -
+                                                                      5,
+                                                                ),
                                                             child: Icon(
-                                                                Icons
-                                                                    .remove_rounded,
-                                                                size: 18,
-                                                                color:
-                                                                    textDark),
+                                                              Icons
+                                                                  .remove_rounded,
+                                                              size: 18,
+                                                              color: textDark,
+                                                            ),
                                                           ),
                                                           Padding(
                                                             padding:
-                                                                const EdgeInsets
-                                                                    .symmetric(
-                                                                    horizontal:
-                                                                        8),
+                                                                const EdgeInsets.symmetric(
+                                                                  horizontal: 8,
+                                                                ),
                                                             child: Text(
-                                                                '${ingredient.khoiLuongGram.round()}g',
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        12,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w800,
-                                                                    color:
-                                                                        textDark)),
+                                                              '${ingredient.khoiLuongGram.round()}g',
+                                                              style: TextStyle(
+                                                                fontSize: 12,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w800,
+                                                                color: textDark,
+                                                              ),
+                                                            ),
                                                           ),
                                                           GestureDetector(
                                                             onTap: () =>
                                                                 _updateDishIngredientGram(
-                                                                    idx,
-                                                                    ingredientIndex,
-                                                                    ingredient
-                                                                            .khoiLuongGram +
-                                                                        5),
+                                                                  idx,
+                                                                  ingredientIndex,
+                                                                  ingredient
+                                                                          .khoiLuongGram +
+                                                                      5,
+                                                                ),
                                                             child: Icon(
-                                                                Icons
-                                                                    .add_rounded,
-                                                                size: 18,
-                                                                color:
-                                                                    textDark),
+                                                              Icons.add_rounded,
+                                                              size: 18,
+                                                              color: textDark,
+                                                            ),
                                                           ),
                                                         ],
                                                       ),
@@ -1345,34 +1455,44 @@ class _ResultScreenState extends State<ResultScreen> {
                                       direction: DismissDirection.endToStart,
                                       background: Container(
                                         alignment: Alignment.centerRight,
-                                        padding:
-                                            const EdgeInsets.only(right: 16),
+                                        padding: const EdgeInsets.only(
+                                          right: 16,
+                                        ),
                                         decoration: BoxDecoration(
                                           color: const Color(0xFFEF4444),
-                                          borderRadius:
-                                              BorderRadius.circular(14),
+                                          borderRadius: BorderRadius.circular(
+                                            14,
+                                          ),
                                         ),
                                         child: Row(
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
-                                            Text(s.deleteAction,
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 13)),
+                                            Text(
+                                              s.deleteAction,
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 13,
+                                              ),
+                                            ),
                                             SizedBox(width: 6),
-                                            Icon(Icons.delete_outline_rounded,
-                                                color: Colors.white, size: 20),
+                                            Icon(
+                                              Icons.delete_outline_rounded,
+                                              color: Colors.white,
+                                              size: 20,
+                                            ),
                                           ],
                                         ),
                                       ),
                                       onDismissed: (_) {
                                         setState(
-                                            () => _ingredients.removeAt(idx));
+                                          () => _ingredients.removeAt(idx),
+                                        );
                                       },
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
-                                            vertical: 2),
+                                          vertical: 2,
+                                        ),
                                         child: Row(
                                           children: [
                                             Expanded(
@@ -1380,17 +1500,22 @@ class _ResultScreenState extends State<ResultScreen> {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  Text(ing.ten,
-                                                      style: TextStyle(
-                                                          fontSize: 14,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: textDark)),
                                                   Text(
-                                                      '${_isMultiDish ? '~' : ''}${s.guidanceDishCalories(ing.calo.round())}',
-                                                      style: TextStyle(
-                                                          fontSize: 12,
-                                                          color: textMuted)),
+                                                    ing.ten,
+                                                    style: TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: textDark,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    '${_isMultiDish ? '~' : ''}${s.guidanceDishCalories(ing.calo.round())}',
+                                                    style: TextStyle(
+                                                      fontSize: 12,
+                                                      color: textMuted,
+                                                    ),
+                                                  ),
                                                 ],
                                               ),
                                             ),
@@ -1399,61 +1524,73 @@ class _ResultScreenState extends State<ResultScreen> {
                                                 children: [
                                                   GestureDetector(
                                                     onTap: () => _updateGram(
-                                                        idx,
-                                                        ing.khoiLuongGram - 5),
+                                                      idx,
+                                                      ing.khoiLuongGram - 5,
+                                                    ),
                                                     child: Container(
                                                       width: 32,
                                                       height: 32,
                                                       decoration: BoxDecoration(
                                                         color: isDark
                                                             ? const Color(
-                                                                0xFF2C2A34)
+                                                                0xFF2C2A34,
+                                                              )
                                                             : const Color(
-                                                                0xFFF1F5F9),
+                                                                0xFFF1F5F9,
+                                                              ),
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
+                                                            BorderRadius.circular(
+                                                              10,
+                                                            ),
                                                       ),
                                                       child: Icon(
-                                                          Icons.remove_rounded,
-                                                          size: 18,
-                                                          color: textDark),
+                                                        Icons.remove_rounded,
+                                                        size: 18,
+                                                        color: textDark,
+                                                      ),
                                                     ),
                                                   ),
                                                   Padding(
-                                                    padding: const EdgeInsets
-                                                        .symmetric(
-                                                        horizontal: 10),
+                                                    padding:
+                                                        const EdgeInsets.symmetric(
+                                                          horizontal: 10,
+                                                        ),
                                                     child: Text(
                                                       '${ing.khoiLuongGram.round()}g',
                                                       style: TextStyle(
-                                                          fontSize: 14,
-                                                          fontWeight:
-                                                              FontWeight.w900,
-                                                          color: textDark),
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w900,
+                                                        color: textDark,
+                                                      ),
                                                     ),
                                                   ),
                                                   GestureDetector(
                                                     onTap: () => _updateGram(
-                                                        idx,
-                                                        ing.khoiLuongGram + 5),
+                                                      idx,
+                                                      ing.khoiLuongGram + 5,
+                                                    ),
                                                     child: Container(
                                                       width: 32,
                                                       height: 32,
                                                       decoration: BoxDecoration(
                                                         color: isDark
                                                             ? const Color(
-                                                                0xFF2C2A34)
+                                                                0xFF2C2A34,
+                                                              )
                                                             : const Color(
-                                                                0xFFF1F5F9),
+                                                                0xFFF1F5F9,
+                                                              ),
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
+                                                            BorderRadius.circular(
+                                                              10,
+                                                            ),
                                                       ),
                                                       child: Icon(
-                                                          Icons.add_rounded,
-                                                          size: 18,
-                                                          color: textDark),
+                                                        Icons.add_rounded,
+                                                        size: 18,
+                                                        color: textDark,
+                                                      ),
                                                     ),
                                                   ),
                                                 ],
@@ -1472,22 +1609,31 @@ class _ResultScreenState extends State<ResultScreen> {
                                     child: OutlinedButton.icon(
                                       style: OutlinedButton.styleFrom(
                                         side: BorderSide(
-                                            color: borderColor, width: 1.5),
+                                          color: borderColor,
+                                          width: 1.5,
+                                        ),
                                         shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(14)),
+                                          borderRadius: BorderRadius.circular(
+                                            14,
+                                          ),
+                                        ),
                                         padding: const EdgeInsets.symmetric(
-                                            horizontal: 16),
+                                          horizontal: 16,
+                                        ),
                                       ),
                                       onPressed: _openAddIngredientSheet,
-                                      icon: Icon(Icons.add_rounded,
-                                          size: 18, color: textDark),
+                                      icon: Icon(
+                                        Icons.add_rounded,
+                                        size: 18,
+                                        color: textDark,
+                                      ),
                                       label: Text(
                                         s.addIngredient,
                                         style: TextStyle(
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.bold,
-                                            color: textDark),
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.bold,
+                                          color: textDark,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -1523,11 +1669,14 @@ class _ResultScreenState extends State<ResultScreen> {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text(s.feedbackThanks,
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: textDark)),
+                          Text(
+                            s.feedbackThanks,
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: textDark,
+                            ),
+                          ),
                           const SizedBox(height: 6),
                           Text(
                             s.feedbackPrompt,
@@ -1541,10 +1690,13 @@ class _ResultScreenState extends State<ResultScreen> {
                             style: TextStyle(fontSize: 13, color: textDark),
                             decoration: InputDecoration(
                               hintText: s.feedbackHint,
-                              hintStyle:
-                                  TextStyle(color: textMuted, fontSize: 12),
+                              hintStyle: TextStyle(
+                                color: textMuted,
+                                fontSize: 12,
+                              ),
                               border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12)),
+                                borderRadius: BorderRadius.circular(12),
+                              ),
                             ),
                           ),
                           const SizedBox(height: 16),
@@ -1557,8 +1709,10 @@ class _ResultScreenState extends State<ResultScreen> {
                                   onPressed: _submittingFeedback
                                       ? null
                                       : _submitDislikeReason,
-                                  child: Text(s.skip,
-                                      style: TextStyle(color: textMuted)),
+                                  child: Text(
+                                    s.skip,
+                                    style: TextStyle(color: textMuted),
+                                  ),
                                 ),
                               ),
                               const SizedBox(width: 8),
@@ -1567,18 +1721,18 @@ class _ResultScreenState extends State<ResultScreen> {
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: const Color(0xFF2563EB),
                                     shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(12)),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
                                   ),
                                   onPressed: _submittingFeedback
                                       ? null
                                       : _submitDislikeReason,
                                   child: Text(
-                                      _submittingFeedback
-                                          ? s.sending
-                                          : s.sendFeedback,
-                                      style:
-                                          const TextStyle(color: Colors.white)),
+                                    _submittingFeedback
+                                        ? s.sending
+                                        : s.sendFeedback,
+                                    style: const TextStyle(color: Colors.white),
+                                  ),
                                 ),
                               ),
                             ],
@@ -1639,14 +1793,19 @@ class _MealGuidanceEntryCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(s.guidanceScreenTitle,
-                        style: TextStyle(
-                            color: text,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w800)),
+                    Text(
+                      s.guidanceScreenTitle,
+                      style: TextStyle(
+                        color: text,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
                     const SizedBox(height: 2),
-                    Text(s.guidanceTodayShortSubtitle,
-                        style: TextStyle(color: muted, fontSize: 12)),
+                    Text(
+                      s.guidanceTodayShortSubtitle,
+                      style: TextStyle(color: muted, fontSize: 12),
+                    ),
                   ],
                 ),
               ),
@@ -1678,8 +1837,9 @@ class _NutrientCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final s = context.watch<AppSettingsProvider>().strings;
     final textDark = isDark ? Colors.white : const Color(0xFF0F172A);
-    final textMuted =
-        isDark ? const Color(0xFF9A99A6) : const Color(0xFF64748B);
+    final textMuted = isDark
+        ? const Color(0xFF9A99A6)
+        : const Color(0xFF64748B);
     final border = isDark ? const Color(0xFF2E2D38) : const Color(0xFFE2E8F0);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
@@ -1696,19 +1856,25 @@ class _NutrientCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(label,
-                    maxLines: 1,
-                    style: TextStyle(
-                        fontSize: 11,
-                        fontWeight: FontWeight.w600,
-                        color: textMuted)),
+                Text(
+                  label,
+                  maxLines: 1,
+                  style: TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w600,
+                    color: textMuted,
+                  ),
+                ),
                 const SizedBox(height: 1),
-                Text(s.gramsValue(value.round()),
-                    maxLines: 1,
-                    style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w900,
-                        color: textDark)),
+                Text(
+                  s.gramsValue(value.round()),
+                  maxLines: 1,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w900,
+                    color: textDark,
+                  ),
+                ),
               ],
             ),
           ),
@@ -1747,7 +1913,7 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
           'protein_g': 26.0,
           'carbs_g': 0.0,
           'fat_g': 10.0,
-          'unit': 'g'
+          'unit': 'g',
         },
         {
           'name': s.ingredientChicken,
@@ -1755,7 +1921,7 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
           'protein_g': 31.0,
           'carbs_g': 0.0,
           'fat_g': 3.6,
-          'unit': 'g'
+          'unit': 'g',
         },
         {
           'name': s.ingredientEgg,
@@ -1763,7 +1929,7 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
           'protein_g': 13.0,
           'carbs_g': 1.1,
           'fat_g': 11.0,
-          'unit': s.unitPiece
+          'unit': s.unitPiece,
         },
         {
           'name': s.ingredientRiceNoodles,
@@ -1771,7 +1937,7 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
           'protein_g': 3.0,
           'carbs_g': 32.0,
           'fat_g': 0.7,
-          'unit': 'g'
+          'unit': 'g',
         },
         {
           'name': s.ingredientRice,
@@ -1779,7 +1945,7 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
           'protein_g': 2.7,
           'carbs_g': 28.0,
           'fat_g': 0.3,
-          'unit': 'g'
+          'unit': 'g',
         },
         {
           'name': s.ingredientBun,
@@ -1787,7 +1953,7 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
           'protein_g': 1.7,
           'carbs_g': 25.0,
           'fat_g': 0.2,
-          'unit': 'g'
+          'unit': 'g',
         },
         {
           'name': s.ingredientSalad,
@@ -1795,7 +1961,7 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
           'protein_g': 1.2,
           'carbs_g': 4.0,
           'fat_g': 0.2,
-          'unit': 'g'
+          'unit': 'g',
         },
         {
           'name': s.ingredientCheddar,
@@ -1803,7 +1969,7 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
           'protein_g': 25.0,
           'carbs_g': 1.3,
           'fat_g': 33.0,
-          'unit': 'g'
+          'unit': 'g',
         },
         {
           'name': s.ingredientPassionSauce,
@@ -1811,7 +1977,7 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
           'protein_g': 1.0,
           'carbs_g': 40.0,
           'fat_g': 25.0,
-          'unit': 'ml'
+          'unit': 'ml',
         },
         {
           'name': s.ingredientPork,
@@ -1819,7 +1985,7 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
           'protein_g': 27.0,
           'carbs_g': 0.0,
           'fat_g': 14.0,
-          'unit': 'g'
+          'unit': 'g',
         },
       ];
 
@@ -1844,21 +2010,92 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
     );
   }
 
+  void _showLocalResults(String query) {
+    final fallbackIngredients = _fallbackIngredients(
+      context.read<AppSettingsProvider>().strings,
+    );
+    final queryStr = query.trim();
+    if (!mounted) return;
+    setState(() {
+      _searchResults = queryStr.isEmpty
+          ? fallbackIngredients
+          : _fallbackMatches(queryStr, fallbackIngredients);
+      // Keep the progress indicator visible until the debounced API result
+      // arrives, while still showing useful results immediately as the user
+      // types.
+      _searching = true;
+    });
+  }
+
   static String _normalizeSearchText(String value) {
     var normalized = value.toLowerCase();
     const replacements = <String, String>{
-      'à': 'a', 'á': 'a', 'ả': 'a', 'ã': 'a', 'ạ': 'a',
-      'ă': 'a', 'ằ': 'a', 'ắ': 'a', 'ẳ': 'a', 'ẵ': 'a', 'ặ': 'a',
-      'â': 'a', 'ầ': 'a', 'ấ': 'a', 'ẩ': 'a', 'ẫ': 'a', 'ậ': 'a',
-      'è': 'e', 'é': 'e', 'ẻ': 'e', 'ẽ': 'e', 'ẹ': 'e',
-      'ê': 'e', 'ề': 'e', 'ế': 'e', 'ể': 'e', 'ễ': 'e', 'ệ': 'e',
-      'ì': 'i', 'í': 'i', 'ỉ': 'i', 'ĩ': 'i', 'ị': 'i',
-      'ò': 'o', 'ó': 'o', 'ỏ': 'o', 'õ': 'o', 'ọ': 'o',
-      'ô': 'o', 'ồ': 'o', 'ố': 'o', 'ổ': 'o', 'ỗ': 'o', 'ộ': 'o',
-      'ơ': 'o', 'ờ': 'o', 'ớ': 'o', 'ở': 'o', 'ỡ': 'o', 'ợ': 'o',
-      'ù': 'u', 'ú': 'u', 'ủ': 'u', 'ũ': 'u', 'ụ': 'u',
-      'ư': 'u', 'ừ': 'u', 'ứ': 'u', 'ử': 'u', 'ữ': 'u', 'ự': 'u',
-      'ỳ': 'y', 'ý': 'y', 'ỷ': 'y', 'ỹ': 'y', 'ỵ': 'y',
+      'à': 'a',
+      'á': 'a',
+      'ả': 'a',
+      'ã': 'a',
+      'ạ': 'a',
+      'ă': 'a',
+      'ằ': 'a',
+      'ắ': 'a',
+      'ẳ': 'a',
+      'ẵ': 'a',
+      'ặ': 'a',
+      'â': 'a',
+      'ầ': 'a',
+      'ấ': 'a',
+      'ẩ': 'a',
+      'ẫ': 'a',
+      'ậ': 'a',
+      'è': 'e',
+      'é': 'e',
+      'ẻ': 'e',
+      'ẽ': 'e',
+      'ẹ': 'e',
+      'ê': 'e',
+      'ề': 'e',
+      'ế': 'e',
+      'ể': 'e',
+      'ễ': 'e',
+      'ệ': 'e',
+      'ì': 'i',
+      'í': 'i',
+      'ỉ': 'i',
+      'ĩ': 'i',
+      'ị': 'i',
+      'ò': 'o',
+      'ó': 'o',
+      'ỏ': 'o',
+      'õ': 'o',
+      'ọ': 'o',
+      'ô': 'o',
+      'ồ': 'o',
+      'ố': 'o',
+      'ổ': 'o',
+      'ỗ': 'o',
+      'ộ': 'o',
+      'ơ': 'o',
+      'ờ': 'o',
+      'ớ': 'o',
+      'ở': 'o',
+      'ỡ': 'o',
+      'ợ': 'o',
+      'ù': 'u',
+      'ú': 'u',
+      'ủ': 'u',
+      'ũ': 'u',
+      'ụ': 'u',
+      'ư': 'u',
+      'ừ': 'u',
+      'ứ': 'u',
+      'ử': 'u',
+      'ữ': 'u',
+      'ự': 'u',
+      'ỳ': 'y',
+      'ý': 'y',
+      'ỷ': 'y',
+      'ỹ': 'y',
+      'ỵ': 'y',
       'đ': 'd',
     };
     for (final replacement in replacements.entries) {
@@ -1868,52 +2105,73 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
   }
 
   List<Map<String, dynamic>> _fallbackMatches(
-      String query, List<Map<String, dynamic>> fallbackIngredients) {
+    String query,
+    List<Map<String, dynamic>> fallbackIngredients,
+  ) {
     final normalizedQuery = _normalizeSearchText(query);
     if (normalizedQuery.isEmpty) return fallbackIngredients;
 
     return fallbackIngredients.where((item) {
       final name = _normalizeSearchText(
-          (item['name'] ?? item['ten'] ?? '').toString());
+        (item['name'] ?? item['ten'] ?? '').toString(),
+      );
       return name.contains(normalizedQuery);
     }).toList();
   }
 
   List<dynamic> _mergeFallbackMatches(
-      String query, List<dynamic> apiItems, List<Map<String, dynamic>> fallback) {
-    if (query.isEmpty) return apiItems;
+    String query,
+    List<dynamic> apiItems,
+    List<Map<String, dynamic>> fallback,
+  ) {
+    if (query.isEmpty) return apiItems.isEmpty ? fallback : apiItems;
 
     final localMatches = _fallbackMatches(query, fallback);
     final apiNames = apiItems
-        .map((item) =>
-            (item is Map ? item['name'] ?? item['ten'] : '').toString())
+        .map(
+          (item) => (item is Map ? item['name'] ?? item['ten'] : '').toString(),
+        )
         .map(_normalizeSearchText)
         .toSet();
     return [
-      ...localMatches.where((item) =>
-          !apiNames.contains(_normalizeSearchText(item['name'].toString()))),
+      ...localMatches.where(
+        (item) =>
+            !apiNames.contains(_normalizeSearchText(item['name'].toString())),
+      ),
       ...apiItems,
     ];
   }
 
   Future<void> _search(String q) async {
     final queryStr = q.trim();
-    final fallbackIngredients =
-        _fallbackIngredients(context.read<AppSettingsProvider>().strings);
+    final fallbackIngredients = _fallbackIngredients(
+      context.read<AppSettingsProvider>().strings,
+    );
     final requestId = ++_searchRequestId;
     if (!mounted) return;
-    setState(() => _searching = true);
+    setState(() {
+      // Show local options immediately. A slow or unavailable API must not
+      // leave the modal blank while the user is searching.
+      _searchResults = queryStr.isEmpty
+          ? fallbackIngredients
+          : _fallbackMatches(queryStr, fallbackIngredients);
+      _searching = true;
+    });
 
     final api = context.read<ApiService>();
     try {
-      final res = await api
-          .get('/nutrition/ingredients?q=${Uri.encodeComponent(queryStr)}');
+      final res = await api.get(
+        '/nutrition/ingredients?q=${Uri.encodeComponent(queryStr)}',
+      );
       if (res is Map && res['items'] is List) {
         final itemsList = res['items'] as List;
         if (mounted && requestId == _searchRequestId) {
           setState(() {
             _searchResults = _mergeFallbackMatches(
-                queryStr, itemsList, fallbackIngredients);
+              queryStr,
+              itemsList,
+              fallbackIngredients,
+            );
             _searching = false;
           });
         }
@@ -1944,14 +2202,17 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
           ((_selectedHit['calories_kcal'] ?? _selectedHit['calo'] ?? 0) * ratio)
               .roundToDouble(),
       carb: double.parse(
-          ((_selectedHit['carbs_g'] ?? _selectedHit['carb'] ?? 0) * ratio)
-              .toStringAsFixed(1)),
+        ((_selectedHit['carbs_g'] ?? _selectedHit['carb'] ?? 0) * ratio)
+            .toStringAsFixed(1),
+      ),
       protein: double.parse(
-          ((_selectedHit['protein_g'] ?? _selectedHit['protein'] ?? 0) * ratio)
-              .toStringAsFixed(1)),
+        ((_selectedHit['protein_g'] ?? _selectedHit['protein'] ?? 0) * ratio)
+            .toStringAsFixed(1),
+      ),
       fat: double.parse(
-          ((_selectedHit['fat_g'] ?? _selectedHit['fat'] ?? 0) * ratio)
-              .toStringAsFixed(1)),
+        ((_selectedHit['fat_g'] ?? _selectedHit['fat'] ?? 0) * ratio)
+            .toStringAsFixed(1),
+      ),
     );
     widget.onAdd(item);
     Navigator.pop(context);
@@ -1962,385 +2223,440 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
     final s = context.watch<AppSettingsProvider>().strings;
     final textDark = widget.isDark ? Colors.white : const Color(0xFF0F172A);
     final cardBg = widget.isDark ? const Color(0xFF212027) : Colors.white;
-    final surface =
-        widget.isDark ? const Color(0xFF2A2932) : const Color(0xFFF8FAFC);
-    final border =
-        widget.isDark ? const Color(0xFF383741) : const Color(0xFFE2E8F0);
-    final textMuted =
-        widget.isDark ? const Color(0xFF9A99A6) : const Color(0xFF64748B);
+    final surface = widget.isDark
+        ? const Color(0xFF2A2932)
+        : const Color(0xFFF8FAFC);
+    final border = widget.isDark
+        ? const Color(0xFF383741)
+        : const Color(0xFFE2E8F0);
+    final textMuted = widget.isDark
+        ? const Color(0xFF9A99A6)
+        : const Color(0xFF64748B);
     final accent = widget.isDark ? Colors.white : const Color(0xFF0F172A);
     final keyboardHeight = MediaQuery.viewInsetsOf(context).bottom;
-    final availableHeight = MediaQuery.sizeOf(context).height - keyboardHeight;
+    final screenHeight = MediaQuery.sizeOf(context).height;
+    final availableHeight = screenHeight - keyboardHeight;
+    final maxModalHeight = screenHeight * 0.88;
+    final minModalHeight = maxModalHeight < 320 ? maxModalHeight : 320.0;
+    final modalHeight = availableHeight.clamp(minModalHeight, maxModalHeight);
 
-    return Container(
-      height: availableHeight * 0.88,
-      padding: const EdgeInsets.only(
-        left: 20,
-        right: 20,
-        top: 12,
-        bottom: 16,
-      ),
-      decoration: BoxDecoration(
-        color: cardBg,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Center(
-            child: Container(
-              width: 38,
-              height: 4,
-              decoration: BoxDecoration(
-                color: border,
-                borderRadius: BorderRadius.circular(99),
-              ),
-            ),
-          ),
-          const SizedBox(height: 14),
-          Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      _selectedHit == null ? s.addIngredient : s.choosePortion,
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w900,
-                        letterSpacing: -0.5,
-                        color: textDark,
-                      ),
-                    ),
-                    const SizedBox(height: 3),
-                    Text(
-                      _selectedHit == null
-                          ? s.searchNutritionLibrary
-                          : s.adjustBeforeAdding,
-                      style: TextStyle(fontSize: 12, color: textMuted),
-                    ),
-                  ],
-                ),
-              ),
-              IconButton(
-                onPressed: () => Navigator.pop(context),
-                style: IconButton.styleFrom(
-                  backgroundColor: surface,
-                  minimumSize: const Size(40, 40),
-                ),
-                icon: Icon(Icons.close_rounded, color: textDark, size: 20),
-              ),
-            ],
-          ),
-          const SizedBox(height: 18),
-          if (_selectedHit == null) ...[
-            TextField(
-              controller: _queryController,
-              autofocus: true,
-              style: TextStyle(fontSize: 14, color: textDark),
-              decoration: InputDecoration(
-                hintText: s.ingredientSearchHint,
-                hintStyle: TextStyle(color: textMuted),
-                prefixIcon:
-                    Icon(Icons.search_rounded, size: 21, color: textMuted),
-                suffixIcon: _queryController.text.isNotEmpty
-                    ? IconButton(
-                        onPressed: () {
-                          _queryController.clear();
-                          _search('');
-                        },
-                        icon: Icon(Icons.cancel_rounded,
-                            size: 18, color: textMuted),
-                      )
-                    : null,
-                filled: true,
-                fillColor: surface,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide(color: border),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide(color: border),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide(color: accent, width: 1.5),
-                ),
-              ),
-              onChanged: (value) {
-                setState(() {});
-                _scheduleSearch(value);
-              },
-            ),
-            SizedBox(
-              height: 3,
-              child: _searching
-                  ? LinearProgressIndicator(
-                      color: accent,
-                      backgroundColor: Colors.transparent,
-                    )
-                  : null,
-            ),
-            const SizedBox(height: 9),
-            Expanded(
-              child: _searchResults.isEmpty && !_searching
-                  ? Center(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Container(
-                            width: 56,
-                            height: 56,
-                            decoration: BoxDecoration(
-                              color: surface,
-                              shape: BoxShape.circle,
-                            ),
-                            child: Icon(Icons.search_off_rounded,
-                                color: textMuted, size: 27),
-                          ),
-                          const SizedBox(height: 12),
-                          Text(
-                            s.ingredientNotFound,
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w700,
-                              color: textDark,
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            s.ingredientSearchTip,
-                            style: TextStyle(fontSize: 12, color: textMuted),
-                          ),
-                        ],
-                      ),
-                    )
-                  : ListView.separated(
-                      keyboardDismissBehavior:
-                          ScrollViewKeyboardDismissBehavior.onDrag,
-                      padding: const EdgeInsets.only(bottom: 8),
-                      itemCount: _searchResults.length,
-                      separatorBuilder: (_, __) => const SizedBox(height: 8),
-                      itemBuilder: (context, idx) {
-                        final hit = _searchResults[idx];
-                        final calories =
-                            hit['calories_kcal'] ?? hit['calo'] ?? 0;
-                        return Material(
-                          color: surface,
-                          borderRadius: BorderRadius.circular(16),
-                          child: InkWell(
-                            onTap: () => setState(() => _selectedHit = hit),
-                            borderRadius: BorderRadius.circular(16),
-                            child: Padding(
-                              padding: const EdgeInsets.all(13),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    width: 42,
-                                    height: 42,
-                                    decoration: BoxDecoration(
-                                      color: textDark.withOpacity(0.08),
-                                      borderRadius: BorderRadius.circular(13),
-                                    ),
-                                    child: Icon(Icons.restaurant_menu_rounded,
-                                        color: textDark, size: 20),
-                                  ),
-                                  const SizedBox(width: 12),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          (hit['name'] ?? hit['ten'] ?? '')
-                                              .toString(),
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w700,
-                                            color: textDark,
-                                          ),
-                                        ),
-                                        const SizedBox(height: 3),
-                                        Text(
-                                          s.caloriesPer100g(calories),
-                                          style: TextStyle(
-                                              fontSize: 11, color: textMuted),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Icon(Icons.chevron_right_rounded,
-                                      color: textMuted, size: 21),
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-            ),
-          ] else ...[
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(18),
-                      decoration: BoxDecoration(
-                        color: surface,
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: border),
-                      ),
-                      child: Column(
-                        children: [
-                          Container(
-                            width: 52,
-                            height: 52,
-                            decoration: BoxDecoration(
-                              color: textDark.withOpacity(0.08),
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                            child: Icon(Icons.restaurant_menu_rounded,
-                                color: textDark, size: 25),
-                          ),
-                          const SizedBox(height: 12),
-                          Text(
-                            (_selectedHit['name'] ?? _selectedHit['ten'] ?? '')
-                                .toString(),
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.w800,
-                              color: textDark,
-                            ),
-                          ),
-                          const SizedBox(height: 18),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              _WeightButton(
-                                icon: Icons.remove_rounded,
-                                enabled: _weightG > 10,
-                                onTap: () => setState(() =>
-                                    _weightG = (_weightG - 10).clamp(10, 1000)),
-                                isDark: widget.isDark,
-                              ),
-                              SizedBox(
-                                width: 120,
-                                child: Text(
-                                  s.gramsValue(_weightG.round()),
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 30,
-                                    fontWeight: FontWeight.w900,
-                                    letterSpacing: -1,
-                                    color: textDark,
-                                  ),
-                                ),
-                              ),
-                              _WeightButton(
-                                icon: Icons.add_rounded,
-                                enabled: _weightG < 1000,
-                                onTap: () => setState(() =>
-                                    _weightG = (_weightG + 10).clamp(10, 1000)),
-                                isDark: widget.isDark,
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 16),
-                          Row(
-                            children: [50, 100, 150, 200]
-                                .map(
-                                  (grams) => Expanded(
-                                    child: Padding(
-                                      padding: EdgeInsets.only(
-                                          left: grams == 50 ? 0 : 4),
-                                      child: ChoiceChip(
-                                        label: Text(s.gramsValue(grams)),
-                                        selected: _weightG == grams,
-                                        showCheckmark: false,
-                                        onSelected: (_) => setState(
-                                            () => _weightG = grams.toDouble()),
-                                        selectedColor: const Color(0xFF0F172A),
-                                        backgroundColor: cardBg,
-                                        side: BorderSide(color: border),
-                                        labelStyle: TextStyle(
-                                          fontSize: 11,
-                                          fontWeight: FontWeight.w700,
-                                          color: _weightG == grams
-                                              ? Colors.white
-                                              : textDark,
-                                        ),
-                                        visualDensity: VisualDensity.compact,
-                                      ),
-                                    ),
-                                  ),
-                                )
-                                .toList(),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 14),
-                    _NutritionPreview(
-                      hit: _selectedHit,
-                      weightG: _weightG,
-                      isDark: widget.isDark,
-                    ),
-                  ],
+    return AnimatedPadding(
+      duration: const Duration(milliseconds: 220),
+      curve: Curves.easeOut,
+      // showModalBottomSheet does not avoid the keyboard by itself. Keep the
+      // whole sheet (including the search field) above the IME.
+      padding: EdgeInsets.only(bottom: keyboardHeight),
+      child: Container(
+        height: modalHeight.toDouble(),
+        padding: const EdgeInsets.only(
+          left: 20,
+          right: 20,
+          top: 12,
+          bottom: 16,
+        ),
+        decoration: BoxDecoration(
+          color: cardBg,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Container(
+                width: 38,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: border,
+                  borderRadius: BorderRadius.circular(99),
                 ),
               ),
             ),
             const SizedBox(height: 14),
             Row(
               children: [
-                SizedBox(
-                  width: 52,
-                  height: 52,
-                  child: OutlinedButton(
-                    onPressed: () => setState(() => _selectedHit = null),
-                    style: OutlinedButton.styleFrom(
-                      padding: EdgeInsets.zero,
-                      side: BorderSide(color: border),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16)),
-                    ),
-                    child: Icon(Icons.arrow_back_rounded, color: textDark),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        _selectedHit == null
+                            ? s.addIngredient
+                            : s.choosePortion,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w900,
+                          letterSpacing: -0.5,
+                          color: textDark,
+                        ),
+                      ),
+                      const SizedBox(height: 3),
+                      Text(
+                        _selectedHit == null
+                            ? s.searchNutritionLibrary
+                            : s.adjustBeforeAdding,
+                        style: TextStyle(fontSize: 12, color: textMuted),
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: SizedBox(
-                    height: 52,
-                    child: ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF0F172A),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16)),
+                IconButton(
+                  onPressed: () => Navigator.pop(context),
+                  style: IconButton.styleFrom(
+                    backgroundColor: surface,
+                    minimumSize: const Size(40, 40),
+                  ),
+                  icon: Icon(Icons.close_rounded, color: textDark, size: 20),
+                ),
+              ],
+            ),
+            const SizedBox(height: 18),
+            if (_selectedHit == null) ...[
+              TextField(
+                controller: _queryController,
+                autofocus: true,
+                style: TextStyle(fontSize: 14, color: textDark),
+                decoration: InputDecoration(
+                  hintText: s.ingredientSearchHint,
+                  hintStyle: TextStyle(color: textMuted),
+                  prefixIcon: Icon(
+                    Icons.search_rounded,
+                    size: 21,
+                    color: textMuted,
+                  ),
+                  suffixIcon: _queryController.text.isNotEmpty
+                      ? IconButton(
+                          onPressed: () {
+                            _queryController.clear();
+                            _search('');
+                          },
+                          icon: Icon(
+                            Icons.cancel_rounded,
+                            size: 18,
+                            color: textMuted,
+                          ),
+                        )
+                      : null,
+                  filled: true,
+                  fillColor: surface,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide(color: border),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide(color: border),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide(color: accent, width: 1.5),
+                  ),
+                ),
+                onChanged: (value) {
+                  _showLocalResults(value);
+                  _scheduleSearch(value);
+                },
+              ),
+              SizedBox(
+                height: 3,
+                child: _searching
+                    ? LinearProgressIndicator(
+                        color: accent,
+                        backgroundColor: Colors.transparent,
+                      )
+                    : null,
+              ),
+              const SizedBox(height: 9),
+              Expanded(
+                child: _searchResults.isEmpty && !_searching
+                    ? Center(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                              width: 56,
+                              height: 56,
+                              decoration: BoxDecoration(
+                                color: surface,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                Icons.search_off_rounded,
+                                color: textMuted,
+                                size: 27,
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            Text(
+                              s.ingredientNotFound,
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
+                                color: textDark,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              s.ingredientSearchTip,
+                              style: TextStyle(fontSize: 12, color: textMuted),
+                            ),
+                          ],
+                        ),
+                      )
+                    : ListView.separated(
+                        keyboardDismissBehavior:
+                            ScrollViewKeyboardDismissBehavior.onDrag,
+                        padding: const EdgeInsets.only(bottom: 8),
+                        itemCount: _searchResults.length,
+                        separatorBuilder: (_, __) => const SizedBox(height: 8),
+                        itemBuilder: (context, idx) {
+                          final hit = _searchResults[idx];
+                          final calories =
+                              hit['calories_kcal'] ?? hit['calo'] ?? 0;
+                          return Material(
+                            color: surface,
+                            borderRadius: BorderRadius.circular(16),
+                            child: InkWell(
+                              onTap: () => setState(() => _selectedHit = hit),
+                              borderRadius: BorderRadius.circular(16),
+                              child: Padding(
+                                padding: const EdgeInsets.all(13),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: 42,
+                                      height: 42,
+                                      decoration: BoxDecoration(
+                                        color: textDark.withOpacity(0.08),
+                                        borderRadius: BorderRadius.circular(13),
+                                      ),
+                                      child: Icon(
+                                        Icons.restaurant_menu_rounded,
+                                        color: textDark,
+                                        size: 20,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 12),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            (hit['name'] ?? hit['ten'] ?? '')
+                                                .toString(),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w700,
+                                              color: textDark,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 3),
+                                          Text(
+                                            s.caloriesPer100g(calories),
+                                            style: TextStyle(
+                                              fontSize: 11,
+                                              color: textMuted,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Icon(
+                                      Icons.chevron_right_rounded,
+                                      color: textMuted,
+                                      size: 21,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        },
                       ),
-                      onPressed: _addSelectedIngredient,
-                      icon: const Icon(Icons.add_rounded,
-                          color: Colors.white, size: 20),
-                      label: Text(
-                        s.addIngredient,
-                        style: const TextStyle(
+              ),
+            ] else ...[
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(18),
+                        decoration: BoxDecoration(
+                          color: surface,
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(color: border),
+                        ),
+                        child: Column(
+                          children: [
+                            Container(
+                              width: 52,
+                              height: 52,
+                              decoration: BoxDecoration(
+                                color: textDark.withOpacity(0.08),
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              child: Icon(
+                                Icons.restaurant_menu_rounded,
+                                color: textDark,
+                                size: 25,
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            Text(
+                              (_selectedHit['name'] ??
+                                      _selectedHit['ten'] ??
+                                      '')
+                                  .toString(),
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.w800,
+                                color: textDark,
+                              ),
+                            ),
+                            const SizedBox(height: 18),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                _WeightButton(
+                                  icon: Icons.remove_rounded,
+                                  enabled: _weightG > 10,
+                                  onTap: () => setState(
+                                    () => _weightG = (_weightG - 10).clamp(
+                                      10,
+                                      1000,
+                                    ),
+                                  ),
+                                  isDark: widget.isDark,
+                                ),
+                                SizedBox(
+                                  width: 120,
+                                  child: Text(
+                                    s.gramsValue(_weightG.round()),
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.w900,
+                                      letterSpacing: -1,
+                                      color: textDark,
+                                    ),
+                                  ),
+                                ),
+                                _WeightButton(
+                                  icon: Icons.add_rounded,
+                                  enabled: _weightG < 1000,
+                                  onTap: () => setState(
+                                    () => _weightG = (_weightG + 10).clamp(
+                                      10,
+                                      1000,
+                                    ),
+                                  ),
+                                  isDark: widget.isDark,
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 16),
+                            Row(
+                              children: [50, 100, 150, 200]
+                                  .map(
+                                    (grams) => Expanded(
+                                      child: Padding(
+                                        padding: EdgeInsets.only(
+                                          left: grams == 50 ? 0 : 4,
+                                        ),
+                                        child: ChoiceChip(
+                                          label: Text(s.gramsValue(grams)),
+                                          selected: _weightG == grams,
+                                          showCheckmark: false,
+                                          onSelected: (_) => setState(
+                                            () => _weightG = grams.toDouble(),
+                                          ),
+                                          selectedColor: const Color(
+                                            0xFF0F172A,
+                                          ),
+                                          backgroundColor: cardBg,
+                                          side: BorderSide(color: border),
+                                          labelStyle: TextStyle(
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.w700,
+                                            color: _weightG == grams
+                                                ? Colors.white
+                                                : textDark,
+                                          ),
+                                          visualDensity: VisualDensity.compact,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                  .toList(),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 14),
+                      _NutritionPreview(
+                        hit: _selectedHit,
+                        weightG: _weightG,
+                        isDark: widget.isDark,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 14),
+              Row(
+                children: [
+                  SizedBox(
+                    width: 52,
+                    height: 52,
+                    child: OutlinedButton(
+                      onPressed: () => setState(() => _selectedHit = null),
+                      style: OutlinedButton.styleFrom(
+                        padding: EdgeInsets.zero,
+                        side: BorderSide(color: border),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                      ),
+                      child: Icon(Icons.arrow_back_rounded, color: textDark),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: SizedBox(
+                      height: 52,
+                      child: ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF0F172A),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                        ),
+                        onPressed: _addSelectedIngredient,
+                        icon: const Icon(
+                          Icons.add_rounded,
                           color: Colors.white,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w800,
+                          size: 20,
+                        ),
+                        label: Text(
+                          s.addIngredient,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w800,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
+            ],
           ],
-        ],
+        ),
       ),
     );
   }
@@ -2398,18 +2714,19 @@ class _NutritionPreview extends StatelessWidget {
   Widget build(BuildContext context) {
     final s = context.watch<AppSettingsProvider>().strings;
     final ratio = weightG / 100;
-    final calories =
-        ((hit['calories_kcal'] ?? hit['calo'] ?? 0) * ratio).round();
-    final protein =
-        ((hit['protein_g'] ?? hit['protein'] ?? 0) * ratio).toStringAsFixed(1);
-    final carbs =
-        ((hit['carbs_g'] ?? hit['carb'] ?? 0) * ratio).toStringAsFixed(1);
+    final calories = ((hit['calories_kcal'] ?? hit['calo'] ?? 0) * ratio)
+        .round();
+    final protein = ((hit['protein_g'] ?? hit['protein'] ?? 0) * ratio)
+        .toStringAsFixed(1);
+    final carbs = ((hit['carbs_g'] ?? hit['carb'] ?? 0) * ratio)
+        .toStringAsFixed(1);
     final fat = ((hit['fat_g'] ?? hit['fat'] ?? 0) * ratio).toStringAsFixed(1);
     final surface = isDark ? const Color(0xFF2A2932) : const Color(0xFFF8FAFC);
     final border = isDark ? const Color(0xFF383741) : const Color(0xFFE2E8F0);
     final textDark = isDark ? Colors.white : const Color(0xFF0F172A);
-    final textMuted =
-        isDark ? const Color(0xFF9A99A6) : const Color(0xFF64748B);
+    final textMuted = isDark
+        ? const Color(0xFF9A99A6)
+        : const Color(0xFF64748B);
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 13),
@@ -2421,36 +2738,40 @@ class _NutritionPreview extends StatelessWidget {
       child: Row(
         children: [
           _PreviewStat(
-              label: s.energyLabel,
-              value: '$calories',
-              unit: 'kcal',
-              color: const Color(0xFFF97316),
-              textDark: textDark,
-              textMuted: textMuted),
+            label: s.energyLabel,
+            value: '$calories',
+            unit: 'kcal',
+            color: const Color(0xFFF97316),
+            textDark: textDark,
+            textMuted: textMuted,
+          ),
           _PreviewDivider(color: border),
           _PreviewStat(
-              label: s.proteinLabel,
-              value: protein,
-              unit: 'g',
-              color: const Color(0xFF22C55E),
-              textDark: textDark,
-              textMuted: textMuted),
+            label: s.proteinLabel,
+            value: protein,
+            unit: 'g',
+            color: const Color(0xFF22C55E),
+            textDark: textDark,
+            textMuted: textMuted,
+          ),
           _PreviewDivider(color: border),
           _PreviewStat(
-              label: s.carbsLabel,
-              value: carbs,
-              unit: 'g',
-              color: const Color(0xFF3B82F6),
-              textDark: textDark,
-              textMuted: textMuted),
+            label: s.carbsLabel,
+            value: carbs,
+            unit: 'g',
+            color: const Color(0xFF3B82F6),
+            textDark: textDark,
+            textMuted: textMuted,
+          ),
           _PreviewDivider(color: border),
           _PreviewStat(
-              label: s.fatLabel,
-              value: fat,
-              unit: 'g',
-              color: const Color(0xFFF59E0B),
-              textDark: textDark,
-              textMuted: textMuted),
+            label: s.fatLabel,
+            value: fat,
+            unit: 'g',
+            color: const Color(0xFFF59E0B),
+            textDark: textDark,
+            textMuted: textMuted,
+          ),
         ],
       ),
     );
@@ -2488,21 +2809,28 @@ class _PreviewStat extends StatelessWidget {
     return Expanded(
       child: Column(
         children: [
-          Text(label,
-              maxLines: 1, style: TextStyle(fontSize: 9, color: textMuted)),
+          Text(
+            label,
+            maxLines: 1,
+            style: TextStyle(fontSize: 9, color: textMuted),
+          ),
           const SizedBox(height: 4),
           Text.rich(
             TextSpan(
               text: value,
               style: TextStyle(
-                  fontSize: 13, fontWeight: FontWeight.w900, color: color),
+                fontSize: 13,
+                fontWeight: FontWeight.w900,
+                color: color,
+              ),
               children: [
                 TextSpan(
                   text: unit,
                   style: TextStyle(
-                      fontSize: 9,
-                      fontWeight: FontWeight.w600,
-                      color: textDark),
+                    fontSize: 9,
+                    fontWeight: FontWeight.w600,
+                    color: textDark,
+                  ),
                 ),
               ],
             ),
@@ -2527,8 +2855,9 @@ class _BarcodeTipCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bgColor = isDark ? const Color(0xFF1E293B) : const Color(0xFFF0FDF4);
-    final borderColor =
-        isDark ? const Color(0xFF334155) : const Color(0xFFBBF7D0);
+    final borderColor = isDark
+        ? const Color(0xFF334155)
+        : const Color(0xFFBBF7D0);
     final textColor = isDark ? Colors.white : const Color(0xFF0F172A);
 
     return Container(

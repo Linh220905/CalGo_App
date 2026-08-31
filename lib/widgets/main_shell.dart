@@ -8,6 +8,7 @@ import '../providers/auth_provider.dart';
 import '../providers/home_provider.dart';
 import '../providers/scan_task_provider.dart';
 import '../providers/gamification_provider.dart';
+import '../services/notification_service.dart';
 import '../widgets/exp_gain_toast.dart';
 import 'ad_banner.dart';
 
@@ -32,6 +33,10 @@ class _MainShellState extends State<MainShell> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    // Retry here as well as from main.dart. This covers a first-start race
+    // where the notification platform channel was not ready after the first
+    // frame and avoids waiting until the next app resume.
+    unawaited(NotificationService.instance.init());
   }
 
   @override
@@ -54,6 +59,9 @@ class _MainShellState extends State<MainShell> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
+      unawaited(
+        NotificationService.instance.ensureDailyMealRemindersScheduled(),
+      );
       unawaited(_refreshSessionAndHome());
     }
   }

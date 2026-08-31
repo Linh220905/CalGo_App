@@ -163,6 +163,23 @@ class OnboardingData {
       activityLevel != null &&
       (goalType == GoalType.maintain || lossPerWeekKg != null);
 
+  /// True when the user has answered the core nutrition questions. Some
+  /// picker screens intentionally keep their displayed default in the UI
+  /// without firing onChanged, so targetWeightKg may still be null here.
+  /// completeOnboarding() fills those display defaults before sending them to
+  /// the API.
+  bool get hasNutritionDraft =>
+      gender != null &&
+      age != null &&
+      age! > 0 &&
+      heightCm != null &&
+      heightCm! > 0 &&
+      weightKg != null &&
+      weightKg! > 0 &&
+      goalType != null &&
+      activityLevel != null &&
+      (goalType == GoalType.maintain || lossPerWeekKg != null);
+
   double get targetProteinG {
     final calories = targetCaloriesPerDay;
     if (calories <= 0 || weightKg == null || weightKg! <= 0) return 0;

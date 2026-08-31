@@ -105,7 +105,7 @@ class AccountStep extends StatelessWidget {
                   final success = await authProvider.signInWithGoogle();
                   if (success && context.mounted) {
                     if (authProvider.user?.hasCompletedOnboarding == true &&
-                        !provider.data.hasCompleteNutritionProfile) {
+                        !provider.data.hasNutritionDraft) {
                       await homeProvider.loadToday(forceRefresh: true);
                       if (context.mounted) context.go('/home');
                       return;
@@ -156,7 +156,7 @@ class AccountStep extends StatelessWidget {
                     // every question, persist those answers so a legacy Apple
                     // account cannot keep its old 1,500 kcal placeholder.
                     if (authProvider.user?.hasCompletedOnboarding == true &&
-                        !onboarding.data.hasCompleteNutritionProfile) {
+                        !onboarding.data.hasNutritionDraft) {
                       await homeProvider.loadToday(forceRefresh: true);
                       if (context.mounted) context.go('/home');
                       return;

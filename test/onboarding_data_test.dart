@@ -111,6 +111,22 @@ void main() {
 
       expect(data.hasCompleteNutritionProfile, isTrue);
     });
+
+    test('recognizes a draft when target weight keeps its displayed default', () {
+      final data = OnboardingData(
+        gender: Gender.male,
+        age: 30,
+        heightCm: 175,
+        weightKg: 80,
+        goalType: GoalType.lose,
+        lossPerWeekKg: 0.5,
+        activityLevel: ActivityLevel.moderate,
+      );
+
+      expect(data.targetWeightKg, isNull);
+      expect(data.hasCompleteNutritionProfile, isFalse);
+      expect(data.hasNutritionDraft, isTrue);
+    });
   });
 
   testWidgets('ruler persists its visible initial value without scrolling',

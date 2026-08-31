@@ -106,7 +106,11 @@ class _ShareCardModalState extends State<ShareCardModal> {
       final filePath = await _saveTempFile(bytes);
       if (filePath != null && mounted) {
         // Trigger native share file sheet so user can save directly to Photos/Gallery or Drive
-        await Share.shareXFiles([XFile(filePath)], text: widget.data.dishName);
+        await Share.shareXFiles(
+          [XFile(filePath)],
+          text: widget.data.dishName,
+          sharePositionOrigin: _sharePositionOrigin(),
+        );
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -115,6 +119,13 @@ class _ShareCardModalState extends State<ShareCardModal> {
             ),
           );
         }
+      }
+    } catch (error) {
+      debugPrint('Error opening image share sheet: $error');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(s.shareCreateFailed)),
+        );
       }
     } finally {
       if (mounted) {
@@ -138,6 +149,14 @@ class _ShareCardModalState extends State<ShareCardModal> {
           [XFile(filePath)],
           text: s.sharePayload(
               widget.data.dishName, widget.data.calories.round()),
+          sharePositionOrigin: _sharePositionOrigin(),
+        );
+      }
+    } catch (error) {
+      debugPrint('Error opening native share sheet: $error');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(s.shareCreateFailed)),
         );
       }
     } finally {
@@ -145,6 +164,12 @@ class _ShareCardModalState extends State<ShareCardModal> {
         setState(() => _isProcessing = false);
       }
     }
+  }
+
+  Rect? _sharePositionOrigin() {
+    final renderObject = context.findRenderObject();
+    if (renderObject is! RenderBox || !renderObject.hasSize) return null;
+    return renderObject.localToGlobal(Offset.zero) & renderObject.size;
   }
 
   @override
