@@ -32,6 +32,7 @@ class MonthCalendarGrid extends StatelessWidget {
   final Color cardColor;
   final Color subtitleColor;
   final Color primaryTextColor;
+  final Color borderColor;
 
   const MonthCalendarGrid({
     super.key,
@@ -46,6 +47,7 @@ class MonthCalendarGrid extends StatelessWidget {
     required this.cardColor,
     required this.subtitleColor,
     required this.primaryTextColor,
+    required this.borderColor,
   });
 
   @override
@@ -58,9 +60,10 @@ class MonthCalendarGrid extends StatelessWidget {
     final firstDayOfWeek = DateTime(year, month, 1).weekday % 7; // 0=Sun
 
     final emptyDayColor =
-        isDark ? const Color(0xFF1C1C1E) : const Color(0xFFF2F2F7);
+        isDark ? const Color(0xFF212027) : const Color(0xFFF1F3F2);
     final hasMealBg =
-        isDark ? const Color(0xFF2C2C2E) : const Color(0xFFE8E8ED);
+        isDark ? const Color(0xFF2C2A34) : const Color(0xFFE2E8F0);
+    const accentColor = Color(0xFF63A97B);
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 28),
@@ -71,47 +74,53 @@ class MonthCalendarGrid extends StatelessWidget {
           Row(
             children: [
               Container(
-                width: 12,
-                height: 12,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFFF9F0A),
+                width: 8,
+                height: 8,
+                decoration: const BoxDecoration(
+                  color: accentColor,
                   shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: const Color(0xFFFF9F0A).withOpacity(0.4),
-                      blurRadius: 6,
-                      spreadRadius: 1,
-                    ),
-                  ],
                 ),
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: 8),
               Expanded(
-                flex: 3,
                 child: Text(
                   monthLabel,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: GoogleFonts.beVietnamPro(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
+                    fontSize: 17,
+                    fontWeight: FontWeight.w800,
                     color: primaryTextColor,
                     letterSpacing: -0.3,
                   ),
                 ),
               ),
               const SizedBox(width: 8),
-              Flexible(
-                flex: 2,
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 4,
+                ),
+                decoration: BoxDecoration(
+                  color: isDark
+                      ? const Color(0xFF2C2A34)
+                      : const Color(0xFFF1F3F2),
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                    color: borderColor,
+                    width: 0.8,
+                  ),
+                ),
                 child: Text(
                   strings.mealCount(totalMeals),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.end,
                   style: GoogleFonts.beVietnamPro(
                     fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                    color: subtitleColor,
+                    fontWeight: FontWeight.w700,
+                    color: isDark
+                        ? const Color(0xFFA7A5B0)
+                        : const Color(0xFF70747A),
                   ),
                 ),
               ),
@@ -129,9 +138,9 @@ class MonthCalendarGrid extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: GoogleFonts.beVietnamPro(
                         fontSize: 11,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w700,
                         color: subtitleColor,
-                        letterSpacing: 0.2,
+                        letterSpacing: 0.3,
                       ),
                     ),
                   ),
@@ -146,8 +155,8 @@ class MonthCalendarGrid extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 7,
-              crossAxisSpacing: 5,
-              mainAxisSpacing: 5,
+              crossAxisSpacing: 6,
+              mainAxisSpacing: 6,
               childAspectRatio: 1.0,
             ),
             itemCount: firstDayOfWeek + daysCount,
@@ -194,15 +203,20 @@ class MonthCalendarGrid extends StatelessWidget {
                     color: hasMeal
                         ? (hasImage ? Colors.transparent : hasMealBg)
                         : emptyDayColor,
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(12),
                     border: dayData.isToday
-                        ? Border.all(color: const Color(0xFFFF9F0A), width: 2.0)
+                        ? Border.all(color: accentColor, width: 2.0)
                         : (quality != null && !hasImage)
                             ? Border.all(
                                 color: quality.color.withOpacity(0.5),
                                 width: 1.5,
                               )
-                            : null,
+                            : Border.all(
+                                color: isDark
+                                    ? Colors.transparent
+                                    : borderColor.withOpacity(0.5),
+                                width: 0.6,
+                              ),
                   ),
                   child: Stack(
                     children: [
@@ -210,8 +224,9 @@ class MonthCalendarGrid extends StatelessWidget {
                       if (hasImage)
                         Positioned.fill(
                           child: ClipRRect(
-                            borderRadius:
-                                BorderRadius.circular(dayData.isToday ? 8 : 10),
+                            borderRadius: BorderRadius.circular(
+                              dayData.isToday ? 9 : 11,
+                            ),
                             child: Image.network(
                               firstItem!.thumbnailUrl ?? firstItem.imageUrl!,
                               fit: BoxFit.cover,
@@ -227,15 +242,16 @@ class MonthCalendarGrid extends StatelessWidget {
                       if (hasImage && dayData.items.length > 1)
                         Positioned.fill(
                           child: ClipRRect(
-                            borderRadius:
-                                BorderRadius.circular(dayData.isToday ? 8 : 10),
+                            borderRadius: BorderRadius.circular(
+                              dayData.isToday ? 9 : 11,
+                            ),
                             child: DecoratedBox(
                               decoration: BoxDecoration(
                                 gradient: LinearGradient(
                                   begin: Alignment.bottomCenter,
                                   end: Alignment.topCenter,
                                   colors: [
-                                    Colors.black.withOpacity(0.35),
+                                    Colors.black.withOpacity(0.4),
                                     Colors.transparent,
                                   ],
                                 ),
@@ -247,20 +263,27 @@ class MonthCalendarGrid extends StatelessWidget {
                       // Meal count badge
                       if (dayData.items.length > 1)
                         Positioned(
-                          top: -1,
-                          right: -1,
+                          top: 2,
+                          right: 2,
                           child: Container(
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 4, vertical: 2),
-                            decoration: const BoxDecoration(
-                              color: Color(0xFFFF9F0A),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(7)),
+                              horizontal: 5,
+                              vertical: 2,
+                            ),
+                            decoration: BoxDecoration(
+                              color: accentColor,
+                              borderRadius: BorderRadius.circular(6),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.2),
+                                  blurRadius: 3,
+                                ),
+                              ],
                             ),
                             child: Text(
                               '+${dayData.items.length}',
                               style: const TextStyle(
-                                fontSize: 8,
+                                fontSize: 9,
                                 fontWeight: FontWeight.w800,
                                 color: Colors.white,
                                 height: 1.1,
@@ -273,16 +296,18 @@ class MonthCalendarGrid extends StatelessWidget {
                       if (dayData.isToday && !hasMeal)
                         Center(
                           child: Container(
-                            width: 20,
-                            height: 20,
+                            width: 22,
+                            height: 22,
                             decoration: BoxDecoration(
-                              color: const Color(0xFFFF9F0A).withOpacity(0.15),
+                              color: isDark
+                                  ? const Color(0xFF24352A)
+                                  : const Color(0xFFE2F1E7),
                               shape: BoxShape.circle,
                             ),
                             child: const Icon(
-                              Icons.add,
-                              color: Color(0xFFFF9F0A),
-                              size: 14,
+                              Icons.add_rounded,
+                              color: accentColor,
+                              size: 15,
                             ),
                           ),
                         ),
@@ -290,14 +315,14 @@ class MonthCalendarGrid extends StatelessWidget {
                       // Day number for empty non-today cells
                       if (!hasMeal && !dayData.isToday)
                         Positioned(
-                          top: 3,
-                          left: 5,
+                          top: 4,
+                          left: 6,
                           child: Text(
                             '$dayNum',
                             style: GoogleFonts.beVietnamPro(
-                              fontSize: 9,
+                              fontSize: 10,
                               fontWeight: FontWeight.w600,
-                              color: subtitleColor.withOpacity(0.7),
+                              color: subtitleColor.withOpacity(0.65),
                             ),
                           ),
                         ),

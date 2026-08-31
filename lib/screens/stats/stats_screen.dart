@@ -7,11 +7,12 @@ import '../../models/progress.dart';
 import '../../providers/app_settings_provider.dart';
 import '../../providers/gamification_provider.dart';
 import '../../providers/progress_provider.dart';
-import '../../services/api_service.dart';
 import '../../widgets/achievement_badge.dart';
+import '../../widgets/horizontal_ruler_picker.dart';
 
-const _kAccent = Color(0xFFFF6B35);
-const _kProtein = Color(0xFFFF6257);
+const _kAccent = Color(0xFF63A97B);
+const _kAccentSoft = Color(0xFFE2F1E7);
+const _kProtein = Color(0xFF4D9A6A);
 const _kCarbs = Color(0xFFF6B722);
 const _kFat = Color(0xFF7B4DDE);
 
@@ -52,7 +53,7 @@ class _StatsScreenState extends State<StatsScreen>
     final gamification = context.watch<GamificationProvider>();
     final progress = context.watch<ProgressProvider>();
     final dark = settings.isDarkMode;
-    final bg = dark ? const Color(0xFF141318) : const Color(0xFFF7F7F5);
+    final bg = dark ? const Color(0xFF141318) : const Color(0xFFFAFAFB);
     final card = dark ? const Color(0xFF212027) : Colors.white;
     final text = dark ? Colors.white : const Color(0xFF111318);
     final muted = dark ? const Color(0xFFA7A5B0) : const Color(0xFF747780);
@@ -102,6 +103,8 @@ class _StatsScreenState extends State<StatsScreen>
                     text: text,
                     muted: muted,
                     border: border,
+                    progressLabel: strings.progressLabel,
+                    statsLabel: strings.statistics,
                   ),
                   const SizedBox(height: 8),
                 ],
@@ -153,6 +156,7 @@ class _StatsScreenState extends State<StatsScreen>
 class _StatsTabBar extends StatelessWidget {
   final TabController controller;
   final Color card, text, muted, border;
+  final String progressLabel, statsLabel;
 
   const _StatsTabBar({
     required this.controller,
@@ -160,6 +164,8 @@ class _StatsTabBar extends StatelessWidget {
     required this.text,
     required this.muted,
     required this.border,
+    required this.progressLabel,
+    required this.statsLabel,
   });
 
   @override
@@ -176,7 +182,7 @@ class _StatsTabBar extends StatelessWidget {
         controller: controller,
         dividerColor: Colors.transparent,
         indicator: BoxDecoration(
-          color: const Color(0xFFFFE5D8),
+          color: _kAccentSoft,
           borderRadius: BorderRadius.circular(12),
         ),
         indicatorSize: TabBarIndicatorSize.tab,
@@ -187,9 +193,9 @@ class _StatsTabBar extends StatelessWidget {
           fontSize: 13,
           fontWeight: FontWeight.w600,
         ),
-        tabs: const [
-          Tab(text: 'Tiến trình'),
-          Tab(text: 'EXP & mục tiêu'),
+        tabs: [
+          Tab(text: progressLabel),
+          Tab(text: statsLabel),
         ],
       ),
     );
@@ -223,7 +229,6 @@ class _ProgressTab extends StatefulWidget {
 }
 
 class _ProgressTabState extends State<_ProgressTab> {
-  final ImagePicker _picker = ImagePicker();
   int _weightRangeDays = 90;
 
   Future<void> _selectWeightRange(int days) async {
@@ -232,93 +237,33 @@ class _ProgressTabState extends State<_ProgressTab> {
     await widget.progress.refresh(days: days);
   }
 
-  Future<void> _pickProgressPhoto() async {
-    final picked = await _picker.pickImage(
-      source: ImageSource.gallery,
-      maxWidth: 1800,
-      maxHeight: 1800,
-      imageQuality: 92,
-    );
-    if (picked == null || !mounted) return;
-    final saved = await widget.progress.uploadPhoto(picked.path);
-    if (!mounted) return;
-    _showMessage(
-      saved ? 'Đã lưu ảnh tiến trình' : 'Không thể lưu ảnh. Vui lòng thử lại.',
-    );
-  }
-
   Future<void> _showWeightDialog() async {
-    final current = widget.progress.data?.currentWeightKg;
-    final controller = TextEditingController(
-      text: current == null ? '' : current.toStringAsFixed(1),
-    );
-    final value = await showDialog<double>(
+    final current = widget.progress.data?.currentWeightKg ?? 70.0;
+    final lastWeight = widget.progress.data?.currentWeightKg;
+    final result = await showModalBottomSheet<_LogWeightResult>(
       context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: const Text('Ghi cân nặng'),
-        content: TextField(
-          controller: controller,
-          autofocus: true,
-          keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          decoration: const InputDecoration(
-            labelText: 'Cân nặng hôm nay',
-            suffixText: 'kg',
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext),
-            child: Text(context.read<AppSettingsProvider>().strings.cancel),
-          ),
-          FilledButton(
-            onPressed: () {
-              final parsed = double.tryParse(
-                controller.text.replaceAll(',', '.'),
-              );
-              if (parsed == null || parsed < 20 || parsed > 300) return;
-              Navigator.pop(dialogContext, parsed);
-            },
-            child: const Text('Lưu'),
-          ),
-        ],
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (ctx) => _LogWeightModalSheet(
+        initialWeight: current,
+        lastWeight: lastWeight,
+        isDark: widget.dark,
       ),
     );
-    controller.dispose();
-    if (value == null || !mounted) return;
-    final saved = await widget.progress.logWeight(value);
+
+    if (result == null || !mounted) return;
+
+    final saved = await widget.progress.logWeight(
+      result.weightKg,
+      date: result.date,
+      photoPath: result.photoPath,
+    );
     if (!mounted) return;
     _showMessage(
       saved
-          ? 'Đã cập nhật cân nặng'
+          ? 'Đã cập nhật cân nặng thành công'
           : 'Không thể lưu cân nặng. Vui lòng thử lại.',
     );
-  }
-
-  Future<void> _confirmDeletePhoto(ProgressPhoto photo) async {
-    final shouldDelete = await showDialog<bool>(
-      context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: const Text('Xóa ảnh tiến trình?'),
-        content: const Text('Ảnh này sẽ bị xóa khỏi tài khoản của bạn.'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext, false),
-            child: Text(context.read<AppSettingsProvider>().strings.cancel),
-          ),
-          FilledButton(
-            style: FilledButton.styleFrom(
-              backgroundColor: const Color(0xFFEF4444),
-            ),
-            onPressed: () => Navigator.pop(dialogContext, true),
-            child: const Text('Xóa'),
-          ),
-        ],
-      ),
-    );
-    if (shouldDelete != true || !mounted) return;
-    final deleted = await widget.progress.deletePhoto(photo.id);
-    if (!mounted || deleted) return;
-    _showMessage('Không thể xóa ảnh. Vui lòng thử lại.');
   }
 
   void _showMessage(String message) {
@@ -346,9 +291,7 @@ class _ProgressTabState extends State<_ProgressTab> {
             dark: widget.dark,
             onLogWeight: _showWeightDialog,
           ),
-          const SizedBox(height: 24),
-          _SectionLabel('CÂN NẶNG', widget.muted),
-          const SizedBox(height: 9),
+          const SizedBox(height: 16),
           _WeightProgressCard(
             data: data,
             card: widget.card,
@@ -360,20 +303,14 @@ class _ProgressTabState extends State<_ProgressTab> {
             loading: widget.progress.loading,
             onRangeChanged: _selectWeightRange,
           ),
-          const SizedBox(height: 24),
-          _SectionLabel('HÌNH ẢNH', widget.muted),
-          const SizedBox(height: 9),
-          _ProgressPhotoCard(
-            photos: data?.progressPhotos ?? const [],
+          const SizedBox(height: 16),
+          _WeightChangeCard(
+            changes: data?.weightChanges ?? const [],
             card: widget.card,
             border: widget.border,
             text: widget.text,
             muted: widget.muted,
             dark: widget.dark,
-            api: context.read<ApiService>(),
-            mutating: widget.progress.mutating,
-            onUpload: _pickProgressPhoto,
-            onDelete: _confirmDeletePhoto,
           ),
           if (widget.weekly != null) ...[
             const SizedBox(height: 24),
@@ -455,10 +392,19 @@ class _WeightHeroCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final current = data?.currentWeightKg;
-    final target = data?.targetWeightKg;
     final start = data?.startWeightKg;
-    final progress = ((data?.progressPercent ?? 0) / 100).clamp(0.0, 1.0);
-    final hasProgress = data?.progressPercent != null;
+    final target = data?.targetWeightKg;
+    final hasProgress = current != null && start != null && target != null;
+    double covered = 0.0;
+    if (current != null && start != null && target != null) {
+      final currentValue = current;
+      final startValue = start;
+      final targetValue = target;
+      if ((startValue - targetValue).abs() > 0.01) {
+        covered = ((startValue - currentValue) / (startValue - targetValue))
+            .clamp(0.0, 1.0);
+      }
+    }
 
     return _Card(
       card: card,
@@ -469,87 +415,164 @@ class _WeightHeroCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _Kicker('CÂN NẶNG HIỆN TẠI', muted),
-                    const SizedBox(height: 7),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.baseline,
-                      textBaseline: TextBaseline.alphabetic,
-                      children: [
-                        Text(
-                          current == null ? '--' : current.toStringAsFixed(1),
-                          style: TextStyle(
-                            color: text,
-                            fontSize: 48,
-                            height: .95,
-                            fontWeight: FontWeight.w900,
-                            letterSpacing: -2,
-                          ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _Kicker('CÂN NẶNG HIỆN TẠI', muted),
+                  const SizedBox(height: 7),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: [
+                      Text(
+                        current == null ? '--' : current.toStringAsFixed(1),
+                        style: TextStyle(
+                          color: text,
+                          fontSize: 48,
+                          height: .95,
+                          fontWeight: FontWeight.w900,
+                          letterSpacing: -2,
                         ),
-                        const SizedBox(width: 7),
-                        Text(
-                          'kg',
-                          style: TextStyle(color: muted, fontSize: 18),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                      const SizedBox(width: 7),
+                      Text('kg', style: TextStyle(color: muted, fontSize: 18)),
+                    ],
+                  ),
+                ],
               ),
-              FilledButton(
+              ElevatedButton.icon(
                 onPressed: onLogWeight,
-                style: FilledButton.styleFrom(
+                icon: const Text(
+                  'Ghi cân nặng',
+                  style: TextStyle(fontWeight: FontWeight.w800, fontSize: 14),
+                ),
+                label: const Icon(Icons.arrow_forward_rounded, size: 16),
+                style: ElevatedButton.styleFrom(
                   backgroundColor: dark
                       ? Colors.white
-                      : const Color(0xFF111318),
+                      : const Color(0xFF0F172A),
                   foregroundColor: dark
-                      ? const Color(0xFF111318)
+                      ? const Color(0xFF0F172A)
                       : Colors.white,
+                  elevation: 0,
                   padding: const EdgeInsets.symmetric(
                     horizontal: 16,
-                    vertical: 14,
+                    vertical: 12,
                   ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(24),
                   ),
                 ),
-                child: const Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      'Ghi cân nặng',
-                      style: TextStyle(fontWeight: FontWeight.w800),
-                    ),
-                    SizedBox(width: 8),
-                    Icon(Icons.arrow_forward_rounded, size: 18),
-                  ],
-                ),
               ),
             ],
           ),
           const SizedBox(height: 24),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(99),
-            child: LinearProgressIndicator(
-              value: hasProgress ? progress : 0,
-              minHeight: 8,
-              backgroundColor: dark
-                  ? const Color(0xFF36343F)
-                  : const Color(0xFFEDEDEB),
-              valueColor: const AlwaysStoppedAnimation(_kAccent),
-            ),
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final double trackWidth = constraints.maxWidth;
+              final double dotX = (trackWidth * covered).clamp(
+                6.0,
+                trackWidth - 6.0,
+              );
+              return Stack(
+                alignment: Alignment.centerLeft,
+                children: [
+                  Container(
+                    width: trackWidth,
+                    height: 6,
+                    decoration: BoxDecoration(
+                      color: dark
+                          ? const Color(0xFF34313D)
+                          : const Color(0xFFE2E8F0),
+                      borderRadius: BorderRadius.circular(3),
+                    ),
+                  ),
+                  if (hasProgress) ...[
+                    Container(
+                      width: dotX,
+                      height: 6,
+                      decoration: BoxDecoration(
+                        color: dark ? Colors.white : const Color(0xFF0F172A),
+                        borderRadius: BorderRadius.circular(3),
+                      ),
+                    ),
+                    Positioned(
+                      left: dotX - 8,
+                      child: Container(
+                        width: 16,
+                        height: 16,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFF95A49),
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.white, width: 2.5),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Color(0x38F95A49),
+                              blurRadius: 6,
+                              offset: Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ],
+              );
+            },
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 12),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _ValueLabel('BẮT ĐẦU', start, muted, text),
-              _ValueLabel('MỤC TIÊU', target, muted, text, alignEnd: true),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'BẮT ĐẦU',
+                    style: TextStyle(
+                      color: muted,
+                      fontSize: 11,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 0.5,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    start == null ? '--' : '${start.toStringAsFixed(1)} kg',
+                    style: TextStyle(
+                      color: text,
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    'MỤC TIÊU',
+                    style: TextStyle(
+                      color: muted,
+                      fontSize: 11,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 0.5,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    target == null ? '--' : '${target.toStringAsFixed(1)} kg',
+                    style: TextStyle(
+                      color: text,
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ],
@@ -581,6 +604,7 @@ class _WeightProgressCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final points = data?.weightHistory ?? const <WeightPoint>[];
     final percent = data?.progressPercent;
+
     return _Card(
       card: card,
       border: border,
@@ -601,32 +625,49 @@ class _WeightProgressCard extends StatelessWidget {
                   ),
                 ),
               ),
-              _ProgressPill(
-                text: percent == null
-                    ? 'Chưa đủ dữ liệu'
-                    : '${percent.toStringAsFixed(0)}% mục tiêu',
-                dark: dark,
-              ),
+              if (percent != null)
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 6,
+                  ),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFDE8E4),
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(
+                        Icons.outlined_flag_rounded,
+                        size: 15,
+                        color: Color(0xFFD9381E),
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        '${percent.toStringAsFixed(0)}% của mục tiêu',
+                        style: const TextStyle(
+                          color: Color(0xFFD9381E),
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
             ],
-          ),
-          const SizedBox(height: 7),
-          Text(
-            points.length < 2
-                ? 'Ghi ít nhất 2 lần để xem biểu đồ.'
-                : '${points.length} lần ghi trong ${rangeDays >= 365 ? '${(rangeDays / 365).round()} năm' : '${(rangeDays / 30).round()} tháng'}.',
-            style: TextStyle(color: muted, fontSize: 14),
           ),
           const SizedBox(height: 18),
           if (loading)
             const SizedBox(
-              height: 138,
+              height: 150,
               child: Center(child: CircularProgressIndicator(strokeWidth: 2)),
             )
-          else if (points.length < 2)
+          else if (points.isEmpty)
             _EmptyChart(
               message: 'Chưa có đủ dữ liệu cân nặng',
               muted: muted,
-              height: 138,
+              height: 150,
             )
           else
             _WeightChart(points: points, muted: muted, dark: dark),
@@ -636,129 +677,6 @@ class _WeightProgressCard extends StatelessWidget {
             dark: dark,
             onChanged: onRangeChanged,
           ),
-        ],
-      ),
-    );
-  }
-}
-
-class _ProgressPhotoCard extends StatelessWidget {
-  final List<ProgressPhoto> photos;
-  final Color card, border, text, muted;
-  final bool dark, mutating;
-  final ApiService api;
-  final VoidCallback onUpload;
-  final Future<void> Function(ProgressPhoto photo) onDelete;
-
-  const _ProgressPhotoCard({
-    required this.photos,
-    required this.card,
-    required this.border,
-    required this.text,
-    required this.muted,
-    required this.dark,
-    required this.api,
-    required this.mutating,
-    required this.onUpload,
-    required this.onDelete,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return _Card(
-      card: card,
-      border: border,
-      radius: 26,
-      padding: const EdgeInsets.fromLTRB(20, 20, 20, 18),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Ảnh tiến trình',
-            style: TextStyle(
-              color: text,
-              fontSize: 22,
-              fontWeight: FontWeight.w800,
-            ),
-          ),
-          const SizedBox(height: 16),
-          if (photos.isEmpty)
-            Row(
-              children: [
-                _PhotoPlaceholder(dark: dark),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Theo dõi thay đổi của bạn theo thời gian.',
-                        style: TextStyle(
-                          color: muted,
-                          fontSize: 15,
-                          height: 1.35,
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      OutlinedButton.icon(
-                        onPressed: mutating ? null : onUpload,
-                        icon: const Icon(Icons.add_rounded, size: 20),
-                        label: const Text('Tải ảnh lên'),
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: text,
-                          side: BorderSide(color: border, width: 1.4),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 15,
-                            vertical: 12,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(22),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            )
-          else
-            Column(
-              children: [
-                SizedBox(
-                  height: 154,
-                  child: ListView.separated(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: photos.length,
-                    separatorBuilder: (_, __) => const SizedBox(width: 10),
-                    itemBuilder: (context, index) {
-                      final photo = photos[index];
-                      return _PhotoTile(
-                        photo: photo,
-                        api: api,
-                        dark: dark,
-                        onDelete: () => onDelete(photo),
-                      );
-                    },
-                  ),
-                ),
-                const SizedBox(height: 14),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: OutlinedButton.icon(
-                    onPressed: mutating ? null : onUpload,
-                    icon: const Icon(Icons.add_rounded, size: 20),
-                    label: const Text('Thêm ảnh'),
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: text,
-                      side: BorderSide(color: border, width: 1.4),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(22),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
         ],
       ),
     );
@@ -1012,8 +930,8 @@ class _ActivityCard extends StatelessWidget {
             _HeatLegend(
               color: dark ? const Color(0xFF36343F) : const Color(0xFFEDEDEB),
             ),
-            const _HeatLegend(color: Color(0xFFFFD6C7)),
-            const _HeatLegend(color: Color(0xFFFF9D79)),
+            const _HeatLegend(color: Color(0xFFD6EBDD)),
+            const _HeatLegend(color: Color(0xFFA8D0B4)),
             const _HeatLegend(color: _kAccent),
             const SizedBox(width: 5),
             Text('Nhiều', style: TextStyle(color: muted, fontSize: 10)),
@@ -1415,39 +1333,120 @@ class _WeightChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final min = points
-        .map((point) => point.weightKg)
-        .reduce((a, b) => a < b ? a : b);
-    final max = points
-        .map((point) => point.weightKg)
-        .reduce((a, b) => a > b ? a : b);
-    final spread = (max - min).clamp(1.0, 20.0);
-    return SizedBox(
-      height: 138,
-      child: CustomPaint(
-        painter: _WeightChartPainter(
-          points: points,
-          min: min - spread * .15,
-          max: max + spread * .15,
-          dark: dark,
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: points
-              .map(
-                (point) => Padding(
-                  padding: const EdgeInsets.only(bottom: 2),
-                  child: Text(
-                    '${point.date.day}/${point.date.month}',
-                    style: TextStyle(color: muted, fontSize: 9),
-                  ),
+    if (points.isEmpty) return const SizedBox.shrink();
+
+    final weights = points.map((p) => p.weightKg).toList();
+    final double minW = weights.reduce((a, b) => a < b ? a : b);
+    final double maxW = weights.reduce((a, b) => a > b ? a : b);
+    final double margin = (maxW - minW) <= 0.5 ? 2.0 : (maxW - minW) * 0.15;
+    final double yMax = maxW + margin;
+    final double yMin = (minW - margin).clamp(0.0, 300.0);
+    final double yMid = (yMax + yMin) / 2;
+
+    return Column(
+      children: [
+        SizedBox(
+          height: 140,
+          child: Row(
+            children: [
+              SizedBox(
+                width: 24,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      yMax.round().toString(),
+                      style: TextStyle(
+                        color: muted,
+                        fontSize: 11,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    Text(
+                      yMid.round().toString(),
+                      style: TextStyle(
+                        color: muted,
+                        fontSize: 11,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    Text(
+                      yMin.round().toString(),
+                      style: TextStyle(
+                        color: muted,
+                        fontSize: 11,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
                 ),
-              )
-              .toList(),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: CustomPaint(
+                  painter: _WeightChartPainter(
+                    points: points,
+                    min: yMin,
+                    max: yMax,
+                    dark: dark,
+                  ),
+                  size: Size.infinite,
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
+        const SizedBox(height: 6),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: _buildDateLabels(),
+        ),
+      ],
     );
+  }
+
+  List<Widget> _buildDateLabels() {
+    if (points.isEmpty) return [];
+    final count = points.length < 4 ? points.length : 4;
+    final list = <Widget>[];
+    for (int i = 0; i < count; i++) {
+      final idx = points.length == 1
+          ? 0
+          : ((points.length - 1) * i / (count - 1)).round();
+      final date = points[idx].date;
+      final label = '${_monthName(date.month)} ${date.day}';
+      list.add(
+        Text(
+          label,
+          style: TextStyle(
+            color: muted,
+            fontSize: 11,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      );
+    }
+    return list;
+  }
+
+  String _monthName(int month) {
+    const names = [
+      '',
+      'Aug',
+      'Aug',
+      'Aug',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
+    return (month >= 1 && month <= 12) ? names[month] : '$month';
   }
 }
 
@@ -1465,61 +1464,81 @@ class _WeightChartPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final grid = Paint()
-      ..color = dark ? const Color(0xFF34313D) : const Color(0xFFF0F0EE)
+    if (points.isEmpty) return;
+
+    final gridPaint = Paint()
+      ..color = dark ? const Color(0xFF34313D) : const Color(0xFFE2E8F0)
       ..strokeWidth = 1;
-    for (var i = 0; i < 4; i++) {
-      final y = 10 + (size.height - 32) * i / 3;
-      canvas.drawLine(Offset(0, y), Offset(size.width, y), grid);
+
+    for (int i = 0; i < 3; i++) {
+      final y = size.height * i / 2;
+      double startX = 0;
+      while (startX < size.width) {
+        canvas.drawLine(Offset(startX, y), Offset(startX + 4, y), gridPaint);
+        startX += 8;
+      }
     }
-    final line = Paint()
-      ..color = _kAccent
-      ..strokeWidth = 3
+
+    final double spread = (max - min) <= 0.01 ? 1.0 : (max - min);
+    final path = Path();
+    final areaPath = Path();
+
+    for (int i = 0; i < points.length; i++) {
+      final x = points.length == 1
+          ? size.width / 2
+          : size.width * i / (points.length - 1);
+      final norm = ((points[i].weightKg - min) / spread).clamp(0.0, 1.0);
+      final y = size.height * (1.0 - norm);
+
+      if (i == 0) {
+        path.moveTo(x, y);
+        areaPath.moveTo(x, size.height);
+        areaPath.lineTo(x, y);
+      } else {
+        path.lineTo(x, y);
+        areaPath.lineTo(x, y);
+      }
+    }
+    areaPath.lineTo(
+      points.length == 1 ? size.width / 2 : size.width,
+      size.height,
+    );
+    areaPath.close();
+
+    final fillPaint = Paint()
+      ..shader = LinearGradient(
+        colors: [
+          const Color(0xFFF95A49).withOpacity(0.08),
+          const Color(0xFFF95A49).withOpacity(0.0),
+        ],
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+      ).createShader(Rect.fromLTWH(0, 0, size.width, size.height));
+
+    canvas.drawPath(areaPath, fillPaint);
+
+    final linePaint = Paint()
+      ..color = dark ? Colors.white : const Color(0xFF0F172A)
+      ..strokeWidth = 2.5
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round
       ..strokeJoin = StrokeJoin.round;
-    final fill = Paint()..color = _kAccent.withValues(alpha: .12);
-    final path = Path();
-    final area = Path();
-    for (var i = 0; i < points.length; i++) {
-      final x = points.length == 1
-          ? size.width / 2
-          : size.width * i / (points.length - 1);
-      final normalized = ((points[i].weightKg - min) / (max - min)).clamp(
-        0.0,
-        1.0,
-      );
-      final y = 10 + (size.height - 32) * (1 - normalized);
-      if (i == 0) {
-        path.moveTo(x, y);
-        area.moveTo(x, size.height - 22);
-        area.lineTo(x, y);
-      } else {
-        path.lineTo(x, y);
-        area.lineTo(x, y);
-      }
-    }
-    area.lineTo(size.width, size.height - 22);
-    area.close();
-    canvas.drawPath(area, fill);
-    canvas.drawPath(path, line);
-    final dot = Paint()..color = _kAccent;
-    final ring = Paint()
+
+    canvas.drawPath(path, linePaint);
+
+    final lastPoint = points.last;
+    final lastX = points.length == 1 ? size.width / 2 : size.width;
+    final lastNorm = ((lastPoint.weightKg - min) / spread).clamp(0.0, 1.0);
+    final lastY = size.height * (1.0 - lastNorm);
+
+    final dotPaint = Paint()..color = const Color(0xFFF95A49);
+    final dotBorderPaint = Paint()
       ..color = Colors.white
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2;
-    for (var i = 0; i < points.length; i++) {
-      final x = points.length == 1
-          ? size.width / 2
-          : size.width * i / (points.length - 1);
-      final normalized = ((points[i].weightKg - min) / (max - min)).clamp(
-        0.0,
-        1.0,
-      );
-      final y = 10 + (size.height - 32) * (1 - normalized);
-      canvas.drawCircle(Offset(x, y), 5, dot);
-      canvas.drawCircle(Offset(x, y), 5, ring);
-    }
+
+    canvas.drawCircle(Offset(lastX, lastY), 5, dotPaint);
+    canvas.drawCircle(Offset(lastX, lastY), 5, dotBorderPaint);
   }
 
   @override
@@ -1552,50 +1571,100 @@ class _MacroChart extends StatelessWidget {
         height: 150,
       );
     }
-    final maxValue = points.fold<double>(1, (max, point) {
-      final value = [
-        point.protein,
-        point.carbs,
-        point.fat,
-      ].reduce((a, b) => a > b ? a : b);
-      return max > value ? max : value;
+    final maxTotal = points.fold<double>(1, (max, point) {
+      final total = point.protein + point.carbs + point.fat;
+      return total > max ? total : max;
     });
     return SizedBox(
       height: 170,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: points.map((point) {
-          final label = point.dateKey.length >= 10
-              ? point.dateKey.substring(8)
-              : '';
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Expanded(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    _MiniBar(
-                      value: point.protein,
-                      max: maxValue,
-                      color: _kProtein,
-                    ),
-                    const SizedBox(width: 2),
-                    _MiniBar(value: point.carbs, max: maxValue, color: _kCarbs),
-                    const SizedBox(width: 2),
-                    _MiniBar(value: point.fat, max: maxValue, color: _kFat),
-                  ],
-                ),
+      child: Column(
+        children: [
+          Expanded(
+            child: CustomPaint(
+              painter: _MacroStackedPainter(
+                points: points,
+                maxTotal: maxTotal,
+                dark: dark,
               ),
-              const SizedBox(height: 8),
-              Text('T$label', style: TextStyle(color: muted, fontSize: 10)),
-            ],
-          );
-        }).toList(),
+              size: Size.infinite,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: points.map((point) {
+              final label = point.dateKey.length >= 10
+                  ? point.dateKey.substring(8)
+                  : '';
+              return Text(
+                'T$label',
+                style: TextStyle(color: muted, fontSize: 10),
+              );
+            }).toList(),
+          ),
+        ],
       ),
     );
   }
+}
+
+class _MacroStackedPainter extends CustomPainter {
+  final List<DayCaloriePoint> points;
+  final double maxTotal;
+  final bool dark;
+
+  const _MacroStackedPainter({
+    required this.points,
+    required this.maxTotal,
+    required this.dark,
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final grid = Paint()
+      ..color = dark ? const Color(0xFF34313D) : const Color(0xFFF0F0EE)
+      ..strokeWidth = 1;
+    for (var i = 0; i < 3; i++) {
+      final y = 6 + (size.height - 12) * i / 2;
+      canvas.drawLine(Offset(0, y), Offset(size.width, y), grid);
+    }
+
+    final width = (size.width / points.length * .42).clamp(14.0, 28.0);
+    for (var i = 0; i < points.length; i++) {
+      final point = points[i];
+      final total = point.protein + point.carbs + point.fat;
+      final x = size.width * (i + .5) / points.length;
+      final totalHeight = (size.height - 12) * (total / maxTotal);
+      var top = size.height - totalHeight;
+      final values = <double>[point.fat, point.carbs, point.protein];
+      final colors = <Color>[_kFat, _kCarbs, _kAccent];
+      for (var segment = 0; segment < values.length; segment++) {
+        final valueHeight = total <= 0
+            ? 0.0
+            : totalHeight * values[segment] / total;
+        if (valueHeight <= 0) continue;
+        final rect = RRect.fromRectAndCorners(
+          Rect.fromLTWH(x - width / 2, top, width, valueHeight),
+          topLeft: segment == values.length - 1
+              ? const Radius.circular(5)
+              : Radius.zero,
+          topRight: segment == values.length - 1
+              ? const Radius.circular(5)
+              : Radius.zero,
+          bottomLeft: segment == 0 ? const Radius.circular(5) : Radius.zero,
+          bottomRight: segment == 0 ? const Radius.circular(5) : Radius.zero,
+        );
+        canvas.drawRRect(rect, Paint()..color = colors[segment]);
+        top += valueHeight;
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _MacroStackedPainter oldDelegate) =>
+      oldDelegate.points != points ||
+      oldDelegate.maxTotal != maxTotal ||
+      oldDelegate.dark != dark;
 }
 
 class _EnergyBars extends StatelessWidget {
@@ -1688,8 +1757,8 @@ class _MonthGrid extends StatelessWidget {
 
     Color cellColor(int count) {
       if (count <= 0) return empty;
-      if (count == 1) return const Color(0xFFFFD6C7);
-      if (count == 2) return const Color(0xFFFF9D79);
+      if (count == 1) return const Color(0xFFD6EBDD);
+      if (count == 2) return const Color(0xFFA8D0B4);
       return _kAccent;
     }
 
@@ -1780,105 +1849,6 @@ class _MiniBar extends StatelessWidget {
   );
 }
 
-class _PhotoTile extends StatelessWidget {
-  final ProgressPhoto photo;
-  final ApiService api;
-  final bool dark;
-  final VoidCallback onDelete;
-
-  const _PhotoTile({
-    required this.photo,
-    required this.api,
-    required this.dark,
-    required this.onDelete,
-  });
-
-  @override
-  Widget build(BuildContext context) => SizedBox(
-    width: 116,
-    child: Stack(
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(17),
-          child: Image.network(
-            photo.thumbnailUrl,
-            width: 116,
-            height: 154,
-            fit: BoxFit.cover,
-            headers: api.authHeaders,
-            errorBuilder: (_, __, ___) => Container(
-              color: dark ? const Color(0xFF36343F) : const Color(0xFFEDEDEB),
-              child: const Icon(Icons.broken_image_outlined),
-            ),
-          ),
-        ),
-        Positioned(
-          left: 7,
-          right: 7,
-          bottom: 7,
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              color: Colors.black.withValues(alpha: .56),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 4),
-              child: Text(
-                '${photo.capturedDate.day}/${photo.capturedDate.month}/${photo.capturedDate.year}',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 10,
-                  fontWeight: FontWeight.w700,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ),
-        ),
-        Positioned(
-          top: 5,
-          right: 5,
-          child: IconButton(
-            tooltip: 'Xóa ảnh',
-            onPressed: onDelete,
-            icon: const Icon(
-              Icons.close_rounded,
-              color: Colors.white,
-              size: 18,
-            ),
-            style: IconButton.styleFrom(
-              backgroundColor: Colors.black.withValues(alpha: .48),
-              minimumSize: const Size(28, 28),
-              padding: EdgeInsets.zero,
-            ),
-          ),
-        ),
-      ],
-    ),
-  );
-}
-
-class _PhotoPlaceholder extends StatelessWidget {
-  final bool dark;
-
-  const _PhotoPlaceholder({required this.dark});
-
-  @override
-  Widget build(BuildContext context) => Container(
-    width: 116,
-    height: 116,
-    decoration: BoxDecoration(
-      color: dark ? const Color(0xFF2C2A34) : const Color(0xFFF1F1EF),
-      shape: BoxShape.circle,
-    ),
-    child: Icon(
-      Icons.photo_camera_outlined,
-      color: dark ? Colors.white70 : const Color(0xFF777780),
-      size: 42,
-    ),
-  );
-}
-
 class _RangeSelector extends StatelessWidget {
   final int value;
   final bool dark;
@@ -1892,7 +1862,7 @@ class _RangeSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const options = <int, String>{90: '90 ngày', 180: '6 tháng', 365: '1 năm'};
+    const options = <int, String>{90: '90D', 180: '6M', 365: '1Y', 3650: 'ALL'};
     return Container(
       height: 44,
       padding: const EdgeInsets.all(3),
@@ -2073,13 +2043,13 @@ class _ProgressPill extends StatelessWidget {
   Widget build(BuildContext context) => Container(
     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
     decoration: BoxDecoration(
-      color: dark ? const Color(0xFF3B2A34) : const Color(0xFFFFE5D8),
+      color: dark ? const Color(0xFF24352A) : _kAccentSoft,
       borderRadius: BorderRadius.circular(20),
     ),
     child: Text(
       text,
       style: TextStyle(
-        color: dark ? const Color(0xFFFFB092) : const Color(0xFFB84C25),
+        color: dark ? const Color(0xFFA8D0B4) : const Color(0xFF3D7F56),
         fontSize: 11,
         fontWeight: FontWeight.w800,
       ),
@@ -2120,48 +2090,6 @@ class _Kicker extends StatelessWidget {
       fontWeight: FontWeight.w700,
       letterSpacing: 2,
     ),
-  );
-}
-
-class _ValueLabel extends StatelessWidget {
-  final String label;
-  final double? value;
-  final Color muted, text;
-  final bool alignEnd;
-
-  const _ValueLabel(
-    this.label,
-    this.value,
-    this.muted,
-    this.text, {
-    this.alignEnd = false,
-  });
-
-  @override
-  Widget build(BuildContext context) => Column(
-    crossAxisAlignment: alignEnd
-        ? CrossAxisAlignment.end
-        : CrossAxisAlignment.start,
-    children: [
-      Text(
-        label,
-        style: TextStyle(
-          color: muted,
-          fontSize: 10,
-          fontWeight: FontWeight.w700,
-          letterSpacing: 1.8,
-        ),
-      ),
-      const SizedBox(height: 4),
-      Text(
-        value == null ? '--' : '${value!.toStringAsFixed(1)} kg',
-        style: TextStyle(
-          color: text,
-          fontSize: 17,
-          fontWeight: FontWeight.w800,
-        ),
-      ),
-    ],
   );
 }
 
@@ -2323,4 +2251,464 @@ class _ErrorState extends StatelessWidget {
       ],
     ),
   );
+}
+
+class _WeightChangeCard extends StatelessWidget {
+  final List<WeightChangeItem> changes;
+  final Color card, border, text, muted;
+  final bool dark;
+
+  const _WeightChangeCard({
+    required this.changes,
+    required this.card,
+    required this.border,
+    required this.text,
+    required this.muted,
+    required this.dark,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final items = changes
+        .where((item) => item.sparkline.length >= 2 || item.diffKg.abs() > 0.01)
+        .toList();
+
+    return _Card(
+      card: card,
+      border: border,
+      radius: 26,
+      padding: const EdgeInsets.fromLTRB(20, 20, 20, 18),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Thay đổi cân nặng',
+            style: TextStyle(
+              color: text,
+              fontSize: 20,
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+          const SizedBox(height: 14),
+          if (items.isEmpty)
+            Text(
+              'Ghi cân nặng ít nhất hai lần để xem thay đổi theo thời gian.',
+              style: TextStyle(color: muted, fontSize: 14, height: 1.4),
+            )
+          else
+            ...items.map((item) {
+              final isLoss = item.diffKg <= 0;
+              final absDiff = item.diffKg.abs().toStringAsFixed(1);
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 70,
+                      child: Text(
+                        item.label,
+                        style: TextStyle(
+                          color: text,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+
+                    Expanded(
+                      child: SizedBox(
+                        height: 24,
+                        child: CustomPaint(
+                          painter: _WeightSparklinePainter(
+                            values: item.sparkline,
+                            color: const Color(0xFFF95A49),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+
+                    Text(
+                      '${item.diffKg.abs() <= 0.01
+                          ? ""
+                          : item.diffKg > 0
+                          ? "+"
+                          : "-"}$absDiff kg',
+                      style: TextStyle(
+                        color: text,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          isLoss
+                              ? Icons.call_received_rounded
+                              : Icons.call_made_rounded,
+                          size: 15,
+                          color: isLoss
+                              ? const Color(0xFF10B981)
+                              : const Color(0xFFEF4444),
+                        ),
+                        const SizedBox(width: 3),
+                        Text(
+                          isLoss ? 'Giảm' : 'Tăng',
+                          style: TextStyle(
+                            color: isLoss
+                                ? const Color(0xFF10B981)
+                                : const Color(0xFFEF4444),
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              );
+            }),
+        ],
+      ),
+    );
+  }
+}
+
+class _WeightSparklinePainter extends CustomPainter {
+  final List<double> values;
+  final Color color;
+
+  const _WeightSparklinePainter({
+    required this.values,
+    this.color = const Color(0xFFF95A49),
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (values.length < 2) {
+      final paint = Paint()
+        ..color = color
+        ..strokeWidth = 2
+        ..style = PaintingStyle.stroke;
+      canvas.drawLine(
+        Offset(0, size.height / 2),
+        Offset(size.width, size.height / 2),
+        paint,
+      );
+      return;
+    }
+
+    final double minV = values.reduce((a, b) => a < b ? a : b);
+    final double maxV = values.reduce((a, b) => a > b ? a : b);
+    final double spread = (maxV - minV) <= 0.01 ? 1.0 : (maxV - minV);
+
+    final path = Path();
+    final paint = Paint()
+      ..color = color
+      ..strokeWidth = 2.2
+      ..style = PaintingStyle.stroke
+      ..strokeCap = StrokeCap.round
+      ..strokeJoin = StrokeJoin.round;
+
+    for (int i = 0; i < values.length; i++) {
+      final x = size.width * i / (values.length - 1);
+      final norm = (values[i] - minV) / spread;
+      final y = size.height - (norm * (size.height - 4) + 2);
+      if (i == 0) {
+        path.moveTo(x, y);
+      } else {
+        path.lineTo(x, y);
+      }
+    }
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant _WeightSparklinePainter oldDelegate) =>
+      oldDelegate.values != values || oldDelegate.color != color;
+}
+
+class _LogWeightResult {
+  final double weightKg;
+  final DateTime date;
+  final String? photoPath;
+
+  _LogWeightResult({
+    required this.weightKg,
+    required this.date,
+    this.photoPath,
+  });
+}
+
+class _LogWeightModalSheet extends StatefulWidget {
+  final double initialWeight;
+  final double? lastWeight;
+  final bool isDark;
+
+  const _LogWeightModalSheet({
+    required this.initialWeight,
+    this.lastWeight,
+    required this.isDark,
+  });
+
+  @override
+  State<_LogWeightModalSheet> createState() => _LogWeightModalSheetState();
+}
+
+class _LogWeightModalSheetState extends State<_LogWeightModalSheet> {
+  late double _weight;
+  late DateTime _selectedDate;
+  String? _selectedPhotoPath;
+
+  @override
+  void initState() {
+    super.initState();
+    _weight = widget.initialWeight.clamp(30.0, 250.0);
+    _selectedDate = DateTime.now();
+  }
+
+  Future<void> _pickDate() async {
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate,
+      firstDate: DateTime(2020),
+      lastDate: DateTime.now(),
+    );
+    if (picked != null) {
+      setState(() => _selectedDate = picked);
+    }
+  }
+
+  Future<void> _pickPhoto() async {
+    try {
+      final ImagePicker picker = ImagePicker();
+      final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+      if (image != null) {
+        setState(() => _selectedPhotoPath = image.path);
+      }
+    } catch (_) {}
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final bg = widget.isDark ? const Color(0xFF1E1D24) : Colors.white;
+    final textDark = widget.isDark ? Colors.white : const Color(0xFF0F172A);
+    final textMuted = widget.isDark
+        ? const Color(0xFFA0A0AB)
+        : const Color(0xFF64748B);
+    final cardBg = widget.isDark
+        ? const Color(0xFF2A2932)
+        : const Color(0xFFF8F9FA);
+
+    return Container(
+      decoration: BoxDecoration(
+        color: bg,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
+      ),
+      padding: EdgeInsets.fromLTRB(
+        24,
+        12,
+        24,
+        MediaQuery.of(context).viewInsets.bottom + 24,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 36,
+            height: 5,
+            decoration: BoxDecoration(
+              color: widget.isDark ? Colors.white24 : const Color(0xFFCBD5E1),
+              borderRadius: BorderRadius.circular(2.5),
+            ),
+          ),
+          const SizedBox(height: 16),
+
+          Text(
+            'Cân nặng',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: textMuted,
+            ),
+          ),
+          const SizedBox(height: 16),
+
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.baseline,
+            textBaseline: TextBaseline.alphabetic,
+            children: [
+              Text(
+                _weight.toStringAsFixed(1),
+                style: TextStyle(
+                  fontSize: 56,
+                  fontWeight: FontWeight.w900,
+                  color: textDark,
+                  letterSpacing: -1.5,
+                  height: 1.0,
+                ),
+              ),
+              const SizedBox(width: 6),
+              Text(
+                'kg',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                  color: textDark,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 6),
+
+          Text(
+            'Lần gần nhất: ${widget.lastWeight != null ? "${widget.lastWeight!.toStringAsFixed(1)} kg" : "${_weight.toStringAsFixed(1)} kg"}',
+            style: TextStyle(fontSize: 14, color: textMuted),
+          ),
+          const SizedBox(height: 20),
+
+          HorizontalRulerPicker(
+            min: 30.0,
+            max: 250.0,
+            initialValue: _weight,
+            step: 0.1,
+            needleColor: const Color(0xFFF95A49),
+            onChanged: (val) {
+              setState(() {
+                _weight = (val * 10).round() / 10;
+              });
+            },
+          ),
+          const SizedBox(height: 24),
+
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+            decoration: BoxDecoration(
+              color: cardBg,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Ngày',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: textDark,
+                  ),
+                ),
+                GestureDetector(
+                  onTap: _pickDate,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 14,
+                      vertical: 8,
+                    ),
+                    decoration: BoxDecoration(
+                      color: widget.isDark
+                          ? const Color(0xFF3B3947)
+                          : const Color(0xFFEBECEF),
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                    child: Text(
+                      'ngày ${_selectedDate.day} thg ${_selectedDate.month}, ${_selectedDate.year}',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: textDark,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 12),
+
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+            decoration: BoxDecoration(
+              color: cardBg,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Icon(Icons.camera_alt_outlined, size: 20, color: textDark),
+                    const SizedBox(width: 10),
+                    Text(
+                      'Thêm ảnh',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: textDark,
+                      ),
+                    ),
+                  ],
+                ),
+                GestureDetector(
+                  onTap: _pickPhoto,
+                  child: Row(
+                    children: [
+                      Text(
+                        _selectedPhotoPath != null ? 'Đã chọn ảnh' : 'Tuỳ chọn',
+                        style: TextStyle(fontSize: 14, color: textMuted),
+                      ),
+                      const SizedBox(width: 4),
+                      Icon(
+                        Icons.chevron_right_rounded,
+                        size: 20,
+                        color: textMuted,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 28),
+
+          SizedBox(
+            width: double.infinity,
+            height: 56,
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.pop(
+                  context,
+                  _LogWeightResult(
+                    weightKg: _weight,
+                    date: _selectedDate,
+                    photoPath: _selectedPhotoPath,
+                  ),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: widget.isDark
+                    ? Colors.white
+                    : const Color(0xFF0F172A),
+                foregroundColor: widget.isDark
+                    ? const Color(0xFF0F172A)
+                    : Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(28),
+                ),
+                elevation: 0,
+              ),
+              child: const Text(
+                'Ghi cân nặng',
+                style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

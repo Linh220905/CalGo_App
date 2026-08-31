@@ -27,6 +27,124 @@ class ProfileScreen extends StatelessWidget {
     showLanguageSelectorModal(context);
   }
 
+  String _getInitials(String? name) {
+    if (name == null || name.trim().isEmpty) return 'DM';
+    final parts = name.trim().split(RegExp(r'\s+'));
+    if (parts.length >= 2) {
+      return '${parts[0][0]}${parts[parts.length - 1][0]}'.toUpperCase();
+    }
+    return name.trim()[0].toUpperCase();
+  }
+
+  void _showPersonalInfoDialog(BuildContext context, User? user, bool isDark) {
+    final s = context.read<AppSettingsProvider>().strings;
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        backgroundColor: isDark ? const Color(0xFF212027) : Colors.white,
+        title: Text(
+          s.profileTitle,
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: isDark ? Colors.white : const Color(0xFF0F172A),
+          ),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildInfoRow('Tên', user?.name ?? s.defaultProfileName, isDark),
+            const SizedBox(height: 10),
+            _buildInfoRow('Email', user?.email ?? '—', isDark),
+            const SizedBox(height: 10),
+            _buildInfoRow(s.creditsLabel, '${user?.credits ?? 0}', isDark),
+            const SizedBox(height: 10),
+            _buildInfoRow(s.statistics, '${user?.totalScans ?? 0}', isDark),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: Text(
+              s.close,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildInfoRow(String label, String value, bool isDark) {
+    return Row(
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+            color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
+            fontSize: 14,
+          ),
+        ),
+        const SizedBox(width: 16),
+        Expanded(
+          child: Text(
+            value,
+            textAlign: TextAlign.end,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              color: isDark ? Colors.white : const Color(0xFF0F172A),
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  void _showAppleHealthDialog(BuildContext context, bool isDark) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        backgroundColor: isDark ? const Color(0xFF212027) : Colors.white,
+        title: Row(
+          children: [
+            const Icon(Icons.favorite_rounded, color: Color(0xFFEF4444)),
+            const SizedBox(width: 8),
+            Text(
+              'Apple Health',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: isDark ? Colors.white : const Color(0xFF0F172A),
+              ),
+            ),
+          ],
+        ),
+        content: Text(
+          'Đồng bộ dữ liệu calo tiêu thụ và bước chân từ Apple Health / Health Connect đang trong quá trình phát triển và sẽ sẵn sàng ở bản cập nhật tiếp theo.',
+          style: TextStyle(
+            fontSize: 14,
+            height: 1.5,
+            color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text(
+              'Đã hiểu',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   void _showTargetDialog(BuildContext context, int currentTarget, bool isDark) {
     final s = context.read<AppSettingsProvider>().strings;
     showDialog(
@@ -53,7 +171,10 @@ class ProfileScreen extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: Text(s.close, style: TextStyle(fontWeight: FontWeight.bold)),
+            child: Text(
+              s.close,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
           ),
         ],
       ),
@@ -86,7 +207,10 @@ class ProfileScreen extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: Text(s.gotIt, style: TextStyle(fontWeight: FontWeight.bold)),
+            child: Text(
+              s.gotIt,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
           ),
         ],
       ),
@@ -120,7 +244,10 @@ class ProfileScreen extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: Text(s.great, style: TextStyle(fontWeight: FontWeight.bold)),
+            child: Text(
+              s.great,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
           ),
         ],
       ),
@@ -153,7 +280,10 @@ class ProfileScreen extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: Text(s.close, style: TextStyle(fontWeight: FontWeight.bold)),
+            child: Text(
+              s.close,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
           ),
         ],
       ),
@@ -330,22 +460,21 @@ class ProfileScreen extends StatelessWidget {
     final user = authProvider.user;
     final s = settings.strings;
 
-    final bgColor = isDark ? const Color(0xFF141318) : const Color(0xFFF7F7F5);
-    final cardBgColor = isDark ? const Color(0xFF212027) : Colors.white;
-    final textColor = isDark ? Colors.white : const Color(0xFF111318);
+    final bgColor = isDark ? const Color(0xFF121116) : const Color(0xFFFAFAFB);
+    final cardBgColor = isDark ? const Color(0xFF1E1C24) : Colors.white;
+    final textColor = isDark ? Colors.white : const Color(0xFF0F172A);
     final mutedColor = isDark
-        ? const Color(0xFFA7A5B0)
-        : const Color(0xFF747780);
+        ? const Color(0xFF94A3B8)
+        : const Color(0xFF64748B);
     final borderColor = isDark
-        ? const Color(0xFF34313D)
-        : const Color(0xFFEDEDEB);
-    const accentColor = Color(0xFFFF6B35);
+        ? const Color(0xFF2C2A34)
+        : const Color(0xFFF1F5F9);
 
     return Scaffold(
       backgroundColor: bgColor,
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(20, 18, 20, 36),
+          padding: const EdgeInsets.fromLTRB(20, 16, 20, 36),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -355,39 +484,124 @@ class ProfileScreen extends StatelessWidget {
                   color: mutedColor,
                   fontSize: 12,
                   fontWeight: FontWeight.w700,
-                  letterSpacing: 2.8,
+                  letterSpacing: 2.0,
                 ),
               ),
-              const SizedBox(height: 6),
+              const SizedBox(height: 4),
               Text(
                 s.profileHeading,
                 style: TextStyle(
                   color: textColor,
-                  fontSize: 36,
-                  height: 1.05,
+                  fontSize: 32,
                   fontWeight: FontWeight.w800,
-                  letterSpacing: -1.1,
+                  letterSpacing: -0.8,
                 ),
               ),
-              const SizedBox(height: 26),
+              const SizedBox(height: 20),
 
+              // Profile Card
               _buildAccountCard(
                 user: user,
                 isDark: isDark,
                 cardBgColor: cardBgColor,
+                borderColor: borderColor,
                 textColor: textColor,
                 mutedColor: mutedColor,
-                accentColor: accentColor,
-                premiumLabel:
-                    !AppBuildConfig.isTesting && user?.hasPremiumAccess == true
-                    ? s.premiumActivated
-                    : s.free,
-                defaultName: s.defaultProfileName,
+                strings: s,
+                onTap: () => _showPersonalInfoDialog(context, user, isDark),
               ),
-              const SizedBox(height: 28),
+              const SizedBox(height: 24),
 
-              _buildSectionLabel(s.accountSection, mutedColor),
-              const SizedBox(height: 9),
+              // Section: ACCOUNT
+              _buildSectionLabel(s.accountSection.toUpperCase(), mutedColor),
+              const SizedBox(height: 8),
+              _buildSectionCard(
+                cardBgColor: cardBgColor,
+                borderColor: borderColor,
+                isDark: isDark,
+                children: [
+                  _buildMenuItem(
+                    icon: Icons.badge_outlined,
+                    label: s.profileTitle,
+                    textColor: textColor,
+                    borderColor: borderColor,
+                    isDark: isDark,
+                    onTap: () => _showPersonalInfoDialog(context, user, isDark),
+                  ),
+                  _buildMenuItem(
+                    icon: Icons.settings_outlined,
+                    label: s.preferencesSection,
+                    textColor: textColor,
+                    borderColor: borderColor,
+                    isDark: isDark,
+                    onTap: () => _showTargetDialog(
+                      context,
+                      user?.dailyCalorieTarget.round() ?? 2000,
+                      isDark,
+                    ),
+                  ),
+                  _buildMenuItem(
+                    icon: Icons.g_translate_rounded,
+                    label: s.language,
+                    badge: s.languageDisplayName,
+                    textColor: textColor,
+                    borderColor: borderColor,
+                    isDark: isDark,
+                    isLast: true,
+                    onTap: () => _showLanguageSelector(context),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 24),
+
+              // Section: MỤC TIÊU & THEO DÕI
+              _buildSectionLabel(s.trackingSection.toUpperCase(), mutedColor),
+              const SizedBox(height: 8),
+              _buildSectionCard(
+                cardBgColor: cardBgColor,
+                borderColor: borderColor,
+                isDark: isDark,
+                children: [
+                  _buildMenuItem(
+                    icon: Icons.favorite_outline_rounded,
+                    label: 'Apple Health',
+                    badge: 'Chưa kết nối',
+                    textColor: textColor,
+                    borderColor: borderColor,
+                    isDark: isDark,
+                    onTap: () => _showAppleHealthDialog(context, isDark),
+                  ),
+                  _buildMenuItem(
+                    icon: Icons.center_focus_strong_outlined,
+                    label: s.calorieTarget,
+                    badge: s.guidanceDishCalories(
+                      user?.dailyCalorieTarget.round() ?? 2000,
+                    ),
+                    textColor: textColor,
+                    borderColor: borderColor,
+                    isDark: isDark,
+                    onTap: () => _showTargetDialog(
+                      context,
+                      user?.dailyCalorieTarget.round() ?? 2000,
+                      isDark,
+                    ),
+                  ),
+                  _buildMenuItem(
+                    icon: Icons.notifications_none_rounded,
+                    label: s.reminderNotifications,
+                    textColor: textColor,
+                    borderColor: borderColor,
+                    isDark: isDark,
+                    isLast: true,
+                    onTap: () => _showNotificationInfoDialog(context, isDark),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 24),
+
+              // Section: DỊCH VỤ PREMIUM & CREDIT (nếu có)
+              _buildSectionLabel('DỊCH VỤ & GÓI CƯỚC', mutedColor),
+              const SizedBox(height: 8),
               _buildSectionCard(
                 cardBgColor: cardBgColor,
                 borderColor: borderColor,
@@ -437,73 +651,9 @@ class ProfileScreen extends StatelessWidget {
               ),
               const SizedBox(height: 24),
 
-              _buildSectionLabel(s.trackingSection, mutedColor),
-              const SizedBox(height: 9),
-              _buildSectionCard(
-                cardBgColor: cardBgColor,
-                borderColor: borderColor,
-                isDark: isDark,
-                children: [
-                  _buildMenuItem(
-                    icon: Icons.track_changes_outlined,
-                    label: s.calorieTarget,
-                    badge: s.guidanceDishCalories(
-                      user?.dailyCalorieTarget.round() ?? 2000,
-                    ),
-                    textColor: textColor,
-                    borderColor: borderColor,
-                    isDark: isDark,
-                    onTap: () => _showTargetDialog(
-                      context,
-                      user?.dailyCalorieTarget.round() ?? 2000,
-                      isDark,
-                    ),
-                  ),
-                  _buildMenuItem(
-                    icon: Icons.notifications_outlined,
-                    label: s.notifications,
-                    textColor: textColor,
-                    borderColor: borderColor,
-                    isDark: isDark,
-                    isLast: true,
-                    onTap: () => _showNotificationInfoDialog(context, isDark),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 24),
-
-              _buildSectionLabel(s.preferencesSection, mutedColor),
-              const SizedBox(height: 9),
-              _buildSectionCard(
-                cardBgColor: cardBgColor,
-                borderColor: borderColor,
-                isDark: isDark,
-                children: [
-                  _buildSwitchItem(
-                    label: s.darkMode,
-                    icon: Icons.dark_mode_outlined,
-                    value: isDark,
-                    isDark: isDark,
-                    textColor: textColor,
-                    borderColor: borderColor,
-                    onChanged: settings.toggleTheme,
-                  ),
-                  _buildMenuItem(
-                    icon: Icons.language_outlined,
-                    label: s.language,
-                    badge: s.languageDisplayName,
-                    textColor: textColor,
-                    borderColor: borderColor,
-                    isDark: isDark,
-                    isLast: true,
-                    onTap: () => _showLanguageSelector(context),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 24),
-
-              _buildSectionLabel(s.supportSection, mutedColor),
-              const SizedBox(height: 9),
+              // Section: HỖ TRỢ & BẢO MẬT
+              _buildSectionLabel(s.supportSection.toUpperCase(), mutedColor),
+              const SizedBox(height: 8),
               _buildSectionCard(
                 cardBgColor: cardBgColor,
                 borderColor: borderColor,
@@ -539,14 +689,24 @@ class ProfileScreen extends StatelessWidget {
                     textColor: textColor,
                     borderColor: borderColor,
                     isDark: isDark,
-                    isLast: true,
                     onTap: () => _showSupportDialog(context, isDark),
+                  ),
+                  _buildSwitchItem(
+                    label: s.darkMode,
+                    icon: Icons.dark_mode_outlined,
+                    value: isDark,
+                    isDark: isDark,
+                    textColor: textColor,
+                    borderColor: borderColor,
+                    isLast: true,
+                    onChanged: settings.toggleTheme,
                   ),
                 ],
               ),
 
-              const SizedBox(height: 24),
+              const SizedBox(height: 28),
 
+              // Logout Button
               SizedBox(
                 width: double.infinity,
                 child: OutlinedButton.icon(
@@ -571,7 +731,7 @@ class ProfileScreen extends StatelessWidget {
                     ),
                   ),
                   style: OutlinedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    padding: const EdgeInsets.symmetric(vertical: 15),
                     side: BorderSide(
                       color: isDark
                           ? const Color(0xFF451A1A)
@@ -606,12 +766,154 @@ class ProfileScreen extends StatelessWidget {
 
   Widget _buildSectionLabel(String label, Color color) {
     return Text(
-      label.toUpperCase(),
+      label,
       style: TextStyle(
         color: color,
-        fontSize: 11,
+        fontSize: 12,
         fontWeight: FontWeight.w700,
-        letterSpacing: 2.2,
+        letterSpacing: 1.8,
+      ),
+    );
+  }
+
+  Widget _buildAccountCard({
+    required User? user,
+    required bool isDark,
+    required Color cardBgColor,
+    required Color borderColor,
+    required Color textColor,
+    required Color mutedColor,
+    required AppLocalizations strings,
+    required VoidCallback onTap,
+  }) {
+    final name = user?.name?.isNotEmpty == true
+        ? user!.name!
+        : strings.defaultProfileName;
+    final initials = _getInitials(name);
+    final premiumLabel =
+        !AppBuildConfig.isTesting && user?.hasPremiumAccess == true
+        ? strings.premiumActivated
+        : strings.free;
+    final showsPremium =
+        !AppBuildConfig.isTesting && user?.hasPremiumAccess == true;
+    final email = user?.email?.isNotEmpty == true ? user!.email! : '';
+
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: cardBgColor,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: borderColor),
+        boxShadow: [
+          BoxShadow(
+            color: isDark ? const Color(0x1A000000) : const Color(0x050F172A),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(20),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            children: [
+              Container(
+                width: 58,
+                height: 58,
+                clipBehavior: Clip.antiAlias,
+                alignment: Alignment.center,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: LinearGradient(
+                    colors: [Color(0xFF14B8A6), Color(0xFF06B6D4)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                ),
+                child: user?.avatar != null
+                    ? Image.network(
+                        user!.avatar!,
+                        fit: BoxFit.cover,
+                        errorBuilder: (_, __, ___) => Text(
+                          initials,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                      )
+                    : Text(
+                        initials,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+              ),
+              const SizedBox(width: 14),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.workspace_premium_rounded,
+                          color: showsPremium
+                              ? const Color(0xFFE0533C)
+                              : mutedColor,
+                          size: 14,
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          premiumLabel,
+                          style: TextStyle(
+                            color: showsPremium
+                                ? const Color(0xFFE0533C)
+                                : mutedColor,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 3),
+                    Text(
+                      name,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: textColor,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: -0.3,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      email,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(color: mutedColor, fontSize: 13.5),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 10),
+              Icon(
+                Icons.chevron_right_rounded,
+                color: isDark
+                    ? const Color(0xFF64748B)
+                    : const Color(0xFFCBD5E1),
+                size: 22,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -625,143 +927,18 @@ class ProfileScreen extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: cardBgColor,
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(20),
         border: Border.all(color: borderColor),
         boxShadow: [
           BoxShadow(
-            color: isDark ? const Color(0x18000000) : const Color(0x07111418),
-            blurRadius: 18,
-            offset: const Offset(0, 7),
+            color: isDark ? const Color(0x1A000000) : const Color(0x050F172A),
+            blurRadius: 10,
+            offset: const Offset(0, 3),
           ),
         ],
       ),
       clipBehavior: Clip.antiAlias,
       child: Column(children: children),
-    );
-  }
-
-  Widget _buildAccountCard({
-    required User? user,
-    required bool isDark,
-    required Color cardBgColor,
-    required Color textColor,
-    required Color mutedColor,
-    required Color accentColor,
-    required String premiumLabel,
-    required String defaultName,
-  }) {
-    final name = user?.name?.isNotEmpty == true ? user!.name! : defaultName;
-    final avatarLetter = name.trim().isNotEmpty
-        ? name.trim()[0].toUpperCase()
-        : '?';
-
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(18),
-      decoration: BoxDecoration(
-        color: cardBgColor,
-        borderRadius: BorderRadius.circular(28),
-        border: Border.all(
-          color: isDark ? const Color(0xFF34313D) : const Color(0xFFECECE9),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: isDark ? const Color(0x22000000) : const Color(0x0D111318),
-            blurRadius: 22,
-            offset: const Offset(0, 9),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 68,
-            height: 68,
-            clipBehavior: Clip.antiAlias,
-            alignment: Alignment.center,
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              gradient: LinearGradient(
-                colors: [Color(0xFF25C6B8), Color(0xFF209BEA)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-            ),
-            child: user?.avatar != null
-                ? Image.network(
-                    user!.avatar!,
-                    fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) => Text(
-                      avatarLetter,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                  )
-                : Text(
-                    avatarLetter,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-          ),
-          const SizedBox(width: 15),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Icon(
-                      Icons.workspace_premium_rounded,
-                      color: accentColor,
-                      size: 16,
-                    ),
-                    const SizedBox(width: 5),
-                    Flexible(
-                      child: Text(
-                        premiumLabel,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          color: accentColor,
-                          fontSize: 13,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  name,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: textColor,
-                    fontSize: 19,
-                    fontWeight: FontWeight.w800,
-                    letterSpacing: -0.3,
-                  ),
-                ),
-                if (user?.email != null) ...[
-                  const SizedBox(height: 2),
-                  Text(
-                    user!.email!,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(color: mutedColor, fontSize: 14),
-                  ),
-                ],
-              ],
-            ),
-          ),
-        ],
-      ),
     );
   }
 
@@ -773,28 +950,29 @@ class ProfileScreen extends StatelessWidget {
     required Color textColor,
     required Color borderColor,
     required ValueChanged<bool> onChanged,
+    bool isLast = false,
   }) {
     final iconBgColor = isDark
-        ? const Color(0xFF2C2A34)
-        : const Color(0xFFF1F3F2);
+        ? const Color(0xFF272630)
+        : const Color(0xFFF1F5F9);
     final iconColor = isDark
-        ? const Color(0xFFD4D1DB)
-        : const Color(0xFF41454D);
+        ? const Color(0xFFCBD5E1)
+        : const Color(0xFF334155);
 
     return Column(
       children: [
         InkWell(
           onTap: () => onChanged(!value),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 11),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 13),
             child: Row(
               children: [
                 Container(
-                  width: 40,
-                  height: 40,
+                  width: 38,
+                  height: 38,
                   decoration: BoxDecoration(
                     color: iconBgColor,
-                    borderRadius: BorderRadius.circular(13),
+                    borderRadius: BorderRadius.circular(11),
                   ),
                   child: Icon(icon, color: iconColor, size: 20),
                 ),
@@ -804,22 +982,22 @@ class ProfileScreen extends StatelessWidget {
                     label,
                     style: TextStyle(
                       color: textColor,
-                      fontSize: 16,
+                      fontSize: 15,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),
                 Switch.adaptive(
                   value: value,
-                  activeColor: Colors.white,
-                  activeTrackColor: const Color(0xFFFF6B35),
+                  activeThumbColor: Colors.white,
+                  activeTrackColor: const Color(0xFF63A97B),
                   onChanged: onChanged,
                 ),
               ],
             ),
           ),
         ),
-        Divider(height: 1, indent: 72, color: borderColor),
+        if (!isLast) Divider(height: 1, indent: 68, color: borderColor),
       ],
     );
   }
@@ -836,11 +1014,11 @@ class ProfileScreen extends StatelessWidget {
     bool isLast = false,
   }) {
     final iconBgColor = isDark
-        ? const Color(0xFF2C2A34)
-        : const Color(0xFFF1F3F2);
+        ? const Color(0xFF272630)
+        : const Color(0xFFF1F5F9);
     final iconColor = isDark
-        ? const Color(0xFFD4D1DB)
-        : const Color(0xFF41454D);
+        ? const Color(0xFFCBD5E1)
+        : const Color(0xFF334155);
 
     return Column(
       children: [
@@ -850,15 +1028,15 @@ class ProfileScreen extends StatelessWidget {
           child: InkWell(
             onTap: onTap,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 11),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 13),
               child: Row(
                 children: [
                   Container(
-                    width: 40,
-                    height: 40,
+                    width: 38,
+                    height: 38,
                     decoration: BoxDecoration(
                       color: iconBgColor,
-                      borderRadius: BorderRadius.circular(13),
+                      borderRadius: BorderRadius.circular(11),
                     ),
                     child: Icon(icon, color: iconColor, size: 20),
                   ),
@@ -866,74 +1044,67 @@ class ProfileScreen extends StatelessWidget {
                   Expanded(
                     child: Text(
                       label,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 15,
                         fontWeight: FontWeight.w600,
                         color: textColor,
                       ),
                     ),
                   ),
                   if (badge != null) ...[
-                    const SizedBox(width: 8),
-                    Flexible(
-                      child: Container(
-                        constraints: const BoxConstraints(maxWidth: 150),
+                    const SizedBox(width: 10),
+                    if (isSpecialBadge)
+                      Container(
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 9,
-                          vertical: 5,
+                          horizontal: 8,
+                          vertical: 3,
                         ),
                         decoration: BoxDecoration(
-                          color: isSpecialBadge
-                              ? (isDark
-                                    ? const Color(0xFF3B2A10)
-                                    : const Color(0xFFFFF1E8))
-                              : (isDark
-                                    ? const Color(0xFF2C2A34)
-                                    : const Color(0xFFF1F3F2)),
-                          borderRadius: BorderRadius.circular(9),
-                          border: isSpecialBadge
-                              ? Border.all(
-                                  color: isDark
-                                      ? const Color(0xFF8A5A20)
-                                      : const Color(0xFFFFD1B8),
-                                  width: 0.8,
-                                )
-                              : null,
+                          color: isDark
+                              ? const Color(0xFF2D261E)
+                              : const Color(0xFFFFF7ED),
+                          borderRadius: BorderRadius.circular(6),
+                          border: Border.all(
+                            color: isDark
+                                ? const Color(0xFF78350F)
+                                : const Color(0xFFFFEDD5),
+                          ),
                         ),
                         child: Text(
                           badge,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.end,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w700,
-                            color: isSpecialBadge
-                                ? const Color(0xFFE85B2A)
-                                : (isDark
-                                      ? const Color(0xFFA7A5B0)
-                                      : const Color(0xFF70747A)),
+                            color: Color(0xFFF97316),
                           ),
                         ),
+                      )
+                    else
+                      Text(
+                        badge,
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: isDark
+                              ? const Color(0xFF94A3B8)
+                              : const Color(0xFF64748B),
+                        ),
                       ),
-                    ),
                   ],
-                  const SizedBox(width: 7),
+                  const SizedBox(width: 10),
                   Icon(
                     Icons.chevron_right_rounded,
                     color: isDark
-                        ? const Color(0xFF777482)
-                        : const Color(0xFFB4B5B5),
-                    size: 24,
+                        ? const Color(0xFF64748B)
+                        : const Color(0xFFCBD5E1),
+                    size: 22,
                   ),
                 ],
               ),
             ),
           ),
         ),
-        if (!isLast) Divider(height: 1, indent: 71, color: borderColor),
+        if (!isLast) Divider(height: 1, indent: 68, color: borderColor),
       ],
     );
   }

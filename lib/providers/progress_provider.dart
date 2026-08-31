@@ -35,13 +35,20 @@ class ProgressProvider extends ChangeNotifier {
     }
   }
 
-  Future<bool> logWeight(double weightKg) async {
+  Future<bool> logWeight(
+    double weightKg, {
+    DateTime? date,
+    String? photoPath,
+  }) async {
     _mutating = true;
     _error = null;
     notifyListeners();
     try {
-      await _service.logWeight(weightKg);
-      await refresh();
+      await _service.logWeight(weightKg, date: date);
+      if (photoPath != null && File(photoPath).existsSync()) {
+        await _service.uploadPhoto(photoPath, date: date);
+      }
+      await refresh(days: _data?.rangeDays ?? 90);
       return true;
     } catch (_) {
       _error = 'saveFailed';
@@ -90,6 +97,7 @@ class ProgressProvider extends ChangeNotifier {
           bmi: _data!.bmi,
           bmiCategory: _data!.bmiCategory,
           weightHistory: _data!.weightHistory,
+          weightChanges: _data!.weightChanges,
           progressPhotos: next,
         );
       }

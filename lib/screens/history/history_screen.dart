@@ -98,12 +98,15 @@ class _HistoryScreenState extends State<HistoryScreen> {
     final settings = context.watch<AppSettingsProvider>();
     final strings = settings.strings;
 
-    final bgColor = isDark ? const Color(0xFF0E0E10) : const Color(0xFFF7F7F8);
-    final cardColor = isDark ? const Color(0xFF1C1C1E) : Colors.white;
+    final bgColor = isDark ? const Color(0xFF141318) : const Color(0xFFFAFAFB);
+    final cardColor = isDark ? const Color(0xFF212027) : Colors.white;
+    final borderColor =
+        isDark ? const Color(0xFF34313D) : const Color(0xFFEDEDEB);
     final subtitleColor = isDark
-        ? const Color(0xFF636366)
-        : const Color(0xFF8E8E93);
-    final primaryTextColor = isDark ? Colors.white : const Color(0xFF1C1C1E);
+        ? const Color(0xFFA7A5B0)
+        : const Color(0xFF747780);
+    final primaryTextColor = isDark ? Colors.white : const Color(0xFF111318);
+    const accentColor = Color(0xFF63A97B);
 
     if (_loading) {
       return Scaffold(
@@ -117,7 +120,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 height: 32,
                 child: CircularProgressIndicator(
                   strokeWidth: 2.5,
-                  color: const Color(0xFFFF9F0A),
+                  color: accentColor,
                   backgroundColor: cs.surfaceContainerHighest,
                 ),
               ),
@@ -186,16 +189,16 @@ class _HistoryScreenState extends State<HistoryScreen> {
       backgroundColor: bgColor,
       body: SafeArea(
         child: RefreshIndicator(
-          color: const Color(0xFFFF9F0A),
+          color: accentColor,
           backgroundColor: cardColor,
           onRefresh: () => _loadHistory(forceRefresh: true),
           child: CustomScrollView(
             physics: const AlwaysScrollableScrollPhysics(),
             slivers: [
-              // ── SliverAppBar-style header ───────────────
+              // ── Modern Editorial Header ─────────────────
               SliverToBoxAdapter(
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
+                  padding: const EdgeInsets.fromLTRB(20, 18, 20, 0),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -204,25 +207,27 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
+                              strings.historySubtitle.toUpperCase(),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: GoogleFonts.beVietnamPro(
+                                color: subtitleColor,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w700,
+                                letterSpacing: 2.8,
+                              ),
+                            ),
+                            const SizedBox(height: 6),
+                            Text(
                               strings.historyTitle,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.beVietnamPro(
-                                fontSize: 26,
-                                fontWeight: FontWeight.w800,
                                 color: primaryTextColor,
-                                letterSpacing: -0.6,
-                              ),
-                            ),
-                            const SizedBox(height: 2),
-                            Text(
-                              strings.historySubtitle,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: GoogleFonts.beVietnamPro(
-                                fontSize: 13,
-                                color: subtitleColor,
-                                fontWeight: FontWeight.w400,
+                                fontSize: 34,
+                                height: 1.05,
+                                fontWeight: FontWeight.w800,
+                                letterSpacing: -1.1,
                               ),
                             ),
                           ],
@@ -233,13 +238,14 @@ class _HistoryScreenState extends State<HistoryScreen> {
                         user: user,
                         isDark: isDark,
                         cardColor: cardColor,
+                        borderColor: borderColor,
                       ),
                     ],
                   ),
                 ),
               ),
 
-              const SliverToBoxAdapter(child: SizedBox(height: 20)),
+              const SliverToBoxAdapter(child: SizedBox(height: 24)),
 
               // ── Stats Grid ─────────────────────────────
               if (_items.isNotEmpty)
@@ -253,6 +259,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       avgProtein: avgProtein,
                       isDark: isDark,
                       cardColor: cardColor,
+                      borderColor: borderColor,
                       subtitleColor: subtitleColor,
                       primaryTextColor: primaryTextColor,
                     ),
@@ -268,6 +275,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     child: _EmptyState(
                       isDark: isDark,
                       cardColor: cardColor,
+                      borderColor: borderColor,
+                      subtitleColor: subtitleColor,
+                      primaryTextColor: primaryTextColor,
                       onScan: () => context.push('/scan'),
                     ),
                   ),
@@ -310,6 +320,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                         days: daysList,
                         isDark: isDark,
                         cardColor: cardColor,
+                        borderColor: borderColor,
                         subtitleColor: subtitleColor,
                         primaryTextColor: primaryTextColor,
                         onSelectDay: (dayData) {
@@ -353,6 +364,7 @@ class _StatsGrid extends StatelessWidget {
   final int avgProtein;
   final bool isDark;
   final Color cardColor;
+  final Color borderColor;
   final Color subtitleColor;
   final Color primaryTextColor;
 
@@ -363,6 +375,7 @@ class _StatsGrid extends StatelessWidget {
     required this.avgProtein,
     required this.isDark,
     required this.cardColor,
+    required this.borderColor,
     required this.subtitleColor,
     required this.primaryTextColor,
   });
@@ -377,32 +390,30 @@ class _StatsGrid extends StatelessWidget {
           padding: const EdgeInsets.all(4),
           decoration: BoxDecoration(
             color: cardColor,
-            borderRadius: BorderRadius.circular(22),
-            boxShadow: [
-              BoxShadow(
-                color: isDark
-                    ? Colors.black.withOpacity(0.3)
-                    : Colors.black.withOpacity(0.06),
-                blurRadius: 20,
-                offset: const Offset(0, 4),
-              ),
-            ],
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: borderColor),
           ),
           child: GridView.count(
             crossAxisCount: 2,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            childAspectRatio: isNarrow ? 1.25 : 1.6,
-            crossAxisSpacing: 2,
-            mainAxisSpacing: 2,
+            childAspectRatio: isNarrow ? 1.3 : 1.6,
+            crossAxisSpacing: 0,
+            mainAxisSpacing: 0,
             children: [
               _StatCell(
                 value: '$totalMeals',
                 label: strings.mealsCountLabel,
-                icon: _MealIcon(isDark: isDark),
-                accentColor: const Color(0xFFFF9F0A),
-                isDark: isDark,
+                icon: const Icon(
+                  Icons.restaurant_menu_rounded,
+                  color: Color(0xFF63A97B),
+                  size: 20,
+                ),
+                iconBg: isDark
+                    ? const Color(0xFF24352A)
+                    : const Color(0xFFE2F1E7),
                 cardColor: cardColor,
+                borderColor: borderColor,
                 subtitleColor: subtitleColor,
                 primaryTextColor: primaryTextColor,
                 isTopLeft: true,
@@ -410,10 +421,16 @@ class _StatsGrid extends StatelessWidget {
               _StatCell(
                 value: '$streak',
                 label: strings.streakDaysLabel,
-                icon: _FireIcon(isDark: isDark),
-                accentColor: const Color(0xFFFF6B35),
-                isDark: isDark,
+                icon: const Icon(
+                  Icons.local_fire_department_rounded,
+                  color: Color(0xFFF97316),
+                  size: 20,
+                ),
+                iconBg: isDark
+                    ? const Color(0xFF332014)
+                    : const Color(0xFFFFF7ED),
                 cardColor: cardColor,
+                borderColor: borderColor,
                 subtitleColor: subtitleColor,
                 primaryTextColor: primaryTextColor,
                 isTopRight: true,
@@ -421,10 +438,16 @@ class _StatsGrid extends StatelessWidget {
               _StatCell(
                 value: '$avgCalo',
                 label: strings.kcalPerDay,
-                icon: _CalIcon(isDark: isDark),
-                accentColor: const Color(0xFF0A84FF),
-                isDark: isDark,
+                icon: const Icon(
+                  Icons.bolt_rounded,
+                  color: Color(0xFFF59E0B),
+                  size: 20,
+                ),
+                iconBg: isDark
+                    ? const Color(0xFF332614)
+                    : const Color(0xFFFEF3C7),
                 cardColor: cardColor,
+                borderColor: borderColor,
                 subtitleColor: subtitleColor,
                 primaryTextColor: primaryTextColor,
                 isBottomLeft: true,
@@ -432,10 +455,16 @@ class _StatsGrid extends StatelessWidget {
               _StatCell(
                 value: '${avgProtein}g',
                 label: strings.proteinPerDay,
-                icon: _ProteinIcon(isDark: isDark),
-                accentColor: const Color(0xFF30D158),
-                isDark: isDark,
+                icon: const Icon(
+                  Icons.egg_alt_rounded,
+                  color: Color(0xFFFF5C5C),
+                  size: 20,
+                ),
+                iconBg: isDark
+                    ? const Color(0xFF351F24)
+                    : const Color(0xFFFFECEC),
                 cardColor: cardColor,
+                borderColor: borderColor,
                 subtitleColor: subtitleColor,
                 primaryTextColor: primaryTextColor,
                 isBottomRight: true,
@@ -452,9 +481,9 @@ class _StatCell extends StatelessWidget {
   final String value;
   final String label;
   final Widget icon;
-  final Color accentColor;
-  final bool isDark;
+  final Color iconBg;
   final Color cardColor;
+  final Color borderColor;
   final Color subtitleColor;
   final Color primaryTextColor;
   final bool isTopLeft;
@@ -466,9 +495,9 @@ class _StatCell extends StatelessWidget {
     required this.value,
     required this.label,
     required this.icon,
-    required this.accentColor,
-    required this.isDark,
+    required this.iconBg,
     required this.cardColor,
+    required this.borderColor,
     required this.subtitleColor,
     required this.primaryTextColor,
     this.isTopLeft = false,
@@ -479,15 +508,11 @@ class _StatCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dividerColor = isDark
-        ? Colors.white.withOpacity(0.06)
-        : Colors.black.withOpacity(0.05);
-
     final radius = BorderRadius.only(
-      topLeft: isTopLeft ? const Radius.circular(19) : Radius.zero,
-      topRight: isTopRight ? const Radius.circular(19) : Radius.zero,
-      bottomLeft: isBottomLeft ? const Radius.circular(19) : Radius.zero,
-      bottomRight: isBottomRight ? const Radius.circular(19) : Radius.zero,
+      topLeft: isTopLeft ? const Radius.circular(16) : Radius.zero,
+      topRight: isTopRight ? const Radius.circular(16) : Radius.zero,
+      bottomLeft: isBottomLeft ? const Radius.circular(16) : Radius.zero,
+      bottomRight: isBottomRight ? const Radius.circular(16) : Radius.zero,
     );
 
     return LayoutBuilder(
@@ -499,21 +524,29 @@ class _StatCell extends StatelessWidget {
             borderRadius: radius,
             border: Border(
               right: (isTopLeft || isBottomLeft)
-                  ? BorderSide(color: dividerColor, width: 0.5)
+                  ? BorderSide(color: borderColor, width: 0.8)
                   : BorderSide.none,
               bottom: (isTopLeft || isTopRight)
-                  ? BorderSide(color: dividerColor, width: 0.5)
+                  ? BorderSide(color: borderColor, width: 0.8)
                   : BorderSide.none,
             ),
           ),
           padding: EdgeInsets.symmetric(
-            horizontal: isCompact ? 12 : 18,
-            vertical: isCompact ? 12 : 14,
+            horizontal: isCompact ? 12 : 16,
+            vertical: isCompact ? 10 : 12,
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              icon,
+              Container(
+                width: 38,
+                height: 38,
+                decoration: BoxDecoration(
+                  color: iconBg,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Center(child: icon),
+              ),
               SizedBox(width: isCompact ? 8 : 12),
               Expanded(
                 child: Column(
@@ -528,7 +561,7 @@ class _StatCell extends StatelessWidget {
                         maxLines: 1,
                         style: GoogleFonts.beVietnamPro(
                           fontSize: 22,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w800,
                           color: primaryTextColor,
                           letterSpacing: -0.5,
                           height: 1.0,
@@ -540,7 +573,7 @@ class _StatCell extends StatelessWidget {
                       label,
                       style: GoogleFonts.beVietnamPro(
                         fontSize: 11,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w600,
                         color: subtitleColor,
                         height: 1.2,
                       ),
@@ -558,103 +591,19 @@ class _StatCell extends StatelessWidget {
   }
 }
 
-// ── Custom Icon Widgets ──────────────────────────────────────────────────────
-
-class _MealIcon extends StatelessWidget {
-  final bool isDark;
-  const _MealIcon({required this.isDark});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 38,
-      height: 38,
-      decoration: BoxDecoration(
-        color: const Color(0xFFFF9F0A).withOpacity(isDark ? 0.18 : 0.12),
-        borderRadius: BorderRadius.circular(11),
-      ),
-      child: const Icon(
-        Icons.fork_right_rounded,
-        color: Color(0xFFFF9F0A),
-        size: 20,
-      ),
-    );
-  }
-}
-
-class _FireIcon extends StatelessWidget {
-  final bool isDark;
-  const _FireIcon({required this.isDark});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 38,
-      height: 38,
-      decoration: BoxDecoration(
-        color: const Color(0xFFFF6B35).withOpacity(isDark ? 0.18 : 0.12),
-        borderRadius: BorderRadius.circular(11),
-      ),
-      child: const Icon(
-        Icons.local_fire_department_rounded,
-        color: Color(0xFFFF6B35),
-        size: 20,
-      ),
-    );
-  }
-}
-
-class _CalIcon extends StatelessWidget {
-  final bool isDark;
-  const _CalIcon({required this.isDark});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 38,
-      height: 38,
-      decoration: BoxDecoration(
-        color: const Color(0xFF0A84FF).withOpacity(isDark ? 0.18 : 0.12),
-        borderRadius: BorderRadius.circular(11),
-      ),
-      child: const Icon(Icons.bolt_rounded, color: Color(0xFF0A84FF), size: 20),
-    );
-  }
-}
-
-class _ProteinIcon extends StatelessWidget {
-  final bool isDark;
-  const _ProteinIcon({required this.isDark});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 38,
-      height: 38,
-      decoration: BoxDecoration(
-        color: const Color(0xFF30D158).withOpacity(isDark ? 0.18 : 0.12),
-        borderRadius: BorderRadius.circular(11),
-      ),
-      child: const Icon(
-        Icons.egg_alt_rounded,
-        color: Color(0xFF30D158),
-        size: 20,
-      ),
-    );
-  }
-}
-
 // ── Avatar Button ────────────────────────────────────────────────────────────
 
 class _AvatarButton extends StatelessWidget {
   final dynamic user;
   final bool isDark;
   final Color cardColor;
+  final Color borderColor;
 
   const _AvatarButton({
     required this.user,
     required this.isDark,
     required this.cardColor,
+    required this.borderColor,
   });
 
   @override
@@ -665,15 +614,13 @@ class _AvatarButton extends StatelessWidget {
         clipBehavior: Clip.none,
         children: [
           Container(
-            width: 40,
-            height: 40,
+            width: 44,
+            height: 44,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: cardColor,
               border: Border.all(
-                color: isDark
-                    ? Colors.white.withOpacity(0.12)
-                    : Colors.black.withOpacity(0.08),
+                color: borderColor,
                 width: 1.5,
               ),
             ),
@@ -686,27 +633,27 @@ class _AvatarButton extends StatelessWidget {
                         ? user!.name![0].toUpperCase()
                         : 'U',
                     style: GoogleFonts.beVietnamPro(
-                      color: isDark ? Colors.white : const Color(0xFF1C1C1E),
-                      fontWeight: FontWeight.w700,
-                      fontSize: 15,
+                      color: isDark ? Colors.white : const Color(0xFF111318),
+                      fontWeight: FontWeight.w800,
+                      fontSize: 16,
                     ),
                   ),
           ),
           if (!AppBuildConfig.isTesting && user?.hasPremiumAccess == true)
             Positioned(
-              top: -3,
-              right: -3,
+              top: -2,
+              right: -2,
               child: Container(
                 width: 16,
                 height: 16,
                 decoration: const BoxDecoration(
-                  color: Color(0xFFFFD700),
+                  color: Color(0xFFF59E0B),
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(
-                  Icons.star,
-                  size: 10,
-                  color: Color(0xFF7A5C00),
+                  Icons.star_rounded,
+                  size: 11,
+                  color: Colors.white,
                 ),
               ),
             ),
@@ -721,55 +668,64 @@ class _AvatarButton extends StatelessWidget {
 class _EmptyState extends StatelessWidget {
   final bool isDark;
   final Color cardColor;
+  final Color borderColor;
+  final Color subtitleColor;
+  final Color primaryTextColor;
   final VoidCallback onScan;
 
   const _EmptyState({
     required this.isDark,
     required this.cardColor,
+    required this.borderColor,
+    required this.subtitleColor,
+    required this.primaryTextColor,
     required this.onScan,
   });
 
   @override
   Widget build(BuildContext context) {
     final strings = context.watch<AppSettingsProvider>().strings;
-    final subtitleColor = isDark
-        ? const Color(0xFF636366)
-        : const Color(0xFF8E8E93);
-    final primaryTextColor = isDark ? Colors.white : const Color(0xFF1C1C1E);
+    const accentColor = Color(0xFF63A97B);
 
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          width: 72,
-          height: 72,
+          width: 76,
+          height: 76,
           decoration: BoxDecoration(
             color: cardColor,
-            borderRadius: BorderRadius.circular(22),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(isDark ? 0.3 : 0.06),
-                blurRadius: 20,
-                offset: const Offset(0, 4),
-              ),
-            ],
+            borderRadius: BorderRadius.circular(24),
+            border: Border.all(color: borderColor),
           ),
-          child: Icon(
-            Icons.restaurant_outlined,
-            size: 30,
-            color: subtitleColor,
+          child: Center(
+            child: Container(
+              width: 48,
+              height: 48,
+              decoration: BoxDecoration(
+                color: isDark
+                    ? const Color(0xFF24352A)
+                    : const Color(0xFFE2F1E7),
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: const Icon(
+                Icons.restaurant_outlined,
+                size: 26,
+                color: accentColor,
+              ),
+            ),
           ),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 18),
         Text(
           strings.noMealsHistory,
           style: GoogleFonts.beVietnamPro(
-            fontSize: 17,
-            fontWeight: FontWeight.w700,
+            fontSize: 18,
+            fontWeight: FontWeight.w800,
             color: primaryTextColor,
           ),
         ),
-        const SizedBox(height: 6),
+        const SizedBox(height: 8),
         Text(
           strings.scanFirstMealPrompt,
           textAlign: TextAlign.center,
@@ -779,34 +735,37 @@ class _EmptyState extends StatelessWidget {
             height: 1.5,
           ),
         ),
-        const SizedBox(height: 22),
-        GestureDetector(
-          onTap: onScan,
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 12),
-            decoration: BoxDecoration(
-              color: const Color(0xFFFF9F0A),
-              borderRadius: BorderRadius.circular(14),
+        const SizedBox(height: 24),
+        ElevatedButton(
+          onPressed: onScan,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: accentColor,
+            foregroundColor: Colors.white,
+            elevation: 0,
+            minimumSize: const Size(0, 48),
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 13),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
             ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(
-                  Icons.camera_alt_rounded,
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(
+                Icons.camera_alt_rounded,
+                color: Colors.white,
+                size: 18,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                strings.scanFirstMealButton,
+                style: GoogleFonts.beVietnamPro(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w700,
                   color: Colors.white,
-                  size: 16,
                 ),
-                const SizedBox(width: 8),
-                Text(
-                  strings.scanFirstMealButton,
-                  style: GoogleFonts.beVietnamPro(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ],

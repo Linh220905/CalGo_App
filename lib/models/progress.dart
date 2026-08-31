@@ -46,6 +46,29 @@ class ProgressPhoto {
   );
 }
 
+class WeightChangeItem {
+  final int periodDays;
+  final double diffKg;
+  final String label;
+  final List<double> sparkline;
+
+  const WeightChangeItem({
+    required this.periodDays,
+    required this.diffKg,
+    required this.label,
+    required this.sparkline,
+  });
+
+  factory WeightChangeItem.fromJson(Map<String, dynamic> json) => WeightChangeItem(
+    periodDays: (json['period_days'] as num?)?.toInt() ?? 7,
+    diffKg: (json['diff_kg'] as num?)?.toDouble() ?? 0.0,
+    label: json['label']?.toString() ?? '',
+    sparkline: (json['sparkline'] as List? ?? [])
+        .map((e) => (e as num).toDouble())
+        .toList(),
+  );
+}
+
 class ProgressStats {
   final int rangeDays;
   final double? currentWeightKg;
@@ -56,6 +79,7 @@ class ProgressStats {
   final double? bmi;
   final String? bmiCategory;
   final List<WeightPoint> weightHistory;
+  final List<WeightChangeItem> weightChanges;
   final List<ProgressPhoto> progressPhotos;
 
   const ProgressStats({
@@ -68,11 +92,13 @@ class ProgressStats {
     this.bmi,
     this.bmiCategory,
     this.weightHistory = const [],
+    this.weightChanges = const [],
     this.progressPhotos = const [],
   });
 
   factory ProgressStats.fromJson(Map<String, dynamic> json) {
     final weights = json['weight_history'];
+    final changes = json['weight_changes'];
     final photos = json['progress_photos'];
     return ProgressStats(
       rangeDays: (json['range_days'] as num?)?.toInt() ?? 90,
@@ -86,6 +112,10 @@ class ProgressStats {
       weightHistory: (weights is List ? weights : const <dynamic>[])
           .whereType<Map>()
           .map((item) => WeightPoint.fromJson(Map<String, dynamic>.from(item)))
+          .toList(),
+      weightChanges: (changes is List ? changes : const <dynamic>[])
+          .whereType<Map>()
+          .map((item) => WeightChangeItem.fromJson(Map<String, dynamic>.from(item)))
           .toList(),
       progressPhotos: (photos is List ? photos : const <dynamic>[])
           .whereType<Map>()
