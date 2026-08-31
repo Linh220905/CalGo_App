@@ -41,14 +41,13 @@ TextStyle _f(
   Color color = _kInk,
   double? height,
   double? letterSpacing,
-}) =>
-    GoogleFonts.plusJakartaSans(
-      fontSize: size,
-      fontWeight: weight,
-      color: color,
-      height: height,
-      letterSpacing: letterSpacing,
-    );
+}) => GoogleFonts.plusJakartaSans(
+  fontSize: size,
+  fontWeight: weight,
+  color: color,
+  height: height,
+  letterSpacing: letterSpacing,
+);
 
 enum _Plan { weekly, annual, monthly }
 
@@ -131,10 +130,12 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
         if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(paymentCopyForPlatform(
-              'Google Play đã nhận giao dịch nhưng máy chủ chưa xác minh được. '
-              'Vui lòng thử Khôi phục giao dịch sau khi cập nhật máy chủ.',
-            )),
+            content: Text(
+              paymentCopyForPlatform(
+                'Google Play đã nhận giao dịch nhưng máy chủ chưa xác minh được. '
+                'Vui lòng thử Khôi phục giao dịch sau khi cập nhật máy chủ.',
+              ),
+            ),
             backgroundColor: Colors.redAccent,
           ),
         );
@@ -143,8 +144,9 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
     if (_handledPremiumSuccess) return;
     final plan =
         _payment?.activePremiumOffer?.plan ?? _toPremiumPlan(_selectedPlan);
-    if (_payment
-            ?.purchaseStates[PaymentProvider.productIdForPremiumPlan(plan)] !=
+    if (_payment?.purchaseStates[PaymentProvider.productIdForPremiumPlan(
+          plan,
+        )] !=
         PurchaseState.purchased) {
       return;
     }
@@ -162,25 +164,36 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
     final offer = payment.activePremiumOffer;
     final analytics = context.read<AnalyticsService?>();
     if (analytics != null && verification?['is_restored'] != true) {
-      unawaited(analytics.trackPremiumPurchased(
-        source: widget.source,
-        productId: verification?['product_id'] as String? ??
-            offer?.product.id ??
-            PaymentProvider.productIdForPremiumPlan(
-              offer?.plan ?? _toPremiumPlan(_selectedPlan),
-            ),
-        plan: (offer?.plan ?? _toPremiumPlan(_selectedPlan)).name,
-        price: offer?.product.rawPrice,
-        currency: offer?.product.currencyCode,
-      ));
+      unawaited(
+        analytics.trackPremiumPurchased(
+          source: widget.source,
+          productId:
+              verification?['product_id'] as String? ??
+              offer?.product.id ??
+              PaymentProvider.productIdForPremiumPlan(
+                offer?.plan ?? _toPremiumPlan(_selectedPlan),
+              ),
+          plan: (offer?.plan ?? _toPremiumPlan(_selectedPlan)).name,
+          price: offer?.product.rawPrice,
+          currency: offer?.product.currencyCode,
+        ),
+      );
     }
     final isTrial = verification?['is_trial'] == true;
     final verifiedTrialDays = (verification?['trial_days'] as num?)?.toInt();
     final trialDays =
         verifiedTrialDays ?? payment.activePremiumOffer?.trialDays ?? 0;
+    final rawTrialEnd = verification?['trial_end'];
+    final trialEnd = rawTrialEnd is DateTime
+        ? rawTrialEnd
+        : rawTrialEnd is String
+        ? DateTime.tryParse(rawTrialEnd)
+        : null;
     if (isTrial && trialDays > 0 && !_trialNotificationScheduled) {
-      await TrialNotificationService.instance
-          .scheduleTrialSequence(trialDays: trialDays);
+      await TrialNotificationService.instance.scheduleTrialSequence(
+        trialDays: trialDays,
+        trialEnd: trialEnd,
+      );
       _trialNotificationScheduled = true;
     }
 
@@ -269,8 +282,11 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
               ),
               child: Text(
                 '🔥 ƯU ĐÃI DÀNH RIÊNG',
-                style:
-                    _f(10.5, weight: FontWeight.w800, color: Colors.redAccent),
+                style: _f(
+                  10.5,
+                  weight: FontWeight.w800,
+                  color: Colors.redAccent,
+                ),
               ),
             ),
             const SizedBox(height: 12),
@@ -330,10 +346,7 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
   }
 
   Future<void> _triggerPostPurchaseQuiz() {
-    return PostPremiumQuizDialog.show(
-      context,
-      onCompleted: () async {},
-    );
+    return PostPremiumQuizDialog.show(context, onCompleted: () async {});
   }
 
   Future<bool> _ensureAuthenticated() async {
@@ -385,7 +398,8 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
               if (sheetContext.mounted) Navigator.pop(sheetContext, true);
             }
 
-            final showApple = defaultTargetPlatform == TargetPlatform.iOS ||
+            final showApple =
+                defaultTargetPlatform == TargetPlatform.iOS ||
                 defaultTargetPlatform == TargetPlatform.macOS;
             return SafeArea(
               child: Padding(
@@ -465,7 +479,8 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
 
     if (!await _ensureAuthenticated() || !mounted) return;
     final plan = _toPremiumPlan(_selectedPlan);
-    final preferTrial = selectedOffer?.hasFreeTrial ??
+    final preferTrial =
+        selectedOffer?.hasFreeTrial ??
         (_enableFreeTrial && payment.hasTrialOffer(plan));
     final started = await payment.buyPremium(
       plan,
@@ -482,45 +497,36 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
     } else {
       final errorMsg = payment.error ?? s.premiumPaymentFailed;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(errorMsg),
-          backgroundColor: Colors.redAccent,
-        ),
+        SnackBar(content: Text(errorMsg), backgroundColor: Colors.redAccent),
       );
     }
   }
 
   PremiumPlan _toPremiumPlan(_Plan plan) => switch (plan) {
-        _Plan.weekly => PremiumPlan.weekly,
-        _Plan.monthly => PremiumPlan.monthly,
-        _Plan.annual => PremiumPlan.annual,
-      };
+    _Plan.weekly => PremiumPlan.weekly,
+    _Plan.monthly => PremiumPlan.monthly,
+    _Plan.annual => PremiumPlan.annual,
+  };
 
-  /// Known trial days per plan (business configuration).
-  /// Play Store is the authoritative source; these are the fallback when
-  /// billing hasn't loaded yet or the trial offer hasn't been returned.
+  /// Known trial days per plan for the QA/testing build only.
   static int _knownTrialDays(_Plan plan) => switch (plan) {
-        _Plan.weekly => 0, // Weekly never has a trial
-        _Plan.monthly => 3,
-        _Plan.annual => 7,
-      };
+    _Plan.weekly => 0, // Weekly never has a trial
+    _Plan.monthly => 3,
+    _Plan.annual => 7,
+  };
 
   int _currentTrialDays(PaymentProvider payment) {
     if (!_enableFreeTrial) return 0;
     if (AppBuildConfig.isTesting) {
       return _knownTrialDays(_selectedPlan);
     }
-    // Play Store is authoritative — use its value when available.
+    // The Store is authoritative. Never promise a trial until the platform
+    // product metadata confirms that the user can actually redeem it.
     final storeDays = payment
-        .premiumOffer(
-          _toPremiumPlan(_selectedPlan),
-          preferFreeTrial: true,
-        )
+        .premiumOffer(_toPremiumPlan(_selectedPlan), preferFreeTrial: true)
         ?.trialDays;
     if (storeDays != null && storeDays > 0) return storeDays;
-    // Fallback to known configuration so the UI never shows "0 days"
-    // while Billing is still initializing.
-    return _knownTrialDays(_selectedPlan);
+    return 0;
   }
 
   String _getButtonLabel(
@@ -543,18 +549,20 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
     const testing = AppBuildConfig.isTesting;
     final s = context.watch<AppSettingsProvider>().strings;
     final payment = context.watch<PaymentProvider>();
-    final premiumState = payment.purchaseStates[
-        PaymentProvider.productIdForPremiumPlan(_toPremiumPlan(_selectedPlan))];
-    final buying = _finishingPurchase ||
+    final premiumState =
+        payment.purchaseStates[PaymentProvider.productIdForPremiumPlan(
+          _toPremiumPlan(_selectedPlan),
+        )];
+    final buying =
+        _finishingPurchase ||
         payment.purchaseInProgress ||
         premiumState == PurchaseState.loading ||
         premiumState == PurchaseState.pending ||
         premiumState == PurchaseState.verifying;
     final activated = testing || premiumState == PurchaseState.purchased;
     final trialDays = _currentTrialDays(payment);
-    // Weekly plan never has a trial. Monthly and annual always do — show
-    // the toggle even before Play Store billing has confirmed the offer
-    // (it falls back to known trial days above).
+    // Weekly plan never has a trial. Monthly and annual show the toggle only
+    // when the Store has confirmed an eligible introductory offer.
     final trialAvailable = testing || _selectedPlan != _Plan.weekly;
     final trialEnabled = _enableFreeTrial && trialAvailable && trialDays > 0;
 
@@ -607,46 +615,47 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
                     PremiumButton(
                       label: widget.onboardingMode
                           ? testing
-                              ? s.continueFreePremium
-                              : activated
-                                  ? _quizCompleted
+                                ? s.continueFreePremium
+                                : activated
+                                ? _quizCompleted
                                       ? 'Hoàn tất thiết lập'
                                       : s.premiumActivated
-                                  : buying
-                                      ? s.processingShort
-                                      : _getButtonLabel(
-                                          s.continueLabel,
-                                          s.continueFreePremium,
-                                          payment,
-                                        )
+                                : buying
+                                ? s.processingShort
+                                : _getButtonLabel(
+                                    s.continueLabel,
+                                    s.continueFreePremium,
+                                    payment,
+                                  )
                           : testing
-                              ? s.premiumFreeUnlocked
-                              : activated
-                                  ? s.premiumActivated
-                                  : buying
-                                      ? s.processingShort
-                                      : _getButtonLabel(
-                                          s.subscribePremium,
-                                          s.premiumFreeUnlocked,
-                                          payment,
-                                        ),
+                          ? s.premiumFreeUnlocked
+                          : activated
+                          ? s.premiumActivated
+                          : buying
+                          ? s.processingShort
+                          : _getButtonLabel(
+                              s.subscribePremium,
+                              s.premiumFreeUnlocked,
+                              payment,
+                            ),
                       loading: buying,
                       onPressed: buying
                           ? null
                           : activated && widget.onboardingMode
-                              ? _handlePremiumSuccess
-                              : activated
-                                  ? null
-                                  : () => _handlePrimaryAction(),
+                          ? _handlePremiumSuccess
+                          : activated
+                          ? null
+                          : () => _handlePrimaryAction(),
                     ),
                     const SizedBox(height: 10),
                     Text(
                       testing
                           ? s.premiumTestingNote
                           : trialEnabled
-                              ? paymentCopyForPlatform(
-                                  'Không tính phí hôm nay. Hủy bất kỳ lúc nào trong cài đặt App Store / Google Play.')
-                              : s.premiumAutoRenewNote,
+                          ? paymentCopyForPlatform(
+                              'Không tính phí hôm nay. Hủy bất kỳ lúc nào trong cài đặt App Store / Google Play.',
+                            )
+                          : s.premiumAutoRenewNote,
                       textAlign: TextAlign.center,
                       style: _f(11, color: _kMuted, weight: FontWeight.w500),
                     ),
@@ -691,7 +700,10 @@ class _HeroSection extends StatelessWidget {
                   color: _kSurface,
                   child: const Center(
                     child: _VecIcon(
-                        type: _IconType.image, color: _kMuted, size: 30),
+                      type: _IconType.image,
+                      color: _kMuted,
+                      size: 30,
+                    ),
                   ),
                 ),
                 frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
@@ -710,7 +722,8 @@ class _HeroSection extends StatelessWidget {
                       Colors.black.withOpacity(0.0), // Start fully transparent
                       Colors.black.withOpacity(0.15), // Darken a bit
                       Colors.white.withOpacity(
-                          0.0), // Start white fade from transparent
+                        0.0,
+                      ), // Start white fade from transparent
                       Colors.white.withOpacity(0.6),
                       Colors.white.withOpacity(0.9),
                       Colors.white, // End fully white
@@ -721,7 +734,7 @@ class _HeroSection extends StatelessWidget {
                       0.4,
                       0.7,
                       0.85,
-                      1.0
+                      1.0,
                     ], // More steps for smoother transition
                   ),
                 ),
@@ -745,9 +758,10 @@ class _HeroSection extends StatelessWidget {
                         ),
                         child: const Center(
                           child: _VecIcon(
-                              type: _IconType.close,
-                              color: Colors.white,
-                              size: 12),
+                            type: _IconType.close,
+                            color: Colors.white,
+                            size: 12,
+                          ),
                         ),
                       ),
                     ),
@@ -781,17 +795,25 @@ class _Headline extends StatelessWidget {
             alignment: WrapAlignment.center,
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
-              Text(s.premiumHeadlineBefore,
-                  style: _f(28, weight: FontWeight.w800, letterSpacing: -0.4)),
+              Text(
+                s.premiumHeadlineBefore,
+                style: _f(28, weight: FontWeight.w800, letterSpacing: -0.4),
+              ),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                 decoration: BoxDecoration(
-                    color: _kAccent, borderRadius: BorderRadius.circular(6)),
-                child: Text(s.todayLower,
-                    style: _f(28,
-                        weight: FontWeight.w800,
-                        color: Colors.white,
-                        letterSpacing: -0.4)),
+                  color: _kAccent,
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                child: Text(
+                  s.todayLower,
+                  style: _f(
+                    28,
+                    weight: FontWeight.w800,
+                    color: Colors.white,
+                    letterSpacing: -0.4,
+                  ),
+                ),
               ),
             ],
           ),
@@ -826,8 +848,12 @@ class _ExperienceRow extends StatelessWidget {
           width: 82,
           child: Text(
             s.yourExperience,
-            style: _f(16,
-                weight: FontWeight.w800, height: 1.15, letterSpacing: -0.3),
+            style: _f(
+              16,
+              weight: FontWeight.w800,
+              height: 1.15,
+              letterSpacing: -0.3,
+            ),
           ),
         ),
         const SizedBox(width: 6),
@@ -847,20 +873,26 @@ class _ExperienceRow extends StatelessWidget {
                           width: 16,
                           height: 16,
                           decoration: const BoxDecoration(
-                              color: _kAccent, shape: BoxShape.circle),
+                            color: _kAccent,
+                            shape: BoxShape.circle,
+                          ),
                           child: const Center(
                             child: _VecIcon(
-                                type: _IconType.check,
-                                color: Colors.white,
-                                size: 8),
+                              type: _IconType.check,
+                              color: Colors.white,
+                              size: 8,
+                            ),
                           ),
                         ),
                         const SizedBox(width: 12),
                         Expanded(
                           child: Text(
                             t,
-                            style:
-                                _f(11.5, weight: FontWeight.w600, height: 1.25),
+                            style: _f(
+                              11.5,
+                              weight: FontWeight.w600,
+                              height: 1.25,
+                            ),
                           ),
                         ),
                       ],
@@ -964,7 +996,8 @@ class _PricingRow extends StatelessWidget {
             weeklyLabel: weeklyOf(annualOffer, _Plan.annual),
             selected: selectedPlan == _Plan.annual,
             highlighted: true,
-            badge: enableFreeTrial &&
+            badge:
+                enableFreeTrial &&
                     (annualOffer?.hasFreeTrial == true || testing)
                 ? 'THỬ ${testing ? 7 : annualOffer!.trialDays} NGÀY \$0'
                 : s.popularMost,
@@ -1021,8 +1054,11 @@ class _FreeTrialToggleRow extends StatelessWidget {
               color: enabled ? _kAccent : _kMuted,
               shape: BoxShape.circle,
             ),
-            child:
-                const Icon(Icons.bolt_rounded, size: 16, color: Colors.white),
+            child: const Icon(
+              Icons.bolt_rounded,
+              size: 16,
+              color: Colors.white,
+            ),
           ),
           const SizedBox(width: 10),
           Expanded(
@@ -1125,11 +1161,7 @@ class _VisualPaymentTimeline extends StatelessWidget {
               shape: BoxShape.circle,
               border: Border.all(color: active ? _kAccent : _kBorder),
             ),
-            child: Icon(
-              icon,
-              size: 14,
-              color: active ? Colors.white : _kMuted,
-            ),
+            child: Icon(icon, size: 14, color: active ? Colors.white : _kMuted),
           ),
           const SizedBox(height: 4),
           Text(
@@ -1219,8 +1251,12 @@ class _PriceCard extends StatelessWidget {
                   note,
                   textAlign: TextAlign.center,
                   maxLines: 2,
-                  style: _f(9.5,
-                      color: _kMuted, height: 1.25, weight: FontWeight.w500),
+                  style: _f(
+                    9.5,
+                    color: _kMuted,
+                    height: 1.25,
+                    weight: FontWeight.w500,
+                  ),
                 ),
                 if (weeklyLabel.isNotEmpty) ...[
                   const SizedBox(height: 4),
@@ -1242,10 +1278,13 @@ class _PriceCard extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
-                    color: _kAccent, borderRadius: BorderRadius.circular(20)),
-                child: Text(badge!,
-                    style:
-                        _f(8.5, weight: FontWeight.w700, color: Colors.white)),
+                  color: _kAccent,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Text(
+                  badge!,
+                  style: _f(8.5, weight: FontWeight.w700, color: Colors.white),
+                ),
               ),
             ),
         ],
@@ -1275,10 +1314,11 @@ class _FooterLinks extends StatelessWidget {
     final settings = context.watch<AppSettingsProvider>();
     final s = settings.strings;
 
-    final style = _f(10, color: _kMuted, weight: FontWeight.w500).copyWith(
-      decoration: TextDecoration.underline,
-      decorationColor: _kMuted,
-    );
+    final style = _f(
+      10,
+      color: _kMuted,
+      weight: FontWeight.w500,
+    ).copyWith(decoration: TextDecoration.underline, decorationColor: _kMuted);
     return Wrap(
       alignment: WrapAlignment.center,
       spacing: 6,
@@ -1303,15 +1343,17 @@ class _FooterLinks extends StatelessWidget {
                           ? paymentCopyForPlatform(s.restoreChecked)
                           : paymentCopyForPlatform(s.restoreFailed),
                     ),
-                    backgroundColor:
-                        restored ? const Color(0xFF111111) : Colors.redAccent,
+                    backgroundColor: restored
+                        ? const Color(0xFF111111)
+                        : Colors.redAccent,
                   ),
                 );
               } catch (e) {
                 messenger.showSnackBar(
                   SnackBar(
                     content: Text(
-                        paymentCopyForPlatform(s.restoreException(e.toString()))),
+                      paymentCopyForPlatform(s.restoreException(e.toString())),
+                    ),
                   ),
                 );
               }

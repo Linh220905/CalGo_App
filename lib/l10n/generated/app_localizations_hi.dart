@@ -18,6 +18,30 @@ class AppLocalizationsHi extends AppLocalizations {
   String get tabSettings => 'सेटिंग्स';
 
   @override
+  String get analysisEyebrow => 'विश्लेषण';
+
+  @override
+  String get progressTitle => 'प्रगति';
+
+  @override
+  String get settingsEyebrow => 'सेटिंग्स';
+
+  @override
+  String get profileHeading => 'प्रोफ़ाइल';
+
+  @override
+  String get accountSection => 'खाता';
+
+  @override
+  String get preferencesSection => 'प्राथमिकताएँ';
+
+  @override
+  String get trackingSection => 'लक्ष्य और ट्रैकिंग';
+
+  @override
+  String get supportSection => 'सहायता';
+
+  @override
   String get today => 'आज';
 
   @override

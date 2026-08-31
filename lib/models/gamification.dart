@@ -22,25 +22,27 @@ class GamificationStatus {
   });
 
   factory GamificationStatus.empty() => const GamificationStatus(
-        exp: 0,
-        level: 1,
-        expToNextLevel: 100,
-        expInCurrentLevel: 0,
-        streakDays: 0,
-        totalScans: 0,
-        scansToday: 0,
-        levelProgress: 0.0,
-      );
+    exp: 0,
+    level: 1,
+    expToNextLevel: 100,
+    expInCurrentLevel: 0,
+    streakDays: 0,
+    totalScans: 0,
+    scansToday: 0,
+    levelProgress: 0.0,
+  );
 
   factory GamificationStatus.fromJson(Map<String, dynamic> json) {
     return GamificationStatus(
       exp: (json['exp'] as num?)?.toInt() ?? 0,
       level: (json['level'] as num?)?.toInt() ?? 1,
-      expToNextLevel: (json['exp_to_next_level'] as num?)?.toInt() ??
+      expToNextLevel:
+          (json['exp_to_next_level'] as num?)?.toInt() ??
           (json['next_level_exp'] as num?)?.toInt() ??
           100,
       expInCurrentLevel: (json['exp_in_current_level'] as num?)?.toInt() ?? 0,
-      streakDays: (json['streak_days'] as num?)?.toInt() ??
+      streakDays:
+          (json['streak_days'] as num?)?.toInt() ??
           (json['streak'] as num?)?.toInt() ??
           0,
       totalScans: (json['total_scans'] as num?)?.toInt() ?? 0,
@@ -200,14 +202,22 @@ class WeeklyStats {
         .map((p) => DayCaloriePoint.fromJson(p))
         .toList();
     return WeeklyStats(
-      avgCalo: (json['avg_calo'] as num?)?.toDouble() ??
+      avgCalo:
+          (json['avg_calo'] as num?)?.toDouble() ??
           (json['avg_calo_daily'] as num?)?.toDouble() ??
           0,
-      avgProtein: (json['avg_protein'] as num?)?.toDouble() ??
+      avgProtein:
+          (json['avg_protein'] as num?)?.toDouble() ??
           (json['avg_protein_daily'] as num?)?.toDouble() ??
           0,
-      avgCarb: (json['avg_carb'] as num?)?.toDouble() ?? 0,
-      avgFat: (json['avg_fat'] as num?)?.toDouble() ?? 0,
+      avgCarb:
+          (json['avg_carb'] as num?)?.toDouble() ??
+          (json['avg_carb_daily'] as num?)?.toDouble() ??
+          0,
+      avgFat:
+          (json['avg_fat'] as num?)?.toDouble() ??
+          (json['avg_fat_daily'] as num?)?.toDouble() ??
+          0,
       daysLogged: (json['days_logged'] as num?)?.toInt() ?? 0,
       streakDays: (json['streak_days'] as num?)?.toInt() ?? 0,
       dailyPoints: points,
@@ -220,12 +230,18 @@ class DayCaloriePoint {
   final int calo;
   final int target;
   final bool hasLog;
+  final double protein;
+  final double carbs;
+  final double fat;
 
   const DayCaloriePoint({
     required this.dateKey,
     required this.calo,
     required this.target,
     required this.hasLog,
+    this.protein = 0,
+    this.carbs = 0,
+    this.fat = 0,
   });
 
   double get pct => target > 0 ? (calo / target).clamp(0.0, 1.4) : 0.0;
@@ -233,11 +249,18 @@ class DayCaloriePoint {
   factory DayCaloriePoint.fromJson(Map<String, dynamic> json) {
     return DayCaloriePoint(
       dateKey: (json['date_key'] ?? json['date'] ?? '').toString(),
-      calo: (json['calo'] as num?)?.toInt() ??
+      calo:
+          (json['calo'] as num?)?.toInt() ??
           (json['calories'] as num?)?.toInt() ??
           0,
       target: (json['target'] as num?)?.toInt() ?? 2000,
       hasLog: json['has_log'] as bool? ?? json['logged'] as bool? ?? false,
+      protein: (json['protein'] as num?)?.toDouble() ?? 0,
+      carbs:
+          (json['carbs'] as num?)?.toDouble() ??
+          (json['carb'] as num?)?.toDouble() ??
+          0,
+      fat: (json['fat'] as num?)?.toDouble() ?? 0,
     );
   }
 }
@@ -284,10 +307,10 @@ class DayLogPoint {
   });
 
   factory DayLogPoint.fromJson(Map<String, dynamic> json) => DayLogPoint(
-        dateKey: (json['date'] ?? json['date_key'] ?? '').toString(),
-        logged: json['logged'] as bool? ?? json['has_log'] as bool? ?? false,
-        scanCount: (json['scan_count'] as num?)?.toInt() ?? 0,
-      );
+    dateKey: (json['date'] ?? json['date_key'] ?? '').toString(),
+    logged: json['logged'] as bool? ?? json['has_log'] as bool? ?? false,
+    scanCount: (json['scan_count'] as num?)?.toInt() ?? 0,
+  );
 }
 
 class GoalForecast {
@@ -304,9 +327,9 @@ class GoalForecast {
   });
 
   factory GoalForecast.fromJson(Map<String, dynamic> json) => GoalForecast(
-        currentWeight: (json['current_weight_kg'] as num?)?.toDouble() ?? 0,
-        targetWeight: (json['target_weight_kg'] as num?)?.toDouble() ?? 0,
-        estimatedWeeks: (json['estimated_weeks'] as num?)?.toDouble() ?? 0,
-        display: (json['estimated_weeks_display'] ?? '').toString(),
-      );
+    currentWeight: (json['current_weight_kg'] as num?)?.toDouble() ?? 0,
+    targetWeight: (json['target_weight_kg'] as num?)?.toDouble() ?? 0,
+    estimatedWeeks: (json['estimated_weeks'] as num?)?.toDouble() ?? 0,
+    display: (json['estimated_weeks_display'] ?? '').toString(),
+  );
 }

@@ -7,6 +7,7 @@ import '../../models/history_item.dart';
 import '../../providers/app_settings_provider.dart';
 import '../../providers/auth_provider.dart';
 import '../../services/scan_service.dart';
+import '../../utils/date_time_utils.dart';
 import '../../utils/localized_date_utils.dart';
 import 'widgets/month_calendar_grid.dart';
 import 'widgets/day_detail_bottom_sheet.dart';
@@ -61,9 +62,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
       return true;
     } catch (_) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(strings.cannotDeleteMeal)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(strings.cannotDeleteMeal)));
       }
       return false;
     }
@@ -71,14 +72,16 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
   int _calculateStreak() {
     final dates = _items
-        .map(
-            (i) => i.createdAt.length >= 10 ? i.createdAt.substring(0, 10) : '')
-        .where((s) => s.isNotEmpty)
+        .map((i) => parseApiDateTime(i.createdAt))
+        .whereType<DateTime>()
+        .map(_formatYMD)
         .toSet();
-    final today = _formatYMD(DateTime.now());
-    if (!dates.contains(today)) return 0;
-    int count = 0;
     var d = DateTime.now();
+    if (!dates.contains(_formatYMD(d))) {
+      d = d.subtract(const Duration(days: 1));
+    }
+    if (!dates.contains(_formatYMD(d))) return 0;
+    int count = 0;
     while (true) {
       final key = _formatYMD(d);
       if (!dates.contains(key)) break;
@@ -97,8 +100,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
     final bgColor = isDark ? const Color(0xFF0E0E10) : const Color(0xFFF7F7F8);
     final cardColor = isDark ? const Color(0xFF1C1C1E) : Colors.white;
-    final subtitleColor =
-        isDark ? const Color(0xFF636366) : const Color(0xFF8E8E93);
+    final subtitleColor = isDark
+        ? const Color(0xFF636366)
+        : const Color(0xFF8E8E93);
     final primaryTextColor = isDark ? Colors.white : const Color(0xFF1C1C1E);
 
     if (_loading) {
@@ -136,7 +140,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
     final totalMeals = _items.length;
     final totalDays = _items
         .map(
-            (i) => i.createdAt.length >= 10 ? i.createdAt.substring(0, 10) : '')
+          (i) => i.createdAt.length >= 10 ? i.createdAt.substring(0, 10) : '',
+        )
         .where((s) => s.isNotEmpty)
         .toSet()
         .length;
@@ -225,7 +230,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       ),
                       const SizedBox(width: 12),
                       _AvatarButton(
-                          user: user, isDark: isDark, cardColor: cardColor),
+                        user: user,
+                        isDark: isDark,
+                        cardColor: cardColor,
+                      ),
                     ],
                   ),
                 ),
@@ -268,66 +276,63 @@ class _HistoryScreenState extends State<HistoryScreen> {
               // ── Monthly Calendar Grids ──────────────────
               if (_items.isNotEmpty)
                 SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, i) {
-                      final mKey = sortedMonthKeys[i];
-                      final parts = mKey.split('-');
-                      final year = int.parse(parts[0]);
-                      final month = int.parse(parts[1]);
-                      final label = '${localizedMonth(
-                        DateTime(year, month),
-                        settings.languageCode,
-                      )} $year';
-                      final dayMap = monthsMap[mKey]!;
+                  delegate: SliverChildBuilderDelegate((context, i) {
+                    final mKey = sortedMonthKeys[i];
+                    final parts = mKey.split('-');
+                    final year = int.parse(parts[0]);
+                    final month = int.parse(parts[1]);
+                    final label =
+                        '${localizedMonth(DateTime(year, month), settings.languageCode)} $year';
+                    final dayMap = monthsMap[mKey]!;
 
-                      int monthTotal = 0;
-                      final daysList = <DayGroupData>[];
-                      dayMap.forEach((dayNum, items) {
-                        monthTotal += items.length;
-                        final fDate = _formatYMD(DateTime(year, month, dayNum));
-                        daysList.add(DayGroupData(
+                    int monthTotal = 0;
+                    final daysList = <DayGroupData>[];
+                    dayMap.forEach((dayNum, items) {
+                      monthTotal += items.length;
+                      final fDate = _formatYMD(DateTime(year, month, dayNum));
+                      daysList.add(
+                        DayGroupData(
                           date: dayNum,
                           fullDate: fDate,
                           items: items,
                           isToday: fDate == todayKey,
-                        ));
-                      });
-
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: MonthCalendarGrid(
-                          monthLabel: label,
-                          totalMeals: monthTotal,
-                          year: year,
-                          month: month,
-                          days: daysList,
-                          isDark: isDark,
-                          cardColor: cardColor,
-                          subtitleColor: subtitleColor,
-                          primaryTextColor: primaryTextColor,
-                          onSelectDay: (dayData) {
-                            showModalBottomSheet(
-                              context: context,
-                              isScrollControlled: true,
-                              backgroundColor: Colors.transparent,
-                              builder: (_) => DayDetailBottomSheet(
-                                dateLabel: dayData.fullDate,
-                                items: dayData.items,
-                                onDeleteMeal: (id) async {
-                                  final deleted = await _deleteItem(id);
-                                  if (deleted && context.mounted) {
-                                    Navigator.of(context).pop();
-                                  }
-                                },
-                              ),
-                            );
-                          },
-                          onSelectTodayEmpty: () => context.push('/scan'),
                         ),
                       );
-                    },
-                    childCount: sortedMonthKeys.length,
-                  ),
+                    });
+
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: MonthCalendarGrid(
+                        monthLabel: label,
+                        totalMeals: monthTotal,
+                        year: year,
+                        month: month,
+                        days: daysList,
+                        isDark: isDark,
+                        cardColor: cardColor,
+                        subtitleColor: subtitleColor,
+                        primaryTextColor: primaryTextColor,
+                        onSelectDay: (dayData) {
+                          showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            backgroundColor: Colors.transparent,
+                            builder: (_) => DayDetailBottomSheet(
+                              dateLabel: dayData.fullDate,
+                              items: dayData.items,
+                              onDeleteMeal: (id) async {
+                                final deleted = await _deleteItem(id);
+                                if (deleted && context.mounted) {
+                                  Navigator.of(context).pop();
+                                }
+                              },
+                            ),
+                          );
+                        },
+                        onSelectTodayEmpty: () => context.push('/scan'),
+                      ),
+                    );
+                  }, childCount: sortedMonthKeys.length),
                 ),
 
               const SliverToBoxAdapter(child: SizedBox(height: 40)),
@@ -391,50 +396,50 @@ class _StatsGrid extends StatelessWidget {
             crossAxisSpacing: 2,
             mainAxisSpacing: 2,
             children: [
-          _StatCell(
-            value: '$totalMeals',
-            label: strings.mealsCountLabel,
-            icon: _MealIcon(isDark: isDark),
-            accentColor: const Color(0xFFFF9F0A),
-            isDark: isDark,
-            cardColor: cardColor,
-            subtitleColor: subtitleColor,
-            primaryTextColor: primaryTextColor,
-            isTopLeft: true,
-          ),
-          _StatCell(
-            value: '$streak',
-            label: strings.streakDaysLabel,
-            icon: _FireIcon(isDark: isDark),
-            accentColor: const Color(0xFFFF6B35),
-            isDark: isDark,
-            cardColor: cardColor,
-            subtitleColor: subtitleColor,
-            primaryTextColor: primaryTextColor,
-            isTopRight: true,
-          ),
-          _StatCell(
-            value: '$avgCalo',
-            label: strings.kcalPerDay,
-            icon: _CalIcon(isDark: isDark),
-            accentColor: const Color(0xFF0A84FF),
-            isDark: isDark,
-            cardColor: cardColor,
-            subtitleColor: subtitleColor,
-            primaryTextColor: primaryTextColor,
-            isBottomLeft: true,
-          ),
-          _StatCell(
-            value: '${avgProtein}g',
-            label: strings.proteinPerDay,
-            icon: _ProteinIcon(isDark: isDark),
-            accentColor: const Color(0xFF30D158),
-            isDark: isDark,
-            cardColor: cardColor,
-            subtitleColor: subtitleColor,
-            primaryTextColor: primaryTextColor,
-            isBottomRight: true,
-          ),
+              _StatCell(
+                value: '$totalMeals',
+                label: strings.mealsCountLabel,
+                icon: _MealIcon(isDark: isDark),
+                accentColor: const Color(0xFFFF9F0A),
+                isDark: isDark,
+                cardColor: cardColor,
+                subtitleColor: subtitleColor,
+                primaryTextColor: primaryTextColor,
+                isTopLeft: true,
+              ),
+              _StatCell(
+                value: '$streak',
+                label: strings.streakDaysLabel,
+                icon: _FireIcon(isDark: isDark),
+                accentColor: const Color(0xFFFF6B35),
+                isDark: isDark,
+                cardColor: cardColor,
+                subtitleColor: subtitleColor,
+                primaryTextColor: primaryTextColor,
+                isTopRight: true,
+              ),
+              _StatCell(
+                value: '$avgCalo',
+                label: strings.kcalPerDay,
+                icon: _CalIcon(isDark: isDark),
+                accentColor: const Color(0xFF0A84FF),
+                isDark: isDark,
+                cardColor: cardColor,
+                subtitleColor: subtitleColor,
+                primaryTextColor: primaryTextColor,
+                isBottomLeft: true,
+              ),
+              _StatCell(
+                value: '${avgProtein}g',
+                label: strings.proteinPerDay,
+                icon: _ProteinIcon(isDark: isDark),
+                accentColor: const Color(0xFF30D158),
+                isDark: isDark,
+                cardColor: cardColor,
+                subtitleColor: subtitleColor,
+                primaryTextColor: primaryTextColor,
+                isBottomRight: true,
+              ),
             ],
           ),
         );
@@ -612,11 +617,7 @@ class _CalIcon extends StatelessWidget {
         color: const Color(0xFF0A84FF).withOpacity(isDark ? 0.18 : 0.12),
         borderRadius: BorderRadius.circular(11),
       ),
-      child: const Icon(
-        Icons.bolt_rounded,
-        color: Color(0xFF0A84FF),
-        size: 20,
-      ),
+      child: const Icon(Icons.bolt_rounded, color: Color(0xFF0A84FF), size: 20),
     );
   }
 }
@@ -650,8 +651,11 @@ class _AvatarButton extends StatelessWidget {
   final bool isDark;
   final Color cardColor;
 
-  const _AvatarButton(
-      {required this.user, required this.isDark, required this.cardColor});
+  const _AvatarButton({
+    required this.user,
+    required this.isDark,
+    required this.cardColor,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -699,8 +703,11 @@ class _AvatarButton extends StatelessWidget {
                   color: Color(0xFFFFD700),
                   shape: BoxShape.circle,
                 ),
-                child:
-                    const Icon(Icons.star, size: 10, color: Color(0xFF7A5C00)),
+                child: const Icon(
+                  Icons.star,
+                  size: 10,
+                  color: Color(0xFF7A5C00),
+                ),
               ),
             ),
         ],
@@ -716,14 +723,18 @@ class _EmptyState extends StatelessWidget {
   final Color cardColor;
   final VoidCallback onScan;
 
-  const _EmptyState(
-      {required this.isDark, required this.cardColor, required this.onScan});
+  const _EmptyState({
+    required this.isDark,
+    required this.cardColor,
+    required this.onScan,
+  });
 
   @override
   Widget build(BuildContext context) {
     final strings = context.watch<AppSettingsProvider>().strings;
-    final subtitleColor =
-        isDark ? const Color(0xFF636366) : const Color(0xFF8E8E93);
+    final subtitleColor = isDark
+        ? const Color(0xFF636366)
+        : const Color(0xFF8E8E93);
     final primaryTextColor = isDark ? Colors.white : const Color(0xFF1C1C1E);
 
     return Column(
@@ -780,8 +791,11 @@ class _EmptyState extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(Icons.camera_alt_rounded,
-                    color: Colors.white, size: 16),
+                const Icon(
+                  Icons.camera_alt_rounded,
+                  color: Colors.white,
+                  size: 16,
+                ),
                 const SizedBox(width: 8),
                 Text(
                   strings.scanFirstMealButton,

@@ -18,6 +18,30 @@ class AppLocalizationsVi extends AppLocalizations {
   String get tabSettings => 'Cài đặt';
 
   @override
+  String get analysisEyebrow => 'Phân tích';
+
+  @override
+  String get progressTitle => 'Tiến trình';
+
+  @override
+  String get settingsEyebrow => 'Cài đặt';
+
+  @override
+  String get profileHeading => 'Hồ sơ';
+
+  @override
+  String get accountSection => 'Tài khoản';
+
+  @override
+  String get preferencesSection => 'Tùy chọn';
+
+  @override
+  String get trackingSection => 'Mục tiêu & Theo dõi';
+
+  @override
+  String get supportSection => 'Hỗ trợ';
+
+  @override
   String get today => 'Hôm nay';
 
   @override

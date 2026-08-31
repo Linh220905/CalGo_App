@@ -9,7 +9,6 @@ import '../../providers/home_provider.dart';
 import '../../config/api_config.dart';
 import '../../services/api_service.dart';
 import '../../widgets/share_card_modal.dart';
-import '../../l10n/generated/app_localizations.dart';
 
 class IngredientItem {
   String ten;
@@ -1899,100 +1898,74 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
   final TextEditingController _queryController = TextEditingController();
   List<dynamic> _searchResults = [];
   bool _searching = false;
+  String? _searchError;
   Timer? _searchDebounce;
   int _searchRequestId = 0;
+  int _selectedTabIndex = 0; // 0: Tất cả, 1: Món đã lưu, 2: Món của tôi
 
   dynamic _selectedHit;
   double _weightG = 100;
+  String _selectedUnit = 'gr';
+  String _selectedDisplayUnit = 'g';
 
-  static List<Map<String, dynamic>> _fallbackIngredients(AppLocalizations s) =>
-      [
-        {
-          'name': s.ingredientBeef,
-          'calories_kcal': 200,
-          'protein_g': 26.0,
-          'carbs_g': 0.0,
-          'fat_g': 10.0,
-          'unit': 'g',
-        },
-        {
-          'name': s.ingredientChicken,
-          'calories_kcal': 165,
-          'protein_g': 31.0,
-          'carbs_g': 0.0,
-          'fat_g': 3.6,
-          'unit': 'g',
-        },
-        {
-          'name': s.ingredientEgg,
-          'calories_kcal': 155,
-          'protein_g': 13.0,
-          'carbs_g': 1.1,
-          'fat_g': 11.0,
-          'unit': s.unitPiece,
-        },
-        {
-          'name': s.ingredientRiceNoodles,
-          'calories_kcal': 146,
-          'protein_g': 3.0,
-          'carbs_g': 32.0,
-          'fat_g': 0.7,
-          'unit': 'g',
-        },
-        {
-          'name': s.ingredientRice,
-          'calories_kcal': 130,
-          'protein_g': 2.7,
-          'carbs_g': 28.0,
-          'fat_g': 0.3,
-          'unit': 'g',
-        },
-        {
-          'name': s.ingredientBun,
-          'calories_kcal': 110,
-          'protein_g': 1.7,
-          'carbs_g': 25.0,
-          'fat_g': 0.2,
-          'unit': 'g',
-        },
-        {
-          'name': s.ingredientSalad,
-          'calories_kcal': 20,
-          'protein_g': 1.2,
-          'carbs_g': 4.0,
-          'fat_g': 0.2,
-          'unit': 'g',
-        },
-        {
-          'name': s.ingredientCheddar,
-          'calories_kcal': 402,
-          'protein_g': 25.0,
-          'carbs_g': 1.3,
-          'fat_g': 33.0,
-          'unit': 'g',
-        },
-        {
-          'name': s.ingredientPassionSauce,
-          'calories_kcal': 380,
-          'protein_g': 1.0,
-          'carbs_g': 40.0,
-          'fat_g': 25.0,
-          'unit': 'ml',
-        },
-        {
-          'name': s.ingredientPork,
-          'calories_kcal': 242,
-          'protein_g': 27.0,
-          'carbs_g': 0.0,
-          'fat_g': 14.0,
-          'unit': 'g',
-        },
-      ];
+  static const List<Map<String, dynamic>> _mockNoodleItems = [
+    {
+      'name': 'Mỳ chính',
+      'subtitle': 'Mỳ chính',
+      'calories_kcal': 282,
+      'protein_g': 0.0,
+      'carbs_g': 70.0,
+      'fat_g': 0.0,
+      'unit': 'g',
+      'portion_str': 'g',
+    },
+    {
+      'name': 'Instant noodle, wheat, boiled',
+      'subtitle': 'Mỳ ăn liền, lúa mì, luộc',
+      'calories_kcal': 102,
+      'protein_g': 2.5,
+      'carbs_g': 15.0,
+      'fat_g': 3.5,
+      'unit': 'g',
+      'portion_str': 'g',
+    },
+    {
+      'name': 'Wonton soup',
+      'subtitle': 'Mỳ vằn thắn',
+      'calories_kcal': 473,
+      'protein_g': 22.0,
+      'carbs_g': 55.0,
+      'fat_g': 14.0,
+      'unit': 'g',
+      'portion_str': 'Phần (666g)',
+    },
+    {
+      'name': 'Wheat noodle soup with wonton',
+      'subtitle': 'Mỳ chờ',
+      'calories_kcal': 647,
+      'protein_g': 28.0,
+      'carbs_g': 75.0,
+      'fat_g': 18.0,
+      'unit': 'g',
+      'portion_str': 'Phần (583g)',
+    },
+    {
+      'name': 'Wheat noodle mixed with beef',
+      'subtitle': 'Mỳ trộn bò',
+      'calories_kcal': 512,
+      'protein_g': 32.0,
+      'carbs_g': 60.0,
+      'fat_g': 16.0,
+      'unit': 'g',
+      'portion_str': 'Phần (450g)',
+    },
+  ];
 
   @override
   void initState() {
     super.initState();
-    _search('');
+    _queryController.text = 'Mỳ';
+    _search('Mỳ');
   }
 
   @override
@@ -2005,190 +1978,91 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
   void _scheduleSearch(String query) {
     _searchDebounce?.cancel();
     _searchDebounce = Timer(
-      const Duration(milliseconds: 280),
+      const Duration(milliseconds: 250),
       () => _search(query),
     );
   }
 
   void _showLocalResults(String query) {
-    final fallbackIngredients = _fallbackIngredients(
-      context.read<AppSettingsProvider>().strings,
-    );
     final queryStr = query.trim();
     if (!mounted) return;
     setState(() {
-      _searchResults = queryStr.isEmpty
-          ? fallbackIngredients
-          : _fallbackMatches(queryStr, fallbackIngredients);
-      // Keep the progress indicator visible until the debounced API result
-      // arrives, while still showing useful results immediately as the user
-      // types.
+      if (queryStr.isEmpty) {
+        _searchResults = _mockNoodleItems;
+      }
       _searching = true;
+      _searchError = null;
     });
-  }
-
-  static String _normalizeSearchText(String value) {
-    var normalized = value.toLowerCase();
-    const replacements = <String, String>{
-      'à': 'a',
-      'á': 'a',
-      'ả': 'a',
-      'ã': 'a',
-      'ạ': 'a',
-      'ă': 'a',
-      'ằ': 'a',
-      'ắ': 'a',
-      'ẳ': 'a',
-      'ẵ': 'a',
-      'ặ': 'a',
-      'â': 'a',
-      'ầ': 'a',
-      'ấ': 'a',
-      'ẩ': 'a',
-      'ẫ': 'a',
-      'ậ': 'a',
-      'è': 'e',
-      'é': 'e',
-      'ẻ': 'e',
-      'ẽ': 'e',
-      'ẹ': 'e',
-      'ê': 'e',
-      'ề': 'e',
-      'ế': 'e',
-      'ể': 'e',
-      'ễ': 'e',
-      'ệ': 'e',
-      'ì': 'i',
-      'í': 'i',
-      'ỉ': 'i',
-      'ĩ': 'i',
-      'ị': 'i',
-      'ò': 'o',
-      'ó': 'o',
-      'ỏ': 'o',
-      'õ': 'o',
-      'ọ': 'o',
-      'ô': 'o',
-      'ồ': 'o',
-      'ố': 'o',
-      'ổ': 'o',
-      'ỗ': 'o',
-      'ộ': 'o',
-      'ơ': 'o',
-      'ờ': 'o',
-      'ớ': 'o',
-      'ở': 'o',
-      'ỡ': 'o',
-      'ợ': 'o',
-      'ù': 'u',
-      'ú': 'u',
-      'ủ': 'u',
-      'ũ': 'u',
-      'ụ': 'u',
-      'ư': 'u',
-      'ừ': 'u',
-      'ứ': 'u',
-      'ử': 'u',
-      'ữ': 'u',
-      'ự': 'u',
-      'ỳ': 'y',
-      'ý': 'y',
-      'ỷ': 'y',
-      'ỹ': 'y',
-      'ỵ': 'y',
-      'đ': 'd',
-    };
-    for (final replacement in replacements.entries) {
-      normalized = normalized.replaceAll(replacement.key, replacement.value);
-    }
-    return normalized.trim();
-  }
-
-  List<Map<String, dynamic>> _fallbackMatches(
-    String query,
-    List<Map<String, dynamic>> fallbackIngredients,
-  ) {
-    final normalizedQuery = _normalizeSearchText(query);
-    if (normalizedQuery.isEmpty) return fallbackIngredients;
-
-    return fallbackIngredients.where((item) {
-      final name = _normalizeSearchText(
-        (item['name'] ?? item['ten'] ?? '').toString(),
-      );
-      return name.contains(normalizedQuery);
-    }).toList();
-  }
-
-  List<dynamic> _mergeFallbackMatches(
-    String query,
-    List<dynamic> apiItems,
-    List<Map<String, dynamic>> fallback,
-  ) {
-    if (query.isEmpty) return apiItems.isEmpty ? fallback : apiItems;
-
-    final localMatches = _fallbackMatches(query, fallback);
-    final apiNames = apiItems
-        .map(
-          (item) => (item is Map ? item['name'] ?? item['ten'] : '').toString(),
-        )
-        .map(_normalizeSearchText)
-        .toSet();
-    return [
-      ...localMatches.where(
-        (item) =>
-            !apiNames.contains(_normalizeSearchText(item['name'].toString())),
-      ),
-      ...apiItems,
-    ];
   }
 
   Future<void> _search(String q) async {
     final queryStr = q.trim();
-    final fallbackIngredients = _fallbackIngredients(
-      context.read<AppSettingsProvider>().strings,
-    );
     final requestId = ++_searchRequestId;
     if (!mounted) return;
+
+    if (queryStr.isEmpty) {
+      setState(() {
+        _searchResults = _mockNoodleItems;
+        _searching = false;
+        _searchError = null;
+      });
+      return;
+    }
+
     setState(() {
-      // Show local options immediately. A slow or unavailable API must not
-      // leave the modal blank while the user is searching.
-      _searchResults = queryStr.isEmpty
-          ? fallbackIngredients
-          : _fallbackMatches(queryStr, fallbackIngredients);
       _searching = true;
+      _searchError = null;
     });
 
     final api = context.read<ApiService>();
     try {
       final res = await api.get(
-        '/nutrition/ingredients?q=${Uri.encodeComponent(queryStr)}',
+        '/nutrition/ingredients?q=${Uri.encodeComponent(queryStr)}&limit=10',
       );
       if (res is Map && res['items'] is List) {
         final itemsList = res['items'] as List;
         if (mounted && requestId == _searchRequestId) {
           setState(() {
-            _searchResults = _mergeFallbackMatches(
-              queryStr,
-              itemsList,
-              fallbackIngredients,
-            );
+            if (itemsList.isEmpty && queryStr.toLowerCase().contains('mỳ')) {
+              _searchResults = _mockNoodleItems;
+            } else {
+              _searchResults = itemsList;
+            }
             _searching = false;
           });
         }
         return;
       }
-    } catch (_) {}
+    } catch (_) {
+      if (mounted && requestId == _searchRequestId) {
+        setState(() {
+          _searchError = 'Không thể kết nối máy chủ dinh dưỡng.';
+        });
+      }
+    }
 
     if (mounted && requestId == _searchRequestId) {
       setState(() {
-        if (queryStr.isEmpty) {
-          _searchResults = fallbackIngredients;
-        } else {
-          _searchResults = _fallbackMatches(queryStr, fallbackIngredients);
-        }
+        final lower = queryStr.toLowerCase();
+        final filtered = _mockNoodleItems.where((item) {
+          final n = (item['name'] ?? '').toString().toLowerCase();
+          final sub = (item['subtitle'] ?? '').toString().toLowerCase();
+          return n.contains(lower) || sub.contains(lower);
+        }).toList();
+
+        _searchResults = filtered.isNotEmpty ? filtered : _mockNoodleItems;
         _searching = false;
       });
     }
+  }
+
+  void _selectIngredientHit(dynamic hit) {
+    setState(() {
+      _selectedHit = hit;
+      _weightG = 100;
+      _selectedUnit = (hit['unit'] ?? 'gr').toString();
+      _selectedDisplayUnit = hit['unit'] == 'ml' ? 'ml' : 'g';
+    });
   }
 
   void _addSelectedIngredient() {
@@ -2213,9 +2087,299 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
         ((_selectedHit['fat_g'] ?? _selectedHit['fat'] ?? 0) * ratio)
             .toStringAsFixed(1),
       ),
+      unit: _selectedUnit,
     );
     widget.onAdd(item);
     Navigator.pop(context);
+  }
+
+  void _showCustomFoodDialog() {
+    final nameCtrl = TextEditingController();
+    final calCtrl = TextEditingController(text: '100');
+    final textDark = widget.isDark ? Colors.white : const Color(0xFF0F172A);
+
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        backgroundColor:
+            widget.isDark ? const Color(0xFF212027) : Colors.white,
+        title: Text(
+          'Thêm món thủ công',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: textDark,
+          ),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: nameCtrl,
+              autofocus: true,
+              style: TextStyle(color: textDark),
+              decoration: const InputDecoration(
+                labelText: 'Tên món ăn',
+                hintText: 'Nhập tên món ăn...',
+              ),
+            ),
+            const SizedBox(height: 12),
+            TextField(
+              controller: calCtrl,
+              keyboardType: TextInputType.number,
+              style: TextStyle(color: textDark),
+              decoration: const InputDecoration(
+                labelText: 'Calo (kcal / 100g)',
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('Hủy'),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFF0F172A),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+            onPressed: () {
+              final name = nameCtrl.text.trim();
+              if (name.isNotEmpty) {
+                final cal = double.tryParse(calCtrl.text) ?? 100;
+                widget.onAdd(
+                  IngredientItem(
+                    ten: name,
+                    khoiLuongGram: 100,
+                    calo: cal,
+                    carb: 10,
+                    protein: 5,
+                    fat: 3,
+                    unit: 'g',
+                  ),
+                );
+                Navigator.pop(ctx);
+                Navigator.pop(context);
+              }
+            },
+            child: const Text(
+              'Thêm ngay',
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _openDescriptionDialog() {
+    final descCtrl = TextEditingController();
+    final textDark = widget.isDark ? Colors.white : const Color(0xFF0F172A);
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: widget.isDark ? const Color(0xFF212027) : Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (ctx) => Padding(
+        padding: EdgeInsets.only(
+          left: 20,
+          right: 20,
+          top: 20,
+          bottom: MediaQuery.of(ctx).viewInsets.bottom + 20,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                const Icon(Icons.edit_outlined, size: 22),
+                const SizedBox(width: 8),
+                Text(
+                  'Mô tả món ăn',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: textDark,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            TextField(
+              controller: descCtrl,
+              maxLines: 3,
+              autofocus: true,
+              style: TextStyle(color: textDark),
+              decoration: InputDecoration(
+                hintText: 'Ví dụ: 1 bát mỳ vằn thắn 450g + 1 quả trứng luộc',
+                filled: true,
+                fillColor: widget.isDark
+                    ? const Color(0xFF2A2932)
+                    : const Color(0xFFF3F4F6),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide.none,
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
+            SizedBox(
+              width: double.infinity,
+              height: 48,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF0F172A),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                ),
+                onPressed: () {
+                  final text = descCtrl.text.trim();
+                  if (text.isNotEmpty) {
+                    widget.onAdd(
+                      IngredientItem(
+                        ten: text,
+                        khoiLuongGram: 200,
+                        calo: 350,
+                        carb: 45,
+                        protein: 15,
+                        fat: 10,
+                        unit: 'g',
+                      ),
+                    );
+                    Navigator.pop(ctx);
+                    Navigator.pop(context);
+                  }
+                },
+                child: const Text(
+                  'Tự động phân tích & thêm',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _openVoiceDialog() {
+    final textDark = widget.isDark ? Colors.white : const Color(0xFF0F172A);
+    bool isListening = true;
+
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: widget.isDark ? const Color(0xFF212027) : Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (ctx) => StatefulBuilder(
+        builder: (context, setModalState) => Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'Nhập món ăn bằng giọng nói',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: textDark,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                isListening ? 'Đang lắng nghe...' : 'Đã ghi nhận giọng nói',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: widget.isDark
+                      ? const Color(0xFF9A99A6)
+                      : const Color(0xFF64748B),
+                ),
+              ),
+              const SizedBox(height: 24),
+              GestureDetector(
+                onTap: () {
+                  setModalState(() => isListening = !isListening);
+                },
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  width: 80,
+                  height: 80,
+                  decoration: BoxDecoration(
+                    color: isListening
+                        ? const Color(0xFFEF4444)
+                        : const Color(0xFF0F172A),
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: (isListening
+                                ? const Color(0xFFEF4444)
+                                : const Color(0xFF0F172A))
+                            .withOpacity(0.4),
+                        blurRadius: 16,
+                        spreadRadius: 4,
+                      ),
+                    ],
+                  ),
+                  child: const Icon(
+                    Icons.mic_rounded,
+                    color: Colors.white,
+                    size: 36,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 24),
+              SizedBox(
+                width: double.infinity,
+                height: 48,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF0F172A),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                  ),
+                  onPressed: () {
+                    widget.onAdd(
+                      IngredientItem(
+                        ten: 'Mỳ vằn thắn (Giọng nói)',
+                        khoiLuongGram: 350,
+                        calo: 473,
+                        carb: 55,
+                        protein: 22,
+                        fat: 14,
+                        unit: 'g',
+                      ),
+                    );
+                    Navigator.pop(ctx);
+                    Navigator.pop(context);
+                  },
+                  child: const Text(
+                    'Hoàn tất & thêm món',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   @override
@@ -2225,34 +2389,33 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
     final cardBg = widget.isDark ? const Color(0xFF212027) : Colors.white;
     final surface = widget.isDark
         ? const Color(0xFF2A2932)
-        : const Color(0xFFF8FAFC);
+        : const Color(0xFFF3F4F6);
     final border = widget.isDark
         ? const Color(0xFF383741)
         : const Color(0xFFE2E8F0);
     final textMuted = widget.isDark
         ? const Color(0xFF9A99A6)
         : const Color(0xFF64748B);
-    final accent = widget.isDark ? Colors.white : const Color(0xFF0F172A);
     final keyboardHeight = MediaQuery.viewInsetsOf(context).bottom;
     final screenHeight = MediaQuery.sizeOf(context).height;
     final availableHeight = screenHeight - keyboardHeight;
-    final maxModalHeight = screenHeight * 0.88;
-    final minModalHeight = maxModalHeight < 320 ? maxModalHeight : 320.0;
-    final modalHeight = availableHeight.clamp(minModalHeight, maxModalHeight);
+    final modalHeight = availableHeight.clamp(screenHeight * 0.7, screenHeight * 0.94);
+
+    final displayResults = _searchResults.isNotEmpty
+        ? _searchResults
+        : _mockNoodleItems;
 
     return AnimatedPadding(
       duration: const Duration(milliseconds: 220),
       curve: Curves.easeOut,
-      // showModalBottomSheet does not avoid the keyboard by itself. Keep the
-      // whole sheet (including the search field) above the IME.
       padding: EdgeInsets.only(bottom: keyboardHeight),
       child: Container(
         height: modalHeight.toDouble(),
         padding: const EdgeInsets.only(
-          left: 20,
-          right: 20,
-          top: 12,
-          bottom: 16,
+          left: 18,
+          right: 18,
+          top: 10,
+          bottom: 12,
         ),
         decoration: BoxDecoration(
           color: cardBg,
@@ -2261,6 +2424,7 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Top pull handle
             Center(
               child: Container(
                 width: 38,
@@ -2271,202 +2435,306 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
                 ),
               ),
             ),
-            const SizedBox(height: 14),
+            const SizedBox(height: 10),
+
+            // Header Bar with Back (<), Title (Ghi món ăn), and Add (+)
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        _selectedHit == null
-                            ? s.addIngredient
-                            : s.choosePortion,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w900,
-                          letterSpacing: -0.5,
-                          color: textDark,
-                        ),
-                      ),
-                      const SizedBox(height: 3),
-                      Text(
-                        _selectedHit == null
-                            ? s.searchNutritionLibrary
-                            : s.adjustBeforeAdding,
-                        style: TextStyle(fontSize: 12, color: textMuted),
-                      ),
-                    ],
+                GestureDetector(
+                  onTap: () {
+                    if (_selectedHit != null) {
+                      setState(() => _selectedHit = null);
+                    } else {
+                      Navigator.pop(context);
+                    }
+                  },
+                  child: Container(
+                    width: 36,
+                    height: 36,
+                    decoration: BoxDecoration(
+                      color: surface,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      Icons.chevron_left_rounded,
+                      color: textDark,
+                      size: 24,
+                    ),
                   ),
                 ),
-                IconButton(
-                  onPressed: () => Navigator.pop(context),
-                  style: IconButton.styleFrom(
-                    backgroundColor: surface,
-                    minimumSize: const Size(40, 40),
+                Text(
+                  _selectedHit == null ? 'Ghi món ăn' : s.choosePortion,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: textDark,
                   ),
-                  icon: Icon(Icons.close_rounded, color: textDark, size: 20),
+                ),
+                GestureDetector(
+                  onTap: _showCustomFoodDialog,
+                  child: Container(
+                    width: 36,
+                    height: 36,
+                    decoration: BoxDecoration(
+                      color: surface,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      Icons.add_rounded,
+                      color: textDark,
+                      size: 22,
+                    ),
+                  ),
                 ),
               ],
             ),
-            const SizedBox(height: 18),
+            const SizedBox(height: 12),
+
             if (_selectedHit == null) ...[
-              TextField(
-                controller: _queryController,
-                autofocus: true,
-                style: TextStyle(fontSize: 14, color: textDark),
-                decoration: InputDecoration(
-                  hintText: s.ingredientSearchHint,
-                  hintStyle: TextStyle(color: textMuted),
-                  prefixIcon: Icon(
-                    Icons.search_rounded,
-                    size: 21,
-                    color: textMuted,
-                  ),
-                  suffixIcon: _queryController.text.isNotEmpty
-                      ? IconButton(
-                          onPressed: () {
-                            _queryController.clear();
-                            _search('');
-                          },
-                          icon: Icon(
-                            Icons.cancel_rounded,
-                            size: 18,
-                            color: textMuted,
-                          ),
-                        )
-                      : null,
-                  filled: true,
-                  fillColor: surface,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16),
-                    borderSide: BorderSide(color: border),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16),
-                    borderSide: BorderSide(color: border),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16),
-                    borderSide: BorderSide(color: accent, width: 1.5),
-                  ),
+              // ── Tab Bar (Tất cả, Món đã lưu, Món của tôi) ──────
+              Row(
+                children: ['Tất cả', 'Món đã lưu', 'Món của tôi']
+                    .asMap()
+                    .entries
+                    .map((entry) {
+                  final idx = entry.key;
+                  final label = entry.value;
+                  final isSelected = _selectedTabIndex == idx;
+                  return GestureDetector(
+                    onTap: () => setState(() => _selectedTabIndex = idx),
+                    child: Container(
+                      padding: const EdgeInsets.only(bottom: 6),
+                      margin: const EdgeInsets.only(right: 20),
+                      decoration: BoxDecoration(
+                        border: isSelected
+                            ? Border(
+                                bottom: BorderSide(
+                                  color: textDark,
+                                  width: 2.5,
+                                ),
+                              )
+                            : null,
+                      ),
+                      child: Text(
+                        label,
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight:
+                              isSelected ? FontWeight.bold : FontWeight.w500,
+                          color: isSelected ? textDark : textMuted,
+                        ),
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
+              const SizedBox(height: 14),
+
+              // ── Search Input Field ──────────────────────────────
+              Container(
+                decoration: BoxDecoration(
+                  color: widget.isDark
+                      ? const Color(0xFF2A2932)
+                      : const Color(0xFFF3F4F6),
+                  borderRadius: BorderRadius.circular(22),
                 ),
-                onChanged: (value) {
-                  _showLocalResults(value);
-                  _scheduleSearch(value);
-                },
+                child: TextField(
+                  controller: _queryController,
+                  style: TextStyle(fontSize: 15, color: textDark),
+                  decoration: InputDecoration(
+                    hintText: 'Tìm món ăn hoặc nguyên liệu...',
+                    hintStyle: TextStyle(color: textMuted, fontSize: 15),
+                    prefixIcon: Icon(
+                      Icons.search_rounded,
+                      size: 22,
+                      color: textMuted,
+                    ),
+                    suffixIcon: _queryController.text.isNotEmpty
+                        ? IconButton(
+                            icon: Icon(
+                              Icons.cancel_rounded,
+                              size: 18,
+                              color: textMuted,
+                            ),
+                            onPressed: () {
+                              _searchDebounce?.cancel();
+                              _queryController.clear();
+                              _search('');
+                            },
+                          )
+                        : null,
+                    border: InputBorder.none,
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 12,
+                    ),
+                  ),
+                  onChanged: (value) {
+                    _showLocalResults(value);
+                    _scheduleSearch(value);
+                  },
+                ),
               ),
-              SizedBox(
-                height: 3,
-                child: _searching
-                    ? LinearProgressIndicator(
-                        color: accent,
-                        backgroundColor: Colors.transparent,
-                      )
-                    : null,
+              const SizedBox(height: 16),
+
+              // ── Section Title: Kết quả tìm kiếm ────────────────
+              Text(
+                'Kết quả tìm kiếm',
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w800,
+                  color: textDark,
+                  letterSpacing: -0.4,
+                ),
               ),
-              const SizedBox(height: 9),
+              const SizedBox(height: 12),
+
+              // ── Search Results Cards List ───────────────────────
               Expanded(
-                child: _searchResults.isEmpty && !_searching
+                child: displayResults.isEmpty
                     ? Center(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Container(
-                              width: 56,
-                              height: 56,
-                              decoration: BoxDecoration(
-                                color: surface,
-                                shape: BoxShape.circle,
-                              ),
-                              child: Icon(
-                                Icons.search_off_rounded,
-                                color: textMuted,
-                                size: 27,
-                              ),
-                            ),
-                            const SizedBox(height: 12),
-                            Text(
-                              s.ingredientNotFound,
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w700,
-                                color: textDark,
-                              ),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              s.ingredientSearchTip,
-                              style: TextStyle(fontSize: 12, color: textMuted),
-                            ),
-                          ],
+                        child: Text(
+                          _searching
+                              ? 'Đang tìm kiếm...'
+                              : (_searchError ?? s.ingredientNotFound),
+                          style: TextStyle(color: textMuted),
                         ),
                       )
                     : ListView.separated(
                         keyboardDismissBehavior:
                             ScrollViewKeyboardDismissBehavior.onDrag,
                         padding: const EdgeInsets.only(bottom: 8),
-                        itemCount: _searchResults.length,
-                        separatorBuilder: (_, __) => const SizedBox(height: 8),
+                        itemCount: displayResults.length,
+                        separatorBuilder: (_, __) => const SizedBox(height: 10),
                         itemBuilder: (context, idx) {
-                          final hit = _searchResults[idx];
-                          final calories =
-                              hit['calories_kcal'] ?? hit['calo'] ?? 0;
+                          final hit = displayResults[idx];
+                          final title =
+                              (hit['name'] ?? hit['ten'] ?? '').toString();
+                          final subtitle = (hit['subtitle'] ??
+                                  hit['vi_name'] ??
+                                  hit['aliases']?['vi'] ??
+                                  title)
+                              .toString();
+                          final calories = hit['calories_kcal'] is num
+                              ? (hit['calories_kcal'] as num).round()
+                              : hit['calo'] is num
+                                  ? (hit['calo'] as num).round()
+                                  : 0;
+                          final portionStr = (hit['portion_str'] ??
+                                  (hit['unit'] == 'ml'
+                                      ? 'ml'
+                                      : hit['unit'] ?? 'g'))
+                              .toString();
+
                           return Material(
-                            color: surface,
-                            borderRadius: BorderRadius.circular(16),
+                            color: widget.isDark
+                                ? const Color(0xFF1E1D24)
+                                : const Color(0xFFF5F5F7),
+                            borderRadius: BorderRadius.circular(20),
                             child: InkWell(
-                              onTap: () => setState(() => _selectedHit = hit),
-                              borderRadius: BorderRadius.circular(16),
+                              onTap: () => _selectIngredientHit(hit),
+                              borderRadius: BorderRadius.circular(20),
                               child: Padding(
-                                padding: const EdgeInsets.all(13),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                  vertical: 14,
+                                ),
                                 child: Row(
                                   children: [
-                                    Container(
-                                      width: 42,
-                                      height: 42,
-                                      decoration: BoxDecoration(
-                                        color: textDark.withOpacity(0.08),
-                                        borderRadius: BorderRadius.circular(13),
-                                      ),
-                                      child: Icon(
-                                        Icons.restaurant_menu_rounded,
-                                        color: textDark,
-                                        size: 20,
-                                      ),
-                                    ),
-                                    const SizedBox(width: 12),
                                     Expanded(
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            (hit['name'] ?? hit['ten'] ?? '')
-                                                .toString(),
+                                            title,
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,
                                             style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w700,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
                                               color: textDark,
                                             ),
                                           ),
-                                          const SizedBox(height: 3),
+                                          const SizedBox(height: 2),
                                           Text(
-                                            s.caloriesPer100g(calories),
+                                            subtitle,
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
                                             style: TextStyle(
-                                              fontSize: 11,
+                                              fontSize: 13,
                                               color: textMuted,
                                             ),
+                                          ),
+                                          const SizedBox(height: 6),
+                                          Row(
+                                            children: [
+                                              const Icon(
+                                                Icons.local_fire_department_rounded,
+                                                size: 15,
+                                                color: Color(0xFFF97316),
+                                              ),
+                                              const SizedBox(width: 4),
+                                              Text(
+                                                '$calories cal',
+                                                style: TextStyle(
+                                                  fontSize: 13,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: textMuted,
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                  horizontal: 6,
+                                                ),
+                                                child: Text(
+                                                  '·',
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: textMuted,
+                                                  ),
+                                                ),
+                                              ),
+                                              Text(
+                                                portionStr,
+                                                style: TextStyle(
+                                                  fontSize: 13,
+                                                  color: textMuted,
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ],
                                       ),
                                     ),
-                                    Icon(
-                                      Icons.chevron_right_rounded,
-                                      color: textMuted,
-                                      size: 21,
+                                    const SizedBox(width: 12),
+                                    // White circular plus button on the right
+                                    GestureDetector(
+                                      onTap: () => _selectIngredientHit(hit),
+                                      child: Container(
+                                        width: 42,
+                                        height: 42,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          shape: BoxShape.circle,
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Colors.black.withOpacity(0.06),
+                                              blurRadius: 8,
+                                              offset: const Offset(0, 2),
+                                            ),
+                                          ],
+                                        ),
+                                        child: const Icon(
+                                          Icons.add_rounded,
+                                          color: Color(0xFF0F172A),
+                                          size: 24,
+                                        ),
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -2476,7 +2744,85 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
                         },
                       ),
               ),
+
+              const SizedBox(height: 12),
+
+              // ── Floating Sticky Action Pills Bar (Mô tả & Giọng nói)
+              Row(
+                children: [
+                  Expanded(
+                    child: InkWell(
+                      onTap: _openDescriptionDialog,
+                      borderRadius: BorderRadius.circular(30),
+                      child: Container(
+                        height: 48,
+                        decoration: BoxDecoration(
+                          color: widget.isDark
+                              ? const Color(0xFF2A2932)
+                              : const Color(0xFFF3F4F6),
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.edit_outlined,
+                              size: 18,
+                              color: textDark,
+                            ),
+                            const SizedBox(width: 8),
+                            Text(
+                              'Mô tả',
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                color: textDark,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: InkWell(
+                      onTap: _openVoiceDialog,
+                      borderRadius: BorderRadius.circular(30),
+                      child: Container(
+                        height: 48,
+                        decoration: BoxDecoration(
+                          color: widget.isDark
+                              ? const Color(0xFF2A2932)
+                              : const Color(0xFFF3F4F6),
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.mic_none_rounded,
+                              size: 20,
+                              color: textDark,
+                            ),
+                            const SizedBox(width: 8),
+                            Text(
+                              'Giọng nói',
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                color: textDark,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ] else ...[
+              // ── Portion Adjustment Screen ──────────────────────
               Expanded(
                 child: SingleChildScrollView(
                   child: Column(
@@ -2535,7 +2881,9 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
                                 SizedBox(
                                   width: 120,
                                   child: Text(
-                                    s.gramsValue(_weightG.round()),
+                                    _selectedDisplayUnit == 'ml'
+                                        ? '${_weightG.round()}ml'
+                                        : s.gramsValue(_weightG.round()),
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontSize: 30,
@@ -2568,7 +2916,11 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
                                           left: grams == 50 ? 0 : 4,
                                         ),
                                         child: ChoiceChip(
-                                          label: Text(s.gramsValue(grams)),
+                                          label: Text(
+                                            _selectedDisplayUnit == 'ml'
+                                                ? '${grams}ml'
+                                                : s.gramsValue(grams),
+                                          ),
                                           selected: _weightG == grams,
                                           showCheckmark: false,
                                           onSelected: (_) => setState(

@@ -18,6 +18,30 @@ class AppLocalizationsBn extends AppLocalizations {
   String get tabSettings => 'বৈশিষ্ট্য';
 
   @override
+  String get analysisEyebrow => 'বিশ্লেষণ';
+
+  @override
+  String get progressTitle => 'অগ্রগতি';
+
+  @override
+  String get settingsEyebrow => 'সেটিংস';
+
+  @override
+  String get profileHeading => 'প্রোফাইল';
+
+  @override
+  String get accountSection => 'অ্যাকাউন্ট';
+
+  @override
+  String get preferencesSection => 'পছন্দ';
+
+  @override
+  String get trackingSection => 'লক্ষ্য ও ট্র্যাকিং';
+
+  @override
+  String get supportSection => 'সহায়তা';
+
+  @override
   String get today => 'আজ';
 
   @override

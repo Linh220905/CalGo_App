@@ -14,9 +14,7 @@ class ApiService {
   Future<bool> Function()? refreshCallback;
 
   Map<String, String> _headers() {
-    final headers = <String, String>{
-      'Content-Type': 'application/json',
-    };
+    final headers = <String, String>{'Content-Type': 'application/json'};
     if (_accessToken != null) {
       headers['Authorization'] = 'Bearer $_accessToken';
     }
@@ -35,23 +33,28 @@ class ApiService {
   int get authScope => _authScope;
   bool get hasAccessToken => _accessToken?.trim().isNotEmpty == true;
 
+  /// Headers for authenticated media requests such as private progress photos.
+  /// The Content-Type header is intentionally omitted because image widgets
+  /// and multipart requests set their own content type.
+  Map<String, String> get authHeaders {
+    final headers = <String, String>{};
+    if (_accessToken != null) {
+      headers['Authorization'] = 'Bearer $_accessToken';
+    }
+    return headers;
+  }
+
   Future<dynamic> get(String path) async {
     final requestKey = '${_accessToken ?? ''}\n$path';
     return _inFlightGets.putIfAbsent(requestKey, () async {
       try {
         final response = await _client
-            .get(
-              Uri.parse('${ApiConfig.baseUrl}$path'),
-              headers: _headers(),
-            )
+            .get(Uri.parse('${ApiConfig.baseUrl}$path'), headers: _headers())
             .timeout(ApiConfig.timeout);
         if (response.statusCode == 401 && await _tryRefresh()) {
           // Retry once with the new token.
           final retried = await _client
-              .get(
-                Uri.parse('${ApiConfig.baseUrl}$path'),
-                headers: _headers(),
-              )
+              .get(Uri.parse('${ApiConfig.baseUrl}$path'), headers: _headers())
               .timeout(ApiConfig.timeout);
           return _handleResponse(retried);
         }
@@ -70,7 +73,9 @@ class ApiService {
           body: body != null ? jsonEncode(body) : null,
         )
         .timeout(ApiConfig.timeout);
-    if (response.statusCode == 401 && path != '/auth/refresh' && await _tryRefresh()) {
+    if (response.statusCode == 401 &&
+        path != '/auth/refresh' &&
+        await _tryRefresh()) {
       final retried = await _client
           .post(
             Uri.parse('${ApiConfig.baseUrl}$path'),
@@ -106,19 +111,38 @@ class ApiService {
 
   Future<dynamic> delete(String path) async {
     final response = await _client
-        .delete(
-          Uri.parse('${ApiConfig.baseUrl}$path'),
-          headers: _headers(),
-        )
+        .delete(Uri.parse('${ApiConfig.baseUrl}$path'), headers: _headers())
         .timeout(ApiConfig.timeout);
     if (response.statusCode == 401 && await _tryRefresh()) {
       final retried = await _client
-          .delete(
-            Uri.parse('${ApiConfig.baseUrl}$path'),
-            headers: _headers(),
-          )
+          .delete(Uri.parse('${ApiConfig.baseUrl}$path'), headers: _headers())
           .timeout(ApiConfig.timeout);
       return _handleResponse(retried);
+    }
+    return _handleResponse(response);
+  }
+
+  Future<dynamic> postMultipart(
+    String path, {
+    required String fieldName,
+    required String filePath,
+    Map<String, String>? fields,
+  }) async {
+    Future<http.Response> send() async {
+      final request = http.MultipartRequest(
+        'POST',
+        Uri.parse('${ApiConfig.baseUrl}$path'),
+      );
+      request.headers.addAll(authHeaders);
+      if (fields != null) request.fields.addAll(fields);
+      request.files.add(await http.MultipartFile.fromPath(fieldName, filePath));
+      final streamed = await _client.send(request).timeout(ApiConfig.timeout);
+      return http.Response.fromStream(streamed);
+    }
+
+    var response = await send();
+    if (response.statusCode == 401 && await _tryRefresh()) {
+      response = await send();
     }
     return _handleResponse(response);
   }
@@ -160,10 +184,10 @@ class ApiService {
       statusCode: response.statusCode,
       message: body is Map
           ? (body['detail'] ??
-                  body['message'] ??
-                  body['error'] ??
-                  'Unknown error')
-              .toString()
+                    body['message'] ??
+                    body['error'] ??
+                    'Unknown error')
+                .toString()
           : 'Unknown error',
     );
   }

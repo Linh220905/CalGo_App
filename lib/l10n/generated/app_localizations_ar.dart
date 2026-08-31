@@ -18,6 +18,30 @@ class AppLocalizationsAr extends AppLocalizations {
   String get tabSettings => 'الترتيبات';
 
   @override
+  String get analysisEyebrow => 'التحليل';
+
+  @override
+  String get progressTitle => 'التقدم';
+
+  @override
+  String get settingsEyebrow => 'الترتيبات';
+
+  @override
+  String get profileHeading => 'الملف الشخصي';
+
+  @override
+  String get accountSection => 'الحساب';
+
+  @override
+  String get preferencesSection => 'التفضيلات';
+
+  @override
+  String get trackingSection => 'الأهداف والمتابعة';
+
+  @override
+  String get supportSection => 'الدعم';
+
+  @override
   String get today => 'اليوم';
 
   @override

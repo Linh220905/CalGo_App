@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
+import 'package:in_app_purchase_storekit/in_app_purchase_storekit.dart';
+import 'package:in_app_purchase_storekit/store_kit_wrappers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../config/app_build_config.dart';
 import '../config/iap_ids.dart';
@@ -74,10 +76,28 @@ class PremiumOffer {
     return '~${weeklyAmount.round()}\u00a0$currencySymbol';
   }
 
-  factory PremiumOffer.fromProduct(
-    PremiumPlan plan,
-    ProductDetails product,
-  ) {
+  factory PremiumOffer.fromProduct(PremiumPlan plan, ProductDetails product) {
+    if (product is AppStoreProductDetails) {
+      final introductory = product.skProduct.introductoryPrice;
+      final hasFreeTrial =
+          introductory?.type == SKProductDiscountType.introductory &&
+          introductory?.paymentMode == SKProductDiscountPaymentMode.freeTrail;
+      final trialDays = hasFreeTrial && introductory != null
+          ? _storeKitPeriodDays(introductory.subscriptionPeriod) *
+                introductory.numberOfPeriods
+          : 0;
+      return PremiumOffer(
+        plan: plan,
+        product: product,
+        basePlanId: null,
+        offerId: introductory?.identifier,
+        offerTags: const [],
+        hasFreeTrial: hasFreeTrial && trialDays > 0,
+        trialDays: trialDays,
+        recurringPrice: product.price,
+      );
+    }
+
     if (product is! GooglePlayProductDetails ||
         product.subscriptionIndex == null) {
       return PremiumOffer(
@@ -114,8 +134,9 @@ class PremiumOffer {
     final paidPhases = details.pricingPhases
         .where((phase) => phase.priceAmountMicros > 0)
         .toList();
-    final recurring =
-        paidPhases.isNotEmpty ? paidPhases.last.formattedPrice : product.price;
+    final recurring = paidPhases.isNotEmpty
+        ? paidPhases.last.formattedPrice
+        : product.price;
     final trialDays = freePhases.fold<int>(
       0,
       (days, phase) =>
@@ -144,6 +165,17 @@ class PremiumOffer {
       'M' => value * 30,
       'Y' => value * 365,
       _ => 0,
+    };
+  }
+
+  static int _storeKitPeriodDays(SKProductSubscriptionPeriodWrapper period) {
+    return switch (period.unit) {
+      SKSubscriptionPeriodUnit.day => period.numberOfUnits,
+      SKSubscriptionPeriodUnit.week => period.numberOfUnits * 7,
+      // This is intentionally an approximation for UI copy only. The
+      // server's signed Apple transaction calculates the exact trial_end.
+      SKSubscriptionPeriodUnit.month => period.numberOfUnits * 30,
+      SKSubscriptionPeriodUnit.year => period.numberOfUnits * 365,
     };
   }
 }
@@ -179,24 +211,24 @@ class PaymentProvider extends ChangeNotifier {
   bool get premiumFreeForTesting => AppBuildConfig.premiumFreeForTesting;
   Map<String, ProductDetails> get products => Map.unmodifiable(_products);
   Map<PremiumPlan, List<PremiumOffer>> get premiumOffers => Map.unmodifiable(
-        _premiumOffers.map(
-          (plan, offers) => MapEntry(plan, List.unmodifiable(offers)),
-        ),
-      );
+    _premiumOffers.map(
+      (plan, offers) => MapEntry(plan, List.unmodifiable(offers)),
+    ),
+  );
   PremiumOffer? get activePremiumOffer => _activePremiumOffer;
   Map<String, dynamic>? get lastSubscriptionVerification =>
       _lastSubscriptionVerification == null
-          ? null
-          : Map.unmodifiable(_lastSubscriptionVerification!);
+      ? null
+      : Map.unmodifiable(_lastSubscriptionVerification!);
   Map<String, PurchaseState> get purchaseStates =>
       Map.unmodifiable(_purchaseStates);
   GooglePlayPaymentService get paymentService => _paymentService;
 
   static String productIdForPremiumPlan(PremiumPlan plan) => switch (plan) {
-        PremiumPlan.weekly => IapIds.premiumWeekly,
-        PremiumPlan.monthly => IapIds.premiumMonthly,
-        PremiumPlan.annual => IapIds.premiumAnnual,
-      };
+    PremiumPlan.weekly => IapIds.premiumWeekly,
+    PremiumPlan.monthly => IapIds.premiumMonthly,
+    PremiumPlan.annual => IapIds.premiumAnnual,
+  };
 
   ProductDetails? premiumProduct(PremiumPlan plan) =>
       premiumOffer(plan, preferFreeTrial: false)?.product;
@@ -231,8 +263,9 @@ class PaymentProvider extends ChangeNotifier {
   }
 
   bool hasTrialOffer(PremiumPlan plan) =>
-      (_premiumOffers[plan] ?? const <PremiumOffer>[])
-          .any((offer) => offer.hasFreeTrial);
+      (_premiumOffers[plan] ?? const <PremiumOffer>[]).any(
+        (offer) => offer.hasFreeTrial,
+      );
 
   PremiumOffer? premiumOfferWithTag(PremiumPlan plan, String tag) {
     final normalized = tag.trim().toLowerCase();
@@ -293,10 +326,7 @@ class PaymentProvider extends ChangeNotifier {
   Future<void> loadProducts() async {
     if (!billingEnabled) return;
 
-    final ids = [
-      ...IapIds.creditProducts.values,
-      ...IapIds.premiumProducts,
-    ];
+    final ids = [...IapIds.creditProducts.values, ...IapIds.premiumProducts];
     final details = await _paymentService.queryProducts(ids);
 
     _products = {};
@@ -447,7 +477,9 @@ class PaymentProvider extends ChangeNotifier {
   }
 
   Future<void> _verifyAndConsume(
-      PurchaseDetails purchase, String packageId) async {
+    PurchaseDetails purchase,
+    String packageId,
+  ) async {
     final sku = purchase.productID;
 
     // 1. Verify receipt on backend
@@ -500,7 +532,8 @@ class PaymentProvider extends ChangeNotifier {
       _lastSubscriptionVerification = {
         ...verification,
         'product_id': purchase.productID,
-        'is_restored': purchase.status == PurchaseStatus.restored ||
+        'is_restored':
+            purchase.status == PurchaseStatus.restored ||
             !initiatedInThisSession,
       };
       _purchaseState(sku, PurchaseState.purchased);
@@ -543,10 +576,7 @@ class PaymentProvider extends ChangeNotifier {
     if (reversed.isEmpty) return sku;
     // Prefer non-dev
     return reversed
-        .firstWhere(
-          (e) => e.value == sku,
-          orElse: () => reversed.first,
-        )
+        .firstWhere((e) => e.value == sku, orElse: () => reversed.first)
         .key;
   }
 
@@ -620,7 +650,8 @@ class PaymentProvider extends ChangeNotifier {
       };
       await prefs.setString(_pendingPurchaseKey, jsonEncode(data));
       debugPrint(
-          '[IAP] Saved pending purchase for retry: ${purchase.productID}');
+        '[IAP] Saved pending purchase for retry: ${purchase.productID}',
+      );
     } catch (e) {
       debugPrint('[IAP] Failed to save pending purchase: $e');
     }

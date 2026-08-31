@@ -18,6 +18,30 @@ class AppLocalizationsEs extends AppLocalizations {
   String get tabSettings => 'Ajustes';
 
   @override
+  String get analysisEyebrow => 'Análisis';
+
+  @override
+  String get progressTitle => 'Progreso';
+
+  @override
+  String get settingsEyebrow => 'Ajustes';
+
+  @override
+  String get profileHeading => 'Perfil';
+
+  @override
+  String get accountSection => 'Cuenta';
+
+  @override
+  String get preferencesSection => 'Preferencias';
+
+  @override
+  String get trackingSection => 'Objetivos y seguimiento';
+
+  @override
+  String get supportSection => 'Soporte';
+
+  @override
   String get today => 'Hoy';
 
   @override

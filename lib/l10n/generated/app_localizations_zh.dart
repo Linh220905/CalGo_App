@@ -18,6 +18,30 @@ class AppLocalizationsZh extends AppLocalizations {
   String get tabSettings => '设置';
 
   @override
+  String get analysisEyebrow => '分析';
+
+  @override
+  String get progressTitle => '进度';
+
+  @override
+  String get settingsEyebrow => '设置';
+
+  @override
+  String get profileHeading => '个人资料';
+
+  @override
+  String get accountSection => '账户';
+
+  @override
+  String get preferencesSection => '偏好设置';
+
+  @override
+  String get trackingSection => '目标与追踪';
+
+  @override
+  String get supportSection => '支持';
+
+  @override
   String get today => '现在';
 
   @override

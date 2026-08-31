@@ -30,7 +30,8 @@ class HomeService {
     String date, {
     bool forceRefresh = false,
   }) async {
-    final cacheFresh = _cacheTime != null &&
+    final cacheFresh =
+        _cacheTime != null &&
         DateTime.now().difference(_cacheTime!) < _cacheLifetime &&
         _cachedEntries != null &&
         _cachedUser != null &&
@@ -54,8 +55,9 @@ class HomeService {
 
     final allEntries = _cachedEntries!;
     final user = _cachedUser!;
-    final meals =
-        allEntries.where((entry) => _dateKey(entry.time) == date).toList();
+    final meals = allEntries
+        .where((entry) => _dateKey(entry.time) == date)
+        .toList();
 
     var calories = 0;
     var protein = 0;
@@ -90,8 +92,9 @@ class HomeService {
     var offset = 0;
     final items = <dynamic>[];
     while (true) {
-      final page =
-          await _api.get('/scan/history?limit=$pageSize&offset=$offset');
+      final page = await _api.get(
+        '/scan/history?limit=$pageSize&offset=$offset',
+      );
       if (page is! List) break;
       items.addAll(page);
       if (page.length < pageSize) break;
@@ -114,6 +117,10 @@ class HomeService {
         .whereType<String>()
         .toSet();
     var cursor = DateTime.now();
+    // Keep yesterday's active streak visible until the current day ends.
+    if (!dates.contains(_dateKey(cursor))) {
+      cursor = cursor.subtract(const Duration(days: 1));
+    }
     var count = 0;
     while (dates.contains(
       '${cursor.year.toString().padLeft(4, '0')}-'

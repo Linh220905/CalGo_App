@@ -17,6 +17,7 @@ import 'providers/app_settings_provider.dart';
 import 'providers/payment_provider.dart';
 import 'providers/scan_task_provider.dart';
 import 'providers/gamification_provider.dart';
+import 'providers/progress_provider.dart';
 import 'routes/app_router.dart';
 import 'theme/app_theme.dart';
 import 'l10n/generated/app_localizations.dart';
@@ -26,9 +27,7 @@ void main() {
   PaintingBinding.instance.imageCache.maximumSize = 100;
   PaintingBinding.instance.imageCache.maximumSizeBytes = 100 * 1024 * 1024;
 
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-  ]);
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   final apiService = ApiService();
   final analyticsService = AnalyticsService(apiService);
@@ -69,6 +68,7 @@ void main() {
   final router = createAppRouter(onboardingProvider, authProvider);
   NotificationService.onNotificationTap = (payload) {
     if (payload == 'daily_recap') router.go('/recap');
+    if (payload == 'trial_expiring') router.go('/pricing');
   };
 
   runApp(
@@ -77,9 +77,7 @@ void main() {
         Provider<ApiService>.value(value: apiService),
         Provider<AnalyticsService>.value(value: analyticsService),
         ChangeNotifierProvider(create: (_) => AppSettingsProvider()),
-        ChangeNotifierProvider(
-          create: (_) => authProvider,
-        ),
+        ChangeNotifierProvider(create: (_) => authProvider),
         ChangeNotifierProvider.value(value: onboardingProvider),
         ChangeNotifierProvider(
           create: (_) => HomeProvider(
@@ -94,6 +92,9 @@ void main() {
         ),
         ChangeNotifierProvider(
           create: (context) => GamificationProvider(context.read<ApiService>()),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ProgressProvider(context.read<ApiService>()),
         ),
       ],
       child: CalGoApp(router: router),

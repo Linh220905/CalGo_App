@@ -18,6 +18,30 @@ class AppLocalizationsRu extends AppLocalizations {
   String get tabSettings => 'Настройки';
 
   @override
+  String get analysisEyebrow => 'Аналитика';
+
+  @override
+  String get progressTitle => 'Прогресс';
+
+  @override
+  String get settingsEyebrow => 'Настройки';
+
+  @override
+  String get profileHeading => 'Профиль';
+
+  @override
+  String get accountSection => 'Аккаунт';
+
+  @override
+  String get preferencesSection => 'Настройки';
+
+  @override
+  String get trackingSection => 'Цели и отслеживание';
+
+  @override
+  String get supportSection => 'Поддержка';
+
+  @override
   String get today => 'Сегодня';
 
   @override

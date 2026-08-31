@@ -132,6 +132,54 @@ abstract class AppLocalizations {
   /// **'Settings'**
   String get tabSettings;
 
+  /// No description provided for @analysisEyebrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Analysis'**
+  String get analysisEyebrow;
+
+  /// No description provided for @progressTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Progress'**
+  String get progressTitle;
+
+  /// No description provided for @settingsEyebrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settingsEyebrow;
+
+  /// No description provided for @profileHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get profileHeading;
+
+  /// No description provided for @accountSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get accountSection;
+
+  /// No description provided for @preferencesSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferences'**
+  String get preferencesSection;
+
+  /// No description provided for @trackingSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Goals & Tracking'**
+  String get trackingSection;
+
+  /// No description provided for @supportSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Support'**
+  String get supportSection;
+
   /// No description provided for @today.
   ///
   /// In en, this message translates to:
