@@ -718,44 +718,34 @@ class ProfileScreen extends StatelessWidget {
                   },
                   icon: const Icon(
                     Icons.logout_rounded,
-                    color: Color(0xFFEF4444),
+                    color: Color(0xFF64748B),
                     size: 18,
                   ),
                   label: Text(
                     s.logout,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFFEF4444),
+                      color: textColor,
                       height: 1.2,
                     ),
                   ),
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 15),
-                    side: BorderSide(
-                      color: isDark
-                          ? const Color(0xFF451A1A)
-                          : const Color(0xFFFECACA),
-                    ),
-                    backgroundColor: isDark
-                        ? const Color(0xFF2C1517)
-                        : const Color(0xFFFEF2F2),
+                    side: BorderSide(color: borderColor),
+                    backgroundColor: cardBgColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),
                   ),
                 ),
               ),
-              const SizedBox(height: 12),
-              _buildMenuItem(
-                icon: Icons.delete_forever_outlined,
-                label: s.deleteAccount,
-                textColor: const Color(0xFFEF4444),
-                borderColor: Colors.transparent,
+              const SizedBox(height: 24),
+              _buildDeleteAccountAction(
+                context: context,
+                authProvider: authProvider,
+                strings: s,
                 isDark: isDark,
-                isLast: true,
-                onTap: () =>
-                    _showDeleteAccountDialog(context, authProvider, s, isDark),
               ),
             ],
           ),
@@ -939,6 +929,76 @@ class ProfileScreen extends StatelessWidget {
       ),
       clipBehavior: Clip.antiAlias,
       child: Column(children: children),
+    );
+  }
+
+  Widget _buildDeleteAccountAction({
+    required BuildContext context,
+    required AuthProvider authProvider,
+    required AppLocalizations strings,
+    required bool isDark,
+  }) {
+    const danger = Color(0xFFEF4444);
+    final background = isDark
+        ? const Color(0xFF241719)
+        : const Color(0xFFFFF8F8);
+    final border = isDark ? const Color(0xFF542126) : const Color(0xFFFECACA);
+    final muted = isDark ? const Color(0xFFFCA5A5) : const Color(0xFFB91C1C);
+
+    return Semantics(
+      button: true,
+      label: strings.deleteAccount,
+      child: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: background,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: border),
+        ),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(16),
+          onTap: () =>
+              _showDeleteAccountDialog(context, authProvider, strings, isDark),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 13),
+            child: Row(
+              children: [
+                Container(
+                  width: 38,
+                  height: 38,
+                  decoration: BoxDecoration(
+                    color: isDark
+                        ? const Color(0xFF3A1D21)
+                        : const Color(0xFFFEE2E2),
+                    borderRadius: BorderRadius.circular(11),
+                  ),
+                  child: const Icon(
+                    Icons.delete_outline_rounded,
+                    color: Color(0xFFEF4444),
+                    size: 20,
+                  ),
+                ),
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Text(
+                    strings.deleteAccount,
+                    style: TextStyle(
+                      color: muted,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+                const Icon(
+                  Icons.chevron_right_rounded,
+                  color: danger,
+                  size: 22,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 
