@@ -240,6 +240,54 @@ abstract class AppLocalizations {
   /// **'Personal Account'**
   String get profileTitle;
 
+  /// No description provided for @personalInfoTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal Information'**
+  String get personalInfoTitle;
+
+  /// No description provided for @personalInfoName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get personalInfoName;
+
+  /// No description provided for @personalInfoAge.
+  ///
+  /// In en, this message translates to:
+  /// **'Age'**
+  String get personalInfoAge;
+
+  /// No description provided for @personalInfoHeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Height'**
+  String get personalInfoHeight;
+
+  /// No description provided for @personalInfoCurrentWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Current weight'**
+  String get personalInfoCurrentWeight;
+
+  /// No description provided for @personalInfoTargetWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Target weight'**
+  String get personalInfoTargetWeight;
+
+  /// No description provided for @personalInfoGender.
+  ///
+  /// In en, this message translates to:
+  /// **'Gender'**
+  String get personalInfoGender;
+
+  /// No description provided for @personalInfoNotSet.
+  ///
+  /// In en, this message translates to:
+  /// **'Not set'**
+  String get personalInfoNotSet;
+
   /// No description provided for @creditsLabel.
   ///
   /// In en, this message translates to:

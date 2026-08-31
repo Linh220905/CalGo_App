@@ -73,6 +73,30 @@ class AppLocalizationsHi extends AppLocalizations {
   String get profileTitle => 'व्यक्तिगत खाता';
 
   @override
+  String get personalInfoTitle => 'व्यक्तिगत जानकारी';
+
+  @override
+  String get personalInfoName => 'नाम';
+
+  @override
+  String get personalInfoAge => 'आयु';
+
+  @override
+  String get personalInfoHeight => 'लंबाई';
+
+  @override
+  String get personalInfoCurrentWeight => 'वर्तमान वजन';
+
+  @override
+  String get personalInfoTargetWeight => 'लक्ष्य वजन';
+
+  @override
+  String get personalInfoGender => 'लिंग';
+
+  @override
+  String get personalInfoNotSet => 'सेट नहीं है';
+
+  @override
   String get creditsLabel => 'स्कैन क्रेडिट';
 
   @override

@@ -9,12 +9,16 @@ class AppSettingsProvider extends ChangeNotifier {
       .map((locale) => locale.languageCode)
       .toSet();
 
+  static const String _kKeyAppleHealth = 'app_apple_health_connected';
+
   ThemeMode _themeMode = ThemeMode.light;
   String _languageCode = 'en';
+  bool _isAppleHealthConnected = false;
 
   ThemeMode get themeMode => _themeMode;
   bool get isDarkMode => _themeMode == ThemeMode.dark;
   String get languageCode => _languageCode;
+  bool get isAppleHealthConnected => _isAppleHealthConnected;
   Locale get locale => Locale(_languageCode);
   AppLocalizations get strings => lookupAppLocalizations(locale);
 
@@ -30,6 +34,8 @@ class AppSettingsProvider extends ChangeNotifier {
       final isDark = prefs.getBool(_kKeyThemeMode) ?? false;
       _themeMode = isDark ? ThemeMode.dark : ThemeMode.light;
 
+      _isAppleHealthConnected = prefs.getBool(_kKeyAppleHealth) ?? false;
+
       // A saved choice is explicit. Otherwise follow the device language and
       // fall back to the template locale when it is not supported.
       final savedLanguage = prefs.getString(_kKeyLanguage);
@@ -39,6 +45,16 @@ class AppSettingsProvider extends ChangeNotifier {
       );
 
       notifyListeners();
+    } catch (_) {}
+  }
+
+  Future<void> setAppleHealthConnected(bool connected) async {
+    _isAppleHealthConnected = connected;
+    notifyListeners();
+
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool(_kKeyAppleHealth, connected);
     } catch (_) {}
   }
 

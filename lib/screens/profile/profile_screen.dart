@@ -1,13 +1,17 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../config/app_build_config.dart';
 import '../../models/user.dart';
-import '../../providers/auth_provider.dart';
 import '../../providers/app_settings_provider.dart';
+import '../../providers/auth_provider.dart';
+import '../../providers/payment_provider.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../widgets/language_selector.dart';
+import '../../widgets/apple_health_modal.dart';
+import '../../widgets/recalculate_target_modal.dart';
 import '../../utils/payment_platform.dart';
 import '../onboarding/steps/premium_paywall_step.dart';
 
@@ -41,27 +45,58 @@ class ProfileScreen extends StatelessWidget {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
+        scrollable: true,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         backgroundColor: isDark ? const Color(0xFF212027) : Colors.white,
         title: Text(
-          s.profileTitle,
+          s.personalInfoTitle,
           style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
+            fontSize: 20,
+            fontWeight: FontWeight.w800,
             color: isDark ? Colors.white : const Color(0xFF0F172A),
           ),
         ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildInfoRow('Tên', user?.name ?? s.defaultProfileName, isDark),
-            const SizedBox(height: 10),
-            _buildInfoRow('Email', user?.email ?? '—', isDark),
-            const SizedBox(height: 10),
-            _buildInfoRow(s.creditsLabel, '${user?.credits ?? 0}', isDark),
-            const SizedBox(height: 10),
-            _buildInfoRow(s.statistics, '${user?.totalScans ?? 0}', isDark),
+            _buildPersonalInfoRow(
+              label: s.personalInfoName,
+              value: user?.name?.trim().isNotEmpty == true
+                  ? user!.name!
+                  : s.defaultProfileName,
+              isDark: isDark,
+            ),
+            _buildPersonalInfoRow(
+              label: s.personalInfoAge,
+              value: user?.age?.toString() ?? s.personalInfoNotSet,
+              isDark: isDark,
+            ),
+            _buildPersonalInfoRow(
+              label: s.personalInfoHeight,
+              value: _formatMeasurement(user?.heightCm, 'cm', s),
+              isDark: isDark,
+            ),
+            _buildPersonalInfoRow(
+              label: s.personalInfoCurrentWeight,
+              value: _formatMeasurement(user?.currentWeightKg, 'kg', s),
+              isDark: isDark,
+            ),
+            _buildPersonalInfoRow(
+              label: s.personalInfoTargetWeight,
+              value: _formatMeasurement(user?.targetWeightKg, 'kg', s),
+              isDark: isDark,
+            ),
+            _buildPersonalInfoRow(
+              label: s.personalInfoGender,
+              value: _genderLabel(user?.gender, s),
+              isDark: isDark,
+            ),
+            _buildPersonalInfoRow(
+              label: s.calorieTarget,
+              value: s.caloriesValue(user?.dailyCalorieTarget.round() ?? 2000),
+              isDark: isDark,
+              isLast: true,
+            ),
           ],
         ),
         actions: [
@@ -77,109 +112,86 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoRow(String label, String value, bool isDark) {
-    return Row(
+  String _formatMeasurement(
+    double? value,
+    String unit,
+    AppLocalizations strings,
+  ) {
+    if (value == null || value <= 0) return strings.personalInfoNotSet;
+    final formatted = value == value.roundToDouble()
+        ? value.toStringAsFixed(0)
+        : value.toStringAsFixed(1);
+    return '$formatted $unit';
+  }
+
+  String _genderLabel(String? gender, AppLocalizations strings) {
+    return switch (gender?.toLowerCase()) {
+      'male' => strings.genderMale,
+      'female' => strings.genderFemale,
+      'other' => strings.genderOther,
+      _ => strings.personalInfoNotSet,
+    };
+  }
+
+  Widget _buildPersonalInfoRow({
+    required String label,
+    required String value,
+    required bool isDark,
+    bool isLast = false,
+  }) {
+    final labelColor = isDark
+        ? const Color(0xFFB5B3BE)
+        : const Color(0xFF64748B);
+    final valueColor = isDark ? Colors.white : const Color(0xFF0F172A);
+    final dividerColor = isDark
+        ? const Color(0xFF34323D)
+        : const Color(0xFFE2E8F0);
+
+    return Column(
       children: [
-        Text(
-          label,
-          style: TextStyle(
-            color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
-            fontSize: 14,
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 14),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Text(
+                  label,
+                  style: TextStyle(
+                    color: labelColor,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 16),
+              Flexible(
+                child: Text(
+                  value,
+                  textAlign: TextAlign.end,
+                  style: TextStyle(
+                    color: valueColor,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
-        const SizedBox(width: 16),
-        Expanded(
-          child: Text(
-            value,
-            textAlign: TextAlign.end,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              color: isDark ? Colors.white : const Color(0xFF0F172A),
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ),
+        if (!isLast) Divider(height: 1, color: dividerColor),
       ],
     );
   }
 
-  void _showAppleHealthDialog(BuildContext context, bool isDark) {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        backgroundColor: isDark ? const Color(0xFF212027) : Colors.white,
-        title: Row(
-          children: [
-            const Icon(Icons.favorite_rounded, color: Color(0xFFEF4444)),
-            const SizedBox(width: 8),
-            Text(
-              'Apple Health',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: isDark ? Colors.white : const Color(0xFF0F172A),
-              ),
-            ),
-          ],
-        ),
-        content: Text(
-          'Đồng bộ dữ liệu calo tiêu thụ và bước chân từ Apple Health / Health Connect đang trong quá trình phát triển và sẽ sẵn sàng ở bản cập nhật tiếp theo.',
-          style: TextStyle(
-            fontSize: 14,
-            height: 1.5,
-            color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: const Text(
-              'Đã hiểu',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ),
-        ],
-      ),
-    );
+  Future<void> _showAppleHealthDialog(BuildContext context, bool isDark) async {
+    final result = await AppleHealthModal.show(context, isDark: isDark);
+    if (result != null && context.mounted) {
+      await context.read<AppSettingsProvider>().setAppleHealthConnected(result);
+    }
   }
 
-  void _showTargetDialog(BuildContext context, int currentTarget, bool isDark) {
-    final s = context.read<AppSettingsProvider>().strings;
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        scrollable: true,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        backgroundColor: isDark ? const Color(0xFF212027) : Colors.white,
-        title: Text(
-          s.dailyCalorieGoal,
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: isDark ? Colors.white : const Color(0xFF0F172A),
-          ),
-        ),
-        content: Text(
-          s.dailyCalorieGoalMessage(currentTarget),
-          style: TextStyle(
-            fontSize: 14,
-            color: isDark ? const Color(0xFF8E8D9A) : const Color(0xFF64748B),
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: Text(
-              s.close,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+
 
   void _showNotificationInfoDialog(BuildContext context, bool isDark) {
     final s = context.read<AppSettingsProvider>().strings;
@@ -290,92 +302,6 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  void _showPrivacyPolicyDialog(
-    BuildContext context,
-    AppLocalizations s,
-    bool isDark,
-  ) {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        backgroundColor: isDark ? const Color(0xFF212027) : Colors.white,
-        title: Text(
-          s.privacyPolicy,
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: isDark ? Colors.white : const Color(0xFF0F172A),
-          ),
-        ),
-        content: SingleChildScrollView(
-          child: Text(
-            _legalContentForPlatform(s.privacyPolicyContent),
-            style: TextStyle(
-              fontSize: 13,
-              height: 1.5,
-              color: isDark ? const Color(0xFF8E8D9A) : const Color(0xFF64748B),
-            ),
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => _openLegalPage('privacy'),
-            child: Text(s.openOnline),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: Text(
-              s.ok,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _showTermsDialog(BuildContext context, AppLocalizations s, bool isDark) {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        backgroundColor: isDark ? const Color(0xFF212027) : Colors.white,
-        title: Text(
-          s.termsOfService,
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: isDark ? Colors.white : const Color(0xFF0F172A),
-          ),
-        ),
-        content: SingleChildScrollView(
-          child: Text(
-            _legalContentForPlatform(s.termsOfServiceContent),
-            style: TextStyle(
-              fontSize: 13,
-              height: 1.5,
-              color: isDark ? const Color(0xFF8E8D9A) : const Color(0xFF64748B),
-            ),
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => _openLegalPage('terms'),
-            child: Text(s.openOnline),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: Text(
-              s.ok,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   void _showDeleteAccountDialog(
     BuildContext context,
     AuthProvider authProvider,
@@ -456,9 +382,13 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final settings = context.watch<AppSettingsProvider>();
     final authProvider = context.watch<AuthProvider>();
+    final payment = context.watch<PaymentProvider>();
     final isDark = settings.isDarkMode;
     final user = authProvider.user;
     final s = settings.strings;
+    final isPremiumUser =
+        (user?.subscriptionTier != null && user!.subscriptionTier!.isNotEmpty) ||
+        payment.purchaseStates.values.any((st) => st == PurchaseState.purchased);
 
     final bgColor = isDark ? const Color(0xFF121116) : const Color(0xFFFAFAFB);
     final cardBgColor = isDark ? const Color(0xFF1E1C24) : Colors.white;
@@ -529,18 +459,6 @@ class ProfileScreen extends StatelessWidget {
                     onTap: () => _showPersonalInfoDialog(context, user, isDark),
                   ),
                   _buildMenuItem(
-                    icon: Icons.settings_outlined,
-                    label: s.preferencesSection,
-                    textColor: textColor,
-                    borderColor: borderColor,
-                    isDark: isDark,
-                    onTap: () => _showTargetDialog(
-                      context,
-                      user?.dailyCalorieTarget.round() ?? 2000,
-                      isDark,
-                    ),
-                  ),
-                  _buildMenuItem(
                     icon: Icons.g_translate_rounded,
                     label: s.language,
                     badge: s.languageDisplayName,
@@ -562,15 +480,18 @@ class ProfileScreen extends StatelessWidget {
                 borderColor: borderColor,
                 isDark: isDark,
                 children: [
-                  _buildMenuItem(
-                    icon: Icons.favorite_outline_rounded,
-                    label: 'Apple Health',
-                    badge: 'Chưa kết nối',
-                    textColor: textColor,
-                    borderColor: borderColor,
-                    isDark: isDark,
-                    onTap: () => _showAppleHealthDialog(context, isDark),
-                  ),
+                  if (defaultTargetPlatform == TargetPlatform.iOS)
+                    _buildMenuItem(
+                      icon: Icons.favorite_outline_rounded,
+                      label: 'Apple Health',
+                      badge: settings.isAppleHealthConnected
+                          ? 'Đã kết nối'
+                          : 'Chưa kết nối',
+                      textColor: textColor,
+                      borderColor: borderColor,
+                      isDark: isDark,
+                      onTap: () => _showAppleHealthDialog(context, isDark),
+                    ),
                   _buildMenuItem(
                     icon: Icons.center_focus_strong_outlined,
                     label: s.calorieTarget,
@@ -580,11 +501,7 @@ class ProfileScreen extends StatelessWidget {
                     textColor: textColor,
                     borderColor: borderColor,
                     isDark: isDark,
-                    onTap: () => _showTargetDialog(
-                      context,
-                      user?.dailyCalorieTarget.round() ?? 2000,
-                      isDark,
-                    ),
+                    onTap: () => showTargetNutritionModal(context, isDark),
                   ),
                   _buildMenuItem(
                     icon: Icons.notifications_none_rounded,
@@ -607,7 +524,7 @@ class ProfileScreen extends StatelessWidget {
                 borderColor: borderColor,
                 isDark: isDark,
                 children: [
-                  if (!AppBuildConfig.isTesting)
+                  if (!AppBuildConfig.isTesting && !isPremiumUser)
                     _buildMenuItem(
                       icon: Icons.workspace_premium_outlined,
                       label: s.premiumMembership,
@@ -631,21 +548,11 @@ class ProfileScreen extends StatelessWidget {
                   _buildMenuItem(
                     icon: Icons.bolt_outlined,
                     label: s.buyCredits,
-                    badge: s.creditsCount(user?.credits ?? 0),
-                    textColor: textColor,
-                    borderColor: borderColor,
-                    isDark: isDark,
-                    onTap: () => context.push('/pricing'),
-                  ),
-                  _buildMenuItem(
-                    icon: Icons.bar_chart_outlined,
-                    label: s.statistics,
-                    badge: '${user?.totalScans ?? 0}',
                     textColor: textColor,
                     borderColor: borderColor,
                     isDark: isDark,
                     isLast: true,
-                    onTap: () => context.push('/stats'),
+                    onTap: () => context.push('/pricing'),
                   ),
                 ],
               ),
@@ -673,7 +580,7 @@ class ProfileScreen extends StatelessWidget {
                     textColor: textColor,
                     borderColor: borderColor,
                     isDark: isDark,
-                    onTap: () => _showPrivacyPolicyDialog(context, s, isDark),
+                    onTap: () => _openLegalPage('privacy'),
                   ),
                   _buildMenuItem(
                     icon: Icons.description_outlined,
@@ -681,7 +588,7 @@ class ProfileScreen extends StatelessWidget {
                     textColor: textColor,
                     borderColor: borderColor,
                     isDark: isDark,
-                    onTap: () => _showTermsDialog(context, s, isDark),
+                    onTap: () => _openLegalPage('terms'),
                   ),
                   _buildMenuItem(
                     icon: Icons.mail_outline_rounded,
@@ -704,9 +611,18 @@ class ProfileScreen extends StatelessWidget {
                 ],
               ),
 
-              const SizedBox(height: 28),
+              const SizedBox(height: 20),
 
-              // Logout Button
+              // Delete Account (subtle & compact above logout)
+              _buildDeleteAccountAction(
+                context: context,
+                authProvider: authProvider,
+                strings: s,
+                isDark: isDark,
+              ),
+              const SizedBox(height: 16),
+
+              // Logout Button (at the bottom)
               SizedBox(
                 width: double.infinity,
                 child: OutlinedButton.icon(
@@ -739,13 +655,6 @@ class ProfileScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 24),
-              _buildDeleteAccountAction(
-                context: context,
-                authProvider: authProvider,
-                strings: s,
-                isDark: isDark,
               ),
             ],
           ),
@@ -782,7 +691,7 @@ class ProfileScreen extends StatelessWidget {
     final initials = _getInitials(name);
     final premiumLabel =
         !AppBuildConfig.isTesting && user?.hasPremiumAccess == true
-        ? strings.premiumActivated
+        ? 'Premium'
         : strings.free;
     final showsPremium =
         !AppBuildConfig.isTesting && user?.hasPremiumAccess == true;
@@ -938,64 +847,35 @@ class ProfileScreen extends StatelessWidget {
     required AppLocalizations strings,
     required bool isDark,
   }) {
-    const danger = Color(0xFFEF4444);
-    final background = isDark
-        ? const Color(0xFF241719)
-        : const Color(0xFFFFF8F8);
-    final border = isDark ? const Color(0xFF542126) : const Color(0xFFFECACA);
-    final muted = isDark ? const Color(0xFFFCA5A5) : const Color(0xFFB91C1C);
+    final dangerColor = isDark
+        ? const Color(0xFFF87171)
+        : const Color(0xFFDC2626);
 
-    return Semantics(
-      button: true,
-      label: strings.deleteAccount,
-      child: Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: background,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: border),
-        ),
-        child: InkWell(
-          borderRadius: BorderRadius.circular(16),
-          onTap: () =>
-              _showDeleteAccountDialog(context, authProvider, strings, isDark),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 13),
-            child: Row(
-              children: [
-                Container(
-                  width: 38,
-                  height: 38,
-                  decoration: BoxDecoration(
-                    color: isDark
-                        ? const Color(0xFF3A1D21)
-                        : const Color(0xFFFEE2E2),
-                    borderRadius: BorderRadius.circular(11),
-                  ),
-                  child: const Icon(
-                    Icons.delete_outline_rounded,
-                    color: Color(0xFFEF4444),
-                    size: 20,
-                  ),
+    return Center(
+      child: InkWell(
+        onTap: () =>
+            _showDeleteAccountDialog(context, authProvider, strings, isDark),
+        borderRadius: BorderRadius.circular(8),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.delete_outline_rounded,
+                color: dangerColor.withValues(alpha: 0.65),
+                size: 15,
+              ),
+              const SizedBox(width: 6),
+              Text(
+                strings.deleteAccount,
+                style: TextStyle(
+                  color: dangerColor.withValues(alpha: 0.75),
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500,
                 ),
-                const SizedBox(width: 14),
-                Expanded(
-                  child: Text(
-                    strings.deleteAccount,
-                    style: TextStyle(
-                      color: muted,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-                const Icon(
-                  Icons.chevron_right_rounded,
-                  color: danger,
-                  size: 22,
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
@@ -1169,3 +1049,5 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 }
+
+

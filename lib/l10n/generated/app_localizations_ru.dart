@@ -72,6 +72,30 @@ class AppLocalizationsRu extends AppLocalizations {
   String get profileTitle => 'Личный счет';
 
   @override
+  String get personalInfoTitle => 'Личная информация';
+
+  @override
+  String get personalInfoName => 'Имя';
+
+  @override
+  String get personalInfoAge => 'Возраст';
+
+  @override
+  String get personalInfoHeight => 'Рост';
+
+  @override
+  String get personalInfoCurrentWeight => 'Текущий вес';
+
+  @override
+  String get personalInfoTargetWeight => 'Целевой вес';
+
+  @override
+  String get personalInfoGender => 'Пол';
+
+  @override
+  String get personalInfoNotSet => 'Не указано';
+
+  @override
   String get creditsLabel => 'Сканирование кредитов';
 
   @override

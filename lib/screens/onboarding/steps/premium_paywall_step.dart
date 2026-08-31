@@ -540,7 +540,7 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
     if (_enableFreeTrial && days > 0) {
       return 'Dùng thử $days ngày miễn phí';
     }
-    return 'Đăng ký Premium ngay';
+    return 'Dùng miễn phí ngay';
   }
 
   @override

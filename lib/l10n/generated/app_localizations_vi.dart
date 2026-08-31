@@ -72,6 +72,30 @@ class AppLocalizationsVi extends AppLocalizations {
   String get profileTitle => 'Tài khoản cá nhân';
 
   @override
+  String get personalInfoTitle => 'Thông tin cá nhân';
+
+  @override
+  String get personalInfoName => 'Họ và tên';
+
+  @override
+  String get personalInfoAge => 'Tuổi';
+
+  @override
+  String get personalInfoHeight => 'Chiều cao';
+
+  @override
+  String get personalInfoCurrentWeight => 'Cân nặng hiện tại';
+
+  @override
+  String get personalInfoTargetWeight => 'Cân nặng mục tiêu';
+
+  @override
+  String get personalInfoGender => 'Giới tính';
+
+  @override
+  String get personalInfoNotSet => 'Chưa cập nhật';
+
+  @override
   String get creditsLabel => 'Lượt quét';
 
   @override

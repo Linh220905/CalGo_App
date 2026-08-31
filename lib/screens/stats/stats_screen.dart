@@ -441,6 +441,33 @@ class _WeightHeroCard extends StatelessWidget {
                       Text('kg', style: TextStyle(color: muted, fontSize: 18)),
                     ],
                   ),
+                  if (current != null && start != null && (current - start).abs() >= 0.1) ...[
+                    const SizedBox(height: 6),
+                    Row(
+                      children: [
+                        Icon(
+                          (current - start) <= 0
+                              ? Icons.south_west_rounded
+                              : Icons.north_east_rounded,
+                          size: 15,
+                          color: (current - start) <= 0
+                              ? const Color(0xFF16A34A)
+                              : const Color(0xFFEF4444),
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          '${(current - start).abs().toStringAsFixed(1)} kg từ Aug ${DateTime.now().year}',
+                          style: TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w600,
+                            color: (current - start) <= 0
+                                ? const Color(0xFF16A34A)
+                                : const Color(0xFFEF4444),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ],
               ),
               ElevatedButton.icon(
@@ -683,7 +710,7 @@ class _WeightProgressCard extends StatelessWidget {
   }
 }
 
-class _NutritionSummaryCard extends StatelessWidget {
+class _NutritionSummaryCard extends StatefulWidget {
   final WeeklyStats weekly;
   final Color card, border, text, muted;
   final bool dark;
@@ -698,83 +725,165 @@ class _NutritionSummaryCard extends StatelessWidget {
   });
 
   @override
+  State<_NutritionSummaryCard> createState() => _NutritionSummaryCardState();
+}
+
+class _NutritionSummaryCardState extends State<_NutritionSummaryCard> {
+  int _selectedWeekIndex = 0; // 0: Tuần này, 1: Tuần trước, 2: 2 tuần trước, 3: 3 tuần trước
+
+  String _formatCalo(double value) {
+    final valInt = value.round();
+    final str = valInt.toString();
+    return str.replaceAllMapped(
+      RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+      (Match m) => '${m[1]}.',
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final caloStr = _formatCalo(widget.weekly.avgCalo);
+
     return _Card(
-      card: card,
-      border: border,
-      radius: 26,
-      padding: const EdgeInsets.fromLTRB(20, 20, 20, 18),
+      card: widget.card,
+      border: widget.border,
+      radius: 28,
+      padding: const EdgeInsets.fromLTRB(20, 22, 20, 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  'Dinh dưỡng trung bình',
-                  style: TextStyle(
-                    color: text,
-                    fontSize: 22,
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-              ),
-              _ProgressPill(text: '${weekly.daysLogged}/7 ngày', dark: dark),
-            ],
-          ),
-          const SizedBox(height: 5),
+          // Title
           Text(
-            'Dữ liệu từ các bữa ăn bạn đã ghi nhận.',
-            style: TextStyle(color: muted, fontSize: 14),
+            'Calo trung bình mỗi ngày',
+            style: TextStyle(
+              color: widget.text,
+              fontSize: 22,
+              fontWeight: FontWeight.w800,
+            ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 10),
+
+          // Big Calorie Number + "cal"
           Row(
+            crossAxisAlignment: CrossAxisAlignment.baseline,
+            textBaseline: TextBaseline.alphabetic,
             children: [
-              Expanded(
-                child: _MacroMetric(
-                  label: 'Calo',
-                  value: '${weekly.avgCalo.round()}',
-                  unit: 'kcal',
-                  color: _kAccent,
-                  text: text,
-                  muted: muted,
+              Text(
+                caloStr.isEmpty ? '0' : caloStr,
+                style: TextStyle(
+                  color: widget.text,
+                  fontSize: 48,
+                  height: 1.0,
+                  fontWeight: FontWeight.w900,
+                  letterSpacing: -1.5,
                 ),
               ),
-              Expanded(
-                child: _MacroMetric(
-                  label: 'Đạm',
-                  value: weekly.avgProtein.toStringAsFixed(1),
-                  unit: 'g',
-                  color: _kProtein,
-                  text: text,
-                  muted: muted,
-                ),
-              ),
-              Expanded(
-                child: _MacroMetric(
-                  label: 'Carb',
-                  value: weekly.avgCarb.toStringAsFixed(1),
-                  unit: 'g',
-                  color: _kCarbs,
-                  text: text,
-                  muted: muted,
-                ),
-              ),
-              Expanded(
-                child: _MacroMetric(
-                  label: 'Béo',
-                  value: weekly.avgFat.toStringAsFixed(1),
-                  unit: 'g',
-                  color: _kFat,
-                  text: text,
-                  muted: muted,
+              const SizedBox(width: 8),
+              Text(
+                'cal',
+                style: TextStyle(
+                  color: widget.muted,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ],
           ),
+          const SizedBox(height: 24),
+
+          // Stacked Bar Chart with Y-axis scale and gridlines
+          _MacroChart(
+            points: widget.weekly.dailyPoints,
+            muted: widget.muted,
+            dark: widget.dark,
+          ),
+          const SizedBox(height: 16),
+
+          // Legend dots: • Đạm  • Carb  • Béo
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _LegendDot(
+                color: const Color(0xFFF95A49),
+                label: 'Đạm',
+                muted: widget.muted,
+              ),
+              const SizedBox(width: 18),
+              _LegendDot(
+                color: const Color(0xFFF59E0B),
+                label: 'Carb',
+                muted: widget.muted,
+              ),
+              const SizedBox(width: 18),
+              _LegendDot(
+                color: const Color(0xFF7B4DDE),
+                label: 'Béo',
+                muted: widget.muted,
+              ),
+            ],
+          ),
           const SizedBox(height: 20),
-          _MacroChart(points: weekly.dailyPoints, muted: muted, dark: dark),
+
+          // Horizontal Week Filter Pills Container
+          Container(
+            padding: const EdgeInsets.all(4),
+            decoration: BoxDecoration(
+              color: widget.dark
+                  ? const Color(0xFF2B2934)
+                  : const Color(0xFFF1F5F9),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  _buildWeekPill('Tuần này', 0),
+                  _buildWeekPill('Tuần trước', 1),
+                  _buildWeekPill('2 tuần trước', 2),
+                  _buildWeekPill('3 tuần trước', 3),
+                ],
+              ),
+            ),
+          ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildWeekPill(String label, int index) {
+    final isSelected = _selectedWeekIndex == index;
+    return GestureDetector(
+      onTap: () => setState(() => _selectedWeekIndex = index),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 180),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        decoration: BoxDecoration(
+          color: isSelected
+              ? (widget.dark ? const Color(0xFF383644) : Colors.white)
+              : Colors.transparent,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: isSelected
+              ? [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.06),
+                    blurRadius: 4,
+                    offset: const Offset(0, 2),
+                  ),
+                ]
+              : null,
+        ),
+        child: Text(
+          label,
+          style: TextStyle(
+            fontSize: 13,
+            fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+            color: isSelected
+                ? widget.text
+                : (widget.dark
+                    ? const Color(0xFF94A3B8)
+                    : const Color(0xFF64748B)),
+          ),
+        ),
       ),
     );
   }
@@ -1562,108 +1671,223 @@ class _MacroChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (points.every(
-      (point) => point.protein == 0 && point.carbs == 0 && point.fat == 0,
-    )) {
+    if (points.isEmpty) {
       return _EmptyChart(
-        message: 'Chưa có đủ dữ liệu macro',
+        message: 'Chưa có đủ dữ liệu dinh dưỡng',
         muted: muted,
-        height: 150,
+        height: 160,
       );
     }
-    final maxTotal = points.fold<double>(1, (max, point) {
-      final total = point.protein + point.carbs + point.fat;
+
+    final double maxVal = points.fold<double>(0, (max, p) {
+      final sum = (p.protein * 4) + (p.carbs * 4) + (p.fat * 9);
+      final total = sum > 0 ? sum : p.calo.toDouble();
       return total > max ? total : max;
     });
+
+    final double yMax = maxVal > 0
+        ? (maxVal > 1500 ? ((maxVal / 1000).ceil() * 1000.0) : 1500.0)
+        : 3000.0;
+    final double yMid = yMax / 2;
+
+    final dayLabels = ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'];
+
     return SizedBox(
       height: 170,
       child: Column(
         children: [
           Expanded(
-            child: CustomPaint(
-              painter: _MacroStackedPainter(
-                points: points,
-                maxTotal: maxTotal,
-                dark: dark,
-              ),
-              size: Size.infinite,
+            child: Row(
+              children: [
+                // Y-Axis Scale Numbers
+                SizedBox(
+                  width: 38,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        _formatYLabel(yMax),
+                        style: TextStyle(
+                          color: muted,
+                          fontSize: 10,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      Text(
+                        _formatYLabel(yMid),
+                        style: TextStyle(
+                          color: muted,
+                          fontSize: 10,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      Text(
+                        '0',
+                        style: TextStyle(
+                          color: muted,
+                          fontSize: 10,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 4),
+                // Stacked Bar Canvas
+                Expanded(
+                  child: CustomPaint(
+                    painter: _MacroStackedPainter(
+                      points: points,
+                      yMax: yMax,
+                      dark: dark,
+                    ),
+                    size: Size.infinite,
+                  ),
+                ),
+              ],
             ),
           ),
           const SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: points.map((point) {
-              final label = point.dateKey.length >= 10
-                  ? point.dateKey.substring(8)
-                  : '';
-              return Text(
-                'T$label',
-                style: TextStyle(color: muted, fontSize: 10),
-              );
-            }).toList(),
+          // Day labels
+          Padding(
+            padding: const EdgeInsets.only(left: 42),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: List.generate(
+                points.isNotEmpty ? points.length : 7,
+                (index) {
+                  final label = index < dayLabels.length
+                      ? dayLabels[index]
+                      : 'T${index + 1}';
+                  return Text(
+                    label,
+                    style: TextStyle(
+                      color: muted,
+                      fontSize: 11,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  );
+                },
+              ),
+            ),
           ),
         ],
       ),
+    );
+  }
+
+  String _formatYLabel(double val) {
+    final str = val.round().toString();
+    return str.replaceAllMapped(
+      RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+      (Match m) => '${m[1]}.',
     );
   }
 }
 
 class _MacroStackedPainter extends CustomPainter {
   final List<DayCaloriePoint> points;
-  final double maxTotal;
+  final double yMax;
   final bool dark;
 
   const _MacroStackedPainter({
     required this.points,
-    required this.maxTotal,
+    required this.yMax,
     required this.dark,
   });
 
   @override
   void paint(Canvas canvas, Size size) {
-    final grid = Paint()
-      ..color = dark ? const Color(0xFF34313D) : const Color(0xFFF0F0EE)
-      ..strokeWidth = 1;
-    for (var i = 0; i < 3; i++) {
-      final y = 6 + (size.height - 12) * i / 2;
-      canvas.drawLine(Offset(0, y), Offset(size.width, y), grid);
+    // 1. Draw dashed grid lines
+    final gridPaint = Paint()
+      ..color = dark ? const Color(0xFF34313D) : const Color(0xFFE2E8F0)
+      ..strokeWidth = 1.0;
+
+    for (int i = 0; i < 3; i++) {
+      final y = 4 + (size.height - 8) * i / 2;
+      _drawDashedLine(canvas, Offset(0, y), Offset(size.width, y), gridPaint);
     }
 
-    final width = (size.width / points.length * .42).clamp(14.0, 28.0);
-    for (var i = 0; i < points.length; i++) {
+    if (points.isEmpty) return;
+
+    // 2. Draw stacked bars
+    final barWidth = (size.width / points.length * 0.45).clamp(16.0, 30.0);
+    const colors = [
+      Color(0xFFF95A49), // Bottom: Đạm (Protein - Coral)
+      Color(0xFFF59E0B), // Middle: Carb (Amber)
+      Color(0xFF7B4DDE), // Top: Béo (Fat - Purple)
+    ];
+
+    for (int i = 0; i < points.length; i++) {
       final point = points[i];
-      final total = point.protein + point.carbs + point.fat;
-      final x = size.width * (i + .5) / points.length;
-      final totalHeight = (size.height - 12) * (total / maxTotal);
-      var top = size.height - totalHeight;
-      final values = <double>[point.fat, point.carbs, point.protein];
-      final colors = <Color>[_kFat, _kCarbs, _kAccent];
-      for (var segment = 0; segment < values.length; segment++) {
-        final valueHeight = total <= 0
-            ? 0.0
-            : totalHeight * values[segment] / total;
-        if (valueHeight <= 0) continue;
+      final x = size.width * (i + 0.5) / points.length;
+
+      final pCal = point.protein * 4;
+      final cCal = point.carbs * 4;
+      final fCal = point.fat * 9;
+      final totalCal = (pCal + cCal + fCal) > 0
+          ? (pCal + cCal + fCal)
+          : point.calo.toDouble();
+
+      if (totalCal <= 0) continue;
+
+      final totalBarHeight =
+          ((size.height - 8) * (totalCal / yMax)).clamp(0.0, size.height - 8);
+      var currentY = size.height - 4;
+
+      final segmentVals = [pCal, cCal, fCal];
+
+      for (int seg = 0; seg < segmentVals.length; seg++) {
+        final val = segmentVals[seg];
+        final segHeight =
+            totalCal > 0 ? (totalBarHeight * (val / totalCal)) : 0.0;
+        if (segHeight <= 0) continue;
+
+        final segTop = currentY - segHeight;
+        final isTopSegment = seg == segmentVals.length - 1 ||
+            segmentVals.sublist(seg + 1).every((v) => v <= 0);
+
         final rect = RRect.fromRectAndCorners(
-          Rect.fromLTWH(x - width / 2, top, width, valueHeight),
-          topLeft: segment == values.length - 1
-              ? const Radius.circular(5)
-              : Radius.zero,
-          topRight: segment == values.length - 1
-              ? const Radius.circular(5)
-              : Radius.zero,
-          bottomLeft: segment == 0 ? const Radius.circular(5) : Radius.zero,
-          bottomRight: segment == 0 ? const Radius.circular(5) : Radius.zero,
+          Rect.fromLTWH(x - barWidth / 2, segTop, barWidth, segHeight),
+          topLeft: isTopSegment ? const Radius.circular(6) : Radius.zero,
+          topRight: isTopSegment ? const Radius.circular(6) : Radius.zero,
         );
-        canvas.drawRRect(rect, Paint()..color = colors[segment]);
-        top += valueHeight;
+
+        canvas.drawRRect(rect, Paint()..color = colors[seg]);
+        currentY = segTop;
       }
+    }
+  }
+
+  void _drawDashedLine(Canvas canvas, Offset start, Offset end, Paint paint) {
+    final distance = (end - start).distance;
+    final dx = (end.dx - start.dx) / distance;
+    final dy = (end.dy - start.dy) / distance;
+    var startX = start.dx;
+    var startY = start.dy;
+    var rem = distance;
+    const dashWidth = 3.0;
+    const dashSpace = 3.0;
+    while (rem > 0) {
+      canvas.drawLine(
+        Offset(startX, startY),
+        Offset(
+          startX + dx * (rem < dashWidth ? rem : dashWidth),
+          startY + dy * (rem < dashWidth ? rem : dashWidth),
+        ),
+        paint,
+      );
+      startX += dx * (dashWidth + dashSpace);
+      startY += dy * (dashWidth + dashSpace);
+      rem -= (dashWidth + dashSpace);
     }
   }
 
   @override
   bool shouldRepaint(covariant _MacroStackedPainter oldDelegate) =>
       oldDelegate.points != points ||
-      oldDelegate.maxTotal != maxTotal ||
+      oldDelegate.yMax != yMax ||
       oldDelegate.dark != dark;
 }
 

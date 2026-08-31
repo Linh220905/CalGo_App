@@ -851,7 +851,7 @@ class _ResultScreenState extends State<ResultScreen> {
                 // ── Full-width food hero ─────────────────────
                 SizedBox(
                   width: double.infinity,
-                  height: 255,
+                  height: 264,
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
@@ -895,7 +895,7 @@ class _ResultScreenState extends State<ResultScreen> {
                   ),
                 ),
                 Transform.translate(
-                  offset: const Offset(0, -18),
+                  offset: const Offset(0, -14),
                   child: Container(
                     width: double.infinity,
                     padding: const EdgeInsets.fromLTRB(18, 16, 18, 8),
@@ -2101,8 +2101,7 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
       context: context,
       builder: (ctx) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        backgroundColor:
-            widget.isDark ? const Color(0xFF212027) : Colors.white,
+        backgroundColor: widget.isDark ? const Color(0xFF212027) : Colors.white,
         title: Text(
           'Thêm món thủ công',
           style: TextStyle(
@@ -2192,7 +2191,10 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
     final keyboardHeight = MediaQuery.viewInsetsOf(context).bottom;
     final screenHeight = MediaQuery.sizeOf(context).height;
     final availableHeight = screenHeight - keyboardHeight;
-    final modalHeight = availableHeight.clamp(screenHeight * 0.7, screenHeight * 0.94);
+    final modalHeight = availableHeight.clamp(
+      screenHeight * 0.7,
+      screenHeight * 0.94,
+    );
 
     final displayResults = _searchResults.isNotEmpty
         ? _searchResults
@@ -2273,11 +2275,7 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
                       color: surface,
                       shape: BoxShape.circle,
                     ),
-                    child: Icon(
-                      Icons.add_rounded,
-                      color: textDark,
-                      size: 22,
-                    ),
+                    child: Icon(Icons.add_rounded, color: textDark, size: 22),
                   ),
                 ),
               ],
@@ -2363,23 +2361,25 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
                         separatorBuilder: (_, __) => const SizedBox(height: 10),
                         itemBuilder: (context, idx) {
                           final hit = displayResults[idx];
-                          final title =
-                              (hit['name'] ?? hit['ten'] ?? '').toString();
-                          final subtitle = (hit['subtitle'] ??
-                                  hit['vi_name'] ??
-                                  hit['aliases']?['vi'] ??
-                                  title)
+                          final title = (hit['name'] ?? hit['ten'] ?? '')
                               .toString();
+                          final subtitle =
+                              (hit['subtitle'] ??
+                                      hit['vi_name'] ??
+                                      hit['aliases']?['vi'] ??
+                                      title)
+                                  .toString();
                           final calories = hit['calories_kcal'] is num
                               ? (hit['calories_kcal'] as num).round()
                               : hit['calo'] is num
-                                  ? (hit['calo'] as num).round()
-                                  : 0;
-                          final portionStr = (hit['portion_str'] ??
-                                  (hit['unit'] == 'ml'
-                                      ? 'ml'
-                                      : hit['unit'] ?? 'g'))
-                              .toString();
+                              ? (hit['calo'] as num).round()
+                              : 0;
+                          final portionStr =
+                              (hit['portion_str'] ??
+                                      (hit['unit'] == 'ml'
+                                          ? 'ml'
+                                          : hit['unit'] ?? 'g'))
+                                  .toString();
 
                           return Material(
                             color: widget.isDark
@@ -2425,7 +2425,8 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
                                           Row(
                                             children: [
                                               const Icon(
-                                                Icons.local_fire_department_rounded,
+                                                Icons
+                                                    .local_fire_department_rounded,
                                                 size: 15,
                                                 color: Color(0xFFF97316),
                                               ),
@@ -2441,8 +2442,8 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
                                               Padding(
                                                 padding:
                                                     const EdgeInsets.symmetric(
-                                                  horizontal: 6,
-                                                ),
+                                                      horizontal: 6,
+                                                    ),
                                                 child: Text(
                                                   '·',
                                                   style: TextStyle(
@@ -2476,8 +2477,9 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
                                           shape: BoxShape.circle,
                                           boxShadow: [
                                             BoxShadow(
-                                              color:
-                                                  Colors.black.withOpacity(0.06),
+                                              color: Colors.black.withOpacity(
+                                                0.06,
+                                              ),
                                               blurRadius: 8,
                                               offset: const Offset(0, 2),
                                             ),

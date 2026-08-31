@@ -73,6 +73,30 @@ class AppLocalizationsFr extends AppLocalizations {
   String get profileTitle => 'Compte personnel';
 
   @override
+  String get personalInfoTitle => 'Informations personnelles';
+
+  @override
+  String get personalInfoName => 'Nom';
+
+  @override
+  String get personalInfoAge => 'Âge';
+
+  @override
+  String get personalInfoHeight => 'Taille';
+
+  @override
+  String get personalInfoCurrentWeight => 'Poids actuel';
+
+  @override
+  String get personalInfoTargetWeight => 'Poids cible';
+
+  @override
+  String get personalInfoGender => 'Genre';
+
+  @override
+  String get personalInfoNotSet => 'Non renseigné';
+
+  @override
   String get creditsLabel => 'Crédits de numérisation';
 
   @override

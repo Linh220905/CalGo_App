@@ -80,9 +80,9 @@ class PremiumOffer {
     if (product is AppStoreProductDetails) {
       final introductory = product.skProduct.introductoryPrice;
       final hasFreeTrial =
-          introductory?.type == SKProductDiscountType.introductory &&
-          introductory?.paymentMode == SKProductDiscountPaymentMode.freeTrail;
-      final trialDays = hasFreeTrial && introductory != null
+          introductory != null &&
+          introductory.paymentMode == SKProductDiscountPaymentMode.freeTrail;
+      final trialDays = hasFreeTrial
           ? _storeKitPeriodDays(introductory.subscriptionPeriod) *
                 introductory.numberOfPeriods
           : 0;

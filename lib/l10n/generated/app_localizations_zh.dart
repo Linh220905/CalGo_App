@@ -72,6 +72,30 @@ class AppLocalizationsZh extends AppLocalizations {
   String get profileTitle => '个人账户';
 
   @override
+  String get personalInfoTitle => '个人信息';
+
+  @override
+  String get personalInfoName => '姓名';
+
+  @override
+  String get personalInfoAge => '年龄';
+
+  @override
+  String get personalInfoHeight => '身高';
+
+  @override
+  String get personalInfoCurrentWeight => '当前体重';
+
+  @override
+  String get personalInfoTargetWeight => '目标体重';
+
+  @override
+  String get personalInfoGender => '性别';
+
+  @override
+  String get personalInfoNotSet => '未设置';
+
+  @override
   String get creditsLabel => '扫描信用';
 
   @override

@@ -99,6 +99,7 @@ class HorizontalRulerPicker extends StatefulWidget {
   final ValueChanged<double> onChanged;
   final Color needleColor;
   final double itemWidth;
+  final bool isDark;
 
   const HorizontalRulerPicker({
     super.key,
@@ -109,6 +110,7 @@ class HorizontalRulerPicker extends StatefulWidget {
     required this.onChanged,
     this.needleColor = const Color(0xFF111111),
     this.itemWidth = 14.0,
+    this.isDark = false,
   });
 
   @override
@@ -191,13 +193,13 @@ class _HorizontalRulerPickerState extends State<HorizontalRulerPicker> {
       _isSnapping = true;
       _scrollController
           .animateTo(
-        targetOffset,
-        duration: const Duration(milliseconds: 160),
-        curve: Curves.easeOutCubic,
-      )
+            targetOffset,
+            duration: const Duration(milliseconds: 160),
+            curve: Curves.easeOutCubic,
+          )
           .whenComplete(() {
-        _isSnapping = false;
-      });
+            _isSnapping = false;
+          });
     }
   }
 
@@ -230,15 +232,21 @@ class _HorizontalRulerPickerState extends State<HorizontalRulerPicker> {
                     final isMajor = (valInt % 10 == 0);
                     final isMid = (valInt % 5 == 0);
 
-                    final double tickHeight =
-                        isMajor ? 36.0 : (isMid ? 24.0 : 15.0);
+                    final double tickHeight = isMajor
+                        ? 36.0
+                        : (isMid ? 24.0 : 15.0);
                     final Color tickColor = isMajor
-                        ? const Color(0xFF334155)
+                        ? (widget.isDark
+                              ? const Color(0xFFCBD5E1)
+                              : const Color(0xFF334155))
                         : (isMid
-                            ? const Color(0xFF94A3B8)
-                            : const Color(0xFFE2E8F0));
-                    final double tickWidth =
-                        isMajor ? 2.2 : (isMid ? 1.8 : 1.2);
+                              ? const Color(0xFF94A3B8)
+                              : (widget.isDark
+                                    ? const Color(0xFF475569)
+                                    : const Color(0xFFE2E8F0)));
+                    final double tickWidth = isMajor
+                        ? 2.2
+                        : (isMid ? 1.8 : 1.2);
 
                     return Container(
                       width: widget.itemWidth,
@@ -263,9 +271,11 @@ class _HorizontalRulerPickerState extends State<HorizontalRulerPicker> {
                 width: 48,
                 child: IgnorePointer(
                   child: Container(
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [Colors.white, Color(0x00FFFFFF)],
+                        colors: widget.isDark
+                            ? const [Color(0xFF2A2932), Color(0x002A2932)]
+                            : const [Colors.white, Color(0x00FFFFFF)],
                         begin: Alignment.centerLeft,
                         end: Alignment.centerRight,
                       ),
@@ -281,9 +291,11 @@ class _HorizontalRulerPickerState extends State<HorizontalRulerPicker> {
                 width: 48,
                 child: IgnorePointer(
                   child: Container(
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [Color(0x00FFFFFF), Colors.white],
+                        colors: widget.isDark
+                            ? const [Color(0x002A2932), Color(0xFF2A2932)]
+                            : const [Color(0x00FFFFFF), Colors.white],
                         begin: Alignment.centerLeft,
                         end: Alignment.centerRight,
                       ),
@@ -332,12 +344,13 @@ class HorizontalRulerPickerCard extends StatefulWidget {
   final String primaryUnit; // e.g. 'kg' or 'cm'
   final String secondaryUnit; // e.g. 'lb' or 'ft'
   final double
-      conversionFactor; // 1 primaryUnit = X secondaryUnits (e.g. 2.20462)
+  conversionFactor; // 1 primaryUnit = X secondaryUnits (e.g. 2.20462)
   final String headerTitle;
   final IconData headerIcon;
   final String scrollHintText;
   final ValueChanged<double> onChanged; // Always returns value in primary unit
   final bool compact;
+  final bool isDark;
 
   const HorizontalRulerPickerCard({
     super.key,
@@ -353,6 +366,7 @@ class HorizontalRulerPickerCard extends StatefulWidget {
     this.scrollHintText = '',
     required this.onChanged,
     this.compact = false,
+    this.isDark = false,
   });
 
   @override
@@ -402,6 +416,23 @@ class _HorizontalRulerPickerCardState extends State<HorizontalRulerPickerCard> {
 
   @override
   Widget build(BuildContext context) {
+    final cardColor = widget.isDark ? const Color(0xFF2A2932) : Colors.white;
+    final cardBorder = widget.isDark
+        ? const Color(0xFF3B3945)
+        : const Color(0xFFF1F5F9);
+    final headerColor = widget.isDark
+        ? const Color(0xFFF8FAFC)
+        : const Color(0xFF1E293B);
+    final valueColor = widget.isDark ? Colors.white : const Color(0xFF0A0A0A);
+    final unitColor = widget.isDark
+        ? const Color(0xFFCBD5E1)
+        : const Color(0xFF334155);
+    final toggleColor = widget.isDark
+        ? const Color(0xFF34323D)
+        : const Color(0xFFF1F5F9);
+    final toggleBorder = widget.isDark
+        ? const Color(0xFF45434F)
+        : const Color(0xFFE2E8F0);
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -410,9 +441,9 @@ class _HorizontalRulerPickerCardState extends State<HorizontalRulerPickerCard> {
           Container(
             padding: const EdgeInsets.all(3),
             decoration: BoxDecoration(
-              color: const Color(0xFFF1F5F9),
+              color: toggleColor,
               borderRadius: BorderRadius.circular(24),
-              border: Border.all(color: const Color(0xFFE2E8F0)),
+              border: Border.all(color: toggleBorder),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -420,6 +451,7 @@ class _HorizontalRulerPickerCardState extends State<HorizontalRulerPickerCard> {
                 _UnitPillButton(
                   label: widget.primaryUnit,
                   isSelected: _isPrimaryUnit,
+                  isDark: widget.isDark,
                   onTap: () {
                     if (!_isPrimaryUnit) {
                       setState(() => _isPrimaryUnit = true);
@@ -429,6 +461,7 @@ class _HorizontalRulerPickerCardState extends State<HorizontalRulerPickerCard> {
                 _UnitPillButton(
                   label: widget.secondaryUnit,
                   isSelected: !_isPrimaryUnit,
+                  isDark: widget.isDark,
                   onTap: () {
                     if (_isPrimaryUnit) {
                       setState(() => _isPrimaryUnit = false);
@@ -445,15 +478,18 @@ class _HorizontalRulerPickerCardState extends State<HorizontalRulerPickerCard> {
         Container(
           width: double.infinity,
           padding: EdgeInsets.symmetric(
-              horizontal: widget.compact ? 16 : 20,
-              vertical: widget.compact ? 16 : 24),
+            horizontal: widget.compact ? 16 : 20,
+            vertical: widget.compact ? 16 : 24,
+          ),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: cardColor,
             borderRadius: BorderRadius.circular(28),
-            border: Border.all(color: const Color(0xFFF1F5F9), width: 1.5),
-            boxShadow: const [
+            border: Border.all(color: cardBorder, width: 1.5),
+            boxShadow: [
               BoxShadow(
-                color: Color(0x0C0F172A),
+                color: widget.isDark
+                    ? const Color(0x33000000)
+                    : const Color(0x0C0F172A),
                 blurRadius: 20,
                 offset: Offset(0, 8),
               ),
@@ -467,7 +503,7 @@ class _HorizontalRulerPickerCardState extends State<HorizontalRulerPickerCard> {
                 children: [
                   Icon(
                     widget.headerIcon,
-                    color: const Color(0xFF1E293B),
+                    color: headerColor,
                     size: widget.compact ? 19 : 22,
                   ),
                   const SizedBox(width: 8),
@@ -480,7 +516,7 @@ class _HorizontalRulerPickerCardState extends State<HorizontalRulerPickerCard> {
                       style: TextStyle(
                         fontSize: widget.compact ? 14 : 16,
                         fontWeight: FontWeight.w600,
-                        color: const Color(0xFF1E293B),
+                        color: headerColor,
                       ),
                     ),
                   ),
@@ -499,7 +535,7 @@ class _HorizontalRulerPickerCardState extends State<HorizontalRulerPickerCard> {
                     style: TextStyle(
                       fontSize: widget.compact ? 42 : 52,
                       fontWeight: FontWeight.w800,
-                      color: const Color(0xFF0A0A0A),
+                      color: valueColor,
                       height: 1.0,
                       letterSpacing: -1.5,
                     ),
@@ -510,7 +546,7 @@ class _HorizontalRulerPickerCardState extends State<HorizontalRulerPickerCard> {
                     style: TextStyle(
                       fontSize: widget.compact ? 16 : 20,
                       fontWeight: FontWeight.w700,
-                      color: const Color(0xFF334155),
+                      color: unitColor,
                     ),
                   ),
                 ],
@@ -524,7 +560,10 @@ class _HorizontalRulerPickerCardState extends State<HorizontalRulerPickerCard> {
                 max: widget.max,
                 initialValue: _currentPrimaryValue,
                 step: widget.step,
-                needleColor: const Color(0xFF111111),
+                needleColor: widget.isDark
+                    ? const Color(0xFFF8FAFC)
+                    : const Color(0xFF111111),
+                isDark: widget.isDark,
                 onChanged: (newVal) {
                   setState(() {
                     _currentPrimaryValue = newVal.clamp(widget.min, widget.max);
@@ -541,10 +580,12 @@ class _HorizontalRulerPickerCardState extends State<HorizontalRulerPickerCard> {
           const SizedBox(height: 14),
           Text(
             widget.scrollHintText,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w400,
-              color: Color(0xFF94A3B8),
+              color: widget.isDark
+                  ? const Color(0xFFA0A0AB)
+                  : const Color(0xFF94A3B8),
             ),
           ),
         ],
@@ -557,11 +598,13 @@ class _UnitPillButton extends StatelessWidget {
   final String label;
   final bool isSelected;
   final VoidCallback onTap;
+  final bool isDark;
 
   const _UnitPillButton({
     required this.label,
     required this.isSelected,
     required this.onTap,
+    required this.isDark,
   });
 
   @override
@@ -582,7 +625,9 @@ class _UnitPillButton extends StatelessWidget {
           style: TextStyle(
             fontSize: 14,
             fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-            color: isSelected ? Colors.white : const Color(0xFF64748B),
+            color: isSelected
+                ? Colors.white
+                : (isDark ? const Color(0xFFA0A0AB) : const Color(0xFF64748B)),
           ),
         ),
       ),

@@ -72,6 +72,30 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profileTitle => 'Personal Account';
 
   @override
+  String get personalInfoTitle => 'Personal Information';
+
+  @override
+  String get personalInfoName => 'Name';
+
+  @override
+  String get personalInfoAge => 'Age';
+
+  @override
+  String get personalInfoHeight => 'Height';
+
+  @override
+  String get personalInfoCurrentWeight => 'Current weight';
+
+  @override
+  String get personalInfoTargetWeight => 'Target weight';
+
+  @override
+  String get personalInfoGender => 'Gender';
+
+  @override
+  String get personalInfoNotSet => 'Not set';
+
+  @override
   String get creditsLabel => 'Scan credits';
 
   @override

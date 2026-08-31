@@ -72,6 +72,30 @@ class AppLocalizationsAr extends AppLocalizations {
   String get profileTitle => 'الحساب الشخصي';
 
   @override
+  String get personalInfoTitle => 'المعلومات الشخصية';
+
+  @override
+  String get personalInfoName => 'الاسم';
+
+  @override
+  String get personalInfoAge => 'العمر';
+
+  @override
+  String get personalInfoHeight => 'الطول';
+
+  @override
+  String get personalInfoCurrentWeight => 'الوزن الحالي';
+
+  @override
+  String get personalInfoTargetWeight => 'الوزن المستهدف';
+
+  @override
+  String get personalInfoGender => 'الجنس';
+
+  @override
+  String get personalInfoNotSet => 'غير محدد';
+
+  @override
   String get creditsLabel => 'ائتمانات المسح';
 
   @override

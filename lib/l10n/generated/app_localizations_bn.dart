@@ -72,6 +72,30 @@ class AppLocalizationsBn extends AppLocalizations {
   String get profileTitle => 'ব্যক্তিগত অ্যাকাউন্ট';
 
   @override
+  String get personalInfoTitle => 'ব্যক্তিগত তথ্য';
+
+  @override
+  String get personalInfoName => 'নাম';
+
+  @override
+  String get personalInfoAge => 'বয়স';
+
+  @override
+  String get personalInfoHeight => 'উচ্চতা';
+
+  @override
+  String get personalInfoCurrentWeight => 'বর্তমান ওজন';
+
+  @override
+  String get personalInfoTargetWeight => 'লক্ষ্য ওজন';
+
+  @override
+  String get personalInfoGender => 'লিঙ্গ';
+
+  @override
+  String get personalInfoNotSet => 'সেট করা হয়নি';
+
+  @override
   String get creditsLabel => 'স্ক্যান করা হবে';
 
   @override
