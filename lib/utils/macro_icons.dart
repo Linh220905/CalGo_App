@@ -36,6 +36,16 @@ class MacroIcons {
       height: size,
       colorFilter:
           color != null ? ColorFilter.mode(color, BlendMode.srcIn) : null,
+      placeholderBuilder: (_) => Icon(
+        switch (type) {
+          'protein' => Icons.fitness_center_rounded,
+          'carb' => Icons.grain_rounded,
+          'fat' => Icons.water_drop_rounded,
+          _ => Icons.circle,
+        },
+        size: size,
+        color: color ?? const Color(0xFF64748B),
+      ),
     );
   }
 

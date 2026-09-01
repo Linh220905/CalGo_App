@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../models/user.dart';
+import '../providers/app_settings_provider.dart';
 import '../providers/auth_provider.dart';
 import '../providers/onboarding_provider.dart';
 import '../utils/macro_colors.dart';
@@ -25,6 +26,7 @@ class _TargetNutritionModalContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final authProvider = context.watch<AuthProvider>();
     final user = authProvider.user;
+    final strings = context.watch<AppSettingsProvider>().strings;
 
     final bgColor = isDark ? const Color(0xFF1E1C24) : Colors.white;
     final textColor = isDark ? Colors.white : const Color(0xFF0F172A);
@@ -34,10 +36,10 @@ class _TargetNutritionModalContent extends StatelessWidget {
     final dailyTarget = (user?.dailyCalorieTarget ?? 2000).round();
     final weightKg = user?.currentWeightKg ?? 70.0;
 
-    // Approximate Macros calculation
-    final proteinG = (weightKg * 2.0).clamp(80.0, dailyTarget * 0.35 / 4).round();
-    final fatG = (dailyTarget * 0.25 / 9).round();
-    final carbG = ((dailyTarget - (proteinG * 4) - (fatG * 9)) / 4).round().clamp(50, 600);
+    // Macro calculation with fallback to default ratio if user macros not set
+    final proteinG = (user?.proteinGrams ?? (weightKg * 2.0).clamp(80.0, dailyTarget * 0.35 / 4)).round();
+    final fatG = (user?.fatGrams ?? (dailyTarget * 0.25 / 9)).round();
+    final carbG = (user?.carbsGrams ?? ((dailyTarget - (proteinG * 4) - (fatG * 9)) / 4)).round().clamp(50, 600);
 
     final proteinKcal = proteinG * 4;
     final carbKcal = carbG * 4;
@@ -81,7 +83,7 @@ class _TargetNutritionModalContent extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Mục tiêu dinh dưỡng',
+                strings.nutritionTargetModalTitle,
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -141,9 +143,9 @@ class _TargetNutritionModalContent extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'CALO MỤC TIÊU HÀNG NGÀY',
-                        style: TextStyle(
+                      Text(
+                        strings.dailyCalorieGoalKicker,
+                        style: const TextStyle(
                           color: Color(0xFF94A3B8),
                           fontSize: 11,
                           fontWeight: FontWeight.w700,
@@ -165,9 +167,9 @@ class _TargetNutritionModalContent extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(width: 6),
-                          const Text(
-                            'kcal / ngày',
-                            style: TextStyle(
+                          Text(
+                            strings.kcalPerDayUnit,
+                            style: const TextStyle(
                               color: Color(0xFFCBD5E1),
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
@@ -184,7 +186,7 @@ class _TargetNutritionModalContent extends StatelessWidget {
           const SizedBox(height: 20),
 
           Text(
-            'CHỈ SỐ MACROS PHÂN BỔ',
+            strings.macroDistributionKicker,
             style: TextStyle(
               color: mutedColor,
               fontSize: 11,
@@ -223,7 +225,7 @@ class _TargetNutritionModalContent extends StatelessWidget {
 
           // Macro cards list
           _MacroRowItem(
-            label: 'Đạm (Protein)',
+            label: strings.proteinMacroLabel,
             amount: '${proteinG}g',
             percentage: '$proteinPct%',
             calories: '$proteinKcal kcal',
@@ -233,7 +235,7 @@ class _TargetNutritionModalContent extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           _MacroRowItem(
-            label: 'Tinh bột (Carb)',
+            label: strings.carbMacroLabel,
             amount: '${carbG}g',
             percentage: '$carbPct%',
             calories: '$carbKcal kcal',
@@ -243,7 +245,7 @@ class _TargetNutritionModalContent extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           _MacroRowItem(
-            label: 'Chất béo (Fat)',
+            label: strings.fatMacroLabel,
             amount: '${fatG}g',
             percentage: '$fatPct%',
             calories: '$fatKcal kcal',
@@ -263,9 +265,9 @@ class _TargetNutritionModalContent extends StatelessWidget {
                 _openRecalculateWizard(context, isDark, user);
               },
               icon: const Icon(Icons.refresh_rounded, size: 20),
-              label: const Text(
-                'Tạo lại mục tiêu',
-                style: TextStyle(
+              label: Text(
+                strings.recalculateTargetButton,
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),

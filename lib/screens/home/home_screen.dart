@@ -44,7 +44,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   String? _lastRecapSyncKey;
   String? _healthSyncScheduledKey;
   bool _healthSyncInFlight = false;
-  int? _lastNotifiedHealthCalories;
 
   @override
   void initState() {
@@ -393,32 +392,10 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
       try {
         final calories = await settings.healthService.getTodayActiveCalories();
         if (!mounted) return;
-        final syncedCalories = await home.syncHealthCalories(calories);
-        if (!mounted ||
-            syncedCalories <= 0 ||
-            _lastNotifiedHealthCalories == syncedCalories) {
-          return;
-        }
-        _lastNotifiedHealthCalories = syncedCalories;
-        ScaffoldMessenger.of(context)
-          ..hideCurrentSnackBar()
-          ..showSnackBar(
-            SnackBar(
-              content: Row(
-                children: [
-                  const Icon(Icons.favorite_rounded, color: Color(0xFFFF2D55)),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: Text(
-                      'Đã đồng bộ $syncedCalories kcal đã đốt từ Apple Health.',
-                    ),
-                  ),
-                ],
-              ),
-              behavior: SnackBarBehavior.floating,
-              duration: const Duration(seconds: 3),
-            ),
-          );
+        // Sync silently. Health data can refresh whenever Home resumes or
+        // reloads; showing a SnackBar here made the same status message
+        // appear repeatedly and interrupt the user.
+        await home.syncHealthCalories(calories);
       } finally {
         _healthSyncInFlight = false;
       }
@@ -801,11 +778,11 @@ class _RecentlyUploadedListState extends State<_RecentlyUploadedList> {
           scrollDirection: Axis.horizontal,
           child: Row(
             children: [
-              _buildFilterChip(0, 'Tất cả', isDark),
+              _buildFilterChip(0, s.filterAll, isDark),
               const SizedBox(width: 8),
-              _buildFilterChip(1, 'Thức ăn', isDark),
+              _buildFilterChip(1, s.filterFood, isDark),
               const SizedBox(width: 8),
-              _buildFilterChip(2, 'Tập luyện', isDark),
+              _buildFilterChip(2, s.filterWorkout, isDark),
             ],
           ),
         ),
@@ -822,8 +799,8 @@ class _RecentlyUploadedListState extends State<_RecentlyUploadedList> {
               padding: const EdgeInsets.symmetric(vertical: 28),
               child: Text(
                 _filterIndex == 2
-                    ? 'Chưa có bài tập nào hôm nay'
-                    : (_filterIndex == 1 ? 'Chưa có món ăn nào hôm nay' : 'Chưa có nhật ký nào'),
+                    ? s.noWorkoutLoggedToday
+                    : (_filterIndex == 1 ? s.noFoodLoggedToday : s.noLogsYet),
                 style: TextStyle(
                   color: textMuted,
                   fontSize: 14,

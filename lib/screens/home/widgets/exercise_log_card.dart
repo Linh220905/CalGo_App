@@ -36,10 +36,10 @@ class ExerciseLogCard extends StatelessWidget {
         }
       },
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
           color: cardBgColor,
-          borderRadius: BorderRadius.circular(22),
+          borderRadius: BorderRadius.circular(20),
           border: Border.all(color: borderColor),
           boxShadow: [
             BoxShadow(
@@ -51,21 +51,21 @@ class ExerciseLogCard extends StatelessWidget {
         ),
         child: Row(
           children: [
-            // Exercise Icon Square Box
+            // Exercise Icon Box matching meal thumbnail size
             Container(
-              width: 72,
-              height: 72,
+              width: 68,
+              height: 68,
               decoration: BoxDecoration(
-                color: isDark ? const Color(0xFF2C2935) : const Color(0xFFF3F3F5),
-                borderRadius: BorderRadius.circular(18),
+                color: isDark ? const Color(0xFF2C2935) : const Color(0xFFF1F5F9),
+                borderRadius: BorderRadius.circular(16),
               ),
               child: Icon(
                 _exerciseIcon(entry.activityType, entry.source),
-                size: 32,
+                size: 26,
                 color: isDark ? Colors.white : const Color(0xFF1E1B26),
               ),
             ),
-            const SizedBox(width: 16),
+            const SizedBox(width: 14),
 
             // Exercise Title, Time, and Calorie / Duration info
             Expanded(
@@ -75,55 +75,66 @@ class ExerciseLogCard extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        _exerciseTitle(entry.activityType, entry.source),
-                        style: TextStyle(
-                          color: textDark,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w800,
-                          letterSpacing: -0.3,
+                      Expanded(
+                        child: Text(
+                          _exerciseTitle(entry.activityType, entry.source),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: textDark,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
-                      Text(
-                        timeStr,
-                        style: TextStyle(
-                          color: textMuted,
-                          fontSize: 12.5,
-                          fontWeight: FontWeight.w500,
+                      const SizedBox(width: 8),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 3,
+                        ),
+                        decoration: BoxDecoration(
+                          color: isDark
+                              ? const Color(0xFF2C2A34)
+                              : const Color(0xFFF1F5F9),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Text(
+                          timeStr,
+                          style: TextStyle(
+                            color: textMuted,
+                            fontSize: 11,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 6),
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.baseline,
-                    textBaseline: TextBaseline.alphabetic,
                     children: [
-                      Text(
-                        '${entry.caloriesBurned.round()}',
-                        style: TextStyle(
-                          color: textDark,
-                          fontSize: 26,
-                          fontWeight: FontWeight.w900,
-                          letterSpacing: -0.8,
-                        ),
+                      const Icon(
+                        Icons.local_fire_department_rounded,
+                        size: 15,
+                        color: Color(0xFFF97316),
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        'calo',
+                        '${entry.caloriesBurned.round()} calo',
                         style: TextStyle(
-                          color: textMuted,
                           fontSize: 14,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.bold,
+                          color: textDark,
                         ),
                       ),
-                      if (entry.durationMinutes != null && entry.durationMinutes! > 0) ...[
+                      if (entry.durationMinutes != null &&
+                          entry.durationMinutes! > 0) ...[
                         Text(
-                          '  ·  ${entry.durationMinutes}′',
+                          '  ·  ${entry.durationMinutes} phút',
                           style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
                             color: textMuted,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ],

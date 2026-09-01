@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/app_settings_provider.dart';
@@ -33,6 +34,9 @@ class CalAiHeroCard extends StatelessWidget {
     final textMuted = isDark
         ? const Color(0xFF8E8D9A)
         : const Color(0xFF64748B);
+    const ringColor = Color(0xFFF15A3A);
+    final ringTrackColor =
+        isDark ? const Color(0xFF2C2A34) : const Color(0xFFE2E8F0);
     final burnedBg = isDark ? const Color(0xFF3A241A) : const Color(0xFFFFEFE6);
 
     return Container(
@@ -55,79 +59,102 @@ class CalAiHeroCard extends StatelessWidget {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
-                'KHẨU PHẦN HÔM NAY',
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w800,
-                  color: textMuted,
-                  letterSpacing: 1.6,
+              // Left column: Calories Left & Target Fraction
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '$caloriesLeft',
+                      style: TextStyle(
+                        fontSize: 44,
+                        fontWeight: FontWeight.w900,
+                        color: textDark,
+                        letterSpacing: -1.5,
+                        height: 0.95,
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      s.caloriesLeft,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: textMuted,
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: '$caloriesConsumed',
+                            style: TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w700,
+                              color: textDark,
+                            ),
+                          ),
+                          TextSpan(
+                            text: ' / $targetCalories kcal',
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                              color: textMuted,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 5,
-                ),
-                decoration: BoxDecoration(
-                  color: isDark ? Colors.white10 : const Color(0xFFF1F5F2),
-                  borderRadius: BorderRadius.circular(999),
-                ),
-                child: Text(
-                  '${(clampedPct * 100).round()}%',
-                  style: const TextStyle(
-                    color: Color(0xFF16A34A),
-                    fontWeight: FontWeight.w800,
-                  ),
+
+              // Right column: Circular Calorie Progress Ring with Flame icon 🔥
+              SizedBox(
+                width: 84,
+                height: 84,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    CustomPaint(
+                      size: const Size(84, 84),
+                      painter: _CalorieHeroRingPainter(
+                        progress: clampedPct,
+                        color: ringColor,
+                        trackColor: ringTrackColor,
+                      ),
+                    ),
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(
+                          Icons.local_fire_department_rounded,
+                          size: 24,
+                          color: Color(0xFFF15A3A),
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          '${(clampedPct * 100).round()}%',
+                          style: TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w800,
+                            color: textDark,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ],
-          ),
-          const SizedBox(height: 18),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                '$caloriesLeft',
-                style: TextStyle(
-                  fontSize: 48,
-                  fontWeight: FontWeight.w900,
-                  color: textDark,
-                  letterSpacing: -1.8,
-                  height: 0.95,
-                ),
-              ),
-              const SizedBox(width: 9),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 4),
-                child: Text(
-                  s.caloriesLeft,
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600,
-                    color: textMuted,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 16),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(999),
-            child: LinearProgressIndicator(
-              minHeight: 8,
-              value: clampedPct,
-              backgroundColor: isDark
-                  ? const Color(0xFF34313B)
-                  : const Color(0xFFE8E8EA),
-              valueColor: const AlwaysStoppedAnimation(Color(0xFFF15A3A)),
-            ),
           ),
           if (caloriesBurned > 0) ...[
-            const SizedBox(height: 15),
+            const SizedBox(height: 14),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
                 color: burnedBg,
                 borderRadius: BorderRadius.circular(999),
@@ -137,14 +164,15 @@ class CalAiHeroCard extends StatelessWidget {
                 children: [
                   const Icon(
                     Icons.local_fire_department_rounded,
-                    size: 17,
+                    size: 16,
                     color: Color(0xFFF15A3A),
                   ),
                   const SizedBox(width: 5),
                   Text(
-                    '+$caloriesBurned đã đốt',
+                    s.burnedCaloriesPill(caloriesBurned),
                     style: const TextStyle(
                       color: Color(0xFFE55233),
+                      fontSize: 12,
                       fontWeight: FontWeight.w800,
                     ),
                   ),
@@ -157,7 +185,7 @@ class CalAiHeroCard extends StatelessWidget {
             children: [
               Expanded(
                 child: _CalorieMetric(
-                  label: 'ĐÃ ĂN',
+                  label: s.consumedLabelUpper,
                   value: caloriesConsumed,
                   textColor: textDark,
                   mutedColor: textMuted,
@@ -165,7 +193,7 @@ class CalAiHeroCard extends StatelessWidget {
               ),
               Expanded(
                 child: _CalorieMetric(
-                  label: 'ĐÃ ĐỐT',
+                  label: s.burnedLabelUpper,
                   value: caloriesBurned,
                   textColor: textDark,
                   mutedColor: textMuted,
@@ -173,7 +201,7 @@ class CalAiHeroCard extends StatelessWidget {
               ),
               Expanded(
                 child: _CalorieMetric(
-                  label: 'MỤC TIÊU',
+                  label: s.targetLabelUpper,
                   value: targetCalories,
                   textColor: textDark,
                   mutedColor: textMuted,
@@ -184,6 +212,56 @@ class CalAiHeroCard extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class _CalorieHeroRingPainter extends CustomPainter {
+  final double progress;
+  final Color color;
+  final Color trackColor;
+
+  _CalorieHeroRingPainter({
+    required this.progress,
+    required this.color,
+    required this.trackColor,
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final c = Offset(size.width / 2, size.height / 2);
+    final r = (size.width - 12) / 2;
+
+    // Track background
+    canvas.drawCircle(
+      c,
+      r,
+      Paint()
+        ..color = trackColor
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 10.0,
+    );
+
+    if (progress > 0) {
+      final sweepAngle = 2 * pi * progress;
+      canvas.drawArc(
+        Rect.fromCircle(center: c, radius: r),
+        -pi / 2,
+        sweepAngle,
+        false,
+        Paint()
+          ..color = color
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 10.0
+          ..strokeCap = StrokeCap.round,
+      );
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _CalorieHeroRingPainter oldDelegate) {
+    return oldDelegate.progress != progress ||
+        oldDelegate.color != color ||
+        oldDelegate.trackColor != trackColor;
   }
 }
 

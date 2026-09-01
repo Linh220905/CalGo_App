@@ -12,6 +12,7 @@ import '../../providers/auth_provider.dart';
 import '../../providers/gamification_provider.dart';
 import '../../models/gamification.dart';
 import '../../utils/macro_colors.dart';
+import '../../utils/stats_localization.dart';
 import '../onboarding/steps/premium_paywall_step.dart';
 
 // ── Color constants matching CalGo design system ─────────────────
@@ -459,7 +460,7 @@ class _CaloRingCard extends StatelessWidget {
                     trackColor: trackColor,
                   ),
                 ),
-                Icon(
+                const Icon(
                   Icons.local_fire_department_rounded,
                   size: 26,
                   color: _kFireColor,
@@ -675,12 +676,12 @@ class _TomorrowTipCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'Gợi ý cho ngày mai',
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
-                    color: const Color(0xFFD97706),
+                    color: Color(0xFFD97706),
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -742,10 +743,7 @@ class _ActionButtons extends StatelessWidget {
         : box.localToGlobal(Offset.zero) & box.size;
 
     try {
-      await Share.share(
-        recapText,
-        sharePositionOrigin: sharePositionOrigin,
-      );
+      await Share.share(recapText, sharePositionOrigin: sharePositionOrigin);
     } catch (error) {
       debugPrint('Unable to share daily recap: $error');
       if (context.mounted) {
@@ -904,7 +902,6 @@ class TargetTimelineCard extends StatelessWidget {
   final DailyRecap? recap;
   final double? todayCalories;
   final double? calorieTarget;
-  final bool isWeeklyAverage;
   final bool isDark;
   final Color cardBg;
   final Color border;
@@ -916,7 +913,6 @@ class TargetTimelineCard extends StatelessWidget {
     this.recap,
     this.todayCalories,
     this.calorieTarget,
-    this.isWeeklyAverage = false,
     required this.isDark,
     required this.cardBg,
     required this.border,
@@ -929,21 +925,58 @@ class TargetTimelineCard extends StatelessWidget {
     final auth = context.watch<AuthProvider>();
     final user = auth.user;
     final isPremiumUser = user?.hasPremiumAccess ?? false;
+    final strings = context.watch<AppSettingsProvider>().strings;
 
-    final currentWeight = user?.currentWeightKg ?? 65.0;
-    final targetWeight = user?.targetWeightKg ?? 60.0;
+    final currentWeight = user?.currentWeightKg;
+    final targetWeight = user?.targetWeightKg;
 
-    final rawTargetCal =
-        calorieTarget ??
-        (recap != null && recap!.targetCalo > 0
-            ? recap!.targetCalo.toDouble()
-            : (user?.dailyCalorieTarget ?? 2000.0).toDouble());
+    if (currentWeight == null || targetWeight == null) {
+      return Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: cardBg,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: border),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              strings.weightTargetForecastTitle,
+              style: TextStyle(color: textDark, fontWeight: FontWeight.w700),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              strings.notEnoughWeightData,
+              style: TextStyle(color: textMuted, fontSize: 13),
+            ),
+          ],
+        ),
+      );
+    }
+
+    final rawTargetCal = (user != null && user.dailyCalorieTarget > 0)
+        ? user.dailyCalorieTarget
+        : (calorieTarget ??
+              (recap != null && recap!.targetCalo > 0
+                  ? recap!.targetCalo.toDouble()
+                  : 2000.0));
     final targetCal = rawTargetCal > 0 ? rawTargetCal : 2000.0;
 
     final todayCal =
         todayCalories ?? (recap != null ? recap!.totalCalo.toDouble() : 0.0);
 
-    final goalType = (user?.goal ?? 'lose').toLowerCase();
+    final storedGoalType = (user?.goal ?? 'maintain').toLowerCase();
+
+    // The profile can briefly contain a new target weight while the cached
+    // goal is still the previous one (for example right after recalculating
+    // targets). A forecast must never project in the opposite direction of
+    // the target: 60.8 -> 67 kg is a gain goal, regardless of stale `goal`.
+    final goalType = targetWeight > currentWeight + 0.1
+        ? 'gain'
+        : targetWeight < currentWeight - 0.1
+        ? 'lose'
+        : storedGoalType;
 
     // Maintenance TDEE estimate baseline
     double maintenanceTdee = targetCal;
@@ -955,124 +988,56 @@ class TargetTimelineCard extends StatelessWidget {
 
     final double ratio = targetCal > 0 ? (todayCal / targetCal) : 1.0;
 
-    String statusTitle;
-    String statusBody;
-    Color statusColor;
-    IconData statusIcon;
-    double weeklyKgChange;
-    int? estimatedWeeks;
-
-    if (goalType == 'lose' || goalType.contains('giảm')) {
-      // --- GOAL: WEIGHT LOSS ---
-      if (ratio < 0.70) {
-        // Under-eating dangerous deficit
-        statusTitle = 'Thâm hụt calo quá mức (Nguy hiểm)';
-        statusColor = const Color(0xFFEF4444);
-        statusIcon = Icons.warning_amber_rounded;
-        weeklyKgChange = -1.2;
-        final weightDiff = math.max(0.1, currentWeight - targetWeight);
-        estimatedWeeks = (weightDiff / 1.2).ceil();
-        statusBody = isWeeklyAverage
-            ? 'Mức nạp calo trung bình 7 ngày qua chỉ đạt ${(ratio * 100).round()}% mục tiêu. Thâm hụt quá sâu kéo dài có thể gây mệt mỏi, mất cơ và sụt giảm chuyển hóa. Hãy bổ sung thêm thực phẩm lành mạnh!'
-            : 'Bạn chỉ mới đạt ${(ratio * 100).round()}% calo mục tiêu hôm nay. Thâm hụt quá sâu có thể gây mệt mỏi, mất cơ và sụt giảm chuyển hóa. Hãy bổ sung thêm thực phẩm lành mạnh!';
-      } else if (ratio <= 1.05) {
-        // Optimal pace
-        statusTitle = 'Tiến độ giảm cân hoàn hảo';
-        statusColor = const Color(0xFF10B981);
-        statusIcon = Icons.check_circle_rounded;
-        final dailyDeficit = math.max(250.0, maintenanceTdee - todayCal);
-        weeklyKgChange = -(dailyDeficit * 7.0) / 7700.0;
-        final weightDiff = math.max(0.1, currentWeight - targetWeight);
-        estimatedWeeks = (weightDiff / weeklyKgChange.abs()).ceil();
-        statusBody = isWeeklyAverage
-            ? 'Nếu duy trì mức calo trung bình 7 ngày qua (${todayCal.round()} kcal/ngày), bạn dự kiến sẽ đạt mục tiêu ${targetWeight.toStringAsFixed(1)} kg trong khoảng $estimatedWeeks tuần nữa!'
-            : 'Nếu duy trì mức calo hôm nay (${todayCal.round()} kcal), bạn dự kiến sẽ đạt mục tiêu ${targetWeight.toStringAsFixed(1)} kg trong khoảng $estimatedWeeks tuần nữa!';
-      } else {
-        // Surplus in weight loss
-        statusTitle = 'Dư thừa calo (Tăng thời gian)';
-        statusColor = const Color(0xFFF59E0B);
-        statusIcon = Icons.trending_up_rounded;
-        final dailySurplus = todayCal - maintenanceTdee;
-        if (dailySurplus > 0) {
-          weeklyKgChange = (dailySurplus * 7.0) / 7700.0;
-          estimatedWeeks = null;
-          statusBody = isWeeklyAverage
-              ? 'Trung bình 7 ngày qua bạn nạp dư calo (${todayCal.round()} / ${targetCal.round()} kcal/ngày). Nếu duy trì mức này, cân nặng sẽ tăng thay vì giảm!'
-              : 'Hôm nay bạn nạp dư calo (${todayCal.round()} / ${targetCal.round()} kcal). Nếu duy trì mức này, cân nặng sẽ tăng thay vì giảm!';
-        } else {
-          weeklyKgChange =
-              -(math.max(50.0, maintenanceTdee - todayCal) * 7.0) / 7700.0;
-          final weightDiff = math.max(0.1, currentWeight - targetWeight);
-          estimatedWeeks = (weightDiff / weeklyKgChange.abs()).ceil();
-          statusBody = isWeeklyAverage
-              ? 'Mức calo trung bình 7 ngày qua cao hơn mục tiêu, khiến thời gian đạt mốc ${targetWeight.toStringAsFixed(1)} kg bị kéo dài lên $estimatedWeeks tuần.'
-              : 'Mức calo hôm nay cao hơn mục tiêu, khiến thời gian đạt mốc ${targetWeight.toStringAsFixed(1)} kg bị kéo dài lên $estimatedWeeks tuần.';
-        }
-      }
-    } else if (goalType == 'gain' || goalType.contains('tăng')) {
-      // --- GOAL: WEIGHT GAIN ---
-      if (ratio < 0.90) {
-        statusTitle = 'Thiếu calo tăng cân';
-        statusColor = const Color(0xFFF59E0B);
-        statusIcon = Icons.trending_down_rounded;
-        weeklyKgChange = -0.3;
-        statusBody = isWeeklyAverage
-            ? 'Mức calo trung bình 7 ngày qua chưa đủ (${todayCal.round()} / ${targetCal.round()} kcal/ngày). Duy trì mức này sẽ khiến cân nặng sụt giảm thay vì tăng!'
-            : 'Bạn nạp chưa đủ calo hôm nay (${todayCal.round()} / ${targetCal.round()} kcal). Duy trì mức này sẽ khiến cân nặng sụt giảm thay vì tăng!';
-        estimatedWeeks = null;
-      } else if (ratio <= 1.20) {
-        statusTitle = 'Tiến độ tăng cơ chuẩn mực';
-        statusColor = const Color(0xFF10B981);
-        statusIcon = Icons.fitness_center_rounded;
-        final dailySurplus = math.max(250.0, todayCal - (targetCal - 400));
-        weeklyKgChange = (dailySurplus * 7.0) / 7700.0;
-        final weightDiff = math.max(0.1, targetWeight - currentWeight);
-        estimatedWeeks = (weightDiff / weeklyKgChange.abs()).ceil();
-        statusBody = isWeeklyAverage
-            ? 'Duy trì lượng calo trung bình 7 ngày qua (${todayCal.round()} kcal/ngày) sẽ giúp bạn đạt mốc ${targetWeight.toStringAsFixed(1)} kg trong khoảng $estimatedWeeks tuần nữa!'
-            : 'Duy trì lượng calo hôm nay (${todayCal.round()} kcal) sẽ giúp bạn đạt mốc ${targetWeight.toStringAsFixed(1)} kg trong khoảng $estimatedWeeks tuần nữa!';
-      } else {
-        statusTitle = 'Dư thừa calo quá nhiều';
-        statusColor = const Color(0xFFF59E0B);
-        statusIcon = Icons.warning_amber_rounded;
-        weeklyKgChange = 0.8;
-        final weightDiff = math.max(0.1, targetWeight - currentWeight);
-        estimatedWeeks = (weightDiff / 0.8).ceil();
-        statusBody = isWeeklyAverage
-            ? 'Lượng calo trung bình 7 ngày qua vượt mục tiêu khá nhiều (${todayCal.round()} kcal/ngày). Cân nặng tăng nhanh nhưng dễ tích tụ mỡ thừa.'
-            : 'Lượng calo hôm nay vượt mục tiêu khá nhiều. Cân nặng tăng nhanh nhưng dễ tích tụ mỡ thừa.';
-      }
+    final gap = (currentWeight - targetWeight).abs();
+    final reached = gap <= 0.1;
+    final onTrack = goalType == 'lose'
+        ? ratio >= 0.70 && ratio <= 1.05
+        : goalType == 'gain'
+        ? ratio >= 0.90 && ratio <= 1.20
+        : ratio >= 0.85 && ratio <= 1.15;
+    final statusTitle = reached
+        ? StatsLocalization.forecastGoalReachedTitle(context)
+        : onTrack
+        ? StatsLocalization.forecastOnTrackTitle(context)
+        : StatsLocalization.forecastNeedsAdjustmentTitle(context);
+    final statusColor = reached || onTrack
+        ? const Color(0xFF10B981)
+        : const Color(0xFFF59E0B);
+    final statusIcon = reached
+        ? Icons.check_circle_rounded
+        : onTrack
+        ? Icons.trending_flat_rounded
+        : Icons.warning_amber_rounded;
+    final double weeklyKgChange;
+    if (reached || !onTrack) {
+      weeklyKgChange = 0.0;
+    } else if (goalType == 'lose') {
+      weeklyKgChange =
+          -(math.max(250.0, maintenanceTdee - todayCal) * 7.0) / 7700.0;
+    } else if (goalType == 'gain') {
+      weeklyKgChange =
+          (math.max(250.0, todayCal - (targetCal - 400)) * 7.0) / 7700.0;
     } else {
-      // --- GOAL: MAINTAIN ---
-      if (ratio >= 0.85 && ratio <= 1.15) {
-        statusTitle = 'Duy trì cân nặng ổn định';
-        statusColor = const Color(0xFF10B981);
-        statusIcon = Icons.balance_rounded;
-        weeklyKgChange = 0.0;
-        statusBody = isWeeklyAverage
-            ? 'Mức calo trung bình 7 ngày qua cân bằng tuyệt vời (${todayCal.round()} kcal/ngày), giúp bạn duy trì vóc dáng ổn định tại mốc ${currentWeight.toStringAsFixed(1)} kg.'
-            : 'Mức calo hôm nay cân bằng tuyệt vời, giúp bạn duy trì vóc dáng ổn định tại mốc ${currentWeight.toStringAsFixed(1)} kg.';
-        estimatedWeeks = 0;
-      } else if (ratio < 0.85) {
-        statusTitle = 'Calo hơi thấp so với duy trì';
-        statusColor = const Color(0xFFF59E0B);
-        statusIcon = Icons.trending_down_rounded;
-        weeklyKgChange = -0.3;
-        statusBody = isWeeklyAverage
-            ? 'Mức calo trung bình 7 ngày qua hơi thấp (${todayCal.round()} kcal/ngày). Hãy chú ý nạp đủ năng lượng để duy trì vóc dáng nhé.'
-            : 'Hôm nay bạn nạp calo hơi thấp. Hãy chú ý nạp đủ năng lượng để duy trì vóc dáng nhé.';
-        estimatedWeeks = null;
-      } else {
-        statusTitle = 'Calo hơi cao so với duy trì';
-        statusColor = const Color(0xFFF59E0B);
-        statusIcon = Icons.trending_up_rounded;
-        weeklyKgChange = 0.3;
-        statusBody = isWeeklyAverage
-            ? 'Mức calo trung bình 7 ngày qua cao hơn mức duy trì (${todayCal.round()} kcal/ngày). Tăng cường vận động để cân bằng lại nhé!'
-            : 'Calo hôm nay cao hơn mức duy trì. Tăng cường vận động để cân bằng lại nhé!';
-        estimatedWeeks = null;
-      }
+      weeklyKgChange = 0.0;
     }
+    final estimatedWeeks = reached || !onTrack || weeklyKgChange.abs() < 0.01
+        ? null
+        : (gap / weeklyKgChange.abs()).ceil();
+    final statusBody = reached
+        ? strings.goalMaintainHint
+        : onTrack
+        ? StatsLocalization.forecastOnTrackBody(
+            context,
+            calories: todayCal.round(),
+            target: targetWeight.toStringAsFixed(1),
+            weeks: estimatedWeeks == null
+                ? strings.notEnoughWeightData
+                : strings.weeksUnit(estimatedWeeks),
+          )
+        : StatsLocalization.forecastNeedsAdjustmentBody(
+            context,
+            target: targetWeight.toStringAsFixed(1),
+          );
 
     final int chartMaxWeeks = math.min(12, math.max(6, estimatedWeeks ?? 8));
     final List<double> projectedPoints = [];
@@ -1102,7 +1067,7 @@ class TargetTimelineCard extends StatelessWidget {
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
-                        'Ước tính thời gian đạt mục tiêu',
+                        strings.weightTargetForecastTitle,
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w700,
@@ -1143,7 +1108,7 @@ class TargetTimelineCard extends StatelessWidget {
                       ),
                       if (estimatedWeeks != null && estimatedWeeks > 0)
                         Text(
-                          '$estimatedWeeks tuần',
+                          strings.weeksFormat(estimatedWeeks),
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w900,
@@ -1174,6 +1139,8 @@ class TargetTimelineCard extends StatelessWidget {
                       lineColor: statusColor,
                       isDark: isDark,
                       textMuted: textMuted,
+                      currentLabel: strings.currentLabel,
+                      weekAbbrev: (w) => strings.weekAbbrev(w),
                     ),
                   ),
                 ),
@@ -1212,7 +1179,7 @@ class TargetTimelineCard extends StatelessWidget {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          'Dự báo tiến trình đạt mục tiêu',
+                          strings.weightTargetForecastTitle,
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w800,
@@ -1221,7 +1188,7 @@ class TargetTimelineCard extends StatelessWidget {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          'Nâng cấp Premium để mở khóa biểu đồ & ước tính số tuần đạt mốc cân nặng!',
+                          strings.premiumBenefitDescriptions,
                           textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 12, color: textMuted),
                         ),
@@ -1243,9 +1210,9 @@ class TargetTimelineCard extends StatelessWidget {
                             size: 16,
                             color: Colors.white,
                           ),
-                          label: const Text(
-                            'Nâng cấp Premium',
-                            style: TextStyle(
+                          label: Text(
+                            strings.upgradePremium,
+                            style: const TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w700,
                               color: Colors.white,
@@ -1283,6 +1250,8 @@ class _ProjectionChartPainter extends CustomPainter {
   final Color lineColor;
   final bool isDark;
   final Color textMuted;
+  final String currentLabel;
+  final String Function(int) weekAbbrev;
 
   _ProjectionChartPainter({
     required this.points,
@@ -1291,6 +1260,8 @@ class _ProjectionChartPainter extends CustomPainter {
     required this.lineColor,
     required this.isDark,
     required this.textMuted,
+    required this.currentLabel,
+    required this.weekAbbrev,
   });
 
   @override
@@ -1421,7 +1392,7 @@ class _ProjectionChartPainter extends CustomPainter {
       }
 
       if (i == 0 || i == points.length - 1 || i == (points.length ~/ 2)) {
-        final labelText = i == 0 ? 'Hiện tại' : 'T$i';
+        final labelText = i == 0 ? currentLabel : weekAbbrev(i);
         final weekTp = TextPainter(
           text: TextSpan(
             text: labelText,
@@ -1439,5 +1410,10 @@ class _ProjectionChartPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _ProjectionChartPainter old) =>
-      old.points != points || old.lineColor != lineColor;
+      old.points != points ||
+      old.currentWeight != currentWeight ||
+      old.targetWeight != targetWeight ||
+      old.lineColor != lineColor ||
+      old.isDark != isDark ||
+      old.textMuted != textMuted;
 }

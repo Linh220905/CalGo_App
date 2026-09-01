@@ -21,6 +21,10 @@ class User {
   final String? goal;
   final double? weeklyGoalKg;
 
+  final double? proteinGrams;
+  final double? fatGrams;
+  final double? carbsGrams;
+
   User({
     required this.id,
     this.email,
@@ -41,6 +45,9 @@ class User {
     this.activityLevel,
     this.goal,
     this.weeklyGoalKg,
+    this.proteinGrams,
+    this.fatGrams,
+    this.carbsGrams,
   });
 
   /// Testing builds keep Premium entitlement enabled for QA/API coverage, but
@@ -92,6 +99,15 @@ class User {
       weeklyGoalKg:
           (json['weekly_goal_kg'] as num?)?.toDouble() ??
           (json['weeklyGoalKg'] as num?)?.toDouble(),
+      proteinGrams:
+          (json['protein_grams'] as num?)?.toDouble() ??
+          (json['proteinGrams'] as num?)?.toDouble(),
+      fatGrams:
+          (json['fat_grams'] as num?)?.toDouble() ??
+          (json['fatGrams'] as num?)?.toDouble(),
+      carbsGrams:
+          (json['carbs_grams'] as num?)?.toDouble() ??
+          (json['carbsGrams'] as num?)?.toDouble(),
     );
   }
 }

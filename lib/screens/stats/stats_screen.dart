@@ -8,19 +8,18 @@ import 'package:provider/provider.dart';
 import '../../models/gamification.dart';
 import '../../models/progress.dart';
 import '../../providers/app_settings_provider.dart';
+import '../../providers/auth_provider.dart';
 import '../../providers/gamification_provider.dart';
 import '../../providers/home_provider.dart';
 import '../../providers/progress_provider.dart';
 import '../../widgets/achievement_badge.dart';
 import '../../utils/macro_colors.dart';
+import '../../utils/stats_localization.dart';
 import '../recap/daily_recap_screen.dart';
 import '../../widgets/horizontal_ruler_picker.dart';
 
 const _kAccent = Color(0xFF63A97B);
 const _kAccentSoft = Color(0xFFE2F1E7);
-const _kProtein = MacroColors.protein;
-const _kCarbs = MacroColors.carb;
-const _kFat = MacroColors.fat;
 
 class StatsScreen extends StatefulWidget {
   const StatsScreen({super.key});
@@ -42,6 +41,7 @@ class _StatsScreenState extends State<StatsScreen>
 
   Future<void> _refreshAll() async {
     await Future.wait([
+      context.read<AuthProvider>().refreshUser(),
       context.read<GamificationProvider>().refresh(),
       context.read<ProgressProvider>().refresh(),
     ]);
@@ -66,11 +66,13 @@ class _StatsScreenState extends State<StatsScreen>
     final border = dark ? const Color(0xFF34313D) : const Color(0xFFECECE9);
     final strings = settings.strings;
     final loading =
-        gamification.loading &&
-        !gamification.hasStats &&
-        progress.loading &&
-        progress.data == null;
-    final hasAnyData = gamification.hasStats || progress.data != null;
+        (gamification.loading && !gamification.hasStats) ||
+        (progress.loading && progress.data == null);
+    final hasAnyData =
+        gamification.hasStats ||
+        gamification.hasStatus ||
+        gamification.hasAchievements ||
+        progress.data != null;
 
     return Scaffold(
       backgroundColor: bg,
@@ -129,9 +131,11 @@ class _StatsScreenState extends State<StatsScreen>
                       children: [
                         _ProgressTab(
                           progress: progress,
+                          progressError: progress.error,
                           weekly: gamification.weekly,
                           monthly: gamification.monthly,
-                          forecast: gamification.forecast,
+                          weeklyError: gamification.weeklyError,
+                          monthlyError: gamification.monthlyError,
                           card: card,
                           border: border,
                           text: text,
@@ -140,8 +144,12 @@ class _StatsScreenState extends State<StatsScreen>
                           onRefresh: _refreshAll,
                         ),
                         _ExpTab(
-                          status: gamification.status,
+                          status: gamification.hasStatus
+                              ? gamification.status
+                              : null,
                           achievements: gamification.achievements,
+                          statusAvailable: gamification.hasStatus,
+                          achievementsAvailable: gamification.hasAchievements,
                           card: card,
                           border: border,
                           text: text,
@@ -210,18 +218,22 @@ class _StatsTabBar extends StatelessWidget {
 
 class _ProgressTab extends StatefulWidget {
   final ProgressProvider progress;
+  final String? progressError;
   final WeeklyStats? weekly;
   final MonthlyStats? monthly;
-  final GoalForecast? forecast;
+  final String? weeklyError;
+  final String? monthlyError;
   final Color card, border, text, muted;
   final bool dark;
   final Future<void> Function() onRefresh;
 
   const _ProgressTab({
     required this.progress,
+    required this.progressError,
     required this.weekly,
     required this.monthly,
-    required this.forecast,
+    required this.weeklyError,
+    required this.monthlyError,
     required this.card,
     required this.border,
     required this.text,
@@ -236,6 +248,21 @@ class _ProgressTab extends StatefulWidget {
 
 class _ProgressTabState extends State<_ProgressTab> {
   int _weightRangeDays = 90;
+  WeeklyStats? _selectedWeekly;
+
+  @override
+  void didUpdateWidget(covariant _ProgressTab oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.weekly != widget.weekly) _selectedWeekly = null;
+  }
+
+  Future<WeeklyStats> _selectNutritionWeek(int index) async {
+    final next = await context.read<GamificationProvider>().fetchWeeklyStats(
+      weeksAgo: index,
+    );
+    if (mounted) setState(() => _selectedWeekly = next);
+    return next;
+  }
 
   Future<void> _selectWeightRange(int days) async {
     if (_weightRangeDays == days || widget.progress.loading) return;
@@ -244,8 +271,11 @@ class _ProgressTabState extends State<_ProgressTab> {
   }
 
   Future<void> _showWeightDialog() async {
-    final current = widget.progress.data?.currentWeightKg ?? 70.0;
-    final lastWeight = widget.progress.data?.currentWeightKg;
+    final user = context.read<AuthProvider>().user;
+    final current =
+        widget.progress.data?.currentWeightKg ?? user?.currentWeightKg ?? 70.0;
+    final lastWeight =
+        widget.progress.data?.currentWeightKg ?? user?.currentWeightKg;
     final result = await showModalBottomSheet<_LogWeightResult>(
       context: context,
       isScrollControlled: true,
@@ -270,8 +300,10 @@ class _ProgressTabState extends State<_ProgressTab> {
       saved ? strings.weightUpdateSuccess : strings.weightUpdateFailed,
     );
     if (saved) {
-      // Refresh gamification weekly stats so TargetTimelineCard updates.
+      unawaited(context.read<AuthProvider>().refreshUser());
+      unawaited(context.read<HomeProvider>().loadToday(forceRefresh: true));
       unawaited(context.read<GamificationProvider>().refresh());
+      unawaited(widget.progress.refresh(days: _weightRangeDays));
     }
   }
 
@@ -291,6 +323,10 @@ class _ProgressTabState extends State<_ProgressTab> {
         physics: const AlwaysScrollableScrollPhysics(),
         padding: const EdgeInsets.fromLTRB(20, 8, 20, 110),
         children: [
+          if (widget.progress.data == null && widget.progressError != null) ...[
+            _StatsInlineError(card: widget.card, border: widget.border),
+            const SizedBox(height: 16),
+          ],
           _WeightHeroCard(
             data: data,
             card: widget.card,
@@ -322,46 +358,61 @@ class _ProgressTabState extends State<_ProgressTab> {
             dark: widget.dark,
             onLogWeight: _showWeightDialog,
           ),
+          if (widget.weekly == null && widget.weeklyError != null) ...[
+            const SizedBox(height: 16),
+            _StatsInlineError(card: widget.card, border: widget.border),
+          ],
           if (widget.weekly != null) ...[
             const SizedBox(height: 24),
-            _SectionLabel(context.watch<AppSettingsProvider>().strings.nutritionSectionHeader, widget.muted),
+            _SectionLabel(
+              context
+                  .watch<AppSettingsProvider>()
+                  .strings
+                  .nutritionSectionHeader,
+              widget.muted,
+            ),
             const SizedBox(height: 9),
             _NutritionSummaryCard(
-              weekly: widget.weekly!,
+              weekly: _selectedWeekly ?? widget.weekly!,
               card: widget.card,
               border: widget.border,
               text: widget.text,
               muted: widget.muted,
               dark: widget.dark,
+              onWeekChanged: _selectNutritionWeek,
             ),
             const SizedBox(height: 12),
             Builder(
               builder: (ctx) {
                 // Use HomeProvider's live data for today's calories so the
                 // card updates immediately after scanning or editing meals.
+                final user = ctx.watch<AuthProvider>().user;
                 final home = ctx.watch<HomeProvider>();
-                final liveCalo = home.hasLoaded
-                    ? home.summary.consumedCalories.toDouble()
-                    : null;
-                final liveTarget = home.hasLoaded &&
-                        home.summary.targetCalories > 0
+                final liveTarget =
+                    home.hasLoaded && home.summary.targetCalories > 0
                     ? home.summary.targetCalories.toDouble()
                     : null;
-                final weeklyAvgCalo = widget.weekly?.avgCalo ?? 0.0;
-                final effectiveCalo = weeklyAvgCalo > 0
-                    ? weeklyAvgCalo
-                    : (liveCalo ??
-                        (widget.weekly!.dailyPoints.isNotEmpty
-                            ? widget.weekly!.dailyPoints.last.calo.toDouble()
-                            : 0.0));
+                final selectedWeekly = _selectedWeekly ?? widget.weekly!;
+                if (selectedWeekly.daysLogged == 0) {
+                  return _StatsInlineError(
+                    card: widget.card,
+                    border: widget.border,
+                    message: context
+                        .watch<AppSettingsProvider>()
+                        .strings
+                        .notEnoughNutritionData,
+                  );
+                }
                 return TargetTimelineCard(
-                  todayCalories: effectiveCalo,
-                  calorieTarget: liveTarget ??
-                      (widget.weekly!.dailyPoints.isNotEmpty &&
-                              widget.weekly!.dailyPoints.last.target > 0
-                          ? widget.weekly!.dailyPoints.last.target.toDouble()
-                          : null),
-                  isWeeklyAverage: true,
+                  todayCalories: selectedWeekly.avgCalo,
+                  calorieTarget: (user != null && user.dailyCalorieTarget > 0)
+                      ? user.dailyCalorieTarget
+                      : (liveTarget ??
+                            (selectedWeekly.dailyPoints.isNotEmpty &&
+                                    selectedWeekly.dailyPoints.last.target > 0
+                                ? selectedWeekly.dailyPoints.last.target
+                                      .toDouble()
+                                : null)),
                   isDark: widget.dark,
                   cardBg: widget.card,
                   border: widget.border,
@@ -381,23 +432,19 @@ class _ProgressTabState extends State<_ProgressTab> {
               muted: widget.muted,
               dark: widget.dark,
             ),
+          ] else if (widget.monthlyError != null) ...[
+            const SizedBox(height: 12),
+            _StatsInlineError(card: widget.card, border: widget.border),
           ],
           if (data?.bmi != null) ...[
             const SizedBox(height: 24),
-            _SectionLabel(context.watch<AppSettingsProvider>().strings.healthSectionHeader, widget.muted),
+            _SectionLabel(
+              context.watch<AppSettingsProvider>().strings.healthSectionHeader,
+              widget.muted,
+            ),
             const SizedBox(height: 9),
             _BmiCard(
               data: data!,
-              card: widget.card,
-              border: widget.border,
-              text: widget.text,
-              muted: widget.muted,
-            ),
-          ],
-          if (widget.forecast != null) ...[
-            const SizedBox(height: 12),
-            _ForecastCard(
-              forecast: widget.forecast!,
               card: widget.card,
               border: widget.border,
               text: widget.text,
@@ -428,9 +475,10 @@ class _WeightHeroCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final current = data?.currentWeightKg;
-    final start = data?.startWeightKg;
-    final target = data?.targetWeightKg;
+    final user = context.watch<AuthProvider>().user;
+    final current = data?.currentWeightKg ?? user?.currentWeightKg;
+    final start = data?.startWeightKg ?? user?.currentWeightKg;
+    final target = data?.targetWeightKg ?? user?.targetWeightKg;
     final hasProgress = current != null && start != null && target != null;
     double covered = 0.0;
     if (current != null && start != null && target != null) {
@@ -458,7 +506,13 @@ class _WeightHeroCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _Kicker(context.watch<AppSettingsProvider>().strings.currentWeightKicker, muted),
+                  _Kicker(
+                    context
+                        .watch<AppSettingsProvider>()
+                        .strings
+                        .currentWeightKicker,
+                    muted,
+                  ),
                   const SizedBox(height: 7),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.baseline,
@@ -489,19 +543,30 @@ class _WeightHeroCard extends StatelessWidget {
                               ? Icons.south_west_rounded
                               : Icons.north_east_rounded,
                           size: 15,
-                          color: (current - start) <= 0
-                              ? const Color(0xFF16A34A)
-                              : const Color(0xFFEF4444),
+                          color: _weightTrendColor(
+                            current: current,
+                            start: start,
+                            target: target,
+                            goal: user?.goal,
+                          ),
                         ),
                         const SizedBox(width: 4),
                         Text(
-                          context.watch<AppSettingsProvider>().strings.weightKgValue((current - start).abs().toStringAsFixed(1)),
+                          context
+                              .watch<AppSettingsProvider>()
+                              .strings
+                              .weightKgValue(
+                                (current - start).abs().toStringAsFixed(1),
+                              ),
                           style: TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.w600,
-                            color: (current - start) <= 0
-                                ? const Color(0xFF16A34A)
-                                : const Color(0xFFEF4444),
+                            color: _weightTrendColor(
+                              current: current,
+                              start: start,
+                              target: target,
+                              goal: user?.goal,
+                            ),
                           ),
                         ),
                       ],
@@ -513,7 +578,10 @@ class _WeightHeroCard extends StatelessWidget {
                 onPressed: onLogWeight,
                 icon: Text(
                   context.watch<AppSettingsProvider>().strings.logWeightButton,
-                  style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 14),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w800,
+                    fontSize: 14,
+                  ),
                 ),
                 label: const Icon(Icons.arrow_forward_rounded, size: 16),
                 style: ElevatedButton.styleFrom(
@@ -645,6 +713,28 @@ class _WeightHeroCard extends StatelessWidget {
       ),
     );
   }
+
+  Color _weightTrendColor({
+    required double current,
+    required double? start,
+    required double? target,
+    required String? goal,
+  }) {
+    final delta = current - (start ?? current);
+    final direction = target != null
+        ? (target > current + 0.1
+              ? 'gain'
+              : target < current - 0.1
+              ? 'lose'
+              : (goal ?? 'maintain'))
+        : (goal ?? 'maintain');
+    final helpful = direction == 'gain'
+        ? delta > 0
+        : direction == 'lose'
+        ? delta < 0
+        : delta.abs() < 0.1;
+    return helpful ? const Color(0xFF16A34A) : const Color(0xFFEF4444);
+  }
 }
 
 class _WeightProgressCard extends StatelessWidget {
@@ -668,8 +758,20 @@ class _WeightProgressCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = context.watch<AuthProvider>().user;
     final points = data?.weightHistory ?? const <WeightPoint>[];
-    final percent = data?.progressPercent;
+    final current = data?.currentWeightKg ?? user?.currentWeightKg;
+    final start = data?.startWeightKg ?? user?.currentWeightKg;
+    final target = data?.targetWeightKg ?? user?.targetWeightKg;
+
+    double? percent = data?.progressPercent;
+    if (percent == null &&
+        current != null &&
+        start != null &&
+        target != null &&
+        (start - target).abs() > 0.01) {
+      percent = ((start - current) / (start - target) * 100).clamp(0.0, 100.0);
+    }
 
     final strings = context.watch<AppSettingsProvider>().strings;
     return _Card(
@@ -754,6 +856,7 @@ class _NutritionSummaryCard extends StatefulWidget {
   final WeeklyStats weekly;
   final Color card, border, text, muted;
   final bool dark;
+  final Future<WeeklyStats> Function(int weeksAgo) onWeekChanged;
 
   const _NutritionSummaryCard({
     required this.weekly,
@@ -762,6 +865,7 @@ class _NutritionSummaryCard extends StatefulWidget {
     required this.text,
     required this.muted,
     required this.dark,
+    required this.onWeekChanged,
   });
 
   @override
@@ -771,6 +875,16 @@ class _NutritionSummaryCard extends StatefulWidget {
 class _NutritionSummaryCardState extends State<_NutritionSummaryCard> {
   int _selectedWeekIndex =
       0; // 0: Tuần này, 1: Tuần trước, 2: 2 tuần trước, 3: 3 tuần trước
+  late WeeklyStats _displayWeekly = widget.weekly;
+  bool _loadingWeek = false;
+
+  @override
+  void didUpdateWidget(covariant _NutritionSummaryCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (_selectedWeekIndex == 0 && oldWidget.weekly != widget.weekly) {
+      _displayWeekly = widget.weekly;
+    }
+  }
 
   String _formatCalo(double value) {
     final valInt = value.round();
@@ -784,13 +898,12 @@ class _NutritionSummaryCardState extends State<_NutritionSummaryCard> {
   @override
   Widget build(BuildContext context) {
     final strings = context.watch<AppSettingsProvider>().strings;
-    final caloStr = _formatCalo(widget.weekly.avgCalo);
-    final target = widget.weekly.dailyPoints.isEmpty
+    final weekly = _displayWeekly;
+    final caloStr = _formatCalo(weekly.avgCalo);
+    final target = weekly.dailyPoints.isEmpty
         ? 0
-        : widget.weekly.dailyPoints
-              .map((point) => point.target)
-              .reduce((a, b) => a > b ? a : b);
-    final balance = target > 0 ? widget.weekly.avgCalo - target : 0;
+        : weekly.dailyPoints.first.target;
+    final balance = target > 0 ? weekly.avgCalo - target : 0;
     final targetColor = widget.dark
         ? const Color(0xFF64748B)
         : const Color(0xFF94A3B8);
@@ -811,6 +924,11 @@ class _NutritionSummaryCardState extends State<_NutritionSummaryCard> {
               fontSize: 22,
               fontWeight: FontWeight.w800,
             ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            strings.daysWithData(weekly.daysLogged, 7),
+            style: TextStyle(color: widget.muted, fontSize: 12),
           ),
           const SizedBox(height: 14),
 
@@ -839,7 +957,11 @@ class _NutritionSummaryCardState extends State<_NutritionSummaryCard> {
                   value: target == 0
                       ? '--'
                       : '${balance >= 0 ? '+' : ''}${balance.round()}',
-                  color: balance > 0 ? _kAccent : const Color(0xFF36A269),
+                  color: balance.abs() < 1
+                      ? const Color(0xFF36A269)
+                      : balance > 0
+                      ? const Color(0xFFF59E0B)
+                      : const Color(0xFFEF4444),
                   muted: widget.muted,
                 ),
               ),
@@ -849,7 +971,7 @@ class _NutritionSummaryCardState extends State<_NutritionSummaryCard> {
 
           // Unified Dual-Bar Chart per day (Col 1: Target | Col 2: Stacked Macros)
           _UnifiedNutritionChart(
-            points: widget.weekly.dailyPoints,
+            points: weekly.dailyPoints,
             muted: widget.muted,
             dark: widget.dark,
           ),
@@ -914,7 +1036,36 @@ class _NutritionSummaryCardState extends State<_NutritionSummaryCard> {
   Widget _buildWeekPill(String label, int index) {
     final isSelected = _selectedWeekIndex == index;
     return GestureDetector(
-      onTap: () => setState(() => _selectedWeekIndex = index),
+      onTap: _loadingWeek
+          ? null
+          : () async {
+              if (_selectedWeekIndex == index) return;
+              final previousIndex = _selectedWeekIndex;
+              setState(() {
+                _selectedWeekIndex = index;
+                _loadingWeek = true;
+              });
+              try {
+                final next = await widget.onWeekChanged(index);
+                if (mounted) setState(() => _displayWeekly = next);
+              } catch (_) {
+                if (mounted) {
+                  setState(() => _selectedWeekIndex = previousIndex);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        context
+                            .read<AppSettingsProvider>()
+                            .strings
+                            .dataLoadFailed,
+                      ),
+                    ),
+                  );
+                }
+              } finally {
+                if (mounted) setState(() => _loadingWeek = false);
+              }
+            },
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 180),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -926,122 +1077,35 @@ class _NutritionSummaryCardState extends State<_NutritionSummaryCard> {
           boxShadow: isSelected
               ? [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.06),
+                    color: Colors.black.withValues(alpha: 0.06),
                     blurRadius: 4,
                     offset: const Offset(0, 2),
                   ),
                 ]
               : null,
         ),
-        child: Text(
-          label,
-          style: TextStyle(
-            fontSize: 13,
-            fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-            color: isSelected
-                ? widget.text
-                : (widget.dark
-                      ? const Color(0xFF94A3B8)
-                      : const Color(0xFF64748B)),
-          ),
-        ),
+        child: _loadingWeek && isSelected
+            ? const SizedBox(
+                width: 14,
+                height: 14,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              )
+            : Text(
+                label,
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+                  color: isSelected
+                      ? widget.text
+                      : (widget.dark
+                            ? const Color(0xFF94A3B8)
+                            : const Color(0xFF64748B)),
+                ),
+              ),
       ),
     );
   }
 }
-
-class _EnergyCard extends StatelessWidget {
-  final WeeklyStats weekly;
-  final Color card, border, text, muted;
-  final bool dark;
-
-  const _EnergyCard({
-    required this.weekly,
-    required this.card,
-    required this.border,
-    required this.text,
-    required this.muted,
-    required this.dark,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final strings = context.watch<AppSettingsProvider>().strings;
-    final target = weekly.dailyPoints.isEmpty
-        ? 0
-        : weekly.dailyPoints
-              .map((point) => point.target)
-              .reduce((a, b) => a > b ? a : b);
-    final balance = target > 0 ? weekly.avgCalo - target : 0;
-
-    return _Card(
-      card: card,
-      border: border,
-      radius: 26,
-      padding: const EdgeInsets.fromLTRB(20, 20, 20, 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            strings.weeklyEnergyTitle,
-            style: TextStyle(
-              color: text,
-              fontSize: 22,
-              fontWeight: FontWeight.w800,
-            ),
-          ),
-          const SizedBox(height: 16),
-          Row(
-            children: [
-              Expanded(
-                child: _EnergyMetric(
-                  label: strings.consumedLabelUpper,
-                  value: '${weekly.avgCalo.round()}',
-                  color: text,
-                  muted: muted,
-                ),
-              ),
-              Expanded(
-                child: _EnergyMetric(
-                  label: strings.targetLabelUpper,
-                  value: target == 0 ? '--' : '$target',
-                  color: text,
-                  muted: muted,
-                ),
-              ),
-              Expanded(
-                child: _EnergyMetric(
-                  label: strings.differenceLabelUpper,
-                  value: target == 0
-                      ? '--'
-                      : '${balance >= 0 ? '+' : ''}${balance.round()}',
-                  color: balance > 0 ? _kAccent : const Color(0xFF36A269),
-                  muted: muted,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 18),
-          _EnergyBars(points: weekly.dailyPoints, muted: muted, dark: dark),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _LegendDot(color: _kAccent, label: strings.consumedLabel, muted: muted),
-              const SizedBox(width: 18),
-              _LegendDot(
-                color: dark ? Colors.white70 : const Color(0xFF111318),
-                label: strings.journeyTarget,
-                muted: muted,
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 
 class _ActivityCard extends StatelessWidget {
   final MonthlyStats monthly;
@@ -1101,7 +1165,10 @@ class _ActivityCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Text(strings.lessLabel, style: TextStyle(color: muted, fontSize: 10)),
+              Text(
+                strings.lessLabel,
+                style: TextStyle(color: muted, fontSize: 10),
+              ),
               _HeatLegend(
                 color: dark ? const Color(0xFF36343F) : const Color(0xFFEDEDEB),
               ),
@@ -1109,7 +1176,10 @@ class _ActivityCard extends StatelessWidget {
               const _HeatLegend(color: Color(0xFFA8D0B4)),
               const _HeatLegend(color: _kAccent),
               const SizedBox(width: 5),
-              Text(strings.moreLabel, style: TextStyle(color: muted, fontSize: 10)),
+              Text(
+                strings.moreLabel,
+                style: TextStyle(color: muted, fontSize: 10),
+              ),
             ],
           ),
         ],
@@ -1135,7 +1205,13 @@ class _BmiCard extends StatelessWidget {
     final strings = context.watch<AppSettingsProvider>().strings;
     final bmi = data.bmi!;
     final category = data.bmiCategory ?? '';
-    final normal = category == 'Normal';
+    final normalizedCategory = category.trim().toLowerCase();
+    final normal = normalizedCategory == 'normal';
+    final displayCategory = StatsLocalization.bmiCategory(
+      context,
+      category,
+      category,
+    );
     final marker = ((bmi - 15) / 25).clamp(0.02, 0.98);
     return _Card(
       card: card,
@@ -1177,7 +1253,7 @@ class _BmiCard extends StatelessWidget {
               const SizedBox(width: 11),
               Flexible(
                 child: Text(
-                  category,
+                  displayCategory,
                   style: TextStyle(
                     color: normal ? const Color(0xFF4C9B67) : _kAccent,
                     fontSize: 15,
@@ -1254,56 +1330,11 @@ class _BmiCard extends StatelessWidget {
   }
 }
 
-class _ForecastCard extends StatelessWidget {
-  final GoalForecast forecast;
-  final Color card, border, text, muted;
-
-  const _ForecastCard({
-    required this.forecast,
-    required this.card,
-    required this.border,
-    required this.text,
-    required this.muted,
-  });
-
-  @override
-  Widget build(BuildContext context) => _Card(
-    card: card,
-    border: border,
-    radius: 22,
-    padding: const EdgeInsets.all(18),
-    child: Row(
-      children: [
-        const Icon(
-          Icons.track_changes_outlined,
-          color: Color(0xFF36A269),
-          size: 23,
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                context.watch<AppSettingsProvider>().strings.weightTargetForecastTitle,
-                style: TextStyle(color: text, fontWeight: FontWeight.w800),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                forecast.display,
-                style: TextStyle(color: muted, fontSize: 13),
-              ),
-            ],
-          ),
-        ),
-      ],
-    ),
-  );
-}
-
 class _ExpTab extends StatelessWidget {
-  final GamificationStatus status;
+  final GamificationStatus? status;
   final List<Achievement> achievements;
+  final bool statusAvailable;
+  final bool achievementsAvailable;
   final Color card, border, text, muted;
   final bool dark;
   final Future<void> Function() onRefresh;
@@ -1311,6 +1342,8 @@ class _ExpTab extends StatelessWidget {
   const _ExpTab({
     required this.status,
     required this.achievements,
+    required this.statusAvailable,
+    required this.achievementsAvailable,
     required this.card,
     required this.border,
     required this.text,
@@ -1323,109 +1356,125 @@ class _ExpTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final strings = context.watch<AppSettingsProvider>().strings;
     return RefreshIndicator(
-    color: _kAccent,
-    onRefresh: onRefresh,
-    child: ListView(
-      physics: const AlwaysScrollableScrollPhysics(),
-      padding: const EdgeInsets.fromLTRB(20, 8, 20, 110),
-      children: [
-        _Card(
-          card: card,
-          border: border,
-          radius: 26,
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      color: _kAccent,
+      onRefresh: onRefresh,
+      child: ListView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        padding: const EdgeInsets.fromLTRB(20, 8, 20, 110),
+        children: [
+          if (!statusAvailable)
+            _StatsInlineError(card: card, border: border)
+          else
+            _Card(
+              card: card,
+              border: border,
+              radius: 26,
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            strings.levelLabel(status!.level),
+                            style: TextStyle(
+                              color: text,
+                              fontSize: 23,
+                              fontWeight: FontWeight.w900,
+                            ),
+                          ),
+                          const SizedBox(height: 3),
+                          Text(
+                            StatsLocalization.levelTitle(
+                              context,
+                              status!.level,
+                            ),
+                            style: TextStyle(color: muted, fontSize: 13),
+                          ),
+                        ],
+                      ),
                       Text(
-                        strings.levelLabel(status.level),
-                        style: TextStyle(
-                          color: text,
-                          fontSize: 23,
+                        '${status!.exp} EXP',
+                        style: const TextStyle(
+                          color: Color(0xFF36A269),
+                          fontSize: 16,
                           fontWeight: FontWeight.w900,
                         ),
                       ),
-                      const SizedBox(height: 3),
-                      Text(
-                        GamificationStatus.levelTitle(status.level),
-                        style: TextStyle(color: muted, fontSize: 13),
-                      ),
                     ],
                   ),
-                  Text(
-                    '${status.exp} EXP',
-                    style: const TextStyle(
-                      color: Color(0xFF36A269),
-                      fontSize: 16,
-                      fontWeight: FontWeight.w900,
+                  const SizedBox(height: 17),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(99),
+                    child: LinearProgressIndicator(
+                      value: status!.levelProgress.clamp(0.0, 1.0),
+                      minHeight: 9,
+                      backgroundColor: dark
+                          ? const Color(0xFF36343F)
+                          : const Color(0xFFEDEDEB),
+                      valueColor: const AlwaysStoppedAnimation(
+                        Color(0xFF36A269),
+                      ),
                     ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    status!.level >= 10
+                        ? strings.maxLevelReached
+                        : strings.expToNextLevel(
+                            (status!.expToNextLevel - status!.expInCurrentLevel)
+                                .clamp(0, 100000),
+                          ),
+                    style: TextStyle(color: muted, fontSize: 12),
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    strings.scansTodaySummary(
+                      status!.scansToday,
+                      status!.totalScans,
+                    ),
+                    style: TextStyle(color: muted, fontSize: 12),
                   ),
                 ],
               ),
-              const SizedBox(height: 17),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(99),
-                child: LinearProgressIndicator(
-                  value: status.levelProgress.clamp(0.0, 1.0),
-                  minHeight: 9,
-                  backgroundColor: dark
-                      ? const Color(0xFF36343F)
-                      : const Color(0xFFEDEDEB),
-                  valueColor: const AlwaysStoppedAnimation(Color(0xFF36A269)),
+            ),
+          const SizedBox(height: 24),
+          _SectionLabel(strings.milestonesHeader, muted),
+          const SizedBox(height: 9),
+          if (!achievementsAvailable)
+            _StatsInlineError(card: card, border: border)
+          else if (achievements.isEmpty)
+            _Card(
+              card: card,
+              border: border,
+              radius: 22,
+              padding: const EdgeInsets.all(18),
+              child: Text(
+                strings.noMilestoneData,
+                style: TextStyle(color: muted),
+              ),
+            )
+          else
+            ...achievements.map(
+              (achievement) => Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: _AchievementTile(
+                  achievement: achievement,
+                  card: card,
+                  border: border,
+                  text: text,
+                  muted: muted,
+                  dark: dark,
                 ),
               ),
-              const SizedBox(height: 8),
-              Text(
-                status.level >= 10
-                    ? strings.maxLevelReached
-                    : strings.expToNextLevel((status.expToNextLevel - status.expInCurrentLevel).clamp(0, 100000)),
-                style: TextStyle(color: muted, fontSize: 12),
-              ),
-              const SizedBox(height: 12),
-              Text(
-                strings.scansTodaySummary(status.scansToday, status.totalScans),
-                style: TextStyle(color: muted, fontSize: 12),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 24),
-        _SectionLabel(strings.milestonesHeader, muted),
-        const SizedBox(height: 9),
-        if (achievements.isEmpty)
-          _Card(
-            card: card,
-            border: border,
-            radius: 22,
-            padding: const EdgeInsets.all(18),
-            child: Text(
-              strings.noMilestoneData,
-              style: TextStyle(color: muted),
             ),
-          )
-        else
-          ...achievements.map(
-            (achievement) => Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: _AchievementTile(
-                achievement: achievement,
-                card: card,
-                border: border,
-                text: text,
-                muted: muted,
-                dark: dark,
-              ),
-            ),
-          ),
-      ],
-    ),
-  );
+        ],
+      ),
+    );
   }
 }
 
@@ -1462,12 +1511,20 @@ class _AchievementTile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                achievement.name,
+                StatsLocalization.achievementName(
+                  context,
+                  achievement.id,
+                  achievement.name,
+                ),
                 style: TextStyle(color: text, fontWeight: FontWeight.w700),
               ),
               const SizedBox(height: 3),
               Text(
-                achievement.description,
+                StatsLocalization.achievementDescription(
+                  context,
+                  achievement.id,
+                  achievement.description,
+                ),
                 style: TextStyle(color: muted, fontSize: 12),
               ),
               if (!achievement.unlocked &&
@@ -1580,13 +1637,13 @@ class _WeightChart extends StatelessWidget {
         const SizedBox(height: 6),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: _buildDateLabels(),
+          children: _buildDateLabels(context),
         ),
       ],
     );
   }
 
-  List<Widget> _buildDateLabels() {
+  List<Widget> _buildDateLabels(BuildContext context) {
     if (points.isEmpty) return [];
     final count = points.length < 4 ? points.length : 4;
     final list = <Widget>[];
@@ -1595,7 +1652,8 @@ class _WeightChart extends StatelessWidget {
           ? 0
           : ((points.length - 1) * i / (count - 1)).round();
       final date = points[idx].date;
-      final label = '${_monthName(date.month)} ${date.day}';
+      final label =
+          '${StatsLocalization.monthShort(context, date)} ${date.day}';
       list.add(
         Text(
           label,
@@ -1608,25 +1666,6 @@ class _WeightChart extends StatelessWidget {
       );
     }
     return list;
-  }
-
-  String _monthName(int month) {
-    const names = [
-      '',
-      'Aug',
-      'Aug',
-      'Aug',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-    ];
-    return (month >= 1 && month <= 12) ? names[month] : '$month';
   }
 }
 
@@ -1688,8 +1727,8 @@ class _WeightChartPainter extends CustomPainter {
     final fillPaint = Paint()
       ..shader = LinearGradient(
         colors: [
-          const Color(0xFFF95A49).withOpacity(0.08),
-          const Color(0xFFF95A49).withOpacity(0.0),
+          const Color(0xFFF95A49).withValues(alpha: 0.08),
+          const Color(0xFFF95A49).withValues(alpha: 0.0),
         ],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
@@ -1744,18 +1783,17 @@ class _UnifiedNutritionChart extends StatelessWidget {
   Widget build(BuildContext context) {
     if (points.isEmpty) {
       return _EmptyChart(
-        message: context.watch<AppSettingsProvider>().strings.notEnoughNutritionData,
+        message: context
+            .watch<AppSettingsProvider>()
+            .strings
+            .notEnoughNutritionData,
         muted: muted,
         height: 160,
       );
     }
 
     final double maxVal = points.fold<double>(0, (max, p) {
-      final pCal = p.protein * 4;
-      final cCal = p.carbs * 4;
-      final fCal = p.fat * 9;
-      final macroSum = pCal + cCal + fCal;
-      final totalActual = macroSum > 0 ? macroSum : p.calo.toDouble();
+      final totalActual = p.hasLog ? p.calo.toDouble() : 0.0;
       final dayMax = math.max(totalActual, p.target.toDouble());
       return dayMax > max ? dayMax : max;
     });
@@ -1764,8 +1802,6 @@ class _UnifiedNutritionChart extends StatelessWidget {
         ? (maxVal > 1500 ? ((maxVal / 1000).ceil() * 1000.0) : 1500.0)
         : 3000.0;
     final double yMid = yMax / 2;
-
-    final dayLabels = ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'];
 
     return SizedBox(
       height: 175,
@@ -1832,9 +1868,10 @@ class _UnifiedNutritionChart extends StatelessWidget {
               children: List.generate(points.isNotEmpty ? points.length : 7, (
                 index,
               ) {
-                final label = index < dayLabels.length
-                    ? dayLabels[index]
-                    : 'T${index + 1}';
+                final date = DateTime.tryParse(points[index].dateKey);
+                final label = date == null
+                    ? ''
+                    : StatsLocalization.weekdayShort(context, date);
                 return Text(
                   label,
                   style: TextStyle(
@@ -1899,6 +1936,7 @@ class _UnifiedStackedPainter extends CustomPainter {
 
     for (int i = 0; i < points.length; i++) {
       final point = points[i];
+      if (!point.hasLog || point.calo <= 0) continue;
       final slotCenterX = slotWidth * (i + 0.5);
 
       final targetBarX = slotCenterX - singleBarWidth / 2 - 1.5;
@@ -1932,7 +1970,7 @@ class _UnifiedStackedPainter extends CustomPainter {
       final cCal = point.carbs * 4;
       final fCal = point.fat * 9;
       final macroSum = pCal + cCal + fCal;
-      final totalCal = macroSum > 0 ? macroSum : point.calo.toDouble();
+      final totalCal = point.calo.toDouble();
 
       if (totalCal > 0) {
         final totalBarHeight = ((size.height - 8) * (totalCal / yMax)).clamp(
@@ -1941,7 +1979,26 @@ class _UnifiedStackedPainter extends CustomPainter {
         );
         var currentY = size.height - 4;
 
-        final segmentVals = [pCal, cCal, fCal];
+        if (macroSum <= 0) {
+          final fallbackRect = RRect.fromRectAndCorners(
+            Rect.fromLTWH(
+              actualBarX - singleBarWidth / 2,
+              currentY - totalBarHeight,
+              singleBarWidth,
+              totalBarHeight,
+            ),
+            topLeft: const Radius.circular(4),
+            topRight: const Radius.circular(4),
+          );
+          canvas.drawRRect(
+            fallbackRect,
+            Paint()..color = const Color(0xFF63A97B),
+          );
+          continue;
+        }
+
+        final scale = totalCal / macroSum;
+        final segmentVals = [pCal * scale, cCal * scale, fCal * scale];
 
         for (int seg = 0; seg < segmentVals.length; seg++) {
           final val = segmentVals[seg];
@@ -2004,74 +2061,6 @@ class _UnifiedStackedPainter extends CustomPainter {
       oldDelegate.dark != dark;
 }
 
-class _EnergyBars extends StatelessWidget {
-  final List<DayCaloriePoint> points;
-  final Color muted;
-  final bool dark;
-
-  const _EnergyBars({
-    required this.points,
-    required this.muted,
-    required this.dark,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    if (points.every((point) => !point.hasLog)) {
-      return _EmptyChart(
-        message: context.watch<AppSettingsProvider>().strings.noEnergyData,
-        muted: muted,
-        height: 150,
-      );
-    }
-    final maxValue = points.fold<double>(
-      1,
-      (max, point) => [
-        max,
-        point.calo.toDouble(),
-        point.target.toDouble(),
-      ].reduce((a, b) => a > b ? a : b),
-    );
-    return SizedBox(
-      height: 160,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: points.map((point) {
-          final label = point.dateKey.length >= 10
-              ? point.dateKey.substring(8)
-              : '';
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Expanded(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    _MiniBar(
-                      value: point.calo.toDouble(),
-                      max: maxValue,
-                      color: _kAccent,
-                    ),
-                    const SizedBox(width: 3),
-                    _MiniBar(
-                      value: point.target.toDouble(),
-                      max: maxValue,
-                      color: dark ? Colors.white70 : const Color(0xFF111318),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text('T$label', style: TextStyle(color: muted, fontSize: 10)),
-            ],
-          );
-        }).toList(),
-      ),
-    );
-  }
-}
-
 class _MonthGrid extends StatelessWidget {
   final List<DayLogPoint> days;
   final bool dark;
@@ -2107,8 +2096,12 @@ class _MonthGrid extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(height: 2),
-              ...['T2', '', 'T4', '', 'T6', '', 'CN'].map(
-                (label) => SizedBox(
+              ...List.generate(7, (weekday) {
+                final label = StatsLocalization.weekdayShort(
+                  context,
+                  DateTime(2024, 1, 1 + weekday),
+                );
+                return SizedBox(
                   height: 19,
                   child: Align(
                     alignment: Alignment.centerLeft,
@@ -2120,8 +2113,8 @@ class _MonthGrid extends StatelessWidget {
                       ),
                     ),
                   ),
-                ),
-              ),
+                );
+              }),
             ],
           ),
         ),
@@ -2167,23 +2160,6 @@ class _MonthGrid extends StatelessWidget {
       ],
     );
   }
-}
-
-class _MiniBar extends StatelessWidget {
-  final double value, max;
-  final Color color;
-
-  const _MiniBar({required this.value, required this.max, required this.color});
-
-  @override
-  Widget build(BuildContext context) => Container(
-    width: 8,
-    height: value <= 0 ? 3 : 105 * (value / max).clamp(.04, 1.0),
-    decoration: BoxDecoration(
-      color: value <= 0 ? color.withValues(alpha: .16) : color,
-      borderRadius: BorderRadius.circular(5),
-    ),
-  );
 }
 
 class _RangeSelector extends StatelessWidget {
@@ -2253,59 +2229,6 @@ class _RangeSelector extends StatelessWidget {
   }
 }
 
-class _MacroMetric extends StatelessWidget {
-  final String label, value, unit;
-  final Color color, text, muted;
-
-  const _MacroMetric({
-    required this.label,
-    required this.value,
-    required this.unit,
-    required this.color,
-    required this.text,
-    required this.muted,
-  });
-
-  @override
-  Widget build(BuildContext context) => Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text(
-        label,
-        style: TextStyle(
-          color: muted,
-          fontSize: 11,
-          fontWeight: FontWeight.w700,
-          letterSpacing: .8,
-        ),
-      ),
-      const SizedBox(height: 4),
-      Text.rich(
-        TextSpan(
-          children: [
-            TextSpan(
-              text: value,
-              style: TextStyle(
-                color: color,
-                fontSize: 22,
-                fontWeight: FontWeight.w900,
-              ),
-            ),
-            TextSpan(
-              text: ' $unit',
-              style: TextStyle(
-                color: muted,
-                fontSize: 11,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ],
-        ),
-      ),
-    ],
-  );
-}
-
 class _EnergyMetric extends StatelessWidget {
   final String label, value;
   final Color color, muted;
@@ -2370,30 +2293,6 @@ class _LegendDot extends StatelessWidget {
       const SizedBox(width: 5),
       Text(label, style: TextStyle(color: muted, fontSize: 12)),
     ],
-  );
-}
-
-class _ProgressPill extends StatelessWidget {
-  final String text;
-  final bool dark;
-
-  const _ProgressPill({required this.text, required this.dark});
-
-  @override
-  Widget build(BuildContext context) => Container(
-    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-    decoration: BoxDecoration(
-      color: dark ? const Color(0xFF24352A) : _kAccentSoft,
-      borderRadius: BorderRadius.circular(20),
-    ),
-    child: Text(
-      text,
-      style: TextStyle(
-        color: dark ? const Color(0xFFA8D0B4) : const Color(0xFF3D7F56),
-        fontSize: 11,
-        fontWeight: FontWeight.w800,
-      ),
-    ),
   );
 }
 
@@ -2596,6 +2495,33 @@ class _ErrorState extends StatelessWidget {
   }
 }
 
+class _StatsInlineError extends StatelessWidget {
+  final Color card, border;
+  final String? message;
+
+  const _StatsInlineError({
+    required this.card,
+    required this.border,
+    this.message,
+  });
+
+  @override
+  Widget build(BuildContext context) => _Card(
+    card: card,
+    border: border,
+    radius: 18,
+    padding: const EdgeInsets.all(16),
+    child: Text(
+      message ?? context.watch<AppSettingsProvider>().strings.dataLoadFailed,
+      style: TextStyle(
+        color: card.computeLuminance() > 0.5
+            ? const Color(0xFF747780)
+            : Colors.white70,
+      ),
+    ),
+  );
+}
+
 class _WeightChangeCard extends StatelessWidget {
   final List<WeightChangeItem> changes;
   final Color card, border, text, muted;
@@ -2627,55 +2553,13 @@ class _WeightChangeCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                strings.weightChangeTitle,
-                style: TextStyle(
-                  color: text,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w800,
-                ),
-              ),
-              if (onLogWeight != null)
-                InkWell(
-                  onTap: onLogWeight,
-                  borderRadius: BorderRadius.circular(14),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 6,
-                    ),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF63A97B).withValues(alpha: 0.15),
-                      borderRadius: BorderRadius.circular(14),
-                      border: Border.all(
-                        color: const Color(0xFF63A97B).withValues(alpha: 0.35),
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(
-                          Icons.add_rounded,
-                          size: 16,
-                          color: Color(0xFF63A97B),
-                        ),
-                        const SizedBox(width: 4),
-                        Text(
-                          strings.logWeightButton,
-                          style: const TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w700,
-                            color: Color(0xFF63A97B),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-            ],
+          Text(
+            strings.weightChangeTitle,
+            style: TextStyle(
+              color: text,
+              fontSize: 20,
+              fontWeight: FontWeight.w800,
+            ),
           ),
           const SizedBox(height: 14),
           if (items.isEmpty)
@@ -2721,6 +2605,10 @@ class _WeightChangeCard extends StatelessWidget {
             ...items.map((item) {
               final isLoss = item.diffKg <= 0;
               final absDiff = item.diffKg.abs().toStringAsFixed(1);
+              final periodLabel = StatsLocalization.periodLabel(
+                context,
+                item.periodDays,
+              );
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: Row(
@@ -2728,7 +2616,7 @@ class _WeightChangeCard extends StatelessWidget {
                     SizedBox(
                       width: 70,
                       child: Text(
-                        item.label,
+                        periodLabel,
                         style: TextStyle(
                           color: text,
                           fontSize: 15,
@@ -2743,7 +2631,9 @@ class _WeightChangeCard extends StatelessWidget {
                         child: CustomPaint(
                           painter: _WeightSparklinePainter(
                             values: item.sparkline,
-                            color: const Color(0xFFF95A49),
+                            color: isLoss
+                                ? const Color(0xFF10B981)
+                                : const Color(0xFFEF4444),
                           ),
                         ),
                       ),
@@ -2751,7 +2641,11 @@ class _WeightChangeCard extends StatelessWidget {
                     const SizedBox(width: 12),
 
                     Text(
-                      '${item.diffKg.abs() <= 0.01 ? "" : item.diffKg > 0 ? "+" : "-"}$absDiff kg',
+                      '${item.diffKg.abs() <= 0.01
+                          ? ""
+                          : item.diffKg > 0
+                          ? "+"
+                          : "-"}$absDiff kg',
                       style: TextStyle(
                         color: text,
                         fontSize: 16,
@@ -2774,7 +2668,9 @@ class _WeightChangeCard extends StatelessWidget {
                         ),
                         const SizedBox(width: 3),
                         Text(
-                          isLoss ? strings.weightDecreased : strings.weightIncreased,
+                          isLoss
+                              ? strings.weightDecreased
+                              : strings.weightIncreased,
                           style: TextStyle(
                             color: isLoss
                                 ? const Color(0xFF10B981)
@@ -2985,7 +2881,11 @@ class _LogWeightModalSheetState extends State<_LogWeightModalSheet> {
           const SizedBox(height: 6),
 
           Text(
-            strings.lastLogWeight(widget.lastWeight != null ? widget.lastWeight!.toStringAsFixed(1) : _weight.toStringAsFixed(1)),
+            strings.lastLogWeight(
+              widget.lastWeight != null
+                  ? widget.lastWeight!.toStringAsFixed(1)
+                  : _weight.toStringAsFixed(1),
+            ),
             style: TextStyle(fontSize: 14, color: textMuted),
           ),
           const SizedBox(height: 20),
@@ -3035,7 +2935,11 @@ class _LogWeightModalSheetState extends State<_LogWeightModalSheet> {
                       borderRadius: BorderRadius.circular(14),
                     ),
                     child: Text(
-                      strings.selectedDateText(_selectedDate.day, _selectedDate.month, _selectedDate.year),
+                      strings.selectedDateText(
+                        _selectedDate.day,
+                        _selectedDate.month,
+                        _selectedDate.year,
+                      ),
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
@@ -3077,7 +2981,9 @@ class _LogWeightModalSheetState extends State<_LogWeightModalSheet> {
                   child: Row(
                     children: [
                       Text(
-                        _selectedPhotoPath != null ? strings.photoSelected : strings.photoOptional,
+                        _selectedPhotoPath != null
+                            ? strings.photoSelected
+                            : strings.photoOptional,
                         style: TextStyle(fontSize: 14, color: textMuted),
                       ),
                       const SizedBox(width: 4),
@@ -3122,7 +3028,10 @@ class _LogWeightModalSheetState extends State<_LogWeightModalSheet> {
               ),
               child: Text(
                 strings.logWeightButton,
-                style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),

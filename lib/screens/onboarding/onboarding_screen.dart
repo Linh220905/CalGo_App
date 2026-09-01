@@ -136,10 +136,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           ],
                         ),
                       )
-                    else if (provider.currentStep >= 2 && provider.currentStep <= 19)
-                      StepProgressBar(
-                        value: (provider.currentStep - 1) / 18,
-                      ),
+                    else if (provider.currentStep >= 2 &&
+                        provider.currentStep <= 19)
+                      StepProgressBar(value: (provider.currentStep - 1) / 18),
                     Expanded(
                       child: AnimatedSwitcher(
                         duration: const Duration(milliseconds: 300),
@@ -200,7 +199,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       case 18:
         return HabitStep(key: key);
       case 19:
-        return AppleHealthPermissionStep(key: key);
+        // A previously persisted recalculate session may still point at the
+        // old Apple Health step. Redirect it to the shared analysis/result UI.
+        return context.read<OnboardingProvider>().isRecalculating
+            ? AnalysisResultStep(key: key)
+            : AppleHealthPermissionStep(key: key);
       case 20:
         return AnalysisResultStep(key: key);
       case 21:

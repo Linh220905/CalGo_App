@@ -105,7 +105,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get buyCredits => 'Buy Credits';
 
   @override
-  String get statistics => 'Statistics';
+  String get statistics => 'Achievements';
 
   @override
   String get calorieTarget => 'Calorie Goal';
@@ -1566,7 +1566,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deleteAction => 'Delete';
 
   @override
-  String get proteinLabel => 'PROTEIN';
+  String get proteinLabel => 'Protein';
 
   @override
   String get onboardingSaveFailed =>
@@ -1777,10 +1777,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get caloriesLabel => 'Calories';
 
   @override
-  String get carbsLabel => 'CARBS';
+  String get carbsLabel => 'Carbs';
 
   @override
-  String get fatLabel => 'FAT';
+  String get fatLabel => 'Fat';
 
   @override
   String get guidanceTodayShortSubtitle => 'View suggestions for today\'s goal';
@@ -1947,22 +1947,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get weightUpdateFailed => 'Could not save weight. Please try again.';
 
   @override
-  String get nutritionSectionHeader => 'NUTRITION';
+  String get nutritionSectionHeader => 'Nutrition';
 
   @override
-  String get healthSectionHeader => 'HEALTH';
+  String get healthSectionHeader => 'Health';
 
   @override
-  String get currentWeightKicker => 'CURRENT WEIGHT';
+  String get currentWeightKicker => 'Current Weight';
 
   @override
   String get logWeightButton => 'Log Weight';
 
   @override
-  String get startLabel => 'START';
+  String get startLabel => 'Start';
 
   @override
-  String get targetLabel => 'TARGET';
+  String get targetLabel => 'Target';
 
   @override
   String get weightProgressTitle => 'Weight Progress';
@@ -1979,13 +1979,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get calorieNutritionStatsTitle => 'Calorie & Nutrition Stats';
 
   @override
-  String get consumedAvgLabel => 'CONSUMED (AVG)';
+  String get consumedAvgLabel => 'Consumed (Avg)';
 
   @override
-  String get targetLabelUpper => 'TARGET';
+  String get targetLabelUpper => 'Target';
 
   @override
-  String get differenceLabelUpper => 'DIFFERENCE';
+  String get differenceLabelUpper => 'Difference';
 
   @override
   String get consumedLabel => 'Consumed';
@@ -2006,7 +2006,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get weeklyEnergyTitle => 'Weekly Energy';
 
   @override
-  String get consumedLabelUpper => 'CONSUMED';
+  String get consumedLabelUpper => 'Consumed';
 
   @override
   String get loggedActivityTitle => 'Logged Activity';
@@ -2094,5 +2094,78 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String selectedDateText(int day, int month, int year) {
     return '$month/$day/$year';
+  }
+
+  @override
+  String get nutritionTargetModalTitle => 'Nutrition Goal';
+
+  @override
+  String get dailyCalorieGoalKicker => 'DAILY CALORIE GOAL';
+
+  @override
+  String get macroDistributionKicker => 'MACRO DISTRIBUTION';
+
+  @override
+  String get proteinMacroLabel => 'Protein';
+
+  @override
+  String get carbMacroLabel => 'Carbs';
+
+  @override
+  String get fatMacroLabel => 'Fat';
+
+  @override
+  String get recalculateTargetButton => 'Recalculate Goal';
+
+  @override
+  String burnedCaloriesPill(int calories) {
+    return '+$calories kcal burned';
+  }
+
+  @override
+  String get burnedLabelUpper => 'Burned';
+
+  @override
+  String get filterAll => 'All';
+
+  @override
+  String get filterFood => 'Food';
+
+  @override
+  String get filterWorkout => 'Workout';
+
+  @override
+  String get noWorkoutLoggedToday => 'No workouts logged today';
+
+  @override
+  String get noFoodLoggedToday => 'No food logged today';
+
+  @override
+  String get noLogsYet => 'No logs yet';
+
+  @override
+  String get targetTimelineTitle => 'Estimated Time to Goal';
+
+  @override
+  String weeksFormat(int weeks) {
+    return '$weeks weeks';
+  }
+
+  @override
+  String get forecastProgressTitle => 'Goal Progress Forecast';
+
+  @override
+  String get forecastPremiumUnlockDesc =>
+      'Upgrade to Premium to unlock charts & estimated weeks to reach weight goal!';
+
+  @override
+  String get unlockPremiumButton => 'Unlock Premium';
+
+  @override
+  String get currentLabel => 'Now';
+
+  @override
+  String weekAbbrev(int weeks) {
+    return 'W$weeks';
   }
 }

@@ -105,7 +105,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get buyCredits => 'Mua lượt quét';
 
   @override
-  String get statistics => 'Thống kê';
+  String get statistics => 'Thành tích';
 
   @override
   String get calorieTarget => 'Mục tiêu Calo';
@@ -1563,7 +1563,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get deleteAction => 'Xóa';
 
   @override
-  String get proteinLabel => 'PROTEIN';
+  String get proteinLabel => 'Protein';
 
   @override
   String get onboardingSaveFailed =>
@@ -1774,10 +1774,10 @@ class AppLocalizationsVi extends AppLocalizations {
   String get caloriesLabel => 'Calo';
 
   @override
-  String get carbsLabel => 'CARB';
+  String get carbsLabel => 'Carb';
 
   @override
-  String get fatLabel => 'CHẤT BÉO';
+  String get fatLabel => 'Chất béo';
 
   @override
   String get guidanceTodayShortSubtitle => 'Xem gợi ý theo mục tiêu hôm nay';
@@ -1943,22 +1943,22 @@ class AppLocalizationsVi extends AppLocalizations {
   String get weightUpdateFailed => 'Không thể lưu cân nặng. Vui lòng thử lại.';
 
   @override
-  String get nutritionSectionHeader => 'DINH DƯỠNG';
+  String get nutritionSectionHeader => 'Dinh dưỡng';
 
   @override
-  String get healthSectionHeader => 'SỨC KHỎE';
+  String get healthSectionHeader => 'Sức khỏe';
 
   @override
-  String get currentWeightKicker => 'CÂN NẶNG HIỆN TẠI';
+  String get currentWeightKicker => 'Cân nặng hiện tại';
 
   @override
   String get logWeightButton => 'Ghi cân nặng';
 
   @override
-  String get startLabel => 'BẮT ĐẦU';
+  String get startLabel => 'Bắt đầu';
 
   @override
-  String get targetLabel => 'MỤC TIÊU';
+  String get targetLabel => 'Mục tiêu';
 
   @override
   String get weightProgressTitle => 'Tiến trình cân nặng';
@@ -1975,13 +1975,13 @@ class AppLocalizationsVi extends AppLocalizations {
   String get calorieNutritionStatsTitle => 'Thống kê Calo & Dinh dưỡng';
 
   @override
-  String get consumedAvgLabel => 'ĐÃ NẠP (TB)';
+  String get consumedAvgLabel => 'Đã nạp (TB)';
 
   @override
-  String get targetLabelUpper => 'MỤC TIÊU';
+  String get targetLabelUpper => 'Mục tiêu';
 
   @override
-  String get differenceLabelUpper => 'CHÊNH LỆCH';
+  String get differenceLabelUpper => 'Chênh lệch';
 
   @override
   String get consumedLabel => 'Đã nạp';
@@ -2002,7 +2002,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get weeklyEnergyTitle => 'Năng lượng hàng tuần';
 
   @override
-  String get consumedLabelUpper => 'ĐÃ NẠP';
+  String get consumedLabelUpper => 'Đã nạp';
 
   @override
   String get loggedActivityTitle => 'Hoạt động ghi nhận';
@@ -2090,5 +2090,78 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String selectedDateText(int day, int month, int year) {
     return 'ngày $day thg $month, $year';
+  }
+
+  @override
+  String get nutritionTargetModalTitle => 'Mục tiêu dinh dưỡng';
+
+  @override
+  String get dailyCalorieGoalKicker => 'CALO MỤC TIÊU HÀNG NGÀY';
+
+  @override
+  String get macroDistributionKicker => 'CHỈ SỐ MACROS PHÂN BỔ';
+
+  @override
+  String get proteinMacroLabel => 'Đạm (Protein)';
+
+  @override
+  String get carbMacroLabel => 'Tinh bột (Carb)';
+
+  @override
+  String get fatMacroLabel => 'Chất béo (Fat)';
+
+  @override
+  String get recalculateTargetButton => 'Tạo lại mục tiêu';
+
+  @override
+  String burnedCaloriesPill(int calories) {
+    return '+$calories kcal đã đốt';
+  }
+
+  @override
+  String get burnedLabelUpper => 'Đã đốt';
+
+  @override
+  String get filterAll => 'Tất cả';
+
+  @override
+  String get filterFood => 'Thức ăn';
+
+  @override
+  String get filterWorkout => 'Tập luyện';
+
+  @override
+  String get noWorkoutLoggedToday => 'Chưa có bài tập nào hôm nay';
+
+  @override
+  String get noFoodLoggedToday => 'Chưa có món ăn nào hôm nay';
+
+  @override
+  String get noLogsYet => 'Chưa có nhật ký nào';
+
+  @override
+  String get targetTimelineTitle => 'Ước tính thời gian đạt mục tiêu';
+
+  @override
+  String weeksFormat(int weeks) {
+    return '$weeks tuần';
+  }
+
+  @override
+  String get forecastProgressTitle => 'Dự báo tiến trình đạt mục tiêu';
+
+  @override
+  String get forecastPremiumUnlockDesc =>
+      'Nâng cấp Premium để mở khóa biểu đồ & ước tính số tuần đạt mốc cân nặng!';
+
+  @override
+  String get unlockPremiumButton => 'Mở khóa Premium';
+
+  @override
+  String get currentLabel => 'Hiện tại';
+
+  @override
+  String weekAbbrev(int weeks) {
+    return 'T$weeks';
   }
 }

@@ -9,6 +9,8 @@ import '../services/onboarding_service.dart';
 import '../services/analytics_service.dart';
 import 'auth_provider.dart';
 import 'home_provider.dart';
+import 'gamification_provider.dart';
+import 'progress_provider.dart';
 
 class OnboardingProvider extends ChangeNotifier {
   final OnboardingService? _onboardingService;
@@ -31,8 +33,8 @@ class OnboardingProvider extends ChangeNotifier {
   OnboardingProvider({
     OnboardingService? onboardingService,
     AnalyticsService? analyticsService,
-  })  : _onboardingService = onboardingService,
-        _analyticsService = analyticsService;
+  }) : _onboardingService = onboardingService,
+       _analyticsService = analyticsService;
 
   int get currentStep => _currentStep;
   bool get loading => _loading;
@@ -57,7 +59,7 @@ class OnboardingProvider extends ChangeNotifier {
       case 10:
         return 5 / 6;
       case 11:
-      case 19:
+      case 20:
         return 1.0;
       default:
         return 0.5;
@@ -73,7 +75,8 @@ class OnboardingProvider extends ChangeNotifier {
       data.name = user.name ?? '';
       if (user.heightCm != null) data.heightCm = user.heightCm;
       if (user.currentWeightKg != null) data.weightKg = user.currentWeightKg;
-      if (user.targetWeightKg != null) data.targetWeightKg = user.targetWeightKg;
+      if (user.targetWeightKg != null)
+        data.targetWeightKg = user.targetWeightKg;
       if (user.age != null) data.age = user.age;
       if (user.gender != null) {
         if (user.gender == 'male') data.gender = Gender.male;
@@ -213,7 +216,7 @@ class OnboardingProvider extends ChangeNotifier {
     }
     data.activityLevel =
         _enumByName(ActivityLevel.values, json['activityLevel']) ??
-            data.activityLevel;
+        data.activityLevel;
     if (json['sports'] is List) {
       data.sports = (json['sports'] as List).cast<String>();
     }
@@ -294,6 +297,9 @@ class OnboardingProvider extends ChangeNotifier {
         case 19:
           _currentStep = 11;
           break;
+        case 20:
+          _currentStep = 11;
+          break;
         case 11:
           _currentStep = 10;
           break;
@@ -348,7 +354,9 @@ class OnboardingProvider extends ChangeNotifier {
           _currentStep = 11;
           break;
         case 11:
-          _currentStep = 19;
+          // Recalculate reuses the onboarding analysis + result UI. Apple
+          // Health is only part of the first-time onboarding flow.
+          _currentStep = 20;
           break;
         case 19:
           // Finishing recalculation step 19 completes the flow instead of advancing to Paywall/Account
@@ -387,6 +395,8 @@ class OnboardingProvider extends ChangeNotifier {
   Future<bool> completeOnboarding({
     AuthProvider? authProvider,
     HomeProvider? homeProvider,
+    GamificationProvider? gamificationProvider,
+    ProgressProvider? progressProvider,
   }) async {
     if (_loading) return false;
     _loading = true;
@@ -411,6 +421,15 @@ class OnboardingProvider extends ChangeNotifier {
 
       if (homeProvider != null) {
         homeProvider.invalidateCache();
+        await homeProvider.loadToday(forceRefresh: true);
+      }
+
+      if (gamificationProvider != null) {
+        await gamificationProvider.refresh();
+      }
+
+      if (progressProvider != null) {
+        await progressProvider.refresh();
       }
 
       _isRecalculating = false;

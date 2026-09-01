@@ -313,7 +313,7 @@ abstract class AppLocalizations {
   /// No description provided for @statistics.
   ///
   /// In en, this message translates to:
-  /// **'Statistics'**
+  /// **'Achievements'**
   String get statistics;
 
   /// No description provided for @calorieTarget.
@@ -2947,7 +2947,7 @@ abstract class AppLocalizations {
   /// No description provided for @proteinLabel.
   ///
   /// In en, this message translates to:
-  /// **'PROTEIN'**
+  /// **'Protein'**
   String get proteinLabel;
 
   /// No description provided for @onboardingSaveFailed.
@@ -3331,13 +3331,13 @@ abstract class AppLocalizations {
   /// No description provided for @carbsLabel.
   ///
   /// In en, this message translates to:
-  /// **'CARBS'**
+  /// **'Carbs'**
   String get carbsLabel;
 
   /// No description provided for @fatLabel.
   ///
   /// In en, this message translates to:
-  /// **'FAT'**
+  /// **'Fat'**
   String get fatLabel;
 
   /// No description provided for @guidanceTodayShortSubtitle.
@@ -3624,19 +3624,19 @@ abstract class AppLocalizations {
   /// No description provided for @nutritionSectionHeader.
   ///
   /// In en, this message translates to:
-  /// **'NUTRITION'**
+  /// **'Nutrition'**
   String get nutritionSectionHeader;
 
   /// No description provided for @healthSectionHeader.
   ///
   /// In en, this message translates to:
-  /// **'HEALTH'**
+  /// **'Health'**
   String get healthSectionHeader;
 
   /// No description provided for @currentWeightKicker.
   ///
   /// In en, this message translates to:
-  /// **'CURRENT WEIGHT'**
+  /// **'Current Weight'**
   String get currentWeightKicker;
 
   /// No description provided for @logWeightButton.
@@ -3648,13 +3648,13 @@ abstract class AppLocalizations {
   /// No description provided for @startLabel.
   ///
   /// In en, this message translates to:
-  /// **'START'**
+  /// **'Start'**
   String get startLabel;
 
   /// No description provided for @targetLabel.
   ///
   /// In en, this message translates to:
-  /// **'TARGET'**
+  /// **'Target'**
   String get targetLabel;
 
   /// No description provided for @weightProgressTitle.
@@ -3684,19 +3684,19 @@ abstract class AppLocalizations {
   /// No description provided for @consumedAvgLabel.
   ///
   /// In en, this message translates to:
-  /// **'CONSUMED (AVG)'**
+  /// **'Consumed (Avg)'**
   String get consumedAvgLabel;
 
   /// No description provided for @targetLabelUpper.
   ///
   /// In en, this message translates to:
-  /// **'TARGET'**
+  /// **'Target'**
   String get targetLabelUpper;
 
   /// No description provided for @differenceLabelUpper.
   ///
   /// In en, this message translates to:
-  /// **'DIFFERENCE'**
+  /// **'Difference'**
   String get differenceLabelUpper;
 
   /// No description provided for @consumedLabel.
@@ -3738,7 +3738,7 @@ abstract class AppLocalizations {
   /// No description provided for @consumedLabelUpper.
   ///
   /// In en, this message translates to:
-  /// **'CONSUMED'**
+  /// **'Consumed'**
   String get consumedLabelUpper;
 
   /// No description provided for @loggedActivityTitle.
@@ -3890,6 +3890,138 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{month}/{day}/{year}'**
   String selectedDateText(int day, int month, int year);
+
+  /// No description provided for @nutritionTargetModalTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Nutrition Goal'**
+  String get nutritionTargetModalTitle;
+
+  /// No description provided for @dailyCalorieGoalKicker.
+  ///
+  /// In en, this message translates to:
+  /// **'DAILY CALORIE GOAL'**
+  String get dailyCalorieGoalKicker;
+
+  /// No description provided for @macroDistributionKicker.
+  ///
+  /// In en, this message translates to:
+  /// **'MACRO DISTRIBUTION'**
+  String get macroDistributionKicker;
+
+  /// No description provided for @proteinMacroLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Protein'**
+  String get proteinMacroLabel;
+
+  /// No description provided for @carbMacroLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Carbs'**
+  String get carbMacroLabel;
+
+  /// No description provided for @fatMacroLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Fat'**
+  String get fatMacroLabel;
+
+  /// No description provided for @recalculateTargetButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Recalculate Goal'**
+  String get recalculateTargetButton;
+
+  /// No description provided for @burnedCaloriesPill.
+  ///
+  /// In en, this message translates to:
+  /// **'+{calories} kcal burned'**
+  String burnedCaloriesPill(int calories);
+
+  /// No description provided for @burnedLabelUpper.
+  ///
+  /// In en, this message translates to:
+  /// **'Burned'**
+  String get burnedLabelUpper;
+
+  /// No description provided for @filterAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get filterAll;
+
+  /// No description provided for @filterFood.
+  ///
+  /// In en, this message translates to:
+  /// **'Food'**
+  String get filterFood;
+
+  /// No description provided for @filterWorkout.
+  ///
+  /// In en, this message translates to:
+  /// **'Workout'**
+  String get filterWorkout;
+
+  /// No description provided for @noWorkoutLoggedToday.
+  ///
+  /// In en, this message translates to:
+  /// **'No workouts logged today'**
+  String get noWorkoutLoggedToday;
+
+  /// No description provided for @noFoodLoggedToday.
+  ///
+  /// In en, this message translates to:
+  /// **'No food logged today'**
+  String get noFoodLoggedToday;
+
+  /// No description provided for @noLogsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No logs yet'**
+  String get noLogsYet;
+
+  /// No description provided for @targetTimelineTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated Time to Goal'**
+  String get targetTimelineTitle;
+
+  /// No description provided for @weeksFormat.
+  ///
+  /// In en, this message translates to:
+  /// **'{weeks} weeks'**
+  String weeksFormat(int weeks);
+
+  /// No description provided for @forecastProgressTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Goal Progress Forecast'**
+  String get forecastProgressTitle;
+
+  /// No description provided for @forecastPremiumUnlockDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Upgrade to Premium to unlock charts & estimated weeks to reach weight goal!'**
+  String get forecastPremiumUnlockDesc;
+
+  /// No description provided for @unlockPremiumButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock Premium'**
+  String get unlockPremiumButton;
+
+  /// No description provided for @currentLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Now'**
+  String get currentLabel;
+
+  /// No description provided for @weekAbbrev.
+  ///
+  /// In en, this message translates to:
+  /// **'W{weeks}'**
+  String weekAbbrev(int weeks);
 }
 
 class _AppLocalizationsDelegate

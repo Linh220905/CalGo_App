@@ -21,8 +21,8 @@ class GamificationApiService {
         .toList();
   }
 
-  Future<WeeklyStats> getWeeklyStats() async {
-    final response = await _api.get('/stats/7d');
+  Future<WeeklyStats> getWeeklyStats({int weeksAgo = 0}) async {
+    final response = await _api.get('/stats/7d?weeks_ago=$weeksAgo');
     return WeeklyStats.fromJson(response as Map<String, dynamic>);
   }
 

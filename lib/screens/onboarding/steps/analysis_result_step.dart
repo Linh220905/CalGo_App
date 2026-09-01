@@ -8,6 +8,8 @@ import '../../../providers/onboarding_provider.dart';
 import '../../../providers/app_settings_provider.dart';
 import '../../../providers/auth_provider.dart';
 import '../../../providers/home_provider.dart';
+import '../../../providers/gamification_provider.dart';
+import '../../../providers/progress_provider.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../../models/onboarding_data.dart';
 import '../../../widgets/premium_ui.dart';
@@ -444,9 +446,13 @@ class _ResultPhaseState extends State<_ResultPhase> {
                           setState(() => _isSaving = true);
                           final authProvider = context.read<AuthProvider>();
                           final homeProvider = context.read<HomeProvider>();
+                          final gamificationProvider = context.read<GamificationProvider>();
+                          final progressProvider = context.read<ProgressProvider>();
                           final ok = await onboardingProvider.completeOnboarding(
                             authProvider: authProvider,
                             homeProvider: homeProvider,
+                            gamificationProvider: gamificationProvider,
+                            progressProvider: progressProvider,
                           );
                           if (mounted) {
                             setState(() => _isSaving = false);
