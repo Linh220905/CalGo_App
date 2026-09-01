@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 import '../../providers/app_settings_provider.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/gamification_provider.dart';
@@ -31,11 +32,8 @@ Future<void> showDailyRecap(
     isScrollControlled: true,
     backgroundColor: Colors.transparent,
     useSafeArea: true,
-    builder: (_) => DailyRecapSheet(
-      recap: recap,
-      onFinish: onFinish,
-      isModal: true,
-    ),
+    builder: (_) =>
+        DailyRecapSheet(recap: recap, onFinish: onFinish, isModal: true),
   );
 }
 
@@ -63,8 +61,9 @@ class _DailyRecapPageState extends State<DailyRecapPage> {
   Widget build(BuildContext context) {
     final settings = context.watch<AppSettingsProvider>();
     final gamification = context.watch<GamificationProvider>();
-    final textColor =
-        settings.isDarkMode ? Colors.white : const Color(0xFF0F172A);
+    final textColor = settings.isDarkMode
+        ? Colors.white
+        : const Color(0xFF0F172A);
 
     return Scaffold(
       backgroundColor: settings.isDarkMode
@@ -79,23 +78,23 @@ class _DailyRecapPageState extends State<DailyRecapPage> {
       body: gamification.recapLoading && gamification.recap == null
           ? const Center(child: CircularProgressIndicator())
           : gamification.recap == null
-              ? Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(28),
-                    child: Text(
-                      'Tổng kết sẽ sẵn sàng sau 22:00, khi bạn đã có dữ liệu quét trong ngày.',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: textColor, fontSize: 15),
-                    ),
-                  ),
-                )
-              : DailyRecapSheet(
-                  recap: gamification.recap!,
-                  isModal: false,
-                  onFinish: () {
-                    unawaited(gamification.finishRecap());
-                  },
+          ? Center(
+              child: Padding(
+                padding: const EdgeInsets.all(28),
+                child: Text(
+                  'Tổng kết sẽ sẵn sàng sau 22:00, khi bạn đã có dữ liệu quét trong ngày.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: textColor, fontSize: 15),
                 ),
+              ),
+            )
+          : DailyRecapSheet(
+              recap: gamification.recap!,
+              isModal: false,
+              onFinish: () {
+                unawaited(gamification.finishRecap());
+              },
+            ),
     );
   }
 }
@@ -158,17 +157,17 @@ class _DailyRecapSheetState extends State<DailyRecapSheet>
     final cardBg = isDark ? const Color(0xFF212027) : Colors.white;
     final border = isDark ? const Color(0xFF2C2A34) : const Color(0xFFE2E8F0);
     final textDark = isDark ? Colors.white : const Color(0xFF0F172A);
-    final textMuted =
-        isDark ? const Color(0xFF8E8D9A) : const Color(0xFF64748B);
+    final textMuted = isDark
+        ? const Color(0xFF8E8D9A)
+        : const Color(0xFF64748B);
 
     return AnimatedBuilder(
       animation: _entryCtrl,
       builder: (context, child) => SlideTransition(
-        position: Tween<Offset>(
-          begin: const Offset(0, 0.05),
-          end: Offset.zero,
-        ).animate(
-            CurvedAnimation(parent: _entryCtrl, curve: Curves.easeOutCubic)),
+        position: Tween<Offset>(begin: const Offset(0, 0.05), end: Offset.zero)
+            .animate(
+              CurvedAnimation(parent: _entryCtrl, curve: Curves.easeOutCubic),
+            ),
         child: FadeTransition(opacity: _entryCtrl, child: child),
       ),
       child: Container(
@@ -217,17 +216,20 @@ class _DailyRecapSheetState extends State<DailyRecapSheet>
                               const SizedBox(height: 2),
                               Text(
                                 '${recap.mealCount} bữa đã ghi',
-                                style:
-                                    TextStyle(fontSize: 13, color: textMuted),
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  color: textMuted,
+                                ),
                               ),
                             ],
                           ),
                         ),
                         // EXP badge
                         _ExpBadge(
-                            expAnim: _expAnim,
-                            exp: recap.expEarned,
-                            isDark: isDark),
+                          expAnim: _expAnim,
+                          exp: recap.expEarned,
+                          isDark: isDark,
+                        ),
                       ],
                     ),
 
@@ -235,12 +237,13 @@ class _DailyRecapSheetState extends State<DailyRecapSheet>
 
                     // ── Calorie Ring Card ────────────────────────
                     _CaloRingCard(
-                        recap: recap,
-                        isDark: isDark,
-                        cardBg: cardBg,
-                        border: border,
-                        textDark: textDark,
-                        textMuted: textMuted),
+                      recap: recap,
+                      isDark: isDark,
+                      cardBg: cardBg,
+                      border: border,
+                      textDark: textDark,
+                      textMuted: textMuted,
+                    ),
 
                     const SizedBox(height: 12),
 
@@ -248,34 +251,37 @@ class _DailyRecapSheetState extends State<DailyRecapSheet>
                     Row(
                       children: [
                         _MacroBar(
-                            label: 'Protein',
-                            pct: recap.proteinPct,
-                            color: _kProteinColor,
-                            isDark: isDark,
-                            cardBg: cardBg,
-                            border: border,
-                            textDark: textDark,
-                            textMuted: textMuted),
+                          label: 'Protein',
+                          pct: recap.proteinPct,
+                          color: _kProteinColor,
+                          isDark: isDark,
+                          cardBg: cardBg,
+                          border: border,
+                          textDark: textDark,
+                          textMuted: textMuted,
+                        ),
                         const SizedBox(width: 8),
                         _MacroBar(
-                            label: 'Carbs',
-                            pct: recap.carbPct,
-                            color: _kCarbColor,
-                            isDark: isDark,
-                            cardBg: cardBg,
-                            border: border,
-                            textDark: textDark,
-                            textMuted: textMuted),
+                          label: 'Carbs',
+                          pct: recap.carbPct,
+                          color: _kCarbColor,
+                          isDark: isDark,
+                          cardBg: cardBg,
+                          border: border,
+                          textDark: textDark,
+                          textMuted: textMuted,
+                        ),
                         const SizedBox(width: 8),
                         _MacroBar(
-                            label: 'Chất béo',
-                            pct: recap.fatPct,
-                            color: _kFatColor,
-                            isDark: isDark,
-                            cardBg: cardBg,
-                            border: border,
-                            textDark: textDark,
-                            textMuted: textMuted),
+                          label: 'Chất béo',
+                          pct: recap.fatPct,
+                          color: _kFatColor,
+                          isDark: isDark,
+                          cardBg: cardBg,
+                          border: border,
+                          textDark: textDark,
+                          textMuted: textMuted,
+                        ),
                       ],
                     ),
 
@@ -283,23 +289,25 @@ class _DailyRecapSheetState extends State<DailyRecapSheet>
                     if (recap.aiComment != null) ...[
                       const SizedBox(height: 16),
                       _AiCommentCard(
-                          comment: recap.aiComment!,
-                          isDark: isDark,
-                          cardBg: cardBg,
-                          border: border,
-                          textDark: textDark,
-                          textMuted: textMuted),
+                        comment: recap.aiComment!,
+                        isDark: isDark,
+                        cardBg: cardBg,
+                        border: border,
+                        textDark: textDark,
+                        textMuted: textMuted,
+                      ),
                     ],
 
                     // ── Tomorrow Tip ─────────────────────────────
                     if (recap.tomorrowTip != null) ...[
                       const SizedBox(height: 10),
                       _TomorrowTipCard(
-                          tip: recap.tomorrowTip!,
-                          isDark: isDark,
-                          cardBg: cardBg,
-                          border: border,
-                          textMuted: textMuted),
+                        tip: recap.tomorrowTip!,
+                        isDark: isDark,
+                        cardBg: cardBg,
+                        border: border,
+                        textMuted: textMuted,
+                      ),
                     ],
 
                     // ── Target Timeline Estimation Card ──────────
@@ -317,11 +325,12 @@ class _DailyRecapSheetState extends State<DailyRecapSheet>
 
                     // ── Action Buttons ───────────────────────────
                     _ActionButtons(
-                        recap: recap,
-                        isDark: isDark,
-                        textDark: textDark,
-                        isModal: widget.isModal,
-                        onFinish: widget.onFinish),
+                      recap: recap,
+                      isDark: isDark,
+                      textDark: textDark,
+                      isModal: widget.isModal,
+                      onFinish: widget.onFinish,
+                    ),
                   ],
                 ),
               ),
@@ -339,8 +348,11 @@ class _ExpBadge extends StatelessWidget {
   final int exp;
   final bool isDark;
 
-  const _ExpBadge(
-      {required this.expAnim, required this.exp, required this.isDark});
+  const _ExpBadge({
+    required this.expAnim,
+    required this.exp,
+    required this.isDark,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -356,8 +368,9 @@ class _ExpBadge extends StatelessWidget {
               color: isDark ? const Color(0xFF0D2B14) : const Color(0xFFF0FDF4),
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
-                color:
-                    isDark ? const Color(0xFF166534) : const Color(0xFFBBF7D0),
+                color: isDark
+                    ? const Color(0xFF166534)
+                    : const Color(0xFFBBF7D0),
               ),
             ),
             child: Column(
@@ -409,10 +422,11 @@ class _CaloRingCard extends StatelessWidget {
     final ringColor = pct >= 1.0
         ? _kExpColor
         : isDark
-            ? Colors.white
-            : const Color(0xFF0F172A);
-    final trackColor =
-        isDark ? const Color(0xFF2C2A34) : const Color(0xFFE2E8F0);
+        ? Colors.white
+        : const Color(0xFF0F172A);
+    final trackColor = isDark
+        ? const Color(0xFF2C2A34)
+        : const Color(0xFFE2E8F0);
 
     return Container(
       padding: const EdgeInsets.all(20),
@@ -440,7 +454,10 @@ class _CaloRingCard extends StatelessWidget {
                 CustomPaint(
                   size: const Size(80, 80),
                   painter: _RingPainter(
-                      progress: pct, color: ringColor, trackColor: trackColor),
+                    progress: pct,
+                    color: ringColor,
+                    trackColor: trackColor,
+                  ),
                 ),
                 Icon(
                   Icons.local_fire_department_rounded,
@@ -510,8 +527,9 @@ class _MacroBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final clamped = pct.clamp(0.0, 100.0);
-    final trackColor =
-        isDark ? const Color(0xFF2C2A34) : const Color(0xFFF1F5F9);
+    final trackColor = isDark
+        ? const Color(0xFF2C2A34)
+        : const Color(0xFFF1F5F9);
 
     return Expanded(
       child: Container(
@@ -587,8 +605,11 @@ class _AiCommentCard extends StatelessWidget {
               color: isDark ? const Color(0xFF2C2A34) : const Color(0xFFF1F5F9),
               borderRadius: BorderRadius.circular(10),
             ),
-            child: const Icon(Icons.auto_awesome_rounded,
-                size: 18, color: Color(0xFF8B5CF6)),
+            child: const Icon(
+              Icons.auto_awesome_rounded,
+              size: 18,
+              color: Color(0xFF8B5CF6),
+            ),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -606,11 +627,7 @@ class _AiCommentCard extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   comment,
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: textDark,
-                    height: 1.5,
-                  ),
+                  style: TextStyle(fontSize: 14, color: textDark, height: 1.5),
                 ),
               ],
             ),
@@ -638,8 +655,9 @@ class _TomorrowTipCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bgTip = isDark ? const Color(0xFF1C1A10) : const Color(0xFFFFFBEB);
-    final borderTip =
-        isDark ? const Color(0xFF3D3510) : const Color(0xFFFDE68A);
+    final borderTip = isDark
+        ? const Color(0xFF3D3510)
+        : const Color(0xFFFDE68A);
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -668,11 +686,7 @@ class _TomorrowTipCard extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   tip,
-                  style: TextStyle(
-                    fontSize: 13,
-                    color: textMuted,
-                    height: 1.5,
-                  ),
+                  style: TextStyle(fontSize: 13, color: textMuted, height: 1.5),
                 ),
               ],
             ),
@@ -728,9 +742,11 @@ class _ActionButtons extends StatelessWidget {
         : box.localToGlobal(Offset.zero) & box.size;
 
     try {
-      await Share.share(
-        recapText,
-        sharePositionOrigin: sharePositionOrigin,
+      await SharePlus.instance.share(
+        ShareParams(
+          text: recapText,
+          sharePositionOrigin: sharePositionOrigin,
+        ),
       );
     } catch (error) {
       debugPrint('Unable to share daily recap: $error');
@@ -772,7 +788,8 @@ class _ActionButtons extends StatelessWidget {
               foregroundColor: btnFg,
               padding: const EdgeInsets.symmetric(vertical: 15),
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(18)),
+                borderRadius: BorderRadius.circular(18),
+              ),
               elevation: 0,
             ),
           ),
@@ -802,7 +819,8 @@ class _ActionButtons extends StatelessWidget {
                         : const Color(0xFFE2E8F0),
                   ),
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14)),
+                    borderRadius: BorderRadius.circular(14),
+                  ),
                 ),
               ),
             ),
@@ -830,7 +848,8 @@ class _ActionButtons extends StatelessWidget {
                         : const Color(0xFFE2E8F0),
                   ),
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14)),
+                    borderRadius: BorderRadius.circular(14),
+                  ),
                 ),
               ),
             ),
@@ -847,8 +866,11 @@ class _RingPainter extends CustomPainter {
   final Color color;
   final Color trackColor;
 
-  _RingPainter(
-      {required this.progress, required this.color, required this.trackColor});
+  _RingPainter({
+    required this.progress,
+    required this.color,
+    required this.trackColor,
+  });
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -911,16 +933,17 @@ class TargetTimelineCard extends StatelessWidget {
     final currentWeight = user?.currentWeightKg ?? 65.0;
     final targetWeight = user?.targetWeightKg ?? 60.0;
 
-    final rawTargetCal = calorieTarget ??
-        (recap != null && recap!.calorieTarget > 0
-            ? recap!.calorieTarget.toDouble()
+    final rawTargetCal =
+        calorieTarget ??
+        (recap != null && recap!.targetCalo > 0
+            ? recap!.targetCalo.toDouble()
             : (user?.dailyCalorieTarget ?? 2000.0).toDouble());
     final targetCal = rawTargetCal > 0 ? rawTargetCal : 2000.0;
 
-    final todayCal = todayCalories ??
-        (recap != null ? recap!.totalCalories.toDouble() : 0.0);
+    final todayCal =
+        todayCalories ?? (recap != null ? recap!.totalCalo.toDouble() : 0.0);
 
-    final goalType = (user?.goalType ?? user?.goal ?? 'lose').toLowerCase();
+    final goalType = (user?.goal ?? 'lose').toLowerCase();
 
     // Maintenance TDEE estimate baseline
     double maintenanceTdee = targetCal;
@@ -1079,18 +1102,23 @@ class TargetTimelineCard extends StatelessWidget {
                     ),
                     Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 3),
+                        horizontal: 8,
+                        vertical: 3,
+                      ),
                       decoration: BoxDecoration(
                         color: const Color(0xFFFFD700).withValues(alpha: 0.15),
                         borderRadius: BorderRadius.circular(8),
                         border: Border.all(
-                            color: const Color(0xFFFFD700)
-                                .withValues(alpha: 0.4)),
+                          color: const Color(0xFFFFD700).withValues(alpha: 0.4),
+                        ),
                       ),
                       child: const Row(
                         children: [
-                          Icon(Icons.crown,
-                              color: Color(0xFFD97706), size: 12),
+                          Icon(
+                            Icons.workspace_premium,
+                            color: Color(0xFFD97706),
+                            size: 12,
+                          ),
                           SizedBox(width: 3),
                           Text(
                             'PRO',
@@ -1109,13 +1137,16 @@ class TargetTimelineCard extends StatelessWidget {
 
                 // Status Banner
                 Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 8,
+                  ),
                   decoration: BoxDecoration(
                     color: statusColor.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
-                    border:
-                        Border.all(color: statusColor.withValues(alpha: 0.3)),
+                    border: Border.all(
+                      color: statusColor.withValues(alpha: 0.3),
+                    ),
                   ),
                   child: Row(
                     children: [
@@ -1148,11 +1179,7 @@ class TargetTimelineCard extends StatelessWidget {
                 // Explanation text
                 Text(
                   statusBody,
-                  style: TextStyle(
-                    fontSize: 13,
-                    height: 1.4,
-                    color: textMuted,
-                  ),
+                  style: TextStyle(fontSize: 13, height: 1.4, color: textMuted),
                 ),
                 const SizedBox(height: 16),
 
@@ -1193,8 +1220,9 @@ class TargetTimelineCard extends StatelessWidget {
                         Container(
                           padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
-                            color: const Color(0xFFD97706)
-                                .withValues(alpha: 0.15),
+                            color: const Color(
+                              0xFFD97706,
+                            ).withValues(alpha: 0.15),
                             shape: BoxShape.circle,
                           ),
                           child: const Icon(
@@ -1216,10 +1244,7 @@ class TargetTimelineCard extends StatelessWidget {
                         Text(
                           'Nâng cấp Premium để mở khóa biểu đồ & ước tính số tuần đạt mốc cân nặng!',
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: textMuted,
-                          ),
+                          style: TextStyle(fontSize: 12, color: textMuted),
                         ),
                         const SizedBox(height: 12),
                         ElevatedButton.icon(
@@ -1234,8 +1259,11 @@ class TargetTimelineCard extends StatelessWidget {
                               ),
                             );
                           },
-                          icon: const Icon(Icons.crown,
-                              size: 16, color: Colors.white),
+                          icon: const Icon(
+                            Icons.workspace_premium,
+                            size: 16,
+                            color: Colors.white,
+                          ),
                           label: const Text(
                             'Nâng cấp Premium',
                             style: TextStyle(
@@ -1248,7 +1276,9 @@ class TargetTimelineCard extends StatelessWidget {
                             backgroundColor: const Color(0xFFE0533C),
                             elevation: 0,
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 18, vertical: 8),
+                              horizontal: 18,
+                              vertical: 8,
+                            ),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20),
                             ),
@@ -1326,7 +1356,9 @@ class _ProjectionChartPainter extends CustomPainter {
       canvas.drawLine(
         Offset(startX, targetY),
         Offset(
-            math.min(startX + dashWidth, size.width - rightPadding), targetY),
+          math.min(startX + dashWidth, size.width - rightPadding),
+          targetY,
+        ),
         dottedPaint,
       );
       startX += dashWidth + dashSpace;
@@ -1414,15 +1446,14 @@ class _ProjectionChartPainter extends CustomPainter {
         final weekTp = TextPainter(
           text: TextSpan(
             text: labelText,
-            style: TextStyle(
-              fontSize: 10,
-              color: textMuted,
-            ),
+            style: TextStyle(fontSize: 10, color: textMuted),
           ),
           textDirection: TextDirection.ltr,
         )..layout();
-        weekTp.paint(canvas,
-            Offset(px - weekTp.width / 2, size.height - bottomPadding + 4));
+        weekTp.paint(
+          canvas,
+          Offset(px - weekTp.width / 2, size.height - bottomPadding + 4),
+        );
       }
     }
   }

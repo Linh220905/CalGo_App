@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/onboarding_provider.dart';
@@ -11,12 +12,20 @@ class SplashStep extends StatefulWidget {
 }
 
 class _SplashStepState extends State<SplashStep> {
+  Timer? _advanceTimer;
+
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(milliseconds: 1200), () {
+    _advanceTimer = Timer(const Duration(milliseconds: 1200), () {
       if (mounted) context.read<OnboardingProvider>().nextStep();
     });
+  }
+
+  @override
+  void dispose() {
+    _advanceTimer?.cancel();
+    super.dispose();
   }
 
   @override
@@ -142,9 +151,10 @@ class _LoadingDotState extends State<_LoadingDot>
       vsync: this,
       duration: const Duration(milliseconds: 800),
     )..repeat(reverse: true);
-    _anim = Tween(begin: 0.3, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
-    );
+    _anim = Tween(
+      begin: 0.3,
+      end: 1.0,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
   }
 
   @override

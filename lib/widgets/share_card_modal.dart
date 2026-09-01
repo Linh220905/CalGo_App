@@ -107,10 +107,12 @@ class _ShareCardModalState extends State<ShareCardModal> {
       final filePath = await _saveTempFile(bytes);
       if (filePath != null && mounted) {
         // Trigger native share file sheet so user can save directly to Photos/Gallery or Drive
-        await Share.shareXFiles(
-          [XFile(filePath)],
-          text: widget.data.dishName,
-          sharePositionOrigin: _sharePositionOrigin(),
+        await SharePlus.instance.share(
+          ShareParams(
+            files: [XFile(filePath)],
+            text: widget.data.dishName,
+            sharePositionOrigin: _sharePositionOrigin(),
+          ),
         );
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -146,11 +148,13 @@ class _ShareCardModalState extends State<ShareCardModal> {
 
       final filePath = await _saveTempFile(bytes);
       if (filePath != null && mounted) {
-        await Share.shareXFiles(
-          [XFile(filePath)],
-          text: s.sharePayload(
-              widget.data.dishName, widget.data.calories.round()),
-          sharePositionOrigin: _sharePositionOrigin(),
+        await SharePlus.instance.share(
+          ShareParams(
+            files: [XFile(filePath)],
+            text: s.sharePayload(
+                widget.data.dishName, widget.data.calories.round()),
+            sharePositionOrigin: _sharePositionOrigin(),
+          ),
         );
       }
     } catch (error) {

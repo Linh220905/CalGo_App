@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +12,7 @@ import '../../providers/progress_provider.dart';
 import '../../widgets/achievement_badge.dart';
 import '../../utils/macro_colors.dart';
 import '../recap/daily_recap_screen.dart';
+import '../../widgets/horizontal_ruler_picker.dart';
 
 const _kAccent = Color(0xFF63A97B);
 const _kAccentSoft = Color(0xFFE2F1E7);
@@ -331,7 +334,8 @@ class _ProgressTabState extends State<_ProgressTab> {
               todayCalories: widget.weekly!.dailyPoints.isNotEmpty
                   ? widget.weekly!.dailyPoints.last.calo.toDouble()
                   : widget.weekly!.avgCalo,
-              calorieTarget: widget.weekly!.dailyPoints.isNotEmpty &&
+              calorieTarget:
+                  widget.weekly!.dailyPoints.isNotEmpty &&
                       widget.weekly!.dailyPoints.last.target > 0
                   ? widget.weekly!.dailyPoints.last.target.toDouble()
                   : null,
@@ -449,7 +453,9 @@ class _WeightHeroCard extends StatelessWidget {
                       Text('kg', style: TextStyle(color: muted, fontSize: 18)),
                     ],
                   ),
-                  if (current != null && start != null && (current - start).abs() >= 0.1) ...[
+                  if (current != null &&
+                      start != null &&
+                      (current - start).abs() >= 0.1) ...[
                     const SizedBox(height: 6),
                     Row(
                       children: [
@@ -737,7 +743,8 @@ class _NutritionSummaryCard extends StatefulWidget {
 }
 
 class _NutritionSummaryCardState extends State<_NutritionSummaryCard> {
-  int _selectedWeekIndex = 0; // 0: Tuần này, 1: Tuần trước, 2: 2 tuần trước, 3: 3 tuần trước
+  int _selectedWeekIndex =
+      0; // 0: Tuần này, 1: Tuần trước, 2: 2 tuần trước, 3: 3 tuần trước
 
   String _formatCalo(double value) {
     final valInt = value.round();
@@ -754,11 +761,12 @@ class _NutritionSummaryCardState extends State<_NutritionSummaryCard> {
     final target = widget.weekly.dailyPoints.isEmpty
         ? 0
         : widget.weekly.dailyPoints
-            .map((point) => point.target)
-            .reduce((a, b) => a > b ? a : b);
+              .map((point) => point.target)
+              .reduce((a, b) => a > b ? a : b);
     final balance = target > 0 ? widget.weekly.avgCalo - target : 0;
-    final targetColor =
-        widget.dark ? const Color(0xFF64748B) : const Color(0xFF94A3B8);
+    final targetColor = widget.dark
+        ? const Color(0xFF64748B)
+        : const Color(0xFF94A3B8);
 
     return _Card(
       card: widget.card,
@@ -906,8 +914,8 @@ class _NutritionSummaryCardState extends State<_NutritionSummaryCard> {
             color: isSelected
                 ? widget.text
                 : (widget.dark
-                    ? const Color(0xFF94A3B8)
-                    : const Color(0xFF64748B)),
+                      ? const Color(0xFF94A3B8)
+                      : const Color(0xFF64748B)),
           ),
         ),
       ),
@@ -1784,22 +1792,21 @@ class _UnifiedNutritionChart extends StatelessWidget {
             padding: const EdgeInsets.only(left: 42),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: List.generate(
-                points.isNotEmpty ? points.length : 7,
-                (index) {
-                  final label = index < dayLabels.length
-                      ? dayLabels[index]
-                      : 'T${index + 1}';
-                  return Text(
-                    label,
-                    style: TextStyle(
-                      color: muted,
-                      fontSize: 11,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  );
-                },
-              ),
+              children: List.generate(points.isNotEmpty ? points.length : 7, (
+                index,
+              ) {
+                final label = index < dayLabels.length
+                    ? dayLabels[index]
+                    : 'T${index + 1}';
+                return Text(
+                  label,
+                  style: TextStyle(
+                    color: muted,
+                    fontSize: 11,
+                    fontWeight: FontWeight.w500,
+                  ),
+                );
+              }),
             ),
           ),
         ],
@@ -1846,11 +1853,12 @@ class _UnifiedStackedPainter extends CustomPainter {
     final singleBarWidth = (slotWidth * 0.30).clamp(7.0, 15.0);
     const macroColors = [
       MacroColors.protein, // Bottom: Đạm
-      MacroColors.carb,    // Middle: Carb
-      MacroColors.fat,     // Top: Béo
+      MacroColors.carb, // Middle: Carb
+      MacroColors.fat, // Top: Béo
     ];
-    final targetColor =
-        dark ? const Color(0xFF64748B) : const Color(0xFF94A3B8);
+    final targetColor = dark
+        ? const Color(0xFF64748B)
+        : const Color(0xFF94A3B8);
 
     for (int i = 0; i < points.length; i++) {
       final point = points[i];
@@ -1862,16 +1870,24 @@ class _UnifiedStackedPainter extends CustomPainter {
       // Draw Target Bar (Col 1)
       final targetCal = point.target.toDouble();
       if (targetCal > 0) {
-        final targetH = ((size.height - 8) * (targetCal / yMax))
-            .clamp(0.0, size.height - 8);
+        final targetH = ((size.height - 8) * (targetCal / yMax)).clamp(
+          0.0,
+          size.height - 8,
+        );
         final targetRect = RRect.fromRectAndCorners(
-          Rect.fromLTWH(targetBarX - singleBarWidth / 2,
-              size.height - 4 - targetH, singleBarWidth, targetH),
+          Rect.fromLTWH(
+            targetBarX - singleBarWidth / 2,
+            size.height - 4 - targetH,
+            singleBarWidth,
+            targetH,
+          ),
           topLeft: const Radius.circular(4),
           topRight: const Radius.circular(4),
         );
         canvas.drawRRect(
-            targetRect, Paint()..color = targetColor.withValues(alpha: 0.85));
+          targetRect,
+          Paint()..color = targetColor.withValues(alpha: 0.85),
+        );
       }
 
       // Draw Actual Stacked Macro Bar (Col 2)
@@ -1882,25 +1898,33 @@ class _UnifiedStackedPainter extends CustomPainter {
       final totalCal = macroSum > 0 ? macroSum : point.calo.toDouble();
 
       if (totalCal > 0) {
-        final totalBarHeight = ((size.height - 8) * (totalCal / yMax))
-            .clamp(0.0, size.height - 8);
+        final totalBarHeight = ((size.height - 8) * (totalCal / yMax)).clamp(
+          0.0,
+          size.height - 8,
+        );
         var currentY = size.height - 4;
 
         final segmentVals = [pCal, cCal, fCal];
 
         for (int seg = 0; seg < segmentVals.length; seg++) {
           final val = segmentVals[seg];
-          final segHeight =
-              totalCal > 0 ? (totalBarHeight * (val / totalCal)) : 0.0;
+          final segHeight = totalCal > 0
+              ? (totalBarHeight * (val / totalCal))
+              : 0.0;
           if (segHeight <= 0) continue;
 
           final segTop = currentY - segHeight;
-          final isTopSegment = seg == segmentVals.length - 1 ||
+          final isTopSegment =
+              seg == segmentVals.length - 1 ||
               segmentVals.sublist(seg + 1).every((v) => v <= 0);
 
           final rect = RRect.fromRectAndCorners(
-            Rect.fromLTWH(actualBarX - singleBarWidth / 2, segTop,
-                singleBarWidth, segHeight),
+            Rect.fromLTWH(
+              actualBarX - singleBarWidth / 2,
+              segTop,
+              singleBarWidth,
+              segHeight,
+            ),
             topLeft: isTopSegment ? const Radius.circular(4) : Radius.zero,
             topRight: isTopSegment ? const Radius.circular(4) : Radius.zero,
           );

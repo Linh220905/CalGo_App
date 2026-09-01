@@ -27,6 +27,8 @@ class AnalysisResultStep extends StatefulWidget {
 
 class _AnalysisResultStepState extends State<AnalysisResultStep> {
   bool _analyzing = true;
+  Timer? _analysisTimer;
+  Completer<void>? _analysisDelay;
 
   @override
   void initState() {
@@ -38,11 +40,28 @@ class _AnalysisResultStepState extends State<AnalysisResultStep> {
     final provider = context.read<OnboardingProvider>();
     // Keep a deliberate analysis window so the personalized plan feels
     // considered; calculation and persistence still happen underneath.
-    await Future.wait([
-      provider.prepareAnalysis(),
-      Future<void>.delayed(const Duration(milliseconds: 10500)),
-    ]);
-    if (mounted) setState(() => _analyzing = false);
+    final delay = Completer<void>();
+    _analysisDelay = delay;
+    _analysisTimer = Timer(const Duration(milliseconds: 10500), () {
+      if (!delay.isCompleted) delay.complete();
+    });
+
+    try {
+      await Future.wait([provider.prepareAnalysis(), delay.future]);
+      if (mounted) setState(() => _analyzing = false);
+    } finally {
+      _analysisTimer?.cancel();
+      _analysisTimer = null;
+      if (identical(_analysisDelay, delay)) _analysisDelay = null;
+    }
+  }
+
+  @override
+  void dispose() {
+    _analysisTimer?.cancel();
+    final delay = _analysisDelay;
+    if (delay != null && !delay.isCompleted) delay.complete();
+    super.dispose();
   }
 
   @override
@@ -158,8 +177,10 @@ class _AnalyzingPhaseState extends State<_AnalyzingPhase>
                       end: Offset.zero,
                     ).animate(animation),
                     child: ScaleTransition(
-                      scale: Tween<double>(begin: 0.98, end: 1.0)
-                          .animate(animation),
+                      scale: Tween<double>(
+                        begin: 0.98,
+                        end: 1.0,
+                      ).animate(animation),
                       child: child,
                     ),
                   ),
@@ -214,16 +235,14 @@ class _AnalyzingPhaseState extends State<_AnalyzingPhase>
                 final angle = (rockT - 0.5) * 2 * 5 * (math.pi / 180); // ±5°
 
                 // Bounce: 4px vertical
-                final bounceT =
-                    Curves.easeInOut.transform(_bounceController.value);
+                final bounceT = Curves.easeInOut.transform(
+                  _bounceController.value,
+                );
                 final dy = (bounceT - 0.5) * 2 * -4; // -4 to +4
 
                 return Transform.translate(
                   offset: Offset(0, dy),
-                  child: Transform.rotate(
-                    angle: angle,
-                    child: child,
-                  ),
+                  child: Transform.rotate(angle: angle, child: child),
                 );
               },
               child: Image.asset(
@@ -243,8 +262,10 @@ class _AnalyzingPhaseState extends State<_AnalyzingPhase>
                   children: List.generate(3, (i) {
                     // Stagger each dot by 0.2
                     final delay = i * 0.2;
-                    final t =
-                        ((_dotsController.value - delay) % 1.0).clamp(0.0, 1.0);
+                    final t = ((_dotsController.value - delay) % 1.0).clamp(
+                      0.0,
+                      1.0,
+                    );
                     // Smooth pulse: scale up then down
                     final scale = 1.0 + 0.4 * math.sin(t * math.pi);
                     final opacity = 0.3 + 0.7 * math.sin(t * math.pi);
@@ -300,10 +321,10 @@ class _ResultPhase extends StatelessWidget {
     final bmiCat = bmi < 18.5
         ? s.bmiUnderweight
         : bmi < 23
-            ? s.bmiNormal
-            : bmi < 27.5
-                ? s.bmiOverweight
-                : s.bmiObese;
+        ? s.bmiNormal
+        : bmi < 27.5
+        ? s.bmiOverweight
+        : s.bmiObese;
     final isHealthy = bmi >= 18.5 && bmi < 23;
     final workoutDays = _workoutDays(d.activityLevel, s);
 
@@ -318,81 +339,82 @@ class _ResultPhase extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-              // ── Header ──
-              Animate(
-                effects: const [
-                  FadeEffect(duration: Duration(milliseconds: 500)),
-                  SlideEffect(
-                    begin: Offset(0, -0.08),
-                    end: Offset.zero,
-                    duration: Duration(milliseconds: 500),
-                  ),
-                ],
-                child: _Header(name: name),
-              ),
-              const SizedBox(height: 24),
-
-              // ── Hero: calo + macro ──
-              _CalorieHeroCard(
-                kcal: kcal,
-                protein: protein,
-                carb: carb,
-                fat: fat,
-              ).animate().fadeIn(duration: 450.ms, delay: 150.ms).slideY(
-                    begin: 0.04,
-                    end: 0,
-                  ),
-              const SizedBox(height: 14),
-
-              // ── BMI + tập luyện ──
-              Row(
-                children: [
-                  Expanded(
-                    child: _StatCard(
-                      icon: Icons.monitor_heart_outlined,
-                      label: 'BMI',
-                      value: bmi > 0 ? bmi.toStringAsFixed(1) : '--',
-                      tag: isHealthy ? s.bmiNormal : bmiCat,
+                    // ── Header ──
+                    Animate(
+                      effects: const [
+                        FadeEffect(duration: Duration(milliseconds: 500)),
+                        SlideEffect(
+                          begin: Offset(0, -0.08),
+                          end: Offset.zero,
+                          duration: Duration(milliseconds: 500),
+                        ),
+                      ],
+                      child: _Header(name: name),
                     ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: _StatCard(
-                      icon: Icons.fitness_center_rounded,
-                      label: s.workoutLabel,
-                      value: workoutDays,
-                      tag: s.perWeekText,
-                    ),
-                  ),
-                ],
-              ).animate().fadeIn(duration: 450.ms, delay: 300.ms),
-              const SizedBox(height: 14),
+                    const SizedBox(height: 24),
 
-              // ── Hành trình ──
-              _ProgressCard(
-                currentWeight: d.weightKg ?? 72,
-                targetWeight: d.targetWeightKg ?? 65,
-                weeks: d.targetWeeks ?? 14,
-              ).animate().fadeIn(duration: 450.ms, delay: 450.ms).slideY(
-                    begin: 0.04,
-                    end: 0,
-                  ),
-              const SizedBox(height: 14),
-
-              // ── Lời khuyên ──
-              _MotivationCard(
-                goalType: d.goalType,
-                remainingKg: _remainingKg(d),
-              ).animate().fadeIn(duration: 450.ms, delay: 600.ms).slideY(
-                    begin: 0.04,
-                    end: 0,
-                  ),
-              const SizedBox(height: 22),
-
-              // ── Chữ ký ──
-                    _TaoSignature()
+                    // ── Hero: calo + macro ──
+                    _CalorieHeroCard(
+                          kcal: kcal,
+                          protein: protein,
+                          carb: carb,
+                          fat: fat,
+                        )
                         .animate()
-                        .fadeIn(duration: 450.ms, delay: 750.ms),
+                        .fadeIn(duration: 450.ms, delay: 150.ms)
+                        .slideY(begin: 0.04, end: 0),
+                    const SizedBox(height: 14),
+
+                    // ── BMI + tập luyện ──
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _StatCard(
+                            icon: Icons.monitor_heart_outlined,
+                            label: 'BMI',
+                            value: bmi > 0 ? bmi.toStringAsFixed(1) : '--',
+                            tag: isHealthy ? s.bmiNormal : bmiCat,
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: _StatCard(
+                            icon: Icons.fitness_center_rounded,
+                            label: s.workoutLabel,
+                            value: workoutDays,
+                            tag: s.perWeekText,
+                          ),
+                        ),
+                      ],
+                    ).animate().fadeIn(duration: 450.ms, delay: 300.ms),
+                    const SizedBox(height: 14),
+
+                    // ── Hành trình ──
+                    _ProgressCard(
+                          currentWeight: d.weightKg ?? 72,
+                          targetWeight: d.targetWeightKg ?? 65,
+                          weeks: d.targetWeeks ?? 14,
+                        )
+                        .animate()
+                        .fadeIn(duration: 450.ms, delay: 450.ms)
+                        .slideY(begin: 0.04, end: 0),
+                    const SizedBox(height: 14),
+
+                    // ── Lời khuyên ──
+                    _MotivationCard(
+                          goalType: d.goalType,
+                          remainingKg: _remainingKg(d),
+                        )
+                        .animate()
+                        .fadeIn(duration: 450.ms, delay: 600.ms)
+                        .slideY(begin: 0.04, end: 0),
+                    const SizedBox(height: 22),
+
+                    // ── Chữ ký ──
+                    _TaoSignature().animate().fadeIn(
+                      duration: 450.ms,
+                      delay: 750.ms,
+                    ),
                     const SizedBox(height: 16),
                   ],
                 ),
@@ -665,10 +687,7 @@ class _StatCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 2),
-          Text(
-            tag,
-            style: const TextStyle(fontSize: 11.5, color: _kMuted),
-          ),
+          Text(tag, style: const TextStyle(fontSize: 11.5, color: _kMuted)),
         ],
       ),
     );
@@ -803,10 +822,7 @@ class _JourneyPoint extends StatelessWidget {
       children: [
         Icon(icon, size: 18, color: emphasize ? _kInk : _kMuted),
         const SizedBox(height: 6),
-        Text(
-          label,
-          style: const TextStyle(fontSize: 11, color: _kMuted),
-        ),
+        Text(label, style: const TextStyle(fontSize: 11, color: _kMuted)),
         const SizedBox(height: 2),
         Text(
           value,
@@ -881,11 +897,17 @@ class _LineChartPainter extends CustomPainter {
     final startY = padding + (descending ? 0 : drawH);
     final endY = padding + (descending ? drawH : 0);
 
-    canvas.drawCircle(Offset(padding, startY), 3.5,
-        Paint()..color = lineColor.withOpacity(0.35));
+    canvas.drawCircle(
+      Offset(padding, startY),
+      3.5,
+      Paint()..color = lineColor.withOpacity(0.35),
+    );
     canvas.drawCircle(Offset(w - padding, endY), 4, Paint()..color = lineColor);
-    canvas.drawCircle(Offset(w - padding, endY), 7,
-        Paint()..color = lineColor.withOpacity(0.15));
+    canvas.drawCircle(
+      Offset(w - padding, endY),
+      7,
+      Paint()..color = lineColor.withOpacity(0.15),
+    );
   }
 
   @override

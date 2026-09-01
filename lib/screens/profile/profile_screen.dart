@@ -196,8 +196,6 @@ class ProfileScreen extends StatelessWidget {
     }
   }
 
-
-
   void _showNotificationInfoDialog(BuildContext context, bool isDark) {
     final s = context.read<AppSettingsProvider>().strings;
     showDialog(
@@ -392,8 +390,11 @@ class ProfileScreen extends StatelessWidget {
     final user = authProvider.user;
     final s = settings.strings;
     final isPremiumUser =
-        (user?.subscriptionTier != null && user!.subscriptionTier!.isNotEmpty) ||
-        payment.purchaseStates.values.any((st) => st == PurchaseState.purchased);
+        (user?.subscriptionTier != null &&
+            user!.subscriptionTier!.isNotEmpty) ||
+        payment.purchaseStates.values.any(
+          (st) => st == PurchaseState.purchased,
+        );
 
     final bgColor = isDark ? const Color(0xFF121116) : const Color(0xFFFAFAFB);
     final cardBgColor = isDark ? const Color(0xFF1E1C24) : Colors.white;
@@ -531,7 +532,7 @@ class ProfileScreen extends StatelessWidget {
                 children: [
                   if (!AppBuildConfig.isTesting && !isPremiumUser)
                     _buildMenuItem(
-                      icon: Icons.crown_outlined,
+                      icon: Icons.workspace_premium_outlined,
                       label: s.premiumMembership,
                       badge: 'PRO',
                       isSpecialBadge: true,
@@ -766,7 +767,7 @@ class ProfileScreen extends StatelessWidget {
                     Row(
                       children: [
                         Icon(
-                          Icons.crown,
+                          Icons.workspace_premium,
                           color: showsPremium
                               ? const Color(0xFFE0533C)
                               : mutedColor,
@@ -1074,5 +1075,3 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 }
-
-

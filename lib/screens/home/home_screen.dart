@@ -12,12 +12,14 @@ import '../../services/scan_service.dart';
 import '../../providers/scan_task_provider.dart';
 import '../../providers/gamification_provider.dart';
 import '../../services/notification_service.dart';
+import '../../models/gamification.dart';
 import '../../widgets/swipeable_card.dart';
 import '../../widgets/mascot_speech_bubble.dart';
 import '../../utils/localized_date_utils.dart';
 import 'widgets/cal_ai_hero_card.dart';
 import 'widgets/cal_ai_macro_card.dart';
 import '../../utils/macro_colors.dart';
+import '../recap/daily_recap_screen.dart';
 
 const _kProteinColor = MacroColors.protein;
 const _kCarbColor = MacroColors.carb;
@@ -63,10 +65,12 @@ class _HomeScreenState extends State<HomeScreen> {
     final bgColor = isDark ? const Color(0xFF141318) : const Color(0xFFFAFAFB);
     final cardBgColor = isDark ? const Color(0xFF212027) : Colors.white;
     final textDark = isDark ? Colors.white : const Color(0xFF0F172A);
-    final borderColor =
-        isDark ? const Color(0xFF2C2A34) : const Color(0xFFE2E8F0);
-    final textMuted =
-        isDark ? const Color(0xFF8E8D9A) : const Color(0xFF64748B);
+    final borderColor = isDark
+        ? const Color(0xFF2C2A34)
+        : const Color(0xFFE2E8F0);
+    final textMuted = isDark
+        ? const Color(0xFF8E8D9A)
+        : const Color(0xFF64748B);
 
     final currentUserId = auth.user?.id ?? 'guest';
     if (!auth.loading && _loadedUserId != currentUserId && !_reloadScheduled) {
@@ -129,8 +133,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                             begin:
                                                 -0.0349, // -2 độ (-0.0349 rad)
                                             end: 0.0349, // +2 độ (+0.0349 rad)
-                                            duration:
-                                                Duration(milliseconds: 1800),
+                                            duration: Duration(
+                                              milliseconds: 1800,
+                                            ),
                                             curve: Curves.easeInOut,
                                           ),
                                         ],
@@ -145,10 +150,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                               cacheWidth: 128,
                                               errorBuilder: (_, __, ___) =>
                                                   const Icon(
-                                                Icons.emoji_nature_rounded,
-                                                size: 38,
-                                                color: Color(0xFF22C55E),
-                                              ),
+                                                    Icons.emoji_nature_rounded,
+                                                    size: 38,
+                                                    color: Color(0xFF22C55E),
+                                                  ),
                                             ),
                                           ),
                                         ),
@@ -189,31 +194,38 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                     child: IconButton(
                                       padding: EdgeInsets.zero,
-                                      icon: Icon(Icons.photo_library_outlined,
-                                          size: 18, color: textDark),
+                                      icon: Icon(
+                                        Icons.photo_library_outlined,
+                                        size: 18,
+                                        color: textDark,
+                                      ),
                                       onPressed: () => context.push('/gallery'),
                                     ),
                                   ),
                                   const SizedBox(width: 6),
                                   Container(
                                     padding: const EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 7),
+                                      horizontal: 10,
+                                      vertical: 7,
+                                    ),
                                     decoration: BoxDecoration(
                                       color: isDark
                                           ? const Color(0xFF332014)
                                           : const Color(0xFFFFF7ED),
                                       borderRadius: BorderRadius.circular(20),
                                       border: Border.all(
-                                          color: isDark
-                                              ? const Color(0xFF522B14)
-                                              : const Color(0xFFFFEDD5)),
+                                        color: isDark
+                                            ? const Color(0xFF522B14)
+                                            : const Color(0xFFFFEDD5),
+                                      ),
                                     ),
                                     child: Row(
                                       children: [
                                         const Icon(
-                                            Icons.local_fire_department_rounded,
-                                            size: 16,
-                                            color: Color(0xFFF97316)),
+                                          Icons.local_fire_department_rounded,
+                                          size: 16,
+                                          color: Color(0xFFF97316),
+                                        ),
                                         const SizedBox(width: 3),
                                         Text(
                                           '${hp.summary.streakDays}',
@@ -300,8 +312,11 @@ class _HomeScreenState extends State<HomeScreen> {
             backgroundColor: textDark,
             elevation: 6,
             shape: const CircleBorder(),
-            child: Icon(Icons.add_rounded,
-                color: isDark ? Colors.black : Colors.white, size: 30),
+            child: Icon(
+              Icons.add_rounded,
+              color: isDark ? Colors.black : Colors.white,
+              size: 30,
+            ),
           ),
         );
       },
@@ -372,8 +387,9 @@ class _WeekDateSelectorState extends State<_WeekDateSelector> {
 
     _scrollController = ScrollController();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final initialIndex =
-          _dates.indexWhere((d) => DateUtils.isSameDay(d, widget.selectedDate));
+      final initialIndex = _dates.indexWhere(
+        (d) => DateUtils.isSameDay(d, widget.selectedDate),
+      );
       final targetIndex = initialIndex >= 0 ? initialIndex : _daysCount - 1;
       _scrollToIndex(targetIndex, animate: false);
     });
@@ -383,8 +399,9 @@ class _WeekDateSelectorState extends State<_WeekDateSelector> {
   void didUpdateWidget(covariant _WeekDateSelector oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (!DateUtils.isSameDay(oldWidget.selectedDate, widget.selectedDate)) {
-      final index =
-          _dates.indexWhere((d) => DateUtils.isSameDay(d, widget.selectedDate));
+      final index = _dates.indexWhere(
+        (d) => DateUtils.isSameDay(d, widget.selectedDate),
+      );
       if (index >= 0) {
         _scrollToIndex(index, animate: true);
       }
@@ -400,8 +417,10 @@ class _WeekDateSelectorState extends State<_WeekDateSelector> {
     final screenWidth = MediaQuery.of(context).size.width - 40;
     final offset =
         (index * totalItemWidth) - (screenWidth / 2) + (itemWidth / 2);
-    final clampedOffset =
-        offset.clamp(0.0, _scrollController.position.maxScrollExtent);
+    final clampedOffset = offset.clamp(
+      0.0,
+      _scrollController.position.maxScrollExtent,
+    );
 
     if (animate) {
       _scrollController.animateTo(
@@ -423,10 +442,12 @@ class _WeekDateSelectorState extends State<_WeekDateSelector> {
   @override
   Widget build(BuildContext context) {
     final selectedBg = widget.isDark ? Colors.white : const Color(0xFF0F172A);
-    final unselectedBg =
-        widget.isDark ? const Color(0xFF212027) : const Color(0xFFF1F5F9);
-    final unselectedText =
-        widget.isDark ? const Color(0xFF8E8D9A) : const Color(0xFF64748B);
+    final unselectedBg = widget.isDark
+        ? const Color(0xFF212027)
+        : const Color(0xFFF1F5F9);
+    final unselectedText = widget.isDark
+        ? const Color(0xFF8E8D9A)
+        : const Color(0xFF64748B);
 
     final settings = context.watch<AppSettingsProvider>();
     final weekdays = localizedWeekdays(settings.languageCode);
@@ -480,8 +501,8 @@ class _WeekDateSelectorState extends State<_WeekDateSelector> {
                             color: selected
                                 ? (widget.isDark ? Colors.black : Colors.white)
                                 : (widget.isDark
-                                    ? Colors.white
-                                    : const Color(0xFF0F172A)),
+                                      ? Colors.white
+                                      : const Color(0xFF0F172A)),
                           ),
                         ),
                       ],
@@ -528,8 +549,9 @@ class _MacroCardsSection extends StatelessWidget {
     if (!hp.hasLoaded || hp.loadingSummary) return const _MacroSkeleton();
 
     final s = hp.summary;
-    final targetProtein =
-        s.targetProteinG > 0 ? s.targetProteinG.toDouble() : 120;
+    final targetProtein = s.targetProteinG > 0
+        ? s.targetProteinG.toDouble()
+        : 120;
     final targetCarb = s.targetCarbG > 0 ? s.targetCarbG.toDouble() : 250;
     final targetFat = s.targetFatG > 0 ? s.targetFatG.toDouble() : 55;
 
@@ -607,10 +629,12 @@ class _RecentlyUploadedList extends StatelessWidget {
 
     final cardBgColor = isDark ? const Color(0xFF212027) : Colors.white;
     final textDark = isDark ? Colors.white : const Color(0xFF0F172A);
-    final textMuted =
-        isDark ? const Color(0xFF8E8D9A) : const Color(0xFF64748B);
-    final borderColor =
-        isDark ? const Color(0xFF2C2A34) : const Color(0xFFE2E8F0);
+    final textMuted = isDark
+        ? const Color(0xFF8E8D9A)
+        : const Color(0xFF64748B);
+    final borderColor = isDark
+        ? const Color(0xFF2C2A34)
+        : const Color(0xFFE2E8F0);
 
     if (pendingTask == null &&
         (!hp.hasLoaded || hp.loadingSummary || hp.loadingDiary)) {
@@ -733,7 +757,9 @@ class _RecentlyUploadedList extends StatelessWidget {
                                   const SizedBox(width: 8),
                                   Container(
                                     padding: const EdgeInsets.symmetric(
-                                        horizontal: 8, vertical: 3),
+                                      horizontal: 8,
+                                      vertical: 3,
+                                    ),
                                     decoration: BoxDecoration(
                                       color: isDark
                                           ? const Color(0xFF2C2A34)
@@ -758,9 +784,10 @@ class _RecentlyUploadedList extends StatelessWidget {
                               Row(
                                 children: [
                                   const Icon(
-                                      Icons.local_fire_department_rounded,
-                                      size: 15,
-                                      color: Color(0xFFF97316)),
+                                    Icons.local_fire_department_rounded,
+                                    size: 15,
+                                    color: Color(0xFFF97316),
+                                  ),
                                   const SizedBox(width: 4),
                                   Text(
                                     s.guidanceDishCalories(item.calories),
@@ -779,39 +806,51 @@ class _RecentlyUploadedList extends StatelessWidget {
                               Row(
                                 children: [
                                   // Protein 🥩
-                                  const Icon(Icons.fitness_center_rounded,
-                                      size: 13, color: _kProteinColor),
+                                  const Icon(
+                                    Icons.fitness_center_rounded,
+                                    size: 13,
+                                    color: _kProteinColor,
+                                  ),
                                   const SizedBox(width: 2),
                                   Text(
                                     '${item.proteinG}g',
                                     style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                        color: textMuted),
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600,
+                                      color: textMuted,
+                                    ),
                                   ),
                                   const SizedBox(width: 12),
                                   // Carbs 🌾
-                                  const Icon(Icons.grain_rounded,
-                                      size: 13, color: _kCarbColor),
+                                  const Icon(
+                                    Icons.grain_rounded,
+                                    size: 13,
+                                    color: _kCarbColor,
+                                  ),
                                   const SizedBox(width: 2),
                                   Text(
                                     '${item.carbG}g',
                                     style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                        color: textMuted),
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600,
+                                      color: textMuted,
+                                    ),
                                   ),
                                   const SizedBox(width: 12),
                                   // Fats 💧
-                                  const Icon(MacroColors.fatIcon,
-                                      size: 13, color: _kFatColor),
+                                  const Icon(
+                                    MacroColors.fatIcon,
+                                    size: 13,
+                                    color: _kFatColor,
+                                  ),
                                   const SizedBox(width: 2),
                                   Text(
                                     '${item.fatG}g',
                                     style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                        color: textMuted),
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600,
+                                      color: textMuted,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -876,8 +915,9 @@ class _PendingScanCardState extends State<_PendingScanCard>
       barrierDismissible: false,
       builder: (dialogContext) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22)),
-        backgroundColor:
-            settings.isDarkMode ? const Color(0xFF212027) : Colors.white,
+        backgroundColor: settings.isDarkMode
+            ? const Color(0xFF212027)
+            : Colors.white,
         title: Text(
           'Chưa nhận diện rõ món ăn',
           style: TextStyle(
@@ -933,13 +973,14 @@ class _PendingScanCardState extends State<_PendingScanCard>
     final isDark = settings.isDarkMode;
     final isFailed = task.status == ScanTaskStatus.failed;
     final textDark = isDark ? Colors.white : const Color(0xFF0F172A);
-    final textMuted =
-        isDark ? const Color(0xFF8E8D9A) : const Color(0xFF64748B);
+    final textMuted = isDark
+        ? const Color(0xFF8E8D9A)
+        : const Color(0xFF64748B);
     final borderColor = isFailed
         ? const Color(0xFFFCA5A5)
         : isDark
-            ? const Color(0xFF2C2A34)
-            : const Color(0xFFE2E8F0);
+        ? const Color(0xFF2C2A34)
+        : const Color(0xFFE2E8F0);
 
     return Container(
       padding: const EdgeInsets.all(14),
@@ -971,8 +1012,11 @@ class _PendingScanCardState extends State<_PendingScanCard>
                   ColoredBox(color: Colors.black.withOpacity(0.34)),
                   Center(
                     child: isFailed
-                        ? const Icon(Icons.error_outline_rounded,
-                            color: Colors.white, size: 27)
+                        ? const Icon(
+                            Icons.error_outline_rounded,
+                            color: Colors.white,
+                            size: 27,
+                          )
                         : _ScanProgress(progress: task.progress),
                   ),
                 ],
@@ -1005,30 +1049,30 @@ class _ScanProgress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => SizedBox(
-        width: 43,
-        height: 43,
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            CircularProgressIndicator(
-              value: progress / 100,
-              color: Colors.white,
-              backgroundColor: Colors.white.withOpacity(0.3),
-              strokeWidth: 3,
-            ),
-            Center(
-              child: Text(
-                '$progress%',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 10,
-                  fontWeight: FontWeight.w800,
-                ),
-              ),
-            ),
-          ],
+    width: 43,
+    height: 43,
+    child: Stack(
+      fit: StackFit.expand,
+      children: [
+        CircularProgressIndicator(
+          value: progress / 100,
+          color: Colors.white,
+          backgroundColor: Colors.white.withOpacity(0.3),
+          strokeWidth: 3,
         ),
-      );
+        Center(
+          child: Text(
+            '$progress%',
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 10,
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
 }
 
 class _FailedScanContent extends StatelessWidget {
@@ -1058,20 +1102,28 @@ class _FailedScanContent extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title,
-            style: TextStyle(
-                fontSize: 15, fontWeight: FontWeight.bold, color: textDark)),
+        Text(
+          title,
+          style: TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.bold,
+            color: textDark,
+          ),
+        ),
         const SizedBox(height: 6),
         Text(message, style: TextStyle(fontSize: 12.5, color: textMuted)),
         const SizedBox(height: 7),
         GestureDetector(
           onTap: () => context.read<ScanTaskProvider>().retry(),
-          child: Text(s.retry,
-              style: TextStyle(
-                  fontSize: 12.5,
-                  fontWeight: FontWeight.w700,
-                  color: textDark,
-                  decoration: TextDecoration.underline)),
+          child: Text(
+            s.retry,
+            style: TextStyle(
+              fontSize: 12.5,
+              fontWeight: FontWeight.w700,
+              color: textDark,
+              decoration: TextDecoration.underline,
+            ),
+          ),
         ),
       ],
     );
@@ -1092,24 +1144,48 @@ class _LoadingMealContent extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _ShimmerBar(
-              width: 118, height: 15, value: shimmer.value, isDark: isDark),
+            width: 118,
+            height: 15,
+            value: shimmer.value,
+            isDark: isDark,
+          ),
           const SizedBox(height: 10),
           _ShimmerBar(
-              width: 66, height: 12, value: shimmer.value, isDark: isDark),
+            width: 66,
+            height: 12,
+            value: shimmer.value,
+            isDark: isDark,
+          ),
           const SizedBox(height: 10),
           _ShimmerBar(
-              width: 78, height: 14, value: shimmer.value, isDark: isDark),
+            width: 78,
+            height: 14,
+            value: shimmer.value,
+            isDark: isDark,
+          ),
           const SizedBox(height: 10),
           Row(
             children: [
               _ShimmerBar(
-                  width: 30, height: 12, value: shimmer.value, isDark: isDark),
+                width: 30,
+                height: 12,
+                value: shimmer.value,
+                isDark: isDark,
+              ),
               const SizedBox(width: 14),
               _ShimmerBar(
-                  width: 30, height: 12, value: shimmer.value, isDark: isDark),
+                width: 30,
+                height: 12,
+                value: shimmer.value,
+                isDark: isDark,
+              ),
               const SizedBox(width: 14),
               _ShimmerBar(
-                  width: 30, height: 12, value: shimmer.value, isDark: isDark),
+                width: 30,
+                height: 12,
+                value: shimmer.value,
+                isDark: isDark,
+              ),
             ],
           ),
         ],
@@ -1187,22 +1263,25 @@ class _ErrorView extends StatelessWidget {
   const _ErrorView();
   @override
   Widget build(BuildContext context) => Center(
-        child: Padding(
-          padding: const EdgeInsets.all(32),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(Icons.cloud_off, size: 48, color: Color(0xFF64748B)),
-              const SizedBox(height: 16),
-              Text(context.watch<AppSettingsProvider>().strings.dataLoadFailed,
-                  style: const TextStyle(
-                      fontSize: 14,
-                      color: Color(0xFF64748B),
-                      fontWeight: FontWeight.w500)),
-            ],
+    child: Padding(
+      padding: const EdgeInsets.all(32),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(Icons.cloud_off, size: 48, color: Color(0xFF64748B)),
+          const SizedBox(height: 16),
+          Text(
+            context.watch<AppSettingsProvider>().strings.dataLoadFailed,
+            style: const TextStyle(
+              fontSize: 14,
+              color: Color(0xFF64748B),
+              fontWeight: FontWeight.w500,
+            ),
           ),
-        ),
-      );
+        ],
+      ),
+    ),
+  );
 }
 
 class _DailyRecapBanner extends StatelessWidget {
@@ -1261,8 +1340,11 @@ class _DailyRecapBanner extends StatelessWidget {
                         : const Color(0xFFF0FDF4),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Icon(Icons.auto_awesome_rounded,
-                      color: Color(0xFF22C55E), size: 22),
+                  child: const Icon(
+                    Icons.auto_awesome_rounded,
+                    color: Color(0xFF22C55E),
+                    size: 22,
+                  ),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
@@ -1280,19 +1362,12 @@ class _DailyRecapBanner extends StatelessWidget {
                       const SizedBox(height: 2),
                       Text(
                         'Xem đánh giá dinh dưỡng & nhận EXP',
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: textMuted,
-                        ),
+                        style: TextStyle(fontSize: 12, color: textMuted),
                       ),
                     ],
                   ),
                 ),
-                Icon(
-                  Icons.chevron_right_rounded,
-                  color: textMuted,
-                  size: 20,
-                ),
+                Icon(Icons.chevron_right_rounded, color: textMuted, size: 20),
               ],
             ),
           ),

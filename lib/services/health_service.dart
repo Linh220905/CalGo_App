@@ -7,13 +7,10 @@ class HealthService {
   HealthService._internal();
 
   final Health _health = Health();
-  bool _isConfigured = false;
+  Future<void>? _configuration;
 
-  void _ensureConfigured() {
-    if (!_isConfigured) {
-      _health.configure();
-      _isConfigured = true;
-    }
+  Future<void> _ensureConfigured() {
+    return _configuration ??= _health.configure();
   }
 
   /// Data types requested for reading from Apple Health / Health Connect
@@ -34,20 +31,43 @@ class HealthService {
     HealthDataType.WEIGHT,
   ];
 
-  /// All types requested by CalGo
-  List<HealthDataType> get types => [...readTypes, ...writeTypes];
+  /// All unique types requested by CalGo.
+  ///
+  /// WEIGHT is both readable and writable, but must only occur once in the
+  /// request because the health plugin matches permissions by list index.
+  static const List<HealthDataType> types = [
+    HealthDataType.STEPS,
+    HealthDataType.ACTIVE_ENERGY_BURNED,
+    HealthDataType.WEIGHT,
+    HealthDataType.HEIGHT,
+    HealthDataType.BODY_MASS_INDEX,
+    HealthDataType.DIETARY_ENERGY_CONSUMED,
+    HealthDataType.DIETARY_CARBS_CONSUMED,
+    HealthDataType.DIETARY_PROTEIN_CONSUMED,
+    HealthDataType.DIETARY_FATS_CONSUMED,
+  ];
 
   /// Permissions list matching `types`
-  List<HealthDataAccess> get permissions => [
-        ...readTypes.map((_) => HealthDataAccess.READ),
-        ...writeTypes.map((_) => HealthDataAccess.READ_WRITE),
-      ];
+  static const List<HealthDataAccess> permissions = [
+    HealthDataAccess.READ,
+    HealthDataAccess.READ,
+    HealthDataAccess.READ_WRITE,
+    HealthDataAccess.READ,
+    HealthDataAccess.READ,
+    HealthDataAccess.READ_WRITE,
+    HealthDataAccess.READ_WRITE,
+    HealthDataAccess.READ_WRITE,
+    HealthDataAccess.READ_WRITE,
+  ];
 
   /// Check if the app currently has authorization for requested types
   Future<bool> hasPermissions() async {
-    _ensureConfigured();
     try {
-      final hasPerm = await _health.hasPermissions(types, permissions: permissions);
+      await _ensureConfigured();
+      final hasPerm = await _health.hasPermissions(
+        types,
+        permissions: permissions,
+      );
       return hasPerm ?? false;
     } catch (e) {
       debugPrint('HealthService: Error checking permissions: $e');
@@ -57,8 +77,8 @@ class HealthService {
 
   /// Request authorization from native Apple Health / Health Connect dialog
   Future<bool> requestAuthorization() async {
-    _ensureConfigured();
     try {
+      await _ensureConfigured();
       // Calling requestAuthorization triggers the native iOS Apple Health modal prompt!
       final authorized = await _health.requestAuthorization(
         types,
@@ -73,8 +93,8 @@ class HealthService {
 
   /// Fetch today's total steps count
   Future<int> getTodaySteps() async {
-    _ensureConfigured();
     try {
+      await _ensureConfigured();
       final now = DateTime.now();
       final midnight = DateTime(now.year, now.month, now.day);
       final steps = await _health.getTotalStepsInInterval(midnight, now);
@@ -87,8 +107,8 @@ class HealthService {
 
   /// Fetch active calories burned today
   Future<double> getTodayActiveCalories() async {
-    _ensureConfigured();
     try {
+      await _ensureConfigured();
       final now = DateTime.now();
       final midnight = DateTime(now.year, now.month, now.day);
       final dataPoints = await _health.getHealthDataFromTypes(
@@ -118,9 +138,9 @@ class HealthService {
     double? fatGrams,
     DateTime? timestamp,
   }) async {
-    _ensureConfigured();
     final time = timestamp ?? DateTime.now();
     try {
+      await _ensureConfigured();
       bool success = true;
 
       if (calories > 0) {
@@ -135,33 +155,36 @@ class HealthService {
       }
 
       if (proteinGrams != null && proteinGrams > 0) {
-        await _health.writeHealthData(
+        final proteinSuccess = await _health.writeHealthData(
           value: proteinGrams,
           type: HealthDataType.DIETARY_PROTEIN_CONSUMED,
           startTime: time,
           endTime: time,
           unit: HealthDataUnit.GRAM,
         );
+        success = success && proteinSuccess;
       }
 
       if (carbsGrams != null && carbsGrams > 0) {
-        await _health.writeHealthData(
+        final carbsSuccess = await _health.writeHealthData(
           value: carbsGrams,
           type: HealthDataType.DIETARY_CARBS_CONSUMED,
           startTime: time,
           endTime: time,
           unit: HealthDataUnit.GRAM,
         );
+        success = success && carbsSuccess;
       }
 
       if (fatGrams != null && fatGrams > 0) {
-        await _health.writeHealthData(
+        final fatSuccess = await _health.writeHealthData(
           value: fatGrams,
           type: HealthDataType.DIETARY_FATS_CONSUMED,
           startTime: time,
           endTime: time,
           unit: HealthDataUnit.GRAM,
         );
+        success = success && fatSuccess;
       }
 
       return success;
@@ -173,9 +196,9 @@ class HealthService {
 
   /// Write weight measurement to Apple Health
   Future<bool> writeWeight(double weightKg, {DateTime? timestamp}) async {
-    _ensureConfigured();
     final time = timestamp ?? DateTime.now();
     try {
+      await _ensureConfigured();
       return await _health.writeHealthData(
         value: weightKg,
         type: HealthDataType.WEIGHT,
