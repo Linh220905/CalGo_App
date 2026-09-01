@@ -265,10 +265,9 @@ class _ProgressTabState extends State<_ProgressTab> {
       photoPath: result.photoPath,
     );
     if (!mounted) return;
+    final strings = context.read<AppSettingsProvider>().strings;
     _showMessage(
-      saved
-          ? 'Đã cập nhật cân nặng thành công'
-          : 'Không thể lưu cân nặng. Vui lòng thử lại.',
+      saved ? strings.weightUpdateSuccess : strings.weightUpdateFailed,
     );
     if (saved) {
       // Refresh gamification weekly stats so TargetTimelineCard updates.
@@ -325,7 +324,7 @@ class _ProgressTabState extends State<_ProgressTab> {
           ),
           if (widget.weekly != null) ...[
             const SizedBox(height: 24),
-            _SectionLabel('DINH DƯỠNG', widget.muted),
+            _SectionLabel(context.watch<AppSettingsProvider>().strings.nutritionSectionHeader, widget.muted),
             const SizedBox(height: 9),
             _NutritionSummaryCard(
               weekly: widget.weekly!,
@@ -385,7 +384,7 @@ class _ProgressTabState extends State<_ProgressTab> {
           ],
           if (data?.bmi != null) ...[
             const SizedBox(height: 24),
-            _SectionLabel('SỨC KHỎE', widget.muted),
+            _SectionLabel(context.watch<AppSettingsProvider>().strings.healthSectionHeader, widget.muted),
             const SizedBox(height: 9),
             _BmiCard(
               data: data!,
@@ -459,7 +458,7 @@ class _WeightHeroCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _Kicker('CÂN NẶNG HIỆN TẠI', muted),
+                  _Kicker(context.watch<AppSettingsProvider>().strings.currentWeightKicker, muted),
                   const SizedBox(height: 7),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.baseline,
@@ -496,7 +495,7 @@ class _WeightHeroCard extends StatelessWidget {
                         ),
                         const SizedBox(width: 4),
                         Text(
-                          '${(current - start).abs().toStringAsFixed(1)} kg từ Aug ${DateTime.now().year}',
+                          context.watch<AppSettingsProvider>().strings.weightKgValue((current - start).abs().toStringAsFixed(1)),
                           style: TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.w600,
@@ -512,9 +511,9 @@ class _WeightHeroCard extends StatelessWidget {
               ),
               ElevatedButton.icon(
                 onPressed: onLogWeight,
-                icon: const Text(
-                  'Ghi cân nặng',
-                  style: TextStyle(fontWeight: FontWeight.w800, fontSize: 14),
+                icon: Text(
+                  context.watch<AppSettingsProvider>().strings.logWeightButton,
+                  style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 14),
                 ),
                 label: const Icon(Icons.arrow_forward_rounded, size: 16),
                 style: ElevatedButton.styleFrom(
@@ -598,7 +597,7 @@ class _WeightHeroCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'BẮT ĐẦU',
+                    context.watch<AppSettingsProvider>().strings.startLabel,
                     style: TextStyle(
                       color: muted,
                       fontSize: 11,
@@ -621,7 +620,7 @@ class _WeightHeroCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    'MỤC TIÊU',
+                    context.watch<AppSettingsProvider>().strings.targetLabel,
                     style: TextStyle(
                       color: muted,
                       fontSize: 11,
@@ -672,6 +671,7 @@ class _WeightProgressCard extends StatelessWidget {
     final points = data?.weightHistory ?? const <WeightPoint>[];
     final percent = data?.progressPercent;
 
+    final strings = context.watch<AppSettingsProvider>().strings;
     return _Card(
       card: card,
       border: border,
@@ -684,7 +684,7 @@ class _WeightProgressCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  'Tiến trình cân nặng',
+                  strings.weightProgressTitle,
                   style: TextStyle(
                     color: text,
                     fontSize: 22,
@@ -712,7 +712,7 @@ class _WeightProgressCard extends StatelessWidget {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        '${percent.toStringAsFixed(0)}% của mục tiêu',
+                        strings.ofTargetPercent(percent.toStringAsFixed(0)),
                         style: const TextStyle(
                           color: Color(0xFFD9381E),
                           fontSize: 13,
@@ -732,7 +732,7 @@ class _WeightProgressCard extends StatelessWidget {
             )
           else if (points.isEmpty)
             _EmptyChart(
-              message: 'Chưa có đủ dữ liệu cân nặng',
+              message: strings.notEnoughWeightData,
               muted: muted,
               height: 150,
             )
@@ -783,6 +783,7 @@ class _NutritionSummaryCardState extends State<_NutritionSummaryCard> {
 
   @override
   Widget build(BuildContext context) {
+    final strings = context.watch<AppSettingsProvider>().strings;
     final caloStr = _formatCalo(widget.weekly.avgCalo);
     final target = widget.weekly.dailyPoints.isEmpty
         ? 0
@@ -804,7 +805,7 @@ class _NutritionSummaryCardState extends State<_NutritionSummaryCard> {
         children: [
           // Title
           Text(
-            'Thống kê Calo & Dinh dưỡng',
+            strings.calorieNutritionStatsTitle,
             style: TextStyle(
               color: widget.text,
               fontSize: 22,
@@ -818,7 +819,7 @@ class _NutritionSummaryCardState extends State<_NutritionSummaryCard> {
             children: [
               Expanded(
                 child: _EnergyMetric(
-                  label: 'ĐÃ NẠP (TB)',
+                  label: strings.consumedAvgLabel,
                   value: caloStr.isEmpty ? '0' : caloStr,
                   color: widget.text,
                   muted: widget.muted,
@@ -826,7 +827,7 @@ class _NutritionSummaryCardState extends State<_NutritionSummaryCard> {
               ),
               Expanded(
                 child: _EnergyMetric(
-                  label: 'MỤC TIÊU',
+                  label: strings.targetLabelUpper,
                   value: target == 0 ? '--' : _formatCalo(target.toDouble()),
                   color: widget.text,
                   muted: widget.muted,
@@ -834,7 +835,7 @@ class _NutritionSummaryCardState extends State<_NutritionSummaryCard> {
               ),
               Expanded(
                 child: _EnergyMetric(
-                  label: 'CHÊNH LỆCH',
+                  label: strings.differenceLabelUpper,
                   value: target == 0
                       ? '--'
                       : '${balance >= 0 ? '+' : ''}${balance.round()}',
@@ -862,22 +863,22 @@ class _NutritionSummaryCardState extends State<_NutritionSummaryCard> {
             children: [
               _LegendDot(
                 color: targetColor,
-                label: 'Mục tiêu',
+                label: strings.journeyTarget,
                 muted: widget.muted,
               ),
               _LegendDot(
                 color: MacroColors.protein,
-                label: 'Đạm',
+                label: strings.proteinLabel,
                 muted: widget.muted,
               ),
               _LegendDot(
                 color: MacroColors.carb,
-                label: 'Carb',
+                label: strings.carbsLabel,
                 muted: widget.muted,
               ),
               _LegendDot(
                 color: MacroColors.fat,
-                label: 'Béo',
+                label: strings.fatLabel,
                 muted: widget.muted,
               ),
             ],
@@ -897,10 +898,10 @@ class _NutritionSummaryCardState extends State<_NutritionSummaryCard> {
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  _buildWeekPill('Tuần này', 0),
-                  _buildWeekPill('Tuần trước', 1),
-                  _buildWeekPill('2 tuần trước', 2),
-                  _buildWeekPill('3 tuần trước', 3),
+                  _buildWeekPill(strings.thisWeek, 0),
+                  _buildWeekPill(strings.lastWeek, 1),
+                  _buildWeekPill(strings.twoWeeksAgo, 2),
+                  _buildWeekPill(strings.threeWeeksAgo, 3),
                 ],
               ),
             ),
@@ -965,22 +966,24 @@ class _EnergyCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final strings = context.watch<AppSettingsProvider>().strings;
     final target = weekly.dailyPoints.isEmpty
         ? 0
         : weekly.dailyPoints
               .map((point) => point.target)
               .reduce((a, b) => a > b ? a : b);
     final balance = target > 0 ? weekly.avgCalo - target : 0;
+
     return _Card(
       card: card,
       border: border,
       radius: 26,
-      padding: const EdgeInsets.fromLTRB(20, 20, 20, 18),
+      padding: const EdgeInsets.fromLTRB(20, 20, 20, 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Năng lượng hàng tuần',
+            strings.weeklyEnergyTitle,
             style: TextStyle(
               color: text,
               fontSize: 22,
@@ -992,7 +995,7 @@ class _EnergyCard extends StatelessWidget {
             children: [
               Expanded(
                 child: _EnergyMetric(
-                  label: 'ĐÃ NẠP',
+                  label: strings.consumedLabelUpper,
                   value: '${weekly.avgCalo.round()}',
                   color: text,
                   muted: muted,
@@ -1000,7 +1003,7 @@ class _EnergyCard extends StatelessWidget {
               ),
               Expanded(
                 child: _EnergyMetric(
-                  label: 'MỤC TIÊU',
+                  label: strings.targetLabelUpper,
                   value: target == 0 ? '--' : '$target',
                   color: text,
                   muted: muted,
@@ -1008,7 +1011,7 @@ class _EnergyCard extends StatelessWidget {
               ),
               Expanded(
                 child: _EnergyMetric(
-                  label: 'CHÊNH LỆCH',
+                  label: strings.differenceLabelUpper,
                   value: target == 0
                       ? '--'
                       : '${balance >= 0 ? '+' : ''}${balance.round()}',
@@ -1024,11 +1027,11 @@ class _EnergyCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _LegendDot(color: _kAccent, label: 'Đã nạp', muted: muted),
+              _LegendDot(color: _kAccent, label: strings.consumedLabel, muted: muted),
               const SizedBox(width: 18),
               _LegendDot(
                 color: dark ? Colors.white70 : const Color(0xFF111318),
-                label: 'Mục tiêu',
+                label: strings.journeyTarget,
                 muted: muted,
               ),
             ],
@@ -1038,6 +1041,7 @@ class _EnergyCard extends StatelessWidget {
     );
   }
 }
+
 
 class _ActivityCard extends StatelessWidget {
   final MonthlyStats monthly;
@@ -1054,61 +1058,64 @@ class _ActivityCard extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => _Card(
-    card: card,
-    border: border,
-    radius: 26,
-    padding: const EdgeInsets.fromLTRB(20, 20, 20, 16),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Expanded(
-              child: Text(
-                'Hoạt động ghi nhận',
-                style: TextStyle(
-                  color: text,
-                  fontSize: 21,
-                  fontWeight: FontWeight.w800,
+  Widget build(BuildContext context) {
+    final strings = context.watch<AppSettingsProvider>().strings;
+    return _Card(
+      card: card,
+      border: border,
+      radius: 26,
+      padding: const EdgeInsets.fromLTRB(20, 20, 20, 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  strings.loggedActivityTitle,
+                  style: TextStyle(
+                    color: text,
+                    fontSize: 21,
+                    fontWeight: FontWeight.w800,
+                  ),
                 ),
               ),
-            ),
-            Text(
-              '${monthly.adherencePercent.toStringAsFixed(0)}%',
-              style: const TextStyle(
-                color: _kAccent,
-                fontWeight: FontWeight.w900,
-                fontSize: 17,
+              Text(
+                '${monthly.adherencePercent.toStringAsFixed(0)}%',
+                style: const TextStyle(
+                  color: _kAccent,
+                  fontWeight: FontWeight.w900,
+                  fontSize: 17,
+                ),
               ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 5),
-        Text(
-          '${monthly.loggedDays}/${monthly.totalDays} ngày có dữ liệu',
-          style: TextStyle(color: muted, fontSize: 14),
-        ),
-        const SizedBox(height: 18),
-        _MonthGrid(days: monthly.days, dark: dark),
-        const SizedBox(height: 9),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Text('Ít', style: TextStyle(color: muted, fontSize: 10)),
-            _HeatLegend(
-              color: dark ? const Color(0xFF36343F) : const Color(0xFFEDEDEB),
-            ),
-            const _HeatLegend(color: Color(0xFFD6EBDD)),
-            const _HeatLegend(color: Color(0xFFA8D0B4)),
-            const _HeatLegend(color: _kAccent),
-            const SizedBox(width: 5),
-            Text('Nhiều', style: TextStyle(color: muted, fontSize: 10)),
-          ],
-        ),
-      ],
-    ),
-  );
+            ],
+          ),
+          const SizedBox(height: 5),
+          Text(
+            strings.daysWithData(monthly.loggedDays, monthly.totalDays),
+            style: TextStyle(color: muted, fontSize: 14),
+          ),
+          const SizedBox(height: 18),
+          _MonthGrid(days: monthly.days, dark: dark),
+          const SizedBox(height: 9),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text(strings.lessLabel, style: TextStyle(color: muted, fontSize: 10)),
+              _HeatLegend(
+                color: dark ? const Color(0xFF36343F) : const Color(0xFFEDEDEB),
+              ),
+              const _HeatLegend(color: Color(0xFFD6EBDD)),
+              const _HeatLegend(color: Color(0xFFA8D0B4)),
+              const _HeatLegend(color: _kAccent),
+              const SizedBox(width: 5),
+              Text(strings.moreLabel, style: TextStyle(color: muted, fontSize: 10)),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 class _BmiCard extends StatelessWidget {
@@ -1125,6 +1132,7 @@ class _BmiCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final strings = context.watch<AppSettingsProvider>().strings;
     final bmi = data.bmi!;
     final category = data.bmiCategory ?? '';
     final normal = category == 'Normal';
@@ -1141,7 +1149,7 @@ class _BmiCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  'Chỉ số BMI',
+                  strings.bmiIndexTitle,
                   style: TextStyle(
                     color: text,
                     fontSize: 22,
@@ -1216,25 +1224,25 @@ class _BmiCard extends StatelessWidget {
             children: [
               _BmiLegend(
                 color: const Color(0xFF78A7DF),
-                label: 'Thấp',
+                label: strings.bmiUnderweight,
                 value: '<18.5',
                 muted: muted,
               ),
               _BmiLegend(
                 color: const Color(0xFF65AD7D),
-                label: 'Khỏe',
+                label: strings.bmiNormal,
                 value: '18.5–24.9',
                 muted: muted,
               ),
               _BmiLegend(
                 color: const Color(0xFFE3B33D),
-                label: 'Cao',
+                label: strings.bmiOverweight,
                 value: '25–29.9',
                 muted: muted,
               ),
               _BmiLegend(
                 color: const Color(0xFFE36C5D),
-                label: 'Béo phì',
+                label: strings.bmiObese,
                 value: '≥30',
                 muted: muted,
               ),
@@ -1277,7 +1285,7 @@ class _ForecastCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Dự báo mục tiêu cân nặng',
+                context.watch<AppSettingsProvider>().strings.weightTargetForecastTitle,
                 style: TextStyle(color: text, fontWeight: FontWeight.w800),
               ),
               const SizedBox(height: 4),
@@ -1312,7 +1320,9 @@ class _ExpTab extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => RefreshIndicator(
+  Widget build(BuildContext context) {
+    final strings = context.watch<AppSettingsProvider>().strings;
+    return RefreshIndicator(
     color: _kAccent,
     onRefresh: onRefresh,
     child: ListView(
@@ -1334,7 +1344,7 @@ class _ExpTab extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Cấp ${status.level}',
+                        strings.levelLabel(status.level),
                         style: TextStyle(
                           color: text,
                           fontSize: 23,
@@ -1373,20 +1383,20 @@ class _ExpTab extends StatelessWidget {
               const SizedBox(height: 8),
               Text(
                 status.level >= 10
-                    ? 'Bạn đã đạt cấp tối đa'
-                    : '${(status.expToNextLevel - status.expInCurrentLevel).clamp(0, 100000)} EXP để lên cấp tiếp theo',
+                    ? strings.maxLevelReached
+                    : strings.expToNextLevel((status.expToNextLevel - status.expInCurrentLevel).clamp(0, 100000)),
                 style: TextStyle(color: muted, fontSize: 12),
               ),
               const SizedBox(height: 12),
               Text(
-                'Hôm nay đã quét ${status.scansToday} món · tổng ${status.totalScans} lần',
+                strings.scansTodaySummary(status.scansToday, status.totalScans),
                 style: TextStyle(color: muted, fontSize: 12),
               ),
             ],
           ),
         ),
         const SizedBox(height: 24),
-        _SectionLabel('MỐC CẦN ĐẠT', muted),
+        _SectionLabel(strings.milestonesHeader, muted),
         const SizedBox(height: 9),
         if (achievements.isEmpty)
           _Card(
@@ -1395,7 +1405,7 @@ class _ExpTab extends StatelessWidget {
             radius: 22,
             padding: const EdgeInsets.all(18),
             child: Text(
-              'Chưa có dữ liệu mốc EXP.',
+              strings.noMilestoneData,
               style: TextStyle(color: muted),
             ),
           )
@@ -1416,6 +1426,7 @@ class _ExpTab extends StatelessWidget {
       ],
     ),
   );
+  }
 }
 
 class _AchievementTile extends StatelessWidget {
@@ -1733,7 +1744,7 @@ class _UnifiedNutritionChart extends StatelessWidget {
   Widget build(BuildContext context) {
     if (points.isEmpty) {
       return _EmptyChart(
-        message: 'Chưa có đủ dữ liệu dinh dưỡng',
+        message: context.watch<AppSettingsProvider>().strings.notEnoughNutritionData,
         muted: muted,
         height: 160,
       );
@@ -2008,7 +2019,7 @@ class _EnergyBars extends StatelessWidget {
   Widget build(BuildContext context) {
     if (points.every((point) => !point.hasLog)) {
       return _EmptyChart(
-        message: 'Chưa có dữ liệu năng lượng',
+        message: context.watch<AppSettingsProvider>().strings.noEnergyData,
         muted: muted,
         height: 150,
       );
@@ -2072,7 +2083,7 @@ class _MonthGrid extends StatelessWidget {
     final empty = dark ? const Color(0xFF36343F) : const Color(0xFFEDEDEB);
     if (days.isEmpty) {
       return Text(
-        'Chưa có dữ liệu',
+        context.watch<AppSettingsProvider>().strings.noData,
         style: TextStyle(color: dark ? Colors.white70 : Colors.black54),
       );
     }
@@ -2329,7 +2340,10 @@ class _EnergyMetric extends StatelessWidget {
           letterSpacing: -.5,
         ),
       ),
-      Text('kcal/ngày', style: TextStyle(color: muted, fontSize: 10)),
+      Text(
+        context.watch<AppSettingsProvider>().strings.kcalPerDayUnit,
+        style: TextStyle(color: muted, fontSize: 10),
+      ),
     ],
   );
 }
@@ -2561,22 +2575,25 @@ class _ErrorState extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => Center(
-    child: Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(
-          'Không tải được dữ liệu',
-          style: TextStyle(color: text, fontWeight: FontWeight.w700),
-        ),
-        const SizedBox(height: 10),
-        TextButton(
-          onPressed: onRetry,
-          child: Text('Thử lại', style: TextStyle(color: muted)),
-        ),
-      ],
-    ),
-  );
+  Widget build(BuildContext context) {
+    final strings = context.watch<AppSettingsProvider>().strings;
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            strings.dataLoadFailed,
+            style: TextStyle(color: text, fontWeight: FontWeight.w700),
+          ),
+          const SizedBox(height: 10),
+          TextButton(
+            onPressed: onRetry,
+            child: Text(strings.retry, style: TextStyle(color: muted)),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 class _WeightChangeCard extends StatelessWidget {
@@ -2597,6 +2614,7 @@ class _WeightChangeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final strings = context.watch<AppSettingsProvider>().strings;
     final items = changes
         .where((item) => item.sparkline.length >= 2 || item.diffKg.abs() > 0.01)
         .toList();
@@ -2613,7 +2631,7 @@ class _WeightChangeCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Thay đổi cân nặng',
+                strings.weightChangeTitle,
                 style: TextStyle(
                   color: text,
                   fontSize: 20,
@@ -2636,18 +2654,18 @@ class _WeightChangeCard extends StatelessWidget {
                         color: const Color(0xFF63A97B).withValues(alpha: 0.35),
                       ),
                     ),
-                    child: const Row(
+                    child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.add_rounded,
                           size: 16,
                           color: Color(0xFF63A97B),
                         ),
-                        SizedBox(width: 4),
+                        const SizedBox(width: 4),
                         Text(
-                          'Ghi cân nặng',
-                          style: TextStyle(
+                          strings.logWeightButton,
+                          style: const TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.w700,
                             color: Color(0xFF63A97B),
@@ -2667,7 +2685,7 @@ class _WeightChangeCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Ghi cân nặng ít nhất hai lần để xem thay đổi theo thời gian.',
+                    strings.logWeightEmptyDesc,
                     style: TextStyle(color: muted, fontSize: 14, height: 1.4),
                   ),
                   if (onLogWeight != null) ...[
@@ -2687,9 +2705,9 @@ class _WeightChangeCard extends StatelessWidget {
                         ),
                       ),
                       icon: const Icon(Icons.add_rounded, size: 18),
-                      label: const Text(
-                        'Ghi cân nặng ngay',
-                        style: TextStyle(
+                      label: Text(
+                        strings.logWeightNow,
+                        style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
                         ),
@@ -2733,11 +2751,7 @@ class _WeightChangeCard extends StatelessWidget {
                     const SizedBox(width: 12),
 
                     Text(
-                      '${item.diffKg.abs() <= 0.01
-                          ? ""
-                          : item.diffKg > 0
-                          ? "+"
-                          : "-"}$absDiff kg',
+                      '${item.diffKg.abs() <= 0.01 ? "" : item.diffKg > 0 ? "+" : "-"}$absDiff kg',
                       style: TextStyle(
                         color: text,
                         fontSize: 16,
@@ -2760,7 +2774,7 @@ class _WeightChangeCard extends StatelessWidget {
                         ),
                         const SizedBox(width: 3),
                         Text(
-                          isLoss ? 'Giảm' : 'Tăng',
+                          isLoss ? strings.weightDecreased : strings.weightIncreased,
                           style: TextStyle(
                             color: isLoss
                                 ? const Color(0xFF10B981)
@@ -2898,14 +2912,15 @@ class _LogWeightModalSheetState extends State<_LogWeightModalSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final strings = context.watch<AppSettingsProvider>().strings;
     final bg = widget.isDark ? const Color(0xFF1E1D24) : Colors.white;
     final textDark = widget.isDark ? Colors.white : const Color(0xFF0F172A);
     final textMuted = widget.isDark
-        ? const Color(0xFFA0A0AB)
+        ? const Color(0xFF94A3B8)
         : const Color(0xFF64748B);
     final cardBg = widget.isDark
-        ? const Color(0xFF2A2932)
-        : const Color(0xFFF8F9FA);
+        ? const Color(0xFF2B2934)
+        : const Color(0xFFF8FAFC);
 
     return Container(
       decoration: BoxDecoration(
@@ -2932,7 +2947,7 @@ class _LogWeightModalSheetState extends State<_LogWeightModalSheet> {
           const SizedBox(height: 16),
 
           Text(
-            'Cân nặng',
+            strings.logWeightButton,
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
@@ -2970,7 +2985,7 @@ class _LogWeightModalSheetState extends State<_LogWeightModalSheet> {
           const SizedBox(height: 6),
 
           Text(
-            'Lần gần nhất: ${widget.lastWeight != null ? "${widget.lastWeight!.toStringAsFixed(1)} kg" : "${_weight.toStringAsFixed(1)} kg"}',
+            strings.lastLogWeight(widget.lastWeight != null ? widget.lastWeight!.toStringAsFixed(1) : _weight.toStringAsFixed(1)),
             style: TextStyle(fontSize: 14, color: textMuted),
           ),
           const SizedBox(height: 20),
@@ -2999,7 +3014,7 @@ class _LogWeightModalSheetState extends State<_LogWeightModalSheet> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Ngày',
+                  strings.dateColumnHeader,
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -3020,7 +3035,7 @@ class _LogWeightModalSheetState extends State<_LogWeightModalSheet> {
                       borderRadius: BorderRadius.circular(14),
                     ),
                     child: Text(
-                      'ngày ${_selectedDate.day} thg ${_selectedDate.month}, ${_selectedDate.year}',
+                      strings.selectedDateText(_selectedDate.day, _selectedDate.month, _selectedDate.year),
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
@@ -3048,7 +3063,7 @@ class _LogWeightModalSheetState extends State<_LogWeightModalSheet> {
                     Icon(Icons.camera_alt_outlined, size: 20, color: textDark),
                     const SizedBox(width: 10),
                     Text(
-                      'Thêm ảnh',
+                      strings.addPhoto,
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -3062,7 +3077,7 @@ class _LogWeightModalSheetState extends State<_LogWeightModalSheet> {
                   child: Row(
                     children: [
                       Text(
-                        _selectedPhotoPath != null ? 'Đã chọn ảnh' : 'Tuỳ chọn',
+                        _selectedPhotoPath != null ? strings.photoSelected : strings.photoOptional,
                         style: TextStyle(fontSize: 14, color: textMuted),
                       ),
                       const SizedBox(width: 4),
@@ -3105,9 +3120,9 @@ class _LogWeightModalSheetState extends State<_LogWeightModalSheet> {
                 ),
                 elevation: 0,
               ),
-              child: const Text(
-                'Ghi cân nặng',
-                style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+              child: Text(
+                strings.logWeightButton,
+                style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
               ),
             ),
           ),

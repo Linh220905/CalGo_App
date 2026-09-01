@@ -1010,19 +1010,19 @@ class AppLocalizationsZh extends AppLocalizations {
   String get budgetNote => 'CalGo问,这样它就可以建议适合你的目标和预算的餐.';
 
   @override
-  String get budgetLow => '30 000人以下';
+  String get budgetLow => '低于 \$2';
 
   @override
   String get budgetLowNote => '简单易得的饭';
 
   @override
-  String get budgetMid => '30 000 - 60 000 ₫';
+  String get budgetMid => '\$2 – \$5';
 
   @override
   String get budgetMidNote => '一餐的典型预算';
 
   @override
-  String get budgetHigh => '6万-100 000 ₫';
+  String get budgetHigh => '高于 \$5';
 
   @override
   String get budgetHighNote => '增加质量空间';
@@ -1860,5 +1860,166 @@ class AppLocalizationsZh extends AppLocalizations {
   @override
   String sharePayload(String dish, int calories) {
     return '🔥 $dish · $calories kcal | CalGo';
+  }
+
+  @override
+  String get connectAppleHealthTitle => '连接到 Apple Health';
+
+  @override
+  String get connectAppleHealthDesc => '在 CalGo 和健康应用之间自动同步您的每日活动数据。';
+
+  @override
+  String get weightUpdateSuccess => '体重更新成功';
+
+  @override
+  String get weightUpdateFailed => '无法保存体重，请重试。';
+
+  @override
+  String get nutritionSectionHeader => '营养';
+
+  @override
+  String get healthSectionHeader => '健康';
+
+  @override
+  String get currentWeightKicker => '当前体重';
+
+  @override
+  String get logWeightButton => '记录体重';
+
+  @override
+  String get startLabel => '起点';
+
+  @override
+  String get targetLabel => '目标';
+
+  @override
+  String get weightProgressTitle => '体重进度';
+
+  @override
+  String ofTargetPercent(String percent) {
+    return '目标的 $percent%';
+  }
+
+  @override
+  String get notEnoughWeightData => '体重数据不足';
+
+  @override
+  String get calorieNutritionStatsTitle => '热量与营养统计';
+
+  @override
+  String get consumedAvgLabel => '摄入 (平均)';
+
+  @override
+  String get targetLabelUpper => '目标';
+
+  @override
+  String get differenceLabelUpper => '差值';
+
+  @override
+  String get consumedLabel => '已摄入';
+
+  @override
+  String get thisWeek => '本周';
+
+  @override
+  String get lastWeek => '上周';
+
+  @override
+  String get twoWeeksAgo => '2 周前';
+
+  @override
+  String get threeWeeksAgo => '3 周前';
+
+  @override
+  String get weeklyEnergyTitle => '每周能量';
+
+  @override
+  String get consumedLabelUpper => '已摄入';
+
+  @override
+  String get loggedActivityTitle => '打卡记录';
+
+  @override
+  String daysWithData(int logged, int total) {
+    return '$logged/$total 天有记录';
+  }
+
+  @override
+  String get lessLabel => '少';
+
+  @override
+  String get moreLabel => '多';
+
+  @override
+  String get weightTargetForecastTitle => '体重目标预测';
+
+  @override
+  String levelLabel(int level) {
+    return '等级 $level';
+  }
+
+  @override
+  String get maxLevelReached => '已达到最高等级！';
+
+  @override
+  String expToNextLevel(int exp) {
+    return '还需 $exp EXP 升级';
+  }
+
+  @override
+  String scansTodaySummary(int scansToday, int totalScans) {
+    return '今天扫描了 $scansToday 餐 · 共 $totalScans 次';
+  }
+
+  @override
+  String get milestonesHeader => '里程碑';
+
+  @override
+  String get noMilestoneData => '暂无里程碑数据。';
+
+  @override
+  String get notEnoughNutritionData => '营养数据不足';
+
+  @override
+  String get noEnergyData => '暂无能量数据';
+
+  @override
+  String get noData => '暂无数据';
+
+  @override
+  String get weightChangeTitle => '体重变化';
+
+  @override
+  String get logWeightEmptyDesc => '至少记录两次体重以查看趋势。';
+
+  @override
+  String get logWeightNow => '立即记录体重';
+
+  @override
+  String get weightDecreased => '减少';
+
+  @override
+  String get weightIncreased => '增加';
+
+  @override
+  String get dateColumnHeader => '日期';
+
+  @override
+  String get addPhoto => '添加照片';
+
+  @override
+  String get photoSelected => '已选择照片';
+
+  @override
+  String get photoOptional => '可选';
+
+  @override
+  String lastLogWeight(String weight) {
+    return '最近记录: $weight kg';
+  }
+
+  @override
+  String selectedDateText(int day, int month, int year) {
+    return '$year年$month月$day日';
   }
 }

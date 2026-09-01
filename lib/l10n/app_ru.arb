@@ -512,11 +512,11 @@
   "challengeMotivation": "Оставаться мотивированным",
   "budgetTitle": "Каков ваш бюджет на один прием пищи?",
   "budgetNote": "CalGo предлагает блюда, которые соответствуют вашим целям и бюджету.",
-  "budgetLow": "менее 30 000  Under",
+  "budgetLow": "Менее $2",
   "budgetLowNote": "Простые, простые в поиске блюда",
-  "budgetMid": "30 000-60 000 –",
+  "budgetMid": "$2 – $5",
   "budgetMidNote": "Типичный бюджет на один прием пищи",
-  "budgetHigh": "60 000-100 000 –",
+  "budgetHigh": "Более $5",
   "budgetHighNote": "Больше места для качества",
   "budgetAny": "Нет предела",
   "budgetAnyNote": "Приоритетность целей в области питания",
@@ -931,6 +931,116 @@
         "type": "String"
       },
       "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "connectAppleHealthTitle": "Подключиться к Apple Health",
+  "connectAppleHealthDesc": "Синхронизируйте ежедневную активность между CalGo и приложением Здоровье.",
+  "weightUpdateSuccess": "Вес успешно обновлен",
+  "weightUpdateFailed": "Не удалось сохранить вес. Попробуйте еще раз.",
+  "nutritionSectionHeader": "ПИТАНИЕ",
+  "healthSectionHeader": "ЗДОРОВЬЕ",
+  "currentWeightKicker": "ТЕКУЩИЙ ВЕС",
+  "logWeightButton": "Записать вес",
+  "startLabel": "СТАРТ",
+  "targetLabel": "ЦЕЛЬ",
+  "weightProgressTitle": "Прогресс веса",
+  "ofTargetPercent": "{percent}% от цели",
+  "@ofTargetPercent": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "notEnoughWeightData": "Недостаточно данных о весе",
+  "calorieNutritionStatsTitle": "Статистика калорий и питания",
+  "consumedAvgLabel": "ПОТРЕБЛЕНО (СРЕДН)",
+  "targetLabelUpper": "ЦЕЛЬ",
+  "differenceLabelUpper": "РАЗНИЦА",
+  "consumedLabel": "Потреблено",
+  "thisWeek": "На этой неделе",
+  "lastWeek": "На прошлой неделе",
+  "twoWeeksAgo": "2 недели назад",
+  "threeWeeksAgo": "3 недели назад",
+  "weeklyEnergyTitle": "Энергия за неделю",
+  "consumedLabelUpper": "ПОТРЕБЛЕНО",
+  "loggedActivityTitle": "Записанная активность",
+  "daysWithData": "{logged}/{total} дн. с данными",
+  "@daysWithData": {
+    "placeholders": {
+      "logged": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "lessLabel": "Меньше",
+  "moreLabel": "Больше",
+  "weightTargetForecastTitle": "Прогноз достижения цели по весу",
+  "levelLabel": "Уровень {level}",
+  "@levelLabel": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "maxLevelReached": "Достигнут максимальный уровень!",
+  "expToNextLevel": "{exp} EXP до следующего уровня",
+  "@expToNextLevel": {
+    "placeholders": {
+      "exp": {
+        "type": "int"
+      }
+    }
+  },
+  "scansTodaySummary": "Отсканировано {scansToday} блюд сегодня · всего {totalScans}",
+  "@scansTodaySummary": {
+    "placeholders": {
+      "scansToday": {
+        "type": "int"
+      },
+      "totalScans": {
+        "type": "int"
+      }
+    }
+  },
+  "milestonesHeader": "ДОСТИЖЕНИЯ",
+  "noMilestoneData": "Пока нет данных о достижениях.",
+  "notEnoughNutritionData": "Недостаточно данных о питании",
+  "noEnergyData": "Нет данных об энергии",
+  "noData": "Нет данных",
+  "weightChangeTitle": "Изменения веса",
+  "logWeightEmptyDesc": "Запишите вес хотя бы дважды, чтобы увидеть динамику.",
+  "logWeightNow": "Записать вес сейчас",
+  "weightDecreased": "Сброшено",
+  "weightIncreased": "Набрано",
+  "dateColumnHeader": "Дата",
+  "addPhoto": "Добавить фото",
+  "photoSelected": "Фото выбрано",
+  "photoOptional": "Опционально",
+  "lastLogWeight": "Последняя запись: {weight} кг",
+  "@lastLogWeight": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
+  "selectedDateText": "{day}.{month}.{year}",
+  "@selectedDateText": {
+    "placeholders": {
+      "day": {
+        "type": "int"
+      },
+      "month": {
+        "type": "int"
+      },
+      "year": {
         "type": "int"
       }
     }

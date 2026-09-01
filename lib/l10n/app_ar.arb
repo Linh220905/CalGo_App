@@ -512,11 +512,11 @@
   "challengeMotivation": "البقاء بدافع",
   "budgetTitle": "ما هي ميزانيتك لوجبة واحدة؟",
   "budgetNote": "(زززفززز) يسأل حتى يمكنه اقتراح وجبات تناسب أهدافك وميزانيتك",
-  "budgetLow": "أقل من 000 30",
+  "budgetLow": "أقل من 2$",
   "budgetLowNote": "وجبات بسيطة، سهلة التكرير",
-  "budgetMid": "30,000-60,000₫",
+  "budgetMid": "2$ – 5$",
   "budgetMidNote": "الميزانية النموذجية لوجبة واحدة",
-  "budgetHigh": "60,000-100,000₫",
+  "budgetHigh": "أكثر من 5$",
   "budgetHighNote": "مجال أكثر للجودة",
   "budgetAny": "لا حدود",
   "budgetAnyNote": "أولويات أهداف التغذية",
@@ -931,6 +931,116 @@
         "type": "String"
       },
       "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "connectAppleHealthTitle": "الربط بـ Apple Health",
+  "connectAppleHealthDesc": "مزامنة نشاطك اليومي بين تطبيق CalGo وتطبيق الصحة للحصول على أدق البيانات.",
+  "weightUpdateSuccess": "تم تحديث الوزن بنجاح",
+  "weightUpdateFailed": "تعذر حفظ الوزن. يرجى المحاولة مرة أخرى.",
+  "nutritionSectionHeader": "التغذية",
+  "healthSectionHeader": "الصحة",
+  "currentWeightKicker": "الوزن الحالي",
+  "logWeightButton": "تسجيل الوزن",
+  "startLabel": "البداية",
+  "targetLabel": "الهدف",
+  "weightProgressTitle": "تقدم الوزن",
+  "ofTargetPercent": "{percent}% من الهدف",
+  "@ofTargetPercent": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "notEnoughWeightData": "لا تتوفر بيانات وزن كافية",
+  "calorieNutritionStatsTitle": "إحصائيات السعرات الحرارية والتغذية",
+  "consumedAvgLabel": "المستهلك (المتوسط)",
+  "targetLabelUpper": "الهدف",
+  "differenceLabelUpper": "الفارق",
+  "consumedLabel": "المستهلك",
+  "thisWeek": "هذا الأسبوع",
+  "lastWeek": "الأسبوع الماضي",
+  "twoWeeksAgo": "منذ أسبوعين",
+  "threeWeeksAgo": "منذ 3 أسابيع",
+  "weeklyEnergyTitle": "الطاقة الأسبوعية",
+  "consumedLabelUpper": "المستهلك",
+  "loggedActivityTitle": "النشاط المسجل",
+  "daysWithData": "{logged}/{total} أيام تحتوي بيانات",
+  "@daysWithData": {
+    "placeholders": {
+      "logged": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "lessLabel": "أقل",
+  "moreLabel": "أكثر",
+  "weightTargetForecastTitle": "توقعات هدف الوزن",
+  "levelLabel": "المستوى {level}",
+  "@levelLabel": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "maxLevelReached": "لقد وصلت إلى المستوى الأقصى!",
+  "expToNextLevel": "{exp} EXP للمستوى التالي",
+  "@expToNextLevel": {
+    "placeholders": {
+      "exp": {
+        "type": "int"
+      }
+    }
+  },
+  "scansTodaySummary": "تم مسح {scansToday} وجبات اليوم · {totalScans} إجمالاً",
+  "@scansTodaySummary": {
+    "placeholders": {
+      "scansToday": {
+        "type": "int"
+      },
+      "totalScans": {
+        "type": "int"
+      }
+    }
+  },
+  "milestonesHeader": "الإنجازات",
+  "noMilestoneData": "لا تتوفر بيانات إنجازات بعد.",
+  "notEnoughNutritionData": "لا تتوفر بيانات تغذية كافية",
+  "noEnergyData": "لا تتوفر بيانات طاقة",
+  "noData": "لا تتوفر بيانات",
+  "weightChangeTitle": "تغيرات الوزن",
+  "logWeightEmptyDesc": "سجل وزنك مرتين على الأقل لمتابعة التغيرات.",
+  "logWeightNow": "سجل الوزن الآن",
+  "weightDecreased": "نقص",
+  "weightIncreased": "زاد",
+  "dateColumnHeader": "التاريخ",
+  "addPhoto": "إضافة صورة",
+  "photoSelected": "تم اختيار الصورة",
+  "photoOptional": "اختياري",
+  "lastLogWeight": "آخر تسجيل: {weight} كجم",
+  "@lastLogWeight": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
+  "selectedDateText": "{year}/{month}/{day}",
+  "@selectedDateText": {
+    "placeholders": {
+      "day": {
+        "type": "int"
+      },
+      "month": {
+        "type": "int"
+      },
+      "year": {
         "type": "int"
       }
     }

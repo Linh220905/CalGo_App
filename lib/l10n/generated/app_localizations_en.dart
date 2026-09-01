@@ -1051,19 +1051,19 @@ class AppLocalizationsEn extends AppLocalizations {
       'CalGo asks so it can suggest meals that fit your goals and budget.';
 
   @override
-  String get budgetLow => 'Under 30,000₫';
+  String get budgetLow => 'Under \$2';
 
   @override
-  String get budgetLowNote => 'Simple, easy-to-find meals';
+  String get budgetLowNote => 'Simple, budget-friendly meals';
 
   @override
-  String get budgetMid => '30,000–60,000₫';
+  String get budgetMid => '\$2 – \$5';
 
   @override
-  String get budgetMidNote => 'Typical budget for one meal';
+  String get budgetMidNote => 'Typical budget for a meal';
 
   @override
-  String get budgetHigh => '60,000–100,000₫';
+  String get budgetHigh => '\$5 – \$10';
 
   @override
   String get budgetHighNote => 'More room for quality';
@@ -1931,5 +1931,168 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String sharePayload(String dish, int calories) {
     return '🔥 $dish · $calories kcal | CalGo';
+  }
+
+  @override
+  String get connectAppleHealthTitle => 'Connect to Apple Health';
+
+  @override
+  String get connectAppleHealthDesc =>
+      'Sync your daily activity between CalGo and the Health app to have the most thorough data.';
+
+  @override
+  String get weightUpdateSuccess => 'Weight updated successfully';
+
+  @override
+  String get weightUpdateFailed => 'Could not save weight. Please try again.';
+
+  @override
+  String get nutritionSectionHeader => 'NUTRITION';
+
+  @override
+  String get healthSectionHeader => 'HEALTH';
+
+  @override
+  String get currentWeightKicker => 'CURRENT WEIGHT';
+
+  @override
+  String get logWeightButton => 'Log Weight';
+
+  @override
+  String get startLabel => 'START';
+
+  @override
+  String get targetLabel => 'TARGET';
+
+  @override
+  String get weightProgressTitle => 'Weight Progress';
+
+  @override
+  String ofTargetPercent(String percent) {
+    return '$percent% of goal';
+  }
+
+  @override
+  String get notEnoughWeightData => 'Not enough weight data';
+
+  @override
+  String get calorieNutritionStatsTitle => 'Calorie & Nutrition Stats';
+
+  @override
+  String get consumedAvgLabel => 'CONSUMED (AVG)';
+
+  @override
+  String get targetLabelUpper => 'TARGET';
+
+  @override
+  String get differenceLabelUpper => 'DIFFERENCE';
+
+  @override
+  String get consumedLabel => 'Consumed';
+
+  @override
+  String get thisWeek => 'This week';
+
+  @override
+  String get lastWeek => 'Last week';
+
+  @override
+  String get twoWeeksAgo => '2 weeks ago';
+
+  @override
+  String get threeWeeksAgo => '3 weeks ago';
+
+  @override
+  String get weeklyEnergyTitle => 'Weekly Energy';
+
+  @override
+  String get consumedLabelUpper => 'CONSUMED';
+
+  @override
+  String get loggedActivityTitle => 'Logged Activity';
+
+  @override
+  String daysWithData(int logged, int total) {
+    return '$logged/$total days with data';
+  }
+
+  @override
+  String get lessLabel => 'Less';
+
+  @override
+  String get moreLabel => 'More';
+
+  @override
+  String get weightTargetForecastTitle => 'Weight Goal Forecast';
+
+  @override
+  String levelLabel(int level) {
+    return 'Level $level';
+  }
+
+  @override
+  String get maxLevelReached => 'You reached max level!';
+
+  @override
+  String expToNextLevel(int exp) {
+    return '$exp EXP to next level';
+  }
+
+  @override
+  String scansTodaySummary(int scansToday, int totalScans) {
+    return 'Scanned $scansToday meals today · $totalScans total';
+  }
+
+  @override
+  String get milestonesHeader => 'MILESTONES';
+
+  @override
+  String get noMilestoneData => 'No milestone data yet.';
+
+  @override
+  String get notEnoughNutritionData => 'Not enough nutrition data';
+
+  @override
+  String get noEnergyData => 'No energy data';
+
+  @override
+  String get noData => 'No data';
+
+  @override
+  String get weightChangeTitle => 'Weight Changes';
+
+  @override
+  String get logWeightEmptyDesc =>
+      'Log weight at least twice to track your progress.';
+
+  @override
+  String get logWeightNow => 'Log Weight Now';
+
+  @override
+  String get weightDecreased => 'Lost';
+
+  @override
+  String get weightIncreased => 'Gained';
+
+  @override
+  String get dateColumnHeader => 'Date';
+
+  @override
+  String get addPhoto => 'Add Photo';
+
+  @override
+  String get photoSelected => 'Photo selected';
+
+  @override
+  String get photoOptional => 'Optional';
+
+  @override
+  String lastLogWeight(String weight) {
+    return 'Last logged: $weight kg';
+  }
+
+  @override
+  String selectedDateText(int day, int month, int year) {
+    return '$month/$day/$year';
   }
 }

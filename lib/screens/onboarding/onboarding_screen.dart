@@ -25,6 +25,7 @@ import 'steps/budget_step.dart';
 import 'steps/nutrition_priority_step.dart';
 import 'steps/avoid_foods_step.dart';
 import 'steps/referral_step.dart';
+import 'steps/apple_health_permission_step.dart';
 import 'steps/analysis_result_step.dart';
 import 'steps/premium_paywall_step.dart';
 import 'steps/account_step.dart';
@@ -135,9 +136,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           ],
                         ),
                       )
-                    else if (provider.currentStep >= 2 && provider.currentStep <= 18)
+                    else if (provider.currentStep >= 2 && provider.currentStep <= 19)
                       StepProgressBar(
-                        value: (provider.currentStep - 1) / 17,
+                        value: (provider.currentStep - 1) / 18,
                       ),
                     Expanded(
                       child: AnimatedSwitcher(
@@ -199,16 +200,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       case 18:
         return HabitStep(key: key);
       case 19:
-        return AnalysisResultStep(key: key);
+        return AppleHealthPermissionStep(key: key);
       case 20:
+        return AnalysisResultStep(key: key);
+      case 21:
         return AppBuildConfig.isTesting
             ? AccountStep(key: key)
             : PremiumPaywallStep(key: key);
-      case 21:
+      case 22:
         return AppBuildConfig.isTesting
             ? HomeStep(key: key)
             : AccountStep(key: key);
-      case 22:
+      case 23:
         return HomeStep(key: key);
       default:
         return SizedBox.shrink(key: key);

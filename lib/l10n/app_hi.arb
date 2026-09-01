@@ -512,11 +512,11 @@
   "challengeMotivation": "प्रेरित रहना",
   "budgetTitle": "एक भोजन के लिए आपका बजट क्या है?",
   "budgetNote": "CalGo पूछता है तो यह भोजन सुझाव दे सकता है जो आपके लक्ष्यों और बजट को फिट करता है।",
-  "budgetLow": "30,000",
+  "budgetLow": "$2 से कम",
   "budgetLowNote": "सरल, आसान करने के लिए खत्म भोजन",
-  "budgetMid": "30,000-60,000",
+  "budgetMid": "$2 – $5",
   "budgetMidNote": "एक भोजन के लिए विशिष्ट बजट",
-  "budgetHigh": "60,000-100,000",
+  "budgetHigh": "$5 से अधिक",
   "budgetHighNote": "गुणवत्ता के लिए अधिक कमरे",
   "budgetAny": "सीमा नहीं",
   "budgetAnyNote": "पोषण लक्ष्यों को प्राथमिकता देना",
@@ -931,6 +931,116 @@
         "type": "String"
       },
       "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "connectAppleHealthTitle": "Apple Health से कनेक्ट करें",
+  "connectAppleHealthDesc": "सटीक डेटा के लिए CalGo और हेल्थ ऐप के बीच अपनी दैनिक गतिविधि सिंक करें।",
+  "weightUpdateSuccess": "वजन सफलतापूर्वक अपडेट किया गया",
+  "weightUpdateFailed": "वजन सहेजा नहीं जा सका। कृपया पुनः प्रयास करें।",
+  "nutritionSectionHeader": "पोषण",
+  "healthSectionHeader": "स्वास्थ्य",
+  "currentWeightKicker": "वर्तमान वजन",
+  "logWeightButton": "वजन दर्ज करें",
+  "startLabel": "प्रारंभ",
+  "targetLabel": "लक्ष्य",
+  "weightProgressTitle": "वजन प्रगति",
+  "ofTargetPercent": "लक्ष्य का {percent}%",
+  "@ofTargetPercent": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "notEnoughWeightData": "पर्याप्त वजन डेटा नहीं है",
+  "calorieNutritionStatsTitle": "कैलोरी और पोषण आंकड़े",
+  "consumedAvgLabel": "सेवन (औसत)",
+  "targetLabelUpper": "लक्ष्य",
+  "differenceLabelUpper": "अंतर",
+  "consumedLabel": "सेवन किया",
+  "thisWeek": "इस सप्ताह",
+  "lastWeek": "पिछले सप्ताह",
+  "twoWeeksAgo": "२ सप्ताह पहले",
+  "threeWeeksAgo": "३ सप्ताह पहले",
+  "weeklyEnergyTitle": "साप्ताहिक ऊर्जा",
+  "consumedLabelUpper": "सेवन",
+  "loggedActivityTitle": "दर्ज गतिविधि",
+  "daysWithData": "{logged}/{total} दिन डेटा के साथ",
+  "@daysWithData": {
+    "placeholders": {
+      "logged": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "lessLabel": "कम",
+  "moreLabel": "अधिक",
+  "weightTargetForecastTitle": "वजन लक्ष्य पूर्वानुमान",
+  "levelLabel": "स्तर {level}",
+  "@levelLabel": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "maxLevelReached": "अधिकतम स्तर पर पहुँच गए!",
+  "expToNextLevel": "अगले स्तर के लिए {exp} EXP",
+  "@expToNextLevel": {
+    "placeholders": {
+      "exp": {
+        "type": "int"
+      }
+    }
+  },
+  "scansTodaySummary": "आज {scansToday} भोजन स्कैन किए गए · कुल {totalScans}",
+  "@scansTodaySummary": {
+    "placeholders": {
+      "scansToday": {
+        "type": "int"
+      },
+      "totalScans": {
+        "type": "int"
+      }
+    }
+  },
+  "milestonesHeader": "मील के पत्थर",
+  "noMilestoneData": "अभी कोई मील का पत्थर डेटा नहीं है।",
+  "notEnoughNutritionData": "पर्याप्त पोषण डेटा नहीं है",
+  "noEnergyData": "कोई ऊर्जा डेटा नहीं है",
+  "noData": "कोई डेटा नहीं",
+  "weightChangeTitle": "वजन में बदलाव",
+  "logWeightEmptyDesc": "समय के साथ बदलाव देखने के लिए कम से कम दो बार वजन दर्ज करें।",
+  "logWeightNow": "अभी वजन दर्ज करें",
+  "weightDecreased": "घटा",
+  "weightIncreased": "बढ़ा",
+  "dateColumnHeader": "दिनांक",
+  "addPhoto": "फोटो जोड़ें",
+  "photoSelected": "फोटो चुनी गई",
+  "photoOptional": "वैकल्पिक",
+  "lastLogWeight": "अंतिम प्रविष्टि: {weight} किग्रा",
+  "@lastLogWeight": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
+  "selectedDateText": "{day}/{month}/{year}",
+  "@selectedDateText": {
+    "placeholders": {
+      "day": {
+        "type": "int"
+      },
+      "month": {
+        "type": "int"
+      },
+      "year": {
         "type": "int"
       }
     }

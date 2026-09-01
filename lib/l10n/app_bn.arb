@@ -512,11 +512,11 @@
   "challengeMotivation": "থাকার উদ্দেশ্য",
   "budgetTitle": "এক খাবারের জন্য আপনার বাজেট কি?",
   "budgetNote": "জেজেডপিজেডজেডজেডজেডজেডজেডজেডজি জিজ্ঞেস করেছে যে এতে আপনার লক্ষ্য ও বাজেট নির্ধারণ করা যাবে।",
-  "budgetLow": "৩০,০০০ সালে",
+  "budgetLow": "$2 এর নিচে",
   "budgetLowNote": "সহজ, সহজ খাবার",
-  "budgetMid": "৩০,৬৪০",
+  "budgetMid": "$2 – $5",
   "budgetMidNote": "সাধারণত এক খাবারের জন্য বাজেট",
-  "budgetHigh": "৬০,০০০-১০ হাজার",
+  "budgetHigh": "$5 এর উপরে",
   "budgetHighNote": "গুণমানের জন্য অতিরিক্ত ঘর",
   "budgetAny": "সীমা অনুপস্থিত",
   "budgetAnyNote": "পুষ্টির অনুধাবন করুন",
@@ -931,6 +931,116 @@
         "type": "String"
       },
       "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "connectAppleHealthTitle": "Apple Health-এর সাথে সংযুক্ত করুন",
+  "connectAppleHealthDesc": "CalGo এবং হেলথ অ্যাপের মধ্যে আপনার দৈনন্দিন কার্যকলাপ সিঙ্ক করুন।",
+  "weightUpdateSuccess": "ওজন সফলভাবে আপডেট করা হয়েছে",
+  "weightUpdateFailed": "ওজন সংরক্ষণ করা যায়নি। আবার চেষ্টা করুন।",
+  "nutritionSectionHeader": "পুষ্টি",
+  "healthSectionHeader": "স্বাস্থ্য",
+  "currentWeightKicker": "বর্তমান ওজন",
+  "logWeightButton": "ওজন রেকর্ড করুন",
+  "startLabel": "শুরু",
+  "targetLabel": "লক্ষ্য",
+  "weightProgressTitle": "ওজন অগ্রগতি",
+  "ofTargetPercent": "লক্ষ্যের {percent}%",
+  "@ofTargetPercent": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "notEnoughWeightData": "पर्याप्त ওজনের ডেটা নেই",
+  "calorieNutritionStatsTitle": "ক্যালোরি ও পুষ্টি পরিসংখ্যান",
+  "consumedAvgLabel": "গৃহীত (গড়)",
+  "targetLabelUpper": "লক্ষ্য",
+  "differenceLabelUpper": "পার্থক্য",
+  "consumedLabel": "গৃহীত",
+  "thisWeek": "এই সপ্তাহে",
+  "lastWeek": "গত সপ্তাহে",
+  "twoWeeksAgo": "২ সপ্তাহ আগে",
+  "threeWeeksAgo": "৩ সপ্তাহ আগে",
+  "weeklyEnergyTitle": "সাপ্তাহিক শক্তি",
+  "consumedLabelUpper": "গৃহীত",
+  "loggedActivityTitle": "লগ করা কার্যকলাপ",
+  "daysWithData": "{logged}/{total} দিন ডেটা সহ",
+  "@daysWithData": {
+    "placeholders": {
+      "logged": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "lessLabel": "কম",
+  "moreLabel": "বেশি",
+  "weightTargetForecastTitle": "ওজন লক্ষ্যের পূর্বাভাস",
+  "levelLabel": "লেভেল {level}",
+  "@levelLabel": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "maxLevelReached": "সর্বোচ্চ লেভেলে পৌঁছে গেছেন!",
+  "expToNextLevel": "পরবর্তী লেভেলের জন্য {exp} EXP",
+  "@expToNextLevel": {
+    "placeholders": {
+      "exp": {
+        "type": "int"
+      }
+    }
+  },
+  "scansTodaySummary": "আজ {scansToday}টি খাবার স্ক্যান করা হয়েছে · মোট {totalScans}টি",
+  "@scansTodaySummary": {
+    "placeholders": {
+      "scansToday": {
+        "type": "int"
+      },
+      "totalScans": {
+        "type": "int"
+      }
+    }
+  },
+  "milestonesHeader": "মাইলফলক",
+  "noMilestoneData": "এখনো কোনো মাইলফলক ডেটা নেই।",
+  "notEnoughNutritionData": "पर्याप्त পুষ্টি ডেটা নেই",
+  "noEnergyData": "কোনো শক্তির ডেটা নেই",
+  "noData": "কোনো ডেটা নেই",
+  "weightChangeTitle": "ওজন পরিবর্তন",
+  "logWeightEmptyDesc": "পরিবর্তন দেখতে কমপক্ষে দুবার ওজন রেকর্ড করুন।",
+  "logWeightNow": "এখনই ওজন রেকর্ড করুন",
+  "weightDecreased": "কমেছে",
+  "weightIncreased": "বেড়েছে",
+  "dateColumnHeader": "তারিখ",
+  "addPhoto": "ছবি যোগ করুন",
+  "photoSelected": "ছবি নির্বাচন করা হয়েছে",
+  "photoOptional": "ঐচ্ছিক",
+  "lastLogWeight": "সর্বশেষ রেকর্ড: {weight} কেজি",
+  "@lastLogWeight": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
+  "selectedDateText": "{day}/{month}/{year}",
+  "@selectedDateText": {
+    "placeholders": {
+      "day": {
+        "type": "int"
+      },
+      "month": {
+        "type": "int"
+      },
+      "year": {
         "type": "int"
       }
     }

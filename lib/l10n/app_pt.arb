@@ -512,11 +512,11 @@
   "challengeMotivation": "Permanecer motivado",
   "budgetTitle": "Qual é o seu orçamento para uma refeição?",
   "budgetNote": "CalGo pede para que possa sugerir refeições que se encaixam em seus objetivos e orçamento.",
-  "budgetLow": "Menos de 30.000",
+  "budgetLow": "Menos de $2",
   "budgetLowNote": "Refeições simples e fáceis de encontrar",
-  "budgetMid": "30.000–60.000",
+  "budgetMid": "$2 – $5",
   "budgetMidNote": "Orçamento típico para uma refeição",
-  "budgetHigh": "60.000–100.000",
+  "budgetHigh": "Mais de $5",
   "budgetHighNote": "Mais espaço para qualidade",
   "budgetAny": "Sem limite",
   "budgetAnyNote": "Priorizar metas nutricionais",
@@ -931,6 +931,116 @@
         "type": "String"
       },
       "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "connectAppleHealthTitle": "Conectar ao Apple Health",
+  "connectAppleHealthDesc": "Sincronize sua atividade diária entre o CalGo e o app Saúde para dados mais precisos.",
+  "weightUpdateSuccess": "Peso atualizado com sucesso",
+  "weightUpdateFailed": "Não foi possível salvar o peso. Tente novamente.",
+  "nutritionSectionHeader": "NUTRIÇÃO",
+  "healthSectionHeader": "SAÚDE",
+  "currentWeightKicker": "PESO ATUAL",
+  "logWeightButton": "Registrar Peso",
+  "startLabel": "INÍCIO",
+  "targetLabel": "META",
+  "weightProgressTitle": "Progresso de peso",
+  "ofTargetPercent": "{percent}% da meta",
+  "@ofTargetPercent": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "notEnoughWeightData": "Dados de peso insuficientes",
+  "calorieNutritionStatsTitle": "Estatísticas de calorias e nutrição",
+  "consumedAvgLabel": "CONSUMIDO (MÉD)",
+  "targetLabelUpper": "META",
+  "differenceLabelUpper": "DIFERENÇA",
+  "consumedLabel": "Consumido",
+  "thisWeek": "Esta semana",
+  "lastWeek": "Semana passada",
+  "twoWeeksAgo": "Há 2 semanas",
+  "threeWeeksAgo": "Há 3 semanas",
+  "weeklyEnergyTitle": "Energia semanal",
+  "consumedLabelUpper": "CONSUMIDO",
+  "loggedActivityTitle": "Atividade registrada",
+  "daysWithData": "{logged}/{total} dias com dados",
+  "@daysWithData": {
+    "placeholders": {
+      "logged": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "lessLabel": "Menos",
+  "moreLabel": "Mais",
+  "weightTargetForecastTitle": "Previsão da meta de peso",
+  "levelLabel": "Nível {level}",
+  "@levelLabel": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "maxLevelReached": "Você atingiu o nível máximo!",
+  "expToNextLevel": "{exp} EXP para o próximo nível",
+  "@expToNextLevel": {
+    "placeholders": {
+      "exp": {
+        "type": "int"
+      }
+    }
+  },
+  "scansTodaySummary": "Escaneou {scansToday} refeições hoje · {totalScans} no total",
+  "@scansTodaySummary": {
+    "placeholders": {
+      "scansToday": {
+        "type": "int"
+      },
+      "totalScans": {
+        "type": "int"
+      }
+    }
+  },
+  "milestonesHeader": "MARCOS",
+  "noMilestoneData": "Nenhum marco registrado ainda.",
+  "notEnoughNutritionData": "Dados de nutrição insuficientes",
+  "noEnergyData": "Sem dados de energia",
+  "noData": "Sem dados",
+  "weightChangeTitle": "Mudanças de peso",
+  "logWeightEmptyDesc": "Registre o peso pelo menos duas vezes para ver o progresso.",
+  "logWeightNow": "Registrar peso agora",
+  "weightDecreased": "Perdeu",
+  "weightIncreased": "Ganhou",
+  "dateColumnHeader": "Data",
+  "addPhoto": "Adicionar foto",
+  "photoSelected": "Foto selecionada",
+  "photoOptional": "Opcional",
+  "lastLogWeight": "Último registro: {weight} kg",
+  "@lastLogWeight": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
+  "selectedDateText": "{day}/{month}/{year}",
+  "@selectedDateText": {
+    "placeholders": {
+      "day": {
+        "type": "int"
+      },
+      "month": {
+        "type": "int"
+      },
+      "year": {
         "type": "int"
       }
     }

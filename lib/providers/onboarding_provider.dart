@@ -98,9 +98,9 @@ class OnboardingProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // The demo screen was removed. Testing releases still skip the Premium
+  // Added AppleHealthPermissionStep. Testing releases still skip the Premium
   // paywall, so Account and Home shift one slot earlier in both variants.
-  static const int totalSteps = AppBuildConfig.isTesting ? 22 : 23;
+  static const int totalSteps = AppBuildConfig.isTesting ? 23 : 24;
 
   Future<void> init() async {
     if (_initialized) return;

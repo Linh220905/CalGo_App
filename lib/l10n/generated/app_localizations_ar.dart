@@ -1042,19 +1042,19 @@ class AppLocalizationsAr extends AppLocalizations {
       '(زززفززز) يسأل حتى يمكنه اقتراح وجبات تناسب أهدافك وميزانيتك';
 
   @override
-  String get budgetLow => 'أقل من 000 30';
+  String get budgetLow => 'أقل من 2\$';
 
   @override
   String get budgetLowNote => 'وجبات بسيطة، سهلة التكرير';
 
   @override
-  String get budgetMid => '30,000-60,000₫';
+  String get budgetMid => '2\$ – 5\$';
 
   @override
   String get budgetMidNote => 'الميزانية النموذجية لوجبة واحدة';
 
   @override
-  String get budgetHigh => '60,000-100,000₫';
+  String get budgetHigh => 'أكثر من 5\$';
 
   @override
   String get budgetHighNote => 'مجال أكثر للجودة';
@@ -1917,5 +1917,167 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String sharePayload(String dish, int calories) {
     return '🔥 $dish · $calories kcal | CalGo';
+  }
+
+  @override
+  String get connectAppleHealthTitle => 'الربط بـ Apple Health';
+
+  @override
+  String get connectAppleHealthDesc =>
+      'مزامنة نشاطك اليومي بين تطبيق CalGo وتطبيق الصحة للحصول على أدق البيانات.';
+
+  @override
+  String get weightUpdateSuccess => 'تم تحديث الوزن بنجاح';
+
+  @override
+  String get weightUpdateFailed => 'تعذر حفظ الوزن. يرجى المحاولة مرة أخرى.';
+
+  @override
+  String get nutritionSectionHeader => 'التغذية';
+
+  @override
+  String get healthSectionHeader => 'الصحة';
+
+  @override
+  String get currentWeightKicker => 'الوزن الحالي';
+
+  @override
+  String get logWeightButton => 'تسجيل الوزن';
+
+  @override
+  String get startLabel => 'البداية';
+
+  @override
+  String get targetLabel => 'الهدف';
+
+  @override
+  String get weightProgressTitle => 'تقدم الوزن';
+
+  @override
+  String ofTargetPercent(String percent) {
+    return '$percent% من الهدف';
+  }
+
+  @override
+  String get notEnoughWeightData => 'لا تتوفر بيانات وزن كافية';
+
+  @override
+  String get calorieNutritionStatsTitle => 'إحصائيات السعرات الحرارية والتغذية';
+
+  @override
+  String get consumedAvgLabel => 'المستهلك (المتوسط)';
+
+  @override
+  String get targetLabelUpper => 'الهدف';
+
+  @override
+  String get differenceLabelUpper => 'الفارق';
+
+  @override
+  String get consumedLabel => 'المستهلك';
+
+  @override
+  String get thisWeek => 'هذا الأسبوع';
+
+  @override
+  String get lastWeek => 'الأسبوع الماضي';
+
+  @override
+  String get twoWeeksAgo => 'منذ أسبوعين';
+
+  @override
+  String get threeWeeksAgo => 'منذ 3 أسابيع';
+
+  @override
+  String get weeklyEnergyTitle => 'الطاقة الأسبوعية';
+
+  @override
+  String get consumedLabelUpper => 'المستهلك';
+
+  @override
+  String get loggedActivityTitle => 'النشاط المسجل';
+
+  @override
+  String daysWithData(int logged, int total) {
+    return '$logged/$total أيام تحتوي بيانات';
+  }
+
+  @override
+  String get lessLabel => 'أقل';
+
+  @override
+  String get moreLabel => 'أكثر';
+
+  @override
+  String get weightTargetForecastTitle => 'توقعات هدف الوزن';
+
+  @override
+  String levelLabel(int level) {
+    return 'المستوى $level';
+  }
+
+  @override
+  String get maxLevelReached => 'لقد وصلت إلى المستوى الأقصى!';
+
+  @override
+  String expToNextLevel(int exp) {
+    return '$exp EXP للمستوى التالي';
+  }
+
+  @override
+  String scansTodaySummary(int scansToday, int totalScans) {
+    return 'تم مسح $scansToday وجبات اليوم · $totalScans إجمالاً';
+  }
+
+  @override
+  String get milestonesHeader => 'الإنجازات';
+
+  @override
+  String get noMilestoneData => 'لا تتوفر بيانات إنجازات بعد.';
+
+  @override
+  String get notEnoughNutritionData => 'لا تتوفر بيانات تغذية كافية';
+
+  @override
+  String get noEnergyData => 'لا تتوفر بيانات طاقة';
+
+  @override
+  String get noData => 'لا تتوفر بيانات';
+
+  @override
+  String get weightChangeTitle => 'تغيرات الوزن';
+
+  @override
+  String get logWeightEmptyDesc => 'سجل وزنك مرتين على الأقل لمتابعة التغيرات.';
+
+  @override
+  String get logWeightNow => 'سجل الوزن الآن';
+
+  @override
+  String get weightDecreased => 'نقص';
+
+  @override
+  String get weightIncreased => 'زاد';
+
+  @override
+  String get dateColumnHeader => 'التاريخ';
+
+  @override
+  String get addPhoto => 'إضافة صورة';
+
+  @override
+  String get photoSelected => 'تم اختيار الصورة';
+
+  @override
+  String get photoOptional => 'اختياري';
+
+  @override
+  String lastLogWeight(String weight) {
+    return 'آخر تسجيل: $weight كجم';
+  }
+
+  @override
+  String selectedDateText(int day, int month, int year) {
+    return '$year/$month/$day';
   }
 }

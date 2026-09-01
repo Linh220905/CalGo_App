@@ -1928,4 +1928,167 @@ class AppLocalizationsVi extends AppLocalizations {
   String sharePayload(String dish, int calories) {
     return '🔥 $dish · $calories kcal | CalGo';
   }
+
+  @override
+  String get connectAppleHealthTitle => 'Kết nối Apple Health';
+
+  @override
+  String get connectAppleHealthDesc =>
+      'Tự động đồng bộ hoạt động hàng ngày giữa CalGo và ứng dụng Sức khỏe để có dữ liệu chính xác nhất.';
+
+  @override
+  String get weightUpdateSuccess => 'Đã cập nhật cân nặng thành công';
+
+  @override
+  String get weightUpdateFailed => 'Không thể lưu cân nặng. Vui lòng thử lại.';
+
+  @override
+  String get nutritionSectionHeader => 'DINH DƯỠNG';
+
+  @override
+  String get healthSectionHeader => 'SỨC KHỎE';
+
+  @override
+  String get currentWeightKicker => 'CÂN NẶNG HIỆN TẠI';
+
+  @override
+  String get logWeightButton => 'Ghi cân nặng';
+
+  @override
+  String get startLabel => 'BẮT ĐẦU';
+
+  @override
+  String get targetLabel => 'MỤC TIÊU';
+
+  @override
+  String get weightProgressTitle => 'Tiến trình cân nặng';
+
+  @override
+  String ofTargetPercent(String percent) {
+    return '$percent% của mục tiêu';
+  }
+
+  @override
+  String get notEnoughWeightData => 'Chưa có đủ dữ liệu cân nặng';
+
+  @override
+  String get calorieNutritionStatsTitle => 'Thống kê Calo & Dinh dưỡng';
+
+  @override
+  String get consumedAvgLabel => 'ĐÃ NẠP (TB)';
+
+  @override
+  String get targetLabelUpper => 'MỤC TIÊU';
+
+  @override
+  String get differenceLabelUpper => 'CHÊNH LỆCH';
+
+  @override
+  String get consumedLabel => 'Đã nạp';
+
+  @override
+  String get thisWeek => 'Tuần này';
+
+  @override
+  String get lastWeek => 'Tuần trước';
+
+  @override
+  String get twoWeeksAgo => '2 tuần trước';
+
+  @override
+  String get threeWeeksAgo => '3 tuần trước';
+
+  @override
+  String get weeklyEnergyTitle => 'Năng lượng hàng tuần';
+
+  @override
+  String get consumedLabelUpper => 'ĐÃ NẠP';
+
+  @override
+  String get loggedActivityTitle => 'Hoạt động ghi nhận';
+
+  @override
+  String daysWithData(int logged, int total) {
+    return '$logged/$total ngày có dữ liệu';
+  }
+
+  @override
+  String get lessLabel => 'Ít';
+
+  @override
+  String get moreLabel => 'Nhiều';
+
+  @override
+  String get weightTargetForecastTitle => 'Dự báo mục tiêu cân nặng';
+
+  @override
+  String levelLabel(int level) {
+    return 'Cấp $level';
+  }
+
+  @override
+  String get maxLevelReached => 'Bạn đã đạt cấp tối đa';
+
+  @override
+  String expToNextLevel(int exp) {
+    return '$exp EXP để lên cấp tiếp theo';
+  }
+
+  @override
+  String scansTodaySummary(int scansToday, int totalScans) {
+    return 'Hôm nay đã quét $scansToday món · tổng $totalScans lần';
+  }
+
+  @override
+  String get milestonesHeader => 'MỐC CẦN ĐẠT';
+
+  @override
+  String get noMilestoneData => 'Chưa có dữ liệu mốc EXP.';
+
+  @override
+  String get notEnoughNutritionData => 'Chưa có đủ dữ liệu dinh dưỡng';
+
+  @override
+  String get noEnergyData => 'Chưa có dữ liệu năng lượng';
+
+  @override
+  String get noData => 'Chưa có dữ liệu';
+
+  @override
+  String get weightChangeTitle => 'Thay đổi cân nặng';
+
+  @override
+  String get logWeightEmptyDesc =>
+      'Ghi cân nặng ít nhất hai lần để xem thay đổi theo thời gian.';
+
+  @override
+  String get logWeightNow => 'Ghi cân nặng ngay';
+
+  @override
+  String get weightDecreased => 'Giảm';
+
+  @override
+  String get weightIncreased => 'Tăng';
+
+  @override
+  String get dateColumnHeader => 'Ngày';
+
+  @override
+  String get addPhoto => 'Thêm ảnh';
+
+  @override
+  String get photoSelected => 'Đã chọn ảnh';
+
+  @override
+  String get photoOptional => 'Tuỳ chọn';
+
+  @override
+  String lastLogWeight(String weight) {
+    return 'Lần gần nhất: $weight kg';
+  }
+
+  @override
+  String selectedDateText(int day, int month, int year) {
+    return 'ngày $day thg $month, $year';
+  }
 }

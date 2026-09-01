@@ -53,6 +53,8 @@
 	<string>CalGo cần quyền lưu ảnh món ăn và kết quả phân tích vào Thư viện ảnh.</string>
 	<key>NSHealthShareUsageDescription</key>
 	<string>CalGo cần đọc Năng lượng hoạt động đã đốt từ Apple Health để cộng vào mục tiêu calo trong ngày.</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>CalGo cần đồng bộ dữ liệu sức khỏe và các bài tập luyện với Apple Health.</string>
 	<!-- Google Mobile Ads iOS test application ID. Replace with the production
 	     AdMob app ID (ca-app-pub-...~...) before releasing real ads. -->
 	<key>GADApplicationIdentifier</key>

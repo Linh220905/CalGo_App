@@ -512,11 +512,11 @@
   "challengeMotivation": "Mantener la motivación",
   "budgetTitle": "¿Cuál es tu presupuesto para una comida?",
   "budgetNote": "CalGo pregunta para sugerir comidas que se ajusten a tus objetivos y presupuesto.",
-  "budgetLow": "Menos de 30.000₫",
+  "budgetLow": "Menos de $2",
   "budgetLowNote": "Comidas sencillas y fáciles de encontrar",
-  "budgetMid": "30.000–60.000₫",
+  "budgetMid": "$2 – $5",
   "budgetMidNote": "Presupuesto habitual para una comida",
-  "budgetHigh": "60.000–100.000₫",
+  "budgetHigh": "Más de $5",
   "budgetHighNote": "Más margen para elegir calidad",
   "budgetAny": "Sin límite",
   "budgetAnyNote": "Prioriza tus objetivos nutricionales",
@@ -876,15 +876,173 @@
   },
   "perScan": "/escaneo",
   "caloriesValue": "{calories} kcal",
-  "@caloriesValue": {"placeholders": {"calories": {"type": "int"}}},
+  "@caloriesValue": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
   "caloriesPer100g": "{calories} kcal / 100g",
-  "@caloriesPer100g": {"placeholders": {"calories": {"type": "int"}}},
+  "@caloriesPer100g": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
   "gramsValue": "{grams}g",
-  "@gramsValue": {"placeholders": {"grams": {"type": "int"}}},
+  "@gramsValue": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
   "weightKgValue": "{weight} kg",
-  "@weightKgValue": {"placeholders": {"weight": {"type": "String"}}},
+  "@weightKgValue": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
   "galleryMacroSummary": "{calories} kcal • C:{carbs}g P:{protein}g G:{fat}g",
-  "@galleryMacroSummary": {"placeholders": {"calories": {"type": "int"}, "carbs": {"type": "String"}, "protein": {"type": "String"}, "fat": {"type": "String"}}},
+  "@galleryMacroSummary": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      },
+      "carbs": {
+        "type": "String"
+      },
+      "protein": {
+        "type": "String"
+      },
+      "fat": {
+        "type": "String"
+      }
+    }
+  },
   "sharePayload": "🔥 {dish} · {calories} kcal | CalGo",
-  "@sharePayload": {"placeholders": {"dish": {"type": "String"}, "calories": {"type": "int"}}}
+  "@sharePayload": {
+    "placeholders": {
+      "dish": {
+        "type": "String"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "connectAppleHealthTitle": "Conectar a Apple Health",
+  "connectAppleHealthDesc": "Sincroniza tu actividad diaria entre CalGo y la aplicación Salud para obtener los datos más precisos.",
+  "weightUpdateSuccess": "Peso actualizado con éxito",
+  "weightUpdateFailed": "No se pudo guardar el peso. Inténtalo de nuevo.",
+  "nutritionSectionHeader": "NUTRICIÓN",
+  "healthSectionHeader": "SALUD",
+  "currentWeightKicker": "PESO ACTUAL",
+  "logWeightButton": "Registrar Peso",
+  "startLabel": "INICIO",
+  "targetLabel": "OBJETIVO",
+  "weightProgressTitle": "Progreso de peso",
+  "ofTargetPercent": "{percent}% del objetivo",
+  "@ofTargetPercent": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "notEnoughWeightData": "No hay suficientes datos de peso",
+  "calorieNutritionStatsTitle": "Estadísticas de calorías y nutrición",
+  "consumedAvgLabel": "CONSUMIDO (PROMEDIO)",
+  "targetLabelUpper": "OBJETIVO",
+  "differenceLabelUpper": "DIFERENCIA",
+  "consumedLabel": "Consumido",
+  "thisWeek": "Esta semana",
+  "lastWeek": "La semana pasada",
+  "twoWeeksAgo": "Hace 2 semanas",
+  "threeWeeksAgo": "Hace 3 semanas",
+  "weeklyEnergyTitle": "Energía semanal",
+  "consumedLabelUpper": "CONSUMIDO",
+  "loggedActivityTitle": "Actividad registrada",
+  "daysWithData": "{logged}/{total} días con datos",
+  "@daysWithData": {
+    "placeholders": {
+      "logged": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "lessLabel": "Menos",
+  "moreLabel": "Más",
+  "weightTargetForecastTitle": "Pronóstico de objetivo de peso",
+  "levelLabel": "Nivel {level}",
+  "@levelLabel": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "maxLevelReached": "¡Alcanzaste el nivel máximo!",
+  "expToNextLevel": "{exp} EXP para el siguiente nivel",
+  "@expToNextLevel": {
+    "placeholders": {
+      "exp": {
+        "type": "int"
+      }
+    }
+  },
+  "scansTodaySummary": "Escaneadas {scansToday} comidas hoy · {totalScans} en total",
+  "@scansTodaySummary": {
+    "placeholders": {
+      "scansToday": {
+        "type": "int"
+      },
+      "totalScans": {
+        "type": "int"
+      }
+    }
+  },
+  "milestonesHeader": "HITOS",
+  "noMilestoneData": "Aún no hay datos de hitos.",
+  "notEnoughNutritionData": "No hay suficientes datos de nutrición",
+  "noEnergyData": "Sin datos de energía",
+  "noData": "Sin datos",
+  "weightChangeTitle": "Cambios de peso",
+  "logWeightEmptyDesc": "Registra tu peso al menos dos veces para ver la evolución.",
+  "logWeightNow": "Registrar peso ahora",
+  "weightDecreased": "Perdido",
+  "weightIncreased": "Ganado",
+  "dateColumnHeader": "Fecha",
+  "addPhoto": "Añadir foto",
+  "photoSelected": "Foto seleccionada",
+  "photoOptional": "Opcional",
+  "lastLogWeight": "Último registro: {weight} kg",
+  "@lastLogWeight": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
+  "selectedDateText": "{day}/{month}/{year}",
+  "@selectedDateText": {
+    "placeholders": {
+      "day": {
+        "type": "int"
+      },
+      "month": {
+        "type": "int"
+      },
+      "year": {
+        "type": "int"
+      }
+    }
+  }
 }

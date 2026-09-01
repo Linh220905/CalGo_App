@@ -512,11 +512,11 @@
   "challengeMotivation": "保持积极性",
   "budgetTitle": "你一餐的预算是多少?",
   "budgetNote": "CalGo问,这样它就可以建议适合你的目标和预算的餐.",
-  "budgetLow": "30 000人以下",
+  "budgetLow": "低于 $2",
   "budgetLowNote": "简单易得的饭",
-  "budgetMid": "30 000 - 60 000 ₫",
+  "budgetMid": "$2 – $5",
   "budgetMidNote": "一餐的典型预算",
-  "budgetHigh": "6万-100 000 ₫",
+  "budgetHigh": "高于 $5",
   "budgetHighNote": "增加质量空间",
   "budgetAny": "无限制",
   "budgetAnyNote": "优先考虑营养目标",
@@ -931,6 +931,116 @@
         "type": "String"
       },
       "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "connectAppleHealthTitle": "连接到 Apple Health",
+  "connectAppleHealthDesc": "在 CalGo 和健康应用之间自动同步您的每日活动数据。",
+  "weightUpdateSuccess": "体重更新成功",
+  "weightUpdateFailed": "无法保存体重，请重试。",
+  "nutritionSectionHeader": "营养",
+  "healthSectionHeader": "健康",
+  "currentWeightKicker": "当前体重",
+  "logWeightButton": "记录体重",
+  "startLabel": "起点",
+  "targetLabel": "目标",
+  "weightProgressTitle": "体重进度",
+  "ofTargetPercent": "目标的 {percent}%",
+  "@ofTargetPercent": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "notEnoughWeightData": "体重数据不足",
+  "calorieNutritionStatsTitle": "热量与营养统计",
+  "consumedAvgLabel": "摄入 (平均)",
+  "targetLabelUpper": "目标",
+  "differenceLabelUpper": "差值",
+  "consumedLabel": "已摄入",
+  "thisWeek": "本周",
+  "lastWeek": "上周",
+  "twoWeeksAgo": "2 周前",
+  "threeWeeksAgo": "3 周前",
+  "weeklyEnergyTitle": "每周能量",
+  "consumedLabelUpper": "已摄入",
+  "loggedActivityTitle": "打卡记录",
+  "daysWithData": "{logged}/{total} 天有记录",
+  "@daysWithData": {
+    "placeholders": {
+      "logged": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "lessLabel": "少",
+  "moreLabel": "多",
+  "weightTargetForecastTitle": "体重目标预测",
+  "levelLabel": "等级 {level}",
+  "@levelLabel": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "maxLevelReached": "已达到最高等级！",
+  "expToNextLevel": "还需 {exp} EXP 升级",
+  "@expToNextLevel": {
+    "placeholders": {
+      "exp": {
+        "type": "int"
+      }
+    }
+  },
+  "scansTodaySummary": "今天扫描了 {scansToday} 餐 · 共 {totalScans} 次",
+  "@scansTodaySummary": {
+    "placeholders": {
+      "scansToday": {
+        "type": "int"
+      },
+      "totalScans": {
+        "type": "int"
+      }
+    }
+  },
+  "milestonesHeader": "里程碑",
+  "noMilestoneData": "暂无里程碑数据。",
+  "notEnoughNutritionData": "营养数据不足",
+  "noEnergyData": "暂无能量数据",
+  "noData": "暂无数据",
+  "weightChangeTitle": "体重变化",
+  "logWeightEmptyDesc": "至少记录两次体重以查看趋势。",
+  "logWeightNow": "立即记录体重",
+  "weightDecreased": "减少",
+  "weightIncreased": "增加",
+  "dateColumnHeader": "日期",
+  "addPhoto": "添加照片",
+  "photoSelected": "已选择照片",
+  "photoOptional": "可选",
+  "lastLogWeight": "最近记录: {weight} kg",
+  "@lastLogWeight": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
+  "selectedDateText": "{year}年{month}月{day}日",
+  "@selectedDateText": {
+    "placeholders": {
+      "day": {
+        "type": "int"
+      },
+      "month": {
+        "type": "int"
+      },
+      "year": {
         "type": "int"
       }
     }

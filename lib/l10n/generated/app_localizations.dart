@@ -1971,31 +1971,31 @@ abstract class AppLocalizations {
   /// No description provided for @budgetLow.
   ///
   /// In en, this message translates to:
-  /// **'Under 30,000₫'**
+  /// **'Under \$2'**
   String get budgetLow;
 
   /// No description provided for @budgetLowNote.
   ///
   /// In en, this message translates to:
-  /// **'Simple, easy-to-find meals'**
+  /// **'Simple, budget-friendly meals'**
   String get budgetLowNote;
 
   /// No description provided for @budgetMid.
   ///
   /// In en, this message translates to:
-  /// **'30,000–60,000₫'**
+  /// **'\$2 – \$5'**
   String get budgetMid;
 
   /// No description provided for @budgetMidNote.
   ///
   /// In en, this message translates to:
-  /// **'Typical budget for one meal'**
+  /// **'Typical budget for a meal'**
   String get budgetMidNote;
 
   /// No description provided for @budgetHigh.
   ///
   /// In en, this message translates to:
-  /// **'60,000–100,000₫'**
+  /// **'\$5 – \$10'**
   String get budgetHigh;
 
   /// No description provided for @budgetHighNote.
@@ -3592,6 +3592,300 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'🔥 {dish} · {calories} kcal | CalGo'**
   String sharePayload(String dish, int calories);
+
+  /// No description provided for @connectAppleHealthTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect to Apple Health'**
+  String get connectAppleHealthTitle;
+
+  /// No description provided for @connectAppleHealthDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync your daily activity between CalGo and the Health app to have the most thorough data.'**
+  String get connectAppleHealthDesc;
+
+  /// No description provided for @weightUpdateSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight updated successfully'**
+  String get weightUpdateSuccess;
+
+  /// No description provided for @weightUpdateFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not save weight. Please try again.'**
+  String get weightUpdateFailed;
+
+  /// No description provided for @nutritionSectionHeader.
+  ///
+  /// In en, this message translates to:
+  /// **'NUTRITION'**
+  String get nutritionSectionHeader;
+
+  /// No description provided for @healthSectionHeader.
+  ///
+  /// In en, this message translates to:
+  /// **'HEALTH'**
+  String get healthSectionHeader;
+
+  /// No description provided for @currentWeightKicker.
+  ///
+  /// In en, this message translates to:
+  /// **'CURRENT WEIGHT'**
+  String get currentWeightKicker;
+
+  /// No description provided for @logWeightButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Log Weight'**
+  String get logWeightButton;
+
+  /// No description provided for @startLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'START'**
+  String get startLabel;
+
+  /// No description provided for @targetLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'TARGET'**
+  String get targetLabel;
+
+  /// No description provided for @weightProgressTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight Progress'**
+  String get weightProgressTitle;
+
+  /// No description provided for @ofTargetPercent.
+  ///
+  /// In en, this message translates to:
+  /// **'{percent}% of goal'**
+  String ofTargetPercent(String percent);
+
+  /// No description provided for @notEnoughWeightData.
+  ///
+  /// In en, this message translates to:
+  /// **'Not enough weight data'**
+  String get notEnoughWeightData;
+
+  /// No description provided for @calorieNutritionStatsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Calorie & Nutrition Stats'**
+  String get calorieNutritionStatsTitle;
+
+  /// No description provided for @consumedAvgLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'CONSUMED (AVG)'**
+  String get consumedAvgLabel;
+
+  /// No description provided for @targetLabelUpper.
+  ///
+  /// In en, this message translates to:
+  /// **'TARGET'**
+  String get targetLabelUpper;
+
+  /// No description provided for @differenceLabelUpper.
+  ///
+  /// In en, this message translates to:
+  /// **'DIFFERENCE'**
+  String get differenceLabelUpper;
+
+  /// No description provided for @consumedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Consumed'**
+  String get consumedLabel;
+
+  /// No description provided for @thisWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'This week'**
+  String get thisWeek;
+
+  /// No description provided for @lastWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'Last week'**
+  String get lastWeek;
+
+  /// No description provided for @twoWeeksAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'2 weeks ago'**
+  String get twoWeeksAgo;
+
+  /// No description provided for @threeWeeksAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'3 weeks ago'**
+  String get threeWeeksAgo;
+
+  /// No description provided for @weeklyEnergyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly Energy'**
+  String get weeklyEnergyTitle;
+
+  /// No description provided for @consumedLabelUpper.
+  ///
+  /// In en, this message translates to:
+  /// **'CONSUMED'**
+  String get consumedLabelUpper;
+
+  /// No description provided for @loggedActivityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Logged Activity'**
+  String get loggedActivityTitle;
+
+  /// No description provided for @daysWithData.
+  ///
+  /// In en, this message translates to:
+  /// **'{logged}/{total} days with data'**
+  String daysWithData(int logged, int total);
+
+  /// No description provided for @lessLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Less'**
+  String get lessLabel;
+
+  /// No description provided for @moreLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get moreLabel;
+
+  /// No description provided for @weightTargetForecastTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight Goal Forecast'**
+  String get weightTargetForecastTitle;
+
+  /// No description provided for @levelLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Level {level}'**
+  String levelLabel(int level);
+
+  /// No description provided for @maxLevelReached.
+  ///
+  /// In en, this message translates to:
+  /// **'You reached max level!'**
+  String get maxLevelReached;
+
+  /// No description provided for @expToNextLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'{exp} EXP to next level'**
+  String expToNextLevel(int exp);
+
+  /// No description provided for @scansTodaySummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Scanned {scansToday} meals today · {totalScans} total'**
+  String scansTodaySummary(int scansToday, int totalScans);
+
+  /// No description provided for @milestonesHeader.
+  ///
+  /// In en, this message translates to:
+  /// **'MILESTONES'**
+  String get milestonesHeader;
+
+  /// No description provided for @noMilestoneData.
+  ///
+  /// In en, this message translates to:
+  /// **'No milestone data yet.'**
+  String get noMilestoneData;
+
+  /// No description provided for @notEnoughNutritionData.
+  ///
+  /// In en, this message translates to:
+  /// **'Not enough nutrition data'**
+  String get notEnoughNutritionData;
+
+  /// No description provided for @noEnergyData.
+  ///
+  /// In en, this message translates to:
+  /// **'No energy data'**
+  String get noEnergyData;
+
+  /// No description provided for @noData.
+  ///
+  /// In en, this message translates to:
+  /// **'No data'**
+  String get noData;
+
+  /// No description provided for @weightChangeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight Changes'**
+  String get weightChangeTitle;
+
+  /// No description provided for @logWeightEmptyDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Log weight at least twice to track your progress.'**
+  String get logWeightEmptyDesc;
+
+  /// No description provided for @logWeightNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Log Weight Now'**
+  String get logWeightNow;
+
+  /// No description provided for @weightDecreased.
+  ///
+  /// In en, this message translates to:
+  /// **'Lost'**
+  String get weightDecreased;
+
+  /// No description provided for @weightIncreased.
+  ///
+  /// In en, this message translates to:
+  /// **'Gained'**
+  String get weightIncreased;
+
+  /// No description provided for @dateColumnHeader.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get dateColumnHeader;
+
+  /// No description provided for @addPhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Photo'**
+  String get addPhoto;
+
+  /// No description provided for @photoSelected.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo selected'**
+  String get photoSelected;
+
+  /// No description provided for @photoOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional'**
+  String get photoOptional;
+
+  /// No description provided for @lastLogWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Last logged: {weight} kg'**
+  String lastLogWeight(String weight);
+
+  /// No description provided for @selectedDateText.
+  ///
+  /// In en, this message translates to:
+  /// **'{month}/{day}/{year}'**
+  String selectedDateText(int day, int month, int year);
 }
 
 class _AppLocalizationsDelegate

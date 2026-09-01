@@ -1055,19 +1055,19 @@ class AppLocalizationsBn extends AppLocalizations {
       'জেজেডপিজেডজেডজেডজেডজেডজেডজেডজি জিজ্ঞেস করেছে যে এতে আপনার লক্ষ্য ও বাজেট নির্ধারণ করা যাবে।';
 
   @override
-  String get budgetLow => '৩০,০০০ সালে';
+  String get budgetLow => '\$2 এর নিচে';
 
   @override
   String get budgetLowNote => 'সহজ, সহজ খাবার';
 
   @override
-  String get budgetMid => '৩০,৬৪০';
+  String get budgetMid => '\$2 – \$5';
 
   @override
   String get budgetMidNote => 'সাধারণত এক খাবারের জন্য বাজেট';
 
   @override
-  String get budgetHigh => '৬০,০০০-১০ হাজার';
+  String get budgetHigh => '\$5 এর উপরে';
 
   @override
   String get budgetHighNote => 'গুণমানের জন্য অতিরিক্ত ঘর';
@@ -1936,5 +1936,168 @@ class AppLocalizationsBn extends AppLocalizations {
   @override
   String sharePayload(String dish, int calories) {
     return '🔥 $dish · $calories kcal | CalGo';
+  }
+
+  @override
+  String get connectAppleHealthTitle => 'Apple Health-এর সাথে সংযুক্ত করুন';
+
+  @override
+  String get connectAppleHealthDesc =>
+      'CalGo এবং হেলথ অ্যাপের মধ্যে আপনার দৈনন্দিন কার্যকলাপ সিঙ্ক করুন।';
+
+  @override
+  String get weightUpdateSuccess => 'ওজন সফলভাবে আপডেট করা হয়েছে';
+
+  @override
+  String get weightUpdateFailed => 'ওজন সংরক্ষণ করা যায়নি। আবার চেষ্টা করুন।';
+
+  @override
+  String get nutritionSectionHeader => 'পুষ্টি';
+
+  @override
+  String get healthSectionHeader => 'স্বাস্থ্য';
+
+  @override
+  String get currentWeightKicker => 'বর্তমান ওজন';
+
+  @override
+  String get logWeightButton => 'ওজন রেকর্ড করুন';
+
+  @override
+  String get startLabel => 'শুরু';
+
+  @override
+  String get targetLabel => 'লক্ষ্য';
+
+  @override
+  String get weightProgressTitle => 'ওজন অগ্রগতি';
+
+  @override
+  String ofTargetPercent(String percent) {
+    return 'লক্ষ্যের $percent%';
+  }
+
+  @override
+  String get notEnoughWeightData => 'पर्याप्त ওজনের ডেটা নেই';
+
+  @override
+  String get calorieNutritionStatsTitle => 'ক্যালোরি ও পুষ্টি পরিসংখ্যান';
+
+  @override
+  String get consumedAvgLabel => 'গৃহীত (গড়)';
+
+  @override
+  String get targetLabelUpper => 'লক্ষ্য';
+
+  @override
+  String get differenceLabelUpper => 'পার্থক্য';
+
+  @override
+  String get consumedLabel => 'গৃহীত';
+
+  @override
+  String get thisWeek => 'এই সপ্তাহে';
+
+  @override
+  String get lastWeek => 'গত সপ্তাহে';
+
+  @override
+  String get twoWeeksAgo => '২ সপ্তাহ আগে';
+
+  @override
+  String get threeWeeksAgo => '৩ সপ্তাহ আগে';
+
+  @override
+  String get weeklyEnergyTitle => 'সাপ্তাহিক শক্তি';
+
+  @override
+  String get consumedLabelUpper => 'গৃহীত';
+
+  @override
+  String get loggedActivityTitle => 'লগ করা কার্যকলাপ';
+
+  @override
+  String daysWithData(int logged, int total) {
+    return '$logged/$total দিন ডেটা সহ';
+  }
+
+  @override
+  String get lessLabel => 'কম';
+
+  @override
+  String get moreLabel => 'বেশি';
+
+  @override
+  String get weightTargetForecastTitle => 'ওজন লক্ষ্যের পূর্বাভাস';
+
+  @override
+  String levelLabel(int level) {
+    return 'লেভেল $level';
+  }
+
+  @override
+  String get maxLevelReached => 'সর্বোচ্চ লেভেলে পৌঁছে গেছেন!';
+
+  @override
+  String expToNextLevel(int exp) {
+    return 'পরবর্তী লেভেলের জন্য $exp EXP';
+  }
+
+  @override
+  String scansTodaySummary(int scansToday, int totalScans) {
+    return 'আজ $scansTodayটি খাবার স্ক্যান করা হয়েছে · মোট $totalScansটি';
+  }
+
+  @override
+  String get milestonesHeader => 'মাইলফলক';
+
+  @override
+  String get noMilestoneData => 'এখনো কোনো মাইলফলক ডেটা নেই।';
+
+  @override
+  String get notEnoughNutritionData => 'पर्याप्त পুষ্টি ডেটা নেই';
+
+  @override
+  String get noEnergyData => 'কোনো শক্তির ডেটা নেই';
+
+  @override
+  String get noData => 'কোনো ডেটা নেই';
+
+  @override
+  String get weightChangeTitle => 'ওজন পরিবর্তন';
+
+  @override
+  String get logWeightEmptyDesc =>
+      'পরিবর্তন দেখতে কমপক্ষে দুবার ওজন রেকর্ড করুন।';
+
+  @override
+  String get logWeightNow => 'এখনই ওজন রেকর্ড করুন';
+
+  @override
+  String get weightDecreased => 'কমেছে';
+
+  @override
+  String get weightIncreased => 'বেড়েছে';
+
+  @override
+  String get dateColumnHeader => 'তারিখ';
+
+  @override
+  String get addPhoto => 'ছবি যোগ করুন';
+
+  @override
+  String get photoSelected => 'ছবি নির্বাচন করা হয়েছে';
+
+  @override
+  String get photoOptional => 'ঐচ্ছিক';
+
+  @override
+  String lastLogWeight(String weight) {
+    return 'সর্বশেষ রেকর্ড: $weight কেজি';
+  }
+
+  @override
+  String selectedDateText(int day, int month, int year) {
+    return '$day/$month/$year';
   }
 }

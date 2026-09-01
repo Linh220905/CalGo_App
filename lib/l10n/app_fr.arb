@@ -512,11 +512,11 @@
   "challengeMotivation": "Rester motivé",
   "budgetTitle": "Quel est votre budget pour un repas ?",
   "budgetNote": "CalGo demande donc il peut suggérer des repas qui correspondent à vos objectifs et budget.",
-  "budgetLow": "Moins de 30 000",
+  "budgetLow": "Moins de 2 $",
   "budgetLowNote": "Repas simples et faciles à trouver",
-  "budgetMid": "30 000 à 60 000",
+  "budgetMid": "2 $ – 5 $",
   "budgetMidNote": "Budget typique pour un repas",
-  "budgetHigh": "60 000 à 100 000 Écus",
+  "budgetHigh": "Plus de 5 $",
   "budgetHighNote": "Plus de place pour la qualité",
   "budgetAny": "Aucune limite",
   "budgetAnyNote": "Privilégier les objectifs nutritionnels",
@@ -931,6 +931,116 @@
         "type": "String"
       },
       "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "connectAppleHealthTitle": "Se connecter à Apple Health",
+  "connectAppleHealthDesc": "Synchronisez votre activité quotidienne entre CalGo et l'application Santé pour des données complètes.",
+  "weightUpdateSuccess": "Poids mis à jour avec succès",
+  "weightUpdateFailed": "Impossible d'enregistrer le poids. Veuillez réessayer.",
+  "nutritionSectionHeader": "NUTRITION",
+  "healthSectionHeader": "SANTÉ",
+  "currentWeightKicker": "POIDS ACTUEL",
+  "logWeightButton": "Enregistrer le poids",
+  "startLabel": "DÉPART",
+  "targetLabel": "OBJECTIF",
+  "weightProgressTitle": "Progrès de poids",
+  "ofTargetPercent": "{percent}% de l'objectif",
+  "@ofTargetPercent": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "notEnoughWeightData": "Pas assez de données de poids",
+  "calorieNutritionStatsTitle": "Statistiques de calories et nutrition",
+  "consumedAvgLabel": "CONSOMMÉ (MOY)",
+  "targetLabelUpper": "OBJECTIF",
+  "differenceLabelUpper": "DIFFÉRENCE",
+  "consumedLabel": "Consommé",
+  "thisWeek": "Cette semaine",
+  "lastWeek": "La semaine dernière",
+  "twoWeeksAgo": "Il y a 2 semaines",
+  "threeWeeksAgo": "Il y a 3 semaines",
+  "weeklyEnergyTitle": "Énergie hebdomadaire",
+  "consumedLabelUpper": "CONSOMMÉ",
+  "loggedActivityTitle": "Activité enregistrée",
+  "daysWithData": "{logged}/{total} jours de données",
+  "@daysWithData": {
+    "placeholders": {
+      "logged": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "lessLabel": "Moins",
+  "moreLabel": "Plus",
+  "weightTargetForecastTitle": "Prévision de l'objectif de poids",
+  "levelLabel": "Niveau {level}",
+  "@levelLabel": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "maxLevelReached": "Niveau maximum atteint !",
+  "expToNextLevel": "{exp} EXP avant le niveau suivant",
+  "@expToNextLevel": {
+    "placeholders": {
+      "exp": {
+        "type": "int"
+      }
+    }
+  },
+  "scansTodaySummary": "{scansToday} repas scannés aujourd'hui · {totalScans} au total",
+  "@scansTodaySummary": {
+    "placeholders": {
+      "scansToday": {
+        "type": "int"
+      },
+      "totalScans": {
+        "type": "int"
+      }
+    }
+  },
+  "milestonesHeader": "ÉTAPES",
+  "noMilestoneData": "Aucune donnée d'étape pour le moment.",
+  "notEnoughNutritionData": "Pas assez de données nutritionnelles",
+  "noEnergyData": "Aucune donnée d'énergie",
+  "noData": "Aucune donnée",
+  "weightChangeTitle": "Évolution du poids",
+  "logWeightEmptyDesc": "Enregistrez votre poids au moins deux fois pour suivre l'évolution.",
+  "logWeightNow": "Enregistrer le poids maintenant",
+  "weightDecreased": "Perdu",
+  "weightIncreased": "Gagné",
+  "dateColumnHeader": "Date",
+  "addPhoto": "Ajouter une photo",
+  "photoSelected": "Photo sélectionnée",
+  "photoOptional": "Optionnel",
+  "lastLogWeight": "Dernier enregistrement: {weight} kg",
+  "@lastLogWeight": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
+  "selectedDateText": "{day}/{month}/{year}",
+  "@selectedDateText": {
+    "placeholders": {
+      "day": {
+        "type": "int"
+      },
+      "month": {
+        "type": "int"
+      },
+      "year": {
         "type": "int"
       }
     }

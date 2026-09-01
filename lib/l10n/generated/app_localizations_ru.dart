@@ -1067,19 +1067,19 @@ class AppLocalizationsRu extends AppLocalizations {
       'CalGo предлагает блюда, которые соответствуют вашим целям и бюджету.';
 
   @override
-  String get budgetLow => 'менее 30 000  Under';
+  String get budgetLow => 'Менее \$2';
 
   @override
   String get budgetLowNote => 'Простые, простые в поиске блюда';
 
   @override
-  String get budgetMid => '30 000-60 000 –';
+  String get budgetMid => '\$2 – \$5';
 
   @override
   String get budgetMidNote => 'Типичный бюджет на один прием пищи';
 
   @override
-  String get budgetHigh => '60 000-100 000 –';
+  String get budgetHigh => 'Более \$5';
 
   @override
   String get budgetHighNote => 'Больше места для качества';
@@ -1961,5 +1961,169 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String sharePayload(String dish, int calories) {
     return '$dish · $calories kcal | CalGo';
+  }
+
+  @override
+  String get connectAppleHealthTitle => 'Подключиться к Apple Health';
+
+  @override
+  String get connectAppleHealthDesc =>
+      'Синхронизируйте ежедневную активность между CalGo и приложением Здоровье.';
+
+  @override
+  String get weightUpdateSuccess => 'Вес успешно обновлен';
+
+  @override
+  String get weightUpdateFailed =>
+      'Не удалось сохранить вес. Попробуйте еще раз.';
+
+  @override
+  String get nutritionSectionHeader => 'ПИТАНИЕ';
+
+  @override
+  String get healthSectionHeader => 'ЗДОРОВЬЕ';
+
+  @override
+  String get currentWeightKicker => 'ТЕКУЩИЙ ВЕС';
+
+  @override
+  String get logWeightButton => 'Записать вес';
+
+  @override
+  String get startLabel => 'СТАРТ';
+
+  @override
+  String get targetLabel => 'ЦЕЛЬ';
+
+  @override
+  String get weightProgressTitle => 'Прогресс веса';
+
+  @override
+  String ofTargetPercent(String percent) {
+    return '$percent% от цели';
+  }
+
+  @override
+  String get notEnoughWeightData => 'Недостаточно данных о весе';
+
+  @override
+  String get calorieNutritionStatsTitle => 'Статистика калорий и питания';
+
+  @override
+  String get consumedAvgLabel => 'ПОТРЕБЛЕНО (СРЕДН)';
+
+  @override
+  String get targetLabelUpper => 'ЦЕЛЬ';
+
+  @override
+  String get differenceLabelUpper => 'РАЗНИЦА';
+
+  @override
+  String get consumedLabel => 'Потреблено';
+
+  @override
+  String get thisWeek => 'На этой неделе';
+
+  @override
+  String get lastWeek => 'На прошлой неделе';
+
+  @override
+  String get twoWeeksAgo => '2 недели назад';
+
+  @override
+  String get threeWeeksAgo => '3 недели назад';
+
+  @override
+  String get weeklyEnergyTitle => 'Энергия за неделю';
+
+  @override
+  String get consumedLabelUpper => 'ПОТРЕБЛЕНО';
+
+  @override
+  String get loggedActivityTitle => 'Записанная активность';
+
+  @override
+  String daysWithData(int logged, int total) {
+    return '$logged/$total дн. с данными';
+  }
+
+  @override
+  String get lessLabel => 'Меньше';
+
+  @override
+  String get moreLabel => 'Больше';
+
+  @override
+  String get weightTargetForecastTitle => 'Прогноз достижения цели по весу';
+
+  @override
+  String levelLabel(int level) {
+    return 'Уровень $level';
+  }
+
+  @override
+  String get maxLevelReached => 'Достигнут максимальный уровень!';
+
+  @override
+  String expToNextLevel(int exp) {
+    return '$exp EXP до следующего уровня';
+  }
+
+  @override
+  String scansTodaySummary(int scansToday, int totalScans) {
+    return 'Отсканировано $scansToday блюд сегодня · всего $totalScans';
+  }
+
+  @override
+  String get milestonesHeader => 'ДОСТИЖЕНИЯ';
+
+  @override
+  String get noMilestoneData => 'Пока нет данных о достижениях.';
+
+  @override
+  String get notEnoughNutritionData => 'Недостаточно данных о питании';
+
+  @override
+  String get noEnergyData => 'Нет данных об энергии';
+
+  @override
+  String get noData => 'Нет данных';
+
+  @override
+  String get weightChangeTitle => 'Изменения веса';
+
+  @override
+  String get logWeightEmptyDesc =>
+      'Запишите вес хотя бы дважды, чтобы увидеть динамику.';
+
+  @override
+  String get logWeightNow => 'Записать вес сейчас';
+
+  @override
+  String get weightDecreased => 'Сброшено';
+
+  @override
+  String get weightIncreased => 'Набрано';
+
+  @override
+  String get dateColumnHeader => 'Дата';
+
+  @override
+  String get addPhoto => 'Добавить фото';
+
+  @override
+  String get photoSelected => 'Фото выбрано';
+
+  @override
+  String get photoOptional => 'Опционально';
+
+  @override
+  String lastLogWeight(String weight) {
+    return 'Последняя запись: $weight кг';
+  }
+
+  @override
+  String selectedDateText(int day, int month, int year) {
+    return '$day.$month.$year';
   }
 }
