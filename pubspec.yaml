@@ -36,7 +36,7 @@ dependencies:
   in_app_purchase_android: 0.4.0
   in_app_purchase_storekit: 0.4.0
   google_mobile_ads: ^5.1.0
-  share_plus: ^13.3.0
+  share_plus: ^10.1.4
   path_provider: ^2.1.5
   flutter_local_notifications: ^17.2.2
   timezone: ^0.9.4
@@ -49,6 +49,12 @@ dev_dependencies:
     sdk: flutter
 
   flutter_lints: ^4.0.0
+
+dependency_overrides:
+  # health 13.3.2 asks for device_info_plus 13.x (win32 6.x), but the current
+  # Codemagic image uses Dart 3.9 and share_plus 10.x uses win32 5.x. Health
+  # only uses the stable id/identifierForVendor fields from this package.
+  device_info_plus: 12.4.0
 
 flutter:
   generate: true

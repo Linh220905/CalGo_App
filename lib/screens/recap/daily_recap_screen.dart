@@ -742,11 +742,9 @@ class _ActionButtons extends StatelessWidget {
         : box.localToGlobal(Offset.zero) & box.size;
 
     try {
-      await SharePlus.instance.share(
-        ShareParams(
-          text: recapText,
-          sharePositionOrigin: sharePositionOrigin,
-        ),
+      await Share.share(
+        recapText,
+        sharePositionOrigin: sharePositionOrigin,
       );
     } catch (error) {
       debugPrint('Unable to share daily recap: $error');
