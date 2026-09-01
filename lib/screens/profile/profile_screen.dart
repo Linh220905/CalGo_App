@@ -67,6 +67,11 @@ class ProfileScreen extends StatelessWidget {
               isDark: isDark,
             ),
             _buildPersonalInfoRow(
+              label: s.creditsLabel,
+              value: '${user?.credits ?? 0}',
+              isDark: isDark,
+            ),
+            _buildPersonalInfoRow(
               label: s.personalInfoAge,
               value: user?.age?.toString() ?? s.personalInfoNotSet,
               isDark: isDark,
@@ -526,7 +531,7 @@ class ProfileScreen extends StatelessWidget {
                 children: [
                   if (!AppBuildConfig.isTesting && !isPremiumUser)
                     _buildMenuItem(
-                      icon: Icons.workspace_premium_outlined,
+                      icon: Icons.crown_outlined,
                       label: s.premiumMembership,
                       badge: 'PRO',
                       isSpecialBadge: true,
@@ -761,7 +766,7 @@ class ProfileScreen extends StatelessWidget {
                     Row(
                       children: [
                         Icon(
-                          Icons.workspace_premium_rounded,
+                          Icons.crown,
                           color: showsPremium
                               ? const Color(0xFFE0533C)
                               : mutedColor,
@@ -776,6 +781,26 @@ class ProfileScreen extends StatelessWidget {
                                 : mutedColor,
                             fontSize: 13,
                             fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          '•',
+                          style: TextStyle(color: mutedColor, fontSize: 12),
+                        ),
+                        const SizedBox(width: 8),
+                        const Icon(
+                          Icons.bolt_rounded,
+                          color: Color(0xFFF59E0B),
+                          size: 14,
+                        ),
+                        const SizedBox(width: 3),
+                        Text(
+                          '${user?.credits ?? 0} ${strings.creditsLabel}',
+                          style: TextStyle(
+                            color: textColor,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ],

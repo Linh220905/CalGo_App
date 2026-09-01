@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../config/app_build_config.dart';
+import '../models/user.dart';
 import '../models/onboarding_data.dart';
 import '../services/onboarding_service.dart';
 import '../services/analytics_service.dart';
@@ -18,6 +19,7 @@ class OnboardingProvider extends ChangeNotifier {
   bool _initialized = false;
   bool _completed = false;
   bool _testingOnboarding = false;
+  bool _isRecalculating = false;
   String? _error;
   final OnboardingData data = OnboardingData();
   static const _stepKey = 'onboarding_step';
@@ -37,9 +39,64 @@ class OnboardingProvider extends ChangeNotifier {
   bool get initialized => _initialized;
   bool get isCompleted => _completed;
   bool get isTestingOnboarding => _testingOnboarding;
+  bool get isRecalculating => _isRecalculating;
   String? get error => _error;
   bool get isLastStep => _currentStep >= totalSteps - 1;
   double get progress => totalSteps > 0 ? (_currentStep + 1) / totalSteps : 0;
+
+  double get recalculateProgress {
+    switch (_currentStep) {
+      case 2:
+        return 1 / 6;
+      case 7:
+        return 2 / 6;
+      case 8:
+        return 3 / 6;
+      case 9:
+        return 4 / 6;
+      case 10:
+        return 5 / 6;
+      case 11:
+      case 19:
+        return 1.0;
+      default:
+        return 0.5;
+    }
+  }
+
+  Future<void> startRecalculate(User? user) async {
+    _isRecalculating = true;
+    _testingOnboarding = true;
+    _completed = false;
+    data.clear();
+    if (user != null) {
+      data.name = user.name ?? '';
+      if (user.heightCm != null) data.heightCm = user.heightCm;
+      if (user.currentWeightKg != null) data.weightKg = user.currentWeightKg;
+      if (user.targetWeightKg != null) data.targetWeightKg = user.targetWeightKg;
+      if (user.age != null) data.age = user.age;
+      if (user.gender != null) {
+        if (user.gender == 'male') data.gender = Gender.male;
+        if (user.gender == 'female') data.gender = Gender.female;
+      }
+      if (user.activityLevel != null) {
+        data.activityLevel = ActivityLevel.values.firstWhere(
+          (e) => e.name == user.activityLevel,
+          orElse: () => ActivityLevel.moderate,
+        );
+      }
+      if (user.goal != null) {
+        data.goalType = GoalType.values.firstWhere(
+          (e) => e.name == user.goal,
+          orElse: () => GoalType.lose,
+        );
+      }
+    }
+    _currentStep = 2; // Step 2 is GoalStep
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt(_stepKey, _currentStep);
+    notifyListeners();
+  }
 
   // The demo screen was removed. Testing releases still skip the Premium
   // paywall, so Account and Home shift one slot earlier in both variants.
@@ -221,6 +278,35 @@ class OnboardingProvider extends ChangeNotifier {
   }
 
   Future<void> nextStep() async {
+    if (_isRecalculating) {
+      switch (_currentStep) {
+        case 2:
+          _currentStep = 7;
+          break;
+        case 7:
+          _currentStep = 8;
+          break;
+        case 8:
+          _currentStep = 9;
+          break;
+        case 9:
+          _currentStep = 10;
+          break;
+        case 10:
+          _currentStep = 11;
+          break;
+        case 11:
+          _currentStep = 19;
+          break;
+        default:
+          _currentStep++;
+      }
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setInt(_stepKey, _currentStep);
+      notifyListeners();
+      return;
+    }
+
     if (_currentStep < totalSteps - 1) {
       _currentStep++;
       final prefs = await SharedPreferences.getInstance();
@@ -271,6 +357,7 @@ class OnboardingProvider extends ChangeNotifier {
         homeProvider.invalidateCache();
       }
 
+      _isRecalculating = false;
       _currentStep = totalSteps;
       final prefs = await SharedPreferences.getInstance();
       await prefs.setBool('onboarding_done', true);

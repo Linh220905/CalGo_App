@@ -12,6 +12,8 @@ import '../../utils/localized_date_utils.dart';
 import 'widgets/month_calendar_grid.dart';
 import 'widgets/day_detail_bottom_sheet.dart';
 
+import '../../utils/macro_colors.dart';
+
 String _formatYMD(DateTime dt) {
   return '${dt.year.toString().padLeft(4, '0')}-${dt.month.toString().padLeft(2, '0')}-${dt.day.toString().padLeft(2, '0')}';
 }
@@ -456,8 +458,8 @@ class _StatsGrid extends StatelessWidget {
                 value: '${avgProtein}g',
                 label: strings.proteinPerDay,
                 icon: const Icon(
-                  Icons.egg_alt_rounded,
-                  color: Color(0xFFFF5C5C),
+                  MacroColors.proteinIcon,
+                  color: MacroColors.protein,
                   size: 20,
                 ),
                 iconBg: isDark

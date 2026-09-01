@@ -331,72 +331,72 @@ class NotificationService {
     if (displayName != null) {
       salutation = '$displayName ơi,';
     } else if (isFemale) {
-      salutation = 'Chào cô gái,';
+      salutation = 'Bạn gái xinh đẹp ơi,';
     } else if (isMale) {
-      salutation = 'Chào bạn,';
+      salutation = 'Bạn nam năng động ơi,';
     } else {
-      salutation = 'Chào bạn,';
+      salutation = 'Bạn thân mến,';
     }
 
     if (mealType == 'breakfast') {
       if (isLose) {
         return {
-          'title': 'CalGo Năng lượng buổi sáng',
+          'title': 'Buổi sáng rạng rỡ cùng CalGo',
           'body':
-              '$salutation Nạp bữa sáng thanh nhẹ, đủ đạm để bắt đầu ngày mới.',
+              '$salutation Dù bận rộn đến đâu bạn cũng nhớ ăn một bữa sáng nhẹ nhàng đủ chất nha. Cùng nhau bắt đầu ngày mới thật tích cực để hướng tới vóc dáng thon gọn nhé.',
         };
       } else if (isGain) {
         return {
-          'title': 'CalGo Bữa sáng tăng cơ',
+          'title': 'Nạp năng lượng buổi sáng cùng CalGo',
           'body':
-              '$salutation Nạp bữa sáng giàu protein và năng lượng để nuôi dưỡng cơ bắp.',
+              '$salutation Hãy bắt đầu ngày mới thật sung sức với bữa sáng giàu đạm nha. Đừng quên chụp một tấm ảnh món ăn để theo dõi đủ lượng dinh dưỡng cho cơ bắp nhé.',
         };
       } else {
         return {
-          'title': 'CalGo Chào ngày mới',
+          'title': 'Chào ngày mới tràn đầy năng lượng',
           'body':
-              '$salutation Một bữa sáng cân bằng giúp bạn duy trì vóc dáng và sức khỏe suốt ngày.',
+              '$salutation Một bữa sáng thơm ngon và cân bằng đang chờ bạn thưởng thức. Mở CalGo chụp ảnh lưu lại bữa ăn ngon miệng ngay nào.',
         };
       }
     } else if (mealType == 'lunch') {
       if (isLose) {
         return {
-          'title': 'CalGo Giờ ăn trưa',
+          'title': 'Đến giờ ăn trưa rồi bạn ơi',
           'body':
-              '$salutation Đến giờ ăn trưa. Mở CalGo và chụp ảnh món ăn để theo dõi calo.',
+              '$salutation Bạn đã làm việc vất vả cả buổi sáng rồi. Hãy thưởng thức một bữa trưa lành mạnh và chụp ảnh món ăn để CalGo theo dõi calo giúp bạn nhé.',
         };
       } else if (isGain) {
         return {
-          'title': 'CalGo Nạp đạm bữa trưa',
+          'title': 'Tiếp thêm năng lượng bữa trưa',
           'body':
-              '$salutation Đến giờ nạp năng lượng. Chụp ảnh bữa trưa để theo dõi đủ đạm cho cơ bắp.',
+              '$salutation Bữa trưa thơm ngon đang chờ bạn tiếp sức. Hãy chụp ảnh món ăn để CalGo giúp bạn kiểm tra lượng protein nạp vào nhé.',
         };
       } else {
         return {
-          'title': 'CalGo Bữa trưa khỏe mạnh',
+          'title': 'Thưởng thức bữa trưa ngon miệng',
           'body':
-              '$salutation Đến giờ ăn trưa. Hãy chụp ảnh món ăn để CalGo theo dõi dinh dưỡng cho bạn.',
+              '$salutation Đến giờ nghỉ trưa rồi, bạn hãy ăn uống thong thả và chụp một tấm ảnh xinh xắn để lưu lại nhật ký dinh dưỡng hôm nay nhé.',
         };
       }
     } else {
       // dinner
       if (isLose) {
         return {
-          'title': 'CalGo Tổng kết ngày',
+          'title': 'Bữa tối nhẹ nhàng cùng CalGo',
           'body':
-              '$salutation Chụp ảnh bữa tối nhẹ nhàng để hoàn thành mục tiêu giảm mỡ hôm nay.',
+              '$salutation Hôm nay bạn đã cố gắng rất tuyệt vời. Hãy chọn một bữa tối thanh nhẹ và chụp ảnh món ăn để hoàn thành mục tiêu giảm mỡ ngày hôm nay nhé.',
         };
       } else if (isGain) {
         return {
-          'title': 'CalGo Chốt calo buổi tối',
+          'title': 'Chốt hạ dinh dưỡng bữa tối',
           'body':
-              '$salutation Chụp ảnh bữa tối để CalGo theo dõi protein và năng lượng phục hồi cơ.',
+              '$salutation Bữa tối ngon lành sẽ giúp cơ bắp phục hồi sau một ngày làm việc. Chụp ảnh bữa tối cùng CalGo để ghi nhận sự nỗ lực của bạn nào.',
         };
       } else {
         return {
-          'title': 'CalGo Bữa tối',
+          'title': 'Bữa tối ấm áp cùng CalGo',
           'body':
-              '$salutation Chụp ảnh bữa tối để hoàn thành nhật ký calo hôm nay cùng CalGo.',
+              '$salutation Cùng khép lại một ngày tuyệt vời với bữa tối ấm áp nhé. Bạn mở CalGo chụp ảnh món ăn để hoàn thành nhật ký calo ngày hôm nay nào.',
         };
       }
     }

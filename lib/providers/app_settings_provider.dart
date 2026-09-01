@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../l10n/generated/app_localizations.dart';
+import '../services/health_service.dart';
 
 class AppSettingsProvider extends ChangeNotifier {
   static const String _kKeyThemeMode = 'app_theme_mode';
@@ -14,11 +15,13 @@ class AppSettingsProvider extends ChangeNotifier {
   ThemeMode _themeMode = ThemeMode.light;
   String _languageCode = 'en';
   bool _isAppleHealthConnected = false;
+  final HealthService _healthService = HealthService();
 
   ThemeMode get themeMode => _themeMode;
   bool get isDarkMode => _themeMode == ThemeMode.dark;
   String get languageCode => _languageCode;
   bool get isAppleHealthConnected => _isAppleHealthConnected;
+  HealthService get healthService => _healthService;
   Locale get locale => Locale(_languageCode);
   AppLocalizations get strings => lookupAppLocalizations(locale);
 
@@ -34,7 +37,13 @@ class AppSettingsProvider extends ChangeNotifier {
       final isDark = prefs.getBool(_kKeyThemeMode) ?? false;
       _themeMode = isDark ? ThemeMode.dark : ThemeMode.light;
 
-      _isAppleHealthConnected = prefs.getBool(_kKeyAppleHealth) ?? false;
+      final savedConnected = prefs.getBool(_kKeyAppleHealth) ?? false;
+      if (savedConnected) {
+        final hasPerms = await _healthService.hasPermissions();
+        _isAppleHealthConnected = hasPerms;
+      } else {
+        _isAppleHealthConnected = false;
+      }
 
       // A saved choice is explicit. Otherwise follow the device language and
       // fall back to the template locale when it is not supported.
@@ -46,6 +55,18 @@ class AppSettingsProvider extends ChangeNotifier {
 
       notifyListeners();
     } catch (_) {}
+  }
+
+  Future<bool> connectAppleHealth() async {
+    final granted = await _healthService.requestAuthorization();
+    _isAppleHealthConnected = granted;
+    notifyListeners();
+
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool(_kKeyAppleHealth, granted);
+    } catch (_) {}
+    return granted;
   }
 
   Future<void> setAppleHealthConnected(bool connected) async {

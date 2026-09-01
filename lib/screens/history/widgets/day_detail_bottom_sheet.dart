@@ -7,6 +7,7 @@ import '../../../providers/app_settings_provider.dart';
 import '../../../utils/nutrition_calculator.dart';
 import '../../../widgets/swipeable_card.dart';
 import '../../../widgets/share_card_modal.dart';
+import '../../../utils/macro_colors.dart';
 
 class DayDetailBottomSheet extends StatelessWidget {
   final String dateLabel;
@@ -151,21 +152,21 @@ class DayDetailBottomSheet extends StatelessWidget {
                     _MacroLabel(
                       label: 'C',
                       value: strings.gramsValue(totalCarb.round()),
-                      color: const Color(0xFFF59E0B),
+                      color: MacroColors.carb,
                       mutedColor: mutedTextColor,
                     ),
                     const SizedBox(width: 14),
                     _MacroLabel(
                       label: 'P',
                       value: strings.gramsValue(totalProtein.round()),
-                      color: const Color(0xFFFF5C5C),
+                      color: MacroColors.protein,
                       mutedColor: mutedTextColor,
                     ),
                     const SizedBox(width: 14),
                     _MacroLabel(
                       label: 'F',
                       value: strings.gramsValue(totalFat.round()),
-                      color: const Color(0xFF3B82F6),
+                      color: MacroColors.fat,
                       mutedColor: mutedTextColor,
                     ),
                   ],
@@ -283,7 +284,7 @@ class DayDetailBottomSheet extends StatelessWidget {
                                         value: strings.gramsValue(
                                           item.totalCarb.round(),
                                         ),
-                                        color: const Color(0xFFF59E0B),
+                                        color: MacroColors.carb,
                                         mutedColor: mutedTextColor,
                                         small: true,
                                       ),
@@ -293,7 +294,7 @@ class DayDetailBottomSheet extends StatelessWidget {
                                         value: strings.gramsValue(
                                           item.totalProtein.round(),
                                         ),
-                                        color: const Color(0xFFFF5C5C),
+                                        color: MacroColors.protein,
                                         mutedColor: mutedTextColor,
                                         small: true,
                                       ),
@@ -303,7 +304,7 @@ class DayDetailBottomSheet extends StatelessWidget {
                                         value: strings.gramsValue(
                                           item.totalFat.round(),
                                         ),
-                                        color: const Color(0xFF3B82F6),
+                                        color: MacroColors.fat,
                                         mutedColor: mutedTextColor,
                                         small: true,
                                       ),

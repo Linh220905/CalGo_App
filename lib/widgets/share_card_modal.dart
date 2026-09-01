@@ -8,6 +8,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:provider/provider.dart';
 import '../providers/app_settings_provider.dart';
+import '../utils/macro_colors.dart';
 
 class CardMemoryData {
   final String dishName;
@@ -497,22 +498,22 @@ class _ShareCardModalState extends State<ShareCardModal> {
                     _buildMacroBadge(
                       label: 'C',
                       value: d.carbs,
-                      color: const Color(0xFF60A5FA),
-                      bgColor: const Color(0xFF60A5FA).withOpacity(0.25),
+                      color: MacroColors.carb,
+                      bgColor: MacroColors.carb.withOpacity(0.25),
                     ),
                     const SizedBox(width: 16),
                     _buildMacroBadge(
                       label: 'P',
                       value: d.protein,
-                      color: const Color(0xFF34D399),
-                      bgColor: const Color(0xFF34D399).withOpacity(0.25),
+                      color: MacroColors.protein,
+                      bgColor: MacroColors.protein.withOpacity(0.25),
                     ),
                     const SizedBox(width: 16),
                     _buildMacroBadge(
                       label: 'F',
                       value: d.fat,
-                      color: const Color(0xFFFBBF24),
-                      bgColor: const Color(0xFFFBBF24).withOpacity(0.25),
+                      color: MacroColors.fat,
+                      bgColor: MacroColors.fat.withOpacity(0.25),
                     ),
                   ],
                 ),

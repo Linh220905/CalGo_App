@@ -8,13 +8,14 @@ import '../../providers/app_settings_provider.dart';
 import '../../providers/gamification_provider.dart';
 import '../../providers/progress_provider.dart';
 import '../../widgets/achievement_badge.dart';
-import '../../widgets/horizontal_ruler_picker.dart';
+import '../../utils/macro_colors.dart';
+import '../recap/daily_recap_screen.dart';
 
 const _kAccent = Color(0xFF63A97B);
 const _kAccentSoft = Color(0xFFE2F1E7);
-const _kProtein = Color(0xFF4D9A6A);
-const _kCarbs = Color(0xFFF6B722);
-const _kFat = Color(0xFF7B4DDE);
+const _kProtein = MacroColors.protein;
+const _kCarbs = MacroColors.carb;
+const _kFat = MacroColors.fat;
 
 class StatsScreen extends StatefulWidget {
   const StatsScreen({super.key});
@@ -311,6 +312,7 @@ class _ProgressTabState extends State<_ProgressTab> {
             text: widget.text,
             muted: widget.muted,
             dark: widget.dark,
+            onLogWeight: _showWeightDialog,
           ),
           if (widget.weekly != null) ...[
             const SizedBox(height: 24),
@@ -325,13 +327,19 @@ class _ProgressTabState extends State<_ProgressTab> {
               dark: widget.dark,
             ),
             const SizedBox(height: 12),
-            _EnergyCard(
-              weekly: widget.weekly!,
-              card: widget.card,
+            TargetTimelineCard(
+              todayCalories: widget.weekly!.dailyPoints.isNotEmpty
+                  ? widget.weekly!.dailyPoints.last.calo.toDouble()
+                  : widget.weekly!.avgCalo,
+              calorieTarget: widget.weekly!.dailyPoints.isNotEmpty &&
+                      widget.weekly!.dailyPoints.last.target > 0
+                  ? widget.weekly!.dailyPoints.last.target.toDouble()
+                  : null,
+              isDark: widget.dark,
+              cardBg: widget.card,
               border: widget.border,
-              text: widget.text,
-              muted: widget.muted,
-              dark: widget.dark,
+              textDark: widget.text,
+              textMuted: widget.muted,
             ),
           ],
           if (widget.monthly != null) ...[
@@ -743,6 +751,14 @@ class _NutritionSummaryCardState extends State<_NutritionSummaryCard> {
   @override
   Widget build(BuildContext context) {
     final caloStr = _formatCalo(widget.weekly.avgCalo);
+    final target = widget.weekly.dailyPoints.isEmpty
+        ? 0
+        : widget.weekly.dailyPoints
+            .map((point) => point.target)
+            .reduce((a, b) => a > b ? a : b);
+    final balance = target > 0 ? widget.weekly.avgCalo - target : 0;
+    final targetColor =
+        widget.dark ? const Color(0xFF64748B) : const Color(0xFF94A3B8);
 
     return _Card(
       card: widget.card,
@@ -754,69 +770,79 @@ class _NutritionSummaryCardState extends State<_NutritionSummaryCard> {
         children: [
           // Title
           Text(
-            'Calo trung bình mỗi ngày',
+            'Thống kê Calo & Dinh dưỡng',
             style: TextStyle(
               color: widget.text,
               fontSize: 22,
               fontWeight: FontWeight.w800,
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 14),
 
-          // Big Calorie Number + "cal"
+          // Energy Metrics Row (ĐÃ NẠP | MỤC TIÊU | CHÊNH LỆCH)
           Row(
-            crossAxisAlignment: CrossAxisAlignment.baseline,
-            textBaseline: TextBaseline.alphabetic,
             children: [
-              Text(
-                caloStr.isEmpty ? '0' : caloStr,
-                style: TextStyle(
+              Expanded(
+                child: _EnergyMetric(
+                  label: 'ĐÃ NẠP (TB)',
+                  value: caloStr.isEmpty ? '0' : caloStr,
                   color: widget.text,
-                  fontSize: 48,
-                  height: 1.0,
-                  fontWeight: FontWeight.w900,
-                  letterSpacing: -1.5,
+                  muted: widget.muted,
                 ),
               ),
-              const SizedBox(width: 8),
-              Text(
-                'cal',
-                style: TextStyle(
-                  color: widget.muted,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
+              Expanded(
+                child: _EnergyMetric(
+                  label: 'MỤC TIÊU',
+                  value: target == 0 ? '--' : _formatCalo(target.toDouble()),
+                  color: widget.text,
+                  muted: widget.muted,
+                ),
+              ),
+              Expanded(
+                child: _EnergyMetric(
+                  label: 'CHÊNH LỆCH',
+                  value: target == 0
+                      ? '--'
+                      : '${balance >= 0 ? '+' : ''}${balance.round()}',
+                  color: balance > 0 ? _kAccent : const Color(0xFF36A269),
+                  muted: widget.muted,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 22),
 
-          // Stacked Bar Chart with Y-axis scale and gridlines
-          _MacroChart(
+          // Unified Dual-Bar Chart per day (Col 1: Target | Col 2: Stacked Macros)
+          _UnifiedNutritionChart(
             points: widget.weekly.dailyPoints,
             muted: widget.muted,
             dark: widget.dark,
           ),
           const SizedBox(height: 16),
 
-          // Legend dots: • Đạm  • Carb  • Béo
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          // Legend dots: • Mục tiêu  • Đạm  • Carb  • Béo
+          Wrap(
+            alignment: WrapAlignment.center,
+            spacing: 14,
+            runSpacing: 8,
             children: [
               _LegendDot(
-                color: const Color(0xFFF95A49),
+                color: targetColor,
+                label: 'Mục tiêu',
+                muted: widget.muted,
+              ),
+              _LegendDot(
+                color: MacroColors.protein,
                 label: 'Đạm',
                 muted: widget.muted,
               ),
-              const SizedBox(width: 18),
               _LegendDot(
-                color: const Color(0xFFF59E0B),
+                color: MacroColors.carb,
                 label: 'Carb',
                 muted: widget.muted,
               ),
-              const SizedBox(width: 18),
               _LegendDot(
-                color: const Color(0xFF7B4DDE),
+                color: MacroColors.fat,
                 label: 'Béo',
                 muted: widget.muted,
               ),
@@ -1658,12 +1684,12 @@ class _WeightChartPainter extends CustomPainter {
       oldDelegate.dark != dark;
 }
 
-class _MacroChart extends StatelessWidget {
+class _UnifiedNutritionChart extends StatelessWidget {
   final List<DayCaloriePoint> points;
   final Color muted;
   final bool dark;
 
-  const _MacroChart({
+  const _UnifiedNutritionChart({
     required this.points,
     required this.muted,
     required this.dark,
@@ -1680,9 +1706,13 @@ class _MacroChart extends StatelessWidget {
     }
 
     final double maxVal = points.fold<double>(0, (max, p) {
-      final sum = (p.protein * 4) + (p.carbs * 4) + (p.fat * 9);
-      final total = sum > 0 ? sum : p.calo.toDouble();
-      return total > max ? total : max;
+      final pCal = p.protein * 4;
+      final cCal = p.carbs * 4;
+      final fCal = p.fat * 9;
+      final macroSum = pCal + cCal + fCal;
+      final totalActual = macroSum > 0 ? macroSum : p.calo.toDouble();
+      final dayMax = math.max(totalActual, p.target.toDouble());
+      return dayMax > max ? dayMax : max;
     });
 
     final double yMax = maxVal > 0
@@ -1693,7 +1723,7 @@ class _MacroChart extends StatelessWidget {
     final dayLabels = ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'];
 
     return SizedBox(
-      height: 170,
+      height: 175,
       child: Column(
         children: [
           Expanded(
@@ -1734,10 +1764,10 @@ class _MacroChart extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 4),
-                // Stacked Bar Canvas
+                // Stacked & Target Dual-Bar Canvas
                 Expanded(
                   child: CustomPaint(
-                    painter: _MacroStackedPainter(
+                    painter: _UnifiedStackedPainter(
                       points: points,
                       yMax: yMax,
                       dark: dark,
@@ -1786,12 +1816,12 @@ class _MacroChart extends StatelessWidget {
   }
 }
 
-class _MacroStackedPainter extends CustomPainter {
+class _UnifiedStackedPainter extends CustomPainter {
   final List<DayCaloriePoint> points;
   final double yMax;
   final bool dark;
 
-  const _MacroStackedPainter({
+  const _UnifiedStackedPainter({
     required this.points,
     required this.yMax,
     required this.dark,
@@ -1799,7 +1829,7 @@ class _MacroStackedPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    // 1. Draw dashed grid lines
+    // 1. Gridlines
     final gridPaint = Paint()
       ..color = dark ? const Color(0xFF34313D) : const Color(0xFFE2E8F0)
       ..strokeWidth = 1.0;
@@ -1811,51 +1841,73 @@ class _MacroStackedPainter extends CustomPainter {
 
     if (points.isEmpty) return;
 
-    // 2. Draw stacked bars
-    final barWidth = (size.width / points.length * 0.45).clamp(16.0, 30.0);
-    const colors = [
-      Color(0xFFF95A49), // Bottom: Đạm (Protein - Coral)
-      Color(0xFFF59E0B), // Middle: Carb (Amber)
-      Color(0xFF7B4DDE), // Top: Béo (Fat - Purple)
+    // 2. Dual Bars
+    final slotWidth = size.width / points.length;
+    final singleBarWidth = (slotWidth * 0.30).clamp(7.0, 15.0);
+    const macroColors = [
+      MacroColors.protein, // Bottom: Đạm
+      MacroColors.carb,    // Middle: Carb
+      MacroColors.fat,     // Top: Béo
     ];
+    final targetColor =
+        dark ? const Color(0xFF64748B) : const Color(0xFF94A3B8);
 
     for (int i = 0; i < points.length; i++) {
       final point = points[i];
-      final x = size.width * (i + 0.5) / points.length;
+      final slotCenterX = slotWidth * (i + 0.5);
 
+      final targetBarX = slotCenterX - singleBarWidth / 2 - 1.5;
+      final actualBarX = slotCenterX + singleBarWidth / 2 + 1.5;
+
+      // Draw Target Bar (Col 1)
+      final targetCal = point.target.toDouble();
+      if (targetCal > 0) {
+        final targetH = ((size.height - 8) * (targetCal / yMax))
+            .clamp(0.0, size.height - 8);
+        final targetRect = RRect.fromRectAndCorners(
+          Rect.fromLTWH(targetBarX - singleBarWidth / 2,
+              size.height - 4 - targetH, singleBarWidth, targetH),
+          topLeft: const Radius.circular(4),
+          topRight: const Radius.circular(4),
+        );
+        canvas.drawRRect(
+            targetRect, Paint()..color = targetColor.withValues(alpha: 0.85));
+      }
+
+      // Draw Actual Stacked Macro Bar (Col 2)
       final pCal = point.protein * 4;
       final cCal = point.carbs * 4;
       final fCal = point.fat * 9;
-      final totalCal = (pCal + cCal + fCal) > 0
-          ? (pCal + cCal + fCal)
-          : point.calo.toDouble();
+      final macroSum = pCal + cCal + fCal;
+      final totalCal = macroSum > 0 ? macroSum : point.calo.toDouble();
 
-      if (totalCal <= 0) continue;
+      if (totalCal > 0) {
+        final totalBarHeight = ((size.height - 8) * (totalCal / yMax))
+            .clamp(0.0, size.height - 8);
+        var currentY = size.height - 4;
 
-      final totalBarHeight =
-          ((size.height - 8) * (totalCal / yMax)).clamp(0.0, size.height - 8);
-      var currentY = size.height - 4;
+        final segmentVals = [pCal, cCal, fCal];
 
-      final segmentVals = [pCal, cCal, fCal];
+        for (int seg = 0; seg < segmentVals.length; seg++) {
+          final val = segmentVals[seg];
+          final segHeight =
+              totalCal > 0 ? (totalBarHeight * (val / totalCal)) : 0.0;
+          if (segHeight <= 0) continue;
 
-      for (int seg = 0; seg < segmentVals.length; seg++) {
-        final val = segmentVals[seg];
-        final segHeight =
-            totalCal > 0 ? (totalBarHeight * (val / totalCal)) : 0.0;
-        if (segHeight <= 0) continue;
+          final segTop = currentY - segHeight;
+          final isTopSegment = seg == segmentVals.length - 1 ||
+              segmentVals.sublist(seg + 1).every((v) => v <= 0);
 
-        final segTop = currentY - segHeight;
-        final isTopSegment = seg == segmentVals.length - 1 ||
-            segmentVals.sublist(seg + 1).every((v) => v <= 0);
+          final rect = RRect.fromRectAndCorners(
+            Rect.fromLTWH(actualBarX - singleBarWidth / 2, segTop,
+                singleBarWidth, segHeight),
+            topLeft: isTopSegment ? const Radius.circular(4) : Radius.zero,
+            topRight: isTopSegment ? const Radius.circular(4) : Radius.zero,
+          );
 
-        final rect = RRect.fromRectAndCorners(
-          Rect.fromLTWH(x - barWidth / 2, segTop, barWidth, segHeight),
-          topLeft: isTopSegment ? const Radius.circular(6) : Radius.zero,
-          topRight: isTopSegment ? const Radius.circular(6) : Radius.zero,
-        );
-
-        canvas.drawRRect(rect, Paint()..color = colors[seg]);
-        currentY = segTop;
+          canvas.drawRRect(rect, Paint()..color = macroColors[seg]);
+          currentY = segTop;
+        }
       }
     }
   }
@@ -1885,7 +1937,7 @@ class _MacroStackedPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant _MacroStackedPainter oldDelegate) =>
+  bool shouldRepaint(covariant _UnifiedStackedPainter oldDelegate) =>
       oldDelegate.points != points ||
       oldDelegate.yMax != yMax ||
       oldDelegate.dark != dark;
@@ -2481,6 +2533,7 @@ class _WeightChangeCard extends StatelessWidget {
   final List<WeightChangeItem> changes;
   final Color card, border, text, muted;
   final bool dark;
+  final VoidCallback? onLogWeight;
 
   const _WeightChangeCard({
     required this.changes,
@@ -2489,6 +2542,7 @@ class _WeightChangeCard extends StatelessWidget {
     required this.text,
     required this.muted,
     required this.dark,
+    this.onLogWeight,
   });
 
   @override
@@ -2505,19 +2559,95 @@ class _WeightChangeCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Thay đổi cân nặng',
-            style: TextStyle(
-              color: text,
-              fontSize: 20,
-              fontWeight: FontWeight.w800,
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Thay đổi cân nặng',
+                style: TextStyle(
+                  color: text,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+              if (onLogWeight != null)
+                InkWell(
+                  onTap: onLogWeight,
+                  borderRadius: BorderRadius.circular(14),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF63A97B).withValues(alpha: 0.15),
+                      borderRadius: BorderRadius.circular(14),
+                      border: Border.all(
+                        color: const Color(0xFF63A97B).withValues(alpha: 0.35),
+                      ),
+                    ),
+                    child: const Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.add_rounded,
+                          size: 16,
+                          color: Color(0xFF63A97B),
+                        ),
+                        SizedBox(width: 4),
+                        Text(
+                          'Ghi cân nặng',
+                          style: TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w700,
+                            color: Color(0xFF63A97B),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+            ],
           ),
           const SizedBox(height: 14),
           if (items.isEmpty)
-            Text(
-              'Ghi cân nặng ít nhất hai lần để xem thay đổi theo thời gian.',
-              style: TextStyle(color: muted, fontSize: 14, height: 1.4),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Ghi cân nặng ít nhất hai lần để xem thay đổi theo thời gian.',
+                    style: TextStyle(color: muted, fontSize: 14, height: 1.4),
+                  ),
+                  if (onLogWeight != null) ...[
+                    const SizedBox(height: 12),
+                    ElevatedButton.icon(
+                      onPressed: onLogWeight,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF63A97B),
+                        foregroundColor: Colors.white,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 10,
+                        ),
+                      ),
+                      icon: const Icon(Icons.add_rounded, size: 18),
+                      label: const Text(
+                        'Ghi cân nặng ngay',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                  ],
+                ],
+              ),
             )
           else
             ...items.map((item) {

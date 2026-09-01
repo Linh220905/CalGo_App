@@ -1,19 +1,22 @@
 import 'dart:math' as math;
 import 'dart:async';
 
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:share_plus/share_plus.dart';
 import '../../providers/app_settings_provider.dart';
+import '../../providers/auth_provider.dart';
 import '../../providers/gamification_provider.dart';
 import '../../models/gamification.dart';
+import '../../utils/macro_colors.dart';
+import '../onboarding/steps/premium_paywall_step.dart';
 
 // ── Color constants matching CalGo design system ─────────────────
-const _kProteinColor = Color(0xFFFF5C5C);
-const _kCarbColor = Color(0xFFF59E0B);
-const _kFatColor = Color(0xFF3B82F6);
+const _kProteinColor = MacroColors.protein;
+const _kCarbColor = MacroColors.carb;
+const _kFatColor = MacroColors.fat;
 const _kExpColor = Color(0xFF22C55E);
 const _kFireColor = Color(0xFFF97316);
 
@@ -298,6 +301,17 @@ class _DailyRecapSheetState extends State<DailyRecapSheet>
                           border: border,
                           textMuted: textMuted),
                     ],
+
+                    // ── Target Timeline Estimation Card ──────────
+                    const SizedBox(height: 16),
+                    TargetTimelineCard(
+                      recap: recap,
+                      isDark: isDark,
+                      cardBg: cardBg,
+                      border: border,
+                      textDark: textDark,
+                      textMuted: textMuted,
+                    ),
 
                     const SizedBox(height: 24),
 
@@ -863,4 +877,557 @@ class _RingPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant _RingPainter old) =>
       old.progress != progress || old.color != color;
+}
+
+// ── Target Timeline Card ─────────────────────────────────────────
+class TargetTimelineCard extends StatelessWidget {
+  final DailyRecap? recap;
+  final double? todayCalories;
+  final double? calorieTarget;
+  final bool isDark;
+  final Color cardBg;
+  final Color border;
+  final Color textDark;
+  final Color textMuted;
+
+  const TargetTimelineCard({
+    super.key,
+    this.recap,
+    this.todayCalories,
+    this.calorieTarget,
+    required this.isDark,
+    required this.cardBg,
+    required this.border,
+    required this.textDark,
+    required this.textMuted,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final auth = context.watch<AuthProvider>();
+    final user = auth.user;
+    final isPremiumUser = user?.hasPremiumAccess ?? false;
+
+    final currentWeight = user?.currentWeightKg ?? 65.0;
+    final targetWeight = user?.targetWeightKg ?? 60.0;
+
+    final rawTargetCal = calorieTarget ??
+        (recap != null && recap!.calorieTarget > 0
+            ? recap!.calorieTarget.toDouble()
+            : (user?.dailyCalorieTarget ?? 2000.0).toDouble());
+    final targetCal = rawTargetCal > 0 ? rawTargetCal : 2000.0;
+
+    final todayCal = todayCalories ??
+        (recap != null ? recap!.totalCalories.toDouble() : 0.0);
+
+    final goalType = (user?.goalType ?? user?.goal ?? 'lose').toLowerCase();
+
+    // Maintenance TDEE estimate baseline
+    double maintenanceTdee = targetCal;
+    if (goalType == 'lose' || goalType.contains('giảm')) {
+      maintenanceTdee = targetCal + 500;
+    } else if (goalType == 'gain' || goalType.contains('tăng')) {
+      maintenanceTdee = math.max(1200.0, targetCal - 400);
+    }
+
+    final double ratio = targetCal > 0 ? (todayCal / targetCal) : 1.0;
+
+    String statusTitle;
+    String statusBody;
+    Color statusColor;
+    IconData statusIcon;
+    double weeklyKgChange;
+    int? estimatedWeeks;
+
+    if (goalType == 'lose' || goalType.contains('giảm')) {
+      // --- GOAL: WEIGHT LOSS ---
+      if (ratio < 0.70) {
+        // Under-eating dangerous deficit
+        statusTitle = 'Thâm hụt calo quá mức (Nguy hiểm)';
+        statusColor = const Color(0xFFEF4444);
+        statusIcon = Icons.warning_amber_rounded;
+        weeklyKgChange = -1.2;
+        final weightDiff = math.max(0.1, currentWeight - targetWeight);
+        estimatedWeeks = (weightDiff / 1.2).ceil();
+        statusBody =
+            'Bạn chỉ mới đạt ${(ratio * 100).round()}% calo mục tiêu. Thâm hụt quá sâu có thể gây mệt mỏi, mất cơ và sụt giảm chuyển hóa. Hãy bổ sung thêm thực phẩm lành mạnh!';
+      } else if (ratio <= 1.05) {
+        // Optimal pace
+        statusTitle = 'Tiến độ giảm cân hoàn hảo';
+        statusColor = const Color(0xFF10B981);
+        statusIcon = Icons.check_circle_rounded;
+        final dailyDeficit = math.max(250.0, maintenanceTdee - todayCal);
+        weeklyKgChange = -(dailyDeficit * 7.0) / 7700.0;
+        final weightDiff = math.max(0.1, currentWeight - targetWeight);
+        estimatedWeeks = (weightDiff / weeklyKgChange.abs()).ceil();
+        statusBody =
+            'Nếu duy trì mức calo hôm nay (${todayCal.round()} kcal), bạn dự kiến sẽ đạt mục tiêu ${targetWeight.toStringAsFixed(1)} kg trong khoảng $estimatedWeeks tuần nữa!';
+      } else {
+        // Surplus in weight loss
+        statusTitle = 'Dư thừa calo (Tăng thời gian)';
+        statusColor = const Color(0xFFF59E0B);
+        statusIcon = Icons.trending_up_rounded;
+        final dailySurplus = todayCal - maintenanceTdee;
+        if (dailySurplus > 0) {
+          weeklyKgChange = (dailySurplus * 7.0) / 7700.0;
+          estimatedWeeks = null;
+          statusBody =
+              'Hôm nay bạn nạp dư calo (${todayCal.round()} / ${targetCal.round()} kcal). Nếu duy trì mức này, cân nặng sẽ tăng thay vì giảm!';
+        } else {
+          weeklyKgChange =
+              -(math.max(50.0, maintenanceTdee - todayCal) * 7.0) / 7700.0;
+          final weightDiff = math.max(0.1, currentWeight - targetWeight);
+          estimatedWeeks = (weightDiff / weeklyKgChange.abs()).ceil();
+          statusBody =
+              'Mức calo hôm nay cao hơn mục tiêu, khiến thời gian đạt mốc ${targetWeight.toStringAsFixed(1)} kg bị kéo dài lên $estimatedWeeks tuần.';
+        }
+      }
+    } else if (goalType == 'gain' || goalType.contains('tăng')) {
+      // --- GOAL: WEIGHT GAIN ---
+      if (ratio < 0.90) {
+        statusTitle = 'Thiếu calo tăng cân';
+        statusColor = const Color(0xFFF59E0B);
+        statusIcon = Icons.trending_down_rounded;
+        weeklyKgChange = -0.3;
+        statusBody =
+            'Bạn nạp chưa đủ calo hôm nay (${todayCal.round()} / ${targetCal.round()} kcal). Duy trì mức này sẽ khiến cân nặng sụt giảm thay vì tăng!';
+        estimatedWeeks = null;
+      } else if (ratio <= 1.20) {
+        statusTitle = 'Tiến độ tăng cơ chuẩn mực';
+        statusColor = const Color(0xFF10B981);
+        statusIcon = Icons.fitness_center_rounded;
+        final dailySurplus = math.max(250.0, todayCal - (targetCal - 400));
+        weeklyKgChange = (dailySurplus * 7.0) / 7700.0;
+        final weightDiff = math.max(0.1, targetWeight - currentWeight);
+        estimatedWeeks = (weightDiff / weeklyKgChange.abs()).ceil();
+        statusBody =
+            'Duy trì lượng calo hôm nay (${todayCal.round()} kcal) sẽ giúp bạn đạt mốc ${targetWeight.toStringAsFixed(1)} kg trong khoảng $estimatedWeeks tuần nữa!';
+      } else {
+        statusTitle = 'Dư thừa calo quá nhiều';
+        statusColor = const Color(0xFFF59E0B);
+        statusIcon = Icons.warning_amber_rounded;
+        weeklyKgChange = 0.8;
+        final weightDiff = math.max(0.1, targetWeight - currentWeight);
+        estimatedWeeks = (weightDiff / 0.8).ceil();
+        statusBody =
+            'Lượng calo hôm nay vượt mục tiêu khá nhiều. Cân nặng tăng nhanh nhưng dễ tích tụ mỡ thừa.';
+      }
+    } else {
+      // --- GOAL: MAINTAIN ---
+      if (ratio >= 0.85 && ratio <= 1.15) {
+        statusTitle = 'Duy trì cân nặng ổn định';
+        statusColor = const Color(0xFF10B981);
+        statusIcon = Icons.balance_rounded;
+        weeklyKgChange = 0.0;
+        statusBody =
+            'Mức calo hôm nay cân bằng tuyệt vời, giúp bạn duy trì vóc dáng ổn định tại mốc ${currentWeight.toStringAsFixed(1)} kg.';
+        estimatedWeeks = 0;
+      } else if (ratio < 0.85) {
+        statusTitle = 'Calo hơi thấp so với duy trì';
+        statusColor = const Color(0xFFF59E0B);
+        statusIcon = Icons.trending_down_rounded;
+        weeklyKgChange = -0.3;
+        statusBody =
+            'Hôm nay bạn nạp calo hơi thấp. Hãy chú ý nạp đủ năng lượng để duy trì vóc dáng nhé.';
+        estimatedWeeks = null;
+      } else {
+        statusTitle = 'Calo hơi cao so với duy trì';
+        statusColor = const Color(0xFFF59E0B);
+        statusIcon = Icons.trending_up_rounded;
+        weeklyKgChange = 0.3;
+        statusBody =
+            'Calo hôm nay cao hơn mức duy trì. Tăng cường vận động để cân bằng lại nhé!';
+        estimatedWeeks = null;
+      }
+    }
+
+    final int chartMaxWeeks = math.min(12, math.max(6, estimatedWeeks ?? 8));
+    final List<double> projectedPoints = [];
+    for (int w = 0; w <= chartMaxWeeks; w++) {
+      double projected = currentWeight + (weeklyKgChange * w);
+      projectedPoints.add(projected);
+    }
+
+    return Container(
+      decoration: BoxDecoration(
+        color: cardBg,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: border),
+      ),
+      child: Stack(
+        children: [
+          // Underlying Card Content
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Header Row
+                Row(
+                  children: [
+                    Icon(Icons.timeline_rounded, color: statusColor, size: 20),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        'Ước tính thời gian đạt mục tiêu',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w700,
+                          color: textDark,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 3),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFFFD700).withValues(alpha: 0.15),
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                            color: const Color(0xFFFFD700)
+                                .withValues(alpha: 0.4)),
+                      ),
+                      child: const Row(
+                        children: [
+                          Icon(Icons.crown,
+                              color: Color(0xFFD97706), size: 12),
+                          SizedBox(width: 3),
+                          Text(
+                            'PRO',
+                            style: TextStyle(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w800,
+                              color: Color(0xFFD97706),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+
+                // Status Banner
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: statusColor.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(12),
+                    border:
+                        Border.all(color: statusColor.withValues(alpha: 0.3)),
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(statusIcon, color: statusColor, size: 18),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          statusTitle,
+                          style: TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w700,
+                            color: statusColor,
+                          ),
+                        ),
+                      ),
+                      if (estimatedWeeks != null && estimatedWeeks > 0)
+                        Text(
+                          '$estimatedWeeks tuần',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w900,
+                            color: statusColor,
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 10),
+
+                // Explanation text
+                Text(
+                  statusBody,
+                  style: TextStyle(
+                    fontSize: 13,
+                    height: 1.4,
+                    color: textMuted,
+                  ),
+                ),
+                const SizedBox(height: 16),
+
+                // Projection Chart
+                SizedBox(
+                  height: 130,
+                  width: double.infinity,
+                  child: CustomPaint(
+                    painter: _ProjectionChartPainter(
+                      points: projectedPoints,
+                      currentWeight: currentWeight,
+                      targetWeight: targetWeight,
+                      lineColor: statusColor,
+                      isDark: isDark,
+                      textMuted: textMuted,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          // Free User Glass Lock Overlay
+          if (!isPremiumUser)
+            Positioned.fill(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 5.5, sigmaY: 5.5),
+                  child: Container(
+                    color: isDark
+                        ? Colors.black.withValues(alpha: 0.65)
+                        : Colors.white.withValues(alpha: 0.75),
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFD97706)
+                                .withValues(alpha: 0.15),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.lock_rounded,
+                            color: Color(0xFFD97706),
+                            size: 24,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          'Dự báo tiến trình đạt mục tiêu',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w800,
+                            color: textDark,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          'Nâng cấp Premium để mở khóa biểu đồ & ước tính số tuần đạt mốc cân nặng!',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: textMuted,
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        ElevatedButton.icon(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const PremiumPaywallStep(
+                                  onboardingMode: false,
+                                  source: 'daily_recap',
+                                ),
+                              ),
+                            );
+                          },
+                          icon: const Icon(Icons.crown,
+                              size: 16, color: Colors.white),
+                          label: const Text(
+                            'Nâng cấp Premium',
+                            style: TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.white,
+                            ),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFFE0533C),
+                            elevation: 0,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 18, vertical: 8),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+// ── Projection Chart Painter ─────────────────────────────────────
+class _ProjectionChartPainter extends CustomPainter {
+  final List<double> points;
+  final double currentWeight;
+  final double targetWeight;
+  final Color lineColor;
+  final bool isDark;
+  final Color textMuted;
+
+  _ProjectionChartPainter({
+    required this.points,
+    required this.currentWeight,
+    required this.targetWeight,
+    required this.lineColor,
+    required this.isDark,
+    required this.textMuted,
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (points.isEmpty) return;
+
+    const double topPadding = 18.0;
+    const double bottomPadding = 24.0;
+    const double leftPadding = 32.0;
+    const double rightPadding = 12.0;
+
+    final double chartW = size.width - leftPadding - rightPadding;
+    final double chartH = size.height - topPadding - bottomPadding;
+
+    double minY = points.reduce(math.min);
+    double maxY = points.reduce(math.max);
+    minY = math.min(minY, targetWeight) - 0.5;
+    maxY = math.max(maxY, targetWeight) + 0.5;
+    if (maxY == minY) maxY += 1.0;
+
+    double getY(double val) {
+      final norm = (val - minY) / (maxY - minY);
+      return topPadding + chartH * (1.0 - norm);
+    }
+
+    double getX(int idx) {
+      if (points.length <= 1) return leftPadding;
+      return leftPadding + (chartW * idx / (points.length - 1));
+    }
+
+    // 1. Dotted Target Weight Line
+    final targetY = getY(targetWeight);
+    final dottedPaint = Paint()
+      ..color = isDark ? const Color(0xFF64748B) : const Color(0xFF94A3B8)
+      ..strokeWidth = 1.2
+      ..style = PaintingStyle.stroke;
+
+    const double dashWidth = 4.0;
+    const double dashSpace = 3.0;
+    double startX = leftPadding;
+    while (startX < size.width - rightPadding) {
+      canvas.drawLine(
+        Offset(startX, targetY),
+        Offset(
+            math.min(startX + dashWidth, size.width - rightPadding), targetY),
+        dottedPaint,
+      );
+      startX += dashWidth + dashSpace;
+    }
+
+    // Target label
+    final tp = TextPainter(
+      text: TextSpan(
+        text: '${targetWeight.toStringAsFixed(1)}kg',
+        style: TextStyle(
+          fontSize: 10,
+          fontWeight: FontWeight.w700,
+          color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
+        ),
+      ),
+      textDirection: TextDirection.ltr,
+    )..layout();
+    tp.paint(canvas, Offset(2, targetY - tp.height / 2));
+
+    // 2. Main Bezier Curve
+    final path = Path();
+    path.moveTo(getX(0), getY(points[0]));
+    for (int i = 0; i < points.length - 1; i++) {
+      final x1 = getX(i);
+      final y1 = getY(points[i]);
+      final x2 = getX(i + 1);
+      final y2 = getY(points[i + 1]);
+      final cx = (x1 + x2) / 2;
+      path.cubicTo(cx, y1, cx, y2, x2, y2);
+    }
+
+    // Gradient fill under curve
+    final fillPath = Path.from(path)
+      ..lineTo(getX(points.length - 1), size.height - bottomPadding)
+      ..lineTo(leftPadding, size.height - bottomPadding)
+      ..close();
+
+    final fillPaint = Paint()
+      ..shader = LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [
+          lineColor.withValues(alpha: 0.25),
+          lineColor.withValues(alpha: 0.0),
+        ],
+      ).createShader(Rect.fromLTWH(0, 0, size.width, size.height));
+    canvas.drawPath(fillPath, fillPaint);
+
+    // Draw main stroke
+    final linePaint = Paint()
+      ..color = lineColor
+      ..strokeWidth = 2.5
+      ..style = PaintingStyle.stroke
+      ..strokeCap = StrokeCap.round;
+    canvas.drawPath(path, linePaint);
+
+    // 3. Points & Week Labels
+    final pointPaint = Paint()..color = lineColor;
+    final whiteInnerPaint = Paint()..color = Colors.white;
+
+    for (int i = 0; i < points.length; i++) {
+      final px = getX(i);
+      final py = getY(points[i]);
+
+      if (i == 0 || i == points.length - 1 || i == (points.length ~/ 2)) {
+        canvas.drawCircle(Offset(px, py), 4.5, pointPaint);
+        canvas.drawCircle(Offset(px, py), 2.0, whiteInnerPaint);
+
+        final valTp = TextPainter(
+          text: TextSpan(
+            text: points[i].toStringAsFixed(1),
+            style: TextStyle(
+              fontSize: 10,
+              fontWeight: FontWeight.bold,
+              color: lineColor,
+            ),
+          ),
+          textDirection: TextDirection.ltr,
+        )..layout();
+        valTp.paint(canvas, Offset(px - valTp.width / 2, py - 14));
+      }
+
+      if (i == 0 || i == points.length - 1 || i == (points.length ~/ 2)) {
+        final labelText = i == 0 ? 'Hiện tại' : 'T$i';
+        final weekTp = TextPainter(
+          text: TextSpan(
+            text: labelText,
+            style: TextStyle(
+              fontSize: 10,
+              color: textMuted,
+            ),
+          ),
+          textDirection: TextDirection.ltr,
+        )..layout();
+        weekTp.paint(canvas,
+            Offset(px - weekTp.width / 2, size.height - bottomPadding + 4));
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _ProjectionChartPainter old) =>
+      old.points != points || old.lineColor != lineColor;
 }

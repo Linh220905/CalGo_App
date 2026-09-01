@@ -9,6 +9,7 @@ import '../../providers/home_provider.dart';
 import '../../config/api_config.dart';
 import '../../services/api_service.dart';
 import '../../widgets/share_card_modal.dart';
+import '../../utils/macro_colors.dart';
 
 class IngredientItem {
   String ten;
@@ -1040,8 +1041,8 @@ class _ResultScreenState extends State<ResultScreen> {
                               child: _NutrientCard(
                                 label: 'Protein',
                                 value: _totalProtein,
-                                color: const Color(0xFFFB7185),
-                                icon: Icons.fitness_center_rounded,
+                                color: MacroColors.protein,
+                                icon: MacroColors.proteinIcon,
                                 isDark: isDark,
                               ),
                             ),
@@ -1050,8 +1051,8 @@ class _ResultScreenState extends State<ResultScreen> {
                               child: _NutrientCard(
                                 label: 'Carbs',
                                 value: _totalCarb,
-                                color: const Color(0xFFF59E0B),
-                                icon: Icons.grain_rounded,
+                                color: MacroColors.carb,
+                                icon: MacroColors.carbIcon,
                                 isDark: isDark,
                               ),
                             ),
@@ -1060,8 +1061,8 @@ class _ResultScreenState extends State<ResultScreen> {
                               child: _NutrientCard(
                                 label: 'Fats',
                                 value: _totalFat,
-                                color: const Color(0xFF3B82F6),
-                                icon: Icons.water_drop_rounded,
+                                color: MacroColors.fat,
+                                icon: MacroColors.fatIcon,
                                 isDark: isDark,
                               ),
                             ),
@@ -2781,7 +2782,7 @@ class _NutritionPreview extends StatelessWidget {
             label: s.proteinLabel,
             value: protein,
             unit: 'g',
-            color: const Color(0xFF22C55E),
+            color: MacroColors.protein,
             textDark: textDark,
             textMuted: textMuted,
           ),
@@ -2790,7 +2791,7 @@ class _NutritionPreview extends StatelessWidget {
             label: s.carbsLabel,
             value: carbs,
             unit: 'g',
-            color: const Color(0xFF3B82F6),
+            color: MacroColors.carb,
             textDark: textDark,
             textMuted: textMuted,
           ),
@@ -2799,7 +2800,7 @@ class _NutritionPreview extends StatelessWidget {
             label: s.fatLabel,
             value: fat,
             unit: 'g',
-            color: const Color(0xFFF59E0B),
+            color: MacroColors.fat,
             textDark: textDark,
             textMuted: textMuted,
           ),

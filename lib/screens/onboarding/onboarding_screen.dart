@@ -87,7 +87,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               body: SafeArea(
                 child: Column(
                   children: [
-                    if (provider.currentStep >= 2 && provider.currentStep <= 18)
+                    if (provider.isRecalculating)
+                      StepProgressBar(
+                        value: provider.recalculateProgress,
+                      )
+                    else if (provider.currentStep >= 2 && provider.currentStep <= 18)
                       StepProgressBar(
                         value: (provider.currentStep - 1) / 17,
                       ),

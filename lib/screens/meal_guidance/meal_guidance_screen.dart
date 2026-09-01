@@ -7,6 +7,7 @@ import '../../models/meal_guidance.dart';
 import '../../providers/app_settings_provider.dart';
 import '../../providers/home_provider.dart';
 import '../../l10n/generated/app_localizations.dart';
+import '../../utils/macro_colors.dart';
 
 class MealGuidanceScreen extends StatefulWidget {
   const MealGuidanceScreen({super.key});
@@ -564,13 +565,13 @@ class _DishCard extends StatelessWidget {
                       _DishTag(
                           label: s.guidanceDishCarbs(dish.carbs.round()),
                           text: text,
-                          icon: Icons.grain_rounded,
-                          tint: const Color(0xFFF59E0B)),
+                          icon: MacroColors.carbIcon,
+                          tint: MacroColors.carb),
                       _DishTag(
                           label: s.guidanceDishFat(dish.fat.round()),
                           text: text,
-                          icon: Icons.opacity_rounded,
-                          tint: const Color(0xFFEF8A70)),
+                          icon: MacroColors.fatIcon,
+                          tint: MacroColors.fat),
                       _DishTag(
                           label: _fitLabel(dish.fit, s),
                           text: text,

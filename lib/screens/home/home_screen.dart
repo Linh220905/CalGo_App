@@ -17,12 +17,11 @@ import '../../widgets/mascot_speech_bubble.dart';
 import '../../utils/localized_date_utils.dart';
 import 'widgets/cal_ai_hero_card.dart';
 import 'widgets/cal_ai_macro_card.dart';
-import '../recap/daily_recap_screen.dart';
-import '../../models/gamification.dart';
+import '../../utils/macro_colors.dart';
 
-const _kProteinColor = Color(0xFFFF5C5C);
-const _kCarbColor = Color(0xFFF59E0B);
-const _kFatColor = Color(0xFF3B82F6);
+const _kProteinColor = MacroColors.protein;
+const _kCarbColor = MacroColors.carb;
+const _kFatColor = MacroColors.fat;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -803,8 +802,8 @@ class _RecentlyUploadedList extends StatelessWidget {
                                         color: textMuted),
                                   ),
                                   const SizedBox(width: 12),
-                                  // Fats 🥑
-                                  const Icon(Icons.pie_chart_rounded,
+                                  // Fats 💧
+                                  const Icon(MacroColors.fatIcon,
                                       size: 13, color: _kFatColor),
                                   const SizedBox(width: 2),
                                   Text(
