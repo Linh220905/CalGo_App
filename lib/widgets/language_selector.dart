@@ -219,6 +219,10 @@ String _flagForLanguage(String code) {
       return '🇨🇳';
     case 'hi':
       return '🇮🇳';
+    case 'ja':
+      return '🇯🇵';
+    case 'ko':
+      return '🇰🇷';
     case 'ar':
       return '🌐';
     case 'pt':

@@ -20,7 +20,10 @@ class Ingredient {
 
   factory Ingredient.fromJson(Map<String, dynamic> json) {
     return Ingredient(
-      ten: (json['ten'] ?? json['name'] ?? '').toString(),
+      // display_name is localized by the backend after LLM voting. Keep the
+      // older keys as fallbacks for historical scans and older API versions.
+      ten: (json['display_name'] ?? json['ten'] ?? json['name'] ?? '')
+          .toString(),
       khoiLuongGram: (json['khoi_luong_gram'] as num?)?.toDouble() ??
           (json['khoiLuongGram'] as num?)?.toDouble() ??
           (json['weight_g'] as num?)?.toDouble() ??
@@ -83,12 +86,16 @@ class ScanResult {
       totalFat: (json['total_fat'] as num?)?.toDouble() ??
           (json['totalFat'] as num?)?.toDouble() ??
           0,
-      monChinh: (json['mon_chinh'] ?? json['monChinh'])?.toString(),
+      monChinh: (json['mon_chinh_display'] ??
+              json['mon_chinh'] ??
+              json['monChinh'])
+          ?.toString(),
       scanType: json['scan_type']?.toString() ?? 'single_dish',
       dishCount: (json['dish_count'] as num?)?.toInt() ?? 1,
-      dishes: (json['dishes'] as List<dynamic>?)
-              ?.map((item) => item.toString())
-              .toList() ??
+      dishes: ((json['display_dishes'] as List<dynamic>?) ??
+              (json['dishes'] as List<dynamic>?))
+          ?.map((item) => item.toString())
+          .toList() ??
           const [],
       expEarned: (json['exp_earned'] as num?)?.toInt() ?? 0,
       ingredients: (json['ingredients'] as List<dynamic>?)

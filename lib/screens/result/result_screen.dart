@@ -33,7 +33,8 @@ class IngredientItem {
 
   factory IngredientItem.fromJson(Map<String, dynamic> json) {
     return IngredientItem(
-      ten: (json['ten'] ?? json['name'] ?? '').toString(),
+      ten: (json['display_name'] ?? json['ten'] ?? json['name'] ?? '')
+          .toString(),
       khoiLuongGram:
           (json['khoi_luong_gram'] ?? json['weight_g'] ?? json['gr'] ?? 100)
               .toDouble(),
@@ -80,7 +81,8 @@ class DishDetailItem {
   factory DishDetailItem.fromJson(Map<String, dynamic> json) {
     double number(String key) => (json[key] as num?)?.toDouble() ?? 0;
     return DishDetailItem(
-      name: (json['name'] ?? json['ten_mon'] ?? '').toString(),
+      name: (json['display_name'] ?? json['name'] ?? json['ten_mon'] ?? '')
+          .toString(),
       weightG: number('weight_g'),
       calo: number('calo'),
       carb: number('carb'),
