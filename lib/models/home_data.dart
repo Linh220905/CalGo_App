@@ -32,11 +32,14 @@ class TodaySummary {
     this.aiMessage,
   });
 
+  int get effectiveTargetCalories => targetCalories + burnedCalories;
   int get remainingCalories =>
-      (targetCalories - consumedCalories + burnedCalories)
-          .clamp(0, targetCalories);
+      (effectiveTargetCalories - consumedCalories)
+          .clamp(0, effectiveTargetCalories);
   double get caloriesProgress =>
-      targetCalories > 0 ? (consumedCalories / targetCalories).clamp(0, 1) : 0;
+      effectiveTargetCalories > 0
+          ? (consumedCalories / effectiveTargetCalories).clamp(0, 1)
+          : 0;
   double get proteinProgress =>
       targetProteinG > 0 ? (proteinG / targetProteinG).clamp(0, 1) : 0;
   double get carbProgress =>
@@ -81,6 +84,38 @@ class TodaySummary {
           (json['targetWeightKg'] as num?)?.toDouble() ??
           0,
       aiMessage: json['aiMessage'] as String?,
+    );
+  }
+
+  TodaySummary copyWith({
+    int? consumedCalories,
+    int? burnedCalories,
+    int? targetCalories,
+    int? proteinG,
+    int? targetProteinG,
+    int? carbG,
+    int? targetCarbG,
+    int? fatG,
+    int? targetFatG,
+    int? streakDays,
+    double? currentWeightKg,
+    double? targetWeightKg,
+    String? aiMessage,
+  }) {
+    return TodaySummary(
+      consumedCalories: consumedCalories ?? this.consumedCalories,
+      burnedCalories: burnedCalories ?? this.burnedCalories,
+      targetCalories: targetCalories ?? this.targetCalories,
+      proteinG: proteinG ?? this.proteinG,
+      targetProteinG: targetProteinG ?? this.targetProteinG,
+      carbG: carbG ?? this.carbG,
+      targetCarbG: targetCarbG ?? this.targetCarbG,
+      fatG: fatG ?? this.fatG,
+      targetFatG: targetFatG ?? this.targetFatG,
+      streakDays: streakDays ?? this.streakDays,
+      currentWeightKg: currentWeightKg ?? this.currentWeightKg,
+      targetWeightKg: targetWeightKg ?? this.targetWeightKg,
+      aiMessage: aiMessage ?? this.aiMessage,
     );
   }
 }

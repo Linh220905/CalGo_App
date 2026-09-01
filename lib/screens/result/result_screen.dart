@@ -10,6 +10,7 @@ import '../../config/api_config.dart';
 import '../../services/api_service.dart';
 import '../../widgets/share_card_modal.dart';
 import '../../utils/macro_colors.dart';
+import '../../utils/macro_icons.dart';
 
 class IngredientItem {
   String ten;
@@ -1042,7 +1043,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                 label: 'Protein',
                                 value: _totalProtein,
                                 color: MacroColors.protein,
-                                icon: MacroColors.proteinIcon,
+                                iconWidget: MacroIcons.protein(size: 18),
                                 isDark: isDark,
                               ),
                             ),
@@ -1052,7 +1053,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                 label: 'Carbs',
                                 value: _totalCarb,
                                 color: MacroColors.carb,
-                                icon: MacroColors.carbIcon,
+                                iconWidget: MacroIcons.carb(size: 18),
                                 isDark: isDark,
                               ),
                             ),
@@ -1062,7 +1063,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                 label: 'Fats',
                                 value: _totalFat,
                                 color: MacroColors.fat,
-                                icon: MacroColors.fatIcon,
+                                iconWidget: MacroIcons.fat(size: 18),
                                 isDark: isDark,
                               ),
                             ),
@@ -1822,14 +1823,14 @@ class _NutrientCard extends StatelessWidget {
   final String label;
   final double value;
   final Color color;
-  final IconData icon;
+  final Widget iconWidget;
   final bool isDark;
 
   const _NutrientCard({
     required this.label,
     required this.value,
     required this.color,
-    required this.icon,
+    required this.iconWidget,
     required this.isDark,
   });
 
@@ -1850,7 +1851,7 @@ class _NutrientCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Icon(icon, size: 18, color: color),
+          iconWidget,
           const SizedBox(width: 6),
           Expanded(
             child: Column(

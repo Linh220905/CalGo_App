@@ -904,6 +904,7 @@ class TargetTimelineCard extends StatelessWidget {
   final DailyRecap? recap;
   final double? todayCalories;
   final double? calorieTarget;
+  final bool isWeeklyAverage;
   final bool isDark;
   final Color cardBg;
   final Color border;
@@ -915,6 +916,7 @@ class TargetTimelineCard extends StatelessWidget {
     this.recap,
     this.todayCalories,
     this.calorieTarget,
+    this.isWeeklyAverage = false,
     required this.isDark,
     required this.cardBg,
     required this.border,
@@ -970,8 +972,9 @@ class TargetTimelineCard extends StatelessWidget {
         weeklyKgChange = -1.2;
         final weightDiff = math.max(0.1, currentWeight - targetWeight);
         estimatedWeeks = (weightDiff / 1.2).ceil();
-        statusBody =
-            'Bạn chỉ mới đạt ${(ratio * 100).round()}% calo mục tiêu. Thâm hụt quá sâu có thể gây mệt mỏi, mất cơ và sụt giảm chuyển hóa. Hãy bổ sung thêm thực phẩm lành mạnh!';
+        statusBody = isWeeklyAverage
+            ? 'Mức nạp calo trung bình 7 ngày qua chỉ đạt ${(ratio * 100).round()}% mục tiêu. Thâm hụt quá sâu kéo dài có thể gây mệt mỏi, mất cơ và sụt giảm chuyển hóa. Hãy bổ sung thêm thực phẩm lành mạnh!'
+            : 'Bạn chỉ mới đạt ${(ratio * 100).round()}% calo mục tiêu hôm nay. Thâm hụt quá sâu có thể gây mệt mỏi, mất cơ và sụt giảm chuyển hóa. Hãy bổ sung thêm thực phẩm lành mạnh!';
       } else if (ratio <= 1.05) {
         // Optimal pace
         statusTitle = 'Tiến độ giảm cân hoàn hảo';
@@ -981,8 +984,9 @@ class TargetTimelineCard extends StatelessWidget {
         weeklyKgChange = -(dailyDeficit * 7.0) / 7700.0;
         final weightDiff = math.max(0.1, currentWeight - targetWeight);
         estimatedWeeks = (weightDiff / weeklyKgChange.abs()).ceil();
-        statusBody =
-            'Nếu duy trì mức calo hôm nay (${todayCal.round()} kcal), bạn dự kiến sẽ đạt mục tiêu ${targetWeight.toStringAsFixed(1)} kg trong khoảng $estimatedWeeks tuần nữa!';
+        statusBody = isWeeklyAverage
+            ? 'Nếu duy trì mức calo trung bình 7 ngày qua (${todayCal.round()} kcal/ngày), bạn dự kiến sẽ đạt mục tiêu ${targetWeight.toStringAsFixed(1)} kg trong khoảng $estimatedWeeks tuần nữa!'
+            : 'Nếu duy trì mức calo hôm nay (${todayCal.round()} kcal), bạn dự kiến sẽ đạt mục tiêu ${targetWeight.toStringAsFixed(1)} kg trong khoảng $estimatedWeeks tuần nữa!';
       } else {
         // Surplus in weight loss
         statusTitle = 'Dư thừa calo (Tăng thời gian)';
@@ -992,15 +996,17 @@ class TargetTimelineCard extends StatelessWidget {
         if (dailySurplus > 0) {
           weeklyKgChange = (dailySurplus * 7.0) / 7700.0;
           estimatedWeeks = null;
-          statusBody =
-              'Hôm nay bạn nạp dư calo (${todayCal.round()} / ${targetCal.round()} kcal). Nếu duy trì mức này, cân nặng sẽ tăng thay vì giảm!';
+          statusBody = isWeeklyAverage
+              ? 'Trung bình 7 ngày qua bạn nạp dư calo (${todayCal.round()} / ${targetCal.round()} kcal/ngày). Nếu duy trì mức này, cân nặng sẽ tăng thay vì giảm!'
+              : 'Hôm nay bạn nạp dư calo (${todayCal.round()} / ${targetCal.round()} kcal). Nếu duy trì mức này, cân nặng sẽ tăng thay vì giảm!';
         } else {
           weeklyKgChange =
               -(math.max(50.0, maintenanceTdee - todayCal) * 7.0) / 7700.0;
           final weightDiff = math.max(0.1, currentWeight - targetWeight);
           estimatedWeeks = (weightDiff / weeklyKgChange.abs()).ceil();
-          statusBody =
-              'Mức calo hôm nay cao hơn mục tiêu, khiến thời gian đạt mốc ${targetWeight.toStringAsFixed(1)} kg bị kéo dài lên $estimatedWeeks tuần.';
+          statusBody = isWeeklyAverage
+              ? 'Mức calo trung bình 7 ngày qua cao hơn mục tiêu, khiến thời gian đạt mốc ${targetWeight.toStringAsFixed(1)} kg bị kéo dài lên $estimatedWeeks tuần.'
+              : 'Mức calo hôm nay cao hơn mục tiêu, khiến thời gian đạt mốc ${targetWeight.toStringAsFixed(1)} kg bị kéo dài lên $estimatedWeeks tuần.';
         }
       }
     } else if (goalType == 'gain' || goalType.contains('tăng')) {
@@ -1010,8 +1016,9 @@ class TargetTimelineCard extends StatelessWidget {
         statusColor = const Color(0xFFF59E0B);
         statusIcon = Icons.trending_down_rounded;
         weeklyKgChange = -0.3;
-        statusBody =
-            'Bạn nạp chưa đủ calo hôm nay (${todayCal.round()} / ${targetCal.round()} kcal). Duy trì mức này sẽ khiến cân nặng sụt giảm thay vì tăng!';
+        statusBody = isWeeklyAverage
+            ? 'Mức calo trung bình 7 ngày qua chưa đủ (${todayCal.round()} / ${targetCal.round()} kcal/ngày). Duy trì mức này sẽ khiến cân nặng sụt giảm thay vì tăng!'
+            : 'Bạn nạp chưa đủ calo hôm nay (${todayCal.round()} / ${targetCal.round()} kcal). Duy trì mức này sẽ khiến cân nặng sụt giảm thay vì tăng!';
         estimatedWeeks = null;
       } else if (ratio <= 1.20) {
         statusTitle = 'Tiến độ tăng cơ chuẩn mực';
@@ -1021,8 +1028,9 @@ class TargetTimelineCard extends StatelessWidget {
         weeklyKgChange = (dailySurplus * 7.0) / 7700.0;
         final weightDiff = math.max(0.1, targetWeight - currentWeight);
         estimatedWeeks = (weightDiff / weeklyKgChange.abs()).ceil();
-        statusBody =
-            'Duy trì lượng calo hôm nay (${todayCal.round()} kcal) sẽ giúp bạn đạt mốc ${targetWeight.toStringAsFixed(1)} kg trong khoảng $estimatedWeeks tuần nữa!';
+        statusBody = isWeeklyAverage
+            ? 'Duy trì lượng calo trung bình 7 ngày qua (${todayCal.round()} kcal/ngày) sẽ giúp bạn đạt mốc ${targetWeight.toStringAsFixed(1)} kg trong khoảng $estimatedWeeks tuần nữa!'
+            : 'Duy trì lượng calo hôm nay (${todayCal.round()} kcal) sẽ giúp bạn đạt mốc ${targetWeight.toStringAsFixed(1)} kg trong khoảng $estimatedWeeks tuần nữa!';
       } else {
         statusTitle = 'Dư thừa calo quá nhiều';
         statusColor = const Color(0xFFF59E0B);
@@ -1030,8 +1038,9 @@ class TargetTimelineCard extends StatelessWidget {
         weeklyKgChange = 0.8;
         final weightDiff = math.max(0.1, targetWeight - currentWeight);
         estimatedWeeks = (weightDiff / 0.8).ceil();
-        statusBody =
-            'Lượng calo hôm nay vượt mục tiêu khá nhiều. Cân nặng tăng nhanh nhưng dễ tích tụ mỡ thừa.';
+        statusBody = isWeeklyAverage
+            ? 'Lượng calo trung bình 7 ngày qua vượt mục tiêu khá nhiều (${todayCal.round()} kcal/ngày). Cân nặng tăng nhanh nhưng dễ tích tụ mỡ thừa.'
+            : 'Lượng calo hôm nay vượt mục tiêu khá nhiều. Cân nặng tăng nhanh nhưng dễ tích tụ mỡ thừa.';
       }
     } else {
       // --- GOAL: MAINTAIN ---
@@ -1040,24 +1049,27 @@ class TargetTimelineCard extends StatelessWidget {
         statusColor = const Color(0xFF10B981);
         statusIcon = Icons.balance_rounded;
         weeklyKgChange = 0.0;
-        statusBody =
-            'Mức calo hôm nay cân bằng tuyệt vời, giúp bạn duy trì vóc dáng ổn định tại mốc ${currentWeight.toStringAsFixed(1)} kg.';
+        statusBody = isWeeklyAverage
+            ? 'Mức calo trung bình 7 ngày qua cân bằng tuyệt vời (${todayCal.round()} kcal/ngày), giúp bạn duy trì vóc dáng ổn định tại mốc ${currentWeight.toStringAsFixed(1)} kg.'
+            : 'Mức calo hôm nay cân bằng tuyệt vời, giúp bạn duy trì vóc dáng ổn định tại mốc ${currentWeight.toStringAsFixed(1)} kg.';
         estimatedWeeks = 0;
       } else if (ratio < 0.85) {
         statusTitle = 'Calo hơi thấp so với duy trì';
         statusColor = const Color(0xFFF59E0B);
         statusIcon = Icons.trending_down_rounded;
         weeklyKgChange = -0.3;
-        statusBody =
-            'Hôm nay bạn nạp calo hơi thấp. Hãy chú ý nạp đủ năng lượng để duy trì vóc dáng nhé.';
+        statusBody = isWeeklyAverage
+            ? 'Mức calo trung bình 7 ngày qua hơi thấp (${todayCal.round()} kcal/ngày). Hãy chú ý nạp đủ năng lượng để duy trì vóc dáng nhé.'
+            : 'Hôm nay bạn nạp calo hơi thấp. Hãy chú ý nạp đủ năng lượng để duy trì vóc dáng nhé.';
         estimatedWeeks = null;
       } else {
         statusTitle = 'Calo hơi cao so với duy trì';
         statusColor = const Color(0xFFF59E0B);
         statusIcon = Icons.trending_up_rounded;
         weeklyKgChange = 0.3;
-        statusBody =
-            'Calo hôm nay cao hơn mức duy trì. Tăng cường vận động để cân bằng lại nhé!';
+        statusBody = isWeeklyAverage
+            ? 'Mức calo trung bình 7 ngày qua cao hơn mức duy trì (${todayCal.round()} kcal/ngày). Tăng cường vận động để cân bằng lại nhé!'
+            : 'Calo hôm nay cao hơn mức duy trì. Tăng cường vận động để cân bằng lại nhé!';
         estimatedWeeks = null;
       }
     }
@@ -1096,37 +1108,6 @@ class TargetTimelineCard extends StatelessWidget {
                           fontWeight: FontWeight.w700,
                           color: textDark,
                         ),
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 3,
-                      ),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFFFD700).withValues(alpha: 0.15),
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(
-                          color: const Color(0xFFFFD700).withValues(alpha: 0.4),
-                        ),
-                      ),
-                      child: const Row(
-                        children: [
-                          Icon(
-                            Icons.workspace_premium,
-                            color: Color(0xFFD97706),
-                            size: 12,
-                          ),
-                          SizedBox(width: 3),
-                          Text(
-                            'PRO',
-                            style: TextStyle(
-                              fontSize: 11,
-                              fontWeight: FontWeight.w800,
-                              color: Color(0xFFD97706),
-                            ),
-                          ),
-                        ],
                       ),
                     ),
                   ],

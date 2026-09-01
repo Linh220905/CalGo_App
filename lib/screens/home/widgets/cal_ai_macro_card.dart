@@ -12,7 +12,7 @@ class CalAiMacroCard extends StatelessWidget {
   final Color color;
   final Color trackColor;
   final Color bgIconColor;
-  final IconData icon;
+  final Widget iconWidget;
 
   const CalAiMacroCard({
     super.key,
@@ -24,7 +24,7 @@ class CalAiMacroCard extends StatelessWidget {
     required this.color,
     required this.trackColor,
     required this.bgIconColor,
-    required this.icon,
+    required this.iconWidget,
   });
 
   @override
@@ -126,11 +126,7 @@ class CalAiMacroCard extends StatelessWidget {
                       color: isDark ? color.withOpacity(0.18) : bgIconColor,
                       shape: BoxShape.circle,
                     ),
-                    child: Icon(
-                      icon,
-                      size: 16,
-                      color: color,
-                    ),
+                    child: Center(child: iconWidget),
                   ),
                 ],
               ),

@@ -2,9 +2,12 @@ import 'dart:async';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/onboarding_provider.dart';
 import '../../../providers/app_settings_provider.dart';
+import '../../../providers/auth_provider.dart';
+import '../../../providers/home_provider.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../../models/onboarding_data.dart';
 import '../../../widgets/premium_ui.dart';
@@ -301,15 +304,24 @@ class _AnalyzingPhaseState extends State<_AnalyzingPhase>
 }
 
 // ═══════════════════════════════════════════════════════════════
-// PHASE 2: RESULT — kết quả phân tích (giữ nguyên logic cũ)
+// PHASE 2: RESULT — kết quả phân tích
 // ═══════════════════════════════════════════════════════════════
 
-class _ResultPhase extends StatelessWidget {
+class _ResultPhase extends StatefulWidget {
   const _ResultPhase();
 
   @override
+  State<_ResultPhase> createState() => _ResultPhaseState();
+}
+
+class _ResultPhaseState extends State<_ResultPhase> {
+  bool _isSaving = false;
+
+  @override
   Widget build(BuildContext context) {
-    final d = context.watch<OnboardingProvider>().data;
+    final onboardingProvider = context.watch<OnboardingProvider>();
+    final isRecalc = onboardingProvider.isRecalculating;
+    final d = onboardingProvider.data;
     final settings = context.watch<AppSettingsProvider>();
     final s = settings.strings;
     final name = d.name ?? s.defaultUserName;
@@ -423,8 +435,29 @@ class _ResultPhase extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
               child: PremiumButton(
-                label: s.nextStepButton,
-                onPressed: () => context.read<OnboardingProvider>().nextStep(),
+                label: isRecalc ? 'Hoàn tất & Lưu mục tiêu' : s.nextStepButton,
+                loading: _isSaving,
+                onPressed: _isSaving
+                    ? null
+                    : () async {
+                        if (isRecalc) {
+                          setState(() => _isSaving = true);
+                          final authProvider = context.read<AuthProvider>();
+                          final homeProvider = context.read<HomeProvider>();
+                          final ok = await onboardingProvider.completeOnboarding(
+                            authProvider: authProvider,
+                            homeProvider: homeProvider,
+                          );
+                          if (mounted) {
+                            setState(() => _isSaving = false);
+                            if (ok) {
+                              context.go('/home');
+                            }
+                          }
+                        } else {
+                          onboardingProvider.nextStep();
+                        }
+                      },
               ),
             ),
           ],

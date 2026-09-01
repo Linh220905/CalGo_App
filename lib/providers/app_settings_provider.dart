@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../l10n/generated/app_localizations.dart';
 import '../services/health_service.dart';
@@ -39,8 +40,12 @@ class AppSettingsProvider extends ChangeNotifier {
 
       final savedConnected = prefs.getBool(_kKeyAppleHealth) ?? false;
       if (savedConnected) {
-        final hasPerms = await _healthService.hasPermissions();
-        _isAppleHealthConnected = hasPerms;
+        // HealthKit deliberately does not reveal read authorization status.
+        // Preserve the user's explicit connection choice on iOS and let the
+        // actual read return zero if access was later revoked in Settings.
+        _isAppleHealthConnected = defaultTargetPlatform == TargetPlatform.iOS
+            ? true
+            : await _healthService.hasPermissions();
       } else {
         _isAppleHealthConnected = false;
       }

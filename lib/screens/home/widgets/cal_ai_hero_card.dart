@@ -1,10 +1,10 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/app_settings_provider.dart';
 
 class CalAiHeroCard extends StatelessWidget {
   final int caloriesConsumed;
+  final int caloriesBurned;
   final int caloriesLeft;
   final int targetCalories;
   final double progress;
@@ -12,6 +12,7 @@ class CalAiHeroCard extends StatelessWidget {
   const CalAiHeroCard({
     super.key,
     required this.caloriesConsumed,
+    required this.caloriesBurned,
     required this.caloriesLeft,
     required this.targetCalories,
     required this.progress,
@@ -25,14 +26,14 @@ class CalAiHeroCard extends StatelessWidget {
     final clampedPct = progress.clamp(0.0, 1.0);
 
     final cardBg = isDark ? const Color(0xFF212027) : Colors.white;
-    final borderColor =
-        isDark ? const Color(0xFF2C2A34) : const Color(0xFFE2E8F0);
+    final borderColor = isDark
+        ? const Color(0xFF2C2A34)
+        : const Color(0xFFE2E8F0);
     final textDark = isDark ? Colors.white : const Color(0xFF0F172A);
-    final textMuted =
-        isDark ? const Color(0xFF8E8D9A) : const Color(0xFF64748B);
-    final ringColor = isDark ? Colors.white : const Color(0xFF0F172A);
-    final ringTrackColor =
-        isDark ? const Color(0xFF2C2A34) : const Color(0xFFE2E8F0);
+    final textMuted = isDark
+        ? const Color(0xFF8E8D9A)
+        : const Color(0xFF64748B);
+    final burnedBg = isDark ? const Color(0xFF3A241A) : const Color(0xFFFFEFE6);
 
     return Container(
       width: double.infinity,
@@ -49,91 +50,136 @@ class CalAiHeroCard extends StatelessWidget {
           ),
         ],
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Con số Calo bên trái
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '$caloriesLeft',
+                'KHẨU PHẦN HÔM NAY',
                 style: TextStyle(
-                  fontSize: 38,
+                  fontSize: 12,
                   fontWeight: FontWeight.w800,
-                  color: textDark,
-                  letterSpacing: -1,
-                  height: 1.0,
-                ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                s.caloriesLeft,
-                style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w500,
                   color: textMuted,
+                  letterSpacing: 1.6,
                 ),
               ),
-              const SizedBox(height: 6),
-              // "consumed / target kcal" fraction
-              RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: '$caloriesConsumed',
-                      style: TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w700,
-                        color: textDark,
-                      ),
-                    ),
-                    TextSpan(
-                      text: ' / $targetCalories kcal',
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                        color: textMuted,
-                      ),
-                    ),
-                  ],
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 5,
+                ),
+                decoration: BoxDecoration(
+                  color: isDark ? Colors.white10 : const Color(0xFFF1F5F2),
+                  borderRadius: BorderRadius.circular(999),
+                ),
+                child: Text(
+                  '${(clampedPct * 100).round()}%',
+                  style: const TextStyle(
+                    color: Color(0xFF16A34A),
+                    fontWeight: FontWeight.w800,
+                  ),
                 ),
               ),
             ],
           ),
-
-          // Vòng tròn tiến độ bên phải với icon Ngọn Lửa 🔥
-          SizedBox(
-            width: 88,
-            height: 88,
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                CustomPaint(
-                  size: const Size(88, 88),
-                  painter: _CalorieHeroRingPainter(
-                    progress: clampedPct,
-                    color: ringColor,
-                    trackColor: ringTrackColor,
+          const SizedBox(height: 18),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                '$caloriesLeft',
+                style: TextStyle(
+                  fontSize: 48,
+                  fontWeight: FontWeight.w900,
+                  color: textDark,
+                  letterSpacing: -1.8,
+                  height: 0.95,
+                ),
+              ),
+              const SizedBox(width: 9),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 4),
+                child: Text(
+                  s.caloriesLeft,
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                    color: textMuted,
                   ),
                 ),
-                Container(
-                  width: 44,
-                  height: 44,
-                  decoration: BoxDecoration(
-                    color: isDark
-                        ? const Color(0xFF332014)
-                        : const Color(0xFFFFEDD5),
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(
-                    Icons.local_fire_department_rounded,
-                    size: 24,
-                    color: Color(0xFFF97316),
-                  ),
-                ),
-              ],
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(999),
+            child: LinearProgressIndicator(
+              minHeight: 8,
+              value: clampedPct,
+              backgroundColor: isDark
+                  ? const Color(0xFF34313B)
+                  : const Color(0xFFE8E8EA),
+              valueColor: const AlwaysStoppedAnimation(Color(0xFFF15A3A)),
             ),
+          ),
+          if (caloriesBurned > 0) ...[
+            const SizedBox(height: 15),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              decoration: BoxDecoration(
+                color: burnedBg,
+                borderRadius: BorderRadius.circular(999),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(
+                    Icons.local_fire_department_rounded,
+                    size: 17,
+                    color: Color(0xFFF15A3A),
+                  ),
+                  const SizedBox(width: 5),
+                  Text(
+                    '+$caloriesBurned đã đốt',
+                    style: const TextStyle(
+                      color: Color(0xFFE55233),
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+          const SizedBox(height: 20),
+          Row(
+            children: [
+              Expanded(
+                child: _CalorieMetric(
+                  label: 'ĐÃ ĂN',
+                  value: caloriesConsumed,
+                  textColor: textDark,
+                  mutedColor: textMuted,
+                ),
+              ),
+              Expanded(
+                child: _CalorieMetric(
+                  label: 'ĐÃ ĐỐT',
+                  value: caloriesBurned,
+                  textColor: textDark,
+                  mutedColor: textMuted,
+                ),
+              ),
+              Expanded(
+                child: _CalorieMetric(
+                  label: 'MỤC TIÊU',
+                  value: targetCalories,
+                  textColor: textDark,
+                  mutedColor: textMuted,
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -141,52 +187,44 @@ class CalAiHeroCard extends StatelessWidget {
   }
 }
 
-class _CalorieHeroRingPainter extends CustomPainter {
-  final double progress;
-  final Color color;
-  final Color trackColor;
+class _CalorieMetric extends StatelessWidget {
+  final String label;
+  final int value;
+  final Color textColor;
+  final Color mutedColor;
 
-  _CalorieHeroRingPainter({
-    required this.progress,
-    required this.color,
-    required this.trackColor,
+  const _CalorieMetric({
+    required this.label,
+    required this.value,
+    required this.textColor,
+    required this.mutedColor,
   });
 
   @override
-  void paint(Canvas canvas, Size size) {
-    final c = Offset(size.width / 2, size.height / 2);
-    final r = (size.width - 12) / 2;
-
-    // Track background
-    canvas.drawCircle(
-      c,
-      r,
-      Paint()
-        ..color = trackColor
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 10.0,
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+            color: mutedColor,
+            fontSize: 10.5,
+            fontWeight: FontWeight.w800,
+            letterSpacing: 1.1,
+          ),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          '$value',
+          style: TextStyle(
+            color: textColor,
+            fontSize: 20,
+            fontWeight: FontWeight.w900,
+            letterSpacing: -0.4,
+          ),
+        ),
+      ],
     );
-
-    if (progress > 0) {
-      final sweepAngle = 2 * pi * progress;
-      canvas.drawArc(
-        Rect.fromCircle(center: c, radius: r),
-        -pi / 2,
-        sweepAngle,
-        false,
-        Paint()
-          ..color = color
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = 10.0
-          ..strokeCap = StrokeCap.round,
-      );
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant _CalorieHeroRingPainter oldDelegate) {
-    return oldDelegate.progress != progress ||
-        oldDelegate.color != color ||
-        oldDelegate.trackColor != trackColor;
   }
 }

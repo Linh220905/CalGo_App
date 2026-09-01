@@ -277,6 +277,58 @@ class OnboardingProvider extends ChangeNotifier {
     await prefs.setString(_dataKey, jsonEncode(data.toJson()));
   }
 
+  Future<void> cancelRecalculate() async {
+    _isRecalculating = false;
+    _testingOnboarding = false;
+    _completed = true;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('onboarding_done', true);
+    await prefs.remove(_stepKey);
+    await prefs.remove(_dataKey);
+    notifyListeners();
+  }
+
+  Future<void> previousStep() async {
+    if (_isRecalculating) {
+      switch (_currentStep) {
+        case 19:
+          _currentStep = 11;
+          break;
+        case 11:
+          _currentStep = 10;
+          break;
+        case 10:
+          _currentStep = 9;
+          break;
+        case 9:
+          _currentStep = 8;
+          break;
+        case 8:
+          _currentStep = 7;
+          break;
+        case 7:
+          _currentStep = 2;
+          break;
+        case 2:
+          await cancelRecalculate();
+          return;
+        default:
+          if (_currentStep > 0) _currentStep--;
+      }
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setInt(_stepKey, _currentStep);
+      notifyListeners();
+      return;
+    }
+
+    if (_currentStep > 0) {
+      _currentStep--;
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setInt(_stepKey, _currentStep);
+      notifyListeners();
+    }
+  }
+
   Future<void> nextStep() async {
     if (_isRecalculating) {
       switch (_currentStep) {
@@ -298,6 +350,10 @@ class OnboardingProvider extends ChangeNotifier {
         case 11:
           _currentStep = 19;
           break;
+        case 19:
+          // Finishing recalculation step 19 completes the flow instead of advancing to Paywall/Account
+          await completeOnboarding();
+          return;
         default:
           _currentStep++;
       }

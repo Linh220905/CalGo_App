@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import '../../models/gamification.dart';
 import '../../models/progress.dart';
 import '../../providers/app_settings_provider.dart';
 import '../../providers/gamification_provider.dart';
+import '../../providers/home_provider.dart';
 import '../../providers/progress_provider.dart';
 import '../../widgets/achievement_badge.dart';
 import '../../utils/macro_colors.dart';
@@ -268,6 +270,10 @@ class _ProgressTabState extends State<_ProgressTab> {
           ? 'Đã cập nhật cân nặng thành công'
           : 'Không thể lưu cân nặng. Vui lòng thử lại.',
     );
+    if (saved) {
+      // Refresh gamification weekly stats so TargetTimelineCard updates.
+      unawaited(context.read<GamificationProvider>().refresh());
+    }
   }
 
   void _showMessage(String message) {
@@ -330,20 +336,40 @@ class _ProgressTabState extends State<_ProgressTab> {
               dark: widget.dark,
             ),
             const SizedBox(height: 12),
-            TargetTimelineCard(
-              todayCalories: widget.weekly!.dailyPoints.isNotEmpty
-                  ? widget.weekly!.dailyPoints.last.calo.toDouble()
-                  : widget.weekly!.avgCalo,
-              calorieTarget:
-                  widget.weekly!.dailyPoints.isNotEmpty &&
-                      widget.weekly!.dailyPoints.last.target > 0
-                  ? widget.weekly!.dailyPoints.last.target.toDouble()
-                  : null,
-              isDark: widget.dark,
-              cardBg: widget.card,
-              border: widget.border,
-              textDark: widget.text,
-              textMuted: widget.muted,
+            Builder(
+              builder: (ctx) {
+                // Use HomeProvider's live data for today's calories so the
+                // card updates immediately after scanning or editing meals.
+                final home = ctx.watch<HomeProvider>();
+                final liveCalo = home.hasLoaded
+                    ? home.summary.consumedCalories.toDouble()
+                    : null;
+                final liveTarget = home.hasLoaded &&
+                        home.summary.targetCalories > 0
+                    ? home.summary.targetCalories.toDouble()
+                    : null;
+                final weeklyAvgCalo = widget.weekly?.avgCalo ?? 0.0;
+                final effectiveCalo = weeklyAvgCalo > 0
+                    ? weeklyAvgCalo
+                    : (liveCalo ??
+                        (widget.weekly!.dailyPoints.isNotEmpty
+                            ? widget.weekly!.dailyPoints.last.calo.toDouble()
+                            : 0.0));
+                return TargetTimelineCard(
+                  todayCalories: effectiveCalo,
+                  calorieTarget: liveTarget ??
+                      (widget.weekly!.dailyPoints.isNotEmpty &&
+                              widget.weekly!.dailyPoints.last.target > 0
+                          ? widget.weekly!.dailyPoints.last.target.toDouble()
+                          : null),
+                  isWeeklyAverage: true,
+                  isDark: widget.dark,
+                  cardBg: widget.card,
+                  border: widget.border,
+                  textDark: widget.text,
+                  textMuted: widget.muted,
+                );
+              },
             ),
           ],
           if (widget.monthly != null) ...[

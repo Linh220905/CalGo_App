@@ -5,10 +5,7 @@ import '../providers/app_settings_provider.dart';
 class AppleHealthModal extends StatefulWidget {
   final bool isDark;
 
-  const AppleHealthModal({
-    super.key,
-    required this.isDark,
-  });
+  const AppleHealthModal({super.key, required this.isDark});
 
   static Future<bool?> show(BuildContext context, {required bool isDark}) {
     return showModalBottomSheet<bool>(
@@ -57,10 +54,14 @@ class _AppleHealthModalState extends State<AppleHealthModal> {
     final settings = context.watch<AppSettingsProvider>();
     final isConnected = settings.isAppleHealthConnected;
 
-    final bgColor = widget.isDark ? const Color(0xFF1E1C24) : const Color(0xFFF2F2F7);
+    final bgColor = widget.isDark
+        ? const Color(0xFF1E1C24)
+        : const Color(0xFFF2F2F7);
     final cardBg = widget.isDark ? const Color(0xFF2A2834) : Colors.white;
     final textColor = widget.isDark ? Colors.white : const Color(0xFF0F172A);
-    final mutedColor = widget.isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B);
+    final mutedColor = widget.isDark
+        ? const Color(0xFF94A3B8)
+        : const Color(0xFF64748B);
 
     return Container(
       padding: EdgeInsets.only(
@@ -114,13 +115,9 @@ class _AppleHealthModalState extends State<AppleHealthModal> {
               const SizedBox(height: 8),
 
               Text(
-                'Kết nối trực tiếp với ứng dụng Apple Health trên iPhone để tự động đồng bộ bước chân, calo tiêu thụ và dinh dưỡng hằng ngày.',
+                'CalGo chỉ đọc Năng lượng hoạt động đã đốt (Active Energy) từ Apple Health để cộng vào mục tiêu calo trong ngày.',
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: mutedColor,
-                  height: 1.4,
-                ),
+                style: TextStyle(fontSize: 14, color: mutedColor, height: 1.4),
               ),
               const SizedBox(height: 20),
 
@@ -132,14 +129,20 @@ class _AppleHealthModalState extends State<AppleHealthModal> {
                   color: cardBg,
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(
-                    color: widget.isDark ? const Color(0xFF383644) : const Color(0xFFE2E8F0),
+                    color: widget.isDark
+                        ? const Color(0xFF383644)
+                        : const Color(0xFFE2E8F0),
                   ),
                 ),
                 child: Row(
                   children: [
                     Icon(
-                      isConnected ? Icons.check_circle_rounded : Icons.info_outline_rounded,
-                      color: isConnected ? const Color(0xFF34C759) : const Color(0xFFF59E0B),
+                      isConnected
+                          ? Icons.check_circle_rounded
+                          : Icons.info_outline_rounded,
+                      color: isConnected
+                          ? const Color(0xFF34C759)
+                          : const Color(0xFFF59E0B),
                       size: 24,
                     ),
                     const SizedBox(width: 12),
@@ -148,7 +151,9 @@ class _AppleHealthModalState extends State<AppleHealthModal> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            isConnected ? 'Trạng thái: Đã kết nối' : 'Trạng thái: Chưa kết nối',
+                            isConnected
+                                ? 'Trạng thái: Đã kết nối'
+                                : 'Trạng thái: Chưa kết nối',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 15,
@@ -160,10 +165,7 @@ class _AppleHealthModalState extends State<AppleHealthModal> {
                             isConnected
                                 ? 'Ứng dụng đã được cấp quyền đọc & ghi dữ liệu với Apple Health.'
                                 : 'Nhấn nút bên dưới để mở hộp thoại ủy quyền từ hệ thống iOS.',
-                            style: TextStyle(
-                              fontSize: 12.5,
-                              color: mutedColor,
-                            ),
+                            style: TextStyle(fontSize: 12.5, color: mutedColor),
                           ),
                         ],
                       ),
@@ -202,7 +204,9 @@ class _AppleHealthModalState extends State<AppleHealthModal> {
                         )
                       : const Icon(Icons.touch_app_rounded),
                   label: Text(
-                    isConnected ? 'Cấp lại quyền / Kết nối lại iOS' : 'Kết nối Apple Health (iOS)',
+                    isConnected
+                        ? 'Cấp lại quyền / Kết nối lại iOS'
+                        : 'Kết nối Apple Health (iOS)',
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,

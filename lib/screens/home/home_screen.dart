@@ -15,11 +15,17 @@ import '../../services/notification_service.dart';
 import '../../models/gamification.dart';
 import '../../widgets/swipeable_card.dart';
 import '../../widgets/mascot_speech_bubble.dart';
+import '../../widgets/quick_add_sheet.dart';
 import '../../utils/localized_date_utils.dart';
 import 'widgets/cal_ai_hero_card.dart';
 import 'widgets/cal_ai_macro_card.dart';
 import '../../utils/macro_colors.dart';
+import '../../utils/macro_icons.dart';
 import '../recap/daily_recap_screen.dart';
+import '../exercise/exercise_entry_screen.dart';
+import 'widgets/exercise_log_card.dart';
+import '../../models/exercise_entry.dart';
+import '../../models/home_data.dart';
 
 const _kProteinColor = MacroColors.protein;
 const _kCarbColor = MacroColors.carb;
@@ -31,15 +37,19 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   String? _loadedUserId;
   Timer? _mascotMessageTimer;
   bool _reloadScheduled = false;
   String? _lastRecapSyncKey;
+  String? _healthSyncScheduledKey;
+  bool _healthSyncInFlight = false;
+  int? _lastNotifiedHealthCalories;
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _mascotMessageTimer = Timer.periodic(const Duration(seconds: 6), (_) {
       if (!mounted) return;
       final home = context.read<HomeProvider>();
@@ -51,8 +61,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _mascotMessageTimer?.cancel();
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state != AppLifecycleState.resumed || !mounted) return;
+    if (!context.read<AppSettingsProvider>().isAppleHealthConnected) return;
+    setState(() => _healthSyncScheduledKey = null);
   }
 
   @override
@@ -89,6 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
       builder: (context, hp, _) {
         final gamification = context.watch<GamificationProvider>();
         _syncRecapFeatures(hp);
+        _scheduleHealthSync(hp, settings, currentUserId);
         void onMascotTap() {
           if (hp.mascotOpensMealGuidance) {
             context.push('/meal-guidance');
@@ -298,6 +317,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                           if (hp.loadingDiary ||
                               hp.entries.isNotEmpty ||
+                              hp.exerciseEntries.isNotEmpty ||
                               context.watch<ScanTaskProvider>().task != null)
                             const _RecentlyUploadedList(),
                         ],
@@ -308,7 +328,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
           // ── Floating Action Button (+) ─────────────────────────
           floatingActionButton: FloatingActionButton(
-            onPressed: () => context.push('/scan'),
+            onPressed: () => _openQuickAdd(isDark),
             backgroundColor: textDark,
             elevation: 6,
             shape: const CircleBorder(),
@@ -321,6 +341,88 @@ class _HomeScreenState extends State<HomeScreen> {
         );
       },
     );
+  }
+
+  Future<void> _openQuickAdd(bool isDark) async {
+    final action = await showQuickAddSheet(context, isDark: isDark);
+    if (!mounted || action == null) return;
+    if (action == QuickAddAction.scanMeal) {
+      context.push('/scan');
+      return;
+    }
+
+    final type = await showExerciseTypeSheet(context, isDark: isDark);
+    if (!mounted || type == null) return;
+    final calories = await Navigator.of(context).push<int>(
+      MaterialPageRoute(builder: (_) => ExerciseEntryScreen(type: type)),
+    );
+    if (!mounted || calories == null) return;
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        SnackBar(
+          content: Text('Đã cộng $calories kcal tập luyện vào mục tiêu hôm nay.'),
+          behavior: SnackBarBehavior.floating,
+          duration: const Duration(seconds: 3),
+        ),
+      );
+  }
+
+  void _scheduleHealthSync(
+    HomeProvider home,
+    AppSettingsProvider settings,
+    String userId,
+  ) {
+    if (!settings.isAppleHealthConnected) {
+      _healthSyncScheduledKey = null;
+      return;
+    }
+    if (!home.hasLoaded ||
+        !_isToday(home.selectedDate) ||
+        _healthSyncInFlight) {
+      return;
+    }
+    final now = DateTime.now();
+    final key =
+        '$userId:${now.year}-${now.month}-${now.day}:${home.loadRevision}';
+    if (_healthSyncScheduledKey == key) return;
+    _healthSyncScheduledKey = key;
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (!mounted) return;
+      _healthSyncInFlight = true;
+      try {
+        final calories = await settings.healthService.getTodayActiveCalories();
+        if (!mounted) return;
+        final syncedCalories = await home.syncHealthCalories(calories);
+        if (!mounted ||
+            syncedCalories <= 0 ||
+            _lastNotifiedHealthCalories == syncedCalories) {
+          return;
+        }
+        _lastNotifiedHealthCalories = syncedCalories;
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(
+            SnackBar(
+              content: Row(
+                children: [
+                  const Icon(Icons.favorite_rounded, color: Color(0xFFFF2D55)),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Text(
+                      'Đã đồng bộ $syncedCalories kcal đã đốt từ Apple Health.',
+                    ),
+                  ),
+                ],
+              ),
+              behavior: SnackBarBehavior.floating,
+              duration: const Duration(seconds: 3),
+            ),
+          );
+      } finally {
+        _healthSyncInFlight = false;
+      }
+    });
   }
 
   void _syncRecapFeatures(HomeProvider hp) {
@@ -526,12 +628,15 @@ class _CalorieCardSection extends StatelessWidget {
     if (!hp.hasLoaded || hp.loadingSummary) return const _CardSkeleton();
 
     final s = hp.summary;
-    final target = s.targetCalories > 0 ? s.targetCalories : 2000;
+    final target = s.effectiveTargetCalories > 0
+        ? s.effectiveTargetCalories
+        : 2000;
     final remaining = s.remainingCalories;
     final pct = s.caloriesProgress;
 
     return CalAiHeroCard(
       caloriesConsumed: s.consumedCalories,
+      caloriesBurned: s.burnedCalories,
       caloriesLeft: remaining,
       targetCalories: target,
       progress: pct,
@@ -575,7 +680,7 @@ class _MacroCardsSection extends StatelessWidget {
             color: _kProteinColor,
             trackColor: const Color(0xFFFEE2E2),
             bgIconColor: const Color(0xFFFEF2F2),
-            icon: Icons.flash_on_rounded,
+            iconWidget: MacroIcons.protein(size: 18),
           ),
         ),
         const SizedBox(width: 10),
@@ -590,7 +695,7 @@ class _MacroCardsSection extends StatelessWidget {
             color: _kCarbColor,
             trackColor: const Color(0xFFFEF3C7),
             bgIconColor: const Color(0xFFFFFBEB),
-            icon: Icons.grain_rounded,
+            iconWidget: MacroIcons.carb(size: 18),
           ),
         ),
         const SizedBox(width: 10),
@@ -605,7 +710,7 @@ class _MacroCardsSection extends StatelessWidget {
             color: _kFatColor,
             trackColor: const Color(0xFFDBEAFE),
             bgIconColor: const Color(0xFFEFF6FF),
-            icon: Icons.pie_chart_rounded,
+            iconWidget: MacroIcons.fat(size: 18),
           ),
         ),
       ],
@@ -613,9 +718,37 @@ class _MacroCardsSection extends StatelessWidget {
   }
 }
 
-// ── Recently Uploaded List ────────────────────────────────
-class _RecentlyUploadedList extends StatelessWidget {
+// ── Recently Uploaded Feed & Timeline ──────────────────────────────
+enum _TimelineItemType { meal, exercise }
+
+class _TimelineItem {
+  final _TimelineItemType type;
+  final DateTime time;
+  final DiaryEntry? meal;
+  final ExerciseEntry? exercise;
+
+  _TimelineItem.meal(DiaryEntry m)
+      : type = _TimelineItemType.meal,
+        time = m.time ?? DateTime.now(),
+        meal = m,
+        exercise = null;
+
+  _TimelineItem.exercise(ExerciseEntry e)
+      : type = _TimelineItemType.exercise,
+        time = e.occurredAt,
+        exercise = e,
+        meal = null;
+}
+
+class _RecentlyUploadedList extends StatefulWidget {
   const _RecentlyUploadedList();
+
+  @override
+  State<_RecentlyUploadedList> createState() => _RecentlyUploadedListState();
+}
+
+class _RecentlyUploadedListState extends State<_RecentlyUploadedList> {
+  int _filterIndex = 0; // 0: Tất cả, 1: Thức ăn, 2: Tập luyện
 
   @override
   Widget build(BuildContext context) {
@@ -624,17 +757,14 @@ class _RecentlyUploadedList extends StatelessWidget {
     final s = settings.strings;
     final isDark = settings.isDarkMode;
     final meals = hp.entries;
+    final exercises = hp.exerciseDay.entries;
     final scanTask = context.watch<ScanTaskProvider>();
     final pendingTask = scanTask.task;
 
     final cardBgColor = isDark ? const Color(0xFF212027) : Colors.white;
     final textDark = isDark ? Colors.white : const Color(0xFF0F172A);
-    final textMuted = isDark
-        ? const Color(0xFF8E8D9A)
-        : const Color(0xFF64748B);
-    final borderColor = isDark
-        ? const Color(0xFF2C2A34)
-        : const Color(0xFFE2E8F0);
+    final textMuted = isDark ? const Color(0xFF8E8D9A) : const Color(0xFF64748B);
+    final borderColor = isDark ? const Color(0xFF2C2A34) : const Color(0xFFE2E8F0);
 
     if (pendingTask == null &&
         (!hp.hasLoaded || hp.loadingSummary || hp.loadingDiary)) {
@@ -646,22 +776,77 @@ class _RecentlyUploadedList extends StatelessWidget {
       );
     }
 
-    if (meals.isEmpty && pendingTask == null) return const SizedBox.shrink();
+    final items = <_TimelineItem>[];
+    if (_filterIndex == 0 || _filterIndex == 1) {
+      for (final m in meals) {
+        items.add(_TimelineItem.meal(m));
+      }
+    }
+    if (_filterIndex == 0 || _filterIndex == 2) {
+      for (final e in exercises) {
+        items.add(_TimelineItem.exercise(e));
+      }
+    }
+    items.sort((a, b) => b.time.compareTo(a.time));
+
+    if (items.isEmpty && pendingTask == null && meals.isEmpty && exercises.isEmpty) {
+      return const SizedBox.shrink();
+    }
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // Filter Chips Row
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: [
+              _buildFilterChip(0, 'Tất cả', isDark),
+              const SizedBox(width: 8),
+              _buildFilterChip(1, 'Thức ăn', isDark),
+              const SizedBox(width: 8),
+              _buildFilterChip(2, 'Tập luyện', isDark),
+            ],
+          ),
+        ),
+        const SizedBox(height: 14),
+
         if (pendingTask != null) ...[
           _PendingScanCard(task: pendingTask),
-          if (meals.isNotEmpty) const SizedBox(height: 12),
+          if (items.isNotEmpty) const SizedBox(height: 12),
         ],
-        if (meals.isNotEmpty)
+
+        if (items.isEmpty && pendingTask == null)
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 28),
+              child: Text(
+                _filterIndex == 2
+                    ? 'Chưa có bài tập nào hôm nay'
+                    : (_filterIndex == 1 ? 'Chưa có món ăn nào hôm nay' : 'Chưa có nhật ký nào'),
+                style: TextStyle(
+                  color: textMuted,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+          ),
+
+        if (items.isNotEmpty)
           ListView.separated(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: meals.length,
+            itemCount: items.length,
             separatorBuilder: (_, __) => const SizedBox(height: 12),
             itemBuilder: (context, index) {
-              final item = meals[index];
+              final timelineItem = items[index];
+
+              if (timelineItem.type == _TimelineItemType.exercise) {
+                return ExerciseLogCard(entry: timelineItem.exercise!);
+              }
+
+              final item = timelineItem.meal!;
               final timeStr = localizedTime(item.time, settings.languageCode);
 
               return SwipeableCard(
@@ -802,15 +987,10 @@ class _RecentlyUploadedList extends StatelessWidget {
 
                               const SizedBox(height: 8),
 
-                              // Macro Badges Line: ⚡ 78g   🌾 78g   💧 78g
+                              // Macro Badges Line: 🥩 78g   🌾 78g   💧 78g
                               Row(
                                 children: [
-                                  // Protein 🥩
-                                  const Icon(
-                                    Icons.fitness_center_rounded,
-                                    size: 13,
-                                    color: _kProteinColor,
-                                  ),
+                                  MacroIcons.protein(size: 13),
                                   const SizedBox(width: 2),
                                   Text(
                                     '${item.proteinG}g',
@@ -821,12 +1001,7 @@ class _RecentlyUploadedList extends StatelessWidget {
                                     ),
                                   ),
                                   const SizedBox(width: 12),
-                                  // Carbs 🌾
-                                  const Icon(
-                                    Icons.grain_rounded,
-                                    size: 13,
-                                    color: _kCarbColor,
-                                  ),
+                                  MacroIcons.carb(size: 13),
                                   const SizedBox(width: 2),
                                   Text(
                                     '${item.carbG}g',
@@ -837,12 +1012,7 @@ class _RecentlyUploadedList extends StatelessWidget {
                                     ),
                                   ),
                                   const SizedBox(width: 12),
-                                  // Fats 💧
-                                  const Icon(
-                                    MacroColors.fatIcon,
-                                    size: 13,
-                                    color: _kFatColor,
-                                  ),
+                                  MacroIcons.fat(size: 13),
                                   const SizedBox(width: 2),
                                   Text(
                                     '${item.fatG}g',
@@ -865,6 +1035,35 @@ class _RecentlyUploadedList extends StatelessWidget {
             },
           ),
       ],
+    );
+  }
+
+  Widget _buildFilterChip(int index, String label, bool isDark) {
+    final isSelected = _filterIndex == index;
+    final activeBg = isDark ? Colors.white : const Color(0xFF1E1B26);
+    final activeText = isDark ? const Color(0xFF1E1B26) : Colors.white;
+    final inactiveBg = isDark ? const Color(0xFF23212A) : const Color(0xFFF3F3F5);
+    final inactiveText = isDark ? const Color(0xFF94A3B8) : const Color(0xFF475569);
+
+    return InkWell(
+      onTap: () => setState(() => _filterIndex = index),
+      borderRadius: BorderRadius.circular(20),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+        decoration: BoxDecoration(
+          color: isSelected ? activeBg : inactiveBg,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Text(
+          label,
+          style: TextStyle(
+            fontSize: 13.5,
+            fontWeight: isSelected ? FontWeight.w700 : FontWeight.w600,
+            color: isSelected ? activeText : inactiveText,
+          ),
+        ),
+      ),
     );
   }
 }

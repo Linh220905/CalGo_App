@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'services/api_service.dart';
 import 'services/onboarding_service.dart';
 import 'services/home_service.dart';
+import 'services/exercise_service.dart';
 import 'services/scan_service.dart';
 import 'services/notification_service.dart';
 import 'services/analytics_service.dart';
@@ -83,6 +84,7 @@ void main() {
           create: (_) => HomeProvider(
             HomeService(apiService),
             MealGuidanceService(apiService),
+            ExerciseService(apiService),
           ),
         ),
         ChangeNotifierProvider<PaymentProvider>.value(value: paymentProvider),

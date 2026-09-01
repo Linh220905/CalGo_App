@@ -68,7 +68,7 @@ class ProfileScreen extends StatelessWidget {
             ),
             _buildPersonalInfoRow(
               label: s.creditsLabel,
-              value: '${user?.credits ?? 0}',
+              value: '${user?.credits ?? 0} lượt',
               isDark: isDark,
             ),
             _buildPersonalInfoRow(
@@ -766,12 +766,9 @@ class ProfileScreen extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Icon(
-                          Icons.workspace_premium,
-                          color: showsPremium
-                              ? const Color(0xFFE0533C)
-                              : mutedColor,
-                          size: 14,
+                        const Text(
+                          '👑',
+                          style: TextStyle(fontSize: 13),
                         ),
                         const SizedBox(width: 4),
                         Text(
@@ -782,26 +779,6 @@ class ProfileScreen extends StatelessWidget {
                                 : mutedColor,
                             fontSize: 13,
                             fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Text(
-                          '•',
-                          style: TextStyle(color: mutedColor, fontSize: 12),
-                        ),
-                        const SizedBox(width: 8),
-                        const Icon(
-                          Icons.bolt_rounded,
-                          color: Color(0xFFF59E0B),
-                          size: 14,
-                        ),
-                        const SizedBox(width: 3),
-                        Text(
-                          '${user?.credits ?? 0} ${strings.creditsLabel}',
-                          style: TextStyle(
-                            color: textColor,
-                            fontSize: 13,
-                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ],

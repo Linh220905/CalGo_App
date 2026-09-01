@@ -13,52 +13,22 @@ class HealthService {
     return _configuration ??= _health.configure();
   }
 
-  /// Data types requested for reading from Apple Health / Health Connect
+  /// This feature only needs active energy. Keep the authorization prompt
+  /// minimal until another Health feature is actually shipped.
   static const List<HealthDataType> readTypes = [
-    HealthDataType.STEPS,
     HealthDataType.ACTIVE_ENERGY_BURNED,
-    HealthDataType.WEIGHT,
-    HealthDataType.HEIGHT,
-    HealthDataType.BODY_MASS_INDEX,
   ];
 
-  /// Data types requested for writing to Apple Health
-  static const List<HealthDataType> writeTypes = [
-    HealthDataType.DIETARY_ENERGY_CONSUMED,
-    HealthDataType.DIETARY_CARBS_CONSUMED,
-    HealthDataType.DIETARY_PROTEIN_CONSUMED,
-    HealthDataType.DIETARY_FATS_CONSUMED,
-    HealthDataType.WEIGHT,
-  ];
+  static const List<HealthDataType> writeTypes = [];
 
-  /// All unique types requested by CalGo.
-  ///
-  /// WEIGHT is both readable and writable, but must only occur once in the
-  /// request because the health plugin matches permissions by list index.
+  /// All types currently requested by CalGo.
   static const List<HealthDataType> types = [
-    HealthDataType.STEPS,
-    HealthDataType.ACTIVE_ENERGY_BURNED,
-    HealthDataType.WEIGHT,
-    HealthDataType.HEIGHT,
-    HealthDataType.BODY_MASS_INDEX,
-    HealthDataType.DIETARY_ENERGY_CONSUMED,
-    HealthDataType.DIETARY_CARBS_CONSUMED,
-    HealthDataType.DIETARY_PROTEIN_CONSUMED,
-    HealthDataType.DIETARY_FATS_CONSUMED,
+    ...readTypes,
+    ...writeTypes,
   ];
 
   /// Permissions list matching `types`
-  static const List<HealthDataAccess> permissions = [
-    HealthDataAccess.READ,
-    HealthDataAccess.READ,
-    HealthDataAccess.READ_WRITE,
-    HealthDataAccess.READ,
-    HealthDataAccess.READ,
-    HealthDataAccess.READ_WRITE,
-    HealthDataAccess.READ_WRITE,
-    HealthDataAccess.READ_WRITE,
-    HealthDataAccess.READ_WRITE,
-  ];
+  static const List<HealthDataAccess> permissions = [HealthDataAccess.READ];
 
   /// Check if the app currently has authorization for requested types
   Future<bool> hasPermissions() async {
@@ -107,14 +77,22 @@ class HealthService {
 
   /// Fetch active calories burned today
   Future<double> getTodayActiveCalories() async {
+    return getActiveCaloriesForDay(DateTime.now());
+  }
+
+  /// Fetch cumulative active energy for one local calendar day.
+  Future<double> getActiveCaloriesForDay(DateTime day) async {
     try {
       await _ensureConfigured();
       final now = DateTime.now();
-      final midnight = DateTime(now.year, now.month, now.day);
+      final midnight = DateTime(day.year, day.month, day.day);
+      final nextMidnight = midnight.add(const Duration(days: 1));
+      if (midnight.isAfter(now)) return 0;
+      final endTime = nextMidnight.isBefore(now) ? nextMidnight : now;
       final dataPoints = await _health.getHealthDataFromTypes(
         types: [HealthDataType.ACTIVE_ENERGY_BURNED],
         startTime: midnight,
-        endTime: now,
+        endTime: endTime,
       );
       double totalCal = 0.0;
       for (final point in dataPoints) {

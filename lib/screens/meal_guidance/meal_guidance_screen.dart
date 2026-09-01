@@ -8,6 +8,7 @@ import '../../providers/app_settings_provider.dart';
 import '../../providers/home_provider.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../utils/macro_colors.dart';
+import '../../utils/macro_icons.dart';
 
 class MealGuidanceScreen extends StatefulWidget {
   const MealGuidanceScreen({super.key});
@@ -565,12 +566,12 @@ class _DishCard extends StatelessWidget {
                       _DishTag(
                           label: s.guidanceDishCarbs(dish.carbs.round()),
                           text: text,
-                          icon: MacroColors.carbIcon,
+                          iconWidget: MacroIcons.carb(size: 13),
                           tint: MacroColors.carb),
                       _DishTag(
                           label: s.guidanceDishFat(dish.fat.round()),
                           text: text,
-                          icon: MacroColors.fatIcon,
+                          iconWidget: MacroIcons.fat(size: 13),
                           tint: MacroColors.fat),
                       _DishTag(
                           label: _fitLabel(dish.fit, s),
@@ -717,10 +718,11 @@ class _DishTag extends StatelessWidget {
   final String label;
   final Color text;
   final IconData? icon;
+  final Widget? iconWidget;
   final Color? tint;
 
   const _DishTag(
-      {required this.label, required this.text, this.icon, this.tint});
+      {required this.label, required this.text, this.icon, this.iconWidget, this.tint});
 
   @override
   Widget build(BuildContext context) => Container(
@@ -732,7 +734,10 @@ class _DishTag extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (icon != null) ...[
+            if (iconWidget != null) ...[
+              iconWidget!,
+              const SizedBox(width: 4),
+            ] else if (icon != null) ...[
               Icon(icon, size: 13, color: tint ?? text.withOpacity(.72)),
               const SizedBox(width: 4),
             ],

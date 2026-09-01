@@ -28,6 +28,7 @@ import 'package:calgo/screens/onboarding/steps/splash_step.dart';
 import 'package:calgo/screens/onboarding/steps/target_weight_step.dart';
 import 'package:calgo/screens/onboarding/steps/weight_step.dart';
 import 'package:calgo/services/api_service.dart';
+import 'package:calgo/services/exercise_service.dart';
 import 'package:calgo/services/home_service.dart';
 import 'package:calgo/services/meal_guidance_service.dart';
 import 'package:flutter/material.dart';
@@ -125,11 +126,10 @@ Future<void> _pumpStep(
   final home = HomeProvider(
     HomeService(api),
     MealGuidanceService(api),
+    ExerciseService(api),
   );
   final router = GoRouter(
-    routes: [
-      GoRoute(path: '/', builder: (_, __) => step),
-    ],
+    routes: [GoRoute(path: '/', builder: (_, __) => step)],
   );
   addTearDown(router.dispose);
 

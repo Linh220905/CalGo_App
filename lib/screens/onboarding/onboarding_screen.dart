@@ -88,8 +88,52 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 child: Column(
                   children: [
                     if (provider.isRecalculating)
-                      StepProgressBar(
-                        value: provider.recalculateProgress,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 4,
+                        ),
+                        child: Row(
+                          children: [
+                            IconButton(
+                              icon: const Icon(
+                                Icons.arrow_back_ios_new_rounded,
+                                size: 18,
+                                color: Color(0xFF111111),
+                              ),
+                              tooltip: 'Quay lại',
+                              onPressed: () async {
+                                if (provider.currentStep == 2) {
+                                  await provider.cancelRecalculate();
+                                  if (context.mounted) {
+                                    context.go('/home');
+                                  }
+                                } else {
+                                  await provider.previousStep();
+                                }
+                              },
+                            ),
+                            Expanded(
+                              child: StepProgressBar(
+                                value: provider.recalculateProgress,
+                              ),
+                            ),
+                            IconButton(
+                              icon: const Icon(
+                                Icons.close_rounded,
+                                size: 22,
+                                color: Color(0xFF71717A),
+                              ),
+                              tooltip: 'Thoát',
+                              onPressed: () async {
+                                await provider.cancelRecalculate();
+                                if (context.mounted) {
+                                  context.go('/home');
+                                }
+                              },
+                            ),
+                          ],
+                        ),
                       )
                     else if (provider.currentStep >= 2 && provider.currentStep <= 18)
                       StepProgressBar(

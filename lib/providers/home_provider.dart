@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import '../models/home_data.dart';
+import '../models/exercise_entry.dart';
 import '../models/meal_guidance.dart';
+import '../services/exercise_service.dart';
 import '../services/home_service.dart';
 import '../services/meal_guidance_service.dart';
 import '../l10n/generated/app_localizations.dart';
@@ -10,6 +12,7 @@ import '../l10n/generated/app_localizations.dart';
 class HomeProvider extends ChangeNotifier {
   final HomeService _service;
   final MealGuidanceService _mealGuidanceService;
+  final ExerciseService _exerciseService;
 
   TodaySummary _summary = TodaySummary();
   List<DiaryEntry> _entries = [];
@@ -22,6 +25,9 @@ class HomeProvider extends ChangeNotifier {
   bool _loadingMealGuidance = false;
   bool _hasViewedMealGuidance = false;
   int _loadGeneration = 0;
+  int _loadRevision = 0;
+  ExerciseDaySummary _exerciseDay = ExerciseDaySummary.empty('');
+  bool _syncingHealth = false;
 
   static const _mealIcons = {
     'breakfast': '🌅',
@@ -30,7 +36,11 @@ class HomeProvider extends ChangeNotifier {
     'snack': '🍪',
   };
 
-  HomeProvider(this._service, this._mealGuidanceService);
+  HomeProvider(
+    this._service,
+    this._mealGuidanceService,
+    this._exerciseService,
+  );
 
   TodaySummary get summary => _summary;
   List<DiaryEntry> get entries => _entries;
@@ -38,7 +48,13 @@ class HomeProvider extends ChangeNotifier {
   bool get loadingSummary => _loadingSummary;
   bool get loadingDiary => _loadingDiary;
   bool get hasLoaded => _hasLoaded;
+  int get loadRevision => _loadRevision;
   String? get error => _error;
+  List<ExerciseEntry> get exerciseEntries => _exerciseDay.entries;
+  ExerciseDaySummary get exerciseDay => _exerciseDay;
+  int get appBurnedCalories => _exerciseDay.appCalories.round();
+  int get healthBurnedCalories => _exerciseDay.healthCalories.round();
+  bool get syncingHealth => _syncingHealth;
   MealGuidance? get mealGuidance => _mealGuidance;
   bool get loadingMealGuidance => _loadingMealGuidance;
   bool get mascotOpensMealGuidance =>
@@ -105,8 +121,9 @@ class HomeProvider extends ChangeNotifier {
         final tips = [s.mascotGuidanceTipWater, s.mascotGuidanceTipSlow];
         return tips[(_mascotClickIndex - 1) % tips.length];
       }
-      final target =
-          _summary.targetCalories > 0 ? _summary.targetCalories : 2000;
+      final target = _summary.effectiveTargetCalories > 0
+          ? _summary.effectiveTargetCalories
+          : 2000;
       final difference = target - _summary.consumedCalories;
       if (difference < 0) {
         return s.mascotGuidanceOverTarget(difference.abs());
@@ -128,7 +145,9 @@ class HomeProvider extends ChangeNotifier {
     }
 
     final consumed = _summary.consumedCalories;
-    final target = _summary.targetCalories > 0 ? _summary.targetCalories : 2000;
+    final target = _summary.effectiveTargetCalories > 0
+        ? _summary.effectiveTargetCalories
+        : 2000;
     final diff = target - consumed;
 
     if (consumed > target + 50) {
@@ -196,7 +215,19 @@ class HomeProvider extends ChangeNotifier {
         forceRefresh: forceRefresh,
       );
       if (loadGeneration != _loadGeneration) return;
-      _summary = dayData.summary;
+      ExerciseDaySummary exerciseDay;
+      try {
+        exerciseDay = await _exerciseService.getDaily(date);
+      } catch (_) {
+        // Exercise syncing is additive. Keep the food dashboard available if
+        // the new endpoint has not reached the server yet or is temporarily down.
+        exerciseDay = ExerciseDaySummary.empty(date);
+      }
+      if (loadGeneration != _loadGeneration) return;
+      _exerciseDay = exerciseDay;
+      _summary = dayData.summary.copyWith(
+        burnedCalories: exerciseDay.totalCalories.round(),
+      );
       _entries = dayData.meals;
     } catch (e) {
       if (loadGeneration != _loadGeneration) return;
@@ -206,6 +237,7 @@ class HomeProvider extends ChangeNotifier {
     _loadingSummary = false;
     _loadingDiary = false;
     _hasLoaded = true;
+    _loadRevision++;
     notifyListeners();
 
     if (_error == null && _isToday(_selectedDate)) {
@@ -285,6 +317,77 @@ class HomeProvider extends ChangeNotifier {
     await loadToday(forceRefresh: true);
   }
 
+  Future<ExerciseEntry> recordExercise({
+    required String activityType,
+    String? intensity,
+    int? durationMinutes,
+    double? caloriesBurned,
+  }) async {
+    final now = DateTime.now();
+    final dateKey = _dateKey(now);
+    final entry = await _exerciseService.createExercise(
+      dateKey: dateKey,
+      activityType: activityType,
+      intensity: intensity,
+      durationMinutes: durationMinutes,
+      caloriesBurned: caloriesBurned,
+      occurredAt: now,
+    );
+    _selectedDate = DateTime(now.year, now.month, now.day);
+    await loadToday(forceRefresh: true);
+    return entry;
+  }
+
+  Future<void> removeExerciseEntry(String id) async {
+    final updatedDay = await _exerciseService.deleteExercise(id);
+    _exerciseDay = updatedDay;
+    _summary = _summary.copyWith(
+      burnedCalories: updatedDay.totalCalories.round(),
+    );
+    notifyListeners();
+  }
+
+  Future<int> syncHealthCalories(double calories) async {
+    if (_syncingHealth) return healthBurnedCalories;
+    _syncingHealth = true;
+    notifyListeners();
+    final now = DateTime.now();
+    final dateKey = _dateKey(now);
+    final safeCalories = calories.clamp(0, 10000).toDouble();
+    try {
+      final result = await _exerciseService.syncHealthCalories(
+        dateKey: dateKey,
+        caloriesBurned: safeCalories,
+      );
+      _exerciseDay = result;
+      if (_isToday(_selectedDate)) {
+        _summary = _summary.copyWith(
+          burnedCalories: result.totalCalories.round(),
+        );
+      }
+      return result.healthCalories.round();
+    } catch (_) {
+      // Still reflect the current on-device Health value. The next refresh
+      // retries the server upsert without incrementing it a second time.
+      _exerciseDay = ExerciseDaySummary(
+        dateKey: dateKey,
+        appCalories: _exerciseDay.appCalories,
+        healthCalories: safeCalories,
+        totalCalories: _exerciseDay.appCalories + safeCalories,
+        entries: _exerciseDay.entries,
+      );
+      if (_isToday(_selectedDate)) {
+        _summary = _summary.copyWith(
+          burnedCalories: _exerciseDay.totalCalories.round(),
+        );
+      }
+      return safeCalories.round();
+    } finally {
+      _syncingHealth = false;
+      notifyListeners();
+    }
+  }
+
   Future<void> refreshMealGuidance() async {
     if (!_isToday(_selectedDate) || _loadingMealGuidance) return;
     _loadingMealGuidance = true;
@@ -322,6 +425,11 @@ class HomeProvider extends ChangeNotifier {
         date.month == now.month &&
         date.day == now.day;
   }
+
+  String _dateKey(DateTime date) =>
+      '${date.year.toString().padLeft(4, '0')}-'
+      '${date.month.toString().padLeft(2, '0')}-'
+      '${date.day.toString().padLeft(2, '0')}';
 
   String mealIcon(String type) => _mealIcons[type] ?? '🍽️';
 }
