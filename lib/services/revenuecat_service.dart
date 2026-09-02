@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 class RevenueCatService {
@@ -109,8 +110,9 @@ class RevenueCatService {
     try {
       final customerInfo = await Purchases.purchasePackage(package);
       return customerInfo.entitlements.all[entitlementId]?.isActive ?? false;
-    } on PurchasesException catch (e) {
-      if (e.code == PurchasesErrorCode.purchaseCancelledError) {
+    } on PlatformException catch (e) {
+      final errorCode = PurchasesErrorHelper.getErrorCode(e);
+      if (errorCode == PurchasesErrorCode.purchaseCancelledError) {
         debugPrint('[RevenueCat] User cancelled purchase');
       } else {
         debugPrint('[RevenueCat] Purchase exception: ${e.message}');
