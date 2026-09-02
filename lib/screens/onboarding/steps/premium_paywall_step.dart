@@ -15,6 +15,8 @@ import '../../../widgets/social_auth_button.dart';
 import '../../../widgets/premium_ui.dart';
 import '../../../services/trial_notification_service.dart';
 import '../../../services/analytics_service.dart';
+import '../../../services/revenuecat_service.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 import '../../../utils/payment_platform.dart';
 import 'post_premium_quiz_dialog.dart';
 
@@ -478,6 +480,41 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
     }
 
     if (!await _ensureAuthenticated() || !mounted) return;
+
+    // Try RevenueCat purchase first
+    try {
+      final offerings = await RevenueCatService.getOfferings();
+      final currentOffering = offerings?.current;
+      if (currentOffering != null && currentOffering.availablePackages.isNotEmpty) {
+        Package? pkg;
+        if (_selectedPlan == _Plan.weekly) {
+          pkg = currentOffering.weekly ?? currentOffering.availablePackages.firstWhere(
+            (p) => p.packageType == PackageType.weekly,
+            orElse: () => currentOffering.availablePackages.first,
+          );
+        } else if (_selectedPlan == _Plan.monthly) {
+          pkg = currentOffering.monthly ?? currentOffering.availablePackages.firstWhere(
+            (p) => p.packageType == PackageType.monthly,
+            orElse: () => currentOffering.availablePackages.first,
+          );
+        } else {
+          pkg = currentOffering.annual ?? currentOffering.availablePackages.firstWhere(
+            (p) => p.packageType == PackageType.annual,
+            orElse: () => currentOffering.availablePackages.first,
+          );
+        }
+
+        final success = await RevenueCatService.purchasePackage(pkg);
+        if (!mounted) return;
+        if (success) {
+          await _handlePremiumSuccess();
+          return;
+        }
+      }
+    } catch (e) {
+      debugPrint('[Paywall] RevenueCat purchase error: $e');
+    }
+
     final plan = _toPremiumPlan(_selectedPlan);
     final preferTrial =
         selectedOffer?.hasFreeTrial ??
@@ -536,11 +573,14 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
   ) {
     const testing = AppBuildConfig.isTesting;
     if (testing) return testingLabel;
+    if (_selectedPlan == _Plan.weekly) {
+      return 'Thay đổi bản thân ngay';
+    }
     final days = _currentTrialDays(payment);
     if (_enableFreeTrial && days > 0) {
-      return 'Dùng thử $days ngày miễn phí';
+      return 'Dùng miễn phí ngay';
     }
-    return 'Dùng miễn phí ngay';
+    return 'Thay đổi bản thân ngay';
   }
 
   @override

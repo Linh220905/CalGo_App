@@ -35,6 +35,7 @@ dependencies:
   in_app_purchase: 3.2.3
   in_app_purchase_android: 0.4.0
   in_app_purchase_storekit: 0.4.0
+  purchases_flutter: ^8.6.0
   google_mobile_ads: ^5.1.0
   share_plus: ^10.1.4
   path_provider: ^2.1.5

@@ -11,6 +11,7 @@ import 'services/scan_service.dart';
 import 'services/notification_service.dart';
 import 'services/analytics_service.dart';
 import 'services/meal_guidance_service.dart';
+import 'services/revenuecat_service.dart';
 import 'providers/auth_provider.dart';
 import 'providers/onboarding_provider.dart';
 import 'providers/home_provider.dart';
@@ -57,6 +58,11 @@ void main() {
         apiService.authScope != restoredPaymentAuthScope) {
       restoredPaymentAuthScope = apiService.authScope;
       unawaited(paymentProvider.restorePurchases());
+      if (authProvider.user?.id != null) {
+        unawaited(RevenueCatService.logIn(authProvider.user!.id));
+      } else {
+        unawaited(RevenueCatService.init());
+      }
       // BUG 4 fix: retry any purchase whose server-side verification failed
       // in a previous session due to an expired auth token.
       unawaited(paymentProvider.retryPendingPurchaseVerification());
@@ -66,6 +72,7 @@ void main() {
   // neutral startup screen until they finish, never a persisted onboarding step.
   unawaited(onboardingProvider.init());
   unawaited(authProvider.tryRestore());
+  unawaited(RevenueCatService.init());
   final router = createAppRouter(onboardingProvider, authProvider);
   NotificationService.onNotificationTap = (payload) {
     if (payload == 'daily_recap') router.go('/recap');
