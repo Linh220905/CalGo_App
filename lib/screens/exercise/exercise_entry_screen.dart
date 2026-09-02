@@ -84,7 +84,7 @@ class _ExerciseEntryScreenState extends State<ExerciseEntryScreen> {
             Icon(_headerIcon, color: text, size: 23),
             const SizedBox(width: 9),
             Text(
-              _title,
+              _title(settings.strings),
               style: TextStyle(
                 color: text,
                 fontSize: 22,
@@ -104,7 +104,7 @@ class _ExerciseEntryScreenState extends State<ExerciseEntryScreen> {
             if (!_isManual) ...[
               _SectionTitle(
                 icon: Icons.auto_awesome,
-                label: 'Cường độ',
+                label: settings.strings.intensityTitle,
                 color: text,
               ),
               const SizedBox(height: 12),
@@ -120,15 +120,17 @@ class _ExerciseEntryScreenState extends State<ExerciseEntryScreen> {
               icon: _isManual
                   ? Icons.local_fire_department_outlined
                   : Icons.schedule_rounded,
-              label: _isManual ? 'Calo đã đốt' : 'Thời lượng',
+              label: _isManual
+                  ? settings.strings.burnedCaloriesTitle
+                  : settings.strings.durationTitle,
               color: text,
             ),
             const SizedBox(height: 12),
             if (_isManual)
               _NumberField(
                 controller: _manualCaloriesController,
-                suffix: 'kcal',
-                hint: 'Nhập calo từ máy tập hoặc thiết bị',
+                suffix: settings.strings.kcalSuffix,
+                hint: settings.strings.manualCaloriesHint,
                 isDark: isDark,
                 onChanged: (_) => setState(() {}),
               )
@@ -155,8 +157,8 @@ class _ExerciseEntryScreenState extends State<ExerciseEntryScreen> {
               const SizedBox(height: 12),
               _NumberField(
                 controller: _durationController,
-                suffix: 'phút',
-                hint: 'Thời lượng tập',
+                suffix: settings.strings.minutesSuffix,
+                hint: settings.strings.durationHint,
                 isDark: isDark,
                 onChanged: (value) {
                   final parsed = int.tryParse(value);
@@ -194,13 +196,13 @@ class _ExerciseEntryScreenState extends State<ExerciseEntryScreen> {
                       children: [
                         Text(
                           _isManual
-                              ? 'Sẽ cộng vào hôm nay'
-                              : 'Ước tính calo hoạt động',
+                              ? settings.strings.willAddToToday
+                              : settings.strings.estimatedActiveCalories,
                           style: TextStyle(color: muted, fontSize: 12.5),
                         ),
                         const SizedBox(height: 2),
                         Text(
-                          '${estimatedCalories.round()} kcal',
+                          '${estimatedCalories.round()} ${settings.strings.kcalSuffix}',
                           style: TextStyle(
                             color: text,
                             fontSize: 28,
@@ -226,13 +228,13 @@ class _ExerciseEntryScreenState extends State<ExerciseEntryScreen> {
               const SizedBox(height: 10),
               Text(
                 weightKg > 0
-                    ? 'Tính theo cân nặng ${weightKg.toStringAsFixed(1)} kg và MET từ Adult Compendium 2024. Đây là ước tính, thiết bị đeo có thể chính xác hơn.'
-                    : 'Hãy cập nhật cân nặng trong hồ sơ để CalGo ước tính calo.',
+                    ? settings.strings.exerciseCalcWeightNote(weightKg.toStringAsFixed(1))
+                    : settings.strings.exerciseUpdateWeightPrompt,
                 style: TextStyle(color: muted, fontSize: 12.5, height: 1.4),
               ),
               const SizedBox(height: 8),
               Text(
-                'Nếu Apple Health đã ghi nhận cùng buổi tập, không ghi lại tại đây để tránh cộng calo hai lần.',
+                settings.strings.exerciseHealthSyncWarning,
                 style: TextStyle(color: muted, fontSize: 12.5, height: 1.4),
               ),
             ],
@@ -249,7 +251,7 @@ class _ExerciseEntryScreenState extends State<ExerciseEntryScreen> {
               child: FilledButton(
                 onPressed: _saving || (!_isManual && weightKg <= 0)
                     ? null
-                    : () => _save(estimatedCalories),
+                    : () => _save(estimatedCalories, settings.strings),
                 style: FilledButton.styleFrom(
                   backgroundColor: text,
                   foregroundColor: isDark ? Colors.black : Colors.white,
@@ -266,9 +268,9 @@ class _ExerciseEntryScreenState extends State<ExerciseEntryScreen> {
                         height: 22,
                         child: CircularProgressIndicator(strokeWidth: 2),
                       )
-                    : const Text(
-                        'Lưu bài tập',
-                        style: TextStyle(
+                    : Text(
+                        settings.strings.saveWorkoutButton,
+                        style: const TextStyle(
                           fontSize: 17,
                           fontWeight: FontWeight.w800,
                         ),
@@ -281,13 +283,13 @@ class _ExerciseEntryScreenState extends State<ExerciseEntryScreen> {
     );
   }
 
-  String get _title => switch (widget.type) {
-    ExerciseEntryType.running => 'Chạy bộ',
-    ExerciseEntryType.walking => 'Đi bộ',
-    ExerciseEntryType.cycling => 'Đạp xe',
-    ExerciseEntryType.swimming => 'Bơi lội',
-    ExerciseEntryType.workout => 'Tập luyện',
-    ExerciseEntryType.manual => 'Ghi thủ công',
+  String _title(dynamic strings) => switch (widget.type) {
+    ExerciseEntryType.running => strings.exerciseRunning,
+    ExerciseEntryType.walking => strings.exerciseWalking,
+    ExerciseEntryType.cycling => strings.exerciseCycling,
+    ExerciseEntryType.swimming => strings.exerciseSwimming,
+    ExerciseEntryType.workout => strings.filterWorkout,
+    ExerciseEntryType.manual => strings.exerciseManual,
   };
 
   IconData get _headerIcon => switch (widget.type) {
@@ -304,14 +306,14 @@ class _ExerciseEntryScreenState extends State<ExerciseEntryScreen> {
     setState(() => _durationMinutes = minutes);
   }
 
-  Future<void> _save(double estimatedCalories) async {
+  Future<void> _save(double estimatedCalories, dynamic strings) async {
     FocusScope.of(context).unfocus();
     if (_isManual && (estimatedCalories <= 0 || estimatedCalories > 5000)) {
-      setState(() => _error = 'Vui lòng nhập số calo từ 1 đến 5.000 kcal.');
+      setState(() => _error = strings.exerciseCalorieRangeError);
       return;
     }
     if (!_isManual && (_durationMinutes <= 0 || _durationMinutes > 1440)) {
-      setState(() => _error = 'Thời lượng phải từ 1 đến 1.440 phút.');
+      setState(() => _error = strings.exerciseDurationRangeError);
       return;
     }
     setState(() {
@@ -331,7 +333,7 @@ class _ExerciseEntryScreenState extends State<ExerciseEntryScreen> {
       if (!mounted) return;
       setState(() {
         _saving = false;
-        _error = 'Chưa thể lưu bài tập. Vui lòng kiểm tra mạng và thử lại.';
+        _error = strings.exerciseSaveNetworkError;
       });
     }
   }
@@ -382,6 +384,7 @@ class _IntensityCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final strings = context.watch<AppSettingsProvider>().strings;
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
@@ -401,8 +404,8 @@ class _IntensityCard extends StatelessWidget {
                 .map(
                   (intensity) => _IntensityOption(
                     intensity: intensity,
-                    title: _intensityTitle(intensity),
-                    description: _description(intensity),
+                    title: _intensityTitle(intensity, strings),
+                    description: _description(intensity, strings),
                     selected: selected == intensity,
                     isDark: isDark,
                     onTap: () => onSelected(intensity),
@@ -413,46 +416,45 @@ class _IntensityCard extends StatelessWidget {
     );
   }
 
-  String _intensityTitle(ExerciseIntensity value) => switch (value) {
-    ExerciseIntensity.low => 'Thấp',
-    ExerciseIntensity.moderate => 'Trung bình',
-    ExerciseIntensity.high => 'Cao',
+  String _intensityTitle(ExerciseIntensity value, dynamic strings) => switch (value) {
+    ExerciseIntensity.low => strings.intensityLow,
+    ExerciseIntensity.moderate => strings.intensityModerate,
+    ExerciseIntensity.high => strings.intensityHigh,
   };
 
-  String _description(ExerciseIntensity value) {
+  String _description(ExerciseIntensity value, dynamic strings) {
     if (activityType == 'running') {
       return switch (value) {
-        ExerciseIntensity.low => 'Chạy nhẹ 6,4–6,8 km/h · khoảng 9:20 phút/km',
-        ExerciseIntensity.moderate =>
-          'Chạy đều 9,7–10,1 km/h · khoảng 6:10 phút/km',
-        ExerciseIntensity.high => 'Chạy nhanh 12,9 km/h · khoảng 4:40 phút/km',
+        ExerciseIntensity.low => strings.exerciseRunLowDesc,
+        ExerciseIntensity.moderate => strings.exerciseRunModDesc,
+        ExerciseIntensity.high => strings.exerciseRunHighDesc,
       };
     }
     if (activityType == 'walking') {
       return switch (value) {
-        ExerciseIntensity.low => 'Đi dạo nhẹ nhàng 4,0 km/h',
-        ExerciseIntensity.moderate => 'Đi bộ nhanh 5,6 km/h',
-        ExerciseIntensity.high => 'Đi bộ rất nhanh / leo dốc nhẹ 6,4–7,2 km/h',
+        ExerciseIntensity.low => strings.exerciseWalkLowDesc,
+        ExerciseIntensity.moderate => strings.exerciseWalkModDesc,
+        ExerciseIntensity.high => strings.exerciseWalkHighDesc,
       };
     }
     if (activityType == 'cycling') {
       return switch (value) {
-        ExerciseIntensity.low => 'Đạp xe nhẹ nhàng 16–19 km/h',
-        ExerciseIntensity.moderate => 'Đạp xe tốc độ vừa 19–22 km/h',
-        ExerciseIntensity.high => 'Đạp xe nhanh gắng sức 22–25 km/h',
+        ExerciseIntensity.low => strings.exerciseCycleLowDesc,
+        ExerciseIntensity.moderate => strings.exerciseCycleModDesc,
+        ExerciseIntensity.high => strings.exerciseCycleHighDesc,
       };
     }
     if (activityType == 'swimming') {
       return switch (value) {
-        ExerciseIntensity.low => 'Bơi thư giãn nhẹ nhàng',
-        ExerciseIntensity.moderate => 'Bơi sải / bơi ếch tốc độ trung bình',
-        ExerciseIntensity.high => 'Bơi liên tục gắng sức cao',
+        ExerciseIntensity.low => strings.exerciseSwimLowDesc,
+        ExerciseIntensity.moderate => strings.exerciseSwimModDesc,
+        ExerciseIntensity.high => strings.exerciseSwimHighDesc,
       };
     }
     return switch (value) {
-      ExerciseIntensity.low => 'Kháng lực nhẹ, nghỉ nhiều giữa các hiệp',
-      ExerciseIntensity.moderate => 'Circuit vừa, đổ mồ hôi và thở nhanh hơn',
-      ExerciseIntensity.high => 'Circuit nặng, ít nghỉ, gắng sức cao',
+      ExerciseIntensity.low => strings.exerciseWorkoutLowDesc,
+      ExerciseIntensity.moderate => strings.exerciseWorkoutModDesc,
+      ExerciseIntensity.high => strings.exerciseWorkoutHighDesc,
     };
   }
 }

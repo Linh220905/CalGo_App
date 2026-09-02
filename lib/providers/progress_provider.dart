@@ -46,11 +46,16 @@ class ProgressProvider extends ChangeNotifier {
     try {
       await _service.logWeight(weightKg, date: date);
       if (photoPath != null && File(photoPath).existsSync()) {
-        await _service.uploadPhoto(photoPath, date: date);
+        try {
+          await _service.uploadPhoto(photoPath, date: date);
+        } catch (e) {
+          debugPrint('Progress photo upload failed: $e');
+        }
       }
       await refresh(days: _data?.rangeDays ?? 90);
       return true;
-    } catch (_) {
+    } catch (e) {
+      debugPrint('logWeight failed: $e');
       _error = 'saveFailed';
       return false;
     } finally {

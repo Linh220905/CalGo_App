@@ -20,6 +20,7 @@ class User {
   final String? activityLevel;
   final String? goal;
   final double? weeklyGoalKg;
+  final double? tdee;
 
   final double? proteinGrams;
   final double? fatGrams;
@@ -45,6 +46,7 @@ class User {
     this.activityLevel,
     this.goal,
     this.weeklyGoalKg,
+    this.tdee,
     this.proteinGrams,
     this.fatGrams,
     this.carbsGrams,
@@ -99,6 +101,9 @@ class User {
       weeklyGoalKg:
           (json['weekly_goal_kg'] as num?)?.toDouble() ??
           (json['weeklyGoalKg'] as num?)?.toDouble(),
+      tdee:
+          (json['tdee'] as num?)?.toDouble() ??
+          (json['tdeeCalories'] as num?)?.toDouble(),
       proteinGrams:
           (json['protein_grams'] as num?)?.toDouble() ??
           (json['proteinGrams'] as num?)?.toDouble(),

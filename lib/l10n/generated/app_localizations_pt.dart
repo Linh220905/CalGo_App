@@ -1264,7 +1264,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get sportsOther => 'Outros';
 
   @override
-  String get durationTitle => 'Quando queres atingir o teu objectivo?';
+  String get durationTitle => 'Duração';
 
   @override
   String get durationNote => 'Escolha um prazo que lhe pareça adequado';
@@ -2194,4 +2194,177 @@ class AppLocalizationsPt extends AppLocalizations {
   String weekAbbrev(int weeks) {
     return 'W$weeks';
   }
+
+  @override
+  String get logWorkoutTile => 'Registrar exercício';
+
+  @override
+  String get scanMealTile => 'Escanear refeição';
+
+  @override
+  String get chooseExerciseTypeSubtitle =>
+      'Selecione o tipo de atividade para calcular as calorias queimadas.';
+
+  @override
+  String get exerciseRunning => 'Corrida';
+
+  @override
+  String get exerciseRunningDesc => 'Estimado por ritmo, peso e duração';
+
+  @override
+  String get exerciseWalking => 'Caminhada';
+
+  @override
+  String get exerciseWalkingDesc =>
+      'Estimado por velocidade de caminhada leve ou rápida';
+
+  @override
+  String get exerciseCycling => 'Ciclismo';
+
+  @override
+  String get exerciseCyclingDesc =>
+      'Estimado por velocidade de pedalada moderada ou intensa';
+
+  @override
+  String get exerciseSwimming => 'Natação';
+
+  @override
+  String get exerciseSwimmingDesc => 'Nado livre ou peito conforme o esforço';
+
+  @override
+  String get exerciseWorkout => 'Treino (Academia)';
+
+  @override
+  String get exerciseWorkoutDesc =>
+      'Musculação ou circuito conforme a intensidade';
+
+  @override
+  String get exerciseManual => 'Entrada manual';
+
+  @override
+  String get exerciseManualDesc =>
+      'Digite as calorias do aparelho ou smartwatch';
+
+  @override
+  String get intensityTitle => 'Intensidade';
+
+  @override
+  String get burnedCaloriesTitle => 'Calorias queimadas';
+
+  @override
+  String get kcalSuffix => 'kcal';
+
+  @override
+  String get minutesSuffix => 'min';
+
+  @override
+  String get manualCaloriesHint =>
+      'Digite as calorias do aparelho ou smartwatch';
+
+  @override
+  String get durationHint => 'Duração do exercício';
+
+  @override
+  String get willAddToToday => 'Será adicionado a hoje';
+
+  @override
+  String get estimatedActiveCalories => 'Calorias ativas estimadas';
+
+  @override
+  String exerciseCalcWeightNote(String weight) {
+    return 'Calculado para um peso de $weight kg e MET do Adult Compendium 2024. Dispositivos vestíveis podem ser mais precisos.';
+  }
+
+  @override
+  String get exerciseUpdateWeightPrompt =>
+      'Atualize seu peso no perfil para que o CalGo possa calcular as calorias.';
+
+  @override
+  String get exerciseHealthSyncWarning =>
+      'Se o Apple Health já registrou este treino, não o registre aqui para evitar duplicidade.';
+
+  @override
+  String get saveWorkoutButton => 'Salvar treino';
+
+  @override
+  String get intensityLow => 'Baixa';
+
+  @override
+  String get intensityModerate => 'Moderada';
+
+  @override
+  String get intensityHigh => 'Alta';
+
+  @override
+  String get exerciseRunLowDesc => 'Trote leve 6,4–6,8 km/h · ~9:20 min/km';
+
+  @override
+  String get exerciseRunModDesc =>
+      'Corrida constante 9,7–10,1 km/h · ~6:10 min/km';
+
+  @override
+  String get exerciseRunHighDesc => 'Corrida rápida 12,9 km/h · ~4:40 min/km';
+
+  @override
+  String get exerciseWalkLowDesc => 'Passeio calmo 4,0 km/h';
+
+  @override
+  String get exerciseWalkModDesc => 'Caminhada rápida 5,6 km/h';
+
+  @override
+  String get exerciseWalkHighDesc =>
+      'Caminhada muito rápida / leve subida 6,4–7,2 km/h';
+
+  @override
+  String get exerciseCycleLowDesc => 'Ciclismo leve 16–19 km/h';
+
+  @override
+  String get exerciseCycleModDesc => 'Ciclismo moderado 19–22 km/h';
+
+  @override
+  String get exerciseCycleHighDesc => 'Ciclismo rápido e intenso 22–25 km/h';
+
+  @override
+  String get exerciseSwimLowDesc => 'Natação recreativa leve';
+
+  @override
+  String get exerciseSwimModDesc => 'Nado livre / peito a ritmo moderado';
+
+  @override
+  String get exerciseSwimHighDesc => 'Natação contínua de alto esforço';
+
+  @override
+  String get exerciseWorkoutLowDesc =>
+      'Carga leve, descansos longos entre séries';
+
+  @override
+  String get exerciseWorkoutModDesc =>
+      'Circuito moderado, suor e respiração acelerada';
+
+  @override
+  String get exerciseWorkoutHighDesc =>
+      'Circuito pesado, descanso mínimo, esforço máximo';
+
+  @override
+  String get exerciseCalorieRangeError =>
+      'Digite calorias entre 1 e 5.000 kcal.';
+
+  @override
+  String get exerciseDurationRangeError =>
+      'A duração deve estar entre 1 e 1.440 minutos.';
+
+  @override
+  String get exerciseSaveNetworkError =>
+      'Não foi possível salvar o treino. Verifique sua conexão e tente novamente.';
+
+  @override
+  String get deleteExerciseConfirm =>
+      'Tem certeza de que deseja excluir este treino?';
+
+  @override
+  String get deleteExerciseFailed =>
+      'Não foi possível excluir o treino. Tente novamente.';
+
+  @override
+  String get appleHealthSynced => 'Sincronização Apple Saúde';
 }

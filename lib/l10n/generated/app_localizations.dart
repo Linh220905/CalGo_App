@@ -2365,7 +2365,7 @@ abstract class AppLocalizations {
   /// No description provided for @durationTitle.
   ///
   /// In en, this message translates to:
-  /// **'When do you want to reach your goal?'**
+  /// **'Duration'**
   String get durationTitle;
 
   /// No description provided for @durationNote.
@@ -4022,6 +4022,312 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'W{weeks}'**
   String weekAbbrev(int weeks);
+
+  /// No description provided for @logWorkoutTile.
+  ///
+  /// In en, this message translates to:
+  /// **'Log workout'**
+  String get logWorkoutTile;
+
+  /// No description provided for @scanMealTile.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan meal'**
+  String get scanMealTile;
+
+  /// No description provided for @chooseExerciseTypeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Select activity type to calculate burned calories.'**
+  String get chooseExerciseTypeSubtitle;
+
+  /// No description provided for @exerciseRunning.
+  ///
+  /// In en, this message translates to:
+  /// **'Running'**
+  String get exerciseRunning;
+
+  /// No description provided for @exerciseRunningDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated by pace, weight, and duration'**
+  String get exerciseRunningDesc;
+
+  /// No description provided for @exerciseWalking.
+  ///
+  /// In en, this message translates to:
+  /// **'Walking'**
+  String get exerciseWalking;
+
+  /// No description provided for @exerciseWalkingDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated by casual or brisk walking speed'**
+  String get exerciseWalkingDesc;
+
+  /// No description provided for @exerciseCycling.
+  ///
+  /// In en, this message translates to:
+  /// **'Cycling'**
+  String get exerciseCycling;
+
+  /// No description provided for @exerciseCyclingDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated by casual or vigorous cycling speed'**
+  String get exerciseCyclingDesc;
+
+  /// No description provided for @exerciseSwimming.
+  ///
+  /// In en, this message translates to:
+  /// **'Swimming'**
+  String get exerciseSwimming;
+
+  /// No description provided for @exerciseSwimmingDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Freestyle or breaststroke by effort level'**
+  String get exerciseSwimmingDesc;
+
+  /// No description provided for @exerciseWorkout.
+  ///
+  /// In en, this message translates to:
+  /// **'Workout (Gym)'**
+  String get exerciseWorkout;
+
+  /// No description provided for @exerciseWorkoutDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Resistance or circuit training by intensity'**
+  String get exerciseWorkoutDesc;
+
+  /// No description provided for @exerciseManual.
+  ///
+  /// In en, this message translates to:
+  /// **'Manual entry'**
+  String get exerciseManual;
+
+  /// No description provided for @exerciseManualDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter calories from gym machines or devices'**
+  String get exerciseManualDesc;
+
+  /// No description provided for @intensityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Intensity'**
+  String get intensityTitle;
+
+  /// No description provided for @burnedCaloriesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Calories burned'**
+  String get burnedCaloriesTitle;
+
+  /// No description provided for @kcalSuffix.
+  ///
+  /// In en, this message translates to:
+  /// **'kcal'**
+  String get kcalSuffix;
+
+  /// No description provided for @minutesSuffix.
+  ///
+  /// In en, this message translates to:
+  /// **'min'**
+  String get minutesSuffix;
+
+  /// No description provided for @manualCaloriesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter calories from machine or device'**
+  String get manualCaloriesHint;
+
+  /// No description provided for @durationHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Exercise duration'**
+  String get durationHint;
+
+  /// No description provided for @willAddToToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Will add to today'**
+  String get willAddToToday;
+
+  /// No description provided for @estimatedActiveCalories.
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated active calories'**
+  String get estimatedActiveCalories;
+
+  /// No description provided for @exerciseCalcWeightNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Calculated for {weight} kg weight & MET from Adult Compendium 2024. Wearables may be more precise.'**
+  String exerciseCalcWeightNote(String weight);
+
+  /// No description provided for @exerciseUpdateWeightPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Please update your weight in your profile so CalGo can estimate calories.'**
+  String get exerciseUpdateWeightPrompt;
+
+  /// No description provided for @exerciseHealthSyncWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'If Apple Health already recorded this workout, do not log here to avoid double counting.'**
+  String get exerciseHealthSyncWarning;
+
+  /// No description provided for @saveWorkoutButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Save workout'**
+  String get saveWorkoutButton;
+
+  /// No description provided for @intensityLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Low'**
+  String get intensityLow;
+
+  /// No description provided for @intensityModerate.
+  ///
+  /// In en, this message translates to:
+  /// **'Moderate'**
+  String get intensityModerate;
+
+  /// No description provided for @intensityHigh.
+  ///
+  /// In en, this message translates to:
+  /// **'High'**
+  String get intensityHigh;
+
+  /// No description provided for @exerciseRunLowDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Light jog 6.4–6.8 km/h · ~9:20 min/km'**
+  String get exerciseRunLowDesc;
+
+  /// No description provided for @exerciseRunModDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Steady run 9.7–10.1 km/h · ~6:10 min/km'**
+  String get exerciseRunModDesc;
+
+  /// No description provided for @exerciseRunHighDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Fast run 12.9 km/h · ~4:40 min/km'**
+  String get exerciseRunHighDesc;
+
+  /// No description provided for @exerciseWalkLowDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Casual stroll 4.0 km/h'**
+  String get exerciseWalkLowDesc;
+
+  /// No description provided for @exerciseWalkModDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Brisk walk 5.6 km/h'**
+  String get exerciseWalkModDesc;
+
+  /// No description provided for @exerciseWalkHighDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Very fast walk / light incline 6.4–7.2 km/h'**
+  String get exerciseWalkHighDesc;
+
+  /// No description provided for @exerciseCycleLowDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Light cycling 16–19 km/h'**
+  String get exerciseCycleLowDesc;
+
+  /// No description provided for @exerciseCycleModDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Moderate cycling 19–22 km/h'**
+  String get exerciseCycleModDesc;
+
+  /// No description provided for @exerciseCycleHighDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Vigorous fast cycling 22–25 km/h'**
+  String get exerciseCycleHighDesc;
+
+  /// No description provided for @exerciseSwimLowDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Light casual swimming'**
+  String get exerciseSwimLowDesc;
+
+  /// No description provided for @exerciseSwimModDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Freestyle / breaststroke moderate pace'**
+  String get exerciseSwimModDesc;
+
+  /// No description provided for @exerciseSwimHighDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Continuous high effort swimming'**
+  String get exerciseSwimHighDesc;
+
+  /// No description provided for @exerciseWorkoutLowDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Light resistance, long rest between sets'**
+  String get exerciseWorkoutLowDesc;
+
+  /// No description provided for @exerciseWorkoutModDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Moderate circuit, sweating & faster breathing'**
+  String get exerciseWorkoutModDesc;
+
+  /// No description provided for @exerciseWorkoutHighDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Heavy circuit, minimal rest, high effort'**
+  String get exerciseWorkoutHighDesc;
+
+  /// No description provided for @exerciseCalorieRangeError.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter calories between 1 and 5,000 kcal.'**
+  String get exerciseCalorieRangeError;
+
+  /// No description provided for @exerciseDurationRangeError.
+  ///
+  /// In en, this message translates to:
+  /// **'Duration must be between 1 and 1,440 minutes.'**
+  String get exerciseDurationRangeError;
+
+  /// No description provided for @exerciseSaveNetworkError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not save workout. Please check your connection and try again.'**
+  String get exerciseSaveNetworkError;
+
+  /// No description provided for @deleteExerciseConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this workout?'**
+  String get deleteExerciseConfirm;
+
+  /// No description provided for @deleteExerciseFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not delete workout. Please try again.'**
+  String get deleteExerciseFailed;
+
+  /// No description provided for @appleHealthSynced.
+  ///
+  /// In en, this message translates to:
+  /// **'Apple Health Sync'**
+  String get appleHealthSynced;
 }
 
 class _AppLocalizationsDelegate

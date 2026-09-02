@@ -1254,7 +1254,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get sportsOther => 'অন্যান্য';
 
   @override
-  String get durationTitle => 'তুমি কখন তোমার লক্ষ্যে পৌঁছাতে চাও?';
+  String get durationTitle => 'সময়কাল';
 
   @override
   String get durationNote => 'একটি সময় নির্বাচন করুন';
@@ -2173,4 +2173,177 @@ class AppLocalizationsBn extends AppLocalizations {
   String weekAbbrev(int weeks) {
     return 'W$weeks';
   }
+
+  @override
+  String get logWorkoutTile => 'ব্যায়াম রেকর্ড করুন';
+
+  @override
+  String get scanMealTile => 'খাবার স্ক্যান করুন';
+
+  @override
+  String get chooseExerciseTypeSubtitle =>
+      'বার্ন করা ক্যালোরি হিসাব করতে ক্রিয়াকলাপের ধরন বেছে নিন।';
+
+  @override
+  String get exerciseRunning => 'দৌড়ানো';
+
+  @override
+  String get exerciseRunningDesc => 'গতি, ওজন এবং সময়কালের ভিত্তিতে আনুমানিক';
+
+  @override
+  String get exerciseWalking => 'হাঁটা';
+
+  @override
+  String get exerciseWalkingDesc =>
+      'হালকা বা দ্রুত হাঁটার গতির ভিত্তিতে আনুমানিক';
+
+  @override
+  String get exerciseCycling => 'সাইক্লিং';
+
+  @override
+  String get exerciseCyclingDesc =>
+      'মাঝারি বা উচ্চ সাইক্লিং গতির ভিত্তিতে আনুমানিক';
+
+  @override
+  String get exerciseSwimming => 'সাঁতার';
+
+  @override
+  String get exerciseSwimmingDesc =>
+      'প্রচেষ্টার ভিত্তিতে ফ্রিটাইপ বা ব্রেস্টস্ট্রোক';
+
+  @override
+  String get exerciseWorkout => 'ওয়ার্কআউট (জিম)';
+
+  @override
+  String get exerciseWorkoutDesc =>
+      'তীব্রতার ভিত্তিতে ওয়েট ট্রেইনিং বা সার্কিট';
+
+  @override
+  String get exerciseManual => 'ম্যানুয়াল এন্ট্রি';
+
+  @override
+  String get exerciseManualDesc =>
+      'জিম সরঞ্জাম বা স্মার্টওয়াচ থেকে ক্যালোরি টাইপ করুন';
+
+  @override
+  String get intensityTitle => 'তীব্রতা';
+
+  @override
+  String get burnedCaloriesTitle => 'বার্ন হওয়া ক্যালোরি';
+
+  @override
+  String get kcalSuffix => 'ক্যালোরি';
+
+  @override
+  String get minutesSuffix => 'মিনিট';
+
+  @override
+  String get manualCaloriesHint => 'সরঞ্জাম বা ঘড়ি থেকে ক্যালোরি লিখুন';
+
+  @override
+  String get durationHint => 'ব্যায়ামের সময়কাল';
+
+  @override
+  String get willAddToToday => 'আজকের তালিকায় যোগ করা হবে';
+
+  @override
+  String get estimatedActiveCalories => 'আনুমানিক সক্রিয় ক্যালোরি';
+
+  @override
+  String exerciseCalcWeightNote(String weight) {
+    return '$weight কেজি ওজন এবং Adult Compendium 2024 MET এর জন্য হিসাব করা হয়েছে। স্মার্টওয়াচ আরও সঠিক হতে পারে।';
+  }
+
+  @override
+  String get exerciseUpdateWeightPrompt =>
+      'প্রোফাইলে আপনার ওজন আপডেট করুন যাতে CalGo ক্যালোরি হিসাব করতে পারে।';
+
+  @override
+  String get exerciseHealthSyncWarning =>
+      'যদি Apple Health ইতিমধ্যেই এই ওয়ার্কআউটটি রেকর্ড করে থাকে, তবে দ্বিগুণ এড়াতে এটি যোগ করবেন না।';
+
+  @override
+  String get saveWorkoutButton => 'ওয়ার্কআউট সংরক্ষণ করুন';
+
+  @override
+  String get intensityLow => 'কম';
+
+  @override
+  String get intensityModerate => 'মাঝারি';
+
+  @override
+  String get intensityHigh => 'উচ্চ';
+
+  @override
+  String get exerciseRunLowDesc =>
+      'হালকা জগিং ৬.৪–৬.৮ কিমি/ঘণ্টা · ~৯:২০ মিনিট/কিমি';
+
+  @override
+  String get exerciseRunModDesc =>
+      'একটানা দৌড় ৯.৭–১০.১ কিমি/ঘণ্টা · ~৬:১০ মিনিট/কিমি';
+
+  @override
+  String get exerciseRunHighDesc =>
+      'দ্রুত দৌড় ১২.৯ কিমি/ঘণ্টা · ~৪:৪০ মিনিট/কিমি';
+
+  @override
+  String get exerciseWalkLowDesc => 'শান্তিপ্রিয় হাঁটা ৪.০ কিমি/ঘণ্টা';
+
+  @override
+  String get exerciseWalkModDesc => 'দ্রুত হাঁটা ৫.৬ কিমি/ঘণ্টা';
+
+  @override
+  String get exerciseWalkHighDesc =>
+      'খুব দ্রুত হাঁটা / হালকা ঢাল ৬.৪–৭.২ কিমি/ঘণ্টা';
+
+  @override
+  String get exerciseCycleLowDesc => 'হালকা সাইক্লিং ১৬–১৯ কিমি/ঘণ্টা';
+
+  @override
+  String get exerciseCycleModDesc => 'মাঝারি সাইক্লিং ১৯–২২ কিমি/ঘণ্টা';
+
+  @override
+  String get exerciseCycleHighDesc => 'দ্রুত ও তীব্র সাইক্লিং ২২–২৫ কিমি/ঘণ্টা';
+
+  @override
+  String get exerciseSwimLowDesc => 'হালকা বিনোদনমূলক সাঁতার';
+
+  @override
+  String get exerciseSwimModDesc => 'মাঝারি গতিতে ফ্রিটাইপ / ব্রেস্টস্ট্রোক';
+
+  @override
+  String get exerciseSwimHighDesc => 'উচ্চ প্রচেষ্টায় ক্রমাগত সাঁতার';
+
+  @override
+  String get exerciseWorkoutLowDesc => 'হালকা ওজন, সেটের মাঝে দীর্ঘ বিশ্রাম';
+
+  @override
+  String get exerciseWorkoutModDesc =>
+      'মাঝারি সার্কিট, ঘাম ও দ্রুত শ্বাস-প্রশ্বাস';
+
+  @override
+  String get exerciseWorkoutHighDesc =>
+      'ভারী সার্কিট, নূন্যতম বিশ্রাম, সর্বোচ্চ প্রচেষ্টা';
+
+  @override
+  String get exerciseCalorieRangeError => '১ থেকে ৫,০০০ ক্যালোরির মধ্যে লিখুন।';
+
+  @override
+  String get exerciseDurationRangeError =>
+      'সময়কাল ১ থেকে ১,৪৪০ মিনিটের মধ্যে হতে হবে।';
+
+  @override
+  String get exerciseSaveNetworkError =>
+      'ওয়ার্কআউট সংরক্ষণ করা যায়নি। ইন্টারনেট সংযোগ পরীক্ষা করে আবার চেষ্টা করুন।';
+
+  @override
+  String get deleteExerciseConfirm =>
+      'আপনি কি নিশ্চিত যে আপনি এই ওয়ার্কআউটটি মুছে ফেলতে চান?';
+
+  @override
+  String get deleteExerciseFailed =>
+      'ওয়ার্কআউট মুছে ফেলা যায়নি। আবার চেষ্টা করুন।';
+
+  @override
+  String get appleHealthSynced => 'Apple Health সিঙ্ক করা হয়েছে';
 }

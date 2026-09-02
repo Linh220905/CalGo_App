@@ -1,5 +1,7 @@
 import 'package:flutter/widgets.dart';
 
+import 'weight_forecast.dart';
+
 /// Localized copy for dynamic values that come from the API catalog.
 ///
 /// The API intentionally keeps achievement ids and BMI categories stable;
@@ -557,6 +559,361 @@ class StatsLocalization {
     bn: 'নির্ভরযোগ্য পূর্বাভাস শুরু করতে আরও ওজন ও পুষ্টির তথ্য রেকর্ড করুন।',
     ar: 'سجّل المزيد من بيانات الوزن والتغذية لبدء توقع موثوق.',
   );
+
+  static String caloriePeriodLabel(
+    BuildContext context, {
+    required bool weekly,
+  }) => _text(
+    context,
+    vi: weekly ? 'trung bình 7 ngày qua' : 'hôm nay',
+    en: weekly ? 'the past 7-day average' : 'today',
+    ko: weekly ? '최근 7일 평균' : '오늘',
+    ja: weekly ? '過去7日間の平均' : '今日',
+    zh: weekly ? '过去7天平均' : '今天',
+    es: weekly ? 'el promedio de los últimos 7 días' : 'hoy',
+    fr: weekly ? 'la moyenne des 7 derniers jours' : "aujourd’hui",
+    pt: weekly ? 'a média dos últimos 7 dias' : 'hoje',
+    ru: weekly ? 'среднем за последние 7 дней' : 'сегодня',
+    hi: weekly ? 'पिछले 7 दिनों के औसत' : 'आज',
+    bn: weekly ? 'গত ৭ দিনের গড়' : 'আজ',
+    ar: weekly ? 'متوسط آخر 7 أيام' : 'اليوم',
+  );
+
+  static String forecastStatusTitle(
+    BuildContext context,
+    WeightForecast forecast,
+  ) {
+    return switch (forecast.status) {
+      WeightForecastStatus.noData => _text(
+        context,
+        vi: 'Chưa có dữ liệu calo',
+        en: 'No calorie data yet',
+        ko: '아직 칼로리 데이터가 없어요',
+        ja: 'カロリーデータがありません',
+        zh: '暂无热量数据',
+        es: 'Aún no hay datos de calorías',
+        fr: 'Aucune donnée calorique',
+        pt: 'Ainda não há dados de calorias',
+        ru: 'Пока нет данных о калориях',
+        hi: 'अभी कैलोरी डेटा नहीं है',
+        bn: 'এখনও ক্যালোরির তথ্য নেই',
+        ar: 'لا توجد بيانات سعرات بعد',
+      ),
+      WeightForecastStatus.reached => forecastGoalReachedTitle(context),
+      WeightForecastStatus.healthy => forecastOnTrackTitle(context),
+      WeightForecastStatus.slow => _text(
+        context,
+        vi: 'Đang tiến bộ chậm nhưng ổn định',
+        en: 'Progressing slowly but steadily',
+        ko: '느리지만 꾸준히 진행 중',
+        ja: 'ゆっくりですが順調です',
+        zh: '进展较慢但稳定',
+        es: 'Progreso lento pero constante',
+        fr: 'Progression lente mais régulière',
+        pt: 'Progresso lento, mas constante',
+        ru: 'Медленный, но стабильный прогресс',
+        hi: 'धीमी लेकिन स्थिर प्रगति',
+        bn: 'ধীর কিন্তু স্থির অগ্রগতি',
+        ar: 'تقدم بطيء لكنه ثابت',
+      ),
+      WeightForecastStatus.aggressiveDeficit => _text(
+        context,
+        vi: 'Thâm hụt calo quá mức',
+        en: 'Calorie deficit is too high',
+        ko: '칼로리 적자가 너무 커요',
+        ja: 'カロリー赤字が大きすぎます',
+        zh: '热量缺口过大',
+        es: 'El déficit calórico es demasiado alto',
+        fr: 'Déficit calorique trop élevé',
+        pt: 'Déficit calórico muito alto',
+        ru: 'Слишком большой дефицит калорий',
+        hi: 'कैलोरी की कमी बहुत अधिक है',
+        bn: 'ক্যালোরির ঘাটতি খুব বেশি',
+        ar: 'عجز السعرات مرتفع جدًا',
+      ),
+      WeightForecastStatus.aggressiveSurplus => _text(
+        context,
+        vi: 'Thặng dư calo hơi cao',
+        en: 'Calorie surplus is quite high',
+        ko: '칼로리 흑자가 조금 높아요',
+        ja: 'カロリー余剰がやや多めです',
+        zh: '热量盈余偏高',
+        es: 'El superávit calórico es alto',
+        fr: 'Excédent calorique assez élevé',
+        pt: 'Superávit calórico um pouco alto',
+        ru: 'Избыток калорий довольно большой',
+        hi: 'कैलोरी अधिशेष काफी अधिक है',
+        bn: 'ক্যালোরির উদ্বৃত্ত বেশ বেশি',
+        ar: 'فائض السعرات مرتفع نسبيًا',
+      ),
+      WeightForecastStatus.maintenance => _text(
+        context,
+        vi: 'Tiến độ đang chững lại',
+        en: 'Progress is currently stalled',
+        ko: '진행이 잠시 멈춰 있어요',
+        ja: '進捗が一時的に停滞しています',
+        zh: '进度暂时停滞',
+        es: 'El progreso está estancado',
+        fr: 'La progression stagne',
+        pt: 'O progresso está parado',
+        ru: 'Прогресс пока остановился',
+        hi: 'प्रगति फिलहाल रुक गई है',
+        bn: 'অগ্রগতি আপাতত থেমে আছে',
+        ar: 'التقدم متوقف حاليًا',
+      ),
+      WeightForecastStatus.opposite => _text(
+        context,
+        vi: 'Đang đi ngược mục tiêu',
+        en: 'Moving away from your goal',
+        ko: '목표에서 멀어지고 있어요',
+        ja: '目標から遠ざかっています',
+        zh: '正在偏离目标',
+        es: 'Te alejas de tu objetivo',
+        fr: 'Vous vous éloignez de votre objectif',
+        pt: 'Você está se afastando da meta',
+        ru: 'Вы удаляетесь от цели',
+        hi: 'आप अपने लक्ष्य से दूर जा रहे हैं',
+        bn: 'আপনি আপনার লক্ষ্য থেকে দূরে সরে যাচ্ছেন',
+        ar: 'أنت تبتعد عن هدفك',
+      ),
+    };
+  }
+
+  static String forecastStatusBody(
+    BuildContext context,
+    WeightForecast forecast, {
+    required String periodLabel,
+    required String weeksLabel,
+    required int recommendedCalories,
+  }) {
+    final calories = forecast.calories.round();
+    final target = forecast.targetWeight.toStringAsFixed(1);
+    final balance = forecast.dailyBalance.abs().round();
+    final code = languageCode(context);
+    final isUp = forecast.isMovingUp;
+
+    switch (code) {
+      case 'vi':
+        return switch (forecast.status) {
+          WeightForecastStatus.noData =>
+            'Hãy ghi nhận bữa ăn để bắt đầu dự báo theo lượng calo thực tế.',
+          WeightForecastStatus.reached =>
+            'Hãy duy trì mức calo và thói quen hiện tại để giữ cân ổn định.',
+          WeightForecastStatus.healthy =>
+            'Với $periodLabel khoảng $calories kcal/ngày, bạn đang tạo ${forecast.goal == 'lose' ? 'thâm hụt' : 'thặng dư'} khoảng $balance kcal/ngày. Nếu duy trì, bạn có thể đạt $target kg trong khoảng $weeksLabel nữa.',
+          WeightForecastStatus.slow =>
+            'Bạn vẫn đang đi đúng hướng nhưng mức ${forecast.goal == 'lose' ? 'thâm hụt' : 'thặng dư'} còn nhẹ. Cân nặng sẽ thay đổi chậm hơn và có thể cần lâu hơn để đạt $target kg.',
+          WeightForecastStatus.aggressiveDeficit =>
+            'Bạn đang nạp khoảng $calories kcal/ngày. Mức thâm hụt hiện tại có thể không an toàn và không nên dùng để giảm cân nhanh hơn. Hãy tăng dần về khoảng $recommendedCalories kcal/ngày.',
+          WeightForecastStatus.aggressiveSurplus =>
+            'Bạn đang nạp cao hơn mức duy trì khoảng $balance kcal/ngày. Cân nặng có thể tăng nhanh hơn kế hoạch; hãy điều chỉnh về mức thặng dư vừa phải.',
+          WeightForecastStatus.maintenance =>
+            'Lượng calo hiện tại gần bằng mức duy trì. Nếu tiếp tục như vậy, cân nặng có thể không thay đổi đáng kể.',
+          WeightForecastStatus.opposite =>
+            'Bạn đang nạp ${isUp ? 'cao hơn' : 'thấp hơn'} mức duy trì khoảng $balance kcal/ngày. Nếu tiếp tục, cân nặng sẽ có xu hướng ${isUp ? 'tăng' : 'giảm'} và mục tiêu $target kg sẽ khó đạt hơn.',
+        };
+      case 'ko':
+        return switch (forecast.status) {
+          WeightForecastStatus.noData => '식사를 기록하면 실제 섭취량을 바탕으로 예측을 시작할 수 있어요.',
+          WeightForecastStatus.reached => '현재 섭취량과 습관을 유지해 체중을 안정적으로 유지하세요.',
+          WeightForecastStatus.healthy =>
+            '$periodLabel 약 $calories kcal를 유지하면 약 $weeksLabel 후 $target kg에 도달할 수 있어요.',
+          WeightForecastStatus.slow =>
+            '목표 방향으로 가고 있지만 ${forecast.goal == 'lose' ? '적자' : '흑자'}가 작아요. 목표까지 더 오래 걸릴 수 있어요.',
+          WeightForecastStatus.aggressiveDeficit =>
+            '하루 약 $calories kcal를 섭취하고 있어요. 현재 적자는 안전하지 않을 수 있어요. 약 $recommendedCalories kcal까지 서서히 늘려 보세요.',
+          WeightForecastStatus.aggressiveSurplus =>
+            '유지 칼로리보다 약 $balance kcal를 더 섭취하고 있어요. 체중이 계획보다 빠르게 늘 수 있어요.',
+          WeightForecastStatus.maintenance =>
+            '현재 섭취량이 유지 칼로리와 비슷해 체중 변화가 크지 않을 수 있어요.',
+          WeightForecastStatus.opposite =>
+            '현재 섭취량으로는 체중이 목표에서 ${isUp ? '늘어나며' : '줄어들며'} 멀어질 수 있어요.',
+        };
+      case 'ja':
+        return switch (forecast.status) {
+          WeightForecastStatus.noData => '食事を記録すると、実際の摂取量に基づく予測を始められます。',
+          WeightForecastStatus.reached => '現在の食事量と習慣を続けて、体重を安定させましょう。',
+          WeightForecastStatus.healthy =>
+            '$periodLabel $calories kcal前後を続けると、約$weeksLabelで$target kgに到達できます。',
+          WeightForecastStatus.slow =>
+            '目標の方向には進んでいますが、変化はゆっくりです。目標まで時間がかかる可能性があります。',
+          WeightForecastStatus.aggressiveDeficit =>
+            '現在の摂取量は約$calories kcalです。赤字が大きすぎる可能性があるため、約$recommendedCalories kcalまで少しずつ増やしましょう。',
+          WeightForecastStatus.aggressiveSurplus =>
+            '維持カロリーを約$balance kcal上回っています。計画より早く体重が増える可能性があります。',
+          WeightForecastStatus.maintenance =>
+            '摂取量が維持カロリーに近いため、体重は大きく変わらない可能性があります。',
+          WeightForecastStatus.opposite => 'この摂取量を続けると、体重が目標から遠ざかる可能性があります。',
+        };
+      case 'zh':
+        return switch (forecast.status) {
+          WeightForecastStatus.noData => '记录一餐后，我们就能根据实际摄入量开始预测。',
+          WeightForecastStatus.reached => '保持当前摄入量和习惯，稳定维持体重。',
+          WeightForecastStatus.healthy =>
+            '按$periodLabel每天约摄入 $calories kcal，预计约 $weeksLabel 后达到 $target kg。',
+          WeightForecastStatus.slow => '你正在朝目标前进，但热量差较小，达到 $target kg 可能需要更久。',
+          WeightForecastStatus.aggressiveDeficit =>
+            '你每天约摄入 $calories kcal，热量缺口可能过大。建议逐步提高到约 $recommendedCalories kcal。',
+          WeightForecastStatus.aggressiveSurplus =>
+            '你每天比维持所需多摄入约 $balance kcal，体重可能增长过快。',
+          WeightForecastStatus.maintenance => '当前摄入接近维持水平，体重可能不会有明显变化。',
+          WeightForecastStatus.opposite =>
+            '按当前摄入，体重可能${isUp ? '增加' : '减少'}，并进一步偏离 $target kg。',
+        };
+      case 'es':
+        return switch (forecast.status) {
+          WeightForecastStatus.noData =>
+            'Registra una comida para empezar una previsión basada en tu ingesta real.',
+          WeightForecastStatus.reached =>
+            'Mantén tu ingesta y tus hábitos actuales para conservar el resultado.',
+          WeightForecastStatus.healthy =>
+            'Con $periodLabel de unos $calories kcal al día, podrías alcanzar $target kg en aproximadamente $weeksLabel.',
+          WeightForecastStatus.slow =>
+            'Avanzas hacia tu objetivo, pero el balance calórico es pequeño. Podrías tardar más en llegar a $target kg.',
+          WeightForecastStatus.aggressiveDeficit =>
+            'Estás consumiendo unas $calories kcal al día. Este déficit podría no ser seguro. Acércate poco a poco a $recommendedCalories kcal.',
+          WeightForecastStatus.aggressiveSurplus =>
+            'Consumes unas $balance kcal al día por encima del mantenimiento. Tu peso podría subir más rápido de lo previsto.',
+          WeightForecastStatus.maintenance =>
+            'Tu ingesta está cerca del mantenimiento, por lo que tu peso podría cambiar poco.',
+          WeightForecastStatus.opposite =>
+            'Con esta ingesta, tu peso podría ${isUp ? 'subir' : 'bajar'} y alejarse de $target kg.',
+        };
+      case 'fr':
+        return switch (forecast.status) {
+          WeightForecastStatus.noData =>
+            'Enregistrez un repas pour commencer une prévision basée sur votre apport réel.',
+          WeightForecastStatus.reached =>
+            'Conservez votre apport et vos habitudes actuels pour stabiliser votre poids.',
+          WeightForecastStatus.healthy =>
+            'Avec $periodLabel autour de $calories kcal par jour, vous pourriez atteindre $target kg dans environ $weeksLabel.',
+          WeightForecastStatus.slow =>
+            'Vous avancez vers votre objectif, mais l’écart calorique est faible. L’objectif $target kg peut prendre plus de temps.',
+          WeightForecastStatus.aggressiveDeficit =>
+            'Vous consommez environ $calories kcal par jour. Ce déficit peut être trop important. Revenez progressivement vers $recommendedCalories kcal.',
+          WeightForecastStatus.aggressiveSurplus =>
+            'Vous dépassez le maintien d’environ $balance kcal par jour. Votre poids pourrait augmenter trop vite.',
+          WeightForecastStatus.maintenance =>
+            'Votre apport est proche du maintien, votre poids pourrait donc peu changer.',
+          WeightForecastStatus.opposite =>
+            'Avec cet apport, votre poids pourrait ${isUp ? 'augmenter' : 'diminuer'} et s’éloigner de $target kg.',
+        };
+      case 'pt':
+        return switch (forecast.status) {
+          WeightForecastStatus.noData =>
+            'Registre uma refeição para iniciar uma previsão baseada no seu consumo real.',
+          WeightForecastStatus.reached =>
+            'Mantenha o consumo e os hábitos atuais para estabilizar o peso.',
+          WeightForecastStatus.healthy =>
+            'Com $periodLabel de cerca de $calories kcal por dia, você pode chegar a $target kg em aproximadamente $weeksLabel.',
+          WeightForecastStatus.slow =>
+            'Você está avançando, mas o saldo calórico é pequeno. Pode levar mais tempo para chegar a $target kg.',
+          WeightForecastStatus.aggressiveDeficit =>
+            'Você está consumindo cerca de $calories kcal por dia. Esse déficit pode não ser seguro. Aumente gradualmente até $recommendedCalories kcal.',
+          WeightForecastStatus.aggressiveSurplus =>
+            'Você consome cerca de $balance kcal por dia acima da manutenção. O peso pode subir mais rápido que o planejado.',
+          WeightForecastStatus.maintenance =>
+            'Seu consumo está próximo da manutenção, então o peso pode mudar pouco.',
+          WeightForecastStatus.opposite =>
+            'Com esse consumo, seu peso pode ${isUp ? 'aumentar' : 'diminuir'} e se afastar de $target kg.',
+        };
+      case 'ru':
+        return switch (forecast.status) {
+          WeightForecastStatus.noData =>
+            'Запишите приём пищи, чтобы начать прогноз по фактическому рациону.',
+          WeightForecastStatus.reached =>
+            'Сохраняйте текущий рацион и привычки, чтобы удерживать результат.',
+          WeightForecastStatus.healthy =>
+            'При $periodLabel около $calories ккал в день вы можете достичь $target кг примерно за $weeksLabel.',
+          WeightForecastStatus.slow =>
+            'Вы движетесь к цели, но разница калорий небольшая. Достижение $target кг может занять больше времени.',
+          WeightForecastStatus.aggressiveDeficit =>
+            'Вы употребляете около $calories ккал в день. Такой дефицит может быть небезопасным. Постепенно приблизьтесь к $recommendedCalories ккал.',
+          WeightForecastStatus.aggressiveSurplus =>
+            'Вы получаете примерно на $balance ккал в день больше уровня поддержания. Вес может расти слишком быстро.',
+          WeightForecastStatus.maintenance =>
+            'Ваш рацион близок к уровню поддержания, поэтому вес может почти не меняться.',
+          WeightForecastStatus.opposite =>
+            'При таком рационе вес может ${isUp ? 'увеличиваться' : 'снижаться'} и удаляться от $target кг.',
+        };
+      case 'hi':
+        return switch (forecast.status) {
+          WeightForecastStatus.noData =>
+            'वास्तविक सेवन के आधार पर पूर्वानुमान शुरू करने के लिए भोजन दर्ज करें।',
+          WeightForecastStatus.reached =>
+            'परिणाम बनाए रखने के लिए अपना वर्तमान सेवन और आदतें जारी रखें।',
+          WeightForecastStatus.healthy =>
+            '$periodLabel लगभग $calories kcal प्रतिदिन रखने पर आप लगभग $weeksLabel में $target kg तक पहुँच सकते हैं।',
+          WeightForecastStatus.slow =>
+            'आप लक्ष्य की ओर बढ़ रहे हैं, लेकिन कैलोरी अंतर कम है। $target kg तक पहुँचने में अधिक समय लग सकता है।',
+          WeightForecastStatus.aggressiveDeficit =>
+            'आप लगभग $calories kcal प्रतिदिन ले रहे हैं। यह कमी सुरक्षित नहीं हो सकती। धीरे-धीरे $recommendedCalories kcal तक बढ़ाएँ।',
+          WeightForecastStatus.aggressiveSurplus =>
+            'आप रखरखाव स्तर से लगभग $balance kcal अधिक ले रहे हैं। वजन योजना से तेज़ी से बढ़ सकता है।',
+          WeightForecastStatus.maintenance =>
+            'आपका सेवन रखरखाव स्तर के करीब है, इसलिए वजन में अधिक बदलाव नहीं हो सकता।',
+          WeightForecastStatus.opposite =>
+            'इस सेवन पर वजन ${isUp ? 'बढ़' : 'घट'} सकता है और $target kg से दूर जा सकता है।',
+        };
+      case 'bn':
+        return switch (forecast.status) {
+          WeightForecastStatus.noData =>
+            'বাস্তব গ্রহণের ভিত্তিতে পূর্বাভাস শুরু করতে একটি খাবার রেকর্ড করুন।',
+          WeightForecastStatus.reached =>
+            'ফল ধরে রাখতে বর্তমান গ্রহণ ও অভ্যাস বজায় রাখুন।',
+          WeightForecastStatus.healthy =>
+            '$periodLabel প্রতিদিন প্রায় $calories kcal রাখলে প্রায় $weeksLabel-এ $target kg-এ পৌঁছাতে পারেন।',
+          WeightForecastStatus.slow =>
+            'আপনি লক্ষ্যের দিকে এগোচ্ছেন, তবে ক্যালোরির পার্থক্য কম। $target kg-এ পৌঁছাতে বেশি সময় লাগতে পারে।',
+          WeightForecastStatus.aggressiveDeficit =>
+            'আপনি প্রতিদিন প্রায় $calories kcal নিচ্ছেন। এই ঘাটতি নিরাপদ নাও হতে পারে। ধীরে ধীরে $recommendedCalories kcal-এর দিকে বাড়ান।',
+          WeightForecastStatus.aggressiveSurplus =>
+            'আপনি রক্ষণাবেক্ষণ মাত্রার চেয়ে প্রতিদিন প্রায় $balance kcal বেশি নিচ্ছেন। ওজন পরিকল্পনার চেয়ে দ্রুত বাড়তে পারে।',
+          WeightForecastStatus.maintenance =>
+            'আপনার গ্রহণ রক্ষণাবেক্ষণ মাত্রার কাছাকাছি, তাই ওজনের পরিবর্তন কম হতে পারে।',
+          WeightForecastStatus.opposite =>
+            'এই গ্রহণে ওজন ${isUp ? 'বাড়তে' : 'কমতে'} পারে এবং $target kg থেকে দূরে সরে যেতে পারে।',
+        };
+      case 'ar':
+        return switch (forecast.status) {
+          WeightForecastStatus.noData =>
+            'سجّل وجبة لبدء توقع يعتمد على مدخولك الفعلي.',
+          WeightForecastStatus.reached =>
+            'حافظ على مدخولك وعاداتك الحالية للحفاظ على النتيجة.',
+          WeightForecastStatus.healthy =>
+            'مع $periodLabel بنحو $calories سعرة يوميًا، يمكنك الوصول إلى $target كجم خلال نحو $weeksLabel.',
+          WeightForecastStatus.slow =>
+            'أنت تتقدم نحو هدفك، لكن الفارق في السعرات صغير. قد يستغرق الوصول إلى $target كجم وقتًا أطول.',
+          WeightForecastStatus.aggressiveDeficit =>
+            'تتناول نحو $calories سعرة يوميًا. قد لا يكون هذا العجز آمنًا. زد المدخول تدريجيًا نحو $recommendedCalories سعرة.',
+          WeightForecastStatus.aggressiveSurplus =>
+            'تتناول نحو $balance سعرة يوميًا فوق مستوى المحافظة. قد يزيد وزنك أسرع من المخطط.',
+          WeightForecastStatus.maintenance =>
+            'مدخولك قريب من مستوى المحافظة، لذلك قد لا يتغير وزنك كثيرًا.',
+          WeightForecastStatus.opposite =>
+            'مع هذا المدخول قد ${isUp ? 'يزداد' : 'ينخفض'} وزنك ويبتعد عن $target كجم.',
+        };
+      default:
+        return switch (forecast.status) {
+          WeightForecastStatus.noData =>
+            'Log a meal to start a forecast based on your actual intake.',
+          WeightForecastStatus.reached =>
+            'Keep your current intake and habits to maintain your result.',
+          WeightForecastStatus.healthy =>
+            'At about $calories kcal/day over $periodLabel, you may reach $target kg in about $weeksLabel.',
+          WeightForecastStatus.slow =>
+            'You are moving toward your goal, but the calorie balance is small. Reaching $target kg may take longer.',
+          WeightForecastStatus.aggressiveDeficit =>
+            'You are eating about $calories kcal/day. This deficit may not be safe. Gradually move toward about $recommendedCalories kcal/day.',
+          WeightForecastStatus.aggressiveSurplus =>
+            'You are about $balance kcal/day above maintenance. Your weight may rise faster than planned.',
+          WeightForecastStatus.maintenance =>
+            'Your intake is close to maintenance, so your weight may not change much.',
+          WeightForecastStatus.opposite =>
+            'At this intake, your weight is likely to ${isUp ? 'increase' : 'decrease'} and move farther from $target kg.',
+        };
+    }
+  }
 
   static String _text(
     BuildContext context, {

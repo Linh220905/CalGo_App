@@ -766,11 +766,13 @@ class ProfileScreen extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        const Text(
-                          '👑',
-                          style: TextStyle(fontSize: 13),
-                        ),
-                        const SizedBox(width: 4),
+                        if (showsPremium) ...[
+                          const Text(
+                            '👑',
+                            style: TextStyle(fontSize: 13),
+                          ),
+                          const SizedBox(width: 4),
+                        ],
                         Text(
                           premiumLabel,
                           style: TextStyle(

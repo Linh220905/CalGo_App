@@ -399,9 +399,7 @@ class OnboardingProvider extends ChangeNotifier {
     ProgressProvider? progressProvider,
   }) async {
     if (_loading) return false;
-    _loading = true;
     _error = null;
-    notifyListeners();
 
     try {
       data.applyDisplayedDefaults();
@@ -412,11 +410,46 @@ class OnboardingProvider extends ChangeNotifier {
         final res = await _onboardingService.saveProfile(data);
         if (res['user'] is Map<String, dynamic> && authProvider != null) {
           authProvider.updateUserFromJson(res['user'] as Map<String, dynamic>);
+        } else if (authProvider?.user != null) {
+          final calories = (res['daily_calorie_target'] as num?)?.toDouble() ??
+              data.targetCaloriesPerDay;
+          final protein = (res['protein_grams'] as num?)?.toDouble() ??
+              data.targetProteinG;
+          final fat =
+              (res['fat_grams'] as num?)?.toDouble() ?? data.targetFatG;
+          final carbs =
+              (res['carbs_grams'] as num?)?.toDouble() ?? data.targetCarbG;
+
+          final current = authProvider!.user!;
+          authProvider.updateUser(User(
+            id: current.id,
+            email: current.email,
+            name: current.name,
+            avatar: current.avatar,
+            credits: current.credits,
+            totalScans: current.totalScans,
+            isAdmin: current.isAdmin,
+            isDev: current.isDev,
+            hasCompletedOnboarding: true,
+            dailyCalorieTarget: calories,
+            subscriptionTier: current.subscriptionTier,
+            gender: data.gender?.name ?? current.gender,
+            age: data.age ?? current.age,
+            heightCm: data.heightCm ?? current.heightCm,
+            currentWeightKg: data.weightKg ?? current.currentWeightKg,
+            targetWeightKg: data.targetWeightKg ?? current.targetWeightKg,
+            activityLevel: data.activityApiValue,
+            goal: data.goalType?.name ?? current.goal,
+            weeklyGoalKg: data.lossPerWeekKg ?? current.weeklyGoalKg,
+            proteinGrams: protein,
+            fatGrams: fat,
+            carbsGrams: carbs,
+          ));
         }
       }
 
       if (authProvider != null) {
-        await authProvider.refreshUser();
+        await authProvider.fetchCurrentUser();
       }
 
       if (homeProvider != null) {

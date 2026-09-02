@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
+import '../../config/api_config.dart';
 import '../../models/gamification.dart';
 import '../../models/progress.dart';
 import '../../providers/app_settings_provider.dart';
@@ -27,7 +28,6 @@ class StatsScreen extends StatefulWidget {
   @override
   State<StatsScreen> createState() => _StatsScreenState();
 }
-
 class _StatsScreenState extends State<StatsScreen>
     with SingleTickerProviderStateMixin {
   late final TabController _tabs;
@@ -323,10 +323,6 @@ class _ProgressTabState extends State<_ProgressTab> {
         physics: const AlwaysScrollableScrollPhysics(),
         padding: const EdgeInsets.fromLTRB(20, 8, 20, 110),
         children: [
-          if (widget.progress.data == null && widget.progressError != null) ...[
-            _StatsInlineError(card: widget.card, border: widget.border),
-            const SizedBox(height: 16),
-          ],
           _WeightHeroCard(
             data: data,
             card: widget.card,
@@ -358,6 +354,18 @@ class _ProgressTabState extends State<_ProgressTab> {
             dark: widget.dark,
             onLogWeight: _showWeightDialog,
           ),
+          if (data != null && data.progressPhotos.isNotEmpty) ...[
+            const SizedBox(height: 16),
+            _ProgressPhotosCard(
+              photos: data.progressPhotos,
+              card: widget.card,
+              border: widget.border,
+              text: widget.text,
+              muted: widget.muted,
+              dark: widget.dark,
+              onDelete: (id) => widget.progress.deletePhoto(id),
+            ),
+          ],
           if (widget.weekly == null && widget.weeklyError != null) ...[
             const SizedBox(height: 16),
             _StatsInlineError(card: widget.card, border: widget.border),
@@ -1645,12 +1653,25 @@ class _WeightChart extends StatelessWidget {
 
   List<Widget> _buildDateLabels(BuildContext context) {
     if (points.isEmpty) return [];
+    if (points.length == 1) {
+      final date = points.first.date;
+      final label =
+          '${StatsLocalization.monthShort(context, date)} ${date.day}';
+      return [
+        Text(
+          label,
+          style: TextStyle(
+            color: muted,
+            fontSize: 11,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ];
+    }
     final count = points.length < 4 ? points.length : 4;
     final list = <Widget>[];
     for (int i = 0; i < count; i++) {
-      final idx = points.length == 1
-          ? 0
-          : ((points.length - 1) * i / (count - 1)).round();
+      final idx = ((points.length - 1) * i / (count - 1)).round();
       final date = points[idx].date;
       final label =
           '${StatsLocalization.monthShort(context, date)} ${date.day}';
@@ -1702,27 +1723,36 @@ class _WeightChartPainter extends CustomPainter {
     final path = Path();
     final areaPath = Path();
 
-    for (int i = 0; i < points.length; i++) {
-      final x = points.length == 1
-          ? size.width / 2
-          : size.width * i / (points.length - 1);
-      final norm = ((points[i].weightKg - min) / spread).clamp(0.0, 1.0);
+    if (points.length == 1) {
+      final norm = ((points[0].weightKg - min) / spread).clamp(0.0, 1.0);
       final y = size.height * (1.0 - norm);
 
-      if (i == 0) {
-        path.moveTo(x, y);
-        areaPath.moveTo(x, size.height);
-        areaPath.lineTo(x, y);
-      } else {
-        path.lineTo(x, y);
-        areaPath.lineTo(x, y);
+      path.moveTo(0, y);
+      path.lineTo(size.width, y);
+
+      areaPath.moveTo(0, size.height);
+      areaPath.lineTo(0, y);
+      areaPath.lineTo(size.width, y);
+      areaPath.lineTo(size.width, size.height);
+      areaPath.close();
+    } else {
+      for (int i = 0; i < points.length; i++) {
+        final x = size.width * i / (points.length - 1);
+        final norm = ((points[i].weightKg - min) / spread).clamp(0.0, 1.0);
+        final y = size.height * (1.0 - norm);
+
+        if (i == 0) {
+          path.moveTo(x, y);
+          areaPath.moveTo(x, size.height);
+          areaPath.lineTo(x, y);
+        } else {
+          path.lineTo(x, y);
+          areaPath.lineTo(x, y);
+        }
       }
+      areaPath.lineTo(size.width, size.height);
+      areaPath.close();
     }
-    areaPath.lineTo(
-      points.length == 1 ? size.width / 2 : size.width,
-      size.height,
-    );
-    areaPath.close();
 
     final fillPaint = Paint()
       ..shader = LinearGradient(
@@ -3033,6 +3063,166 @@ class _LogWeightModalSheetState extends State<_LogWeightModalSheet> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ProgressPhotosCard extends StatelessWidget {
+  final List<ProgressPhoto> photos;
+  final Color card, border, text, muted;
+  final bool dark;
+  final Function(String id) onDelete;
+
+  const _ProgressPhotosCard({
+    required this.photos,
+    required this.card,
+    required this.border,
+    required this.text,
+    required this.muted,
+    required this.dark,
+    required this.onDelete,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    if (photos.isEmpty) return const SizedBox.shrink();
+    final authHeaders = context.watch<AuthProvider>().api.authHeaders;
+
+    return _Card(
+      card: card,
+      border: border,
+      radius: 26,
+      padding: const EdgeInsets.fromLTRB(20, 20, 20, 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Ảnh tiến trình',
+                style: TextStyle(
+                  color: text,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+              Text(
+                '${photos.length} ảnh',
+                style: TextStyle(color: muted, fontSize: 13),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          SizedBox(
+            height: 140,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              itemCount: photos.length,
+              separatorBuilder: (_, __) => const SizedBox(width: 12),
+              itemBuilder: (ctx, idx) {
+                final photo = photos[idx];
+                final resolved = ApiConfig.resolveMediaUrl(
+                  photo.thumbnailUrl.isNotEmpty ? photo.thumbnailUrl : photo.imageUrl,
+                );
+                final fullResolved = ApiConfig.resolveMediaUrl(photo.imageUrl);
+
+                return Stack(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        if (fullResolved != null) {
+                          showDialog(
+                            context: ctx,
+                            builder: (_) => Dialog(
+                              backgroundColor: Colors.black,
+                              insetPadding: const EdgeInsets.all(16),
+                              child: Stack(
+                                children: [
+                                  Center(
+                                    child: InteractiveViewer(
+                                      child: Image.network(
+                                        fullResolved,
+                                        headers: authHeaders,
+                                        fit: BoxFit.contain,
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    top: 10,
+                                    right: 10,
+                                    child: IconButton(
+                                      icon: const Icon(Icons.close, color: Colors.white),
+                                      onPressed: () => Navigator.pop(ctx),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        }
+                      },
+                      child: Container(
+                        width: 110,
+                        height: 140,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16),
+                          color: dark ? const Color(0xFF2C2A34) : const Color(0xFFE2E8F0),
+                        ),
+                        clipBehavior: Clip.antiAlias,
+                        child: resolved != null
+                            ? Image.network(
+                                resolved,
+                                headers: authHeaders,
+                                fit: BoxFit.cover,
+                                errorBuilder: (_, __, ___) => Center(
+                                  child: Icon(Icons.broken_image, color: muted),
+                                ),
+                              )
+                            : Center(child: Icon(Icons.image, color: muted)),
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 6,
+                      left: 6,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                        decoration: BoxDecoration(
+                          color: Colors.black54,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Text(
+                          '${photo.capturedDate.day}/${photo.capturedDate.month}',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: 4,
+                      right: 4,
+                      child: GestureDetector(
+                        onTap: () => onDelete(photo.id),
+                        child: Container(
+                          padding: const EdgeInsets.all(4),
+                          decoration: const BoxDecoration(
+                            color: Colors.black54,
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(Icons.delete_outline, color: Colors.white, size: 14),
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
             ),
           ),
         ],

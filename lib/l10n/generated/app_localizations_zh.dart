@@ -1205,7 +1205,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get sportsOther => '其它';
 
   @override
-  String get durationTitle => '你想什么时候达到目的?';
+  String get durationTitle => '运动时长';
 
   @override
   String get durationNote => '选择一个适合你的时间范围';
@@ -2095,4 +2095,159 @@ class AppLocalizationsZh extends AppLocalizations {
   String weekAbbrev(int weeks) {
     return 'W$weeks';
   }
+
+  @override
+  String get logWorkoutTile => '记录运动';
+
+  @override
+  String get scanMealTile => '扫描餐食';
+
+  @override
+  String get chooseExerciseTypeSubtitle => '选择活动类型以计算消耗的卡路里。';
+
+  @override
+  String get exerciseRunning => '跑步';
+
+  @override
+  String get exerciseRunningDesc => '根据配速、体重和时长估算';
+
+  @override
+  String get exerciseWalking => '散步';
+
+  @override
+  String get exerciseWalkingDesc => '根据慢走或快走速度估算';
+
+  @override
+  String get exerciseCycling => '骑行';
+
+  @override
+  String get exerciseCyclingDesc => '根据中速或高速骑行估算';
+
+  @override
+  String get exerciseSwimming => '游泳';
+
+  @override
+  String get exerciseSwimmingDesc => '根据自由泳或蛙泳运动强度估算';
+
+  @override
+  String get exerciseWorkout => '健身 / 训练';
+
+  @override
+  String get exerciseWorkoutDesc => '根据强度的力量训练或循环训练';
+
+  @override
+  String get exerciseManual => '手动输入';
+
+  @override
+  String get exerciseManualDesc => '输入健身器材或手环上显示的卡路里';
+
+  @override
+  String get intensityTitle => '运动强度';
+
+  @override
+  String get burnedCaloriesTitle => '消耗卡路里';
+
+  @override
+  String get kcalSuffix => '千卡';
+
+  @override
+  String get minutesSuffix => '分钟';
+
+  @override
+  String get manualCaloriesHint => '输入器材或手环上的卡路里';
+
+  @override
+  String get durationHint => '运动时长';
+
+  @override
+  String get willAddToToday => '将添加到今天';
+
+  @override
+  String get estimatedActiveCalories => '估算活动热量';
+
+  @override
+  String exerciseCalcWeightNote(String weight) {
+    return '基于 $weight kg 体重及 Adult Compendium 2024 MET 标准计算。佩戴式设备可能会更精确。';
+  }
+
+  @override
+  String get exerciseUpdateWeightPrompt => '请在个人资料中更新体重，以便 CalGo 计算热量。';
+
+  @override
+  String get exerciseHealthSyncWarning => '如果 Apple 健康已同步该运动，请勿在此重复记录。';
+
+  @override
+  String get saveWorkoutButton => '保存运动记录';
+
+  @override
+  String get intensityLow => '低';
+
+  @override
+  String get intensityModerate => '中';
+
+  @override
+  String get intensityHigh => '高';
+
+  @override
+  String get exerciseRunLowDesc => '轻松慢跑 6.4–6.8 km/h · ~9:20 分钟/km';
+
+  @override
+  String get exerciseRunModDesc => '匀速跑步 9.7–10.1 km/h · ~6:10 分钟/km';
+
+  @override
+  String get exerciseRunHighDesc => '快速跑步 12.9 km/h · ~4:40 分钟/km';
+
+  @override
+  String get exerciseWalkLowDesc => '悠闲散步 4.0 km/h';
+
+  @override
+  String get exerciseWalkModDesc => '快步走 5.6 km/h';
+
+  @override
+  String get exerciseWalkHighDesc => '极快行走 / 缓坡走 6.4–7.2 km/h';
+
+  @override
+  String get exerciseCycleLowDesc => '轻松骑行 16–19 km/h';
+
+  @override
+  String get exerciseCycleModDesc => '中速骑行 19–22 km/h';
+
+  @override
+  String get exerciseCycleHighDesc => '高速高强度骑行 22–25 km/h';
+
+  @override
+  String get exerciseSwimLowDesc => '轻松休闲游泳';
+
+  @override
+  String get exerciseSwimModDesc => '中等配速自由泳 / 蛙泳';
+
+  @override
+  String get exerciseSwimHighDesc => '高强度连续游泳';
+
+  @override
+  String get exerciseWorkoutLowDesc => '轻重量，组间休息较长';
+
+  @override
+  String get exerciseWorkoutModDesc => '中等强度循环，出汗且呼吸急促';
+
+  @override
+  String get exerciseWorkoutHighDesc => '大重量循环，休息极短，全力以赴';
+
+  @override
+  String get exerciseCalorieRangeError => '请输入 1 至 5,000 千卡之间的数值。';
+
+  @override
+  String get exerciseDurationRangeError => '时长必须在 1 至 1,440 分钟之间。';
+
+  @override
+  String get exerciseSaveNetworkError => '无法保存运动记录，请检查网络连接后重试。';
+
+  @override
+  String get deleteExerciseConfirm => '确定要删除这条运动记录吗？';
+
+  @override
+  String get deleteExerciseFailed => '删除运动记录失败，请重试。';
+
+  @override
+  String get appleHealthSynced => '已同步 Apple 健康';
 }

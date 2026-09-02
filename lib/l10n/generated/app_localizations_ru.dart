@@ -1269,7 +1269,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get sportsOther => 'другой';
 
   @override
-  String get durationTitle => 'Когда вы хотите достичь своей цели?';
+  String get durationTitle => 'Длительность';
 
   @override
   String get durationNote =>
@@ -2199,4 +2199,175 @@ class AppLocalizationsRu extends AppLocalizations {
   String weekAbbrev(int weeks) {
     return 'W$weeks';
   }
+
+  @override
+  String get logWorkoutTile => 'Записать тренировку';
+
+  @override
+  String get scanMealTile => 'Сканировать блюдо';
+
+  @override
+  String get chooseExerciseTypeSubtitle =>
+      'Выберите вид активности для расчета сожженных калорий.';
+
+  @override
+  String get exerciseRunning => 'Бег';
+
+  @override
+  String get exerciseRunningDesc => 'Расчет по темпу, весу и длительности';
+
+  @override
+  String get exerciseWalking => 'Ходьба';
+
+  @override
+  String get exerciseWalkingDesc =>
+      'Расчет по скорости прогулки или быстрой ходьбы';
+
+  @override
+  String get exerciseCycling => 'Велоспорт';
+
+  @override
+  String get exerciseCyclingDesc =>
+      'Расчет по умеренной или высокой скорости педалирования';
+
+  @override
+  String get exerciseSwimming => 'Плавание';
+
+  @override
+  String get exerciseSwimmingDesc => 'Кроль или брасс в зависимости от усилий';
+
+  @override
+  String get exerciseWorkout => 'Тренировка (Зал)';
+
+  @override
+  String get exerciseWorkoutDesc =>
+      'Силовая или круговая тренировка по интенсивности';
+
+  @override
+  String get exerciseManual => 'Ручной ввод';
+
+  @override
+  String get exerciseManualDesc =>
+      'Введите калории с тренажера или фитнес-часов';
+
+  @override
+  String get intensityTitle => 'Интенсивность';
+
+  @override
+  String get burnedCaloriesTitle => 'Сожжено калорий';
+
+  @override
+  String get kcalSuffix => 'ккал';
+
+  @override
+  String get minutesSuffix => 'мин';
+
+  @override
+  String get manualCaloriesHint => 'Введите калории с тренажера или часов';
+
+  @override
+  String get durationHint => 'Длительность тренировки';
+
+  @override
+  String get willAddToToday => 'Будет добавлено на сегодня';
+
+  @override
+  String get estimatedActiveCalories => 'Расчетные активные калории';
+
+  @override
+  String exerciseCalcWeightNote(String weight) {
+    return 'Рассчитано для веса $weight кг и MET из Adult Compendium 2024. Носимые устройства могут быть точнее.';
+  }
+
+  @override
+  String get exerciseUpdateWeightPrompt =>
+      'Обновите вес в профиле, чтобы CalGo мог рассчитать калории.';
+
+  @override
+  String get exerciseHealthSyncWarning =>
+      'Если Apple Здоровье уже записало эту тренировку, не добавляйте ее повторно.';
+
+  @override
+  String get saveWorkoutButton => 'Сохранить тренировку';
+
+  @override
+  String get intensityLow => 'Низкая';
+
+  @override
+  String get intensityModerate => 'Умеренная';
+
+  @override
+  String get intensityHigh => 'Высокая';
+
+  @override
+  String get exerciseRunLowDesc => 'Легкий бег 6.4–6.8 км/ч · ~9:20 мин/км';
+
+  @override
+  String get exerciseRunModDesc =>
+      'Бег в среднем темпе 9.7–10.1 км/h · ~6:10 мин/км';
+
+  @override
+  String get exerciseRunHighDesc => 'Быстрый бег 12.9 км/ч · ~4:40 мин/км';
+
+  @override
+  String get exerciseWalkLowDesc => 'Спокойная прогулка 4.0 км/ч';
+
+  @override
+  String get exerciseWalkModDesc => 'Быстрая ходьба 5.6 км/ч';
+
+  @override
+  String get exerciseWalkHighDesc =>
+      'Очень быстрая ходьба / небольшой подъем 6.4–7.2 км/ч';
+
+  @override
+  String get exerciseCycleLowDesc => 'Неспешная езда 16–19 км/ч';
+
+  @override
+  String get exerciseCycleModDesc => 'Умеренная езда 19–22 км/ч';
+
+  @override
+  String get exerciseCycleHighDesc => 'Быстрая и интенсивная езда 22–25 км/ч';
+
+  @override
+  String get exerciseSwimLowDesc => 'Легкое оздоровительное плавание';
+
+  @override
+  String get exerciseSwimModDesc => 'Кроль / брасс в умеренном темпе';
+
+  @override
+  String get exerciseSwimHighDesc => 'Непрерывное плавание с высоким усилием';
+
+  @override
+  String get exerciseWorkoutLowDesc =>
+      'Легкий вес, длинные паузы между подходами';
+
+  @override
+  String get exerciseWorkoutModDesc =>
+      'Умеренная круговая, учащенное дыхание и потливость';
+
+  @override
+  String get exerciseWorkoutHighDesc =>
+      'Тяжелая круговая, минимальный отдых, максимум усилий';
+
+  @override
+  String get exerciseCalorieRangeError => 'Введите калории от 1 до 5000 ккал.';
+
+  @override
+  String get exerciseDurationRangeError =>
+      'Длительность должна быть от 1 до 1440 минут.';
+
+  @override
+  String get exerciseSaveNetworkError =>
+      'Не удалось сохранить тренировку. Проверьте подключение и повторите попытку.';
+
+  @override
+  String get deleteExerciseConfirm =>
+      'Вы уверены, что хотите удалить эту тренировку?';
+
+  @override
+  String get deleteExerciseFailed =>
+      'Не удалось удалить тренировку. Попробуйте еще раз.';
+
+  @override
+  String get appleHealthSynced => 'Синхронизировано с Apple Здоровье';
 }

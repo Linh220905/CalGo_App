@@ -23,14 +23,14 @@ class ExerciseLogCard extends StatelessWidget {
     final timeStr = localizedTime(entry.occurredAt, settings.languageCode);
 
     return SwipeableCard(
-      confirmMessage: 'Bạn có chắc chắn muốn xóa bài tập này?',
+      confirmMessage: settings.strings.deleteExerciseConfirm,
       onDelete: () async {
         try {
           await context.read<HomeProvider>().removeExerciseEntry(entry.id);
         } catch (_) {
           if (context.mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Xóa bài tập thất bại. Vui lòng thử lại.')),
+              SnackBar(content: Text(settings.strings.deleteExerciseFailed)),
             );
           }
         }
@@ -77,7 +77,7 @@ class ExerciseLogCard extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          _exerciseTitle(entry.activityType, entry.source),
+                          _exerciseTitle(entry.activityType, entry.source, settings.strings),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
@@ -120,7 +120,7 @@ class ExerciseLogCard extends StatelessWidget {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        '${entry.caloriesBurned.round()} calo',
+                        '${entry.caloriesBurned.round()} ${settings.strings.kcalSuffix}',
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
@@ -130,7 +130,7 @@ class ExerciseLogCard extends StatelessWidget {
                       if (entry.durationMinutes != null &&
                           entry.durationMinutes! > 0) ...[
                         Text(
-                          '  ·  ${entry.durationMinutes} phút',
+                          '  ·  ${entry.durationMinutes} ${settings.strings.minutesSuffix}',
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w500,
@@ -161,16 +161,16 @@ class ExerciseLogCard extends StatelessWidget {
     };
   }
 
-  static String _exerciseTitle(String activityType, String source) {
-    if (source == 'health') return 'Đồng bộ Apple Health';
+  static String _exerciseTitle(String activityType, String source, dynamic strings) {
+    if (source == 'health') return strings.appleHealthSynced;
     return switch (activityType) {
-      'running' => 'Chạy bộ',
-      'walking' => 'Đi bộ',
-      'cycling' => 'Đạp xe',
-      'swimming' => 'Bơi lội',
-      'workout' => 'Tập luyện',
-      'manual' => 'Ghi thủ công',
-      _ => 'Tập luyện',
+      'running' => strings.exerciseRunning,
+      'walking' => strings.exerciseWalking,
+      'cycling' => strings.exerciseCycling,
+      'swimming' => strings.exerciseSwimming,
+      'workout' => strings.filterWorkout,
+      'manual' => strings.exerciseManual,
+      _ => strings.filterWorkout,
     };
   }
 }

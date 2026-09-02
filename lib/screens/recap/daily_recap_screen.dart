@@ -13,6 +13,7 @@ import '../../providers/gamification_provider.dart';
 import '../../models/gamification.dart';
 import '../../utils/macro_colors.dart';
 import '../../utils/stats_localization.dart';
+import '../../utils/weight_forecast.dart';
 import '../onboarding/steps/premium_paywall_step.dart';
 
 // ── Color constants matching CalGo design system ─────────────────
@@ -955,94 +956,75 @@ class TargetTimelineCard extends StatelessWidget {
       );
     }
 
-    final rawTargetCal = (user != null && user.dailyCalorieTarget > 0)
+    final todayCal =
+        todayCalories ?? (recap != null ? recap!.totalCalo.toDouble() : 0.0);
+    final targetCal = (user != null && user.dailyCalorieTarget > 0)
         ? user.dailyCalorieTarget
         : (calorieTarget ??
               (recap != null && recap!.targetCalo > 0
                   ? recap!.targetCalo.toDouble()
                   : 2000.0));
-    final targetCal = rawTargetCal > 0 ? rawTargetCal : 2000.0;
-
-    final todayCal =
-        todayCalories ?? (recap != null ? recap!.totalCalo.toDouble() : 0.0);
-
-    final storedGoalType = (user?.goal ?? 'maintain').toLowerCase();
-
-    // The profile can briefly contain a new target weight while the cached
-    // goal is still the previous one (for example right after recalculating
-    // targets). A forecast must never project in the opposite direction of
-    // the target: 60.8 -> 67 kg is a gain goal, regardless of stale `goal`.
-    final goalType = targetWeight > currentWeight + 0.1
-        ? 'gain'
-        : targetWeight < currentWeight - 0.1
-        ? 'lose'
-        : storedGoalType;
-
-    // Maintenance TDEE estimate baseline
-    double maintenanceTdee = targetCal;
-    if (goalType == 'lose' || goalType.contains('giảm')) {
-      maintenanceTdee = targetCal + 500;
-    } else if (goalType == 'gain' || goalType.contains('tăng')) {
-      maintenanceTdee = math.max(1200.0, targetCal - 400);
-    }
-
-    final double ratio = targetCal > 0 ? (todayCal / targetCal) : 1.0;
-
-    final gap = (currentWeight - targetWeight).abs();
-    final reached = gap <= 0.1;
-    final onTrack = goalType == 'lose'
-        ? ratio >= 0.70 && ratio <= 1.05
-        : goalType == 'gain'
-        ? ratio >= 0.90 && ratio <= 1.20
-        : ratio >= 0.85 && ratio <= 1.15;
-    final statusTitle = reached
-        ? StatsLocalization.forecastGoalReachedTitle(context)
-        : onTrack
-        ? StatsLocalization.forecastOnTrackTitle(context)
-        : StatsLocalization.forecastNeedsAdjustmentTitle(context);
-    final statusColor = reached || onTrack
+    final safeFloor = switch (user?.gender?.toLowerCase()) {
+      'male' => 1500.0,
+      'female' => 1200.0,
+      _ => 1350.0,
+    };
+    final forecast = WeightForecastCalculator.calculate(
+      currentWeight: currentWeight,
+      targetWeight: targetWeight,
+      calories: todayCal,
+      calorieTarget: targetCal,
+      goal: user?.goal,
+      tdee: user?.tdee,
+      weeklyGoalKg: user?.weeklyGoalKg,
+      safeFloorCalories: safeFloor,
+    );
+    final statusTitle = StatsLocalization.forecastStatusTitle(
+      context,
+      forecast,
+    );
+    final statusColor = forecast.isReached
         ? const Color(0xFF10B981)
-        : const Color(0xFFF59E0B);
-    final statusIcon = reached
+        : forecast.status == WeightForecastStatus.noData
+        ? const Color(0xFF64748B)
+        : forecast.isWarning
+        ? const Color(0xFFDC2626)
+        : forecast.isMovingAway
+        ? const Color(0xFFEA580C)
+        : forecast.status == WeightForecastStatus.maintenance
+        ? const Color(0xFF64748B)
+        : const Color(0xFF10B981);
+    final statusIcon = forecast.isReached
         ? Icons.check_circle_rounded
-        : onTrack
+        : forecast.status == WeightForecastStatus.noData
+        ? Icons.info_outline_rounded
+        : forecast.isWarning
+        ? Icons.health_and_safety_rounded
+        : forecast.isMovingAway
+        ? Icons.warning_amber_rounded
+        : forecast.status == WeightForecastStatus.maintenance
         ? Icons.trending_flat_rounded
-        : Icons.warning_amber_rounded;
-    final double weeklyKgChange;
-    if (reached || !onTrack) {
-      weeklyKgChange = 0.0;
-    } else if (goalType == 'lose') {
-      weeklyKgChange =
-          -(math.max(250.0, maintenanceTdee - todayCal) * 7.0) / 7700.0;
-    } else if (goalType == 'gain') {
-      weeklyKgChange =
-          (math.max(250.0, todayCal - (targetCal - 400)) * 7.0) / 7700.0;
-    } else {
-      weeklyKgChange = 0.0;
-    }
-    final estimatedWeeks = reached || !onTrack || weeklyKgChange.abs() < 0.01
-        ? null
-        : (gap / weeklyKgChange.abs()).ceil();
-    final statusBody = reached
-        ? strings.goalMaintainHint
-        : onTrack
-        ? StatsLocalization.forecastOnTrackBody(
-            context,
-            calories: todayCal.round(),
-            target: targetWeight.toStringAsFixed(1),
-            weeks: estimatedWeeks == null
-                ? strings.notEnoughWeightData
-                : strings.weeksUnit(estimatedWeeks),
-          )
-        : StatsLocalization.forecastNeedsAdjustmentBody(
-            context,
-            target: targetWeight.toStringAsFixed(1),
-          );
+        : forecast.isMovingDown
+        ? Icons.trending_down_rounded
+        : Icons.trending_up_rounded;
+    final estimatedWeeks = forecast.estimatedWeeks;
+    final statusBody = StatsLocalization.forecastStatusBody(
+      context,
+      forecast,
+      periodLabel: StatsLocalization.caloriePeriodLabel(
+        context,
+        weekly: recap == null,
+      ),
+      weeksLabel: estimatedWeeks == null
+          ? strings.notEnoughWeightData
+          : strings.weeksUnit(estimatedWeeks),
+      recommendedCalories: targetCal.round(),
+    );
 
     final int chartMaxWeeks = math.min(12, math.max(6, estimatedWeeks ?? 8));
     final List<double> projectedPoints = [];
     for (int w = 0; w <= chartMaxWeeks; w++) {
-      double projected = currentWeight + (weeklyKgChange * w);
+      final projected = currentWeight + (forecast.weeklyWeightChangeKg * w);
       projectedPoints.add(projected);
     }
 

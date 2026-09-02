@@ -1209,7 +1209,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get sportsOther => 'その他';
 
   @override
-  String get durationTitle => 'いつ目標を達成したいですか？';
+  String get durationTitle => '時間';
 
   @override
   String get durationNote => '自分に合った時間枠を選択してください';
@@ -2109,4 +2109,160 @@ class AppLocalizationsJa extends AppLocalizations {
   String weekAbbrev(int weeks) {
     return 'W$weeks';
   }
+
+  @override
+  String get logWorkoutTile => '運動を記録';
+
+  @override
+  String get scanMealTile => '食事をスキャン';
+
+  @override
+  String get chooseExerciseTypeSubtitle => '消費カロリーを計算するためのアクティビティを選択してください。';
+
+  @override
+  String get exerciseRunning => 'ランニング';
+
+  @override
+  String get exerciseRunningDesc => 'ペース、体重、時間から推定';
+
+  @override
+  String get exerciseWalking => 'ウォーキング';
+
+  @override
+  String get exerciseWalkingDesc => '散歩または早歩きの速度から推定';
+
+  @override
+  String get exerciseCycling => 'サイクリング';
+
+  @override
+  String get exerciseCyclingDesc => '軽いペースまたは高負荷の速度から推定';
+
+  @override
+  String get exerciseSwimming => '水泳';
+
+  @override
+  String get exerciseSwimmingDesc => 'クロールや平泳ぎなどの運動強度から推定';
+
+  @override
+  String get exerciseWorkout => '筋トレ・ワークアウト';
+
+  @override
+  String get exerciseWorkoutDesc => '強度に応じたウエイトトレやサーキット運動';
+
+  @override
+  String get exerciseManual => '手動入力';
+
+  @override
+  String get exerciseManualDesc => 'ジムのマシンやスマートウォッチの消費カロリーを入力';
+
+  @override
+  String get intensityTitle => '運動強度';
+
+  @override
+  String get burnedCaloriesTitle => '消費カロリー';
+
+  @override
+  String get kcalSuffix => 'kcal';
+
+  @override
+  String get minutesSuffix => '分';
+
+  @override
+  String get manualCaloriesHint => 'マシンや端末のカロリーを入力';
+
+  @override
+  String get durationHint => '運動時間';
+
+  @override
+  String get willAddToToday => '今日の記録に追加されます';
+
+  @override
+  String get estimatedActiveCalories => '推定アクティブ消費カロリー';
+
+  @override
+  String exerciseCalcWeightNote(String weight) {
+    return '体重 $weight kg および Adult Compendium 2024 の MET に基づき計算。ウェアラブル端末の方がより正確な場合があります。';
+  }
+
+  @override
+  String get exerciseUpdateWeightPrompt => 'カロリー計算のためにプロフィールで体重を更新してください。';
+
+  @override
+  String get exerciseHealthSyncWarning =>
+      'Apple ヘルスケアで既に記録されている場合、二重記録を防ぐためここでの記録はお控えください。';
+
+  @override
+  String get saveWorkoutButton => '運動を保存';
+
+  @override
+  String get intensityLow => '低';
+
+  @override
+  String get intensityModerate => '中';
+
+  @override
+  String get intensityHigh => '高';
+
+  @override
+  String get exerciseRunLowDesc => '軽いジョギング 6.4〜6.8 km/h · 約9:20 分/km';
+
+  @override
+  String get exerciseRunModDesc => 'ペース走 9.7〜10.1 km/h · 約6:10 分/km';
+
+  @override
+  String get exerciseRunHighDesc => 'ファストラン 12.9 km/h · 約4:40 分/km';
+
+  @override
+  String get exerciseWalkLowDesc => 'ゆっくり散歩 4.0 km/h';
+
+  @override
+  String get exerciseWalkModDesc => '早歩き 5.6 km/h';
+
+  @override
+  String get exerciseWalkHighDesc => 'かなりの早歩き / 緩やかな坂道 6.4〜7.2 km/h';
+
+  @override
+  String get exerciseCycleLowDesc => 'ゆったりサイクリング 16〜19 km/h';
+
+  @override
+  String get exerciseCycleModDesc => '適度なペースのサイクリング 19〜22 km/h';
+
+  @override
+  String get exerciseCycleHighDesc => '高速サイクリング 22〜25 km/h';
+
+  @override
+  String get exerciseSwimLowDesc => 'ゆったり水泳';
+
+  @override
+  String get exerciseSwimModDesc => 'クロール / 平泳ぎ（中程度のペース）';
+
+  @override
+  String get exerciseSwimHighDesc => 'ハードな連続水泳';
+
+  @override
+  String get exerciseWorkoutLowDesc => '軽い負荷・セット間休憩長め';
+
+  @override
+  String get exerciseWorkoutModDesc => '中程度のサーキット・発汗と息上がりのある強度';
+
+  @override
+  String get exerciseWorkoutHighDesc => '高強度サーキット・休憩最小限';
+
+  @override
+  String get exerciseCalorieRangeError => '1〜5,000 kcalの間で入力してください。';
+
+  @override
+  String get exerciseDurationRangeError => '時間は1〜1,440分の間で指定してください。';
+
+  @override
+  String get exerciseSaveNetworkError => '運動を保存できませんでした。ネットワーク接続を確認してください。';
+
+  @override
+  String get deleteExerciseConfirm => 'この運動記録を削除してもよろしいですか？';
+
+  @override
+  String get deleteExerciseFailed => '運動記録を削除できませんでした。もう一度お試しください。';
+
+  @override
+  String get appleHealthSynced => 'Appleヘルスケア同期';
 }

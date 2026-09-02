@@ -1239,7 +1239,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get sportsOther => 'أخرى';
 
   @override
-  String get durationTitle => 'متى تريد الوصول إلى هدفك؟';
+  String get durationTitle => 'المدة';
 
   @override
   String get durationNote => 'اختر الإطار الزمني الذي يشعرك بالراحة';
@@ -2153,4 +2153,176 @@ class AppLocalizationsAr extends AppLocalizations {
   String weekAbbrev(int weeks) {
     return 'W$weeks';
   }
+
+  @override
+  String get logWorkoutTile => 'تسجيل التمرين';
+
+  @override
+  String get scanMealTile => 'مسح الوجبة';
+
+  @override
+  String get chooseExerciseTypeSubtitle =>
+      'اختر نوع النشاط لحساب السعرات الحرارية المحروقة.';
+
+  @override
+  String get exerciseRunning => 'الجري';
+
+  @override
+  String get exerciseRunningDesc => 'مقدر بناءً على السرعة والوزن والمدة';
+
+  @override
+  String get exerciseWalking => 'المشي';
+
+  @override
+  String get exerciseWalkingDesc =>
+      'مقدر بناءً على سرعة المشي الخفيف أو السريع';
+
+  @override
+  String get exerciseCycling => 'ركوب الدراجة';
+
+  @override
+  String get exerciseCyclingDesc =>
+      'مقدر بناءً على سرعة التبديل المعتدلة أو العالية';
+
+  @override
+  String get exerciseSwimming => 'السباحة';
+
+  @override
+  String get exerciseSwimmingDesc => 'سباحة حرة أو صدر بناءً على مستوى الجهد';
+
+  @override
+  String get exerciseWorkout => 'تمارين (صالة الرياضة)';
+
+  @override
+  String get exerciseWorkoutDesc => 'تمارين قوة أو تمارين دائرية حسب الشدة';
+
+  @override
+  String get exerciseManual => 'إدخال يدوي';
+
+  @override
+  String get exerciseManualDesc =>
+      'أدخل السعرات الحرارية من أجهزة التمارين أو الساعات الذكية';
+
+  @override
+  String get intensityTitle => 'الشدة';
+
+  @override
+  String get burnedCaloriesTitle => 'السعرات المحروقة';
+
+  @override
+  String get kcalSuffix => 'سعرة';
+
+  @override
+  String get minutesSuffix => 'دقيقة';
+
+  @override
+  String get manualCaloriesHint => 'أدخل السعرات من الجهاز أو الساعة';
+
+  @override
+  String get durationHint => 'مدة التمرين';
+
+  @override
+  String get willAddToToday => 'سيتم إضافته إلى اليوم';
+
+  @override
+  String get estimatedActiveCalories => 'السعرات النشطة المقدرة';
+
+  @override
+  String exerciseCalcWeightNote(String weight) {
+    return 'محسوب لوزن $weight كجم وقيم MET من Adult Compendium 2024. قد تكون الأجهزة الذكية أكثر دقة.';
+  }
+
+  @override
+  String get exerciseUpdateWeightPrompt =>
+      'يرجى تحديث وزنك في الملف الشخصي ليتمكن CalGo من حساب السعرات.';
+
+  @override
+  String get exerciseHealthSyncWarning =>
+      'إذا كان Apple Health قد سجل هذا التمرين بالفعل، فلا تسجله هنا لتجنب التكرار.';
+
+  @override
+  String get saveWorkoutButton => 'حفظ التمرين';
+
+  @override
+  String get intensityLow => 'منخفضة';
+
+  @override
+  String get intensityModerate => 'معتدلة';
+
+  @override
+  String get intensityHigh => 'عالية';
+
+  @override
+  String get exerciseRunLowDesc =>
+      'هرولة خفيفة 6.4–6.8 كم/ساعة · ~9:20 دقيقة/كم';
+
+  @override
+  String get exerciseRunModDesc =>
+      'جري منتظم 9.7–10.1 كم/ساعة · ~6:10 دقيقة/كم';
+
+  @override
+  String get exerciseRunHighDesc => 'جري سريع 12.9 كم/ساعة · ~4:40 دقيقة/كم';
+
+  @override
+  String get exerciseWalkLowDesc => 'مشي هادئ 4.0 كم/ساعة';
+
+  @override
+  String get exerciseWalkModDesc => 'مشي سريع 5.6 كم/ساعة';
+
+  @override
+  String get exerciseWalkHighDesc =>
+      'مشي سريع جداً / صعود خفيف 6.4–7.2 كم/ساعة';
+
+  @override
+  String get exerciseCycleLowDesc => 'ركوب دراجة خفيف 16–19 كم/ساعة';
+
+  @override
+  String get exerciseCycleModDesc => 'ركوب دراجة معتدل 19–22 كم/ساعة';
+
+  @override
+  String get exerciseCycleHighDesc =>
+      'ركوب دراجة سريع وعالي الشدة 22–25 كم/ساعة';
+
+  @override
+  String get exerciseSwimLowDesc => 'سباحة ترفيهية خفيفة';
+
+  @override
+  String get exerciseSwimModDesc => 'سباحة حرة / صدر بسرعة معتدلة';
+
+  @override
+  String get exerciseSwimHighDesc => 'سباحة متواصلة بجهد عالٍ';
+
+  @override
+  String get exerciseWorkoutLowDesc =>
+      'أوزان خفيفة، فترات راحة طويلة بين المجموعات';
+
+  @override
+  String get exerciseWorkoutModDesc => 'تمارين دائرية معتدلة، تعرق وتنفس سريع';
+
+  @override
+  String get exerciseWorkoutHighDesc =>
+      'تمارين شاقة، راحة قصيرة جداً، جهد أقصى';
+
+  @override
+  String get exerciseCalorieRangeError =>
+      'يرجى إدخال السعرات الحرارية بين 1 و 5000 سعرة.';
+
+  @override
+  String get exerciseDurationRangeError =>
+      'يجب أن تكون المدة بين 1 و 1440 دقيقة.';
+
+  @override
+  String get exerciseSaveNetworkError =>
+      'تعذر حفظ التمرين. تحقق من الاتصال وحاول مرة أخرى.';
+
+  @override
+  String get deleteExerciseConfirm =>
+      'هل أنت تأكد من أنك تريد حذف هذا التمرين؟';
+
+  @override
+  String get deleteExerciseFailed =>
+      'تعذر حذف التمرين. يرجى المحاولة مرة أخرى.';
+
+  @override
+  String get appleHealthSynced => 'مزامنة Apple Health';
 }

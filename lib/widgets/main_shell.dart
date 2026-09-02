@@ -217,7 +217,7 @@ class _MainShellState extends State<MainShell> with WidgetsBindingObserver {
                 ),
                 BottomNavigationBarItem(
                   icon: const Icon(Icons.bar_chart_rounded),
-                  label: s.statistics,
+                  label: s.tabAnalytics,
                 ),
                 BottomNavigationBarItem(
                   icon: const Icon(Icons.settings_rounded),

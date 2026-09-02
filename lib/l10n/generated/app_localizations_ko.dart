@@ -1212,7 +1212,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get sportsOther => '기타';
 
   @override
-  String get durationTitle => '언제 목표를 달성하고 싶으신가요?';
+  String get durationTitle => '운동 시간';
 
   @override
   String get durationNote => '원하는 기간을 선택하세요.';
@@ -2115,4 +2115,161 @@ class AppLocalizationsKo extends AppLocalizations {
   String weekAbbrev(int weeks) {
     return 'W$weeks';
   }
+
+  @override
+  String get logWorkoutTile => '운동 기록';
+
+  @override
+  String get scanMealTile => '식사 스캔';
+
+  @override
+  String get chooseExerciseTypeSubtitle => '소모된 칼로리를 계산할 운동 유형을 선택하세요.';
+
+  @override
+  String get exerciseRunning => '러닝';
+
+  @override
+  String get exerciseRunningDesc => '페이스, 체중, 운동 시간으로 추정';
+
+  @override
+  String get exerciseWalking => '걷기';
+
+  @override
+  String get exerciseWalkingDesc => '보통 걷기 또는 빠른 걷기 속도로 추정';
+
+  @override
+  String get exerciseCycling => '사이클링';
+
+  @override
+  String get exerciseCyclingDesc => '보통 또는 고강도 페달링 속도로 추정';
+
+  @override
+  String get exerciseSwimming => '수영';
+
+  @override
+  String get exerciseSwimmingDesc => '자유형/평영 강도에 따른 추정';
+
+  @override
+  String get exerciseWorkout => '운동 (웨이트/헬스)';
+
+  @override
+  String get exerciseWorkoutDesc => '강도별 근력 운동 또는 서킷 운동';
+
+  @override
+  String get exerciseManual => '직접 입력';
+
+  @override
+  String get exerciseManualDesc => '머신이나 스마트워치에 표시된 칼로리 입력';
+
+  @override
+  String get intensityTitle => '운동 강도';
+
+  @override
+  String get burnedCaloriesTitle => '소모 칼로리';
+
+  @override
+  String get kcalSuffix => 'kcal';
+
+  @override
+  String get minutesSuffix => '분';
+
+  @override
+  String get manualCaloriesHint => '머신 또는 스마트워치 칼로리 입력';
+
+  @override
+  String get durationHint => '운동 시간';
+
+  @override
+  String get willAddToToday => '오늘 기록에 추가됩니다';
+
+  @override
+  String get estimatedActiveCalories => '추정 활동 소모 칼로리';
+
+  @override
+  String exerciseCalcWeightNote(String weight) {
+    return '체중 $weight kg 및 Adult Compendium 2024의 MET 기준으로 계산되었습니다. 스마트워치 등이 더 정확할 수 있습니다.';
+  }
+
+  @override
+  String get exerciseUpdateWeightPrompt => '칼로리 계산을 위해 프로필에서 체중을 업데이트해 주세요.';
+
+  @override
+  String get exerciseHealthSyncWarning =>
+      'Apple Health에 이미 기록된 운동인 경우 중복을 방지하기 위해 여기서 다시 기록하지 마세요.';
+
+  @override
+  String get saveWorkoutButton => '운동 저장';
+
+  @override
+  String get intensityLow => '낮음';
+
+  @override
+  String get intensityModerate => '보통';
+
+  @override
+  String get intensityHigh => '높음';
+
+  @override
+  String get exerciseRunLowDesc => '가벼운 조깅 6.4–6.8 km/h · 약 9:20 min/km';
+
+  @override
+  String get exerciseRunModDesc => '일정한 러닝 9.7–10.1 km/h · 약 6:10 min/km';
+
+  @override
+  String get exerciseRunHighDesc => '빠른 러닝 12.9 km/h · 약 4:40 min/km';
+
+  @override
+  String get exerciseWalkLowDesc => '편안한 산책 4.0 km/h';
+
+  @override
+  String get exerciseWalkModDesc => '빠른 걷기 5.6 km/h';
+
+  @override
+  String get exerciseWalkHighDesc => '매우 빠른 걷기 / 완만한 경사 6.4–7.2 km/h';
+
+  @override
+  String get exerciseCycleLowDesc => '가벼운 사이클링 16–19 km/h';
+
+  @override
+  String get exerciseCycleModDesc => '보통 사이클링 19–22 km/h';
+
+  @override
+  String get exerciseCycleHighDesc => '고속/고강도 사이클링 22–25 km/h';
+
+  @override
+  String get exerciseSwimLowDesc => '가벼운 레저 수영';
+
+  @override
+  String get exerciseSwimModDesc => '보통 페이스의 자유형 / 평영';
+
+  @override
+  String get exerciseSwimHighDesc => '고강도 연속 수영';
+
+  @override
+  String get exerciseWorkoutLowDesc => '가벼운 무게, 세트 간 충분한 휴식';
+
+  @override
+  String get exerciseWorkoutModDesc => '보통 서킷, 땀이 나고 숨이 차는 강도';
+
+  @override
+  String get exerciseWorkoutHighDesc => '고강도 서킷, 휴식 최소화, 최대 노력';
+
+  @override
+  String get exerciseCalorieRangeError => '1 ~ 5,000 kcal 사이로 입력해 주세요.';
+
+  @override
+  String get exerciseDurationRangeError => '운동 시간은 1 ~ 1,440분 사이여야 합니다.';
+
+  @override
+  String get exerciseSaveNetworkError =>
+      '운동을 저장할 수 없습니다. 네트워크 연결을 확인하고 다시 시도해 주세요.';
+
+  @override
+  String get deleteExerciseConfirm => '이 운동 기록을 삭제하시겠습니까?';
+
+  @override
+  String get deleteExerciseFailed => '운동 기록을 삭제하지 못했습니다. 다시 시도해 주세요.';
+
+  @override
+  String get appleHealthSynced => 'Apple Health 동기화됨';
 }

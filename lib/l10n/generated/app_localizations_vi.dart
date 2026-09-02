@@ -1247,7 +1247,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get sportsOther => 'Khác';
 
   @override
-  String get durationTitle => 'Bạn muốn đạt mục tiêu trong?';
+  String get durationTitle => 'Thời lượng';
 
   @override
   String get durationNote => 'Chọn thời gian phù hợp với bạn';
@@ -2164,4 +2164,173 @@ class AppLocalizationsVi extends AppLocalizations {
   String weekAbbrev(int weeks) {
     return 'T$weeks';
   }
+
+  @override
+  String get logWorkoutTile => 'Ghi tập luyện';
+
+  @override
+  String get scanMealTile => 'Quét món ăn';
+
+  @override
+  String get chooseExerciseTypeSubtitle =>
+      'Chọn loại hình vận động để tính calo đã đốt.';
+
+  @override
+  String get exerciseRunning => 'Chạy bộ';
+
+  @override
+  String get exerciseRunningDesc =>
+      'Ước tính theo tốc độ, cân nặng và thời lượng';
+
+  @override
+  String get exerciseWalking => 'Đi bộ';
+
+  @override
+  String get exerciseWalkingDesc => 'Ước tính theo tốc độ đi dạo hoặc đi nhanh';
+
+  @override
+  String get exerciseCycling => 'Đạp xe';
+
+  @override
+  String get exerciseCyclingDesc =>
+      'Ước tính theo tốc độ đạp nhẹ hoặc gắng sức';
+
+  @override
+  String get exerciseSwimming => 'Bơi lội';
+
+  @override
+  String get exerciseSwimmingDesc => 'Bơi sải, bơi ếch theo mức độ gắng sức';
+
+  @override
+  String get exerciseWorkout => 'Tập luyện (Gym)';
+
+  @override
+  String get exerciseWorkoutDesc => 'Kháng lực hoặc circuit theo cường độ';
+
+  @override
+  String get exerciseManual => 'Ghi thủ công';
+
+  @override
+  String get exerciseManualDesc => 'Nhập số calo từ máy tập hoặc thiết bị khác';
+
+  @override
+  String get intensityTitle => 'Cường độ';
+
+  @override
+  String get burnedCaloriesTitle => 'Calo đã đốt';
+
+  @override
+  String get kcalSuffix => 'kcal';
+
+  @override
+  String get minutesSuffix => 'phút';
+
+  @override
+  String get manualCaloriesHint => 'Nhập calo từ máy tập hoặc thiết bị';
+
+  @override
+  String get durationHint => 'Thời lượng tập';
+
+  @override
+  String get willAddToToday => 'Sẽ cộng vào hôm nay';
+
+  @override
+  String get estimatedActiveCalories => 'Ước tính calo hoạt động';
+
+  @override
+  String exerciseCalcWeightNote(String weight) {
+    return 'Tính theo cân nặng $weight kg và MET từ Adult Compendium 2024. Đây là ước tính, thiết bị đeo có thể chính xác hơn.';
+  }
+
+  @override
+  String get exerciseUpdateWeightPrompt =>
+      'Hãy cập nhật cân nặng trong hồ sơ để CalGo ước tính calo.';
+
+  @override
+  String get exerciseHealthSyncWarning =>
+      'Nếu Apple Health đã ghi nhận cùng buổi tập, không ghi lại tại đây để tránh cộng calo hai lần.';
+
+  @override
+  String get saveWorkoutButton => 'Lưu bài tập';
+
+  @override
+  String get intensityLow => 'Thấp';
+
+  @override
+  String get intensityModerate => 'Trung bình';
+
+  @override
+  String get intensityHigh => 'Cao';
+
+  @override
+  String get exerciseRunLowDesc =>
+      'Chạy nhẹ 6,4–6,8 km/h · khoảng 9:20 phút/km';
+
+  @override
+  String get exerciseRunModDesc =>
+      'Chạy đều 9,7–10,1 km/h · khoảng 6:10 phút/km';
+
+  @override
+  String get exerciseRunHighDesc =>
+      'Chạy nhanh 12,9 km/h · khoảng 4:40 phút/km';
+
+  @override
+  String get exerciseWalkLowDesc => 'Đi dạo nhẹ nhàng 4,0 km/h';
+
+  @override
+  String get exerciseWalkModDesc => 'Đi bộ nhanh 5,6 km/h';
+
+  @override
+  String get exerciseWalkHighDesc =>
+      'Đi bộ rất nhanh / leo dốc nhẹ 6,4–7,2 km/h';
+
+  @override
+  String get exerciseCycleLowDesc => 'Đạp xe nhẹ nhàng 16–19 km/h';
+
+  @override
+  String get exerciseCycleModDesc => 'Đạp xe tốc độ vừa 19–22 km/h';
+
+  @override
+  String get exerciseCycleHighDesc => 'Đạp xe nhanh gắng sức 22–25 km/h';
+
+  @override
+  String get exerciseSwimLowDesc => 'Bơi thư giãn nhẹ nhàng';
+
+  @override
+  String get exerciseSwimModDesc => 'Bơi sải / bơi ếch tốc độ trung bình';
+
+  @override
+  String get exerciseSwimHighDesc => 'Bơi liên tục gắng sức cao';
+
+  @override
+  String get exerciseWorkoutLowDesc =>
+      'Kháng lực nhẹ, nghỉ nhiều giữa các hiệp';
+
+  @override
+  String get exerciseWorkoutModDesc =>
+      'Circuit vừa, đổ mồ hôi và thở nhanh hơn';
+
+  @override
+  String get exerciseWorkoutHighDesc => 'Circuit nặng, ít nghỉ, gắng sức cao';
+
+  @override
+  String get exerciseCalorieRangeError =>
+      'Vui lòng nhập số calo từ 1 đến 5.000 kcal.';
+
+  @override
+  String get exerciseDurationRangeError =>
+      'Thời lượng phải từ 1 đến 1.440 phút.';
+
+  @override
+  String get exerciseSaveNetworkError =>
+      'Chưa thể lưu bài tập. Vui lòng kiểm tra mạng và thử lại.';
+
+  @override
+  String get deleteExerciseConfirm => 'Bạn có chắc chắn muốn xóa bài tập này?';
+
+  @override
+  String get deleteExerciseFailed => 'Xóa bài tập thất bại. Vui lòng thử lại.';
+
+  @override
+  String get appleHealthSynced => 'Đồng bộ Apple Health';
 }

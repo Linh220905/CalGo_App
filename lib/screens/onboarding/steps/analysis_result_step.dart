@@ -43,11 +43,11 @@ class _AnalysisResultStepState extends State<AnalysisResultStep> {
 
   Future<void> _prepareResult() async {
     final provider = context.read<OnboardingProvider>();
-    // Keep a deliberate analysis window so the personalized plan feels
-    // considered; calculation and persistence still happen underneath.
+    // For recalculating existing targets, use a fast 2.5s analysis window.
+    final durationMs = provider.isRecalculating ? 2500 : 10500;
     final delay = Completer<void>();
     _analysisDelay = delay;
-    _analysisTimer = Timer(const Duration(milliseconds: 10500), () {
+    _analysisTimer = Timer(Duration(milliseconds: durationMs), () {
       if (!delay.isCompleted) delay.complete();
     });
 
@@ -454,12 +454,12 @@ class _ResultPhaseState extends State<_ResultPhase> {
                             gamificationProvider: gamificationProvider,
                             progressProvider: progressProvider,
                           );
-                          if (mounted) {
-                            setState(() => _isSaving = false);
-                            if (ok) {
-                              context.go('/home');
+                            if (mounted) {
+                              setState(() => _isSaving = false);
+                              if (ok && context.mounted) {
+                                context.go('/profile');
+                              }
                             }
-                          }
                         } else {
                           onboardingProvider.nextStep();
                         }

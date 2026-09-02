@@ -21,6 +21,8 @@ class AuthProvider extends ChangeNotifier {
 
   AuthProvider(ApiService api) : _authService = AuthService(api);
 
+  ApiService get api => _authService.api;
+
   User? get user => _user;
   bool get loading => _loading;
   bool get googleLoading => _googleLoading;
@@ -60,7 +62,25 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> refreshUser() => tryRestore();
+  Future<void> fetchCurrentUser() async {
+    try {
+      final userData = await _authService.getCurrentUser();
+      if (userData != null) {
+        _user = User.fromJson(userData);
+        notifyListeners();
+      }
+    } catch (e) {
+      debugPrint('Failed to fetch current user: $e');
+    }
+  }
+
+  Future<void> refreshUser() async {
+    if (isAuthenticated) {
+      await fetchCurrentUser();
+    } else {
+      await tryRestore();
+    }
+  }
 
   /// Silently refreshes the access token in the background (no loading state,
   /// no UI change). Used as the ApiService.refreshCallback interceptor so that

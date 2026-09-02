@@ -9,6 +9,8 @@ class AuthService {
 
   AuthService(this._api);
 
+  ApiService get api => _api;
+
   bool _isInvalidSession(Object error) {
     return error is ApiException &&
         (error.statusCode == 401 || error.statusCode == 403);
@@ -138,6 +140,19 @@ class AuthService {
     } finally {
       _inFlightRefresh = null;
     }
+  }
+
+  Future<Map<String, dynamic>?> getCurrentUser() async {
+    final token = await getToken();
+    if (token == null || token.isEmpty) return null;
+    _api.setToken(token);
+    try {
+      final res = await _api.get('/users/me');
+      if (res is Map<String, dynamic>) {
+        return res;
+      }
+    } catch (_) {}
+    return null;
   }
 
   Future<Map<String, dynamic>?> tryRestore() async {
