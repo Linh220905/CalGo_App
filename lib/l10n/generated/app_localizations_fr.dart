@@ -2114,6 +2114,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get weightIncreased => 'Gagné';
 
   @override
+  String get weightUnchanged => 'Inchangé';
+
+  @override
   String get dateColumnHeader => 'Date';
 
   @override

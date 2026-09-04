@@ -2022,6 +2022,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get weightIncreased => '증량';
 
   @override
+  String get weightUnchanged => '변화 없음';
+
+  @override
   String get dateColumnHeader => '날짜';
 
   @override

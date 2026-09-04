@@ -2071,6 +2071,9 @@ class AppLocalizationsVi extends AppLocalizations {
   String get weightIncreased => 'Tăng';
 
   @override
+  String get weightUnchanged => 'Không đổi';
+
+  @override
   String get dateColumnHeader => 'Ngày';
 
   @override

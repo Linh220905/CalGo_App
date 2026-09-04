@@ -2106,6 +2106,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get weightIncreased => 'Набрано';
 
   @override
+  String get weightUnchanged => 'Без изменений';
+
+  @override
   String get dateColumnHeader => 'Дата';
 
   @override

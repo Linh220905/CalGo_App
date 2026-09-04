@@ -1019,6 +1019,7 @@
   "logWeightNow": "سجل الوزن الآن",
   "weightDecreased": "نقص",
   "weightIncreased": "زاد",
+  "weightUnchanged": "دون تغيير",
   "dateColumnHeader": "التاريخ",
   "addPhoto": "إضافة صورة",
   "photoSelected": "تم اختيار الصورة",

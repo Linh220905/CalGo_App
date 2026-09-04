@@ -637,6 +637,7 @@
   "logWeightNow": "지금 체중 기록하기",
   "weightDecreased": "감량",
   "weightIncreased": "증량",
+  "weightUnchanged": "변화 없음",
   "dateColumnHeader": "날짜",
   "addPhoto": "사진 추가",
   "photoSelected": "사진 선택됨",

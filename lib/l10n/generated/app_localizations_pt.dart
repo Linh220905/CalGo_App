@@ -2101,6 +2101,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get weightIncreased => 'Ganhou';
 
   @override
+  String get weightUnchanged => 'Sem alteração';
+
+  @override
   String get dateColumnHeader => 'Data';
 
   @override

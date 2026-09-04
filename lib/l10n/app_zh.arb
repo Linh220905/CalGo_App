@@ -1019,6 +1019,7 @@
   "logWeightNow": "立即记录体重",
   "weightDecreased": "减少",
   "weightIncreased": "增加",
+  "weightUnchanged": "无变化",
   "dateColumnHeader": "日期",
   "addPhoto": "添加照片",
   "photoSelected": "已选择照片",

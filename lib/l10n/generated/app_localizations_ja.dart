@@ -2016,6 +2016,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get weightIncreased => '増量';
 
   @override
+  String get weightUnchanged => '変化なし';
+
+  @override
   String get dateColumnHeader => '日付';
 
   @override

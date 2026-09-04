@@ -935,6 +935,7 @@
   "logWeightNow": "Ghi cân nặng ngay",
   "weightDecreased": "Giảm",
   "weightIncreased": "Tăng",
+  "weightUnchanged": "Không đổi",
   "dateColumnHeader": "Ngày",
   "addPhoto": "Thêm ảnh",
   "photoSelected": "Đã chọn ảnh",

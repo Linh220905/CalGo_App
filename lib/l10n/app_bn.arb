@@ -1019,6 +1019,7 @@
   "logWeightNow": "এখনই ওজন রেকর্ড করুন",
   "weightDecreased": "কমেছে",
   "weightIncreased": "বেড়েছে",
+  "weightUnchanged": "অপরিবর্তিত",
   "dateColumnHeader": "তারিখ",
   "addPhoto": "ছবি যোগ করুন",
   "photoSelected": "ছবি নির্বাচন করা হয়েছে",

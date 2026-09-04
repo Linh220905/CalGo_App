@@ -2083,6 +2083,9 @@ class AppLocalizationsHi extends AppLocalizations {
   String get weightIncreased => 'बढ़ा';
 
   @override
+  String get weightUnchanged => 'अपरिवर्तित';
+
+  @override
   String get dateColumnHeader => 'दिनांक';
 
   @override

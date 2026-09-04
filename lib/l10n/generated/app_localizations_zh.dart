@@ -2002,6 +2002,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get weightIncreased => '增加';
 
   @override
+  String get weightUnchanged => '无变化';
+
+  @override
   String get dateColumnHeader => '日期';
 
   @override

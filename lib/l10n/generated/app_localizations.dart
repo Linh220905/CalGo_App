@@ -3855,6 +3855,12 @@ abstract class AppLocalizations {
   /// **'Gained'**
   String get weightIncreased;
 
+  /// No description provided for @weightUnchanged.
+  ///
+  /// In en, this message translates to:
+  /// **'No change'**
+  String get weightUnchanged;
+
   /// No description provided for @dateColumnHeader.
   ///
   /// In en, this message translates to:

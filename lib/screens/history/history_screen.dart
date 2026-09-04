@@ -215,9 +215,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
                               overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.beVietnamPro(
                                 color: subtitleColor,
-                                fontSize: 12,
+                                fontSize: 11,
                                 fontWeight: FontWeight.w700,
-                                letterSpacing: 2.8,
+                                letterSpacing: 1.2,
                               ),
                             ),
                             const SizedBox(height: 6),

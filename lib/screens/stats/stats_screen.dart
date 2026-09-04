@@ -582,30 +582,30 @@ class _WeightHeroCard extends StatelessWidget {
                   ],
                 ],
               ),
-              ElevatedButton.icon(
+              FilledButton.icon(
                 onPressed: onLogWeight,
-                icon: Text(
+                icon: const Icon(Icons.add_rounded, size: 16),
+                label: Text(
                   context.watch<AppSettingsProvider>().strings.logWeightButton,
                   style: const TextStyle(
-                    fontWeight: FontWeight.w800,
-                    fontSize: 14,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 13,
                   ),
                 ),
-                label: const Icon(Icons.arrow_forward_rounded, size: 16),
-                style: ElevatedButton.styleFrom(
+                style: FilledButton.styleFrom(
                   backgroundColor: dark
+                      ? const Color(0xFF2E2B38)
+                      : const Color(0xFFF1F5F9),
+                  foregroundColor: dark
                       ? Colors.white
                       : const Color(0xFF0F172A),
-                  foregroundColor: dark
-                      ? const Color(0xFF0F172A)
-                      : Colors.white,
                   elevation: 0,
                   padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 12,
+                    horizontal: 12,
+                    vertical: 8,
                   ),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(24),
+                    borderRadius: BorderRadius.circular(16),
                   ),
                 ),
               ),
@@ -2571,9 +2571,28 @@ class _WeightChangeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final strings = context.watch<AppSettingsProvider>().strings;
-    final items = changes
-        .where((item) => item.sparkline.length >= 2 || item.diffKg.abs() > 0.01)
-        .toList();
+    final List<WeightChangeItem> displayItems = changes.isNotEmpty
+        ? changes
+        : const [
+            WeightChangeItem(
+              periodDays: 7,
+              diffKg: 0.0,
+              label: '7d',
+              sparkline: [0.0, 0.0],
+            ),
+            WeightChangeItem(
+              periodDays: 30,
+              diffKg: 0.0,
+              label: '30d',
+              sparkline: [0.0, 0.0],
+            ),
+            WeightChangeItem(
+              periodDays: 90,
+              diffKg: 0.0,
+              label: '90d',
+              sparkline: [0.0, 0.0],
+            ),
+          ];
 
     return _Card(
       card: card,
@@ -2592,129 +2611,85 @@ class _WeightChangeCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 14),
-          if (items.isEmpty)
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+          ...displayItems.map((item) {
+            final isZero = item.diffKg.abs() <= 0.01;
+            final isLoss = item.diffKg <= 0;
+            final absDiff = item.diffKg.abs().toStringAsFixed(1);
+            final periodLabel = StatsLocalization.periodLabel(
+              context,
+              item.periodDays,
+            );
+            final changeColor = isZero
+                ? muted
+                : (isLoss ? const Color(0xFF10B981) : const Color(0xFFEF4444));
+
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: Row(
                 children: [
-                  Text(
-                    strings.logWeightEmptyDesc,
-                    style: TextStyle(color: muted, fontSize: 14, height: 1.4),
-                  ),
-                  if (onLogWeight != null) ...[
-                    const SizedBox(height: 12),
-                    ElevatedButton.icon(
-                      onPressed: onLogWeight,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF63A97B),
-                        foregroundColor: Colors.white,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 10,
-                        ),
-                      ),
-                      icon: const Icon(Icons.add_rounded, size: 18),
-                      label: Text(
-                        strings.logWeightNow,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ),
-                  ],
-                ],
-              ),
-            )
-          else
-            ...items.map((item) {
-              final isLoss = item.diffKg <= 0;
-              final absDiff = item.diffKg.abs().toStringAsFixed(1);
-              final periodLabel = StatsLocalization.periodLabel(
-                context,
-                item.periodDays,
-              );
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: Row(
-                  children: [
-                    SizedBox(
-                      width: 70,
-                      child: Text(
-                        periodLabel,
-                        style: TextStyle(
-                          color: text,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-
-                    Expanded(
-                      child: SizedBox(
-                        height: 24,
-                        child: CustomPaint(
-                          painter: _WeightSparklinePainter(
-                            values: item.sparkline,
-                            color: isLoss
-                                ? const Color(0xFF10B981)
-                                : const Color(0xFFEF4444),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-
-                    Text(
-                      '${item.diffKg.abs() <= 0.01
-                          ? ""
-                          : item.diffKg > 0
-                          ? "+"
-                          : "-"}$absDiff kg',
+                  SizedBox(
+                    width: 70,
+                    child: Text(
+                      periodLabel,
                       style: TextStyle(
                         color: text,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
-                    const SizedBox(width: 16),
-
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          isLoss
-                              ? Icons.call_received_rounded
-                              : Icons.call_made_rounded,
-                          size: 15,
-                          color: isLoss
-                              ? const Color(0xFF10B981)
-                              : const Color(0xFFEF4444),
+                  ),
+                  Expanded(
+                    child: SizedBox(
+                      height: 24,
+                      child: CustomPaint(
+                        painter: _WeightSparklinePainter(
+                          values: item.sparkline.isNotEmpty ? item.sparkline : [0.0, 0.0],
+                          color: changeColor,
                         ),
-                        const SizedBox(width: 3),
-                        Text(
-                          isLoss
-                              ? strings.weightDecreased
-                              : strings.weightIncreased,
-                          style: TextStyle(
-                            color: isLoss
-                                ? const Color(0xFF10B981)
-                                : const Color(0xFFEF4444),
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
-                  ],
-                ),
-              );
-            }),
+                  ),
+                  const SizedBox(width: 12),
+                  Text(
+                    '${isZero ? "" : (item.diffKg > 0 ? "+" : "-")}$absDiff kg',
+                    style: TextStyle(
+                      color: text,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        isZero
+                            ? Icons.remove_rounded
+                            : (isLoss
+                                ? Icons.call_received_rounded
+                                : Icons.call_made_rounded),
+                        size: 15,
+                        color: changeColor,
+                      ),
+                      const SizedBox(width: 3),
+                      Text(
+                        isZero
+                            ? strings.weightUnchanged
+                            : (isLoss
+                                ? strings.weightDecreased
+                                : strings.weightIncreased),
+                        style: TextStyle(
+                          color: changeColor,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            );
+          }),
         ],
       ),
     );

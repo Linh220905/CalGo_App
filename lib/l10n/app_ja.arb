@@ -637,6 +637,7 @@
   "logWeightNow": "今すぐ体重を記録",
   "weightDecreased": "減量",
   "weightIncreased": "増量",
+  "weightUnchanged": "変化なし",
   "dateColumnHeader": "日付",
   "addPhoto": "写真を追加",
   "photoSelected": "写真を選択済み",

@@ -1019,6 +1019,7 @@
   "logWeightNow": "Записать вес сейчас",
   "weightDecreased": "Сброшено",
   "weightIncreased": "Набрано",
+  "weightUnchanged": "Без изменений",
   "dateColumnHeader": "Дата",
   "addPhoto": "Добавить фото",
   "photoSelected": "Фото выбрано",

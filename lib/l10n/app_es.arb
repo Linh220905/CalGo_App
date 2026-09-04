@@ -1019,6 +1019,7 @@
   "logWeightNow": "Registrar peso ahora",
   "weightDecreased": "Perdido",
   "weightIncreased": "Ganado",
+  "weightUnchanged": "Sin cambios",
   "dateColumnHeader": "Fecha",
   "addPhoto": "Añadir foto",
   "photoSelected": "Foto seleccionada",

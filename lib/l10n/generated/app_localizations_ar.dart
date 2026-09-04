@@ -2060,6 +2060,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get weightIncreased => 'زاد';
 
   @override
+  String get weightUnchanged => 'دون تغيير';
+
+  @override
   String get dateColumnHeader => 'التاريخ';
 
   @override

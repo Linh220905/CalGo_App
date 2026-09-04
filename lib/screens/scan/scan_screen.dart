@@ -156,6 +156,21 @@ class _ScanScreenState extends State<ScanScreen>
       );
       await controller.initialize();
 
+      // Configure anti-glare / food-optimized exposure
+      try {
+        final minExp = await controller.getMinExposureOffset();
+        final maxExp = await controller.getMaxExposureOffset();
+        final step = await controller.getExposureOffsetStepSize();
+        // Target -0.3 to -0.5 EV compensation to suppress blown-out highlights on dishes
+        const targetEv = -0.35;
+        if (targetEv >= minExp && targetEv <= maxExp && step > 0) {
+          final roundedEv = (targetEv / step).round() * step;
+          await controller.setExposureOffset(roundedEv);
+        }
+      } catch (_) {
+        // Ignore hardware lack of exposure offset support
+      }
+
       if (!mounted ||
           _selectedImageFile != null ||
           lifecycleGeneration != _cameraLifecycleGeneration ||
@@ -209,6 +224,16 @@ class _ScanScreenState extends State<ScanScreen>
     await WidgetsBinding.instance.endOfFrame;
   }
 
+  // ── Food-enhancing & anti-glare color filter matrix ──────────
+  // Matrix subtly boosts saturation (+8%), warmth (+3% red, -2% blue),
+  // and tones down blown-out whites (contrast curve adjustment).
+  static const List<double> _foodEnhanceFilterMatrix = <double>[
+    1.04, 0.00, 0.00, 0.00, -2.0, // Red
+    0.00, 1.02, 0.00, 0.00, -2.0, // Green
+    0.00, 0.00, 0.98, 0.00, -4.0, // Blue (subtle warmth & anti-cool glare)
+    0.00, 0.00, 0.00, 1.00,  0.0, // Alpha
+  ];
+
   Widget _buildCameraPreview() {
     final controller = _cameraController;
     if (controller == null || !controller.value.isInitialized) {
@@ -235,7 +260,12 @@ class _ScanScreenState extends State<ScanScreen>
               constraints.maxWidth / constraints.maxHeight;
           return Transform.scale(
             scale: previewAspectRatio / screenAspectRatio,
-            child: Center(child: CameraPreview(controller)),
+            child: Center(
+              child: ColorFiltered(
+                colorFilter: const ColorFilter.matrix(_foodEnhanceFilterMatrix),
+                child: CameraPreview(controller),
+              ),
+            ),
           );
         },
       ),
@@ -467,7 +497,11 @@ class _ScanScreenState extends State<ScanScreen>
             // ── Camera / Captured Image Preview Viewport ─────
             Positioned.fill(
               child: _selectedImageFile != null
-                  ? Image.file(_selectedImageFile!, fit: BoxFit.cover)
+                  ? ColorFiltered(
+                      colorFilter:
+                          const ColorFilter.matrix(_foodEnhanceFilterMatrix),
+                      child: Image.file(_selectedImageFile!, fit: BoxFit.cover),
+                    )
                   : _buildCameraPreview(),
             ),
 

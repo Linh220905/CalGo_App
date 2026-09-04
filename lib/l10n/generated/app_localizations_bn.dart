@@ -2080,6 +2080,9 @@ class AppLocalizationsBn extends AppLocalizations {
   String get weightIncreased => 'বেড়েছে';
 
   @override
+  String get weightUnchanged => 'অপরিবর্তিত';
+
+  @override
   String get dateColumnHeader => 'তারিখ';
 
   @override

@@ -935,6 +935,7 @@
   "logWeightNow": "Log Weight Now",
   "weightDecreased": "Lost",
   "weightIncreased": "Gained",
+  "weightUnchanged": "No change",
   "dateColumnHeader": "Date",
   "addPhoto": "Add Photo",
   "photoSelected": "Photo selected",
