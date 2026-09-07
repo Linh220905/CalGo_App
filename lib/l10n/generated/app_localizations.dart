@@ -1348,6 +1348,12 @@ abstract class AppLocalizations {
   /// **'{count, plural, =0 {No ingredients} =1 {1 ingredient} other {{count} ingredients}}'**
   String ingredientCount(int count);
 
+  /// Localized UI text for ingredients without a nutrition match
+  ///
+  /// In en, this message translates to:
+  /// **'Nutrition data was not found for: {ingredients}. Please add them manually.'**
+  String unmatchedIngredientsNote(String ingredients);
+
   /// Localized UI text
   ///
   /// In en, this message translates to:

@@ -96,7 +96,10 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         _reloadScheduled = false;
         if (mounted) {
-          context.read<HomeProvider>().loadToday(forceRefresh: true);
+          final hp = context.read<HomeProvider>();
+          if (!hp.hasLoaded) {
+            hp.loadToday();
+          }
           unawaited(context.read<ScanService>().preloadHistoryImages(context));
         }
       });
@@ -105,8 +108,10 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     return Consumer<HomeProvider>(
       builder: (context, hp, _) {
         final gamification = context.watch<GamificationProvider>();
-        _syncRecapFeatures(hp);
-        _scheduleHealthSync(hp, settings, currentUserId);
+        if (hp.hasLoaded) {
+          _syncRecapFeatures(hp);
+          _scheduleHealthSync(hp, settings, currentUserId);
+        }
         void onMascotTap() {
           if (hp.mascotOpensMealGuidance) {
             context.push('/meal-guidance');
@@ -602,7 +607,7 @@ class _CalorieCardSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final hp = context.watch<HomeProvider>();
-    if (!hp.hasLoaded || hp.loadingSummary) return const _CardSkeleton();
+    if (!hp.hasLoaded && hp.loadingSummary) return const _CardSkeleton();
 
     final s = hp.summary;
     final target = s.effectiveTargetCalories > 0
@@ -628,7 +633,7 @@ class _MacroCardsSection extends StatelessWidget {
     final hp = context.watch<HomeProvider>();
     final settings = context.watch<AppSettingsProvider>();
     final strings = settings.strings;
-    if (!hp.hasLoaded || hp.loadingSummary) return const _MacroSkeleton();
+    if (!hp.hasLoaded && hp.loadingSummary) return const _MacroSkeleton();
 
     final s = hp.summary;
     final targetProtein = s.targetProteinG > 0
@@ -741,7 +746,7 @@ class _RecentlyUploadedListState extends State<_RecentlyUploadedList> {
     final borderColor = isDark ? const Color(0xFF2C2A34) : const Color(0xFFE2E8F0);
 
     if (pendingTask == null &&
-        (!hp.hasLoaded || hp.loadingSummary || hp.loadingDiary)) {
+        !hp.hasLoaded && (hp.loadingSummary || hp.loadingDiary)) {
       return Center(
         child: Padding(
           padding: const EdgeInsets.all(24),

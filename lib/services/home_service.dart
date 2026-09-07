@@ -40,7 +40,7 @@ class HomeService {
     if (forceRefresh || !cacheFresh) {
       final responses = await Future.wait([
         _getAllHistory(),
-        _api.get('/users/me'),
+        _api.get('/users/me', caller: 'HomeService.getDayData'),
       ]);
       final history = responses[0] as List<dynamic>;
       _cachedEntries = history
@@ -94,6 +94,7 @@ class HomeService {
     while (true) {
       final page = await _api.get(
         '/scan/history?limit=$pageSize&offset=$offset',
+        caller: 'HomeService._getAllHistory',
       );
       if (page is! List) break;
       items.addAll(page);

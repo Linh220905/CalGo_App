@@ -15,8 +15,6 @@ import '../../../widgets/social_auth_button.dart';
 import '../../../widgets/premium_ui.dart';
 import '../../../services/trial_notification_service.dart';
 import '../../../services/analytics_service.dart';
-import '../../../services/revenuecat_service.dart';
-import 'package:purchases_flutter/purchases_flutter.dart';
 import '../../../utils/payment_platform.dart';
 import 'post_premium_quiz_dialog.dart';
 
@@ -470,7 +468,6 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
 
   Future<void> _handlePrimaryAction({PremiumOffer? selectedOffer}) async {
     final payment = context.read<PaymentProvider>();
-    final auth = context.read<AuthProvider>();
     final s = context.read<AppSettingsProvider>().strings;
     const testing = AppBuildConfig.isTesting;
 
@@ -481,40 +478,6 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
 
     if (!await _ensureAuthenticated() || !mounted) return;
 
-    // Try RevenueCat purchase first
-    try {
-      final offerings = await RevenueCatService.getOfferings();
-      final currentOffering = offerings?.current;
-      if (currentOffering != null && currentOffering.availablePackages.isNotEmpty) {
-        Package? pkg;
-        if (_selectedPlan == _Plan.weekly) {
-          pkg = currentOffering.weekly ?? currentOffering.availablePackages.firstWhere(
-            (p) => p.packageType == PackageType.weekly,
-            orElse: () => currentOffering.availablePackages.first,
-          );
-        } else if (_selectedPlan == _Plan.monthly) {
-          pkg = currentOffering.monthly ?? currentOffering.availablePackages.firstWhere(
-            (p) => p.packageType == PackageType.monthly,
-            orElse: () => currentOffering.availablePackages.first,
-          );
-        } else {
-          pkg = currentOffering.annual ?? currentOffering.availablePackages.firstWhere(
-            (p) => p.packageType == PackageType.annual,
-            orElse: () => currentOffering.availablePackages.first,
-          );
-        }
-
-        final success = await RevenueCatService.purchasePackage(pkg);
-        if (!mounted) return;
-        if (success) {
-          await _handlePremiumSuccess();
-          return;
-        }
-      }
-    } catch (e) {
-      debugPrint('[Paywall] RevenueCat purchase error: $e');
-    }
-
     final plan = _toPremiumPlan(_selectedPlan);
     final preferTrial =
         selectedOffer?.hasFreeTrial ??
@@ -523,7 +486,6 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
       plan,
       preferFreeTrial: preferTrial,
       selectedOffer: selectedOffer,
-      applicationUserName: auth.user?.id,
     );
     if (!mounted) return;
 
@@ -759,13 +721,15 @@ class _HeroSection extends StatelessWidget {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      Colors.black.withOpacity(0.0), // Start fully transparent
-                      Colors.black.withOpacity(0.15), // Darken a bit
-                      Colors.white.withOpacity(
-                        0.0,
+                      Colors.black.withValues(
+                        alpha: 0.0,
+                      ), // Start fully transparent
+                      Colors.black.withValues(alpha: 0.15), // Darken a bit
+                      Colors.white.withValues(
+                        alpha: 0.0,
                       ), // Start white fade from transparent
-                      Colors.white.withOpacity(0.6),
-                      Colors.white.withOpacity(0.9),
+                      Colors.white.withValues(alpha: 0.6),
+                      Colors.white.withValues(alpha: 0.9),
                       Colors.white, // End fully white
                     ],
                     stops: const [
@@ -1083,7 +1047,7 @@ class _FreeTrialToggleRow extends StatelessWidget {
         color: enabled ? _kAccentSoft : _kSurface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: enabled ? _kAccent.withOpacity(0.4) : _kBorder,
+          color: enabled ? _kAccent.withValues(alpha: 0.4) : _kBorder,
         ),
       ),
       child: Row(
@@ -1123,7 +1087,7 @@ class _FreeTrialToggleRow extends StatelessWidget {
           Switch.adaptive(
             value: enabled,
             onChanged: onChanged,
-            activeColor: _kAccent,
+            activeThumbColor: _kAccent,
           ),
         ],
       ),

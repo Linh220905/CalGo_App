@@ -200,9 +200,11 @@ class HomeProvider extends ChangeNotifier {
     final loadGeneration = ++_loadGeneration;
     if (forceRefresh) {
       _service.invalidateCache();
+      _mealGuidanceService.invalidateCache();
     }
-    _loadingSummary = true;
-    _loadingDiary = true;
+    // Only set loading spinners if we haven't loaded yet to avoid flickering UI
+    _loadingSummary = !_hasLoaded || forceRefresh;
+    _loadingDiary = !_hasLoaded || forceRefresh;
     _error = null;
     notifyListeners();
 
@@ -231,7 +233,9 @@ class HomeProvider extends ChangeNotifier {
       _entries = dayData.meals;
     } catch (e) {
       if (loadGeneration != _loadGeneration) return;
-      _error = 'dataLoadFailed';
+      if (!_hasLoaded) {
+        _error = 'dataLoadFailed';
+      }
     }
     if (loadGeneration != _loadGeneration) return;
     _loadingSummary = false;
@@ -241,7 +245,7 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
 
     if (_error == null && _isToday(_selectedDate)) {
-      unawaited(_loadMealGuidance(loadGeneration));
+      unawaited(_loadMealGuidance(loadGeneration, forceRefresh: forceRefresh));
     } else if (!_isToday(_selectedDate)) {
       _mealGuidance = null;
       _loadingMealGuidance = false;
@@ -249,18 +253,21 @@ class HomeProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> _loadMealGuidance(int loadGeneration) async {
+  Future<void> _loadMealGuidance(int loadGeneration, {bool forceRefresh = false}) async {
+    if (_loadingMealGuidance) return;
     _loadingMealGuidance = true;
     notifyListeners();
     MealGuidance? result;
     try {
-      result = await _mealGuidanceService.getToday();
+      result = await _mealGuidanceService.getToday(refresh: forceRefresh);
     } catch (_) {
       // Guidance is an enhancement; Home remains usable if Gemini/API is
       // temporarily unavailable.
     }
     if (loadGeneration != _loadGeneration) return;
-    _mealGuidance = result;
+    if (result != null) {
+      _mealGuidance = result;
+    }
     _loadingMealGuidance = false;
     notifyListeners();
   }

@@ -695,6 +695,11 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String unmatchedIngredientsNote(String ingredients) {
+    return 'Nutrition data was not found for: $ingredients. Please add them manually.';
+  }
+
+  @override
   String dishCount(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

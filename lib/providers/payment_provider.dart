@@ -5,6 +5,7 @@ import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import 'package:in_app_purchase_storekit/in_app_purchase_storekit.dart';
 import 'package:in_app_purchase_storekit/store_kit_wrappers.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../config/app_build_config.dart';
 import '../config/iap_ids.dart';
@@ -183,6 +184,8 @@ class PremiumOffer {
 /// Payment state — single source of truth for IAP in the app.
 class PaymentProvider extends ChangeNotifier {
   late final GooglePlayPaymentService _paymentService;
+  final String? Function() _accountIdProvider;
+  final FlutterSecureStorage _pendingStorage = const FlutterSecureStorage();
 
   bool _ready = false;
   bool _initializing = true;
@@ -278,9 +281,18 @@ class PaymentProvider extends ChangeNotifier {
     return null;
   }
 
-  PaymentProvider(ApiService api) {
+  PaymentProvider(
+    ApiService api, {
+    required String? Function() accountIdProvider,
+  }) : _accountIdProvider = accountIdProvider {
     _paymentService = GooglePlayPaymentService(api);
+    unawaited(_removeLegacyPendingPurchase());
     _initialization = billingEnabled ? _init() : _disableForTesting();
+  }
+
+  String? get _accountId {
+    final value = _accountIdProvider()?.trim();
+    return value == null || value.isEmpty ? null : value;
   }
 
   /// Called after the server has committed a credit top-up so the signed-in
@@ -365,13 +377,18 @@ class PaymentProvider extends ChangeNotifier {
   Future<bool> buyPremium(
     PremiumPlan plan, {
     required bool preferFreeTrial,
-    String? applicationUserName,
     PremiumOffer? selectedOffer,
   }) async {
     await _initialization;
     if (!billingEnabled) return false;
     if (!_ready) {
       _error = _paymentService.lastError ?? 'paymentNotReady';
+      notifyListeners();
+      return false;
+    }
+    final accountId = _accountId;
+    if (accountId == null) {
+      _error = 'authenticationRequired';
       notifyListeners();
       return false;
     }
@@ -397,7 +414,7 @@ class PaymentProvider extends ChangeNotifier {
 
     final started = await _paymentService.purchaseSubscription(
       offer.product,
-      applicationUserName: applicationUserName,
+      applicationUserName: accountId,
     );
     if (!started) {
       _purchaseState(sku, PurchaseState.idle);
@@ -421,6 +438,12 @@ class PaymentProvider extends ChangeNotifier {
       notifyListeners();
       return false;
     }
+    final accountId = _accountId;
+    if (accountId == null) {
+      _error = 'authenticationRequired';
+      notifyListeners();
+      return false;
+    }
 
     // The API package id is a UUID; Google Play uses the stable SKU based on
     // the credit amount instead of assuming a fake pkg_10-style id.
@@ -437,7 +460,10 @@ class PaymentProvider extends ChangeNotifier {
     _error = null;
     notifyListeners();
 
-    final started = await _paymentService.purchase(product);
+    final started = await _paymentService.purchase(
+      product,
+      applicationUserName: accountId,
+    );
     if (!started) {
       _purchaseState(sku, PurchaseState.idle);
       _purchaseInProgress = false;
@@ -614,8 +640,16 @@ class PaymentProvider extends ChangeNotifier {
       notifyListeners();
       return false;
     }
+    final accountId = _accountId;
+    if (accountId == null) {
+      _error = 'authenticationRequired';
+      notifyListeners();
+      return false;
+    }
 
-    final restored = await _paymentService.restorePurchases();
+    final restored = await _paymentService.restorePurchases(
+      applicationUserName: accountId,
+    );
     if (!restored) {
       _error = _paymentService.lastError ?? 'paymentRestoreFailed';
     } else {
@@ -636,19 +670,38 @@ class PaymentProvider extends ChangeNotifier {
   }
 
   // ── Pending purchase persistence ────────────────────────────────────────
-  static const _pendingPurchaseKey = 'pending_purchase_verification';
+  static const _legacyPendingPurchaseKey = 'pending_purchase_verification';
+  static const _pendingPurchaseKeyPrefix = 'pending_purchase_verification_v2';
 
-  Future<void> _savePendingPurchase(PurchaseDetails purchase) async {
+  String _pendingPurchaseKey(String accountId) =>
+      '$_pendingPurchaseKeyPrefix:$accountId';
+
+  Future<void> _removeLegacyPendingPurchase() async {
     try {
       final prefs = await SharedPreferences.getInstance();
+      await prefs.remove(_legacyPendingPurchaseKey);
+    } catch (_) {}
+  }
+
+  Future<void> _savePendingPurchase(PurchaseDetails purchase) async {
+    final accountId = _accountId;
+    if (accountId == null ||
+        _paymentService.lastError == 'purchaseAccountMismatch') {
+      return;
+    }
+    try {
       final data = {
+        'account_id': accountId,
         'product_id': purchase.productID,
         'purchase_id': purchase.purchaseID,
         'verification_data': purchase.verificationData.serverVerificationData,
         'is_subscription': IapIds.isPremiumProduct(purchase.productID),
         'saved_at': DateTime.now().toIso8601String(),
       };
-      await prefs.setString(_pendingPurchaseKey, jsonEncode(data));
+      await _pendingStorage.write(
+        key: _pendingPurchaseKey(accountId),
+        value: jsonEncode(data),
+      );
       debugPrint(
         '[IAP] Saved pending purchase for retry: ${purchase.productID}',
       );
@@ -657,10 +710,11 @@ class PaymentProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> _clearPendingPurchase() async {
+  Future<void> _clearPendingPurchase({String? accountId}) async {
+    final owner = accountId ?? _accountId;
+    if (owner == null) return;
     try {
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.remove(_pendingPurchaseKey);
+      await _pendingStorage.delete(key: _pendingPurchaseKey(owner));
     } catch (_) {}
   }
 
@@ -669,11 +723,18 @@ class PaymentProvider extends ChangeNotifier {
   Future<void> retryPendingPurchaseVerification() async {
     await _initialization;
     if (!billingEnabled || !_ready) return;
+    final accountId = _accountId;
+    if (accountId == null) return;
     try {
-      final prefs = await SharedPreferences.getInstance();
-      final raw = prefs.getString(_pendingPurchaseKey);
+      final raw = await _pendingStorage.read(
+        key: _pendingPurchaseKey(accountId),
+      );
       if (raw == null || raw.isEmpty) return;
       final data = jsonDecode(raw) as Map<String, dynamic>;
+      if (data['account_id'] != accountId) {
+        await _clearPendingPurchase(accountId: accountId);
+        return;
+      }
       final productId = data['product_id'] as String?;
       final purchaseToken = data['verification_data'] as String?;
       final transactionId = data['purchase_id'] as String?;
@@ -682,7 +743,7 @@ class PaymentProvider extends ChangeNotifier {
           (isAppleBillingPlatform
               ? transactionId == null
               : purchaseToken == null)) {
-        await _clearPendingPurchase();
+        await _clearPendingPurchase(accountId: accountId);
         return;
       }
       debugPrint('[IAP] Retrying pending verification: $productId');
@@ -702,7 +763,7 @@ class PaymentProvider extends ChangeNotifier {
         if (result is Map<String, dynamic> && result['success'] == true) {
           _lastSubscriptionVerification = result;
           _purchaseState(productId, PurchaseState.purchased);
-          await _clearPendingPurchase();
+          await _clearPendingPurchase(accountId: accountId);
           debugPrint('[IAP] Pending subscription verified successfully');
           notifyListeners();
         }
@@ -721,7 +782,7 @@ class PaymentProvider extends ChangeNotifier {
           },
         );
         if (result is Map<String, dynamic> && result['success'] == true) {
-          await _clearPendingPurchase();
+          await _clearPendingPurchase(accountId: accountId);
           try {
             await _onCreditsVerified?.call();
           } catch (_) {}

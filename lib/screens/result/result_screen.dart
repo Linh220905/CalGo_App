@@ -137,6 +137,7 @@ class _ResultScreenState extends State<ResultScreen> {
   String? _feedback; // 'like' | 'dislike'
   bool _suggestBarcode = false;
   String? _tipBarcode;
+  List<String> _unmatchedIngredients = [];
 
   bool _showDetail = true;
   bool _editingDishName = false;
@@ -308,6 +309,7 @@ class _ResultScreenState extends State<ResultScreen> {
         _hasDishCount = true;
         _dishNameController.text = _monChinh;
         _imageUrl = mockData['image_url'] as String?;
+        _unmatchedIngredients = [];
         _ingredients = rawIngs
             .map((e) => IngredientItem.fromJson(e as Map<String, dynamic>))
             .toList();
@@ -350,6 +352,12 @@ class _ResultScreenState extends State<ResultScreen> {
       _feedback = data['scan_feedback'] as String?;
       _suggestBarcode = data['suggest_barcode'] == true;
       _tipBarcode = data['tip_barcode'] as String?;
+      _unmatchedIngredients =
+          (data['unmatched_ingredients'] as List? ?? const [])
+              .map((item) => item.toString().trim())
+              .where((name) => name.isNotEmpty)
+              .toSet()
+              .toList();
       _ingredients = rawIngs
           .map((e) => IngredientItem.fromJson(e as Map<String, dynamic>))
           .toList();
@@ -1604,6 +1612,56 @@ class _ResultScreenState extends State<ResultScreen> {
                                     );
                                   },
                                 ),
+                                if (_unmatchedIngredients.isNotEmpty) ...[
+                                  const SizedBox(height: 12),
+                                  Container(
+                                    width: double.infinity,
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 12,
+                                      vertical: 10,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: const Color(
+                                        0xFFF59E0B,
+                                      ).withValues(alpha: isDark ? 0.12 : 0.08),
+                                      borderRadius: BorderRadius.circular(12),
+                                      border: Border.all(
+                                        color: const Color(
+                                          0xFFF59E0B,
+                                        ).withValues(alpha: 0.28),
+                                      ),
+                                    ),
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const Padding(
+                                          padding: EdgeInsets.only(top: 1),
+                                          child: Icon(
+                                            Icons.info_outline_rounded,
+                                            size: 16,
+                                            color: Color(0xFFD97706),
+                                          ),
+                                        ),
+                                        const SizedBox(width: 8),
+                                        Expanded(
+                                          child: Text(
+                                            s.unmatchedIngredientsNote(
+                                              _unmatchedIngredients.join(', '),
+                                            ),
+                                            style: TextStyle(
+                                              fontSize: 11,
+                                              height: 1.35,
+                                              color: isDark
+                                                  ? const Color(0xFFFBBF24)
+                                                  : const Color(0xFF92400E),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
                                 if (!_isMultiDish) ...[
                                   const SizedBox(height: 10),
                                   SizedBox(

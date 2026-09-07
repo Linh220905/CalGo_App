@@ -82,13 +82,20 @@ class GooglePlayPaymentService {
   }
 
   /// Start purchase flow for a consumable credit package.
-  Future<bool> purchase(ProductDetails product) async {
+  Future<bool> purchase(
+    ProductDetails product, {
+    required String applicationUserName,
+  }) async {
     if (!_available) {
       _lastError = 'paymentBillingUnavailable';
       return false;
     }
 
-    final purchaseParam = PurchaseParam(productDetails: product);
+    final purchaseParam = PurchaseParam(
+      productDetails: product,
+      // Maps to Google Play obfuscatedAccountId and StoreKit appAccountToken.
+      applicationUserName: applicationUserName,
+    );
 
     try {
       // Do not let the Flutter plugin auto-consume before the server has
@@ -116,7 +123,7 @@ class GooglePlayPaymentService {
   /// consumed: StoreKit / Play Billing owns their renewal lifecycle.
   Future<bool> purchaseSubscription(
     ProductDetails product, {
-    String? applicationUserName,
+    required String applicationUserName,
   }) async {
     if (!_available) {
       _lastError = 'paymentBillingUnavailable';
@@ -226,7 +233,9 @@ class GooglePlayPaymentService {
       debugPrint('[IAP] Verify receipt success: product=$productId status=200');
       return true;
     } catch (e) {
-      _lastError = 'receiptVerificationFailed';
+      _lastError = e is ApiException && e.statusCode == 403
+          ? 'purchaseAccountMismatch'
+          : 'receiptVerificationFailed';
       final status = e is ApiException ? e.statusCode : 'network';
       debugPrint(
         '[IAP] Verify receipt failed: product=${purchase.productID} status=$status',
@@ -289,7 +298,9 @@ class GooglePlayPaymentService {
       _lastError = null;
       return response;
     } catch (e) {
-      _lastError = 'subscriptionVerificationFailed';
+      _lastError = e is ApiException && e.statusCode == 403
+          ? 'purchaseAccountMismatch'
+          : 'subscriptionVerificationFailed';
       debugPrint('[IAP] Verify subscription error: $e');
       return null;
     }
@@ -338,13 +349,13 @@ class GooglePlayPaymentService {
   }
 
   /// Restore previous purchases (for iOS App Store & Android Google Play Store compliance)
-  Future<bool> restorePurchases() async {
+  Future<bool> restorePurchases({required String applicationUserName}) async {
     if (!_available) {
       _lastError = 'paymentBillingUnavailable';
       return false;
     }
     try {
-      await _iap.restorePurchases();
+      await _iap.restorePurchases(applicationUserName: applicationUserName);
       _lastError = null;
       return true;
     } catch (e) {
@@ -355,8 +366,11 @@ class GooglePlayPaymentService {
   }
 
   /// Verify if a purchase is already owned (for non-consumables).
-  Future<bool> isPurchased(String productId) async {
-    await restorePurchases();
+  Future<bool> isPurchased(
+    String productId, {
+    required String applicationUserName,
+  }) async {
+    await restorePurchases(applicationUserName: applicationUserName);
     return false;
   }
 

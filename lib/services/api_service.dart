@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import '../config/api_config.dart';
 
@@ -44,8 +45,11 @@ class ApiService {
     return headers;
   }
 
-  Future<dynamic> get(String path) async {
+  Future<dynamic> get(String path, {String? caller}) async {
     final requestKey = '${_accessToken ?? ''}\n$path';
+    if (kDebugMode && caller != null) {
+      debugPrint('[API GET] $path (caller: $caller)');
+    }
     return _inFlightGets.putIfAbsent(requestKey, () async {
       try {
         final response = await _client

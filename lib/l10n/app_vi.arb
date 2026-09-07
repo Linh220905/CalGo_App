@@ -309,6 +309,15 @@
       }
     }
   },
+  "unmatchedIngredientsNote": "Không tìm thấy dữ liệu dinh dưỡng cho: {ingredients}. Vui lòng thêm thủ công.",
+  "@unmatchedIngredientsNote": {
+    "description": "Localized UI text for ingredients without a nutrition match",
+    "placeholders": {
+      "ingredients": {
+        "type": "String"
+      }
+    }
+  },
   "dishCount": "{count, plural, =1 {1 món} other {{count} món}}",
   "@dishCount": {
     "description": "Localized UI text",

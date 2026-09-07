@@ -309,6 +309,15 @@
       }
     }
   },
+  "unmatchedIngredientsNote": "Nutrition data was not found for: {ingredients}. Please add them manually.",
+  "@unmatchedIngredientsNote": {
+    "description": "Localized UI text for ingredients without a nutrition match",
+    "placeholders": {
+      "ingredients": {
+        "type": "String"
+      }
+    }
+  },
   "dishCount": "{count, plural, =1 {1 dish} other {{count} dishes}}",
   "@dishCount": {
     "description": "Localized UI text",

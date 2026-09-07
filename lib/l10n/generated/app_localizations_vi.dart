@@ -695,6 +695,11 @@ class AppLocalizationsVi extends AppLocalizations {
   }
 
   @override
+  String unmatchedIngredientsNote(String ingredients) {
+    return 'Không tìm thấy dữ liệu dinh dưỡng cho: $ingredients. Vui lòng thêm thủ công.';
+  }
+
+  @override
   String dishCount(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
