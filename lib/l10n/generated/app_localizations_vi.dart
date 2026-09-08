@@ -1330,6 +1330,10 @@ class AppLocalizationsVi extends AppLocalizations {
       'Không thể mở thanh toán Google Play. Vui lòng thử lại.';
 
   @override
+  String get paymentVerificationFailed =>
+      'Thanh toán chưa thành công. Vui lòng thử lại.';
+
+  @override
   String errorWithDetails(String error) {
     return 'Lỗi: $error';
   }

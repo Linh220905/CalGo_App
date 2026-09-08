@@ -1,9 +1,11 @@
+import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import '../models/user.dart';
 import '../services/auth_service.dart';
 import '../services/api_service.dart';
+import '../services/revenuecat_service.dart';
 
 class AuthProvider extends ChangeNotifier {
   final AuthService _authService;
@@ -39,8 +41,10 @@ class AuthProvider extends ChangeNotifier {
       if (generation != _restoreGeneration) return;
       if (userData != null) {
         _user = User.fromJson(userData);
+        unawaited(RevenueCatService.logIn(_user!.id));
       } else {
         _user = null;
+        unawaited(RevenueCatService.logOut());
       }
     } catch (_) {
       if (generation != _restoreGeneration) return;
@@ -103,6 +107,7 @@ class AuthProvider extends ChangeNotifier {
         if (idToken != null && idToken.isNotEmpty) {
           final userData = await _authService.loginWithGoogle(idToken);
           _user = User.fromJson(userData);
+          unawaited(RevenueCatService.logIn(_user!.id));
           _error = null;
           return true;
         }
@@ -139,6 +144,7 @@ class AuthProvider extends ChangeNotifier {
           lastName: credential.familyName,
         );
         _user = User.fromJson(userData);
+        unawaited(RevenueCatService.logIn(_user!.id));
         _error = null;
         return true;
       }
@@ -179,6 +185,7 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
       final userData = await _authService.loginWithGoogle(idToken);
       _user = User.fromJson(userData);
+      unawaited(RevenueCatService.logIn(_user!.id));
       _error = null;
       _loading = false;
       notifyListeners();
@@ -197,6 +204,7 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
       final userData = await _authService.loginWithEmail(email, password);
       _user = User.fromJson(userData);
+      unawaited(RevenueCatService.logIn(_user!.id));
       _error = null;
       _loading = false;
       notifyListeners();
@@ -222,6 +230,7 @@ class AuthProvider extends ChangeNotifier {
       // block leaving the account.
     }
     _user = null;
+    unawaited(RevenueCatService.logOut());
     _loading = _googleLoading || _appleLoading;
     notifyListeners();
   }

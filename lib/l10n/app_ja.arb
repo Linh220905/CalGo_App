@@ -415,6 +415,7 @@
   "deleteFailed": "は削除できませんでした。もう一度お試しください。",
   "paymentProcessing": "Google Play経由で支払いを処理しています...",
   "paymentOpenFailed": "Google Playの支払いを開けませんでした。もう一度お試しください。",
+  "paymentVerificationFailed": "支払いを完了できませんでした。もう一度お試しください。",
   "errorWithDetails": "エラー：{error}",
   "packIncludes": "AI栄養スキャン {count}回付き",
   "permanentCredits": "スキャンの有効期限はありません"

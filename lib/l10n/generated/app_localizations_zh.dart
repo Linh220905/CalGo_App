@@ -1284,6 +1284,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get paymentOpenFailed => '无法打开 Google Play 付款 。 请再试一次。';
 
   @override
+  String get paymentVerificationFailed => '付款未能完成，请重试。';
+
+  @override
   String errorWithDetails(String error) {
     return 'Error: $error';
   }

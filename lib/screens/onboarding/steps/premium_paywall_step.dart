@@ -118,6 +118,7 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
 
   void _onPaymentChanged() {
     if (!mounted) return;
+    final s = context.read<AppSettingsProvider>().strings;
     final paymentError = _payment?.error;
     final state = _payment?.purchaseStates.values
         .where((value) => value == PurchaseState.error)
@@ -130,12 +131,7 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
         if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(
-              paymentCopyForPlatform(
-                'Google Play đã nhận giao dịch nhưng máy chủ chưa xác minh được. '
-                'Vui lòng thử Khôi phục giao dịch sau khi cập nhật máy chủ.',
-              ),
-            ),
+            content: Text(paymentCopyForPlatform(s.paymentVerificationFailed)),
             backgroundColor: Colors.redAccent,
           ),
         );
@@ -494,7 +490,7 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
         SnackBar(content: Text(paymentCopyForPlatform(s.paymentProcessing))),
       );
     } else {
-      final errorMsg = payment.error ?? s.premiumPaymentFailed;
+      final errorMsg = paymentCopyForPlatform(s.paymentVerificationFailed);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(errorMsg), backgroundColor: Colors.redAccent),
       );
@@ -1352,12 +1348,11 @@ class _FooterLinks extends StatelessWidget {
                         : Colors.redAccent,
                   ),
                 );
-              } catch (e) {
+              } catch (_) {
                 messenger.showSnackBar(
                   SnackBar(
-                    content: Text(
-                      paymentCopyForPlatform(s.restoreException(e.toString())),
-                    ),
+                    content: Text(paymentCopyForPlatform(s.restoreFailed)),
+                    backgroundColor: Colors.redAccent,
                   ),
                 );
               }

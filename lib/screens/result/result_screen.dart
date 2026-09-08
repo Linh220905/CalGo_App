@@ -2076,9 +2076,11 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
     });
 
     final api = context.read<ApiService>();
+    final settings = context.read<AppSettingsProvider>();
+    final locale = settings.locale.languageCode;
     try {
       final res = await api.get(
-        '/nutrition/ingredients?q=${Uri.encodeComponent(queryStr)}&limit=10',
+        '/nutrition/ingredients?q=${Uri.encodeComponent(queryStr)}&limit=10&locale=$locale',
       );
       if (res is Map && res['items'] is List) {
         final itemsList = res['items'] as List;
@@ -2129,9 +2131,13 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
   void _addSelectedIngredient() {
     final ratio = _weightG / 100.0;
     final s = context.read<AppSettingsProvider>().strings;
+    final displayName = (_selectedHit['display_name'] ??
+            _selectedHit['name'] ??
+            _selectedHit['ten'] ??
+            s.newIngredient)
+        .toString();
     final item = IngredientItem(
-      ten: (_selectedHit['name'] ?? _selectedHit['ten'] ?? s.newIngredient)
-          .toString(),
+      ten: displayName,
       khoiLuongGram: _weightG,
       calo:
           ((_selectedHit['calories_kcal'] ?? _selectedHit['calo'] ?? 0) * ratio)
@@ -2423,10 +2429,16 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
                         separatorBuilder: (_, __) => const SizedBox(height: 10),
                         itemBuilder: (context, idx) {
                           final hit = displayResults[idx];
-                          final title = (hit['name'] ?? hit['ten'] ?? '')
+                          final title = (hit['display_name'] ??
+                                  hit['name'] ??
+                                  hit['ten'] ??
+                                  '')
                               .toString();
-                          final subtitle =
-                              (hit['subtitle'] ??
+                          final subtitle = (hit['name'] != null &&
+                                  hit['display_name'] != null &&
+                                  hit['display_name'] != hit['name'])
+                              ? hit['name'].toString()
+                              : (hit['subtitle'] ??
                                       hit['vi_name'] ??
                                       hit['aliases']?['vi'] ??
                                       title)

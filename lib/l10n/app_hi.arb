@@ -616,6 +616,7 @@
   "deleteFailed": "इसे हटा नहीं सकता। फिर से प्रयास करें।",
   "paymentProcessing": "Google Play के माध्यम से प्रसंस्करण भुगतान ...",
   "paymentOpenFailed": "Google Play भुगतान नहीं खोल सका। फिर से प्रयास करें।",
+  "paymentVerificationFailed": "भुगतान पूरा नहीं हो सका। फिर से प्रयास करें।",
   "errorWithDetails": "त्रुटि: {error}",
   "@errorWithDetails": {
     "description": "Localized UI text",

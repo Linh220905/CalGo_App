@@ -625,6 +625,7 @@
   "deleteFailed": "Could not delete it. Please try again.",
   "paymentProcessing": "Processing payment through Google Play...",
   "paymentOpenFailed": "Could not open Google Play payment. Please try again.",
+  "paymentVerificationFailed": "Payment could not be completed. Please try again.",
   "errorWithDetails": "Error: {error}",
   "@errorWithDetails": {
     "description": "Localized UI text",

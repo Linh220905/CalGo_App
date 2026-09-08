@@ -1294,6 +1294,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get paymentOpenFailed => 'Google Play 결제를 열 수 없습니다. 다시 시도해주세요.';
 
   @override
+  String get paymentVerificationFailed => '결제를 완료하지 못했습니다. 다시 시도해주세요.';
+
+  @override
   String errorWithDetails(String error) {
     return '오류: $error';
   }

@@ -616,6 +616,7 @@
   "deleteFailed": "মুছে ফেলতে ব্যর্থ। অনুগ্রহ করে পুনরায় প্রচেষ্টা করুন।",
   "paymentProcessing": "Processing payment through Google Play...",
   "paymentOpenFailed": "Could not open Google Play payment. Please try again.",
+  "paymentVerificationFailed": "Payment could not be completed. Please try again.",
   "errorWithDetails": "Error: {error}",
   "@errorWithDetails": {
     "description": "Localized UI text",

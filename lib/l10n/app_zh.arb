@@ -616,6 +616,7 @@
   "deleteFailed": "无法删除 。 请再试一次。",
   "paymentProcessing": "通过Google Play处理付款...",
   "paymentOpenFailed": "无法打开 Google Play 付款 。 请再试一次。",
+  "paymentVerificationFailed": "付款未能完成，请重试。",
   "errorWithDetails": "Error: {error}",
   "@errorWithDetails": {
     "description": "Localized UI text",

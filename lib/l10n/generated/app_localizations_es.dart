@@ -1344,6 +1344,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se pudo abrir el pago de Google Play. Inténtalo de nuevo.';
 
   @override
+  String get paymentVerificationFailed =>
+      'No se pudo completar el pago. Inténtalo de nuevo.';
+
+  @override
   String errorWithDetails(String error) {
     return 'Error: $error';
   }

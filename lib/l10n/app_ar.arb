@@ -616,6 +616,7 @@
   "deleteFailed": "لا يمكن حذفه. أرجوك حاول مرة أخرى",
   "paymentProcessing": "تجهيز الدفع من خلال Google Play...",
   "paymentOpenFailed": "لم يكن بمقدوره فتح دفعة (زيز) أرجوك حاول مرة أخرى",
+  "paymentVerificationFailed": "تعذر إكمال الدفع. يرجى المحاولة مرة أخرى.",
   "errorWithDetails": "Error: {error}",
   "@errorWithDetails": {
     "description": "Localized UI text",

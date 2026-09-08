@@ -1291,6 +1291,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get paymentOpenFailed => 'Google Playの支払いを開けませんでした。もう一度お試しください。';
 
   @override
+  String get paymentVerificationFailed => '支払いを完了できませんでした。もう一度お試しください。';
+
+  @override
   String errorWithDetails(String error) {
     return 'エラー：$error';
   }

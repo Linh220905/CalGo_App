@@ -616,6 +616,7 @@
   "deleteFailed": "Не мог его удалить. Пожалуйста, попробуйте еще раз.",
   "paymentProcessing": "Обработка платежей через Google Play...",
   "paymentOpenFailed": "Не удалось открыть платеж Google Play. Пожалуйста, попробуйте еще раз.",
+  "paymentVerificationFailed": "Не удалось завершить платеж. Попробуйте еще раз.",
   "errorWithDetails": "Ошибка: {error}",
   "@errorWithDetails": {
     "description": "Localized UI text",

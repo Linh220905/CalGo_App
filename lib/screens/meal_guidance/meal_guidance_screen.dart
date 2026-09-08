@@ -23,8 +23,10 @@ class _MealGuidanceScreenState extends State<MealGuidanceScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
+        final settings = context.read<AppSettingsProvider>();
+        final locale = settings.locale.languageCode;
         context.read<HomeProvider>().markMealGuidanceViewed();
-        context.read<HomeProvider>().generateMealGuidance();
+        context.read<HomeProvider>().generateMealGuidance(locale: locale);
       }
     });
   }
@@ -32,6 +34,7 @@ class _MealGuidanceScreenState extends State<MealGuidanceScreen> {
   @override
   Widget build(BuildContext context) {
     final settings = context.watch<AppSettingsProvider>();
+    final locale = settings.locale.languageCode;
     final isDark = settings.isDarkMode;
     final s = settings.strings;
     final background =
@@ -71,7 +74,7 @@ class _MealGuidanceScreenState extends State<MealGuidanceScreen> {
               loading: home.loadingMealGuidance || !home.hasLoaded,
               refreshing: home.loadingMealGuidance,
               isDark: isDark,
-              onRetry: home.refreshMealGuidance,
+              onRetry: () => home.refreshMealGuidance(locale: locale),
               onScan: () => context.push('/scan'),
             ),
           ),

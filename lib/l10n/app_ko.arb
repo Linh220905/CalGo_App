@@ -415,6 +415,7 @@
   "deleteFailed": "삭제할 수 없습니다. 다시 시도해주세요.",
   "paymentProcessing": "Google Play를 통한 결제 처리 중...",
   "paymentOpenFailed": "Google Play 결제를 열 수 없습니다. 다시 시도해주세요.",
+  "paymentVerificationFailed": "결제를 완료하지 못했습니다. 다시 시도해주세요.",
   "errorWithDetails": "오류: {error}",
   "packIncludes": "AI 영양 스캔 {count} 포함",
   "permanentCredits": "스캔은 만료되지 않습니다"

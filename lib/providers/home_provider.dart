@@ -196,7 +196,10 @@ class HomeProvider extends ChangeNotifier {
     _service.invalidateCache();
   }
 
-  Future<void> loadToday({bool forceRefresh = false}) async {
+  Future<void> loadToday({
+    bool forceRefresh = false,
+    String locale = 'en',
+  }) async {
     final loadGeneration = ++_loadGeneration;
     if (forceRefresh) {
       _service.invalidateCache();
@@ -245,7 +248,7 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
 
     if (_error == null && _isToday(_selectedDate)) {
-      unawaited(_loadMealGuidance(loadGeneration, forceRefresh: forceRefresh));
+      unawaited(_loadMealGuidance(loadGeneration, forceRefresh: forceRefresh, locale: locale));
     } else if (!_isToday(_selectedDate)) {
       _mealGuidance = null;
       _loadingMealGuidance = false;
@@ -253,13 +256,20 @@ class HomeProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> _loadMealGuidance(int loadGeneration, {bool forceRefresh = false}) async {
+  Future<void> _loadMealGuidance(
+    int loadGeneration, {
+    bool forceRefresh = false,
+    String locale = 'en',
+  }) async {
     if (_loadingMealGuidance) return;
     _loadingMealGuidance = true;
     notifyListeners();
     MealGuidance? result;
     try {
-      result = await _mealGuidanceService.getToday(refresh: forceRefresh);
+      result = await _mealGuidanceService.getToday(
+        refresh: forceRefresh,
+        locale: locale,
+      );
     } catch (_) {
       // Guidance is an enhancement; Home remains usable if Gemini/API is
       // temporarily unavailable.
@@ -395,7 +405,7 @@ class HomeProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> refreshMealGuidance() async {
+  Future<void> refreshMealGuidance({String locale = 'en'}) async {
     if (!_isToday(_selectedDate) || _loadingMealGuidance) return;
     _loadingMealGuidance = true;
     notifyListeners();
@@ -403,6 +413,7 @@ class HomeProvider extends ChangeNotifier {
       _mealGuidance = await _mealGuidanceService.getToday(
         generate: true,
         refresh: true,
+        locale: locale,
       );
     } catch (_) {
       // Keep the last useful recommendation on refresh failure.
@@ -413,12 +424,15 @@ class HomeProvider extends ChangeNotifier {
 
   /// Generate the natural-language ranking only after the user chooses to
   /// view meal guidance. Home itself only loads DB-filtered candidates.
-  Future<void> generateMealGuidance() async {
+  Future<void> generateMealGuidance({String locale = 'en'}) async {
     if (!_isToday(_selectedDate) || _loadingMealGuidance) return;
     _loadingMealGuidance = true;
     notifyListeners();
     try {
-      _mealGuidance = await _mealGuidanceService.getToday(generate: true);
+      _mealGuidance = await _mealGuidanceService.getToday(
+        generate: true,
+        locale: locale,
+      );
     } catch (_) {
       // Keep the deterministic database candidates if Vertex is unavailable.
     }

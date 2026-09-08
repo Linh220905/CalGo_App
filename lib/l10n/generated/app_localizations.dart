@@ -2506,6 +2506,12 @@ abstract class AppLocalizations {
   /// **'Could not open Google Play payment. Please try again.'**
   String get paymentOpenFailed;
 
+  /// No description provided for @paymentVerificationFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment could not be completed. Please try again.'**
+  String get paymentVerificationFailed;
+
   /// Localized UI text
   ///
   /// In en, this message translates to:

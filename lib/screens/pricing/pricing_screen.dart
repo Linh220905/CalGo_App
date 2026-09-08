@@ -55,8 +55,8 @@ class _PricingScreenState extends State<PricingScreen> {
 
   String _storePriceLabel(CreditPackageItem pack) {
     return context.read<PaymentProvider>().formattedPriceForCreditAmount(
-              pack.creditAmount,
-            ) ??
+          pack.creditAmount,
+        ) ??
         pack.priceLabel;
   }
 
@@ -66,23 +66,26 @@ class _PricingScreenState extends State<PricingScreen> {
     final s = context.read<AppSettingsProvider>().strings;
     _payPacks = [
       CreditPackageItem(
-          id: '9568d78d-9a8f-4ac7-94d0-ea3a7dc2d04d',
-          name: s.packBasic,
-          creditAmount: 10,
-          priceVnd: 10000,
-          popular: false),
+        id: '9568d78d-9a8f-4ac7-94d0-ea3a7dc2d04d',
+        name: s.packBasic,
+        creditAmount: 10,
+        priceVnd: 10000,
+        popular: false,
+      ),
       CreditPackageItem(
-          id: 'f49d9e33-f605-496a-a0b7-5aed663068a7',
-          name: s.packPopular,
-          creditAmount: 25,
-          priceVnd: 20000,
-          popular: true),
+        id: 'f49d9e33-f605-496a-a0b7-5aed663068a7',
+        name: s.packPopular,
+        creditAmount: 25,
+        priceVnd: 20000,
+        popular: true,
+      ),
       CreditPackageItem(
-          id: '68d6aec7-ab65-4b96-a34a-4765e8e4a367',
-          name: s.packPremium,
-          creditAmount: 100,
-          priceVnd: 50000,
-          popular: false),
+        id: '68d6aec7-ab65-4b96-a34a-4765e8e4a367',
+        name: s.packPremium,
+        creditAmount: 100,
+        priceVnd: 50000,
+        popular: false,
+      ),
     ];
     _fetchPackagesAsync();
   }
@@ -106,18 +109,21 @@ class _PricingScreenState extends State<PricingScreen> {
     if (!mounted) return;
     final payment = _payment;
     if (payment == null) return;
+    final s = context.read<AppSettingsProvider>().strings;
     final creditStates = payment.purchaseStates.entries.where(
       (entry) => entry.key.startsWith('credit_'),
     );
-    final purchased =
-        creditStates.any((entry) => entry.value == PurchaseState.purchased);
-    final failed =
-        creditStates.any((entry) => entry.value == PurchaseState.error);
+    final purchased = creditStates.any(
+      (entry) => entry.value == PurchaseState.purchased,
+    );
+    final failed = creditStates.any(
+      (entry) => entry.value == PurchaseState.error,
+    );
     final message = purchased
         ? 'Đã xác minh và cộng lượt quét vào tài khoản.'
         : failed
-            ? 'Cửa hàng đã nhận giao dịch nhưng máy chủ chưa cộng lượt. Vui lòng thử Khôi phục giao dịch sau khi cập nhật backend.'
-            : null;
+        ? paymentCopyForPlatform(s.paymentVerificationFailed)
+        : null;
     if (message == null || message == _lastPurchaseMessage) return;
     _lastPurchaseMessage = message;
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -142,8 +148,12 @@ class _PricingScreenState extends State<PricingScreen> {
           _payPacks = res
               .asMap()
               .entries
-              .map((e) => CreditPackageItem.fromJson(
-                  e.value as Map<String, dynamic>, e.key))
+              .map(
+                (e) => CreditPackageItem.fromJson(
+                  e.value as Map<String, dynamic>,
+                  e.key,
+                ),
+              )
               .toList();
         });
       }
@@ -151,7 +161,9 @@ class _PricingScreenState extends State<PricingScreen> {
   }
 
   Future<void> _processStorePurchase(
-      String packageId, CreditPackageItem pack) async {
+    String packageId,
+    CreditPackageItem pack,
+  ) async {
     final s = context.read<AppSettingsProvider>().strings;
     setState(() => _creatingPayment = true);
     try {
@@ -162,24 +174,23 @@ class _PricingScreenState extends State<PricingScreen> {
       );
       if (ok && mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(paymentCopyForPlatform(s.paymentProcessing)),
-          ),
+          SnackBar(content: Text(paymentCopyForPlatform(s.paymentProcessing))),
         );
       } else if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(
-              paymentCopyForPlatform(s.paymentOpenFailed),
-            ),
+            content: Text(paymentCopyForPlatform(s.paymentOpenFailed)),
             backgroundColor: Colors.redAccent,
           ),
         );
       }
-    } catch (e) {
+    } catch (_) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(s.errorWithDetails(e.toString()))),
+          SnackBar(
+            content: Text(paymentCopyForPlatform(s.paymentVerificationFailed)),
+            backgroundColor: Colors.redAccent,
+          ),
         );
       }
     } finally {
@@ -239,8 +250,11 @@ class _PricingScreenState extends State<PricingScreen> {
                     ),
                     borderRadius: BorderRadius.circular(18),
                   ),
-                  child: const Icon(Icons.bolt_rounded,
-                      color: Color(0xFF2563EB), size: 30),
+                  child: const Icon(
+                    Icons.bolt_rounded,
+                    color: Color(0xFF2563EB),
+                    size: 30,
+                  ),
                 ),
                 const SizedBox(height: 14),
 
@@ -257,10 +271,11 @@ class _PricingScreenState extends State<PricingScreen> {
                 Text(
                   s.packIncludes(pack.creditAmount),
                   style: TextStyle(
-                      fontSize: 13,
-                      color: isDark
-                          ? const Color(0xFF8E8D9A)
-                          : const Color(0xFF64748B)),
+                    fontSize: 13,
+                    color: isDark
+                        ? const Color(0xFF8E8D9A)
+                        : const Color(0xFF64748B),
+                  ),
                 ),
                 const SizedBox(height: 20),
 
@@ -331,21 +346,26 @@ class _PricingScreenState extends State<PricingScreen> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF22C55E),
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16)),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
                         elevation: 2,
                       ),
                       onPressed: () {
                         Navigator.pop(ctx);
                         _processStorePurchase(pack.id, pack);
                       },
-                      icon: const Icon(Icons.smartphone_rounded,
-                          color: Colors.white, size: 20),
+                      icon: const Icon(
+                        Icons.smartphone_rounded,
+                        color: Colors.white,
+                        size: 20,
+                      ),
                       label: Text(
                         s.payButton,
                         style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),
@@ -353,10 +373,11 @@ class _PricingScreenState extends State<PricingScreen> {
                   Text(
                     paymentCopyForPlatform(s.paymentMethods),
                     style: TextStyle(
-                        fontSize: 11,
-                        color: isDark
-                            ? const Color(0xFF8E8D9A)
-                            : const Color(0xFF94A3B8)),
+                      fontSize: 11,
+                      color: isDark
+                          ? const Color(0xFF8E8D9A)
+                          : const Color(0xFF94A3B8),
+                    ),
                   ),
                   const SizedBox(height: 12),
                   TextButton(
@@ -369,7 +390,8 @@ class _PricingScreenState extends State<PricingScreen> {
                           messenger.showSnackBar(
                             SnackBar(
                               content: Text(
-                                  paymentCopyForPlatform(s.restoreSuccess)),
+                                paymentCopyForPlatform(s.restoreSuccess),
+                              ),
                             ),
                           );
                         } else if (mounted) {
@@ -382,12 +404,15 @@ class _PricingScreenState extends State<PricingScreen> {
                             ),
                           );
                         }
-                      } catch (e) {
+                      } catch (_) {
                         if (mounted) {
                           messenger.showSnackBar(
                             SnackBar(
-                                content: Text(paymentCopyForPlatform(
-                                    s.restoreFailedWithDetails(e.toString())))),
+                              content: Text(
+                                paymentCopyForPlatform(s.restoreFailed),
+                              ),
+                              backgroundColor: Colors.redAccent,
+                            ),
                           );
                         }
                       }
@@ -395,11 +420,12 @@ class _PricingScreenState extends State<PricingScreen> {
                     child: Text(
                       s.restorePurchases,
                       style: TextStyle(
-                          fontSize: 12,
-                          decoration: TextDecoration.underline,
-                          color: isDark
-                              ? const Color(0xFF8E8D9A)
-                              : const Color(0xFF64748B)),
+                        fontSize: 12,
+                        decoration: TextDecoration.underline,
+                        color: isDark
+                            ? const Color(0xFF8E8D9A)
+                            : const Color(0xFF64748B),
+                      ),
                     ),
                   ),
                 ],
@@ -415,8 +441,11 @@ class _PricingScreenState extends State<PricingScreen> {
   Widget _buildBenefitRow(String text, bool isDark) {
     return Row(
       children: [
-        const Icon(Icons.check_circle_rounded,
-            color: Color(0xFF22C55E), size: 18),
+        const Icon(
+          Icons.check_circle_rounded,
+          color: Color(0xFF22C55E),
+          size: 18,
+        ),
         const SizedBox(width: 10),
         Expanded(
           child: Text(
@@ -445,8 +474,9 @@ class _PricingScreenState extends State<PricingScreen> {
     final bgColor = isDark ? const Color(0xFF141318) : const Color(0xFFFAFAFB);
     final cardBgColor = isDark ? const Color(0xFF212027) : Colors.white;
     final textDark = isDark ? Colors.white : const Color(0xFF0F172A);
-    final textMuted =
-        isDark ? const Color(0xFF8E8D9A) : const Color(0xFF64748B);
+    final textMuted = isDark
+        ? const Color(0xFF8E8D9A)
+        : const Color(0xFF64748B);
 
     return Scaffold(
       backgroundColor: bgColor,
@@ -476,8 +506,11 @@ class _PricingScreenState extends State<PricingScreen> {
                                   : const Color(0xFFE2E8F0),
                             ),
                           ),
-                          child: Icon(Icons.arrow_back_rounded,
-                              color: textDark, size: 20),
+                          child: Icon(
+                            Icons.arrow_back_rounded,
+                            color: textDark,
+                            size: 20,
+                          ),
                         ),
                       ),
                       const SizedBox(width: 14),
@@ -559,7 +592,9 @@ class _PricingScreenState extends State<PricingScreen> {
                             ),
                             const SizedBox(height: 8),
                             Align(
-                                alignment: Alignment.centerRight, child: badge),
+                              alignment: Alignment.centerRight,
+                              child: badge,
+                            ),
                           ],
                         );
                       }
@@ -593,7 +628,9 @@ class _PricingScreenState extends State<PricingScreen> {
                             borderRadius: BorderRadius.circular(20),
                             child: Container(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 18, vertical: 20),
+                                horizontal: 18,
+                                vertical: 20,
+                              ),
                               decoration: BoxDecoration(
                                 color: cardBgColor,
                                 borderRadius: BorderRadius.circular(20),
@@ -601,8 +638,8 @@ class _PricingScreenState extends State<PricingScreen> {
                                   color: pack.popular
                                       ? const Color(0xFF93C5FD)
                                       : (isDark
-                                          ? const Color(0xFF2C2A34)
-                                          : const Color(0xFFF1F5F9)),
+                                            ? const Color(0xFF2C2A34)
+                                            : const Color(0xFFF1F5F9)),
                                   width: pack.popular ? 2.0 : 1.0,
                                 ),
                                 boxShadow: [
@@ -610,8 +647,8 @@ class _PricingScreenState extends State<PricingScreen> {
                                     color: pack.popular
                                         ? const Color(0x1A2563EB)
                                         : (isDark
-                                            ? const Color(0x22000000)
-                                            : const Color(0x060F172A)),
+                                              ? const Color(0x22000000)
+                                              : const Color(0x060F172A)),
                                     blurRadius: pack.popular ? 16 : 6,
                                     offset: const Offset(0, 3),
                                   ),
@@ -626,8 +663,11 @@ class _PricingScreenState extends State<PricingScreen> {
                                       color: const Color(0xFFEFF6FF),
                                       borderRadius: BorderRadius.circular(14),
                                     ),
-                                    child: const Icon(Icons.bolt_rounded,
-                                        color: Color(0xFF2563EB), size: 26),
+                                    child: const Icon(
+                                      Icons.bolt_rounded,
+                                      color: Color(0xFF2563EB),
+                                      size: 26,
+                                    ),
                                   ),
                                   const SizedBox(width: 16),
                                   Expanded(
@@ -646,10 +686,13 @@ class _PricingScreenState extends State<PricingScreen> {
                                         const SizedBox(height: 3),
                                         Text(
                                           s.creditPackageSummary(
-                                              pack.creditAmount,
-                                              '${pack.unitPriceLabel}${s.perScan}'),
+                                            pack.creditAmount,
+                                            '${pack.unitPriceLabel}${s.perScan}',
+                                          ),
                                           style: TextStyle(
-                                              fontSize: 13, color: textMuted),
+                                            fontSize: 13,
+                                            color: textMuted,
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -668,8 +711,11 @@ class _PricingScreenState extends State<PricingScreen> {
                                         ),
                                       ),
                                       const SizedBox(width: 4),
-                                      Icon(Icons.chevron_right_rounded,
-                                          color: textMuted, size: 22),
+                                      Icon(
+                                        Icons.chevron_right_rounded,
+                                        color: textMuted,
+                                        size: 22,
+                                      ),
                                     ],
                                   ),
                                 ],
@@ -684,20 +730,23 @@ class _PricingScreenState extends State<PricingScreen> {
                               right: 20,
                               child: Container(
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 12, vertical: 4),
+                                  horizontal: 12,
+                                  vertical: 4,
+                                ),
                                 decoration: BoxDecoration(
                                   gradient: const LinearGradient(
                                     colors: [
                                       Color(0xFF2563EB),
-                                      Color(0xFF1D4ED8)
+                                      Color(0xFF1D4ED8),
                                     ],
                                   ),
                                   borderRadius: BorderRadius.circular(20),
                                   boxShadow: const [
                                     BoxShadow(
-                                        color: Color(0x332563EB),
-                                        blurRadius: 6,
-                                        offset: Offset(0, 2)),
+                                      color: Color(0x332563EB),
+                                      blurRadius: 6,
+                                      offset: Offset(0, 2),
+                                    ),
                                   ],
                                 ),
                                 child: Text(

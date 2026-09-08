@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
+import 'package:in_app_purchase_storekit/in_app_purchase_storekit.dart';
+import 'package:in_app_purchase_storekit/store_kit_2_wrappers.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../config/iap_ids.dart';
 import '../services/api_service.dart';
@@ -18,6 +20,51 @@ class GooglePlayPaymentService {
   /// Stream of purchase updates from Google Play.
   /// Emits raw [PurchaseDetails] for upstream handling.
   Stream<List<PurchaseDetails>>? get purchaseStream => _iap.purchaseStream;
+
+  /// Reads the account identifier that the Store attached to this purchase.
+  ///
+  /// StoreKit 2 exposes appAccountToken through its transaction wrapper,
+  /// while StoreKit 1 exposes the legacy applicationUsername. Google Play
+  /// exposes the equivalent obfuscated account id on the purchase object.
+  /// The provider uses this before verification so a transaction from a
+  /// previous CalGo account is not sent with the currently signed-in session.
+  Future<String?> accountIdForPurchase(PurchaseDetails purchase) async {
+    String? normalized(String? value) {
+      final result = value?.trim();
+      return result == null || result.isEmpty ? null : result;
+    }
+
+    if (defaultTargetPlatform == TargetPlatform.iOS) {
+      if (purchase is SK2PurchaseDetails) {
+        final purchaseId = purchase.purchaseID;
+        if (purchaseId == null || purchaseId.isEmpty) return null;
+        try {
+          final transactions = await SK2Transaction.transactions();
+          for (final transaction in transactions) {
+            if (transaction.id == purchaseId) {
+              return normalized(transaction.appAccountToken);
+            }
+          }
+        } catch (error) {
+          debugPrint('[IAP] Could not read StoreKit account token: $error');
+        }
+        return null;
+      }
+
+      if (purchase is AppStorePurchaseDetails) {
+        return normalized(
+          purchase.skPaymentTransaction.payment.applicationUsername,
+        );
+      }
+    }
+
+    if (defaultTargetPlatform == TargetPlatform.android &&
+        purchase is GooglePlayPurchaseDetails) {
+      return normalized(purchase.billingClientPurchase.obfuscatedAccountId);
+    }
+
+    return null;
+  }
 
   bool get available => _available;
   String? get lastError => _lastError;

@@ -1,3 +1,5 @@
+import '../utils/date_time_utils.dart';
+
 class ExerciseEntry {
   final String id;
   final String dateKey;
@@ -32,7 +34,8 @@ class ExerciseEntry {
       caloriesBurned: (json['calories_burned'] as num?)?.toDouble() ?? 0,
       metValue: (json['met_value'] as num?)?.toDouble(),
       occurredAt:
-          DateTime.tryParse(json['occurred_at']?.toString() ?? '') ??
+          parseApiDateTime(json['occurred_at']) ??
+          DateTime.tryParse(json['occurred_at']?.toString() ?? '')?.toLocal() ??
           DateTime.now(),
     );
   }

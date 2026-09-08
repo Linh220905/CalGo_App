@@ -12,11 +12,11 @@ class RevenueCatService {
   );
   static const String _envIosApiKey = String.fromEnvironment(
     'REVENUECAT_IOS_API_KEY',
-    defaultValue: '',
+    defaultValue: 'appl_ewZBuGVynrAWHYczmwxNOfpXrhF',
   );
   static const String _envAndroidApiKey = String.fromEnvironment(
     'REVENUECAT_ANDROID_API_KEY',
-    defaultValue: '',
+    defaultValue: 'goog_xceHZqyMatSbyscQyBdoDYmIoZL',
   );
 
   static const String entitlementId = 'calgo_pro';
@@ -26,6 +26,7 @@ class RevenueCatService {
 
   /// Initialize RevenueCat SDK with the signed-in User ID.
   static Future<void> init({String? appUserId}) async {
+    if (kIsWeb) return;
     if (_initialized) return;
 
     try {
@@ -34,6 +35,11 @@ class RevenueCatService {
       }
 
       final apiKey = _getApiKey();
+      if (apiKey.isEmpty) {
+        debugPrint('[RevenueCat] No API key configured');
+        return;
+      }
+
       final configuration = PurchasesConfiguration(apiKey);
       if (appUserId != null && appUserId.isNotEmpty) {
         configuration.appUserID = appUserId;
@@ -49,6 +55,7 @@ class RevenueCatService {
 
   /// Selects the appropriate API key based on OS platform and env configuration.
   static String _getApiKey() {
+    if (kIsWeb) return _envApiKey;
     if (Platform.isIOS && _envIosApiKey.isNotEmpty) {
       return _envIosApiKey;
     }
@@ -60,6 +67,7 @@ class RevenueCatService {
 
   /// Set user ID after login.
   static Future<void> logIn(String userId) async {
+    if (kIsWeb) return;
     if (!_initialized) await init(appUserId: userId);
     try {
       final customerInfo = await Purchases.logIn(userId);
@@ -71,7 +79,7 @@ class RevenueCatService {
 
   /// Reset identity on logout.
   static Future<void> logOut() async {
-    if (!_initialized) return;
+    if (kIsWeb || !_initialized) return;
     try {
       await Purchases.logOut();
       debugPrint('[RevenueCat] Logged out successfully');
@@ -82,7 +90,7 @@ class RevenueCatService {
 
   /// Check if the user currently holds an active premium entitlement.
   static Future<bool> isPremium() async {
-    if (!_initialized) return false;
+    if (kIsWeb || !_initialized) return false;
     try {
       final customerInfo = await Purchases.getCustomerInfo();
       return customerInfo.entitlements.all[entitlementId]?.isActive ?? false;
@@ -94,6 +102,7 @@ class RevenueCatService {
 
   /// Fetch current offerings (Weekly, Monthly, Annual packages).
   static Future<Offerings?> getOfferings() async {
+    if (kIsWeb) return null;
     if (!_initialized) await init();
     try {
       final offerings = await Purchases.getOfferings();
@@ -106,6 +115,7 @@ class RevenueCatService {
 
   /// Purchase a package. Returns true if entitlement became active.
   static Future<bool> purchasePackage(Package package) async {
+    if (kIsWeb) return false;
     if (!_initialized) await init();
     try {
       final customerInfo = await Purchases.purchasePackage(package);
@@ -126,6 +136,7 @@ class RevenueCatService {
 
   /// Restore previous purchases.
   static Future<bool> restorePurchases() async {
+    if (kIsWeb) return false;
     if (!_initialized) await init();
     try {
       final customerInfo = await Purchases.restorePurchases();

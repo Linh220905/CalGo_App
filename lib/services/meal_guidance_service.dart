@@ -21,6 +21,7 @@ class MealGuidanceService {
   Future<MealGuidance> getToday({
     bool generate = false,
     bool refresh = false,
+    String locale = 'en',
   }) async {
     final now = DateTime.now();
     final isCacheValid = !refresh &&
@@ -41,6 +42,7 @@ class MealGuidanceService {
     final query = <String>[];
     if (generate) query.add('generate=true');
     if (refresh) query.add('refresh=true');
+    if (locale.isNotEmpty) query.add('locale=$locale');
     final queryString = query.isEmpty ? '' : '?${query.join('&')}';
 
     final requestFuture = () async {

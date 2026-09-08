@@ -1342,6 +1342,10 @@ class AppLocalizationsHi extends AppLocalizations {
       'Google Play भुगतान नहीं खोल सका। फिर से प्रयास करें।';
 
   @override
+  String get paymentVerificationFailed =>
+      'भुगतान पूरा नहीं हो सका। फिर से प्रयास करें।';
+
+  @override
   String errorWithDetails(String error) {
     return 'त्रुटि: $error';
   }

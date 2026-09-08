@@ -97,8 +97,9 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         _reloadScheduled = false;
         if (mounted) {
           final hp = context.read<HomeProvider>();
+          final settings = context.read<AppSettingsProvider>();
           if (!hp.hasLoaded) {
-            hp.loadToday();
+            hp.loadToday(locale: settings.locale.languageCode);
           }
           unawaited(context.read<ScanService>().preloadHistoryImages(context));
         }
@@ -128,7 +129,10 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                 : RefreshIndicator(
                     color: textDark,
                     backgroundColor: cardBgColor,
-                    onRefresh: () => hp.loadToday(forceRefresh: true),
+                    onRefresh: () => hp.loadToday(
+                      forceRefresh: true,
+                      locale: settings.locale.languageCode,
+                    ),
                     child: SingleChildScrollView(
                       physics: const AlwaysScrollableScrollPhysics(),
                       padding: const EdgeInsets.fromLTRB(20, 16, 20, 100),

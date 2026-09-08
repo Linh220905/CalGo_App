@@ -1359,6 +1359,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Impossible d\'ouvrir le paiement Google Play. Veuillez réessayer.';
 
   @override
+  String get paymentVerificationFailed =>
+      'Le paiement n\'a pas pu être effectué. Veuillez réessayer.';
+
+  @override
   String errorWithDetails(String error) {
     return 'Erreur : $error';
   }

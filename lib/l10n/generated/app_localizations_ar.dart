@@ -1322,6 +1322,10 @@ class AppLocalizationsAr extends AppLocalizations {
       'لم يكن بمقدوره فتح دفعة (زيز) أرجوك حاول مرة أخرى';
 
   @override
+  String get paymentVerificationFailed =>
+      'تعذر إكمال الدفع. يرجى المحاولة مرة أخرى.';
+
+  @override
   String errorWithDetails(String error) {
     return 'Error: $error';
   }

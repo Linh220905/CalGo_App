@@ -11,6 +11,7 @@ import 'services/scan_service.dart';
 import 'services/notification_service.dart';
 import 'services/analytics_service.dart';
 import 'services/meal_guidance_service.dart';
+import 'services/revenuecat_service.dart';
 import 'providers/auth_provider.dart';
 import 'providers/onboarding_provider.dart';
 import 'providers/home_provider.dart';
@@ -29,6 +30,8 @@ void main() {
   PaintingBinding.instance.imageCache.maximumSizeBytes = 100 * 1024 * 1024;
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
+  unawaited(RevenueCatService.init());
 
   final apiService = ApiService();
   final analyticsService = AnalyticsService(apiService);
@@ -53,6 +56,12 @@ void main() {
       trackedFirstOpenAuthScope = apiService.authScope;
       unawaited(analyticsService.trackAppFirstOpen());
       unawaited(analyticsService.flushPending());
+      if (authProvider.user?.id != null) {
+        unawaited(RevenueCatService.logIn(authProvider.user!.id));
+      }
+    }
+    if (!authProvider.isAuthenticated) {
+      unawaited(RevenueCatService.logOut());
     }
     // queryPurchases/restore is needed after a cold start and after account
     // switching so a renewed subscription refreshes the server entitlement.

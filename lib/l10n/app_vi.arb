@@ -625,6 +625,7 @@
   "deleteFailed": "Không thể xóa. Vui lòng thử lại!",
   "paymentProcessing": "Đang xử lý thanh toán qua Google Play...",
   "paymentOpenFailed": "Không thể mở thanh toán Google Play. Vui lòng thử lại.",
+  "paymentVerificationFailed": "Thanh toán chưa thành công. Vui lòng thử lại.",
   "errorWithDetails": "Lỗi: {error}",
   "@errorWithDetails": {
     "description": "Localized UI text",

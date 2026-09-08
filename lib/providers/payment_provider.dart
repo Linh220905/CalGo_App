@@ -205,6 +205,7 @@ class PaymentProvider extends ChangeNotifier {
 
   /// Map of package ID → purchase state (for UI binding).
   Map<String, PurchaseState> _purchaseStates = {};
+  final Set<String> _processingPurchaseKeys = <String>{};
 
   bool get ready => _ready;
   bool get initializing => _initializing;
@@ -479,11 +480,12 @@ class PaymentProvider extends ChangeNotifier {
 
     if (purchase.status == PurchaseStatus.purchased ||
         purchase.status == PurchaseStatus.restored) {
-      if (IapIds.isPremiumProduct(sku)) {
-        _verifySubscription(purchase);
-      } else {
-        _verifyAndConsume(purchase, packageId);
+      final key = _purchaseKey(purchase);
+      if (!_processingPurchaseKeys.add(key)) {
+        debugPrint('[IAP] Ignoring duplicate purchase update: $sku');
+        return;
       }
+      unawaited(_processCompletedPurchase(purchase, packageId, key));
     } else if (purchase.status == PurchaseStatus.error) {
       _purchaseState(sku, PurchaseState.error);
       _error = 'purchaseFailed';
@@ -502,17 +504,61 @@ class PaymentProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> _verifyAndConsume(
+  String _purchaseKey(PurchaseDetails purchase) =>
+      '${purchase.productID}:${purchase.purchaseID ?? purchase.transactionDate ?? ''}';
+
+  Future<void> _processCompletedPurchase(
     PurchaseDetails purchase,
     String packageId,
+    String purchaseKey,
   ) async {
+    try {
+      // A StoreKit/Play transaction can be delivered after logout or account
+      // switching. Never send it with an unrelated authenticated account.
+      final accountId = _accountId;
+      if (accountId == null) {
+        debugPrint('[IAP] Purchase held until a CalGo account is signed in');
+        return;
+      }
+
+      final storeAccountId = await _paymentService.accountIdForPurchase(
+        purchase,
+      );
+      if (_accountId != accountId) {
+        debugPrint('[IAP] Purchase held because the CalGo account changed');
+        return;
+      }
+      if (storeAccountId != null && storeAccountId != accountId) {
+        // Leave the transaction unfinished. It can be completed when the
+        // CalGo account that created it signs back in. In particular, do not
+        // surface this unrelated transaction as a payment failure for the
+        // account currently on screen.
+        debugPrint('[IAP] Purchase belongs to another CalGo account; held');
+        return;
+      }
+
+      if (IapIds.isPremiumProduct(purchase.productID)) {
+        await _verifySubscription(purchase, accountId: accountId);
+      } else {
+        await _verifyAndConsume(purchase, packageId, accountId: accountId);
+      }
+    } finally {
+      _processingPurchaseKeys.remove(purchaseKey);
+    }
+  }
+
+  Future<void> _verifyAndConsume(
+    PurchaseDetails purchase,
+    String packageId, {
+    required String accountId,
+  }) async {
     final sku = purchase.productID;
 
     // 1. Verify receipt on backend
     final verified = await _paymentService.verifyReceipt(purchase);
 
     if (verified) {
-      await _clearPendingPurchase();
+      await _clearPendingPurchase(accountId: accountId);
       // The backend verifies, commits credits, and consumes the token. Calling
       // completePurchase is still safe and clears any pending client-side
       // transaction state; Android returns OK for an already acknowledged
@@ -536,7 +582,7 @@ class PaymentProvider extends ChangeNotifier {
     } else {
       // Persist for retry on next cold start so a transient auth failure
       // does not permanently lose a paid purchase.
-      await _savePendingPurchase(purchase);
+      await _savePendingPurchase(purchase, accountId: accountId);
       _purchaseState(sku, PurchaseState.error);
       _error = _paymentService.lastError ?? 'receiptVerificationFailed';
     }
@@ -545,7 +591,10 @@ class PaymentProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> _verifySubscription(PurchaseDetails purchase) async {
+  Future<void> _verifySubscription(
+    PurchaseDetails purchase, {
+    required String accountId,
+  }) async {
     final sku = purchase.productID;
     final initiatedInThisSession = _purchaseInProgress;
     _purchaseState(sku, PurchaseState.verifying);
@@ -565,7 +614,7 @@ class PaymentProvider extends ChangeNotifier {
       _purchaseState(sku, PurchaseState.purchased);
       _error = null;
       _purchaseInProgress = false;
-      await _clearPendingPurchase();
+      await _clearPendingPurchase(accountId: accountId);
       // The server has already verified and granted the entitlement. Clearing
       // the local Play transaction is cleanup and must not block the success
       // UI if Play reports an already-acknowledged transaction here.
@@ -579,7 +628,7 @@ class PaymentProvider extends ChangeNotifier {
     } else {
       // Persist for retry on next cold start so a transient auth failure
       // does not permanently lose a paid purchase.
-      await _savePendingPurchase(purchase);
+      await _savePendingPurchase(purchase, accountId: accountId);
       _purchaseState(sku, PurchaseState.error);
       _error = _paymentService.lastError ?? 'subscriptionVerificationFailed';
     }
@@ -683,8 +732,11 @@ class PaymentProvider extends ChangeNotifier {
     } catch (_) {}
   }
 
-  Future<void> _savePendingPurchase(PurchaseDetails purchase) async {
-    final accountId = _accountId;
+  Future<void> _savePendingPurchase(
+    PurchaseDetails purchase, {
+    String? accountId,
+  }) async {
+    accountId ??= _accountId;
     if (accountId == null ||
         _paymentService.lastError == 'purchaseAccountMismatch') {
       return;
