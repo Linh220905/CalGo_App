@@ -2261,4 +2261,10 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get appleHealthSynced => '已同步 Apple 健康';
+
+  @override
+  String get guidanceRecoveryTitle => '拯救今天';
+
+  @override
+  String get guidanceReadyTitle => '今天吃什么达到目标？';
 }

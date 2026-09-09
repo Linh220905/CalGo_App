@@ -2382,4 +2382,11 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get appleHealthSynced => 'Синхронизировано с Apple Здоровье';
+
+  @override
+  String get guidanceRecoveryTitle => 'Спасти сегодняшний день';
+
+  @override
+  String get guidanceReadyTitle =>
+      'Что съесть, чтобы достичь сегодняшней цели?';
 }

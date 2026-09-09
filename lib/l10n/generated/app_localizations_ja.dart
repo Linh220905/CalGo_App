@@ -2276,4 +2276,10 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get appleHealthSynced => 'Appleヘルスケア同期';
+
+  @override
+  String get guidanceRecoveryTitle => '今日のリカバリー';
+
+  @override
+  String get guidanceReadyTitle => '今日の目標達成のために何を食べる？';
 }

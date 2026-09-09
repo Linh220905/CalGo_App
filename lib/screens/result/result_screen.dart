@@ -2025,8 +2025,7 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
   @override
   void initState() {
     super.initState();
-    _queryController.text = 'Mỳ';
-    _search('Mỳ');
+    _search('');
   }
 
   @override
@@ -2086,11 +2085,7 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
         final itemsList = res['items'] as List;
         if (mounted && requestId == _searchRequestId) {
           setState(() {
-            if (itemsList.isEmpty && queryStr.toLowerCase().contains('mỳ')) {
-              _searchResults = _mockNoodleItems;
-            } else {
-              _searchResults = itemsList;
-            }
+            _searchResults = itemsList;
             _searching = false;
           });
         }
@@ -2605,7 +2600,8 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
                             ),
                             const SizedBox(height: 12),
                             Text(
-                              (_selectedHit['name'] ??
+                              (_selectedHit['display_name'] ??
+                                      _selectedHit['name'] ??
                                       _selectedHit['ten'] ??
                                       '')
                                   .toString(),

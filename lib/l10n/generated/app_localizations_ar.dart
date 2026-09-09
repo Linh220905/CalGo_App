@@ -2337,4 +2337,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get appleHealthSynced => 'مزامنة Apple Health';
+
+  @override
+  String get guidanceRecoveryTitle => 'إنقاذ اليوم';
+
+  @override
+  String get guidanceReadyTitle => 'ماذا تأكل للوصول إلى هدف اليوم؟';
 }

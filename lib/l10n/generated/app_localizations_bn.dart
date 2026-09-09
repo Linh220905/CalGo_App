@@ -2358,4 +2358,10 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get appleHealthSynced => 'Apple Health সিঙ্ক করা হয়েছে';
+
+  @override
+  String get guidanceRecoveryTitle => 'আজকের দিনটি বাঁচান';
+
+  @override
+  String get guidanceReadyTitle => 'আজকের লক্ষ্যে পৌঁছাতে কী খাবেন?';
 }

@@ -2345,4 +2345,10 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get appleHealthSynced => 'Đồng bộ Apple Health';
+
+  @override
+  String get guidanceRecoveryTitle => 'Cứu ngày hôm nay';
+
+  @override
+  String get guidanceReadyTitle => 'Ăn gì để chạm mục tiêu hôm nay?';
 }

@@ -2375,4 +2375,11 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get appleHealthSynced => 'Sincronización con Apple Health';
+
+  @override
+  String get guidanceRecoveryTitle => 'Salvar el día';
+
+  @override
+  String get guidanceReadyTitle =>
+      '¿Qué comer para alcanzar el objetivo de hoy?';
 }

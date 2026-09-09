@@ -172,7 +172,9 @@ class _GuidanceBody extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          value.title,
+                          value.isRecovery
+                              ? s.guidanceRecoveryTitle
+                              : s.guidanceReadyTitle,
                           style: TextStyle(
                             color: text,
                             fontSize: 22,

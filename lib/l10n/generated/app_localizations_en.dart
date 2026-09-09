@@ -2352,4 +2352,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get appleHealthSynced => 'Apple Health Sync';
+
+  @override
+  String get guidanceRecoveryTitle => 'Rescue today';
+
+  @override
+  String get guidanceReadyTitle => 'What to eat to reach today\'s goal?';
 }

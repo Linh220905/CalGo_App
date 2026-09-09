@@ -577,7 +577,7 @@
   "sportsBadminton": "Badminton",
   "sportsBasketball": "كرة السلة",
   "sportsOther": "أخرى",
-  "durationTitle": "متى تريد الوصول إلى هدفك؟",
+  "durationTitle": "المدة",
   "durationNote": "اختر الإطار الزمني الذي يشعرك بالراحة",
   "dailyCalorieGoal": "دايلي كالوري",
   "dailyCalorieGoalMessage": "Your current goal is {calories} kcal/day. You can change it in onboarding settings or contact support.",
@@ -1064,7 +1064,6 @@
   "exerciseManualDesc": "أدخل السعرات الحرارية من أجهزة التمارين أو الساعات الذكية",
   "intensityTitle": "الشدة",
   "burnedCaloriesTitle": "السعرات المحروقة",
-  "durationTitle": "المدة",
   "kcalSuffix": "سعرة",
   "minutesSuffix": "دقيقة",
   "manualCaloriesHint": "أدخل السعرات من الجهاز أو الساعة",
@@ -1072,7 +1071,13 @@
   "willAddToToday": "سيتم إضافته إلى اليوم",
   "estimatedActiveCalories": "السعرات النشطة المقدرة",
   "exerciseCalcWeightNote": "محسوب لوزن {weight} كجم وقيم MET من Adult Compendium 2024. قد تكون الأجهزة الذكية أكثر دقة.",
-  "@exerciseCalcWeightNote": {"placeholders": {"weight": {"type": "String"}}},
+  "@exerciseCalcWeightNote": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
   "exerciseUpdateWeightPrompt": "يرجى تحديث وزنك في الملف الشخصي ليتمكن CalGo من حساب السعرات.",
   "exerciseHealthSyncWarning": "إذا كان Apple Health قد سجل هذا التمرين بالفعل، فلا تسجله هنا لتجنب التكرار.",
   "saveWorkoutButton": "حفظ التمرين",
@@ -1099,5 +1104,7 @@
   "exerciseSaveNetworkError": "تعذر حفظ التمرين. تحقق من الاتصال وحاول مرة أخرى.",
   "deleteExerciseConfirm": "هل أنت تأكد من أنك تريد حذف هذا التمرين؟",
   "deleteExerciseFailed": "تعذر حذف التمرين. يرجى المحاولة مرة أخرى.",
-  "appleHealthSynced": "مزامنة Apple Health"
+  "appleHealthSynced": "مزامنة Apple Health",
+  "guidanceRecoveryTitle": "إنقاذ اليوم",
+  "guidanceReadyTitle": "ماذا تأكل للوصول إلى هدف اليوم؟"
 }

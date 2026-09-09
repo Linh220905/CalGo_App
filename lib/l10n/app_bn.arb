@@ -577,7 +577,7 @@
   "sportsBadminton": "হনটন",
   "sportsBasketball": "বেকিবল",
   "sportsOther": "অন্যান্য",
-  "durationTitle": "তুমি কখন তোমার লক্ষ্যে পৌঁছাতে চাও?",
+  "durationTitle": "সময়কাল",
   "durationNote": "একটি সময় নির্বাচন করুন",
   "dailyCalorieGoal": "দৈনিক ক্যালরি গোলাল",
   "dailyCalorieGoalMessage": "Your current goal is {calories} kcal/day. You can change it in onboarding settings or contact support.",
@@ -1064,7 +1064,6 @@
   "exerciseManualDesc": "জিম সরঞ্জাম বা স্মার্টওয়াচ থেকে ক্যালোরি টাইপ করুন",
   "intensityTitle": "তীব্রতা",
   "burnedCaloriesTitle": "বার্ন হওয়া ক্যালোরি",
-  "durationTitle": "সময়কাল",
   "kcalSuffix": "ক্যালোরি",
   "minutesSuffix": "মিনিট",
   "manualCaloriesHint": "সরঞ্জাম বা ঘড়ি থেকে ক্যালোরি লিখুন",
@@ -1072,7 +1071,13 @@
   "willAddToToday": "আজকের তালিকায় যোগ করা হবে",
   "estimatedActiveCalories": "আনুমানিক সক্রিয় ক্যালোরি",
   "exerciseCalcWeightNote": "{weight} কেজি ওজন এবং Adult Compendium 2024 MET এর জন্য হিসাব করা হয়েছে। স্মার্টওয়াচ আরও সঠিক হতে পারে।",
-  "@exerciseCalcWeightNote": {"placeholders": {"weight": {"type": "String"}}},
+  "@exerciseCalcWeightNote": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
   "exerciseUpdateWeightPrompt": "প্রোফাইলে আপনার ওজন আপডেট করুন যাতে CalGo ক্যালোরি হিসাব করতে পারে।",
   "exerciseHealthSyncWarning": "যদি Apple Health ইতিমধ্যেই এই ওয়ার্কআউটটি রেকর্ড করে থাকে, তবে দ্বিগুণ এড়াতে এটি যোগ করবেন না।",
   "saveWorkoutButton": "ওয়ার্কআউট সংরক্ষণ করুন",
@@ -1099,5 +1104,7 @@
   "exerciseSaveNetworkError": "ওয়ার্কআউট সংরক্ষণ করা যায়নি। ইন্টারনেট সংযোগ পরীক্ষা করে আবার চেষ্টা করুন।",
   "deleteExerciseConfirm": "আপনি কি নিশ্চিত যে আপনি এই ওয়ার্কআউটটি মুছে ফেলতে চান?",
   "deleteExerciseFailed": "ওয়ার্কআউট মুছে ফেলা যায়নি। আবার চেষ্টা করুন।",
-  "appleHealthSynced": "Apple Health সিঙ্ক করা হয়েছে"
+  "appleHealthSynced": "Apple Health সিঙ্ক করা হয়েছে",
+  "guidanceRecoveryTitle": "আজকের দিনটি বাঁচান",
+  "guidanceReadyTitle": "আজকের লক্ষ্যে পৌঁছাতে কী খাবেন?"
 }

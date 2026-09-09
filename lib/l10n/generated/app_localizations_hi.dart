@@ -2359,4 +2359,10 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get appleHealthSynced => 'Apple Health सिंक किया गया';
+
+  @override
+  String get guidanceRecoveryTitle => 'आज का दिन संभालें';
+
+  @override
+  String get guidanceReadyTitle => 'आज का लक्ष्य हासिल करने के लिए क्या खाएं?';
 }

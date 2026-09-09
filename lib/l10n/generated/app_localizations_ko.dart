@@ -2283,4 +2283,10 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get appleHealthSynced => 'Apple Health 동기화됨';
+
+  @override
+  String get guidanceRecoveryTitle => '오늘 하루 만회하기';
+
+  @override
+  String get guidanceReadyTitle => '오늘 목표 달성을 위해 무엇을 먹을까요?';
 }

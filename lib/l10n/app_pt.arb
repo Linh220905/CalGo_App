@@ -577,7 +577,7 @@
   "sportsBadminton": "Badminton",
   "sportsBasketball": "Basquetebol",
   "sportsOther": "Outros",
-  "durationTitle": "Quando queres atingir o teu objectivo?",
+  "durationTitle": "Duração",
   "durationNote": "Escolha um prazo que lhe pareça adequado",
   "dailyCalorieGoal": "Objetivo diário da calorias",
   "dailyCalorieGoalMessage": "Seu objetivo atual é {calories} kcal/dia. Você pode alterá-lo em configurações de onboarding ou suporte de contato.",
@@ -1064,7 +1064,6 @@
   "exerciseManualDesc": "Digite as calorias do aparelho ou smartwatch",
   "intensityTitle": "Intensidade",
   "burnedCaloriesTitle": "Calorias queimadas",
-  "durationTitle": "Duração",
   "kcalSuffix": "kcal",
   "minutesSuffix": "min",
   "manualCaloriesHint": "Digite as calorias do aparelho ou smartwatch",
@@ -1072,7 +1071,13 @@
   "willAddToToday": "Será adicionado a hoje",
   "estimatedActiveCalories": "Calorias ativas estimadas",
   "exerciseCalcWeightNote": "Calculado para um peso de {weight} kg e MET do Adult Compendium 2024. Dispositivos vestíveis podem ser mais precisos.",
-  "@exerciseCalcWeightNote": {"placeholders": {"weight": {"type": "String"}}},
+  "@exerciseCalcWeightNote": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
   "exerciseUpdateWeightPrompt": "Atualize seu peso no perfil para que o CalGo possa calcular as calorias.",
   "exerciseHealthSyncWarning": "Se o Apple Health já registrou este treino, não o registre aqui para evitar duplicidade.",
   "saveWorkoutButton": "Salvar treino",
@@ -1099,5 +1104,7 @@
   "exerciseSaveNetworkError": "Não foi possível salvar o treino. Verifique sua conexão e tente novamente.",
   "deleteExerciseConfirm": "Tem certeza de que deseja excluir este treino?",
   "deleteExerciseFailed": "Não foi possível excluir o treino. Tente novamente.",
-  "appleHealthSynced": "Sincronização Apple Saúde"
+  "appleHealthSynced": "Sincronização Apple Saúde",
+  "guidanceRecoveryTitle": "Salvar o dia",
+  "guidanceReadyTitle": "O que comer para atingir a meta de hoje?"
 }

@@ -586,7 +586,7 @@
   "sportsBadminton": "Cầu lông",
   "sportsBasketball": "Bóng rổ",
   "sportsOther": "Khác",
-  "durationTitle": "Bạn muốn đạt mục tiêu trong?",
+  "durationTitle": "Thời lượng",
   "durationNote": "Chọn thời gian phù hợp với bạn",
   "dailyCalorieGoal": "Mục tiêu Calo hàng ngày",
   "dailyCalorieGoalMessage": "Mục tiêu hiện tại của bạn là {calories} kcal/ngày. Bạn có thể thay đổi mục tiêu này trong cài đặt Onboarding hoặc liên hệ hỗ trợ.",
@@ -886,17 +886,65 @@
   },
   "perScan": "/lượt",
   "caloriesValue": "{calories} kcal",
-  "@caloriesValue": {"placeholders": {"calories": {"type": "int"}}},
+  "@caloriesValue": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
   "caloriesPer100g": "{calories} kcal / 100g",
-  "@caloriesPer100g": {"placeholders": {"calories": {"type": "int"}}},
+  "@caloriesPer100g": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
   "gramsValue": "{grams}g",
-  "@gramsValue": {"placeholders": {"grams": {"type": "int"}}},
+  "@gramsValue": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
   "weightKgValue": "{weight} kg",
-  "@weightKgValue": {"placeholders": {"weight": {"type": "String"}}},
+  "@weightKgValue": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
   "galleryMacroSummary": "{calories} kcal • C:{carbs}g P:{protein}g F:{fat}g",
-  "@galleryMacroSummary": {"placeholders": {"calories": {"type": "int"}, "carbs": {"type": "String"}, "protein": {"type": "String"}, "fat": {"type": "String"}}},
+  "@galleryMacroSummary": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      },
+      "carbs": {
+        "type": "String"
+      },
+      "protein": {
+        "type": "String"
+      },
+      "fat": {
+        "type": "String"
+      }
+    }
+  },
   "sharePayload": "🔥 {dish} · {calories} kcal | CalGo",
-  "@sharePayload": {"placeholders": {"dish": {"type": "String"}, "calories": {"type": "int"}}},
+  "@sharePayload": {
+    "placeholders": {
+      "dish": {
+        "type": "String"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
   "connectAppleHealthTitle": "Kết nối Apple Health",
   "connectAppleHealthDesc": "Tự động đồng bộ hoạt động hàng ngày giữa CalGo và ứng dụng Sức khỏe để có dữ liệu chính xác nhất.",
   "weightUpdateSuccess": "Đã cập nhật cân nặng thành công",
@@ -909,7 +957,13 @@
   "targetLabel": "Mục tiêu",
   "weightProgressTitle": "Tiến trình cân nặng",
   "ofTargetPercent": "{percent}% của mục tiêu",
-  "@ofTargetPercent": {"placeholders": {"percent": {"type": "String"}}},
+  "@ofTargetPercent": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
   "notEnoughWeightData": "Chưa có đủ dữ liệu cân nặng",
   "calorieNutritionStatsTitle": "Thống kê Calo & Dinh dưỡng",
   "consumedAvgLabel": "Đã nạp (TB)",
@@ -924,17 +978,47 @@
   "consumedLabelUpper": "Đã nạp",
   "loggedActivityTitle": "Hoạt động ghi nhận",
   "daysWithData": "{logged}/{total} ngày có dữ liệu",
-  "@daysWithData": {"placeholders": {"logged": {"type": "int"}, "total": {"type": "int"}}},
+  "@daysWithData": {
+    "placeholders": {
+      "logged": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "lessLabel": "Ít",
   "moreLabel": "Nhiều",
   "weightTargetForecastTitle": "Dự báo mục tiêu cân nặng",
   "levelLabel": "Cấp {level}",
-  "@levelLabel": {"placeholders": {"level": {"type": "int"}}},
+  "@levelLabel": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
   "maxLevelReached": "Bạn đã đạt cấp tối đa",
   "expToNextLevel": "{exp} EXP để lên cấp tiếp theo",
-  "@expToNextLevel": {"placeholders": {"exp": {"type": "int"}}},
+  "@expToNextLevel": {
+    "placeholders": {
+      "exp": {
+        "type": "int"
+      }
+    }
+  },
   "scansTodaySummary": "Hôm nay đã quét {scansToday} món · tổng {totalScans} lần",
-  "@scansTodaySummary": {"placeholders": {"scansToday": {"type": "int"}, "totalScans": {"type": "int"}}},
+  "@scansTodaySummary": {
+    "placeholders": {
+      "scansToday": {
+        "type": "int"
+      },
+      "totalScans": {
+        "type": "int"
+      }
+    }
+  },
   "milestonesHeader": "MỐC CẦN ĐẠT",
   "noMilestoneData": "Chưa có dữ liệu mốc EXP.",
   "notEnoughNutritionData": "Chưa có đủ dữ liệu dinh dưỡng",
@@ -951,9 +1035,27 @@
   "photoSelected": "Đã chọn ảnh",
   "photoOptional": "Tuỳ chọn",
   "lastLogWeight": "Lần gần nhất: {weight} kg",
-  "@lastLogWeight": {"placeholders": {"weight": {"type": "String"}}},
+  "@lastLogWeight": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
   "selectedDateText": "ngày {day} thg {month}, {year}",
-  "@selectedDateText": {"placeholders": {"day": {"type": "int"}, "month": {"type": "int"}, "year": {"type": "int"}}},
+  "@selectedDateText": {
+    "placeholders": {
+      "day": {
+        "type": "int"
+      },
+      "month": {
+        "type": "int"
+      },
+      "year": {
+        "type": "int"
+      }
+    }
+  },
   "nutritionTargetModalTitle": "Mục tiêu dinh dưỡng",
   "dailyCalorieGoalKicker": "CALO MỤC TIÊU HÀNG NGÀY",
   "macroDistributionKicker": "CHỈ SỐ MACROS PHÂN BỔ",
@@ -962,7 +1064,13 @@
   "fatMacroLabel": "Chất béo (Fat)",
   "recalculateTargetButton": "Tạo lại mục tiêu",
   "burnedCaloriesPill": "+{calories} kcal đã đốt",
-  "@burnedCaloriesPill": {"placeholders": {"calories": {"type": "int"}}},
+  "@burnedCaloriesPill": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
   "burnedLabelUpper": "Đã đốt",
   "filterAll": "Tất cả",
   "filterFood": "Thức ăn",
@@ -972,13 +1080,25 @@
   "noLogsYet": "Chưa có nhật ký nào",
   "targetTimelineTitle": "Ước tính thời gian đạt mục tiêu",
   "weeksFormat": "{weeks} tuần",
-  "@weeksFormat": {"placeholders": {"weeks": {"type": "int"}}},
+  "@weeksFormat": {
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
   "forecastProgressTitle": "Dự báo tiến trình đạt mục tiêu",
   "forecastPremiumUnlockDesc": "Nâng cấp Premium để mở khóa biểu đồ & ước tính số tuần đạt mốc cân nặng!",
   "unlockPremiumButton": "Mở khóa Premium",
   "currentLabel": "Hiện tại",
   "weekAbbrev": "T{weeks}",
-  "@weekAbbrev": {"placeholders": {"weeks": {"type": "int"}}},
+  "@weekAbbrev": {
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
   "logWorkoutTile": "Ghi tập luyện",
   "scanMealTile": "Quét món ăn",
   "chooseExerciseTypeSubtitle": "Chọn loại hình vận động để tính calo đã đốt.",
@@ -996,7 +1116,6 @@
   "exerciseManualDesc": "Nhập số calo từ máy tập hoặc thiết bị khác",
   "intensityTitle": "Cường độ",
   "burnedCaloriesTitle": "Calo đã đốt",
-  "durationTitle": "Thời lượng",
   "kcalSuffix": "kcal",
   "minutesSuffix": "phút",
   "manualCaloriesHint": "Nhập calo từ máy tập hoặc thiết bị",
@@ -1004,7 +1123,13 @@
   "willAddToToday": "Sẽ cộng vào hôm nay",
   "estimatedActiveCalories": "Ước tính calo hoạt động",
   "exerciseCalcWeightNote": "Tính theo cân nặng {weight} kg và MET từ Adult Compendium 2024. Đây là ước tính, thiết bị đeo có thể chính xác hơn.",
-  "@exerciseCalcWeightNote": {"placeholders": {"weight": {"type": "String"}}},
+  "@exerciseCalcWeightNote": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
   "exerciseUpdateWeightPrompt": "Hãy cập nhật cân nặng trong hồ sơ để CalGo ước tính calo.",
   "exerciseHealthSyncWarning": "Nếu Apple Health đã ghi nhận cùng buổi tập, không ghi lại tại đây để tránh cộng calo hai lần.",
   "saveWorkoutButton": "Lưu bài tập",
@@ -1031,5 +1156,7 @@
   "exerciseSaveNetworkError": "Chưa thể lưu bài tập. Vui lòng kiểm tra mạng và thử lại.",
   "deleteExerciseConfirm": "Bạn có chắc chắn muốn xóa bài tập này?",
   "deleteExerciseFailed": "Xóa bài tập thất bại. Vui lòng thử lại.",
-  "appleHealthSynced": "Đồng bộ Apple Health"
+  "appleHealthSynced": "Đồng bộ Apple Health",
+  "guidanceRecoveryTitle": "Cứu ngày hôm nay",
+  "guidanceReadyTitle": "Ăn gì để chạm mục tiêu hôm nay?"
 }

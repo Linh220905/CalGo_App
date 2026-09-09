@@ -127,7 +127,9 @@ class _RecommendationsCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      guidance.title,
+                      guidance.isRecovery
+                          ? s.guidanceRecoveryTitle
+                          : s.guidanceReadyTitle,
                       style: TextStyle(
                         color: title,
                         fontWeight: FontWeight.w800,

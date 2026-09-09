@@ -24,8 +24,7 @@
         "type": "String"
       }
     }
-  }
-,
+  },
   "tabHome": "홈",
   "tabAnalytics": "분석",
   "tabSettings": "설정",
@@ -114,8 +113,7 @@
   "goalGainMuscle": "근육 증가",
   "goalGainMuscleDesc": "근육을 키우고 근력을 높이세요",
   "goalGainMuscleReason": "이는 트레이닝 및 단백질 필요에 대한 근육 증가 계획을 수립하는 데 도움이 됩니다.",
-  "goalMaintain": "체중 유지"
-,
+  "goalMaintain": "체중 유지",
   "goalMaintainDesc": "균형 잡힌 체격을 유지하세요",
   "goalMaintainReason": "이는 장기적으로 귀하의 삶에 적합한 균형 잡힌 계획을 수립하는 데 도움이 됩니다.",
   "nameStepTitle": "당신의 이름은...",
@@ -215,8 +213,7 @@
   "mascotTipHydration": "아직 수분이 부족하신가요? 날카로움을 유지하려면 물을 한 모금 마시세요. ✨",
   "mascotTipChew": "천천히 씹으면 소화를 돕고 포만감을 유지합니다.",
   "mascotTipConsistency": "매일의 일관성은 훌륭한 체격을 형성합니다",
-  "mascotNoMeals": "아직 아무것도 기록하지 않으셨나요? 음식 사진을 찍어주세요!"
-,
+  "mascotNoMeals": "아직 아무것도 기록하지 않으셨나요? 음식 사진을 찍어주세요!",
   "mascotOverTarget": "오늘 약 {calories} kcal로 목표를 초과했습니다. 걱정하지 마세요. 다음 식사를 위해 가볍고 높은 단백질을 섭취하세요!",
   "mascotMissingCalories": "오늘도 {calories} kcal이 누락되었습니다. 맛있는 음식을 드세요!",
   "mascotOnTrack": "무결점 규율! 칼로리가 바로 포인트에 도달했습니다!",
@@ -316,8 +313,7 @@
   "foodEggs": "계란",
   "foodDairy": "우유 & 치즈",
   "foodFried": "튀긴 음식",
-  "foodSpicy": "매운 음식"
-,
+  "foodSpicy": "매운 음식",
   "challengeTitle": "가장 힘든 부분은 무엇인가요?",
   "challengeCalories": "음식의 칼로리를 모릅니다.",
   "challengeSweets": "과자에 저항하기",
@@ -392,7 +388,7 @@
   "sportsBadminton": "배드민턴",
   "sportsBasketball": "농구",
   "sportsOther": "기타",
-  "durationTitle": "언제 목표를 달성하고 싶으신가요?",
+  "durationTitle": "운동 시간",
   "durationNote": "원하는 기간을 선택하세요.",
   "dailyCalorieGoal": "일일 칼로리 목표",
   "dailyCalorieGoalMessage": "현재 목표는 {calories} kcal/day입니다. 파트너 등록 및 교육 과정 설정에서 변경하거나 고객지원팀에 문의하실 수 있습니다.",
@@ -418,8 +414,7 @@
   "paymentVerificationFailed": "결제를 완료하지 못했습니다. 다시 시도해주세요.",
   "errorWithDetails": "오류: {error}",
   "packIncludes": "AI 영양 스캔 {count} 포함",
-  "permanentCredits": "스캔은 만료되지 않습니다"
-,
+  "permanentCredits": "스캔은 만료되지 않습니다",
   "testingFreeCredits": "테스트 빌드: 프리미엄 스캔은 무료입니다. Google Play 결제가 이루어지지 않았습니다.",
   "restoreSuccess": "구매 복원이 성공적으로 확인되었습니다!",
   "restoreFailed": "Google Play 구매를 복원할 수 없습니다.",
@@ -513,8 +508,7 @@
   "premiumFreeUnlocked": "프리미엄 무료 잠금 해제됨",
   "premiumActivated": "프리미엄 활성화됨",
   "processingShort": "처리 중...",
-  "subscribePremium": "Premium 구독"
-,
+  "subscribePremium": "Premium 구독",
   "premiumTestingNote": "테스트 빌드: 프리미엄은 무료입니다. 결제가 이루어지지 않았습니다.",
   "premiumNoChargeNote": "이 단계에서는 요금이 청구되지 않습니다.",
   "premiumAutoRenewNote": "자동 갱신. 언제든지 취소할 수 있습니다.",
@@ -614,8 +608,7 @@
   "consumedLabel": "소비됨",
   "thisWeek": "이번 주",
   "lastWeek": "지난주",
-  "twoWeeksAgo": "2주 전"
-,
+  "twoWeeksAgo": "2주 전",
   "threeWeeksAgo": "3주 전",
   "weeklyEnergyTitle": "주간 에너지",
   "consumedLabelUpper": "소비됨",
@@ -662,7 +655,6 @@
   "exerciseManualDesc": "머신이나 스마트워치에 표시된 칼로리 입력",
   "intensityTitle": "운동 강도",
   "burnedCaloriesTitle": "소모 칼로리",
-  "durationTitle": "운동 시간",
   "kcalSuffix": "kcal",
   "minutesSuffix": "분",
   "manualCaloriesHint": "머신 또는 스마트워치 칼로리 입력",
@@ -670,7 +662,13 @@
   "willAddToToday": "오늘 기록에 추가됩니다",
   "estimatedActiveCalories": "추정 활동 소모 칼로리",
   "exerciseCalcWeightNote": "체중 {weight} kg 및 Adult Compendium 2024의 MET 기준으로 계산되었습니다. 스마트워치 등이 더 정확할 수 있습니다.",
-  "@exerciseCalcWeightNote": {"placeholders": {"weight": {"type": "String"}}},
+  "@exerciseCalcWeightNote": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
   "exerciseUpdateWeightPrompt": "칼로리 계산을 위해 프로필에서 체중을 업데이트해 주세요.",
   "exerciseHealthSyncWarning": "Apple Health에 이미 기록된 운동인 경우 중복을 방지하기 위해 여기서 다시 기록하지 마세요.",
   "saveWorkoutButton": "운동 저장",
@@ -697,5 +695,7 @@
   "exerciseSaveNetworkError": "운동을 저장할 수 없습니다. 네트워크 연결을 확인하고 다시 시도해 주세요.",
   "deleteExerciseConfirm": "이 운동 기록을 삭제하시겠습니까?",
   "deleteExerciseFailed": "운동 기록을 삭제하지 못했습니다. 다시 시도해 주세요.",
-  "appleHealthSynced": "Apple Health 동기화됨"
+  "appleHealthSynced": "Apple Health 동기화됨",
+  "guidanceRecoveryTitle": "오늘 하루 만회하기",
+  "guidanceReadyTitle": "오늘 목표 달성을 위해 무엇을 먹을까요?"
 }

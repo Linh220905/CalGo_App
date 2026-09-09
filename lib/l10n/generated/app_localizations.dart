@@ -4346,6 +4346,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Apple Health Sync'**
   String get appleHealthSynced;
+
+  /// No description provided for @guidanceRecoveryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Rescue today'**
+  String get guidanceRecoveryTitle;
+
+  /// No description provided for @guidanceReadyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'What to eat to reach today\'s goal?'**
+  String get guidanceReadyTitle;
 }
 
 class _AppLocalizationsDelegate

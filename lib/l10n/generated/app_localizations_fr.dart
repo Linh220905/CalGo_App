@@ -2393,4 +2393,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get appleHealthSynced => 'Synchro Apple Santé';
+
+  @override
+  String get guidanceRecoveryTitle => 'Sauver la journée';
+
+  @override
+  String get guidanceReadyTitle =>
+      'Que manger pour atteindre l\'objectif d\'aujourd\'hui ?';
 }

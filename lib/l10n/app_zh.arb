@@ -577,7 +577,7 @@
   "sportsBadminton": "羽毛球",
   "sportsBasketball": "篮球",
   "sportsOther": "其它",
-  "durationTitle": "你想什么时候达到目的?",
+  "durationTitle": "运动时长",
   "durationNote": "选择一个适合你的时间范围",
   "dailyCalorieGoal": "每日卡罗里目标",
   "dailyCalorieGoalMessage": "Your current goal is {calories} kcal/day. You can change it in onboarding settings or contact support.",
@@ -1064,7 +1064,6 @@
   "exerciseManualDesc": "输入健身器材或手环上显示的卡路里",
   "intensityTitle": "运动强度",
   "burnedCaloriesTitle": "消耗卡路里",
-  "durationTitle": "运动时长",
   "kcalSuffix": "千卡",
   "minutesSuffix": "分钟",
   "manualCaloriesHint": "输入器材或手环上的卡路里",
@@ -1072,7 +1071,13 @@
   "willAddToToday": "将添加到今天",
   "estimatedActiveCalories": "估算活动热量",
   "exerciseCalcWeightNote": "基于 {weight} kg 体重及 Adult Compendium 2024 MET 标准计算。佩戴式设备可能会更精确。",
-  "@exerciseCalcWeightNote": {"placeholders": {"weight": {"type": "String"}}},
+  "@exerciseCalcWeightNote": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
   "exerciseUpdateWeightPrompt": "请在个人资料中更新体重，以便 CalGo 计算热量。",
   "exerciseHealthSyncWarning": "如果 Apple 健康已同步该运动，请勿在此重复记录。",
   "saveWorkoutButton": "保存运动记录",
@@ -1099,5 +1104,7 @@
   "exerciseSaveNetworkError": "无法保存运动记录，请检查网络连接后重试。",
   "deleteExerciseConfirm": "确定要删除这条运动记录吗？",
   "deleteExerciseFailed": "删除运动记录失败，请重试。",
-  "appleHealthSynced": "已同步 Apple 健康"
+  "appleHealthSynced": "已同步 Apple 健康",
+  "guidanceRecoveryTitle": "拯救今天",
+  "guidanceReadyTitle": "今天吃什么达到目标？"
 }

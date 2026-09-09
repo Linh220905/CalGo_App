@@ -586,7 +586,7 @@
   "sportsBadminton": "Badminton",
   "sportsBasketball": "Basketball",
   "sportsOther": "Other",
-  "durationTitle": "When do you want to reach your goal?",
+  "durationTitle": "Duration",
   "durationNote": "Choose a timeframe that feels right for you",
   "dailyCalorieGoal": "Daily Calorie Goal",
   "dailyCalorieGoalMessage": "Your current goal is {calories} kcal/day. You can change it in onboarding settings or contact support.",
@@ -886,17 +886,65 @@
   },
   "perScan": "/scan",
   "caloriesValue": "{calories} kcal",
-  "@caloriesValue": {"placeholders": {"calories": {"type": "int"}}},
+  "@caloriesValue": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
   "caloriesPer100g": "{calories} kcal / 100g",
-  "@caloriesPer100g": {"placeholders": {"calories": {"type": "int"}}},
+  "@caloriesPer100g": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
   "gramsValue": "{grams}g",
-  "@gramsValue": {"placeholders": {"grams": {"type": "int"}}},
+  "@gramsValue": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
   "weightKgValue": "{weight} kg",
-  "@weightKgValue": {"placeholders": {"weight": {"type": "String"}}},
+  "@weightKgValue": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
   "galleryMacroSummary": "{calories} kcal • C:{carbs}g P:{protein}g F:{fat}g",
-  "@galleryMacroSummary": {"placeholders": {"calories": {"type": "int"}, "carbs": {"type": "String"}, "protein": {"type": "String"}, "fat": {"type": "String"}}},
+  "@galleryMacroSummary": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      },
+      "carbs": {
+        "type": "String"
+      },
+      "protein": {
+        "type": "String"
+      },
+      "fat": {
+        "type": "String"
+      }
+    }
+  },
   "sharePayload": "🔥 {dish} · {calories} kcal | CalGo",
-  "@sharePayload": {"placeholders": {"dish": {"type": "String"}, "calories": {"type": "int"}}},
+  "@sharePayload": {
+    "placeholders": {
+      "dish": {
+        "type": "String"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
   "connectAppleHealthTitle": "Connect to Apple Health",
   "connectAppleHealthDesc": "Sync your daily activity between CalGo and the Health app to have the most thorough data.",
   "weightUpdateSuccess": "Weight updated successfully",
@@ -909,7 +957,13 @@
   "targetLabel": "Target",
   "weightProgressTitle": "Weight Progress",
   "ofTargetPercent": "{percent}% of goal",
-  "@ofTargetPercent": {"placeholders": {"percent": {"type": "String"}}},
+  "@ofTargetPercent": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
   "notEnoughWeightData": "Not enough weight data",
   "calorieNutritionStatsTitle": "Calorie & Nutrition Stats",
   "consumedAvgLabel": "Consumed (Avg)",
@@ -924,17 +978,47 @@
   "consumedLabelUpper": "Consumed",
   "loggedActivityTitle": "Logged Activity",
   "daysWithData": "{logged}/{total} days with data",
-  "@daysWithData": {"placeholders": {"logged": {"type": "int"}, "total": {"type": "int"}}},
+  "@daysWithData": {
+    "placeholders": {
+      "logged": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "lessLabel": "Less",
   "moreLabel": "More",
   "weightTargetForecastTitle": "Weight Goal Forecast",
   "levelLabel": "Level {level}",
-  "@levelLabel": {"placeholders": {"level": {"type": "int"}}},
+  "@levelLabel": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
   "maxLevelReached": "You reached max level!",
   "expToNextLevel": "{exp} EXP to next level",
-  "@expToNextLevel": {"placeholders": {"exp": {"type": "int"}}},
+  "@expToNextLevel": {
+    "placeholders": {
+      "exp": {
+        "type": "int"
+      }
+    }
+  },
   "scansTodaySummary": "Scanned {scansToday} meals today · {totalScans} total",
-  "@scansTodaySummary": {"placeholders": {"scansToday": {"type": "int"}, "totalScans": {"type": "int"}}},
+  "@scansTodaySummary": {
+    "placeholders": {
+      "scansToday": {
+        "type": "int"
+      },
+      "totalScans": {
+        "type": "int"
+      }
+    }
+  },
   "milestonesHeader": "MILESTONES",
   "noMilestoneData": "No milestone data yet.",
   "notEnoughNutritionData": "Not enough nutrition data",
@@ -951,9 +1035,27 @@
   "photoSelected": "Photo selected",
   "photoOptional": "Optional",
   "lastLogWeight": "Last logged: {weight} kg",
-  "@lastLogWeight": {"placeholders": {"weight": {"type": "String"}}},
+  "@lastLogWeight": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
   "selectedDateText": "{month}/{day}/{year}",
-  "@selectedDateText": {"placeholders": {"day": {"type": "int"}, "month": {"type": "int"}, "year": {"type": "int"}}},
+  "@selectedDateText": {
+    "placeholders": {
+      "day": {
+        "type": "int"
+      },
+      "month": {
+        "type": "int"
+      },
+      "year": {
+        "type": "int"
+      }
+    }
+  },
   "nutritionTargetModalTitle": "Nutrition Goal",
   "dailyCalorieGoalKicker": "DAILY CALORIE GOAL",
   "macroDistributionKicker": "MACRO DISTRIBUTION",
@@ -962,7 +1064,13 @@
   "fatMacroLabel": "Fat",
   "recalculateTargetButton": "Recalculate Goal",
   "burnedCaloriesPill": "+{calories} kcal burned",
-  "@burnedCaloriesPill": {"placeholders": {"calories": {"type": "int"}}},
+  "@burnedCaloriesPill": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
   "burnedLabelUpper": "Burned",
   "filterAll": "All",
   "filterFood": "Food",
@@ -972,13 +1080,25 @@
   "noLogsYet": "No logs yet",
   "targetTimelineTitle": "Estimated Time to Goal",
   "weeksFormat": "{weeks} weeks",
-  "@weeksFormat": {"placeholders": {"weeks": {"type": "int"}}},
+  "@weeksFormat": {
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
   "forecastProgressTitle": "Goal Progress Forecast",
   "forecastPremiumUnlockDesc": "Upgrade to Premium to unlock charts & estimated weeks to reach weight goal!",
   "unlockPremiumButton": "Unlock Premium",
   "currentLabel": "Now",
   "weekAbbrev": "W{weeks}",
-  "@weekAbbrev": {"placeholders": {"weeks": {"type": "int"}}},
+  "@weekAbbrev": {
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
   "logWorkoutTile": "Log workout",
   "scanMealTile": "Scan meal",
   "chooseExerciseTypeSubtitle": "Select activity type to calculate burned calories.",
@@ -996,7 +1116,6 @@
   "exerciseManualDesc": "Enter calories from gym machines or devices",
   "intensityTitle": "Intensity",
   "burnedCaloriesTitle": "Calories burned",
-  "durationTitle": "Duration",
   "kcalSuffix": "kcal",
   "minutesSuffix": "min",
   "manualCaloriesHint": "Enter calories from machine or device",
@@ -1004,7 +1123,13 @@
   "willAddToToday": "Will add to today",
   "estimatedActiveCalories": "Estimated active calories",
   "exerciseCalcWeightNote": "Calculated for {weight} kg weight & MET from Adult Compendium 2024. Wearables may be more precise.",
-  "@exerciseCalcWeightNote": {"placeholders": {"weight": {"type": "String"}}},
+  "@exerciseCalcWeightNote": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
   "exerciseUpdateWeightPrompt": "Please update your weight in your profile so CalGo can estimate calories.",
   "exerciseHealthSyncWarning": "If Apple Health already recorded this workout, do not log here to avoid double counting.",
   "saveWorkoutButton": "Save workout",
@@ -1031,5 +1156,7 @@
   "exerciseSaveNetworkError": "Could not save workout. Please check your connection and try again.",
   "deleteExerciseConfirm": "Are you sure you want to delete this workout?",
   "deleteExerciseFailed": "Could not delete workout. Please try again.",
-  "appleHealthSynced": "Apple Health Sync"
+  "appleHealthSynced": "Apple Health Sync",
+  "guidanceRecoveryTitle": "Rescue today",
+  "guidanceReadyTitle": "What to eat to reach today's goal?"
 }

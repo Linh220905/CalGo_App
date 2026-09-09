@@ -2379,4 +2379,10 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get appleHealthSynced => 'Sincronização Apple Saúde';
+
+  @override
+  String get guidanceRecoveryTitle => 'Salvar o dia';
+
+  @override
+  String get guidanceReadyTitle => 'O que comer para atingir a meta de hoje?';
 }

@@ -577,7 +577,7 @@
   "sportsBadminton": "Badminton",
   "sportsBasketball": "Basketball",
   "sportsOther": "Autres",
-  "durationTitle": "Quand voulez-vous atteindre votre objectif?",
+  "durationTitle": "Durée",
   "durationNote": "Choisissez un délai qui vous semble approprié",
   "dailyCalorieGoal": "Objectif calorique quotidien",
   "dailyCalorieGoalMessage": "Votre objectif actuel est {calories} kcal/jour. Vous pouvez le modifier dans les paramètres d'embarquement ou le support de contact.",
@@ -1064,7 +1064,6 @@
   "exerciseManualDesc": "Saisissez les calories d'une machine ou montre",
   "intensityTitle": "Intensité",
   "burnedCaloriesTitle": "Calories brûlées",
-  "durationTitle": "Durée",
   "kcalSuffix": "kcal",
   "minutesSuffix": "min",
   "manualCaloriesHint": "Entrez les calories affichées sur l'appareil",
@@ -1072,7 +1071,13 @@
   "willAddToToday": "Sera ajouté à aujourd'hui",
   "estimatedActiveCalories": "Calories actives estimées",
   "exerciseCalcWeightNote": "Calculé pour un poids de {weight} kg et MET de l'Adult Compendium 2024. Les appareils connectés peuvent être plus précis.",
-  "@exerciseCalcWeightNote": {"placeholders": {"weight": {"type": "String"}}},
+  "@exerciseCalcWeightNote": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
   "exerciseUpdateWeightPrompt": "Veuillez mettre à jour votre poids dans votre profil pour calculer les calories.",
   "exerciseHealthSyncWarning": "Si Apple Santé a déjà enregistré cet entraînement, ne l'ajoutez pas ici pour éviter les doublons.",
   "saveWorkoutButton": "Enregistrer l'entraînement",
@@ -1099,5 +1104,7 @@
   "exerciseSaveNetworkError": "Impossible d'enregistrer l'entraînement. Vérifiez votre connexion et réessayez.",
   "deleteExerciseConfirm": "Voulez-vous vraiment supprimer cet entraînement ?",
   "deleteExerciseFailed": "Impossible de supprimer l'entraînement. Réessayez.",
-  "appleHealthSynced": "Synchro Apple Santé"
+  "appleHealthSynced": "Synchro Apple Santé",
+  "guidanceRecoveryTitle": "Sauver la journée",
+  "guidanceReadyTitle": "Que manger pour atteindre l'objectif d'aujourd'hui ?"
 }

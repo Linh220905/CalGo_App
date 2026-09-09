@@ -577,7 +577,7 @@
   "sportsBadminton": "बैडमिंटन",
   "sportsBasketball": "बास्केटबॉल",
   "sportsOther": "अन्य",
-  "durationTitle": "जब आप अपने लक्ष्य तक पहुंचना चाहते हैं?",
+  "durationTitle": "अवधि",
   "durationNote": "एक टाइमफ्रेम चुनें जो आपके लिए सही महसूस करता है",
   "dailyCalorieGoal": "दैनिक कैलोरी गोल",
   "dailyCalorieGoalMessage": "आपका वर्तमान लक्ष्य {calories} kcal/day है। आप इसे ऑनबोर्डिंग सेटिंग्स या संपर्क समर्थन में बदल सकते हैं।",
@@ -1064,7 +1064,6 @@
   "exerciseManualDesc": "जिम उपकरण या स्मार्टवॉच से कैलोरी टाइप करें",
   "intensityTitle": "तीव्रता",
   "burnedCaloriesTitle": "बर्न हुई कैलोरी",
-  "durationTitle": "अवधि",
   "kcalSuffix": "किलोकैलोरी",
   "minutesSuffix": "मिनट",
   "manualCaloriesHint": "उपकरण या घड़ी से कैलोरी दर्ज करें",
@@ -1072,7 +1071,13 @@
   "willAddToToday": "आज की सूची में जोड़ा जाएगा",
   "estimatedActiveCalories": "अनुमानित सक्रिय कैलोरी",
   "exerciseCalcWeightNote": "{weight} किग्रा वजन और Adult Compendium 2024 MET के लिए गणना की गई। स्मार्टवॉच अधिक सटीक हो सकती है।",
-  "@exerciseCalcWeightNote": {"placeholders": {"weight": {"type": "String"}}},
+  "@exerciseCalcWeightNote": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
   "exerciseUpdateWeightPrompt": "प्रोफ़ाइल में अपना वजन अपडेट करें ताकि CalGo कैलोरी की गणना कर सके।",
   "exerciseHealthSyncWarning": "यदि Apple Health ने इसे पहले ही रिकॉर्ड कर लिया है, तो दोहराव से बचने के लिए यहाँ दर्ज न करें।",
   "saveWorkoutButton": "वर्कआउट सहेजें",
@@ -1099,5 +1104,7 @@
   "exerciseSaveNetworkError": "वर्कआउट सहेजा नहीं जा सका। इंटरनेट कनेक्शन जांचें और पुनः प्रयास करें।",
   "deleteExerciseConfirm": "क्या आप निश्चित हैं कि आप इस वर्कआउट को हटाना चाहते हैं?",
   "deleteExerciseFailed": "वर्कआउट हटाया नहीं जा सका। पुनः प्रयास करें।",
-  "appleHealthSynced": "Apple Health सिंक किया गया"
+  "appleHealthSynced": "Apple Health सिंक किया गया",
+  "guidanceRecoveryTitle": "आज का दिन संभालें",
+  "guidanceReadyTitle": "आज का लक्ष्य हासिल करने के लिए क्या खाएं?"
 }

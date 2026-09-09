@@ -24,8 +24,7 @@
         "type": "String"
       }
     }
-  }
-,
+  },
   "tabHome": "ホーム",
   "tabAnalytics": "分析",
   "tabSettings": "設定",
@@ -114,8 +113,7 @@
   "goalGainMuscle": "筋肉を獲得",
   "goalGainMuscleDesc": "筋肉を鍛えて強さを高めましょう",
   "goalGainMuscleReason": "これは、トレーニングとタンパク質のニーズに合わせた筋肉増強計画を構築するのに役立ちます。",
-  "goalMaintain": "体重を維持"
-,
+  "goalMaintain": "体重を維持",
   "goalMaintainDesc": "バランスの取れた体格を保ちましょう",
   "goalMaintainReason": "これは、あなたの長期的な人生に合ったバランスの取れた計画を構築するのに役立ちます。",
   "nameStepTitle": "あなたの名前は...",
@@ -215,8 +213,7 @@
   "mascotTipHydration": "水分補給済み？ 水を一口飲んで鋭く保ちましょう ✨",
   "mascotTipChew": "ゆっくりと噛んでください。消化を助け、満腹感を保ちます",
   "mascotTipConsistency": "毎日の一貫性が素晴らしい体格を築きます",
-  "mascotNoMeals": "まだ何も記録していませんか？ 料理の写真を撮って見せてください！"
-,
+  "mascotNoMeals": "まだ何も記録していませんか？ 料理の写真を撮って見せてください！",
   "mascotOverTarget": "今日はターゲットを約{calories}キロカロリー上回りました。 安心して、次の食事のために軽くて高タンパク質にしましょう！",
   "mascotMissingCalories": "今日も{calories} kcalが不足しています。 おいしいものを食べに行きましょう！",
   "mascotOnTrack": "完璧な規律！ カロリーがポイントに当たった！",
@@ -316,8 +313,7 @@
   "foodEggs": "卵",
   "foodDairy": "ミルク&チーズ",
   "foodFried": "フライドフード",
-  "foodSpicy": "スパイシーフード"
-,
+  "foodSpicy": "スパイシーフード",
   "challengeTitle": "あなたにとって最も難しい部分は何ですか？",
   "challengeCalories": "食べ物のカロリーがわからない",
   "challengeSweets": "レジスタンススイーツ",
@@ -392,7 +388,7 @@
   "sportsBadminton": "バドミントン",
   "sportsBasketball": "バスケットボール",
   "sportsOther": "その他",
-  "durationTitle": "いつ目標を達成したいですか？",
+  "durationTitle": "時間",
   "durationNote": "自分に合った時間枠を選択してください",
   "dailyCalorieGoal": "デイリーカロリー目標",
   "dailyCalorieGoalMessage": "現在の目標は{calories} kcal/日です。 登録設定で変更するか、サポートにお問い合わせください。",
@@ -418,8 +414,7 @@
   "paymentVerificationFailed": "支払いを完了できませんでした。もう一度お試しください。",
   "errorWithDetails": "エラー：{error}",
   "packIncludes": "AI栄養スキャン {count}回付き",
-  "permanentCredits": "スキャンの有効期限はありません"
-,
+  "permanentCredits": "スキャンの有効期限はありません",
   "testingFreeCredits": "テスト版：Premiumスキャンは無料です。Google Playへの支払いは発生しません。",
   "restoreSuccess": "購入の復元を確認しました！",
   "restoreFailed": "Google Playの購入を復元できませんでした。",
@@ -513,8 +508,7 @@
   "premiumFreeUnlocked": "Premiumを無料で利用できます",
   "premiumActivated": "Premiumが有効です",
   "processingShort": "処理中…",
-  "subscribePremium": "Premiumに登録"
-,
+  "subscribePremium": "Premiumに登録",
   "premiumTestingNote": "テスト版：Premiumは無料です。支払いは発生しません。",
   "premiumNoChargeNote": "この手順では請求されません。",
   "premiumAutoRenewNote": "自動更新。いつでも解約できます。",
@@ -614,8 +608,7 @@
   "consumedLabel": "摂取量",
   "thisWeek": "今週",
   "lastWeek": "先週",
-  "twoWeeksAgo": "2週間前"
-,
+  "twoWeeksAgo": "2週間前",
   "threeWeeksAgo": "3週間前",
   "weeklyEnergyTitle": "週間エネルギー",
   "consumedLabelUpper": "摂取量",
@@ -662,7 +655,6 @@
   "exerciseManualDesc": "ジムのマシンやスマートウォッチの消費カロリーを入力",
   "intensityTitle": "運動強度",
   "burnedCaloriesTitle": "消費カロリー",
-  "durationTitle": "時間",
   "kcalSuffix": "kcal",
   "minutesSuffix": "分",
   "manualCaloriesHint": "マシンや端末のカロリーを入力",
@@ -670,7 +662,13 @@
   "willAddToToday": "今日の記録に追加されます",
   "estimatedActiveCalories": "推定アクティブ消費カロリー",
   "exerciseCalcWeightNote": "体重 {weight} kg および Adult Compendium 2024 の MET に基づき計算。ウェアラブル端末の方がより正確な場合があります。",
-  "@exerciseCalcWeightNote": {"placeholders": {"weight": {"type": "String"}}},
+  "@exerciseCalcWeightNote": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
   "exerciseUpdateWeightPrompt": "カロリー計算のためにプロフィールで体重を更新してください。",
   "exerciseHealthSyncWarning": "Apple ヘルスケアで既に記録されている場合、二重記録を防ぐためここでの記録はお控えください。",
   "saveWorkoutButton": "運動を保存",
@@ -697,5 +695,7 @@
   "exerciseSaveNetworkError": "運動を保存できませんでした。ネットワーク接続を確認してください。",
   "deleteExerciseConfirm": "この運動記録を削除してもよろしいですか？",
   "deleteExerciseFailed": "運動記録を削除できませんでした。もう一度お試しください。",
-  "appleHealthSynced": "Appleヘルスケア同期"
+  "appleHealthSynced": "Appleヘルスケア同期",
+  "guidanceRecoveryTitle": "今日のリカバリー",
+  "guidanceReadyTitle": "今日の目標達成のために何を食べる？"
 }

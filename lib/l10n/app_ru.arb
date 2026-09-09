@@ -577,7 +577,7 @@
   "sportsBadminton": "Бадминтон",
   "sportsBasketball": "баскетбол",
   "sportsOther": "другой",
-  "durationTitle": "Когда вы хотите достичь своей цели?",
+  "durationTitle": "Длительность",
   "durationNote": "Выберите временные рамки, которые кажутся вам правильными",
   "dailyCalorieGoal": "Ежедневная цель калорийности",
   "dailyCalorieGoalMessage": "Ваша текущая цель - {calories} kcal / день. Вы можете изменить его в настройках посадки или контактной поддержке.",
@@ -1064,7 +1064,6 @@
   "exerciseManualDesc": "Введите калории с тренажера или фитнес-часов",
   "intensityTitle": "Интенсивность",
   "burnedCaloriesTitle": "Сожжено калорий",
-  "durationTitle": "Длительность",
   "kcalSuffix": "ккал",
   "minutesSuffix": "мин",
   "manualCaloriesHint": "Введите калории с тренажера или часов",
@@ -1072,7 +1071,13 @@
   "willAddToToday": "Будет добавлено на сегодня",
   "estimatedActiveCalories": "Расчетные активные калории",
   "exerciseCalcWeightNote": "Рассчитано для веса {weight} кг и MET из Adult Compendium 2024. Носимые устройства могут быть точнее.",
-  "@exerciseCalcWeightNote": {"placeholders": {"weight": {"type": "String"}}},
+  "@exerciseCalcWeightNote": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
   "exerciseUpdateWeightPrompt": "Обновите вес в профиле, чтобы CalGo мог рассчитать калории.",
   "exerciseHealthSyncWarning": "Если Apple Здоровье уже записало эту тренировку, не добавляйте ее повторно.",
   "saveWorkoutButton": "Сохранить тренировку",
@@ -1099,5 +1104,7 @@
   "exerciseSaveNetworkError": "Не удалось сохранить тренировку. Проверьте подключение и повторите попытку.",
   "deleteExerciseConfirm": "Вы уверены, что хотите удалить эту тренировку?",
   "deleteExerciseFailed": "Не удалось удалить тренировку. Попробуйте еще раз.",
-  "appleHealthSynced": "Синхронизировано с Apple Здоровье"
+  "appleHealthSynced": "Синхронизировано с Apple Здоровье",
+  "guidanceRecoveryTitle": "Спасти сегодняшний день",
+  "guidanceReadyTitle": "Что съесть, чтобы достичь сегодняшней цели?"
 }

@@ -577,7 +577,7 @@
   "sportsBadminton": "Bádminton",
   "sportsBasketball": "Baloncesto",
   "sportsOther": "Otro",
-  "durationTitle": "¿Cuándo quieres alcanzar tu objetivo?",
+  "durationTitle": "Duración",
   "durationNote": "Elige un plazo que te resulte cómodo",
   "dailyCalorieGoal": "Objetivo calórico diario",
   "dailyCalorieGoalMessage": "Tu objetivo actual es de {calories} kcal/día. Puedes cambiarlo en los ajustes de onboarding o contactar con soporte.",
@@ -1064,7 +1064,6 @@
   "exerciseManualDesc": "Introduce las calorías de máquinas o dispositivos",
   "intensityTitle": "Intensidad",
   "burnedCaloriesTitle": "Calorías quemadas",
-  "durationTitle": "Duración",
   "kcalSuffix": "kcal",
   "minutesSuffix": "min",
   "manualCaloriesHint": "Ingresa las calorías de la máquina o dispositivo",
@@ -1072,7 +1071,13 @@
   "willAddToToday": "Se añadirá a hoy",
   "estimatedActiveCalories": "Calorías activas estimadas",
   "exerciseCalcWeightNote": "Calculado para un peso de {weight} kg y MET de Adult Compendium 2024. Los dispositivos portátiles pueden ser más precisos.",
-  "@exerciseCalcWeightNote": {"placeholders": {"weight": {"type": "String"}}},
+  "@exerciseCalcWeightNote": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
   "exerciseUpdateWeightPrompt": "Actualiza tu peso en tu perfil para que CalGo pueda calcular las calorías.",
   "exerciseHealthSyncWarning": "Si Apple Health ya registró este entrenamiento, no lo registres aquí para evitar duplicación.",
   "saveWorkoutButton": "Guardar entrenamiento",
@@ -1099,5 +1104,7 @@
   "exerciseSaveNetworkError": "No se pudo guardar el entrenamiento. Comprueba tu conexión e inténtalo de nuevo.",
   "deleteExerciseConfirm": "¿Estás seguro de que quieres eliminar este entrenamiento?",
   "deleteExerciseFailed": "No se pudo eliminar el entrenamiento. Inténtalo de nuevo.",
-  "appleHealthSynced": "Sincronización con Apple Health"
+  "appleHealthSynced": "Sincronización con Apple Health",
+  "guidanceRecoveryTitle": "Salvar el día",
+  "guidanceReadyTitle": "¿Qué comer para alcanzar el objetivo de hoy?"
 }
