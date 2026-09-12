@@ -1158,5 +1158,27 @@
   "deleteExerciseFailed": "Could not delete workout. Please try again.",
   "appleHealthSynced": "Apple Health Sync",
   "guidanceRecoveryTitle": "Rescue today",
-  "guidanceReadyTitle": "What to eat to reach today's goal?"
+  "guidanceReadyTitle": "What to eat to reach today's goal?",
+  "expGainTitle": "You earned +{exp} EXP",
+  "@expGainTitle": {
+    "placeholders": {
+      "exp": {
+        "type": "int"
+      }
+    }
+  },
+  "expGainDesc": "Points added from {reason}.",
+  "@expGainDesc": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "expGainClaim": "Claim",
+  "scanMealReason": "food scan",
+  "dailySummaryBannerTitle": "Daily Recap & AI Coach",
+  "dailySummaryBannerSubtitle": "View nutrition insights & earn EXP",
+  "cannotOpenShareSheet": "Unable to open share sheet.",
+  "profileSaveFailed": "Could not save profile. Please try again."
 }

@@ -2282,4 +2282,32 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get guidanceReadyTitle => '今日の目標達成のために何を食べる？';
+
+  @override
+  String expGainTitle(int exp) {
+    return '+$exp EXP を獲得しました';
+  }
+
+  @override
+  String expGainDesc(String reason) {
+    return '$reasonからポイントが加算されました。';
+  }
+
+  @override
+  String get expGainClaim => '受け取る';
+
+  @override
+  String get scanMealReason => '食事のスキャン';
+
+  @override
+  String get dailySummaryBannerTitle => '1日のまとめ ＆ AIコーチ';
+
+  @override
+  String get dailySummaryBannerSubtitle => '栄養レポートを確認してEXPを獲得';
+
+  @override
+  String get cannotOpenShareSheet => '共有シートを開けません。';
+
+  @override
+  String get profileSaveFailed => 'プロファイルを保存できませんでした。もう一度お試しください。';
 }

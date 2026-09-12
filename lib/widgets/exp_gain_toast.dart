@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../providers/app_settings_provider.dart';
 
 void showExpGainPrompt(
   BuildContext context, {
@@ -66,6 +68,7 @@ class _ExpToastWidgetState extends State<_ExpToastWidget>
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final s = context.watch<AppSettingsProvider>().strings;
 
     return Positioned(
       top: MediaQuery.of(context).padding.top + 8,
@@ -112,7 +115,7 @@ class _ExpToastWidgetState extends State<_ExpToastWidget>
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        'Bạn nhận được +${widget.exp} EXP',
+                        s.expGainTitle(widget.exp),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
@@ -125,7 +128,7 @@ class _ExpToastWidgetState extends State<_ExpToastWidget>
                       ),
                       const SizedBox(height: 3),
                       Text(
-                        'Điểm đã được cộng từ ${widget.reason.toLowerCase()}.',
+                        s.expGainDesc(widget.reason.toLowerCase()),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
@@ -151,9 +154,9 @@ class _ExpToastWidgetState extends State<_ExpToastWidget>
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  child: const Text(
-                    'Nhận',
-                    style: TextStyle(fontSize: 13, fontWeight: FontWeight.w800),
+                  child: Text(
+                    s.expGainClaim,
+                    style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w800),
                   ),
                 ),
               ],

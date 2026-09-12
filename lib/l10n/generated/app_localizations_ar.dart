@@ -2343,4 +2343,33 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get guidanceReadyTitle => 'ماذا تأكل للوصول إلى هدف اليوم؟';
+
+  @override
+  String expGainTitle(int exp) {
+    return 'لقد ربحت +$exp EXP';
+  }
+
+  @override
+  String expGainDesc(String reason) {
+    return 'تمت إضافة النقاط من $reason.';
+  }
+
+  @override
+  String get expGainClaim => 'استلام';
+
+  @override
+  String get scanMealReason => 'مسح الوجبة';
+
+  @override
+  String get dailySummaryBannerTitle => 'ملخص اليوم والمدرب الذكي';
+
+  @override
+  String get dailySummaryBannerSubtitle => 'عرض تقييم التغذية واكسب EXP';
+
+  @override
+  String get cannotOpenShareSheet => 'تعذر فتح لوحة المشاركة.';
+
+  @override
+  String get profileSaveFailed =>
+      'تعذر حفظ الملف الشخصي. يرجى المحاولة مرة أخرى.';
 }

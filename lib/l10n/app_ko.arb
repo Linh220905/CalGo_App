@@ -697,5 +697,13 @@
   "deleteExerciseFailed": "운동 기록을 삭제하지 못했습니다. 다시 시도해 주세요.",
   "appleHealthSynced": "Apple Health 동기화됨",
   "guidanceRecoveryTitle": "오늘 하루 만회하기",
-  "guidanceReadyTitle": "오늘 목표 달성을 위해 무엇을 먹을까요?"
+  "guidanceReadyTitle": "오늘 목표 달성을 위해 무엇을 먹을까요?",
+  "expGainTitle": "+{exp} EXP 획득!",
+  "expGainDesc": "{reason}에서 포인트가 적립되었습니다.",
+  "expGainClaim": "받기",
+  "scanMealReason": "음식 스캔",
+  "dailySummaryBannerTitle": "일일 요약 및 AI 코치",
+  "dailySummaryBannerSubtitle": "영양 평가를 확인하고 EXP 획득하기",
+  "cannotOpenShareSheet": "공유 창을 열 수 없습니다.",
+  "profileSaveFailed": "프로필을 저장할 수 없습니다. 다시 시도해 주세요."
 }

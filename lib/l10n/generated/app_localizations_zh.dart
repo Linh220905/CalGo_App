@@ -2267,4 +2267,32 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get guidanceReadyTitle => '今天吃什么达到目标？';
+
+  @override
+  String expGainTitle(int exp) {
+    return '获得 +$exp EXP';
+  }
+
+  @override
+  String expGainDesc(String reason) {
+    return '积分已从$reason发放。';
+  }
+
+  @override
+  String get expGainClaim => '领取';
+
+  @override
+  String get scanMealReason => '扫描食物';
+
+  @override
+  String get dailySummaryBannerTitle => '每日总结与AI教练';
+
+  @override
+  String get dailySummaryBannerSubtitle => '查看营养分析并领取EXP';
+
+  @override
+  String get cannotOpenShareSheet => '无法打开分享面板。';
+
+  @override
+  String get profileSaveFailed => '无法保存个人资料。请重试。';
 }

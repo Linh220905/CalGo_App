@@ -46,6 +46,21 @@ GoRouter createAppRouter(OnboardingProvider onboarding, AuthProvider auth) =>
           return '/onboarding';
         }
 
+        final onOnboarding = state.matchedLocation == '/onboarding';
+        final onLogin = state.matchedLocation == '/login';
+
+        if (auth.loading) return null;
+
+        // When user is authenticated, the backend user profile is the absolute source of truth.
+        // If the authenticated user has not completed onboarding, they must be redirected to /onboarding.
+        if (auth.isAuthenticated && !auth.user!.hasCompletedOnboarding) {
+          if (!onOnboarding) {
+            onboarding.resetLocalProgressForIncompleteAccount();
+            return '/onboarding';
+          }
+          return null;
+        }
+
         // The server profile is the source of truth per account. A single
         // device-level onboarding flag must never make a newly signed-in user
         // inherit the previous user's completed profile.
@@ -54,10 +69,6 @@ GoRouter createAppRouter(OnboardingProvider onboarding, AuthProvider auth) =>
             : auth.isAuthenticated
                 ? auth.user!.hasCompletedOnboarding
                 : onboarding.isCompleted;
-        final onOnboarding = state.matchedLocation == '/onboarding';
-        final onLogin = state.matchedLocation == '/login';
-
-        if (auth.loading) return null;
 
         // Unauthenticated users may only be on /onboarding or /login.
         // /onboarding contains the AccountStep so they sign in there.
@@ -195,18 +206,12 @@ class _StartupScreenState extends State<_StartupScreen>
           padding: const EdgeInsets.symmetric(horizontal: 34),
           child: Column(
             children: [
-              const Spacer(flex: 4),
-              Image.asset(
-                'assets/images/calgo_logo_wordmark.png',
-                width: 160,
-                fit: BoxFit.contain,
-              ),
-              const Spacer(flex: 2),
+              const Spacer(flex: 3),
               AnimatedBuilder(
                 animation: _mascotController,
                 child: Image.asset(
                   'assets/images/apple_mascot/apple_hello.png',
-                  height: 320,
+                  height: 360,
                   fit: BoxFit.contain,
                 ),
                 builder: (context, child) {

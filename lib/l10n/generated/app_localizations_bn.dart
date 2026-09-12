@@ -2364,4 +2364,34 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get guidanceReadyTitle => 'আজকের লক্ষ্যে পৌঁছাতে কী খাবেন?';
+
+  @override
+  String expGainTitle(int exp) {
+    return 'আপনি +$exp EXP অর্জন করেছেন';
+  }
+
+  @override
+  String expGainDesc(String reason) {
+    return '$reason থেকে পয়েন্ট যোগ করা হয়েছে।';
+  }
+
+  @override
+  String get expGainClaim => 'নিন';
+
+  @override
+  String get scanMealReason => 'খাবার স্ক্যান';
+
+  @override
+  String get dailySummaryBannerTitle => 'দৈনিক সংক্ষিপ্ত বিবরণ ও এআই কোচ';
+
+  @override
+  String get dailySummaryBannerSubtitle =>
+      'পুষ্টি বিশ্লেষণ দেখুন এবং EXP অর্জন করুন';
+
+  @override
+  String get cannotOpenShareSheet => 'শেয়ার শীট খোলা যায়নি।';
+
+  @override
+  String get profileSaveFailed =>
+      'প্রোফাইল সংরক্ষণ করা যায়নি। অনুগ্রহ করে আবার চেষ্টা করুন।';
 }

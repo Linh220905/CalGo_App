@@ -1106,5 +1106,13 @@
   "deleteExerciseFailed": "Impossible de supprimer l'entraînement. Réessayez.",
   "appleHealthSynced": "Synchro Apple Santé",
   "guidanceRecoveryTitle": "Sauver la journée",
-  "guidanceReadyTitle": "Que manger pour atteindre l'objectif d'aujourd'hui ?"
+  "guidanceReadyTitle": "Que manger pour atteindre l'objectif d'aujourd'hui ?",
+  "expGainTitle": "Vous avez gagné +{exp} EXP",
+  "expGainDesc": "Points ajoutés grâce à {reason}.",
+  "expGainClaim": "Récupérer",
+  "scanMealReason": "analyse de repas",
+  "dailySummaryBannerTitle": "Récapitulatif quotidien & AI Coach",
+  "dailySummaryBannerSubtitle": "Voir le bilan nutritionnel & gagner des EXP",
+  "cannotOpenShareSheet": "Impossible d’ouvrir le volet de partage.",
+  "profileSaveFailed": "Impossible d’enregistrer le profil. Veuillez réessayer."
 }

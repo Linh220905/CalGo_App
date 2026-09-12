@@ -136,7 +136,7 @@ class _MainShellState extends State<MainShell> with WidgetsBindingObserver {
       showExpGainPrompt(
         context,
         exp: exp,
-        reason: 'Quét món ăn',
+        reason: context.read<AppSettingsProvider>().strings.scanMealReason,
       );
     });
   }

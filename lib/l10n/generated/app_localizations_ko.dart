@@ -2289,4 +2289,32 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get guidanceReadyTitle => '오늘 목표 달성을 위해 무엇을 먹을까요?';
+
+  @override
+  String expGainTitle(int exp) {
+    return '+$exp EXP 획득!';
+  }
+
+  @override
+  String expGainDesc(String reason) {
+    return '$reason에서 포인트가 적립되었습니다.';
+  }
+
+  @override
+  String get expGainClaim => '받기';
+
+  @override
+  String get scanMealReason => '음식 스캔';
+
+  @override
+  String get dailySummaryBannerTitle => '일일 요약 및 AI 코치';
+
+  @override
+  String get dailySummaryBannerSubtitle => '영양 평가를 확인하고 EXP 획득하기';
+
+  @override
+  String get cannotOpenShareSheet => '공유 창을 열 수 없습니다.';
+
+  @override
+  String get profileSaveFailed => '프로필을 저장할 수 없습니다. 다시 시도해 주세요.';
 }

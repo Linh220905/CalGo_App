@@ -1106,5 +1106,13 @@
   "deleteExerciseFailed": "删除运动记录失败，请重试。",
   "appleHealthSynced": "已同步 Apple 健康",
   "guidanceRecoveryTitle": "拯救今天",
-  "guidanceReadyTitle": "今天吃什么达到目标？"
+  "guidanceReadyTitle": "今天吃什么达到目标？",
+  "expGainTitle": "获得 +{exp} EXP",
+  "expGainDesc": "积分已从{reason}发放。",
+  "expGainClaim": "领取",
+  "scanMealReason": "扫描食物",
+  "dailySummaryBannerTitle": "每日总结与AI教练",
+  "dailySummaryBannerSubtitle": "查看营养分析并领取EXP",
+  "cannotOpenShareSheet": "无法打开分享面板。",
+  "profileSaveFailed": "无法保存个人资料。请重试。"
 }

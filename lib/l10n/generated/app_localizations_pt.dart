@@ -2385,4 +2385,35 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get guidanceReadyTitle => 'O que comer para atingir a meta de hoje?';
+
+  @override
+  String expGainTitle(int exp) {
+    return 'Você ganhou +$exp EXP';
+  }
+
+  @override
+  String expGainDesc(String reason) {
+    return 'Pontos adicionados por $reason.';
+  }
+
+  @override
+  String get expGainClaim => 'Receber';
+
+  @override
+  String get scanMealReason => 'leitura de refeição';
+
+  @override
+  String get dailySummaryBannerTitle => 'Resumo diário e AI Coach';
+
+  @override
+  String get dailySummaryBannerSubtitle =>
+      'Ver insights de nutrição e ganhar EXP';
+
+  @override
+  String get cannotOpenShareSheet =>
+      'Não foi possível abrir a folha de compartilhamento.';
+
+  @override
+  String get profileSaveFailed =>
+      'Não foi possível salvar o perfil. Tente novamente.';
 }

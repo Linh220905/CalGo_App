@@ -2351,4 +2351,32 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get guidanceReadyTitle => 'Ăn gì để chạm mục tiêu hôm nay?';
+
+  @override
+  String expGainTitle(int exp) {
+    return 'Bạn nhận được +$exp EXP';
+  }
+
+  @override
+  String expGainDesc(String reason) {
+    return 'Điểm đã được cộng từ $reason.';
+  }
+
+  @override
+  String get expGainClaim => 'Nhận';
+
+  @override
+  String get scanMealReason => 'quét món ăn';
+
+  @override
+  String get dailySummaryBannerTitle => 'Tổng kết ngày & AI Coach';
+
+  @override
+  String get dailySummaryBannerSubtitle => 'Xem đánh giá dinh dưỡng & nhận EXP';
+
+  @override
+  String get cannotOpenShareSheet => 'Không thể mở bảng chia sẻ.';
+
+  @override
+  String get profileSaveFailed => 'Không thể lưu hồ sơ. Vui lòng thử lại.';
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../../models/onboarding_data.dart';
+import '../../../providers/app_settings_provider.dart';
 import '../../../providers/auth_provider.dart';
 import '../../../providers/onboarding_provider.dart';
 
@@ -196,9 +197,10 @@ class _PostPremiumQuizDialogState extends State<PostPremiumQuizDialog> {
       if (mounted) Navigator.of(context).pop();
     } catch (_) {
       if (!mounted) return;
+      final s = context.read<AppSettingsProvider>().strings;
       setState(() {
         _isGenerating = false;
-        _saveError = 'Không thể lưu cá nhân hóa. Kiểm tra mạng và thử lại.';
+        _saveError = s.profileSaveFailed;
       });
     }
   }

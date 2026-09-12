@@ -39,40 +39,21 @@ class _SplashStepState extends State<SplashStep> {
             children: [
               Animate(
                 effects: const [
-                  FadeEffect(duration: Duration(milliseconds: 400)),
+                  FadeEffect(duration: Duration(milliseconds: 500)),
                   ScaleEffect(
-                    begin: Offset(0.8, 0.8),
+                    begin: Offset(0.85, 0.85),
                     end: Offset(1, 1),
-                    duration: Duration(milliseconds: 600),
+                    duration: Duration(milliseconds: 700),
                     curve: Curves.elasticOut,
                   ),
                 ],
-                child: Container(
-                  width: 100,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(28),
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color(0xFF000000).withOpacity(0.06),
-                        blurRadius: 24,
-                        offset: const Offset(0, 8),
-                      ),
-                    ],
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(28),
-                    child: Image.asset(
-                      'assets/images/calgo_logo_wordmark.png',
-                      width: 100,
-                      height: 100,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                child: Image.asset(
+                  'assets/images/apple_mascot/apple_hello.png',
+                  height: 220,
+                  fit: BoxFit.contain,
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 24),
               Animate(
                 effects: const [
                   FadeEffect(
@@ -90,21 +71,7 @@ class _SplashStepState extends State<SplashStep> {
                   ),
                 ),
               ),
-              const SizedBox(height: 40),
-              Animate(
-                effects: const [
-                  FadeEffect(
-                    duration: Duration(milliseconds: 400),
-                    delay: Duration(milliseconds: 200),
-                  ),
-                ],
-                child: Image.asset(
-                  'assets/images/apple_mascot/apple_hello.png',
-                  height: 100,
-                  fit: BoxFit.contain,
-                ),
-              ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 32),
               Animate(
                 effects: const [
                   FadeEffect(

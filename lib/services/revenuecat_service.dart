@@ -118,8 +118,8 @@ class RevenueCatService {
     if (kIsWeb) return false;
     if (!_initialized) await init();
     try {
-      final customerInfo = await Purchases.purchasePackage(package);
-      return customerInfo.entitlements.all[entitlementId]?.isActive ?? false;
+      final purchaseResult = await Purchases.purchasePackage(package);
+      return purchaseResult.customerInfo.entitlements.all[entitlementId]?.isActive ?? false;
     } on PlatformException catch (e) {
       final errorCode = PurchasesErrorHelper.getErrorCode(e);
       if (errorCode == PurchasesErrorCode.purchaseCancelledError) {

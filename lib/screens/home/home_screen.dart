@@ -1482,6 +1482,7 @@ class _DailyRecapBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = context.watch<AppSettingsProvider>().strings;
     return Container(
       decoration: BoxDecoration(
         color: cardBg,
@@ -1534,7 +1535,7 @@ class _DailyRecapBanner extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Tổng kết ngày & AI Coach',
+                        s.dailySummaryBannerTitle,
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
@@ -1543,7 +1544,7 @@ class _DailyRecapBanner extends StatelessWidget {
                       ),
                       const SizedBox(height: 2),
                       Text(
-                        'Xem đánh giá dinh dưỡng & nhận EXP',
+                        s.dailySummaryBannerSubtitle,
                         style: TextStyle(fontSize: 12, color: textMuted),
                       ),
                     ],

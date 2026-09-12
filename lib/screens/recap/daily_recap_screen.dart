@@ -748,8 +748,9 @@ class _ActionButtons extends StatelessWidget {
     } catch (error) {
       debugPrint('Unable to share daily recap: $error');
       if (context.mounted) {
+        final s = context.read<AppSettingsProvider>().strings;
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Không thể mở bảng chia sẻ.')),
+          SnackBar(content: Text(s.cannotOpenShareSheet)),
         );
       }
     }

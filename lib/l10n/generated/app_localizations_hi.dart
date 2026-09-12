@@ -2365,4 +2365,34 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get guidanceReadyTitle => 'आज का लक्ष्य हासिल करने के लिए क्या खाएं?';
+
+  @override
+  String expGainTitle(int exp) {
+    return 'आपने +$exp EXP प्राप्त किए';
+  }
+
+  @override
+  String expGainDesc(String reason) {
+    return '$reason से अंक जोड़े गए।';
+  }
+
+  @override
+  String get expGainClaim => 'प्राप्त करें';
+
+  @override
+  String get scanMealReason => 'भोजन स्कैन';
+
+  @override
+  String get dailySummaryBannerTitle => 'दैनिक सारांश और एआई कोच';
+
+  @override
+  String get dailySummaryBannerSubtitle =>
+      'पोषण विश्लेषण देखें और EXP प्राप्त करें';
+
+  @override
+  String get cannotOpenShareSheet => 'शेयर शीट नहीं खोली जा सकी।';
+
+  @override
+  String get profileSaveFailed =>
+      'प्रोफ़ाइल सहेजी नहीं जा सकी। कृपया पुन: प्रयास करें।';
 }

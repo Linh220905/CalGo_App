@@ -1,7 +1,7 @@
 name: calgo
 description: "CAL.ai - Food recognition & calorie estimation app"
 publish_to: 'none'
-version: 1.0.6+42
+version: 1.0.6+44
 
 environment:
   # The build environment currently provides Dart 3.9.0.
@@ -33,10 +33,10 @@ dependencies:
   # Keep the billing plugins compatible with the current Dart/Flutter build
   # image. StoreKit 0.4.1 is required because 0.4.0 drops appAccountToken
   # before calling Apple's StoreKit 2 purchase API.
-  in_app_purchase: 3.2.3
-  in_app_purchase_android: 0.4.0
+  in_app_purchase: ^3.2.3
+  in_app_purchase_android: ^0.5.3
   in_app_purchase_storekit: 0.4.1
-  purchases_flutter: ^8.6.0
+  purchases_flutter: ^10.12.0
   google_mobile_ads: ^5.1.0
   share_plus: ^10.1.4
   path_provider: ^2.1.5

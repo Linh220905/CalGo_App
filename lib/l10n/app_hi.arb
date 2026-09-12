@@ -1106,5 +1106,13 @@
   "deleteExerciseFailed": "वर्कआउट हटाया नहीं जा सका। पुनः प्रयास करें।",
   "appleHealthSynced": "Apple Health सिंक किया गया",
   "guidanceRecoveryTitle": "आज का दिन संभालें",
-  "guidanceReadyTitle": "आज का लक्ष्य हासिल करने के लिए क्या खाएं?"
+  "guidanceReadyTitle": "आज का लक्ष्य हासिल करने के लिए क्या खाएं?",
+  "expGainTitle": "आपने +{exp} EXP प्राप्त किए",
+  "expGainDesc": "{reason} से अंक जोड़े गए।",
+  "expGainClaim": "प्राप्त करें",
+  "scanMealReason": "भोजन स्कैन",
+  "dailySummaryBannerTitle": "दैनिक सारांश और एआई कोच",
+  "dailySummaryBannerSubtitle": "पोषण विश्लेषण देखें और EXP प्राप्त करें",
+  "cannotOpenShareSheet": "शेयर शीट नहीं खोली जा सकी।",
+  "profileSaveFailed": "प्रोफ़ाइल सहेजी नहीं जा सकी। कृपया पुन: प्रयास करें।"
 }

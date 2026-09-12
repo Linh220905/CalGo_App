@@ -1106,5 +1106,13 @@
   "deleteExerciseFailed": "تعذر حذف التمرين. يرجى المحاولة مرة أخرى.",
   "appleHealthSynced": "مزامنة Apple Health",
   "guidanceRecoveryTitle": "إنقاذ اليوم",
-  "guidanceReadyTitle": "ماذا تأكل للوصول إلى هدف اليوم؟"
+  "guidanceReadyTitle": "ماذا تأكل للوصول إلى هدف اليوم؟",
+  "expGainTitle": "لقد ربحت +{exp} EXP",
+  "expGainDesc": "تمت إضافة النقاط من {reason}.",
+  "expGainClaim": "استلام",
+  "scanMealReason": "مسح الوجبة",
+  "dailySummaryBannerTitle": "ملخص اليوم والمدرب الذكي",
+  "dailySummaryBannerSubtitle": "عرض تقييم التغذية واكسب EXP",
+  "cannotOpenShareSheet": "تعذر فتح لوحة المشاركة.",
+  "profileSaveFailed": "تعذر حفظ الملف الشخصي. يرجى المحاولة مرة أخرى."
 }

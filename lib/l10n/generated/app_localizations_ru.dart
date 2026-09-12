@@ -2389,4 +2389,34 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get guidanceReadyTitle =>
       'Что съесть, чтобы достичь сегодняшней цели?';
+
+  @override
+  String expGainTitle(int exp) {
+    return 'Вы получили +$exp EXP';
+  }
+
+  @override
+  String expGainDesc(String reason) {
+    return 'Очки начислены за $reason.';
+  }
+
+  @override
+  String get expGainClaim => 'Забрать';
+
+  @override
+  String get scanMealReason => 'сканирование еды';
+
+  @override
+  String get dailySummaryBannerTitle => 'Итоги дня и AI Coach';
+
+  @override
+  String get dailySummaryBannerSubtitle =>
+      'Посмотреть анализ питания и получить EXP';
+
+  @override
+  String get cannotOpenShareSheet => 'Не удалось открыть меню отправки.';
+
+  @override
+  String get profileSaveFailed =>
+      'Не удалось сохранить профиль. Попробуйте еще раз.';
 }

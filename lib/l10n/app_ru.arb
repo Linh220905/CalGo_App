@@ -1106,5 +1106,13 @@
   "deleteExerciseFailed": "Не удалось удалить тренировку. Попробуйте еще раз.",
   "appleHealthSynced": "Синхронизировано с Apple Здоровье",
   "guidanceRecoveryTitle": "Спасти сегодняшний день",
-  "guidanceReadyTitle": "Что съесть, чтобы достичь сегодняшней цели?"
+  "guidanceReadyTitle": "Что съесть, чтобы достичь сегодняшней цели?",
+  "expGainTitle": "Вы получили +{exp} EXP",
+  "expGainDesc": "Очки начислены за {reason}.",
+  "expGainClaim": "Забрать",
+  "scanMealReason": "сканирование еды",
+  "dailySummaryBannerTitle": "Итоги дня и AI Coach",
+  "dailySummaryBannerSubtitle": "Посмотреть анализ питания и получить EXP",
+  "cannotOpenShareSheet": "Не удалось открыть меню отправки.",
+  "profileSaveFailed": "Не удалось сохранить профиль. Попробуйте еще раз."
 }

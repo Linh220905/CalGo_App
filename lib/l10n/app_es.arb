@@ -1106,5 +1106,13 @@
   "deleteExerciseFailed": "No se pudo eliminar el entrenamiento. Inténtalo de nuevo.",
   "appleHealthSynced": "Sincronización con Apple Health",
   "guidanceRecoveryTitle": "Salvar el día",
-  "guidanceReadyTitle": "¿Qué comer para alcanzar el objetivo de hoy?"
+  "guidanceReadyTitle": "¿Qué comer para alcanzar el objetivo de hoy?",
+  "expGainTitle": "Has ganado +{exp} EXP",
+  "expGainDesc": "Puntos añadidos por {reason}.",
+  "expGainClaim": "Reclamar",
+  "scanMealReason": "escaneo de comida",
+  "dailySummaryBannerTitle": "Resumen diario y AI Coach",
+  "dailySummaryBannerSubtitle": "Ver análisis nutricional y ganar EXP",
+  "cannotOpenShareSheet": "No se puede abrir el panel para compartir.",
+  "profileSaveFailed": "No se pudo guardar el perfil. Inténtalo de nuevo."
 }

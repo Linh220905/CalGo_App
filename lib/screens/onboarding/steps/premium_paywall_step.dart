@@ -218,9 +218,10 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
       );
       if (!mounted) return;
       if (!saved) {
+        final s = context.read<AppSettingsProvider>().strings;
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Không thể lưu hồ sơ. Vui lòng thử lại.'),
+          SnackBar(
+            content: Text(s.profileSaveFailed),
             backgroundColor: Colors.redAccent,
           ),
         );

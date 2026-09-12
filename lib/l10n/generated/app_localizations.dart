@@ -4358,6 +4358,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'What to eat to reach today\'s goal?'**
   String get guidanceReadyTitle;
+
+  /// No description provided for @expGainTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You earned +{exp} EXP'**
+  String expGainTitle(int exp);
+
+  /// No description provided for @expGainDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Points added from {reason}.'**
+  String expGainDesc(String reason);
+
+  /// No description provided for @expGainClaim.
+  ///
+  /// In en, this message translates to:
+  /// **'Claim'**
+  String get expGainClaim;
+
+  /// No description provided for @scanMealReason.
+  ///
+  /// In en, this message translates to:
+  /// **'food scan'**
+  String get scanMealReason;
+
+  /// No description provided for @dailySummaryBannerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Recap & AI Coach'**
+  String get dailySummaryBannerTitle;
+
+  /// No description provided for @dailySummaryBannerSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'View nutrition insights & earn EXP'**
+  String get dailySummaryBannerSubtitle;
+
+  /// No description provided for @cannotOpenShareSheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to open share sheet.'**
+  String get cannotOpenShareSheet;
+
+  /// No description provided for @profileSaveFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not save profile. Please try again.'**
+  String get profileSaveFailed;
 }
 
 class _AppLocalizationsDelegate

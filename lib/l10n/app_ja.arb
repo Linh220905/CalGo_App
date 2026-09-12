@@ -697,5 +697,13 @@
   "deleteExerciseFailed": "運動記録を削除できませんでした。もう一度お試しください。",
   "appleHealthSynced": "Appleヘルスケア同期",
   "guidanceRecoveryTitle": "今日のリカバリー",
-  "guidanceReadyTitle": "今日の目標達成のために何を食べる？"
+  "guidanceReadyTitle": "今日の目標達成のために何を食べる？",
+  "expGainTitle": "+{exp} EXP を獲得しました",
+  "expGainDesc": "{reason}からポイントが加算されました。",
+  "expGainClaim": "受け取る",
+  "scanMealReason": "食事のスキャン",
+  "dailySummaryBannerTitle": "1日のまとめ ＆ AIコーチ",
+  "dailySummaryBannerSubtitle": "栄養レポートを確認してEXPを獲得",
+  "cannotOpenShareSheet": "共有シートを開けません。",
+  "profileSaveFailed": "プロファイルを保存できませんでした。もう一度お試しください。"
 }

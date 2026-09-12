@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../../providers/auth_provider.dart';
+import '../../providers/onboarding_provider.dart';
 import '../../widgets/social_auth_button.dart';
 import '../../widgets/language_selector.dart';
 import '../../providers/app_settings_provider.dart';
@@ -156,7 +157,12 @@ class _LoginScreenState extends State<LoginScreen> {
       return;
     }
     if (context.mounted) {
-      context.go('/home');
+      if (auth.user?.hasCompletedOnboarding == true) {
+        context.go('/home');
+      } else {
+        context.read<OnboardingProvider>().resetLocalProgressForIncompleteAccount();
+        context.go('/onboarding');
+      }
     }
   }
 

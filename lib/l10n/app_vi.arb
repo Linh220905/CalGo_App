@@ -1158,5 +1158,13 @@
   "deleteExerciseFailed": "Xóa bài tập thất bại. Vui lòng thử lại.",
   "appleHealthSynced": "Đồng bộ Apple Health",
   "guidanceRecoveryTitle": "Cứu ngày hôm nay",
-  "guidanceReadyTitle": "Ăn gì để chạm mục tiêu hôm nay?"
+  "guidanceReadyTitle": "Ăn gì để chạm mục tiêu hôm nay?",
+  "expGainTitle": "Bạn nhận được +{exp} EXP",
+  "expGainDesc": "Điểm đã được cộng từ {reason}.",
+  "expGainClaim": "Nhận",
+  "scanMealReason": "quét món ăn",
+  "dailySummaryBannerTitle": "Tổng kết ngày & AI Coach",
+  "dailySummaryBannerSubtitle": "Xem đánh giá dinh dưỡng & nhận EXP",
+  "cannotOpenShareSheet": "Không thể mở bảng chia sẻ.",
+  "profileSaveFailed": "Không thể lưu hồ sơ. Vui lòng thử lại."
 }
