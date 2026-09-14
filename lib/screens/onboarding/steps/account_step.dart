@@ -1,15 +1,30 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
+import '../../../services/analytics_service.dart';
 import '../../../providers/auth_provider.dart';
 import '../../../providers/onboarding_provider.dart';
 import '../../../providers/home_provider.dart';
 import '../../../providers/app_settings_provider.dart';
 import '../../../widgets/social_auth_button.dart';
 
-class AccountStep extends StatelessWidget {
+class AccountStep extends StatefulWidget {
   const AccountStep({super.key});
+
+  @override
+  State<AccountStep> createState() => _AccountStepState();
+}
+
+class _AccountStepState extends State<AccountStep> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      unawaited(context.read<AnalyticsService>().trackAuthScreenView());
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -102,10 +117,11 @@ class AccountStep extends StatelessWidget {
                 onTap: () async {
                   final authProvider = context.read<AuthProvider>();
                   final homeProvider = context.read<HomeProvider>();
+                  final analytics = context.read<AnalyticsService>();
                   final success = await authProvider.signInWithGoogle();
                   if (success && context.mounted) {
-                    if (authProvider.user?.hasCompletedOnboarding == true &&
-                        !provider.data.hasNutritionDraft) {
+                    unawaited(analytics.trackLoginSuccess(method: 'google'));
+                    if (authProvider.user?.hasCompletedOnboarding == true) {
                       await homeProvider.loadToday(forceRefresh: true);
                       if (context.mounted) context.go('/home');
                       return;
@@ -149,14 +165,11 @@ class AccountStep extends StatelessWidget {
                   final authProvider = context.read<AuthProvider>();
                   final homeProvider = context.read<HomeProvider>();
                   final onboarding = context.read<OnboardingProvider>();
+                  final analytics = context.read<AnalyticsService>();
                   final success = await authProvider.signInWithApple();
                   if (success && context.mounted) {
-                    // Preserve an existing profile only when this device has
-                    // no complete onboarding draft. If the user just answered
-                    // every question, persist those answers so a legacy Apple
-                    // account cannot keep its old 1,500 kcal placeholder.
-                    if (authProvider.user?.hasCompletedOnboarding == true &&
-                        !onboarding.data.hasNutritionDraft) {
+                    unawaited(analytics.trackLoginSuccess(method: 'apple'));
+                    if (authProvider.user?.hasCompletedOnboarding == true) {
                       await homeProvider.loadToday(forceRefresh: true);
                       if (context.mounted) context.go('/home');
                       return;

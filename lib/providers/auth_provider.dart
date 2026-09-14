@@ -41,10 +41,10 @@ class AuthProvider extends ChangeNotifier {
       if (generation != _restoreGeneration) return;
       if (userData != null) {
         _user = User.fromJson(userData);
-        unawaited(RevenueCatService.logIn(_user!.id));
+        await RevenueCatService.logIn(_user!.id);
       } else {
         _user = null;
-        unawaited(RevenueCatService.logOut());
+        await RevenueCatService.logOut();
       }
     } catch (_) {
       if (generation != _restoreGeneration) return;
@@ -107,7 +107,7 @@ class AuthProvider extends ChangeNotifier {
         if (idToken != null && idToken.isNotEmpty) {
           final userData = await _authService.loginWithGoogle(idToken);
           _user = User.fromJson(userData);
-          unawaited(RevenueCatService.logIn(_user!.id));
+          await RevenueCatService.logIn(_user!.id);
           _error = null;
           return true;
         }
@@ -144,7 +144,7 @@ class AuthProvider extends ChangeNotifier {
           lastName: credential.familyName,
         );
         _user = User.fromJson(userData);
-        unawaited(RevenueCatService.logIn(_user!.id));
+        await RevenueCatService.logIn(_user!.id);
         _error = null;
         return true;
       }
@@ -185,7 +185,7 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
       final userData = await _authService.loginWithGoogle(idToken);
       _user = User.fromJson(userData);
-      unawaited(RevenueCatService.logIn(_user!.id));
+      await RevenueCatService.logIn(_user!.id);
       _error = null;
       _loading = false;
       notifyListeners();
@@ -204,7 +204,7 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
       final userData = await _authService.loginWithEmail(email, password);
       _user = User.fromJson(userData);
-      unawaited(RevenueCatService.logIn(_user!.id));
+      await RevenueCatService.logIn(_user!.id);
       _error = null;
       _loading = false;
       notifyListeners();
@@ -230,7 +230,7 @@ class AuthProvider extends ChangeNotifier {
       // block leaving the account.
     }
     _user = null;
-    unawaited(RevenueCatService.logOut());
+    await RevenueCatService.logOut();
     _loading = _googleLoading || _appleLoading;
     notifyListeners();
   }

@@ -1682,6 +1682,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get scanCreditsExhausted => '你没有扫描学分了';
 
   @override
+  String get scanSpamDetectedTitle => '检测到异常活动';
+
+  @override
+  String get scanSpamDetectedMessage => '检测到异常活动，请联系客服获取支持。';
+
+  @override
   String get networkRetry => '相接为慢. 再试一次';
 
   @override
@@ -2295,4 +2301,425 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get profileSaveFailed => '无法保存个人资料。请重试。';
+
+  @override
+  String trialDaysFree(int days) {
+    return '免费试用 $days 天';
+  }
+
+  @override
+  String enableTrialDaysFree(int days) {
+    return '开启 $days 天免费试用';
+  }
+
+  @override
+  String get trialNoChargeTodayReminder => '今日不扣费，提前 24 小时提醒';
+
+  @override
+  String get trialDirectChargeOnRegister => '订阅时立即付费';
+
+  @override
+  String get trialPaymentSchedule => '试用扣费流程：';
+
+  @override
+  String get trialStepToday => '今日';
+
+  @override
+  String get trialStepUnlockFree => '0元解锁';
+
+  @override
+  String trialStepDayReminder(int day) {
+    return '第 $day 天';
+  }
+
+  @override
+  String get trialStepPushReminder => '通知提醒';
+
+  @override
+  String get trialStepChargeStarts => '开始扣费';
+
+  @override
+  String trialDaysCountBadge(int days) {
+    return '试用 $days 天 0元';
+  }
+
+  @override
+  String trialDaysNote(int days) {
+    return '试用 $days 天 0元';
+  }
+
+  @override
+  String get payYearlyNote => '按年支付';
+
+  @override
+  String get payMonthlyNote => '按月支付';
+
+  @override
+  String get trialCancelAnytimeNote =>
+      '今日不收费。随时可在 App Store / Google Play 设置中取消。';
+
+  @override
+  String get changeYourselfNow => '立即改变自我';
+
+  @override
+  String get tryFreeNow => '立即免费体验';
+
+  @override
+  String get completeSetup => '完成设置';
+
+  @override
+  String get servicesAndPlans => '服务与套餐';
+
+  @override
+  String get connectedStatus => '已连接';
+
+  @override
+  String get notConnectedStatus => '未连接';
+
+  @override
+  String get scanBarcodeTip => '对于包装/盒装食品，建议扫描条形码以获取 100% 精准营养数据！';
+
+  @override
+  String get scanBarcodeNow => '立即扫条形码';
+
+  @override
+  String progressForecastPrefix(String goal) {
+    return '进度预测 • $goal';
+  }
+
+  @override
+  String weeksLeftCount(int weeks) {
+    return '还剩 $weeks 周';
+  }
+
+  @override
+  String reachTargetWeight(String weight) {
+    return '→ 达成目标 ${weight}kg';
+  }
+
+  @override
+  String get badgeUnlockedTitle => '解锁成就徽章！';
+
+  @override
+  String get greatExclamation => '太棒了！';
+
+  @override
+  String get appleHealthPermissionDenied =>
+      '无法授予权限。请确保在 iPhone 设置 > 隐私与安全性 > 健康 中开启权限。';
+
+  @override
+  String get appleHealthSyncTitle => '同步 Apple 健康';
+
+  @override
+  String get appleHealthSyncDesc => 'CalGo 仅读取 Apple 健康中的活动能量消耗，并将其加入每日卡路里目标。';
+
+  @override
+  String get appleHealthStatusConnected => '状态：已连接';
+
+  @override
+  String get appleHealthStatusNotConnected => '状态：未连接';
+
+  @override
+  String get appleHealthConnectedDesc => '应用已获得读取和同步 Apple 健康数据的权限。';
+
+  @override
+  String get appleHealthNotConnectedDesc => '点击下方按钮打开 iOS 系统授权弹窗。';
+
+  @override
+  String get appleHealthReconnectButton => '重新授权 / 重新连接 iOS';
+
+  @override
+  String get appleHealthConnectButton => '连接 Apple 健康 (iOS)';
+
+  @override
+  String get disconnect => '断开连接';
+
+  @override
+  String get scanBarcodeTitle => '扫描条形码';
+
+  @override
+  String get lookingUpBarcode => '正在查询条形码...';
+
+  @override
+  String get alignBarcodeInstruction => '将摄像头对准包装上的条形码';
+
+  @override
+  String get switchToPhotoScan => '切换到拍摄食物照片';
+
+  @override
+  String get barcodeNotFound => '未找到此条形码的数据。请尝试直接拍摄食物照片！📸';
+
+  @override
+  String addedExerciseCaloriesSnackbar(int calories) {
+    return '已将 $calories kcal 运动消耗计入今日目标。';
+  }
+
+  @override
+  String get foodNotRecognizedTitle => '未能清晰识别食物';
+
+  @override
+  String get foodNotRecognizedMessage => '请重新拍摄一张更清晰的食物照片，或手动输入食物。';
+
+  @override
+  String get retakePhoto => '重新拍摄';
+
+  @override
+  String get manualFoodEntry => '手动输入';
+
+  @override
+  String get backTooltip => '返回';
+
+  @override
+  String get exitTooltip => '退出';
+
+  @override
+  String get completeAndSaveGoal => '完成并保存目标';
+
+  @override
+  String get winbackExclusiveOffer => '🔥 专属特惠';
+
+  @override
+  String winbackStayTitle(String price) {
+    return '等等！以 $price/年 继续';
+  }
+
+  @override
+  String get winbackDisclaimer => '价格和特惠条款由应用商店直接确认。';
+
+  @override
+  String winbackSubscribeButton(String price) {
+    return '订阅 $price/年';
+  }
+
+  @override
+  String get winbackDismissButton => '放弃优惠';
+
+  @override
+  String get savePremiumToAccountTitle => '将高级会员保存到您的账户';
+
+  @override
+  String get savePremiumToAccountDesc => '登录一次以验证交易并同步您的个性化计划。';
+
+  @override
+  String get signInFailed => '登录失败。';
+
+  @override
+  String get dailyRecapTitle => '每日总结';
+
+  @override
+  String get recapReadyAfterTime => '今日有记录时，总结将于 22:00 后生成。';
+
+  @override
+  String get todayRecap => '今日总结';
+
+  @override
+  String mealsLoggedCount(int count) {
+    return '已记录 $count 餐';
+  }
+
+  @override
+  String get consumedToday => '今日已摄入';
+
+  @override
+  String targetCaloProgress(String percent, int target) {
+    return '$target kcal 目标的 $percent%';
+  }
+
+  @override
+  String get aiReview => 'AI 点评';
+
+  @override
+  String get tomorrowTipTitle => '明日建议';
+
+  @override
+  String get finishDayButton => '完成今日';
+
+  @override
+  String get reportButton => '报告';
+
+  @override
+  String get likeTooltip => '喜欢';
+
+  @override
+  String get dislikeTooltip => '不喜欢';
+
+  @override
+  String get addCustomFoodTitle => '手动添加食物';
+
+  @override
+  String get foodNameLabel => '食物名称';
+
+  @override
+  String get foodNameHint => '输入食物名称...';
+
+  @override
+  String get caloriePer100gLabel => '卡路里 (kcal / 100g)';
+
+  @override
+  String get addNow => '立即添加';
+
+  @override
+  String get logFoodTitle => '记录食物';
+
+  @override
+  String get creditsPurchasedSuccess => '已验证并将扫描次数充入您的账户。';
+
+  @override
+  String get progressPhotosTitle => '进度照片';
+
+  @override
+  String photosCount(int count) {
+    return '$count 张照片';
+  }
+
+  @override
+  String creditsCountSuffix(int count) {
+    return '$count 次';
+  }
+
+  @override
+  String quizStepCount(int current) {
+    return '步骤 $current / 3';
+  }
+
+  @override
+  String get quizMealPatternTitle => '您每日的进餐模式';
+
+  @override
+  String get quizMealPatternDesc => '您想将每日卡路里分成几餐？';
+
+  @override
+  String get quizMealPattern3Title => '3 顿正餐';
+
+  @override
+  String get quizMealPattern3Desc => '标准 早 - 中 - 晚餐，易于掌控';
+
+  @override
+  String get quizMealPattern3SnackTitle => '3 顿正餐 + 1 次加餐';
+
+  @override
+  String get quizMealPattern3SnackDesc => '下午搭配健康轻食，有效抗饿';
+
+  @override
+  String get quizMealPatternIFTitle => '2 顿正餐 (间歇性轻断食)';
+
+  @override
+  String get quizMealPatternIFDesc => '适合 16:8 间歇性断食作息';
+
+  @override
+  String get quizMealPatternSmallTitle => '4 - 5 顿少食多餐';
+
+  @override
+  String get quizMealPatternSmallDesc => '全天均匀补充能量';
+
+  @override
+  String get quizVarietyTitle => '菜单多样性偏好';
+
+  @override
+  String get quizVarietyDesc => '您希望以何种方式推荐菜单？';
+
+  @override
+  String get quizVarietySimpleTitle => '极简重复';
+
+  @override
+  String get quizVarietySimpleDesc => '一次下厨吃 2-3 餐，省时高效';
+
+  @override
+  String get quizVarietyRotateTitle => '每日尝新';
+
+  @override
+  String get quizVarietyRotateDesc => '每天不同菜单，新鲜不重样';
+
+  @override
+  String get quizVarietyLocalTitle => '本地风味家常菜';
+
+  @override
+  String get quizVarietyLocalDesc => '选用本地菜市和超市常见易买食材';
+
+  @override
+  String get quizPriorityTitle => '饮食计划核心重点';
+
+  @override
+  String get quizPriorityDesc => '您在营养计划中最看重哪一点？';
+
+  @override
+  String get quizOptSatietyTitle => '强饱腹感，低卡路里';
+
+  @override
+  String get quizOptSatietyDesc => '注重高蛋白和高纤蔬菜，轻松保持热量缺口';
+
+  @override
+  String get quizOptCalorieFitTitle => '精确贴合剩余热量';
+
+  @override
+  String get quizOptCalorieFitDesc => '每餐严格贴合设定的卡路里预算';
+
+  @override
+  String get quizOptSmartSwapTitle => '智能替代推荐';
+
+  @override
+  String get quizOptSmartSwapDesc => '当此前摄入过多时，自动推荐更清淡的餐品平衡';
+
+  @override
+  String get quizOptHighProteinTitle => '高蛋白低脂肪';
+
+  @override
+  String get quizOptHighProteinDesc => '精益蛋白质为主，增肌同时严格防脂';
+
+  @override
+  String get quizOptTrainingFuelTitle => '训练能量与恢复';
+
+  @override
+  String get quizOptTrainingFuelDesc => '合理搭配碳水与蛋白质，赋能训练与高效恢复';
+
+  @override
+  String get quizOptCalorieSurplusTitle => '充足热量健康盈余';
+
+  @override
+  String get quizOptCalorieSurplusDesc => '容易进食的餐食组合，轻松达标每日热量盈余';
+
+  @override
+  String get quizOptBalancedMacrosTitle => '均衡宏量营养素';
+
+  @override
+  String get quizOptBalancedMacrosDesc => '每日保持稳定均衡的蛋白质、碳水和健康脂肪';
+
+  @override
+  String get quizOptWeightStabilityTitle => '稳定保持体重';
+
+  @override
+  String get quizOptWeightStabilityDesc => '精准契合当前维持体重所需的日常卡路里';
+
+  @override
+  String get quizOptFlexibleWeekendsTitle => '周末灵活调节';
+
+  @override
+  String get quizOptFlexibleWeekendsDesc => '社交大餐后，智能调节其余餐次回归平衡';
+
+  @override
+  String get quizSyncAnswersLater => '继续，稍后同步回答';
+
+  @override
+  String get quizCompleteAndGenerateMenu => '完成并生成专属菜单';
+
+  @override
+  String get quizSettingUpMenu => 'CalGo 正在为您定制专属菜单...';
+
+  @override
+  String get quizPersonalizingCalories => '正在为您量身定制热量摄入与最佳餐食方案';
+
+  @override
+  String get quizFinalizingSetup => '正在完成最后设置';
+
+  @override
+  String get searchFoodOrIngredientsHint => '搜索美食或食材...';
+
+  @override
+  String get searchResultsTitle => '搜索结果';
+
+  @override
+  String get searchingInProgress => '正在搜索...';
+
+  @override
+  String get nutritionServerConnectError => '无法连接到营养数据库服务器。';
 }

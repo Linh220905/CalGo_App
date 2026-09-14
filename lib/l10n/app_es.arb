@@ -807,6 +807,8 @@
   "manageSubscription": "Gestionar suscripción",
   "manageSubscriptionFailed": "No se pudo abrir la gestión de suscripciones.",
   "scanCreditsExhausted": "No te quedan créditos de escaneo.",
+  "scanSpamDetectedTitle": "Actividad inusual detectada",
+  "scanSpamDetectedMessage": "Se ha detectado actividad inusual. Por favor, contacta con soporte.",
   "networkRetry": "La conexión es lenta. Inténtalo de nuevo.",
   "scanUnavailable": "No se pudo analizar esta imagen.",
   "notificationChannelName": "Recordatorios diarios de comidas",
@@ -1114,5 +1116,190 @@
   "dailySummaryBannerTitle": "Resumen diario y AI Coach",
   "dailySummaryBannerSubtitle": "Ver análisis nutricional y ganar EXP",
   "cannotOpenShareSheet": "No se puede abrir el panel para compartir.",
-  "profileSaveFailed": "No se pudo guardar el perfil. Inténtalo de nuevo."
+  "profileSaveFailed": "No se pudo guardar el perfil. Inténtalo de nuevo.",
+  "trialDaysFree": "Prueba gratis de {days} días",
+  "@trialDaysFree": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "enableTrialDaysFree": "Activar prueba gratis de {days} días",
+  "@enableTrialDaysFree": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "trialNoChargeTodayReminder": "Sin cargo hoy, recordatorio 24h antes",
+  "trialDirectChargeOnRegister": "Facturación directa al registrarse",
+  "trialPaymentSchedule": "Calendario de pagos de prueba:",
+  "trialStepToday": "Hoy",
+  "trialStepUnlockFree": "Desbloquear por 0 $",
+  "trialStepDayReminder": "Día {day}",
+  "@trialStepDayReminder": {
+    "placeholders": {
+      "day": {
+        "type": "int"
+      }
+    }
+  },
+  "trialStepPushReminder": "Recordatorio push",
+  "trialStepChargeStarts": "Comienza el cobro",
+  "trialDaysCountBadge": "PRUEBA {days} DÍAS 0 $",
+  "@trialDaysCountBadge": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "trialDaysNote": "Prueba {days} días 0 $",
+  "@trialDaysNote": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "payYearlyNote": "Facturado anualmente",
+  "payMonthlyNote": "Facturado mensualmente",
+  "trialCancelAnytimeNote": "Sin cargos hoy. Cancela cuando quieras en los ajustes de App Store / Google Play.",
+  "changeYourselfNow": "Transforma tu cuerpo ahora",
+  "tryFreeNow": "Probar gratis ahora",
+  "completeSetup": "Completar configuración",
+  "servicesAndPlans": "Servicios y Planes",
+  "connectedStatus": "Conectado",
+  "notConnectedStatus": "No conectado",
+  "scanBarcodeTip": "¡Para alimentos envasados, prueba Escanear código de barras para una nutrición 100% precisa!",
+  "scanBarcodeNow": "Escanear código de barras",
+  "progressForecastPrefix": "Pronóstico de progreso • {goal}",
+  "@progressForecastPrefix": {
+    "placeholders": {
+      "goal": {
+        "type": "String"
+      }
+    }
+  },
+  "weeksLeftCount": "{weeks} semanas restantes",
+  "@weeksLeftCount": {
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
+  "reachTargetWeight": "→ Alcanzar meta de {weight}kg",
+  "@reachTargetWeight": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
+  "badgeUnlockedTitle": "¡INSIGNIA DESBLOQUEADA!",
+  "greatExclamation": "¡Genial!",
+  "appleHealthPermissionDenied": "No se pudo otorgar permiso. Asegúrate de permitir el acceso en Ajustes de iPhone > Privacidad y seguridad > Salud.",
+  "appleHealthSyncTitle": "Sincronización con Apple Health",
+  "appleHealthSyncDesc": "CalGo solo lee la energía activa quemada de Apple Health para añadirla a tu objetivo calórico diario.",
+  "appleHealthStatusConnected": "Estado: Conectado",
+  "appleHealthStatusNotConnected": "Estado: No conectado",
+  "appleHealthConnectedDesc": "La aplicación tiene permiso para leer y sincronizar datos con Apple Health.",
+  "appleHealthNotConnectedDesc": "Toca el botón abajo para abrir el diálogo de autorización de iOS.",
+  "appleHealthReconnectButton": "Reautorizar / Reconectar iOS",
+  "appleHealthConnectButton": "Conectar Apple Health (iOS)",
+  "disconnect": "Desconectar",
+  "scanBarcodeTitle": "Escanear código de barras",
+  "lookingUpBarcode": "Buscando código de barras...",
+  "alignBarcodeInstruction": "Alinea la cámara con el código de barras del paquete",
+  "switchToPhotoScan": "Cambiar a foto de comida",
+  "barcodeNotFound": "No se encontraron datos para este código. ¡Prueba a tomar una foto de la comida! 📸",
+  "addedExerciseCaloriesSnackbar": "Se añadieron {calories} kcal de ejercicio al objetivo de hoy.",
+  "foodNotRecognizedTitle": "Comida no reconocida claramente",
+  "foodNotRecognizedMessage": "Por favor, toma una foto más clara de tu comida o ingrésala manualmente.",
+  "retakePhoto": "Repetir foto",
+  "manualFoodEntry": "Entrada manual",
+  "backTooltip": "Atrás",
+  "exitTooltip": "Salir",
+  "completeAndSaveGoal": "Completar y guardar objetivo",
+  "winbackExclusiveOffer": "🔥 OFERTA EXCLUSIVA",
+  "winbackStayTitle": "¡Espera! Continúa con {price}/año",
+  "winbackDisclaimer": "El precio y las condiciones de la oferta son verificados por la tienda.",
+  "winbackSubscribeButton": "Suscribirse {price}/año",
+  "winbackDismissButton": "Descartar oferta",
+  "savePremiumToAccountTitle": "Guarda Premium en tu cuenta",
+  "savePremiumToAccountDesc": "Inicia sesión una vez para verificar compras y sincronizar tu plan.",
+  "signInFailed": "Error al iniciar sesión.",
+  "dailyRecapTitle": "Resumen del día",
+  "recapReadyAfterTime": "El resumen estará listo después de las 22:00 cuando tengas registros de hoy.",
+  "todayRecap": "Resumen de hoy",
+  "mealsLoggedCount": "{count} comidas registradas",
+  "consumedToday": "consumido hoy",
+  "targetCaloProgress": "{percent}% del objetivo de {target} kcal",
+  "aiReview": "Comentario de IA",
+  "tomorrowTipTitle": "Consejo para mañana",
+  "finishDayButton": "Completar día",
+  "reportButton": "Informe",
+  "likeTooltip": "Me gusta",
+  "dislikeTooltip": "No me gusta",
+  "addCustomFoodTitle": "Añadir comida manualmente",
+  "foodNameLabel": "Nombre de la comida",
+  "foodNameHint": "Introduce el nombre de la comida...",
+  "caloriePer100gLabel": "Calorías (kcal / 100g)",
+  "addNow": "Añadir ahora",
+  "logFoodTitle": "Registrar comida",
+  "creditsPurchasedSuccess": "Verificado y créditos añadidos a tu cuenta.",
+  "progressPhotosTitle": "Fotos de progreso",
+  "photosCount": "{count} fotos",
+  "creditsCountSuffix": "{count} créditos",
+  "quizStepCount": "Paso {current} / 3",
+  "quizMealPatternTitle": "Tus comidas diarias",
+  "quizMealPatternDesc": "¿En cuántas comidas quieres dividir tus calorías diarias?",
+  "quizMealPattern3Title": "3 comidas principales",
+  "quizMealPattern3Desc": "Desayuno - Comida - Cena estándar, fácil de controlar",
+  "quizMealPattern3SnackTitle": "3 comidas + 1 snack",
+  "quizMealPattern3SnackDesc": "Incluye un snack ligero para la tarde",
+  "quizMealPatternIFTitle": "2 comidas principales (Ayuno intermitente)",
+  "quizMealPatternIFDesc": "Sigue el protocolo de ayuno 16:8",
+  "quizMealPatternSmallTitle": "4 - 5 comidas pequeñas",
+  "quizMealPatternSmallDesc": "Distribuye la energía uniformemente en el día",
+  "quizVarietyTitle": "Flexibilidad del menú",
+  "quizVarietyDesc": "¿Cómo prefieres que te sugiramos comidas?",
+  "quizVarietySimpleTitle": "Repetición simple",
+  "quizVarietySimpleDesc": "Cocina una vez, come 2-3 veces, ahorra tiempo",
+  "quizVarietyRotateTitle": "Variedad diaria",
+  "quizVarietyRotateDesc": "Un menú nuevo cada día, sin aburrirse",
+  "quizVarietyLocalTitle": "Cocina local y tradicional",
+  "quizVarietyLocalDesc": "Ingredientes fáciles de encontrar en el supermercado local",
+  "quizPriorityTitle": "Tus prioridades de alimentación",
+  "quizPriorityDesc": "¿Qué quieres priorizar en tu plan de nutrición?",
+  "quizOptSatietyTitle": "Saciedad duradera, bajas calorías",
+  "quizOptSatietyDesc": "Proteína, verduras y platos bajos en grasa para mantener el déficit",
+  "quizOptCalorieFitTitle": "Ajustar calorías restantes",
+  "quizOptCalorieFitDesc": "Elige porciones ajustadas al presupuesto de cada comida",
+  "quizOptSmartSwapTitle": "Sustituciones inteligentes",
+  "quizOptSmartSwapDesc": "Sugiere platos más ligeros si has comido de más",
+  "quizOptHighProteinTitle": "Alto en proteína, magro",
+  "quizOptHighProteinDesc": "Proteína magra para ganar músculo sin exceso de grasa",
+  "quizOptTrainingFuelTitle": "Energía y recuperación de entreno",
+  "quizOptTrainingFuelDesc": "Equilibrio de proteína y carbohidratos para entrenar y recuperar",
+  "quizOptCalorieSurplusTitle": "Superávit calórico saludable",
+  "quizOptCalorieSurplusDesc": "Comidas fáciles de consumir para alcanzar el superávit",
+  "quizOptBalancedMacrosTitle": "Macronutrientes equilibrados",
+  "quizOptBalancedMacrosDesc": "Mantén niveles consistentes de proteína, carbohidratos y grasa",
+  "quizOptWeightStabilityTitle": "Estabilidad de peso",
+  "quizOptWeightStabilityDesc": "Platos que coincidan con tus calorías de mantenimiento",
+  "quizOptFlexibleWeekendsTitle": "Fines de semana flexibles",
+  "quizOptFlexibleWeekendsDesc": "Reequilibra las comidas tras una cena especial",
+  "quizSyncAnswersLater": "Continuar, sincronizar respuestas luego",
+  "quizCompleteAndGenerateMenu": "Completar y crear menú",
+  "quizSettingUpMenu": "CalGo está preparando tu menú...",
+  "quizPersonalizingCalories": "Personalizando calorías y los platos más adecuados para ti",
+  "quizFinalizingSetup": "Finalizando configuración",
+  "searchFoodOrIngredientsHint": "Buscar comida o ingredientes...",
+  "searchResultsTitle": "Resultados de búsqueda",
+  "searchingInProgress": "Buscando...",
+  "nutritionServerConnectError": "No se puede conectar al servidor de nutrición."
 }

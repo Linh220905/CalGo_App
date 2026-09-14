@@ -807,6 +807,8 @@
   "manageSubscription": "Управление подпиской",
   "manageSubscriptionFailed": "Не удалось открыть управление подпиской.",
   "scanCreditsExhausted": "У тебя не осталось кредитов на сканирование.",
+  "scanSpamDetectedTitle": "Обнаружена подозрительная активность",
+  "scanSpamDetectedMessage": "Обнаружена подозрительная активность, пожалуйста, обратитесь в службу поддержки.",
   "networkRetry": "Связь медленная. Попробуй снова.",
   "scanUnavailable": "Это изображение не может быть проанализировано.",
   "notificationChannelName": "Ежедневные напоминания о еде",
@@ -1114,5 +1116,190 @@
   "dailySummaryBannerTitle": "Итоги дня и AI Coach",
   "dailySummaryBannerSubtitle": "Посмотреть анализ питания и получить EXP",
   "cannotOpenShareSheet": "Не удалось открыть меню отправки.",
-  "profileSaveFailed": "Не удалось сохранить профиль. Попробуйте еще раз."
+  "profileSaveFailed": "Не удалось сохранить профиль. Попробуйте еще раз.",
+  "trialDaysFree": "Пробный период {days} дн. бесплатно",
+  "@trialDaysFree": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "enableTrialDaysFree": "Включить пробный период на {days} дней",
+  "@enableTrialDaysFree": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "trialNoChargeTodayReminder": "Без оплаты сегодня, напоминание за 24 ч",
+  "trialDirectChargeOnRegister": "Оплата сразу при подписке",
+  "trialPaymentSchedule": "График пробного периода:",
+  "trialStepToday": "Сегодня",
+  "trialStepUnlockFree": "Доступ за 0 $",
+  "trialStepDayReminder": "День {day}",
+  "@trialStepDayReminder": {
+    "placeholders": {
+      "day": {
+        "type": "int"
+      }
+    }
+  },
+  "trialStepPushReminder": "Push-напоминание",
+  "trialStepChargeStarts": "Начало списания",
+  "trialDaysCountBadge": "ПРОБА {days} ДН. 0 $",
+  "@trialDaysCountBadge": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "trialDaysNote": "Проба {days} дн. 0 $",
+  "@trialDaysNote": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "payYearlyNote": "Оплата раз в год",
+  "payMonthlyNote": "Оплата каждый месяц",
+  "trialCancelAnytimeNote": "Сегодня плата не взимается. Отмена в любой момент в настройках App Store / Google Play.",
+  "changeYourselfNow": "Начните трансформацию сейчас",
+  "tryFreeNow": "Попробовать бесплатно",
+  "completeSetup": "Завершить настройку",
+  "servicesAndPlans": "Услуги и тарифы",
+  "connectedStatus": "Подключено",
+  "notConnectedStatus": "Не подключено",
+  "scanBarcodeTip": "Для упакованных продуктов попробуйте сканер штрихкодов для 100% точного состава!",
+  "scanBarcodeNow": "Сканировать штрихкод",
+  "progressForecastPrefix": "Прогноз прогресса • {goal}",
+  "@progressForecastPrefix": {
+    "placeholders": {
+      "goal": {
+        "type": "String"
+      }
+    }
+  },
+  "weeksLeftCount": "Осталось {weeks} нед.",
+  "@weeksLeftCount": {
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
+  "reachTargetWeight": "→ Достичь цели {weight} кг",
+  "@reachTargetWeight": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
+  "badgeUnlockedTitle": "ЗНАЧОК РАЗБЛОКИРОВАН!",
+  "greatExclamation": "Отлично!",
+  "appleHealthPermissionDenied": "Не удалось предоставить разрешение. Убедитесь, что доступ разрешен в Настройки iPhone > Конфиденциальность и безопасность > Здоровье.",
+  "appleHealthSyncTitle": "Синхронизация с Apple Health",
+  "appleHealthSyncDesc": "CalGo считывает только активную энергию из Apple Health, чтобы прибавить ее к вашей суточной норме калорий.",
+  "appleHealthStatusConnected": "Статус: Подключено",
+  "appleHealthStatusNotConnected": "Статус: Не подключено",
+  "appleHealthConnectedDesc": "Приложение имеет разрешение на чтение и синхронизацию данных с Apple Health.",
+  "appleHealthNotConnectedDesc": "Нажмите кнопку ниже, чтобы открыть диалог авторизации iOS.",
+  "appleHealthReconnectButton": "Повторно запросить / Переподключить iOS",
+  "appleHealthConnectButton": "Подключить Apple Health (iOS)",
+  "disconnect": "Отключить",
+  "scanBarcodeTitle": "Сканировать штрихкод",
+  "lookingUpBarcode": "Поиск штрихкода...",
+  "alignBarcodeInstruction": "Наведите камеру на штрихкод на упаковке",
+  "switchToPhotoScan": "Переключить на фото блюда",
+  "barcodeNotFound": "Данные для этого штрихкода не найдены. Попробуйте сфотографировать блюдо! 📸",
+  "addedExerciseCaloriesSnackbar": "Добавлено {calories} ккал тренировки к цели на сегодня.",
+  "foodNotRecognizedTitle": "Блюдо не распознано",
+  "foodNotRecognizedMessage": "Пожалуйста, сделайте более четкое фото блюда или введите его вручную.",
+  "retakePhoto": "Переснять",
+  "manualFoodEntry": "Вручную",
+  "backTooltip": "Назад",
+  "exitTooltip": "Выйти",
+  "completeAndSaveGoal": "Завершить и сохранить цель",
+  "winbackExclusiveOffer": "🔥 ЭКСКЛЮЗИВНОЕ ПРЕДЛОЖЕНИЕ",
+  "winbackStayTitle": "Подождите! Продолжите за {price}/год",
+  "winbackDisclaimer": "Цены и условия акции проверяются магазином приложений.",
+  "winbackSubscribeButton": "Подписаться за {price}/год",
+  "winbackDismissButton": "Пропустить предложение",
+  "savePremiumToAccountTitle": "Сохранить Premium в аккаунте",
+  "savePremiumToAccountDesc": "Войдите один раз для проверки транзакций и синхронизации плана.",
+  "signInFailed": "Не удалось войти.",
+  "dailyRecapTitle": "Итоги дня",
+  "recapReadyAfterTime": "Итоги будут готовы после 22:00, когда появятся записи за сегодня.",
+  "todayRecap": "Итоги сегодня",
+  "mealsLoggedCount": "Записано приемов пищи: {count}",
+  "consumedToday": "съедено сегодня",
+  "targetCaloProgress": "{percent}% от цели {target} ккал",
+  "aiReview": "Отзыв от ИИ",
+  "tomorrowTipTitle": "Совет на завтра",
+  "finishDayButton": "Завершить день",
+  "reportButton": "Отчет",
+  "likeTooltip": "Нравится",
+  "dislikeTooltip": "Не нравится",
+  "addCustomFoodTitle": "Добавить блюдо вручную",
+  "foodNameLabel": "Название блюда",
+  "foodNameHint": "Введите название блюда...",
+  "caloriePer100gLabel": "Калории (ккал / 100г)",
+  "addNow": "Добавить сейчас",
+  "logFoodTitle": "Записать блюдо",
+  "creditsPurchasedSuccess": "Проверено, сканы добавлены на ваш аккаунт.",
+  "progressPhotosTitle": "Фото прогресса",
+  "photosCount": "Фото: {count}",
+  "creditsCountSuffix": "{count} сканов",
+  "quizStepCount": "Шаг {current} из 3",
+  "quizMealPatternTitle": "Ваш режим питания",
+  "quizMealPatternDesc": "На сколько приемов пищи вы хотите разделить суточную норму?",
+  "quizMealPattern3Title": "3 основных приема",
+  "quizMealPattern3Desc": "Завтрак - Обед - Ужин, легко контролировать",
+  "quizMealPattern3SnackTitle": "3 приема + 1 перекус",
+  "quizMealPattern3SnackDesc": "Легкий перекус во второй половине дня",
+  "quizMealPatternIFTitle": "2 приема (Интервальное голодание)",
+  "quizMealPatternIFDesc": "По схеме интервального голодания 16:8",
+  "quizMealPatternSmallTitle": "4 - 5 небольших приемов",
+  "quizMealPatternSmallDesc": "Равномерное распределение энергии в течение дня",
+  "quizVarietyTitle": "Гибкость меню",
+  "quizVarietyDesc": "Как вы предпочитаете получать рекомендации по блюдам?",
+  "quizVarietySimpleTitle": "Простой повтор",
+  "quizVarietySimpleDesc": "Готовить 1 раз на 2-3 приема, экономия времени",
+  "quizVarietyRotateTitle": "Разнообразие каждый день",
+  "quizVarietyRotateDesc": "Новое меню каждый день, чтобы не надоедало",
+  "quizVarietyLocalTitle": "Местная и традиционная кухня",
+  "quizVarietyLocalDesc": "Ингредиенты, доступные в ближайших магазинах",
+  "quizPriorityTitle": "Приоритеты в питании",
+  "quizPriorityDesc": "Что для вас важнее всего в плане питания?",
+  "quizOptSatietyTitle": "Сытость надолго, мало калорий",
+  "quizOptSatietyDesc": "Белок, овощи и минимум масла для поддержания дефицита",
+  "quizOptCalorieFitTitle": "Под остаток калорий",
+  "quizOptCalorieFitDesc": "Порции строго под лимит калорий каждого приема",
+  "quizOptSmartSwapTitle": "Умная замена блюд",
+  "quizOptSmartSwapDesc": "Подсказывает легкие блюда, если днем съедено лишнее",
+  "quizOptHighProteinTitle": "Много белка, мало жира",
+  "quizOptHighProteinDesc": "Нежирный белок для роста мышц без лишнего жира",
+  "quizOptTrainingFuelTitle": "Топливо для тренировок и восстановление",
+  "quizOptTrainingFuelDesc": "Баланс белка и углеводов для сил и восстановления",
+  "quizOptCalorieSurplusTitle": "Здоровый профицит калорий",
+  "quizOptCalorieSurplusDesc": "Удобные приемы пищи для набора суточного профицита",
+  "quizOptBalancedMacrosTitle": "Сбалансированные макронутриенты",
+  "quizOptBalancedMacrosDesc": "Стабильное соотношение БЖУ каждый день",
+  "quizOptWeightStabilityTitle": "Стабильный вес",
+  "quizOptWeightStabilityDesc": "Блюда под ваши калории поддержания веса",
+  "quizOptFlexibleWeekendsTitle": "Гибкие выходные",
+  "quizOptFlexibleWeekendsDesc": "Балансируйте рацион после плотных праздничных приемов",
+  "quizSyncAnswersLater": "Продолжить, синхронизировать позже",
+  "quizCompleteAndGenerateMenu": "Завершить и создать меню",
+  "quizSettingUpMenu": "CalGo составляет ваше меню...",
+  "quizPersonalizingCalories": "Персонализация калорий и подбор подходящих блюд",
+  "quizFinalizingSetup": "Завершение настройки",
+  "searchFoodOrIngredientsHint": "Поиск блюд или ингредиентов...",
+  "searchResultsTitle": "Результаты поиска",
+  "searchingInProgress": "Поиск...",
+  "nutritionServerConnectError": "Не удалось подключиться к серверу питания."
 }

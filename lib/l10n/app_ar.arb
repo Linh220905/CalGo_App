@@ -807,6 +807,8 @@
   "manageSubscription": "الاشتراك في الخدمة",
   "manageSubscriptionFailed": "لا يمكن فتح إدارة الاشتراك.",
   "scanCreditsExhausted": "لم يتبقَ لديكَ أيّ إئتمان",
+  "scanSpamDetectedTitle": "تم اكتشاف نشاط غير معتاد",
+  "scanSpamDetectedMessage": "تم اكتشاف نشاط غير معتاد، يرجى التواصل مع الدعم للمساعدة.",
   "networkRetry": "الاتصال بطيء حاول مرة أخرى",
   "scanUnavailable": "هذه الصورة لا يمكن تحليلها",
   "notificationChannelName": "التذكير اليومي بالوجبات",
@@ -1114,5 +1116,190 @@
   "dailySummaryBannerTitle": "ملخص اليوم والمدرب الذكي",
   "dailySummaryBannerSubtitle": "عرض تقييم التغذية واكسب EXP",
   "cannotOpenShareSheet": "تعذر فتح لوحة المشاركة.",
-  "profileSaveFailed": "تعذر حفظ الملف الشخصي. يرجى المحاولة مرة أخرى."
+  "profileSaveFailed": "تعذر حفظ الملف الشخصي. يرجى المحاولة مرة أخرى.",
+  "trialDaysFree": "تجربة مجانية لمدة {days} أيام",
+  "@trialDaysFree": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "enableTrialDaysFree": "تفعيل التجربة المجانية لمدة {days} أيام",
+  "@enableTrialDaysFree": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "trialNoChargeTodayReminder": "لا رسوم اليوم، تذكير قبل 24 ساعة",
+  "trialDirectChargeOnRegister": "الدفع مباشرة عند التسجيل",
+  "trialPaymentSchedule": "جدول دفع التجربة المجانية:",
+  "trialStepToday": "اليوم",
+  "trialStepUnlockFree": "فتح بقيمة 0$",
+  "trialStepDayReminder": "اليوم {day}",
+  "@trialStepDayReminder": {
+    "placeholders": {
+      "day": {
+        "type": "int"
+      }
+    }
+  },
+  "trialStepPushReminder": "إشعار تذكيري",
+  "trialStepChargeStarts": "بدء احتساب الرسوم",
+  "trialDaysCountBadge": "تجربة {days} أيام بـ 0$",
+  "@trialDaysCountBadge": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "trialDaysNote": "تجربة {days} أيام بـ 0$",
+  "@trialDaysNote": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "payYearlyNote": "الدفع سنوياً",
+  "payMonthlyNote": "الدفع شهرياً",
+  "trialCancelAnytimeNote": "لا توجد رسوم اليوم. يمكنك الإلغاء في أي وقت من إعدادات App Store / Google Play.",
+  "changeYourselfNow": "ابدأ تغيير نفسك الآن",
+  "tryFreeNow": "جرب مجاناً الآن",
+  "completeSetup": "إتمام الإعداد",
+  "servicesAndPlans": "الخدمات والخطط",
+  "connectedStatus": "متصل",
+  "notConnectedStatus": "غير متصل",
+  "scanBarcodeTip": "بالنسبة للأطعمة المغلفة/المعلبة، جرب مسح الباركود للحصول على دقة غذائية 100%!",
+  "scanBarcodeNow": "مسح الباركود الآن",
+  "progressForecastPrefix": "توقع التقدم • {goal}",
+  "@progressForecastPrefix": {
+    "placeholders": {
+      "goal": {
+        "type": "String"
+      }
+    }
+  },
+  "weeksLeftCount": "باقٍ {weeks} أسابيع",
+  "@weeksLeftCount": {
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
+  "reachTargetWeight": "→ الوصول إلى وزن الهدف {weight} كجم",
+  "@reachTargetWeight": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
+  "badgeUnlockedTitle": "تم فتح الشارة!",
+  "greatExclamation": "رائع!",
+  "appleHealthPermissionDenied": "تعذر منح الإذن. يرجى التأكد من السماح بالوصول في إعدادات iPhone > الخصوصية والأمان > صحتي.",
+  "appleHealthSyncTitle": "مزامنة Apple Health",
+  "appleHealthSyncDesc": "يقرأ CalGo فقط الطاقة النشطة المحروقة من Apple Health لإضافتها إلى هدف السعرات اليومي.",
+  "appleHealthStatusConnected": "الحالة: متصل",
+  "appleHealthStatusNotConnected": "الحالة: غير متصل",
+  "appleHealthConnectedDesc": "التطبيق لديه إذن لقراءة ومزامنة البيانات مع Apple Health.",
+  "appleHealthNotConnectedDesc": "اضغط على الزر أدناه لفتح نافذة التفويض من iOS.",
+  "appleHealthReconnectButton": "إعادة التفويض / إعادة الاتصال بـ iOS",
+  "appleHealthConnectButton": "ربط Apple Health (iOS)",
+  "disconnect": "قطع الاتصال",
+  "scanBarcodeTitle": "مسح الرمز الشريطي",
+  "lookingUpBarcode": "جارٍ البحث عن الرمز الشريطي...",
+  "alignBarcodeInstruction": "وجّه الكاميرا نحو الرمز الشريطي على العبوة",
+  "switchToPhotoScan": "التبديل إلى تصوير الوجبة",
+  "barcodeNotFound": "لم يتم العثور على بيانات لهذا الرمز. جرب التقاط صورة للطعام مباشرة! 📸",
+  "addedExerciseCaloriesSnackbar": "تمت إضافة {calories} سعرة حرارية من التمارين إلى هدف اليوم.",
+  "foodNotRecognizedTitle": "لم يتم التعرف على الطعام بوضوح",
+  "foodNotRecognizedMessage": "يرجى التقاط صورة أوضح لطعامك أو إدخاله يدويًا.",
+  "retakePhoto": "إعادة الالتقاط",
+  "manualFoodEntry": "إدخال يدوي",
+  "backTooltip": "رجوع",
+  "exitTooltip": "خروج",
+  "completeAndSaveGoal": "إكمال وحفظ الهدف",
+  "winbackExclusiveOffer": "🔥 عرض حصري",
+  "winbackStayTitle": "انتظر! تابع مقابل {price}/سنة",
+  "winbackDisclaimer": "يتم التحقق من الأسعار وشروط العرض مباشرة من قِبل المتجر.",
+  "winbackSubscribeButton": "اشتراك مقابل {price}/سنة",
+  "winbackDismissButton": "تخطي العرض",
+  "savePremiumToAccountTitle": "حفظ Premium في حسابك",
+  "savePremiumToAccountDesc": "سجّل الدخول مرة واحدة للتحقق من المعاملات ومزامنة خطتك.",
+  "signInFailed": "فشل تسجيل الدخول.",
+  "dailyRecapTitle": "ملخص نهاية اليوم",
+  "recapReadyAfterTime": "سيكون الملخص جاهزًا بعد الساعة 22:00 بمجرد توفر بيانات المسح اليوم.",
+  "todayRecap": "ملخص اليوم",
+  "mealsLoggedCount": "تم تسجيل {count} وجبات",
+  "consumedToday": "تم استهلاكه اليوم",
+  "targetCaloProgress": "{percent}% من هدف {target} سعرة",
+  "aiReview": "تقييم الذكاء الاصطناعي",
+  "tomorrowTipTitle": "نصيحة للغد",
+  "finishDayButton": "إتمام اليوم",
+  "reportButton": "تقرير",
+  "likeTooltip": "أعجبني",
+  "dislikeTooltip": "لم يعجبني",
+  "addCustomFoodTitle": "إضافة طعام يدويًا",
+  "foodNameLabel": "اسم الطعام",
+  "foodNameHint": "أدخل اسم الطعام...",
+  "caloriePer100gLabel": "السعرات (سعرة / 100 جم)",
+  "addNow": "إضافة الآن",
+  "logFoodTitle": "تسجيل الطعام",
+  "creditsPurchasedSuccess": "تم التحقق وإضافة رصيد المسح إلى حسابك.",
+  "progressPhotosTitle": "صور التقدم",
+  "photosCount": "{count} صور",
+  "creditsCountSuffix": "{count} رصيد",
+  "quizStepCount": "الخطوة {current} / 3",
+  "quizMealPatternTitle": "وجباتك اليومية",
+  "quizMealPatternDesc": "كم عدد الوجبات التي ترغب في تقسيم سعراتك اليومية عليها؟",
+  "quizMealPattern3Title": "3 وجبات رئيسية",
+  "quizMealPattern3Desc": "فطور - غداء - عشاء قياسي، سهل التحكم",
+  "quizMealPattern3SnackTitle": "3 وجبات رئيسية + وجبة خفيفة",
+  "quizMealPattern3SnackDesc": "يتضمن وجبة خفيفة بعد الظهر لتجنب الجوع",
+  "quizMealPatternIFTitle": "وجبتان رئيسيتان (صيام متقطع)",
+  "quizMealPatternIFDesc": "يتبع نمط الصيام المتقطع 16:8",
+  "quizMealPatternSmallTitle": "4 - 5 وجبات صغيرة",
+  "quizMealPatternSmallDesc": "توزيع الطاقة بالتساوي على مدار اليوم",
+  "quizVarietyTitle": "مرونة قائمة الطعام",
+  "quizVarietyDesc": "كيف تفضل اقتراحات الوجبات؟",
+  "quizVarietySimpleTitle": "تكرار بسيط",
+  "quizVarietySimpleDesc": "اطبخ مرة واحدة وتناول 2-3 وجبات، وفر الوقت",
+  "quizVarietyRotateTitle": "تنوع يومي",
+  "quizVarietyRotateDesc": "قائمة جديدة كل يوم لتجنب الملل",
+  "quizVarietyLocalTitle": "المأكولات المحلية والتقليدية",
+  "quizVarietyLocalDesc": "مكونات يسهل العثور عليها في الأسواق المحلية",
+  "quizPriorityTitle": "أولوياتك الغذائية",
+  "quizPriorityDesc": "ما الذي ترغب في إعطائه الأولوية في خطتك الغذائية؟",
+  "quizOptSatietyTitle": "شبع طويل وسعرات قليلة",
+  "quizOptSatietyDesc": "البروتين والخضار لسهولة الحفاظ على عجز السعرات",
+  "quizOptCalorieFitTitle": "مطابقة السعرات المتبقية",
+  "quizOptCalorieFitDesc": "حصص متطابقة بدقة مع ميزانية كل وجبة",
+  "quizOptSmartSwapTitle": "بدائل ذكية للطعام",
+  "quizOptSmartSwapDesc": "اقتراح وجبات أخف عند تناول كمية إضافية في وقت سابق",
+  "quizOptHighProteinTitle": "بروتين عالي ودهون قليلة",
+  "quizOptHighProteinDesc": "بروتين خالٍ من الدهون لبناء العضلات دون زيادة الدهون",
+  "quizOptTrainingFuelTitle": "وقود التمارين والتعافي",
+  "quizOptTrainingFuelDesc": "توازن البروتين والكربوهيدرات للتمرين والتعافي",
+  "quizOptCalorieSurplusTitle": "فائض صحي من السعرات",
+  "quizOptCalorieSurplusDesc": "تقسيم وجبات سهل للوصول إلى هدف الفائض اليومي",
+  "quizOptBalancedMacrosTitle": "عناصر غذائية متوازنة",
+  "quizOptBalancedMacrosDesc": "الحفاظ على استقرار البروتين والكربوهيدرات والدهون يوميًا",
+  "quizOptWeightStabilityTitle": "استقرار الوزن",
+  "quizOptWeightStabilityDesc": "وجبات تتطابق مع سعرات الحفاظ على الوزن الحالية",
+  "quizOptFlexibleWeekendsTitle": "عطلات نهاية أسبوع مرنة",
+  "quizOptFlexibleWeekendsDesc": "إعادة توازن الوجبات بعد الاستمتاع بوجبة اجتماعية",
+  "quizSyncAnswersLater": "متابعة، مزامنة الإجابات لاحقًا",
+  "quizCompleteAndGenerateMenu": "إكمال وإنشاء القائمة",
+  "quizSettingUpMenu": "يقوم CalGo بإعداد قائمتك...",
+  "quizPersonalizingCalories": "تخصيص السعرات الحرارية وأنسب الوجبات لك",
+  "quizFinalizingSetup": "جارٍ إنهاء الإعداد",
+  "searchFoodOrIngredientsHint": "البحث عن طعام أو مكونات...",
+  "searchResultsTitle": "نتائج البحث",
+  "searchingInProgress": "جارٍ البحث...",
+  "nutritionServerConnectError": "تعذر الاتصال بخادم التغذية."
 }

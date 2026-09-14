@@ -65,15 +65,22 @@ class RevenueCatService {
     return _envApiKey;
   }
 
-  /// Set user ID after login.
-  static Future<void> logIn(String userId) async {
-    if (kIsWeb) return;
-    if (!_initialized) await init(appUserId: userId);
+  /// Set user ID after login, merge anonymous purchases, and verify identity.
+  static Future<LogInResult?> logIn(String userId) async {
+    if (kIsWeb) return null;
+    if (!_initialized) {
+      await init(appUserId: userId);
+      return null;
+    }
     try {
-      final customerInfo = await Purchases.logIn(userId);
-      debugPrint('[RevenueCat] Logged in user: $userId, active entitlements: ${customerInfo.customerInfo.entitlements.active.keys}');
+      final logInResult = await Purchases.logIn(userId);
+      final currentAppUserId = await Purchases.appUserID;
+      final activeEntitlements = logInResult.customerInfo.entitlements.active.keys.toList();
+      debugPrint('[RC] Logged in user: $userId (appUserID: $currentAppUserId, created: ${logInResult.created}), active entitlements: $activeEntitlements');
+      return logInResult;
     } catch (e) {
-      debugPrint('[RevenueCat] Login error: $e');
+      debugPrint('[RC] Login error for $userId: $e');
+      return null;
     }
   }
 
@@ -81,10 +88,11 @@ class RevenueCatService {
   static Future<void> logOut() async {
     if (kIsWeb || !_initialized) return;
     try {
-      await Purchases.logOut();
-      debugPrint('[RevenueCat] Logged out successfully');
+      final customerInfo = await Purchases.logOut();
+      final currentAppUserId = await Purchases.appUserID;
+      debugPrint('[RC] Logged out successfully. New anonymous ID: $currentAppUserId, active: ${customerInfo.entitlements.active.keys.toList()}');
     } catch (e) {
-      debugPrint('[RevenueCat] Logout error: $e');
+      debugPrint('[RC] Logout error: $e');
     }
   }
 

@@ -155,6 +155,7 @@ class OnboardingProvider extends ChangeNotifier {
     }
     _loading = false;
     _initialized = true;
+    _trackStepMilestones(_currentStep);
     notifyListeners();
   }
 
@@ -291,6 +292,21 @@ class OnboardingProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> _trackStepMilestones(int step) async {
+    if (_isRecalculating || _analyticsService == null) return;
+    if (step == 1) {
+      unawaited(_analyticsService.trackOnboardingStarted());
+    } else if (step == 5) {
+      unawaited(_analyticsService.trackOnboardingQ5());
+    } else if (step == 10) {
+      unawaited(_analyticsService.trackOnboardingQ10());
+    } else if (step == 15) {
+      unawaited(_analyticsService.trackOnboardingQ15());
+    } else if (step == 20) {
+      unawaited(_analyticsService.trackOnboardingQ20());
+    }
+  }
+
   Future<void> previousStep() async {
     if (_isRecalculating) {
       switch (_currentStep) {
@@ -375,6 +391,7 @@ class OnboardingProvider extends ChangeNotifier {
       _currentStep++;
       final prefs = await SharedPreferences.getInstance();
       await prefs.setInt(_stepKey, _currentStep);
+      _trackStepMilestones(_currentStep);
       notifyListeners();
     }
   }
@@ -383,6 +400,7 @@ class OnboardingProvider extends ChangeNotifier {
     _currentStep = step.clamp(0, totalSteps - 1);
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt(_stepKey, _currentStep);
+    _trackStepMilestones(_currentStep);
     notifyListeners();
   }
 

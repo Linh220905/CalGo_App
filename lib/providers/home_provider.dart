@@ -196,6 +196,26 @@ class HomeProvider extends ChangeNotifier {
     _service.invalidateCache();
   }
 
+  void reset() {
+    _summary = TodaySummary();
+    _entries = [];
+    _selectedDate = DateTime.now();
+    _loadingSummary = false;
+    _loadingDiary = false;
+    _hasLoaded = false;
+    _error = null;
+    _mealGuidance = null;
+    _loadingMealGuidance = false;
+    _hasViewedMealGuidance = false;
+    _exerciseDay = ExerciseDaySummary.empty('');
+    _syncingHealth = false;
+    _loadGeneration++;
+    _loadRevision++;
+    _service.invalidateCache();
+    _mealGuidanceService.invalidateCache();
+    notifyListeners();
+  }
+
   Future<void> loadToday({
     bool forceRefresh = false,
     String locale = 'en',

@@ -437,7 +437,7 @@ class _ResultPhaseState extends State<_ResultPhase> {
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
               child: PremiumButton(
-                label: isRecalc ? 'Hoàn tất & Lưu mục tiêu' : s.nextStepButton,
+                label: isRecalc ? s.completeAndSaveGoal : s.nextStepButton,
                 loading: _isSaving,
                 onPressed: _isSaving
                     ? null

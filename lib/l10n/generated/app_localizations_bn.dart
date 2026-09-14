@@ -1751,6 +1751,13 @@ class AppLocalizationsBn extends AppLocalizations {
   String get scanCreditsExhausted => 'আপনার কাছে কোন স্ক্যান লেঅাউট নেই।';
 
   @override
+  String get scanSpamDetectedTitle => 'অস্বাভাবিক কার্যকলাপ শনাক্ত হয়েছে';
+
+  @override
+  String get scanSpamDetectedMessage =>
+      'অস্বাভাবিক কার্যকলাপ শনাক্ত হয়েছে, সহায়তার জন্য সাপোর্টে যোগাযোগ করুন।';
+
+  @override
   String get networkRetry => 'সংযোগ খুবই ধীর । আবার চেষ্টা করো।';
 
   @override
@@ -2394,4 +2401,458 @@ class AppLocalizationsBn extends AppLocalizations {
   @override
   String get profileSaveFailed =>
       'প্রোফাইল সংরক্ষণ করা যায়নি। অনুগ্রহ করে আবার চেষ্টা করুন।';
+
+  @override
+  String trialDaysFree(int days) {
+    return '$days দিন বিনামূল্যে ট্রায়াল';
+  }
+
+  @override
+  String enableTrialDaysFree(int days) {
+    return '$days দিনের ফ্রি ট্রায়াল চালু করুন';
+  }
+
+  @override
+  String get trialNoChargeTodayReminder =>
+      'আজ কোনো চার্জ নেই, ২৪ ঘণ্টা আগে অনুস্মারক';
+
+  @override
+  String get trialDirectChargeOnRegister => 'নিবন্ধনের সাথে সাথেই বিল পরিশোধ';
+
+  @override
+  String get trialPaymentSchedule => 'ট্রায়াল পেমেন্টের সময়সূচি:';
+
+  @override
+  String get trialStepToday => 'আজ';
+
+  @override
+  String get trialStepUnlockFree => '৳০ আনলক';
+
+  @override
+  String trialStepDayReminder(int day) {
+    return '$day দিন';
+  }
+
+  @override
+  String get trialStepPushReminder => 'পুশ অনুস্মারক';
+
+  @override
+  String get trialStepChargeStarts => 'বিল শুরু';
+
+  @override
+  String trialDaysCountBadge(int days) {
+    return '$days দিন চেষ্টা করুন ৳০';
+  }
+
+  @override
+  String trialDaysNote(int days) {
+    return '$days দিন চেষ্টা করুন ৳০';
+  }
+
+  @override
+  String get payYearlyNote => 'বার্ষিক বিল';
+
+  @override
+  String get payMonthlyNote => 'মাসিক বিল';
+
+  @override
+  String get trialCancelAnytimeNote =>
+      'আজ কোনো চার্জ নেই। App Store / Google Play সেটিংস থেকে যেকোনো সময় বাতিল করুন।';
+
+  @override
+  String get changeYourselfNow => 'এখনই নিজেকে পরিবর্তন করুন';
+
+  @override
+  String get tryFreeNow => 'এখনই বিনামূল্যে চেষ্টা করুন';
+
+  @override
+  String get completeSetup => 'সেটআপ সম্পন্ন করুন';
+
+  @override
+  String get servicesAndPlans => 'পরিষেবা এবং পরিকল্পনা';
+
+  @override
+  String get connectedStatus => 'সংযুক্ত';
+
+  @override
+  String get notConnectedStatus => 'সংযুক্ত নয়';
+
+  @override
+  String get scanBarcodeTip =>
+      'প্যাকেটজাত খাবারের জন্য, ১০০% সঠিক পুষ্টি জানতে বারকোড স্ক্যান করুন!';
+
+  @override
+  String get scanBarcodeNow => 'এখনই বারকোড স্ক্যান করুন';
+
+  @override
+  String progressForecastPrefix(String goal) {
+    return 'অগ্রগতির পূর্বাভাস • $goal';
+  }
+
+  @override
+  String weeksLeftCount(int weeks) {
+    return 'আর $weeks সপ্তাহ বাকি';
+  }
+
+  @override
+  String reachTargetWeight(String weight) {
+    return '→ $weight কেজি লক্ষ্যে পৌঁছান';
+  }
+
+  @override
+  String get badgeUnlockedTitle => 'ব্যাজ আনলক হয়েছে!';
+
+  @override
+  String get greatExclamation => 'চমৎকার!';
+
+  @override
+  String get appleHealthPermissionDenied =>
+      'অনুমতি প্রদান করা যায়নি। আইফোন সেটিংস > গোপনীয়তা ও নিরাপত্তা > হেলথ-এ অ্যাক্সেস নিশ্চিত করুন।';
+
+  @override
+  String get appleHealthSyncTitle => 'অ্যাপল হেলথ সিঙ্ক';
+
+  @override
+  String get appleHealthSyncDesc =>
+      'CalGo শুধুমাত্র Apple Health থেকে অ্যাক্টিভ শক্তি পড়ে আপনার দৈনিক ক্যালোরি লক্ষ্যে যোগ করে।';
+
+  @override
+  String get appleHealthStatusConnected => 'অবস্থা: সংযুক্ত';
+
+  @override
+  String get appleHealthStatusNotConnected => 'অবস্থা: সংযুক্ত নয়';
+
+  @override
+  String get appleHealthConnectedDesc =>
+      'অ্যাপটির Apple Health এর সাথে ডেটা পড়া ও সিঙ্ক করার অনুমতি রয়েছে।';
+
+  @override
+  String get appleHealthNotConnectedDesc =>
+      'iOS অনুমোদন ডায়ালগ খুলতে নিচের বোতামে ট্যাপ করুন।';
+
+  @override
+  String get appleHealthReconnectButton => 'পুনরায় অনুমোদন / iOS পুনঃসংযোগ';
+
+  @override
+  String get appleHealthConnectButton => 'অ্যাপল হেলথ সংযুক্ত করুন (iOS)';
+
+  @override
+  String get disconnect => 'সংযোগ বিচ্ছিন্ন করুন';
+
+  @override
+  String get scanBarcodeTitle => 'বারকোড স্ক্যান করুন';
+
+  @override
+  String get lookingUpBarcode => 'বারকোড অনুসন্ধান করা হচ্ছে...';
+
+  @override
+  String get alignBarcodeInstruction =>
+      'প্যাকেটের বারকোডের দিকে ক্যামেরা সোজা রাখুন';
+
+  @override
+  String get switchToPhotoScan => 'খাবারের ছবি স্ক্যানে যান';
+
+  @override
+  String get barcodeNotFound =>
+      'এই বারকোডের কোনো তথ্য পাওয়া যায়নি। সরাসরি খাবারের ছবি তোলার চেষ্টা করুন! 📸';
+
+  @override
+  String addedExerciseCaloriesSnackbar(int calories) {
+    return 'আজকের লক্ষ্যে $calories কিলোক্যালরি ব্যায়াম যোগ করা হয়েছে।';
+  }
+
+  @override
+  String get foodNotRecognizedTitle => 'খাবার স্পষ্টভাবে চিহ্নিত করা যায়নি';
+
+  @override
+  String get foodNotRecognizedMessage =>
+      'অনুগ্রহ করে আপনার খাবারের আরও স্পষ্ট ছবি তুলুন অথবা ম্যানুয়ালি খাবার যোগ করুন।';
+
+  @override
+  String get retakePhoto => 'আবার তুলুন';
+
+  @override
+  String get manualFoodEntry => 'ম্যানুয়ালি যোগ করুন';
+
+  @override
+  String get backTooltip => 'পেছনে';
+
+  @override
+  String get exitTooltip => 'প্রস্থান';
+
+  @override
+  String get completeAndSaveGoal => 'সম্পূর্ণ করুন এবং লক্ষ্য সংরক্ষণ করুন';
+
+  @override
+  String get winbackExclusiveOffer => '🔥 বিশেষ অফার';
+
+  @override
+  String winbackStayTitle(String price) {
+    return 'একটু দাঁড়ান! $price/বছর দিয়ে চালিয়ে যান';
+  }
+
+  @override
+  String get winbackDisclaimer =>
+      'মূল্য এবং অফারের শর্তাবলী সরাসরি স্টোর দ্বারা যাচাই করা হয়।';
+
+  @override
+  String winbackSubscribeButton(String price) {
+    return 'সাবস্ক্রাইব করুন $price/বছর';
+  }
+
+  @override
+  String get winbackDismissButton => 'অফার বাতিল করুন';
+
+  @override
+  String get savePremiumToAccountTitle =>
+      'আপনার অ্যাকাউন্টে Premium সংরক্ষণ করুন';
+
+  @override
+  String get savePremiumToAccountDesc =>
+      'লেনদেন যাচাই করতে এবং আপনার পরিকল্পনা সিঙ্ক করতে একবার সাইন ইন করুন।';
+
+  @override
+  String get signInFailed => 'সাইন ইন ব্যর্থ হয়েছে।';
+
+  @override
+  String get dailyRecapTitle => 'দিনের সারসংক্ষেপ';
+
+  @override
+  String get recapReadyAfterTime =>
+      'আজকের স্ক্যান ডেটা থাকলে রাত ১০টার পর সারসংক্ষেপ প্রস্তুত হবে।';
+
+  @override
+  String get todayRecap => 'আজকের সারসংক্ষেপ';
+
+  @override
+  String mealsLoggedCount(int count) {
+    return '$countটি খাবার রেকর্ড করা হয়েছে';
+  }
+
+  @override
+  String get consumedToday => 'আজ খাওয়া হয়েছে';
+
+  @override
+  String targetCaloProgress(String percent, int target) {
+    return '$target কিলোক্যালরি লক্ষ্যের $percent%';
+  }
+
+  @override
+  String get aiReview => 'এআই পর্যালোচনা';
+
+  @override
+  String get tomorrowTipTitle => 'আগামীকালের জন্য পরামর্শ';
+
+  @override
+  String get finishDayButton => 'দিন সমাপ্ত করুন';
+
+  @override
+  String get reportButton => 'রিপোর্ট';
+
+  @override
+  String get likeTooltip => 'পছন্দ';
+
+  @override
+  String get dislikeTooltip => 'অপছন্দ';
+
+  @override
+  String get addCustomFoodTitle => 'ম্যানুয়ালি খাবার যোগ করুন';
+
+  @override
+  String get foodNameLabel => 'খাবারের নাম';
+
+  @override
+  String get foodNameHint => 'খাবারের নাম লিখুন...';
+
+  @override
+  String get caloriePer100gLabel => 'ক্যালোরি (কিলোক্যালরি / ১০০ গ্রাম)';
+
+  @override
+  String get addNow => 'এখনই যোগ করুন';
+
+  @override
+  String get logFoodTitle => 'খাবার রেকর্ড করুন';
+
+  @override
+  String get creditsPurchasedSuccess =>
+      'যাচাই করা হয়েছে এবং আপনার অ্যাকাউন্টে স্ক্যান ক্রেডিট যোগ করা হয়েছে।';
+
+  @override
+  String get progressPhotosTitle => 'অগ্রগতির ছবি';
+
+  @override
+  String photosCount(int count) {
+    return '$countটি ছবি';
+  }
+
+  @override
+  String creditsCountSuffix(int count) {
+    return '$count ক্রেডিট';
+  }
+
+  @override
+  String quizStepCount(int current) {
+    return 'ধাপ $current / ৩';
+  }
+
+  @override
+  String get quizMealPatternTitle => 'আপনার দৈনিক খাবার';
+
+  @override
+  String get quizMealPatternDesc =>
+      'আপনি আপনার দৈনিক ক্যালোরি কতটি খাবারে ভাগ করতে চান?';
+
+  @override
+  String get quizMealPattern3Title => '৩টি প্রধান খাবার';
+
+  @override
+  String get quizMealPattern3Desc =>
+      'সকাল - দুপুর - রাতের আদর্শ খাবার, নিয়ন্ত্রণ করা সহজ';
+
+  @override
+  String get quizMealPattern3SnackTitle => '৩টি প্রধান খাবার + ১টি হালকা খাবার';
+
+  @override
+  String get quizMealPattern3SnackDesc =>
+      'বিকেলের ক্ষুধা মেটাতে হালকা নাস্তা অন্তর্ভুক্ত';
+
+  @override
+  String get quizMealPatternIFTitle =>
+      '২টি প্রধান খাবার (ইন্টারমিটেন্ট ফাস্টিং)';
+
+  @override
+  String get quizMealPatternIFDesc =>
+      '১৬:৮ ইন্টারমিটেন্ট ফাস্টিং সময়সূচী মেনে চলে';
+
+  @override
+  String get quizMealPatternSmallTitle => '৪ - ৫টি ছোট খাবার';
+
+  @override
+  String get quizMealPatternSmallDesc => 'সারাদিনে সমানভাবে শক্তি বিতরণ করে';
+
+  @override
+  String get quizVarietyTitle => 'মেনু নমনীয়তা';
+
+  @override
+  String get quizVarietyDesc => 'আপনি কীভাবে খাবারের পরামর্শ পছন্দ করেন?';
+
+  @override
+  String get quizVarietySimpleTitle => 'সহজ পুনরাবৃত্তি';
+
+  @override
+  String get quizVarietySimpleDesc =>
+      'একবার রান্না করে ২-৩ বার খাওয়া, সময় সাশ্রয়';
+
+  @override
+  String get quizVarietyRotateTitle => 'প্রতিদিনের বৈচিত্র্য';
+
+  @override
+  String get quizVarietyRotateDesc =>
+      'প্রতিদিন নতুন মেনু, খাবারের বৈচিত্র্য বজায় রাখুন';
+
+  @override
+  String get quizVarietyLocalTitle => 'স্থানীয় ও ঐতিহ্যবাহী খাবার';
+
+  @override
+  String get quizVarietyLocalDesc =>
+      'স্থানীয় বাজার ও দোকানে সহজে পাওয়া উপাদান';
+
+  @override
+  String get quizPriorityTitle => 'আপনার খাওয়ার লক্ষ্য';
+
+  @override
+  String get quizPriorityDesc =>
+      'পুষ্টি পরিকল্পনায় আপনি কী অগ্রাধিকার দিতে চান?';
+
+  @override
+  String get quizOptSatietyTitle => 'দীর্ঘ তৃপ্তি, কম ক্যালোরি';
+
+  @override
+  String get quizOptSatietyDesc =>
+      'ক্যালোরি ঘাটতি রাখতে প্রোটিন ও শাকসবজিকে অগ্রাধিকার';
+
+  @override
+  String get quizOptCalorieFitTitle => 'অবশিষ্ট ক্যালোরি মেলান';
+
+  @override
+  String get quizOptCalorieFitDesc =>
+      'প্রতিটি খাবারের ক্যালোরি বাজেটের সাথে সামঞ্জস্যপূর্ণ অংশ';
+
+  @override
+  String get quizOptSmartSwapTitle => 'স্মার্ট খাবার পরিবর্তন';
+
+  @override
+  String get quizOptSmartSwapDesc =>
+      'বেশি খাওয়া হলে হালকা খাবারের পরামর্শ দিন';
+
+  @override
+  String get quizOptHighProteinTitle => 'উচ্চ প্রোটিন, কম চর্বি';
+
+  @override
+  String get quizOptHighProteinDesc =>
+      'অতিরিক্ত চর্বি ছাড়া পেশী বৃদ্ধির জন্য চর্বিহীন প্রোটিন';
+
+  @override
+  String get quizOptTrainingFuelTitle => 'ব্যায়ামের শক্তি এবং পুনরুদ্ধার';
+
+  @override
+  String get quizOptTrainingFuelDesc =>
+      'ব্যায়াম ও পুনরুদ্ধারের জন্য প্রোটিন ও কার্বসের ভারসাম্য';
+
+  @override
+  String get quizOptCalorieSurplusTitle => 'স্বাস্থ্যকর ক্যালোরি উদ্বৃত্ত';
+
+  @override
+  String get quizOptCalorieSurplusDesc =>
+      'দৈনিক উদ্বৃত্ত লক্ষ্যে পৌঁছানোর জন্য সহজ খাবার';
+
+  @override
+  String get quizOptBalancedMacrosTitle => 'ভারসাম্যপূর্ণ ম্যাক্রো';
+
+  @override
+  String get quizOptBalancedMacrosDesc =>
+      'প্রতিদিন প্রোটিন, কার্বস এবং চর্বি স্থিতিশীল রাখুন';
+
+  @override
+  String get quizOptWeightStabilityTitle => 'ওজন স্থিতিশীলতা';
+
+  @override
+  String get quizOptWeightStabilityDesc =>
+      'আপনার বর্তমান রক্ষণাবেক্ষণ ক্যালোরির সাথে মানানসই খাবার';
+
+  @override
+  String get quizOptFlexibleWeekendsTitle => 'নমনীয় সাপ্তাহিক ছুটি';
+
+  @override
+  String get quizOptFlexibleWeekendsDesc =>
+      'সামাজিক খাবারের পর অন্যান্য খাবার পুনরায় ভারসাম্য করুন';
+
+  @override
+  String get quizSyncAnswersLater => 'চালিয়ে যান, পরে উত্তর সিঙ্ক করুন';
+
+  @override
+  String get quizCompleteAndGenerateMenu => 'সম্পূর্ণ করুন এবং মেনু তৈরি করুন';
+
+  @override
+  String get quizSettingUpMenu => 'CalGo আপনার মেনু তৈরি করছে...';
+
+  @override
+  String get quizPersonalizingCalories =>
+      'আপনার জন্য ক্যালোরি এবং সবচেয়ে উপযুক্ত খাবার তৈরি করা হচ্ছে';
+
+  @override
+  String get quizFinalizingSetup => 'সেটআপ সম্পন্ন হচ্ছে';
+
+  @override
+  String get searchFoodOrIngredientsHint => 'খাবার বা উপাদান খুঁজুন...';
+
+  @override
+  String get searchResultsTitle => 'অনুসন্ধানের ফলাফল';
+
+  @override
+  String get searchingInProgress => 'অনুসন্ধান করা হচ্ছে...';
+
+  @override
+  String get nutritionServerConnectError =>
+      'পুষ্টি সার্ভারের সাথে সংযোগ করা যাচ্ছে না।';
 }

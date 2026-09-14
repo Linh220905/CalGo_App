@@ -347,6 +347,17 @@ class _ResultScreenState extends State<ResultScreen> {
       _apiTotalCarb = (data['total_carb'] as num?)?.toDouble() ?? 0;
       _apiTotalProtein = (data['total_protein'] as num?)?.toDouble() ?? 0;
       _apiTotalFat = (data['total_fat'] as num?)?.toDouble() ?? 0;
+
+      // Fallback: If _isMultiDish but _apiTotalCalo is 0 and _dishDetails has calo
+      if (_apiTotalCalo == 0 && _dishDetails.isNotEmpty) {
+        final dishDetailsCalo = _dishDetails.fold(0.0, (sum, d) => sum + d.calo);
+        if (dishDetailsCalo > 0) {
+          _apiTotalCalo = dishDetailsCalo;
+          _apiTotalCarb = _dishDetails.fold(0.0, (sum, d) => sum + d.carb);
+          _apiTotalProtein = _dishDetails.fold(0.0, (sum, d) => sum + d.protein);
+          _apiTotalFat = _dishDetails.fold(0.0, (sum, d) => sum + d.fat);
+        }
+      }
       _dishNameController.text = _monChinh;
       _imageUrl = ApiConfig.resolveMediaUrl(data['image_url']);
       _feedback = data['scan_feedback'] as String?;
@@ -734,7 +745,7 @@ class _ResultScreenState extends State<ResultScreen> {
             ),
           ),
           IconButton(
-            tooltip: 'Thích',
+            tooltip: s.likeTooltip,
             onPressed: () => _handleFeedback('like'),
             icon: Container(
               width: 38,
@@ -753,7 +764,7 @@ class _ResultScreenState extends State<ResultScreen> {
             ),
           ),
           IconButton(
-            tooltip: 'Không thích',
+            tooltip: s.dislikeTooltip,
             onPressed: () => _handleFeedback('dislike'),
             icon: Container(
               width: 38,
@@ -1160,9 +1171,7 @@ class _ResultScreenState extends State<ResultScreen> {
                           const SizedBox(height: 6),
                           _BarcodeTipCard(
                             isDark: isDark,
-                            tipText:
-                                _tipBarcode ??
-                                "Với thực phẩm đóng gói/hộp, bạn hãy thử Quét mã vạch để tra cứu dinh dưỡng chuẩn 100% nhé!",
+                            tipText: _tipBarcode ?? s.scanBarcodeTip,
                             onTap: () => context.push('/barcode-scan'),
                           ),
                         ],
@@ -2044,12 +2053,8 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
   }
 
   void _showLocalResults(String query) {
-    final queryStr = query.trim();
     if (!mounted) return;
     setState(() {
-      if (queryStr.isEmpty) {
-        _searchResults = _mockNoodleItems;
-      }
       _searching = true;
       _searchError = null;
     });
@@ -2062,7 +2067,7 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
 
     if (queryStr.isEmpty) {
       setState(() {
-        _searchResults = _mockNoodleItems;
+        _searchResults = const [];
         _searching = false;
         _searchError = null;
       });
@@ -2093,22 +2098,16 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
       }
     } catch (_) {
       if (mounted && requestId == _searchRequestId) {
+        final s = context.read<AppSettingsProvider>().strings;
         setState(() {
-          _searchError = 'Không thể kết nối máy chủ dinh dưỡng.';
+          _searchError = s.nutritionServerConnectError;
         });
       }
     }
 
     if (mounted && requestId == _searchRequestId) {
       setState(() {
-        final lower = queryStr.toLowerCase();
-        final filtered = _mockNoodleItems.where((item) {
-          final n = (item['name'] ?? '').toString().toLowerCase();
-          final sub = (item['subtitle'] ?? '').toString().toLowerCase();
-          return n.contains(lower) || sub.contains(lower);
-        }).toList();
-
-        _searchResults = filtered.isNotEmpty ? filtered : _mockNoodleItems;
+        _searchResults = const [];
         _searching = false;
       });
     }
@@ -2159,6 +2158,7 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
     final nameCtrl = TextEditingController();
     final calCtrl = TextEditingController(text: '100');
     final textDark = widget.isDark ? Colors.white : const Color(0xFF0F172A);
+    final s = context.read<AppSettingsProvider>().strings;
 
     showDialog(
       context: context,
@@ -2166,7 +2166,7 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         backgroundColor: widget.isDark ? const Color(0xFF212027) : Colors.white,
         title: Text(
-          'Thêm món thủ công',
+          s.addCustomFoodTitle,
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
@@ -2180,9 +2180,9 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
               controller: nameCtrl,
               autofocus: true,
               style: TextStyle(color: textDark),
-              decoration: const InputDecoration(
-                labelText: 'Tên món ăn',
-                hintText: 'Nhập tên món ăn...',
+              decoration: InputDecoration(
+                labelText: s.foodNameLabel,
+                hintText: s.foodNameHint,
               ),
             ),
             const SizedBox(height: 12),
@@ -2190,8 +2190,8 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
               controller: calCtrl,
               keyboardType: TextInputType.number,
               style: TextStyle(color: textDark),
-              decoration: const InputDecoration(
-                labelText: 'Calo (kcal / 100g)',
+              decoration: InputDecoration(
+                labelText: s.caloriePer100gLabel,
               ),
             ),
           ],
@@ -2199,7 +2199,7 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('Hủy'),
+            child: Text(s.cancel),
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
@@ -2227,9 +2227,9 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
                 Navigator.pop(context);
               }
             },
-            child: const Text(
-              'Thêm ngay',
-              style: TextStyle(color: Colors.white),
+            child: Text(
+              s.addNow,
+              style: const TextStyle(color: Colors.white),
             ),
           ),
         ],
@@ -2259,9 +2259,7 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
       screenHeight * 0.94,
     );
 
-    final displayResults = _searchResults.isNotEmpty
-        ? _searchResults
-        : _mockNoodleItems;
+    final displayResults = _searchResults;
 
     return AnimatedPadding(
       duration: const Duration(milliseconds: 220),
@@ -2322,7 +2320,7 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
                   ),
                 ),
                 Text(
-                  _selectedHit == null ? 'Ghi món ăn' : s.choosePortion,
+                  _selectedHit == null ? s.logFoodTitle : s.choosePortion,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -2358,7 +2356,7 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
                   controller: _queryController,
                   style: TextStyle(fontSize: 15, color: textDark),
                   decoration: InputDecoration(
-                    hintText: 'Tìm món ăn hoặc nguyên liệu...',
+                    hintText: s.searchFoodOrIngredientsHint,
                     hintStyle: TextStyle(color: textMuted, fontSize: 15),
                     prefixIcon: Icon(
                       Icons.search_rounded,
@@ -2395,7 +2393,7 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
 
               // ── Section Title: Kết quả tìm kiếm ────────────────
               Text(
-                'Kết quả tìm kiếm',
+                s.searchResultsTitle,
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.w800,
@@ -2411,7 +2409,7 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
                     ? Center(
                         child: Text(
                           _searching
-                              ? 'Đang tìm kiếm...'
+                              ? s.searchingInProgress
                               : (_searchError ?? s.ingredientNotFound),
                           style: TextStyle(color: textMuted),
                         ),
@@ -2955,6 +2953,7 @@ class _BarcodeTipCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = context.watch<AppSettingsProvider>().strings;
     final bgColor = isDark ? const Color(0xFF1E293B) : const Color(0xFFF0FDF4);
     final borderColor = isDark
         ? const Color(0xFF334155)
@@ -3000,19 +2999,19 @@ class _BarcodeTipCard extends StatelessWidget {
                 const SizedBox(height: 6),
                 InkWell(
                   onTap: onTap,
-                  child: const Row(
+                  child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        "Quét mã vạch ngay",
-                        style: TextStyle(
+                        s.scanBarcodeNow,
+                        style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
                           color: Color(0xFF22C55E),
                         ),
                       ),
-                      SizedBox(width: 4),
-                      Icon(
+                      const SizedBox(width: 4),
+                      const Icon(
                         Icons.arrow_forward_rounded,
                         size: 14,
                         color: Color(0xFF22C55E),

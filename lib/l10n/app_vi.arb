@@ -816,6 +816,8 @@
   "manageSubscription": "Quản lý gói",
   "manageSubscriptionFailed": "Không thể mở trang quản lý gói.",
   "scanCreditsExhausted": "Bạn đã hết lượt quét.",
+  "scanSpamDetectedTitle": "Phát hiện dấu hiệu bất thường",
+  "scanSpamDetectedMessage": "Hệ thống phát hiện dấu hiệu bất thường, vui lòng liên hệ hỗ trợ.",
   "networkRetry": "Kết nối chậm, thử lại nhé.",
   "scanUnavailable": "Chưa phân tích được ảnh này.",
   "notificationChannelName": "Nhắc nhở bữa ăn hàng ngày",
@@ -1166,5 +1168,190 @@
   "dailySummaryBannerTitle": "Tổng kết ngày & AI Coach",
   "dailySummaryBannerSubtitle": "Xem đánh giá dinh dưỡng & nhận EXP",
   "cannotOpenShareSheet": "Không thể mở bảng chia sẻ.",
-  "profileSaveFailed": "Không thể lưu hồ sơ. Vui lòng thử lại."
+  "profileSaveFailed": "Không thể lưu hồ sơ. Vui lòng thử lại.",
+  "trialDaysFree": "Dùng thử {days} ngày miễn phí",
+  "@trialDaysFree": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "enableTrialDaysFree": "Bật thử miễn phí {days} ngày",
+  "@enableTrialDaysFree": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "trialNoChargeTodayReminder": "Không mất tiền hôm nay, nhắc trước 24h",
+  "trialDirectChargeOnRegister": "Thanh toán trực tiếp ngay khi đăng ký",
+  "trialPaymentSchedule": "Lịch trình thanh toán dùng thử:",
+  "trialStepToday": "Hôm nay",
+  "trialStepUnlockFree": "Mở khóa 0đ",
+  "trialStepDayReminder": "Ngày {day}",
+  "@trialStepDayReminder": {
+    "placeholders": {
+      "day": {
+        "type": "int"
+      }
+    }
+  },
+  "trialStepPushReminder": "Push nhắc nhở",
+  "trialStepChargeStarts": "Bắt đầu tính phí",
+  "trialDaysCountBadge": "THỬ {days} NGÀY 0đ",
+  "@trialDaysCountBadge": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "trialDaysNote": "Thử {days} ngày 0đ",
+  "@trialDaysNote": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "payYearlyNote": "Thanh toán mỗi năm",
+  "payMonthlyNote": "Thanh toán mỗi tháng",
+  "trialCancelAnytimeNote": "Không tính phí hôm nay. Hủy bất kỳ lúc nào trong cài đặt App Store / Google Play.",
+  "changeYourselfNow": "Thay đổi bản thân ngay",
+  "tryFreeNow": "Dùng miễn phí ngay",
+  "completeSetup": "Hoàn tất thiết lập",
+  "servicesAndPlans": "Dịch vụ & Gói cước",
+  "connectedStatus": "Đã kết nối",
+  "notConnectedStatus": "Chưa kết nối",
+  "scanBarcodeTip": "Với thực phẩm đóng gói/hộp, bạn hãy thử Quét mã vạch để tra cứu dinh dưỡng chuẩn 100% nhé!",
+  "scanBarcodeNow": "Quét mã vạch ngay",
+  "progressForecastPrefix": "Dự báo tiến trình • {goal}",
+  "@progressForecastPrefix": {
+    "placeholders": {
+      "goal": {
+        "type": "String"
+      }
+    }
+  },
+  "weeksLeftCount": "{weeks} tuần nữa",
+  "@weeksLeftCount": {
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
+  "reachTargetWeight": "→ Chạm mốc {weight}kg",
+  "@reachTargetWeight": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
+  "badgeUnlockedTitle": "MỞ KHÓA HUY HIỆU!",
+  "greatExclamation": "Tuyệt vời!",
+  "appleHealthPermissionDenied": "Chưa thể cấp quyền. Hãy đảm bảo bạn đã cấp quyền trong Cài đặt iPhone > Quyền riêng tư & Bật Apple Health.",
+  "appleHealthSyncTitle": "Đồng bộ Apple Health",
+  "appleHealthSyncDesc": "CalGo chỉ đọc Năng lượng hoạt động đã đốt (Active Energy) từ Apple Health để cộng vào mục tiêu calo trong ngày.",
+  "appleHealthStatusConnected": "Trạng thái: Đã kết nối",
+  "appleHealthStatusNotConnected": "Trạng thái: Chưa kết nối",
+  "appleHealthConnectedDesc": "Ứng dụng đã được cấp quyền đọc & ghi dữ liệu với Apple Health.",
+  "appleHealthNotConnectedDesc": "Nhấn nút bên dưới để mở hộp thoại ủy quyền từ hệ thống iOS.",
+  "appleHealthReconnectButton": "Cấp lại quyền / Kết nối lại iOS",
+  "appleHealthConnectButton": "Kết nối Apple Health (iOS)",
+  "disconnect": "Ngắt kết nối",
+  "scanBarcodeTitle": "Quét mã vạch",
+  "lookingUpBarcode": "Đang tra cứu mã vạch...",
+  "alignBarcodeInstruction": "Di chuyển camera vào mã vạch trên bao bì",
+  "switchToPhotoScan": "Chuyển sang chụp ảnh món",
+  "barcodeNotFound": "Chưa tìm thấy dữ liệu cho mã vạch này. Bạn hãy thử chụp trực tiếp ảnh món ăn nhé! 📸",
+  "addedExerciseCaloriesSnackbar": "Đã cộng {calories} kcal tập luyện vào mục tiêu hôm nay.",
+  "foodNotRecognizedTitle": "Chưa nhận diện rõ món ăn",
+  "foodNotRecognizedMessage": "Vui lòng chụp lại ảnh món ăn rõ ràng hơn hoặc nhập món ăn thủ công nhé.",
+  "retakePhoto": "Chụp lại",
+  "manualFoodEntry": "Nhập thủ công",
+  "backTooltip": "Quay lại",
+  "exitTooltip": "Thoát",
+  "completeAndSaveGoal": "Hoàn tất & Lưu mục tiêu",
+  "winbackExclusiveOffer": "🔥 ƯU ĐÃI DÀNH RIÊNG",
+  "winbackStayTitle": "Chờ chút! Tiếp tục với gói {price}/năm",
+  "winbackDisclaimer": "Mức giá và điều kiện ưu đãi được xác nhận trực tiếp bởi cửa hàng.",
+  "winbackSubscribeButton": "Đăng ký {price}/năm",
+  "winbackDismissButton": "Bỏ qua ưu đãi",
+  "savePremiumToAccountTitle": "Lưu Premium vào tài khoản của bạn",
+  "savePremiumToAccountDesc": "Đăng nhập một lần để xác minh giao dịch và đồng bộ kế hoạch cá nhân hóa.",
+  "signInFailed": "Đăng nhập không thành công.",
+  "dailyRecapTitle": "Tổng kết cuối ngày",
+  "recapReadyAfterTime": "Tổng kết sẽ sẵn sàng sau 22:00, khi bạn đã có dữ liệu quét trong ngày.",
+  "todayRecap": "Tổng kết hôm nay",
+  "mealsLoggedCount": "{count} bữa đã ghi",
+  "consumedToday": "đã ăn hôm nay",
+  "targetCaloProgress": "{percent}% mục tiêu {target} kcal",
+  "aiReview": "Nhận xét từ AI",
+  "tomorrowTipTitle": "Gợi ý cho ngày mai",
+  "finishDayButton": "Hoàn thành ngày",
+  "reportButton": "Báo cáo",
+  "likeTooltip": "Thích",
+  "dislikeTooltip": "Không thích",
+  "addCustomFoodTitle": "Thêm món thủ công",
+  "foodNameLabel": "Tên món ăn",
+  "foodNameHint": "Nhập tên món ăn...",
+  "caloriePer100gLabel": "Calo (kcal / 100g)",
+  "addNow": "Thêm ngay",
+  "logFoodTitle": "Ghi món ăn",
+  "creditsPurchasedSuccess": "Đã xác minh và cộng lượt quét vào tài khoản.",
+  "progressPhotosTitle": "Ảnh tiến trình",
+  "photosCount": "{count} ảnh",
+  "creditsCountSuffix": "{count} lượt",
+  "quizStepCount": "Bước {current} / 3",
+  "quizMealPatternTitle": "Bữa ăn trong ngày của bạn",
+  "quizMealPatternDesc": "Bạn muốn chia lượng Calo hằng ngày thành mấy bữa?",
+  "quizMealPattern3Title": "3 Bữa chính",
+  "quizMealPattern3Desc": "Sáng - Trưa - Tối chuẩn mực, dễ kiểm soát",
+  "quizMealPattern3SnackTitle": "3 Bữa chính + 1 Bữa phụ",
+  "quizMealPattern3SnackDesc": "Có thêm snack nhẹ chống đói buổi chiều",
+  "quizMealPatternIFTitle": "2 Bữa chính (Intermittent Fasting)",
+  "quizMealPatternIFDesc": "Theo chế độ nhịn ăn gián đoạn 16:8",
+  "quizMealPatternSmallTitle": "4 - 5 Bữa nhỏ",
+  "quizMealPatternSmallDesc": "Chia nhỏ năng lượng đều đặn trong ngày",
+  "quizVarietyTitle": "Mức độ linh hoạt thực đơn",
+  "quizVarietyDesc": "Bạn thích thực đơn được gợi ý như thế nào?",
+  "quizVarietySimpleTitle": "Lặp lại tối giản",
+  "quizVarietySimpleDesc": "Nấu 1 lần ăn 2-3 bữa, tiết kiệm thời gian",
+  "quizVarietyRotateTitle": "Đổi món liên tục",
+  "quizVarietyRotateDesc": "Mỗi ngày 1 thực đơn mới, không lo ngán",
+  "quizVarietyLocalTitle": "Ưu tiên món ăn Việt",
+  "quizVarietyLocalDesc": "Nguyên liệu dễ tìm ở chợ & siêu thị Việt",
+  "quizPriorityTitle": "Mục tiêu ăn uống của bạn",
+  "quizPriorityDesc": "Bạn muốn ưu tiên điều gì trong kế hoạch ăn uống?",
+  "quizOptSatietyTitle": "No lâu, ít calo",
+  "quizOptSatietyDesc": "Ưu tiên protein, rau và món ít dầu để dễ giữ thâm hụt",
+  "quizOptCalorieFitTitle": "Khớp calo còn lại",
+  "quizOptCalorieFitDesc": "Chọn khẩu phần sát ngân sách calo của từng bữa",
+  "quizOptSmartSwapTitle": "Thay món thông minh",
+  "quizOptSmartSwapDesc": "Gợi ý món nhẹ hơn khi hôm nay đã ăn hơi nhiều",
+  "quizOptHighProteinTitle": "Nhiều protein, ít fat",
+  "quizOptHighProteinDesc": "Ưu tiên đạm nạc để hỗ trợ tăng cơ mà không đội mỡ",
+  "quizOptTrainingFuelTitle": "Nhiên liệu tập luyện",
+  "quizOptTrainingFuelDesc": "Cân bằng protein và carb cho buổi tập, phục hồi",
+  "quizOptCalorieSurplusTitle": "Đủ calo tăng cân",
+  "quizOptCalorieSurplusDesc": "Chia bữa dễ ăn để đạt mức calo dư mỗi ngày",
+  "quizOptBalancedMacrosTitle": "Cân bằng macro",
+  "quizOptBalancedMacrosDesc": "Giữ protein, carb và fat ổn định qua từng ngày",
+  "quizOptWeightStabilityTitle": "Giữ cân ổn định",
+  "quizOptWeightStabilityDesc": "Ưu tiên món khớp mức calo duy trì hiện tại",
+  "quizOptFlexibleWeekendsTitle": "Linh hoạt cuối tuần",
+  "quizOptFlexibleWeekendsDesc": "Cân lại các bữa sau khi có một bữa ăn thoải mái",
+  "quizSyncAnswersLater": "Tiếp tục, đồng bộ câu trả lời sau",
+  "quizCompleteAndGenerateMenu": "Hoàn tất & Tạo thực đơn",
+  "quizSettingUpMenu": "CalGo đang thiết lập thực đơn...",
+  "quizPersonalizingCalories": "Đang cá nhân hóa lượng Calo và món ăn phù hợp nhất cho bạn",
+  "quizFinalizingSetup": "Đang hoàn tất thiết lập",
+  "searchFoodOrIngredientsHint": "Tìm món ăn hoặc nguyên liệu...",
+  "searchResultsTitle": "Kết quả tìm kiếm",
+  "searchingInProgress": "Đang tìm kiếm...",
+  "nutritionServerConnectError": "Không thể kết nối máy chủ dinh dưỡng."
 }

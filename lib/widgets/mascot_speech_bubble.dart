@@ -39,11 +39,11 @@ class MascotSpeechBubble extends StatelessWidget {
               ),
             ),
           ),
-          // Main Bubble Container - Fixed height 64px for rock-solid UI stability
+          // Main Bubble Container - Dynamic height with min-height, auto text wrapping & scaling
           Container(
             width: double.infinity,
-            height: 64,
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            constraints: const BoxConstraints(minHeight: 48),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
             decoration: BoxDecoration(
               color: bubbleBg,
               borderRadius: const BorderRadius.only(
@@ -65,17 +65,16 @@ class MascotSpeechBubble extends StatelessWidget {
             ),
             child: Align(
               alignment: Alignment.centerLeft,
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: Text(
-                  message,
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                    color: textColor,
-                    height: 1.34,
-                    letterSpacing: -0.1,
-                  ),
+              child: Text(
+                message,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: 11.5,
+                  fontWeight: FontWeight.w600,
+                  color: textColor,
+                  height: 1.25,
+                  letterSpacing: -0.2,
                 ),
               ),
             ),

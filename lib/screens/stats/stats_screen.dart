@@ -3066,6 +3066,7 @@ class _ProgressPhotosCard extends StatelessWidget {
   Widget build(BuildContext context) {
     if (photos.isEmpty) return const SizedBox.shrink();
     final authHeaders = context.watch<AuthProvider>().api.authHeaders;
+    final s = context.watch<AppSettingsProvider>().strings;
 
     return _Card(
       card: card,
@@ -3079,7 +3080,7 @@ class _ProgressPhotosCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Ảnh tiến trình',
+                s.progressPhotosTitle,
                 style: TextStyle(
                   color: text,
                   fontSize: 20,
@@ -3087,7 +3088,7 @@ class _ProgressPhotosCard extends StatelessWidget {
                 ),
               ),
               Text(
-                '${photos.length} ảnh',
+                s.photosCount(photos.length),
                 style: TextStyle(color: muted, fontSize: 13),
               ),
             ],

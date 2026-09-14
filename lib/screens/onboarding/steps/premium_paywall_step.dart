@@ -16,6 +16,7 @@ import '../../../widgets/premium_ui.dart';
 import '../../../services/trial_notification_service.dart';
 import '../../../services/analytics_service.dart';
 import '../../../utils/payment_platform.dart';
+import '../../../l10n/generated/app_localizations.dart';
 import 'post_premium_quiz_dialog.dart';
 
 // ═══════════════════════════════════════════════════════════════
@@ -257,6 +258,7 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
   void _showWinbackDownsellDialog() {
     setState(() => _hasShownDownsell = true);
     final payment = context.read<PaymentProvider>();
+    final s = context.read<AppSettingsProvider>().strings;
     final winback = payment.premiumOfferWithTag(PremiumPlan.annual, 'winback');
     if (winback == null) {
       _proceedClose();
@@ -278,7 +280,7 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Text(
-                '🔥 ƯU ĐÃI DÀNH RIÊNG',
+                s.winbackExclusiveOffer,
                 style: _f(
                   10.5,
                   weight: FontWeight.w800,
@@ -288,13 +290,13 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
             ),
             const SizedBox(height: 12),
             Text(
-              'Chờ chút! Tiếp tục với gói ${winback.recurringPrice}/năm',
+              s.winbackStayTitle(winback.recurringPrice),
               textAlign: TextAlign.center,
               style: _f(18, weight: FontWeight.w800, letterSpacing: -0.3),
             ),
             const SizedBox(height: 8),
             Text(
-              'Mức giá và điều kiện ưu đãi được xác nhận trực tiếp bởi cửa hàng.',
+              s.winbackDisclaimer,
               textAlign: TextAlign.center,
               style: _f(12.5, color: _kMuted, height: 1.35),
             ),
@@ -320,7 +322,7 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
                   ),
                 ),
                 child: Text(
-                  'Đăng ký ${winback.recurringPrice}/năm',
+                  s.winbackSubscribeButton(winback.recurringPrice),
                   style: _f(14, weight: FontWeight.w800, color: Colors.white),
                 ),
               ),
@@ -332,7 +334,7 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
                 _proceedClose();
               },
               child: Text(
-                'Bỏ qua ưu đãi',
+                s.winbackDismissButton,
                 style: _f(12, color: _kMuted, weight: FontWeight.w600),
               ),
             ),
@@ -376,6 +378,7 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
                 error = null;
               });
               final provider = context.read<AuthProvider>();
+              final s = context.read<AppSettingsProvider>().strings;
               final success = method == 'google'
                   ? await provider.signInWithGoogle()
                   : await provider.signInWithApple();
@@ -387,7 +390,7 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
                   } else {
                     appleBusy = false;
                   }
-                  error = provider.error ?? 'Đăng nhập không thành công.';
+                  error = provider.error ?? s.signInFailed;
                 });
                 return;
               }
@@ -398,6 +401,7 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
             final showApple =
                 defaultTargetPlatform == TargetPlatform.iOS ||
                 defaultTargetPlatform == TargetPlatform.macOS;
+            final s = context.read<AppSettingsProvider>().strings;
             return SafeArea(
               child: Padding(
                 padding: EdgeInsets.fromLTRB(
@@ -410,20 +414,20 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      'Lưu Premium vào tài khoản của bạn',
+                      s.savePremiumToAccountTitle,
                       textAlign: TextAlign.center,
                       style: _f(21, weight: FontWeight.w800),
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'Đăng nhập một lần để xác minh giao dịch và đồng bộ kế hoạch cá nhân hóa.',
+                      s.savePremiumToAccountDesc,
                       textAlign: TextAlign.center,
                       style: _f(12.5, color: _kMuted, height: 1.4),
                     ),
                     const SizedBox(height: 20),
                     SocialAuthButton(
                       type: SocialAuthType.google,
-                      label: 'Tiếp tục với Google',
+                      label: s.continueWithGoogle,
                       isLoading: googleBusy,
                       onTap: () => signIn('google'),
                     ),
@@ -431,7 +435,7 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
                       const SizedBox(height: 12),
                       SocialAuthButton(
                         type: SocialAuthType.apple,
-                        label: 'Tiếp tục với Apple',
+                        label: s.continueWithApple,
                         isLoading: appleBusy,
                         onTap: () => signIn('apple'),
                       ),
@@ -449,7 +453,7 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
                       onPressed: googleBusy || appleBusy
                           ? null
                           : () => Navigator.pop(sheetContext, false),
-                      child: const Text('Để sau'),
+                      child: Text(s.cancel),
                     ),
                   ],
                 ),
@@ -507,8 +511,8 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
   /// Known trial days per plan for the QA/testing build only.
   static int _knownTrialDays(_Plan plan) => switch (plan) {
     _Plan.weekly => 0, // Weekly never has a trial
-    _Plan.monthly => 3,
-    _Plan.annual => 7,
+    _Plan.monthly => 0, // Monthly has no trial
+    _Plan.annual => 3, // Annual has 3-day trial
   };
 
   int _currentTrialDays(PaymentProvider payment) {
@@ -529,17 +533,18 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
     String fallback,
     String testingLabel,
     PaymentProvider payment,
+    AppLocalizations s,
   ) {
     const testing = AppBuildConfig.isTesting;
     if (testing) return testingLabel;
     if (_selectedPlan == _Plan.weekly) {
-      return 'Thay đổi bản thân ngay';
+      return s.changeYourselfNow;
     }
     final days = _currentTrialDays(payment);
     if (_enableFreeTrial && days > 0) {
-      return 'Dùng miễn phí ngay';
+      return s.tryFreeNow;
     }
-    return 'Thay đổi bản thân ngay';
+    return s.changeYourselfNow;
   }
 
   @override
@@ -560,9 +565,11 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
         premiumState == PurchaseState.verifying;
     final activated = testing || premiumState == PurchaseState.purchased;
     final trialDays = _currentTrialDays(payment);
-    // Weekly plan never has a trial. Monthly and annual show the toggle only
-    // when the Store has confirmed an eligible introductory offer.
-    final trialAvailable = testing || _selectedPlan != _Plan.weekly;
+    // Weekly and Monthly have no trial. Annual shows the toggle only
+    // when trial is available.
+    final trialAvailable = testing
+        ? _selectedPlan == _Plan.annual
+        : trialDays > 0;
     final trialEnabled = _enableFreeTrial && trialAvailable && trialDays > 0;
 
     return Scaffold(
@@ -617,7 +624,7 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
                                 ? s.continueFreePremium
                                 : activated
                                 ? _quizCompleted
-                                      ? 'Hoàn tất thiết lập'
+                                      ? s.completeSetup
                                       : s.premiumActivated
                                 : buying
                                 ? s.processingShort
@@ -625,6 +632,7 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
                                     s.continueLabel,
                                     s.continueFreePremium,
                                     payment,
+                                    s,
                                   )
                           : testing
                           ? s.premiumFreeUnlocked
@@ -636,6 +644,7 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
                               s.subscribePremium,
                               s.premiumFreeUnlocked,
                               payment,
+                              s,
                             ),
                       loading: buying,
                       onPressed: buying
@@ -652,7 +661,7 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
                           ? s.premiumTestingNote
                           : trialEnabled
                           ? paymentCopyForPlatform(
-                              'Không tính phí hôm nay. Hủy bất kỳ lúc nào trong cài đặt App Store / Google Play.',
+                              s.trialCancelAnytimeNote,
                             )
                           : s.premiumAutoRenewNote,
                       textAlign: TextAlign.center,
@@ -952,13 +961,13 @@ class _PricingRow extends StatelessWidget {
       if (offer != null && offer.recurringPrice.isNotEmpty) {
         return offer.recurringPrice;
       }
-      return 'Không khả dụng';
+      return s.scanUnavailable;
     }
 
     String trialNote(PremiumOffer? offer, String paidNote) {
       if (testing) return s.testingAccess;
       if (enableFreeTrial && offer?.hasFreeTrial == true) {
-        return 'Thử ${offer!.trialDays} ngày \$0';
+        return s.trialDaysNote(offer!.trialDays);
       }
       return paidNote;
     }
@@ -966,12 +975,12 @@ class _PricingRow extends StatelessWidget {
     String weeklyOf(PremiumOffer? offer, _Plan plan) {
       if (testing) {
         return switch (plan) {
-          _Plan.weekly => '~29k / tuần',
-          _Plan.monthly => '~11k / tuần',
-          _Plan.annual => '~9k / tuần',
+          _Plan.weekly => '~29k ${s.perWeekText}',
+          _Plan.monthly => '~11k ${s.perWeekText}',
+          _Plan.annual => '~9k ${s.perWeekText}',
         };
       }
-      return offer?.weeklyPrice != null ? '${offer!.weeklyPrice} / tuần' : '';
+      return offer?.weeklyPrice != null ? '${offer!.weeklyPrice} ${s.perWeekText}' : '';
     }
 
     return Row(
@@ -993,14 +1002,14 @@ class _PricingRow extends StatelessWidget {
           child: _PriceCard(
             title: s.planYear,
             price: priceOf(annualOffer),
-            note: trialNote(annualOffer, 'Thanh toán mỗi năm'),
+            note: trialNote(annualOffer, s.payYearlyNote),
             weeklyLabel: weeklyOf(annualOffer, _Plan.annual),
             selected: selectedPlan == _Plan.annual,
             highlighted: true,
             badge:
                 enableFreeTrial &&
                     (annualOffer?.hasFreeTrial == true || testing)
-                ? 'THỬ ${testing ? 7 : annualOffer!.trialDays} NGÀY \$0'
+                ? s.trialDaysCountBadge(testing ? 3 : annualOffer!.trialDays)
                 : s.popularMost,
             onTap: () => onChanged(_Plan.annual),
           ),
@@ -1010,13 +1019,11 @@ class _PricingRow extends StatelessWidget {
           child: _PriceCard(
             title: s.planMonth,
             price: priceOf(monthlyOffer),
-            note: trialNote(monthlyOffer, 'Thanh toán mỗi tháng'),
+            note: trialNote(monthlyOffer, s.payMonthlyNote),
             weeklyLabel: weeklyOf(monthlyOffer, _Plan.monthly),
             selected: selectedPlan == _Plan.monthly,
             highlighted: false,
-            badge: enableFreeTrial && monthlyOffer?.hasFreeTrial == true
-                ? 'THỬ ${monthlyOffer!.trialDays} NGÀY \$0'
-                : null,
+            badge: null,
             onTap: () => onChanged(_Plan.monthly),
           ),
         ),
@@ -1038,6 +1045,7 @@ class _FreeTrialToggleRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = context.watch<AppSettingsProvider>().strings;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
       decoration: BoxDecoration(
@@ -1068,14 +1076,14 @@ class _FreeTrialToggleRow extends StatelessWidget {
               children: [
                 Text(
                   enabled
-                      ? 'Dùng thử $trialDays ngày miễn phí'
-                      : 'Bật thử miễn phí $trialDays ngày',
+                      ? s.trialDaysFree(trialDays)
+                      : s.enableTrialDaysFree(trialDays),
                   style: _f(13, weight: FontWeight.w700, color: _kInk),
                 ),
                 Text(
                   enabled
-                      ? 'Không mất tiền hôm nay, nhắc trước 24h'
-                      : 'Thanh toán trực tiếp ngay khi đăng ký',
+                      ? s.trialNoChargeTodayReminder
+                      : s.trialDirectChargeOnRegister,
                   style: _f(10.5, color: _kMuted),
                 ),
               ],
@@ -1099,6 +1107,7 @@ class _VisualPaymentTimeline extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = context.watch<AppSettingsProvider>().strings;
     final reminderDay = trialDays > 1 ? trialDays - 1 : 1;
 
     return Container(
@@ -1112,7 +1121,7 @@ class _VisualPaymentTimeline extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Lịch trình thanh toán dùng thử:',
+            s.trialPaymentSchedule,
             style: _f(11.5, weight: FontWeight.w700, color: _kInk),
           ),
           const SizedBox(height: 10),
@@ -1120,22 +1129,22 @@ class _VisualPaymentTimeline extends StatelessWidget {
             children: [
               _buildTimelineStep(
                 icon: Icons.lock_open_rounded,
-                title: 'Hôm nay',
-                sub: 'Mở khóa \$0',
+                title: s.trialStepToday,
+                sub: s.trialStepUnlockFree,
                 active: true,
               ),
               _buildConnector(),
               _buildTimelineStep(
                 icon: Icons.notifications_active_rounded,
-                title: 'Ngày $reminderDay',
-                sub: 'Push nhắc nhở',
+                title: s.trialStepDayReminder(reminderDay),
+                sub: s.trialStepPushReminder,
                 active: false,
               ),
               _buildConnector(),
               _buildTimelineStep(
                 icon: Icons.credit_card_rounded,
-                title: 'Ngày $trialDays',
-                sub: 'Bắt đầu tính phí',
+                title: s.trialStepDayReminder(trialDays),
+                sub: s.trialStepChargeStarts,
                 active: false,
               ),
             ],

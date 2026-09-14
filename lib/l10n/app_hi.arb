@@ -807,6 +807,8 @@
   "manageSubscription": "सदस्यता प्रबंधित करें",
   "manageSubscriptionFailed": "सदस्यता प्रबंधन नहीं खोल सकता।",
   "scanCreditsExhausted": "आपके पास कोई स्कैन क्रेडिट नहीं है।",
+  "scanSpamDetectedTitle": "असामान्य गतिविधि का पता चला",
+  "scanSpamDetectedMessage": "असामान्य गतिविधि का पता चला है, कृपया सहायता के लिए सहायता टीम से संपर्क करें।",
   "networkRetry": "कनेक्शन धीमी है। फिर से कोशिश करो।",
   "scanUnavailable": "इस छवि का विश्लेषण नहीं किया जा सकता है।",
   "notificationChannelName": "दैनिक भोजन अनुस्मारक",
@@ -1114,5 +1116,190 @@
   "dailySummaryBannerTitle": "दैनिक सारांश और एआई कोच",
   "dailySummaryBannerSubtitle": "पोषण विश्लेषण देखें और EXP प्राप्त करें",
   "cannotOpenShareSheet": "शेयर शीट नहीं खोली जा सकी।",
-  "profileSaveFailed": "प्रोफ़ाइल सहेजी नहीं जा सकी। कृपया पुन: प्रयास करें।"
+  "profileSaveFailed": "प्रोफ़ाइल सहेजी नहीं जा सकी। कृपया पुन: प्रयास करें।",
+  "trialDaysFree": "{days} दिन का मुफ़्त ट्रायल",
+  "@trialDaysFree": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "enableTrialDaysFree": "{days} दिन का मुफ़्त ट्रायल चालू करें",
+  "@enableTrialDaysFree": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "trialNoChargeTodayReminder": "आज कोई शुल्क नहीं, 24 घंटे पहले रिमाइंडर",
+  "trialDirectChargeOnRegister": "साइन अप करते ही तुरंत भुगतान",
+  "trialPaymentSchedule": "ट्रायल भुगतान अनुसूची:",
+  "trialStepToday": "आज",
+  "trialStepUnlockFree": "₹0 में अनलॉक करें",
+  "trialStepDayReminder": "दिन {day}",
+  "@trialStepDayReminder": {
+    "placeholders": {
+      "day": {
+        "type": "int"
+      }
+    }
+  },
+  "trialStepPushReminder": "पुश रिमाइंडर",
+  "trialStepChargeStarts": "शुल्क प्रारंभ",
+  "trialDaysCountBadge": "{days} दिन आज़माएं ₹0",
+  "@trialDaysCountBadge": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "trialDaysNote": "{days} दिन आज़माएं ₹0",
+  "@trialDaysNote": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "payYearlyNote": "वार्षिक भुगतान",
+  "payMonthlyNote": "मासिक भुगतान",
+  "trialCancelAnytimeNote": "आज कोई शुल्क नहीं लगेगा। App Store / Google Play सेटिंग्स में कभी भी रद्द करें।",
+  "changeYourselfNow": "खुद को अभी बदलें",
+  "tryFreeNow": "अभी मुफ़्त आज़माएं",
+  "completeSetup": "सेटअप पूरा करें",
+  "servicesAndPlans": "सेवाएं और योजनाएं",
+  "connectedStatus": "कनेक्टेड",
+  "notConnectedStatus": "कनेक्ट नहीं है",
+  "scanBarcodeTip": "पैकेज्ड खाद्य पदार्थों के लिए, 100% सटीक पोषण जानने के लिए बारकोड स्कैन करें!",
+  "scanBarcodeNow": "अभी बारकोड स्कैन करें",
+  "progressForecastPrefix": "प्रगति का पूर्वानुमान • {goal}",
+  "@progressForecastPrefix": {
+    "placeholders": {
+      "goal": {
+        "type": "String"
+      }
+    }
+  },
+  "weeksLeftCount": "{weeks} सप्ताह शेष",
+  "@weeksLeftCount": {
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
+  "reachTargetWeight": "→ लक्ष्य {weight}kg तक पहुंचें",
+  "@reachTargetWeight": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
+  "badgeUnlockedTitle": "बैज अनलॉक हो गया!",
+  "greatExclamation": "शानदार!",
+  "appleHealthPermissionDenied": "अनुमति देने में असमर्थ। कृपया iPhone सेटिंग्स > गोपनीयता और सुरक्षा > स्वास्थ्य में अनुमति सुनिश्चित करें।",
+  "appleHealthSyncTitle": "Apple Health सिंक",
+  "appleHealthSyncDesc": "CalGo केवल Apple Health से खर्च की गई सक्रिय ऊर्जा को पढ़कर आपके दैनिक कैलोरी लक्ष्य में जोड़ता है।",
+  "appleHealthStatusConnected": "स्थिति: कनेक्टेड",
+  "appleHealthStatusNotConnected": "स्थिति: कनेक्ट नहीं है",
+  "appleHealthConnectedDesc": "ऐप के पास Apple Health के साथ डेटा पढ़ने और सिंक करने की अनुमति है।",
+  "appleHealthNotConnectedDesc": "iOS प्राधिकरण विंडो खोलने के लिए नीचे दिए गए बटन पर टैप करें।",
+  "appleHealthReconnectButton": "पुनः अधिकृत करें / iOS को फिर से कनेक्ट करें",
+  "appleHealthConnectButton": "Apple Health कनेक्ट करें (iOS)",
+  "disconnect": "डिस्कनेक्ट करें",
+  "scanBarcodeTitle": "बारकोड स्कैन करें",
+  "lookingUpBarcode": "बारकोड खोजा जा रहा है...",
+  "alignBarcodeInstruction": "पैकेज पर दिए गए बारकोड पर कैमरा संरेखित करें",
+  "switchToPhotoScan": "भोजन की फोटो स्कैन पर स्विच करें",
+  "barcodeNotFound": "इस बारकोड के लिए कोई डेटा नहीं मिला। भोजन की सीधी फोटो लेने का प्रयास करें! 📸",
+  "addedExerciseCaloriesSnackbar": "आज के लक्ष्य में {calories} kcal व्यायाम जोड़ा गया।",
+  "foodNotRecognizedTitle": "भोजन स्पष्ट रूप से पहचाना नहीं गया",
+  "foodNotRecognizedMessage": "कृपया अपने भोजन की एक स्पष्ट फोटो लें या इसे मैन्युअल रूप से दर्ज करें।",
+  "retakePhoto": "फिर से लें",
+  "manualFoodEntry": "मैन्युअल दर्ज करें",
+  "backTooltip": "वापस",
+  "exitTooltip": "बाहर निकलें",
+  "completeAndSaveGoal": "लक्ष्य पूरा करें और सहेजें",
+  "winbackExclusiveOffer": "🔥 विशेष ऑफर",
+  "winbackStayTitle": "रुकिए! {price}/वर्ष के साथ जारी रखें",
+  "winbackDisclaimer": "मूल्य निर्धारण और ऑफ़र की शर्तें सीधे स्टोर द्वारा सत्यापित की जाती हैं।",
+  "winbackSubscribeButton": "सदस्यता लें {price}/वर्ष",
+  "winbackDismissButton": "ऑफ़र छोड़ें",
+  "savePremiumToAccountTitle": "अपने खाते में Premium सहेजें",
+  "savePremiumToAccountDesc": "लेन-देन सत्यापित करने और अपनी योजना को सिंक करने के लिए एक बार साइन इन करें।",
+  "signInFailed": "साइन इन विफल रहा।",
+  "dailyRecapTitle": "दिन का सारांश",
+  "recapReadyAfterTime": "आज के डेटा के साथ रात 10:00 बजे के बाद सारांश तैयार हो जाएगा।",
+  "todayRecap": "आज का सारांश",
+  "mealsLoggedCount": "{count} भोजन दर्ज किए गए",
+  "consumedToday": "आज खाया गया",
+  "targetCaloProgress": "{target} kcal लक्ष्य का {percent}%",
+  "aiReview": "AI समीक्षा",
+  "tomorrowTipTitle": "कल के लिए सुझाव",
+  "finishDayButton": "दिन पूरा करें",
+  "reportButton": "रिपोर्ट",
+  "likeTooltip": "पसंद",
+  "dislikeTooltip": "नापसंद",
+  "addCustomFoodTitle": "मैन्युअल रूप से भोजन जोड़ें",
+  "foodNameLabel": "भोजन का नाम",
+  "foodNameHint": "भोजन का नाम दर्ज करें...",
+  "caloriePer100gLabel": "कैलोरी (kcal / 100g)",
+  "addNow": "अभी जोड़ें",
+  "logFoodTitle": "भोजन दर्ज करें",
+  "creditsPurchasedSuccess": "सत्यापित किया गया और आपके खाते में स्कैन क्रेडिट जोड़ दिए गए।",
+  "progressPhotosTitle": "प्रगति तस्वीरें",
+  "photosCount": "{count} तस्वीरें",
+  "creditsCountSuffix": "{count} क्रेडिट",
+  "quizStepCount": "चरण {current} / 3",
+  "quizMealPatternTitle": "आपका दैनिक भोजन",
+  "quizMealPatternDesc": "आप अपनी दैनिक कैलोरी को कितने भोजन में विभाजित करना चाहते हैं?",
+  "quizMealPattern3Title": "3 मुख्य भोजन",
+  "quizMealPattern3Desc": "मानक सुबह - दोपहर - रात का भोजन, नियंत्रित करना आसान",
+  "quizMealPattern3SnackTitle": "3 मुख्य भोजन + 1 स्नैक",
+  "quizMealPattern3SnackDesc": "दोपहर की भूख से बचने के लिए हल्का नाश्ता शामिल",
+  "quizMealPatternIFTitle": "2 मुख्य भोजन (आंतरायिक उपवास)",
+  "quizMealPatternIFDesc": "16:8 आंतरायिक उपवास कार्यक्रम का पालन करता है",
+  "quizMealPatternSmallTitle": "4 - 5 छोटे भोजन",
+  "quizMealPatternSmallDesc": "दिन भर ऊर्जा को समान रूप से वितरित करता है",
+  "quizVarietyTitle": "मेनू लचीलापन",
+  "quizVarietyDesc": "आप भोजन के सुझाव कैसे पसंद करते हैं?",
+  "quizVarietySimpleTitle": "सरल दोहराव",
+  "quizVarietySimpleDesc": "एक बार पकाएं, 2-3 बार खाएं, समय बचाएं",
+  "quizVarietyRotateTitle": "दैनिक विविधता",
+  "quizVarietyRotateDesc": "हर दिन नया मेनू, भोजन को रोचक बनाए रखें",
+  "quizVarietyLocalTitle": "स्थानीय और पारंपरिक व्यंजन",
+  "quizVarietyLocalDesc": "स्थानीय बाजारों में आसानी से मिलने वाली सामग्री",
+  "quizPriorityTitle": "आपके भोजन के लक्ष्य",
+  "quizPriorityDesc": "आप अपनी पोषण योजना में किसे प्राथमिकता देना चाहते हैं?",
+  "quizOptSatietyTitle": "लंबे समय तक तृप्ति, कम कैलोरी",
+  "quizOptSatietyDesc": "कैलोरी घाटे को बनाए रखने के लिए उच्च प्रोटीन और सब्जियां",
+  "quizOptCalorieFitTitle": "शेष कैलोरी से मिलान करें",
+  "quizOptCalorieFitDesc": "प्रत्येक भोजन के कैलोरी बजट के अनुकूल भाग",
+  "quizOptSmartSwapTitle": "स्मार्ट भोजन प्रतिस्थापन",
+  "quizOptSmartSwapDesc": "यदि पहले अधिक खाया हो तो हल्का भोजन सुझाएं",
+  "quizOptHighProteinTitle": "उच्च प्रोटीन, कम वसा",
+  "quizOptHighProteinDesc": "अतिरिक्त वसा के बिना मांसपेशियों के विकास के लिए लीन प्रोटीन",
+  "quizOptTrainingFuelTitle": "प्रशिक्षण ऊर्जा और रिकवरी",
+  "quizOptTrainingFuelDesc": "कसरत के लिए प्रोटीन और कार्ब्स का संतुलित मेल",
+  "quizOptCalorieSurplusTitle": "स्वस्थ कैलोरी सरप्लस",
+  "quizOptCalorieSurplusDesc": "दैनिक सरप्लस लक्ष्य हासिल करने के लिए आसान भोजन",
+  "quizOptBalancedMacrosTitle": "संतुलित मैक्रोज़",
+  "quizOptBalancedMacrosDesc": "प्रतिदिन प्रोटीन, कार्ब्स और वसा को स्थिर रखें",
+  "quizOptWeightStabilityTitle": "वजन स्थिरता",
+  "quizOptWeightStabilityDesc": "आपके वर्तमान रखरखाव कैलोरी के अनुकूल भोजन",
+  "quizOptFlexibleWeekendsTitle": "लचीले सप्ताहांत",
+  "quizOptFlexibleWeekendsDesc": "पार्टी या सामाजिक भोजन के बाद शेष भोजन को संतुलित करें",
+  "quizSyncAnswersLater": "जारी रखें, बाद में उत्तर सिंक करें",
+  "quizCompleteAndGenerateMenu": "पूरा करें और मेनू बनाएं",
+  "quizSettingUpMenu": "CalGo आपका मेनू बना रहा है...",
+  "quizPersonalizingCalories": "आपके लिए कैलोरी और सबसे उपयुक्त भोजन को अनुकूलित किया जा रहा है",
+  "quizFinalizingSetup": "सेटअप पूरा किया जा रहा है",
+  "searchFoodOrIngredientsHint": "भोजन या सामग्री खोजें...",
+  "searchResultsTitle": "खोज परिणाम",
+  "searchingInProgress": "खोज जारी है...",
+  "nutritionServerConnectError": "पोषण सर्वर से कनेक्ट नहीं हो सका।"
 }

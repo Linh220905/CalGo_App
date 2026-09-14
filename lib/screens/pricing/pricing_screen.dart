@@ -120,7 +120,7 @@ class _PricingScreenState extends State<PricingScreen> {
       (entry) => entry.value == PurchaseState.error,
     );
     final message = purchased
-        ? 'Đã xác minh và cộng lượt quét vào tài khoản.'
+        ? s.creditsPurchasedSuccess
         : failed
         ? paymentCopyForPlatform(s.paymentVerificationFailed)
         : null;

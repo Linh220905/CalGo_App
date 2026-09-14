@@ -28,6 +28,7 @@ import 'package:calgo/screens/onboarding/steps/splash_step.dart';
 import 'package:calgo/screens/onboarding/steps/target_weight_step.dart';
 import 'package:calgo/screens/onboarding/steps/weight_step.dart';
 import 'package:calgo/services/api_service.dart';
+import 'package:calgo/services/analytics_service.dart';
 import 'package:calgo/services/exercise_service.dart';
 import 'package:calgo/services/home_service.dart';
 import 'package:calgo/services/meal_guidance_service.dart';
@@ -110,8 +111,9 @@ Future<void> _pumpStep(
   });
 
   final api = ApiService();
+  final analytics = AnalyticsService(api);
   final settings = AppSettingsProvider();
-  final onboarding = OnboardingProvider();
+  final onboarding = OnboardingProvider(analyticsService: analytics);
   onboarding.data
     ..name = 'Responsive Test User'
     ..applyDisplayedDefaults();
@@ -137,6 +139,7 @@ Future<void> _pumpStep(
     MultiProvider(
       providers: [
         Provider<ApiService>.value(value: api),
+        Provider<AnalyticsService>.value(value: analytics),
         ChangeNotifierProvider.value(value: settings),
         ChangeNotifierProvider.value(value: onboarding),
         ChangeNotifierProvider.value(value: auth),

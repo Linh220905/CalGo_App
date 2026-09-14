@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:provider/provider.dart';
 
+import '../../providers/app_settings_provider.dart';
 import '../../services/scan_service.dart';
 import '../../providers/gamification_provider.dart';
 
@@ -66,15 +67,8 @@ class _BarcodeScanScreenState extends State<BarcodeScanScreen> {
     } catch (e) {
       if (!mounted) return;
 
-      String errorMsg =
-          "Chưa tìm thấy dữ liệu cho mã vạch này. Bạn hãy thử chụp trực tiếp ảnh món ăn nhé! 📸";
-      final eStr = e.toString().toLowerCase();
-      if (eStr.contains("404") ||
-          eStr.contains("không tìm thấy") ||
-          eStr.contains("chưa có")) {
-        errorMsg =
-            "Chưa tìm thấy dữ liệu cho mã vạch này. Bạn hãy thử chụp trực tiếp ảnh món ăn nhé! 📸";
-      }
+      final s = context.read<AppSettingsProvider>().strings;
+      String errorMsg = s.barcodeNotFound;
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -96,6 +90,7 @@ class _BarcodeScanScreenState extends State<BarcodeScanScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final s = context.watch<AppSettingsProvider>().strings;
     return Scaffold(
       backgroundColor: Colors.black,
       body: Stack(
@@ -129,9 +124,9 @@ class _BarcodeScanScreenState extends State<BarcodeScanScreen> {
                               color: Colors.white, size: 20),
                         ),
                       ),
-                      const Text(
-                        "Quét mã vạch",
-                        style: TextStyle(
+                      Text(
+                        s.scanBarcodeTitle,
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -171,15 +166,15 @@ class _BarcodeScanScreenState extends State<BarcodeScanScreen> {
                     child: Stack(
                       children: [
                         if (_isProcessing)
-                          const Center(
+                          Center(
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                CircularProgressIndicator(color: _kScanGreen),
-                                SizedBox(height: 12),
+                                const CircularProgressIndicator(color: _kScanGreen),
+                                const SizedBox(height: 12),
                                 Text(
-                                  "Đang tra cứu mã vạch...",
-                                  style: TextStyle(
+                                  s.lookingUpBarcode,
+                                  style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 14,
                                     fontWeight: FontWeight.w600,
@@ -195,7 +190,7 @@ class _BarcodeScanScreenState extends State<BarcodeScanScreen> {
 
                 const SizedBox(height: 16),
                 Text(
-                  "Di chuyển camera vào mã vạch trên bao bì",
+                  s.alignBarcodeInstruction,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white.withOpacity(0.85),
@@ -219,15 +214,15 @@ class _BarcodeScanScreenState extends State<BarcodeScanScreen> {
                         border:
                             Border.all(color: Colors.white.withOpacity(0.3)),
                       ),
-                      child: const Row(
+                      child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(Icons.camera_alt_outlined,
+                          const Icon(Icons.camera_alt_outlined,
                               color: Colors.white, size: 20),
-                          SizedBox(width: 8),
+                          const SizedBox(width: 8),
                           Text(
-                            "Chuyển sang chụp ảnh món",
-                            style: TextStyle(
+                            s.switchToPhotoScan,
+                            style: const TextStyle(
                               color: Colors.white,
                               fontSize: 14,
                               fontWeight: FontWeight.w600,

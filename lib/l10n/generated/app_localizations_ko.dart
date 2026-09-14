@@ -1697,6 +1697,12 @@ class AppLocalizationsKo extends AppLocalizations {
   String get scanCreditsExhausted => '남은 스캔 크레딧이 없습니다.';
 
   @override
+  String get scanSpamDetectedTitle => '비정상적인 활동 감지됨';
+
+  @override
+  String get scanSpamDetectedMessage => '비정상적인 활동이 감지되었습니다. 고객 지원팀에 문의해 주세요.';
+
+  @override
   String get networkRetry => '연결이 느립니다. 다시 시도하세요.';
 
   @override
@@ -2317,4 +2323,427 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get profileSaveFailed => '프로필을 저장할 수 없습니다. 다시 시도해 주세요.';
+
+  @override
+  String trialDaysFree(int days) {
+    return '$days일 무료 체험';
+  }
+
+  @override
+  String enableTrialDaysFree(int days) {
+    return '$days일 무료 체험 켜기';
+  }
+
+  @override
+  String get trialNoChargeTodayReminder => '오늘 청구 없음, 24시간 전 알림';
+
+  @override
+  String get trialDirectChargeOnRegister => '가입 시 즉시 결제';
+
+  @override
+  String get trialPaymentSchedule => '체험 결제 일정:';
+
+  @override
+  String get trialStepToday => '오늘';
+
+  @override
+  String get trialStepUnlockFree => '₩0 잠금 해제';
+
+  @override
+  String trialStepDayReminder(int day) {
+    return '$day일차';
+  }
+
+  @override
+  String get trialStepPushReminder => '푸시 알림';
+
+  @override
+  String get trialStepChargeStarts => '결제 시작';
+
+  @override
+  String trialDaysCountBadge(int days) {
+    return '$days일 무료 ₩0';
+  }
+
+  @override
+  String trialDaysNote(int days) {
+    return '$days일 체험 ₩0';
+  }
+
+  @override
+  String get payYearlyNote => '연간 결제';
+
+  @override
+  String get payMonthlyNote => '월간 결제';
+
+  @override
+  String get trialCancelAnytimeNote =>
+      '오늘 청구 금액은 0원입니다. App Store / Google Play 설정에서 언제든지 취소 가능합니다.';
+
+  @override
+  String get changeYourselfNow => '지금 시작하기';
+
+  @override
+  String get tryFreeNow => '지금 무료 체험';
+
+  @override
+  String get completeSetup => '설정 완료';
+
+  @override
+  String get servicesAndPlans => '서비스 및 요금제';
+
+  @override
+  String get connectedStatus => '연결됨';
+
+  @override
+  String get notConnectedStatus => '연결 안 됨';
+
+  @override
+  String get scanBarcodeTip => '가공식품은 바코드 스캔으로 100% 정확한 영양 성분을 확인해보세요!';
+
+  @override
+  String get scanBarcodeNow => '바코드 스캔하기';
+
+  @override
+  String progressForecastPrefix(String goal) {
+    return '진행 예측 • $goal';
+  }
+
+  @override
+  String weeksLeftCount(int weeks) {
+    return '$weeks주 남음';
+  }
+
+  @override
+  String reachTargetWeight(String weight) {
+    return '→ 목표 ${weight}kg 달성';
+  }
+
+  @override
+  String get badgeUnlockedTitle => '뱃지 획득!';
+
+  @override
+  String get greatExclamation => '대단해요!';
+
+  @override
+  String get appleHealthPermissionDenied =>
+      '권한을 부여할 수 없습니다. iPhone 설정 > 개인정보 보호 및 보안 > 건강에서 권한을 허용했는지 확인하세요.';
+
+  @override
+  String get appleHealthSyncTitle => 'Apple 건강 동기화';
+
+  @override
+  String get appleHealthSyncDesc =>
+      'CalGo는 Apple 건강에서 활동 에너지(소모 칼로리)만 읽어와 일일 칼로리 목표에 추가합니다.';
+
+  @override
+  String get appleHealthStatusConnected => '상태: 연결됨';
+
+  @override
+  String get appleHealthStatusNotConnected => '상태: 연결 안 됨';
+
+  @override
+  String get appleHealthConnectedDesc =>
+      '앱이 Apple 건강과 데이터를 읽고 동기화할 수 있는 권한을 얻었습니다.';
+
+  @override
+  String get appleHealthNotConnectedDesc => '아래 버튼을 눌러 iOS 권한 요청 창을 엽니다.';
+
+  @override
+  String get appleHealthReconnectButton => '권한 다시 요청 / iOS 재연결';
+
+  @override
+  String get appleHealthConnectButton => 'Apple 건강 연결 (iOS)';
+
+  @override
+  String get disconnect => '연결 해제';
+
+  @override
+  String get scanBarcodeTitle => '바코드 스캔';
+
+  @override
+  String get lookingUpBarcode => '바코드 조회 중...';
+
+  @override
+  String get alignBarcodeInstruction => '카메라를 포장지의 바코드에 맞춰주세요';
+
+  @override
+  String get switchToPhotoScan => '음식 사진 촬영으로 전환';
+
+  @override
+  String get barcodeNotFound => '이 바코드의 정보를 찾을 수 없습니다. 음식 사진을 직접 촬영해보세요! 📸';
+
+  @override
+  String addedExerciseCaloriesSnackbar(int calories) {
+    return '오늘 목표에 운동 $calories kcal를 추가했습니다.';
+  }
+
+  @override
+  String get foodNotRecognizedTitle => '음식을 명확히 인식하지 못했습니다';
+
+  @override
+  String get foodNotRecognizedMessage => '음식 사진을 좀 더 선명하게 다시 찍거나 직접 입력해주세요.';
+
+  @override
+  String get retakePhoto => '다시 촬영';
+
+  @override
+  String get manualFoodEntry => '직접 입력';
+
+  @override
+  String get backTooltip => '뒤로';
+
+  @override
+  String get exitTooltip => '나가기';
+
+  @override
+  String get completeAndSaveGoal => '완료 및 목표 저장';
+
+  @override
+  String get winbackExclusiveOffer => '🔥 특별 한정 혜택';
+
+  @override
+  String winbackStayTitle(String price) {
+    return '잠깐만요! 연 $price으로 계속하기';
+  }
+
+  @override
+  String get winbackDisclaimer => '가격 및 혜택 조건은 스토어에서 직접 확인됩니다.';
+
+  @override
+  String winbackSubscribeButton(String price) {
+    return '연 $price 구독하기';
+  }
+
+  @override
+  String get winbackDismissButton => '혜택 건너뛰기';
+
+  @override
+  String get savePremiumToAccountTitle => '계정에 Premium 저장';
+
+  @override
+  String get savePremiumToAccountDesc => '거래를 확인하고 맞춤 계획을 동기화하려면 로그인하세요.';
+
+  @override
+  String get signInFailed => '로그인에 실패했습니다.';
+
+  @override
+  String get dailyRecapTitle => '하루 마감 요약';
+
+  @override
+  String get recapReadyAfterTime => '오늘 기록된 식사 데이터가 있으면 22:00 이후에 요약이 준비됩니다.';
+
+  @override
+  String get todayRecap => '오늘의 요약';
+
+  @override
+  String mealsLoggedCount(int count) {
+    return '$count끼 기록됨';
+  }
+
+  @override
+  String get consumedToday => '오늘 섭취';
+
+  @override
+  String targetCaloProgress(String percent, int target) {
+    return '$target kcal 목표의 $percent%';
+  }
+
+  @override
+  String get aiReview => 'AI 분석 의견';
+
+  @override
+  String get tomorrowTipTitle => '내일을 위한 팁';
+
+  @override
+  String get finishDayButton => '하루 완료하기';
+
+  @override
+  String get reportButton => '보고서';
+
+  @override
+  String get likeTooltip => '좋아요';
+
+  @override
+  String get dislikeTooltip => '별로예요';
+
+  @override
+  String get addCustomFoodTitle => '직접 음식 추가';
+
+  @override
+  String get foodNameLabel => '음식 이름';
+
+  @override
+  String get foodNameHint => '음식 이름을 입력하세요...';
+
+  @override
+  String get caloriePer100gLabel => '칼로리 (kcal / 100g)';
+
+  @override
+  String get addNow => '지금 추가';
+
+  @override
+  String get logFoodTitle => '음식 기록';
+
+  @override
+  String get creditsPurchasedSuccess => '확인 완료되어 스캔 크레딧이 계정에 추가되었습니다.';
+
+  @override
+  String get progressPhotosTitle => '변화 사진';
+
+  @override
+  String photosCount(int count) {
+    return '$count장의 사진';
+  }
+
+  @override
+  String creditsCountSuffix(int count) {
+    return '$count 크레딧';
+  }
+
+  @override
+  String quizStepCount(int current) {
+    return '$current / 3 단계';
+  }
+
+  @override
+  String get quizMealPatternTitle => '하루 식사 패턴';
+
+  @override
+  String get quizMealPatternDesc => '하루 칼로리를 몇 끼로 나누고 싶으신가요?';
+
+  @override
+  String get quizMealPattern3Title => '3끼 식사';
+
+  @override
+  String get quizMealPattern3Desc => '아침 - 점심 - 저녁 표준 구성, 관리하기 쉬움';
+
+  @override
+  String get quizMealPattern3SnackTitle => '3끼 + 간식 1회';
+
+  @override
+  String get quizMealPattern3SnackDesc => '오후 출출함을 달래는 가벼운 간식 포함';
+
+  @override
+  String get quizMealPatternIFTitle => '2끼 식사 (간헐적 단식)';
+
+  @override
+  String get quizMealPatternIFDesc => '16:8 간헐적 단식 방식에 맞춤';
+
+  @override
+  String get quizMealPatternSmallTitle => '4 - 5회 소식';
+
+  @override
+  String get quizMealPatternSmallDesc => '하루 동안 에너지를 고르게 분산';
+
+  @override
+  String get quizVarietyTitle => '식단 유연성';
+
+  @override
+  String get quizVarietyDesc => '어떤 방식으로 식단을 추천받고 싶으신가요?';
+
+  @override
+  String get quizVarietySimpleTitle => '간편한 반복';
+
+  @override
+  String get quizVarietySimpleDesc => '1번 요리해 2~3끼 해결, 시간 절약';
+
+  @override
+  String get quizVarietyRotateTitle => '매일 새로운 메뉴';
+
+  @override
+  String get quizVarietyRotateDesc => '매일 새로운 식단으로 질리지 않게 유지';
+
+  @override
+  String get quizVarietyLocalTitle => '일상 한식/로컬 중심';
+
+  @override
+  String get quizVarietyLocalDesc => '주변 마트에서 쉽게 구할 수 있는 친숙한 식재료';
+
+  @override
+  String get quizPriorityTitle => '식단 우선순위';
+
+  @override
+  String get quizPriorityDesc => '식단 계획에서 가장 우선하고 싶은 점은 무엇인가요?';
+
+  @override
+  String get quizOptSatietyTitle => '포만감 오래, 저칼로리';
+
+  @override
+  String get quizOptSatietyDesc => '단백질과 채소 중심, 기름기 적은 식단으로 칼로리 적자 유지';
+
+  @override
+  String get quizOptCalorieFitTitle => '남은 칼로리 맞춤';
+
+  @override
+  String get quizOptCalorieFitDesc => '식사별 칼로리 목표치에 딱 맞는 적정량 선택';
+
+  @override
+  String get quizOptSmartSwapTitle => '스마트한 메뉴 대체';
+
+  @override
+  String get quizOptSmartSwapDesc => '과식한 날에는 더 가벼운 식사를 추천해 균형 맞춤';
+
+  @override
+  String get quizOptHighProteinTitle => '고단백 저지방';
+
+  @override
+  String get quizOptHighProteinDesc => '체지방 증가 없이 근육 성장을 돕는 순수 단백질 우선';
+
+  @override
+  String get quizOptTrainingFuelTitle => '운동 에너지 및 회복';
+
+  @override
+  String get quizOptTrainingFuelDesc => '운동 전후 에너지 공급과 근육 회복을 위한 탄수화물/단백질 밸런스';
+
+  @override
+  String get quizOptCalorieSurplusTitle => '건강한 잉여 칼로리';
+
+  @override
+  String get quizOptCalorieSurplusDesc => '무리 없이 소화할 수 있는 구성으로 일일 잉여 칼로리 달성';
+
+  @override
+  String get quizOptBalancedMacrosTitle => '균형 잡힌 매크로';
+
+  @override
+  String get quizOptBalancedMacrosDesc => '매일 단백질, 탄수화물, 지방 비율을 안정적으로 유지';
+
+  @override
+  String get quizOptWeightStabilityTitle => '체중 안정 유지';
+
+  @override
+  String get quizOptWeightStabilityDesc => '현재 유지 칼로리에 알맞은 식단 구성';
+
+  @override
+  String get quizOptFlexibleWeekendsTitle => '유연한 주말 조율';
+
+  @override
+  String get quizOptFlexibleWeekendsDesc => '즐거운 외식이나 모임 후 다른 식사로 자연스럽게 조율';
+
+  @override
+  String get quizSyncAnswersLater => '계속하기 (나중에 답변 동기화)';
+
+  @override
+  String get quizCompleteAndGenerateMenu => '완료 및 맞춤 식단 생성';
+
+  @override
+  String get quizSettingUpMenu => 'CalGo가 식단을 구성하고 있습니다...';
+
+  @override
+  String get quizPersonalizingCalories => '회원님에게 가장 적합한 칼로리와 식단을 맞춤 설정 중입니다';
+
+  @override
+  String get quizFinalizingSetup => '설정을 마무리하고 있습니다';
+
+  @override
+  String get searchFoodOrIngredientsHint => '음식 또는 재료 검색...';
+
+  @override
+  String get searchResultsTitle => '검색 결과';
+
+  @override
+  String get searchingInProgress => '검색 중...';
+
+  @override
+  String get nutritionServerConnectError => '영양 서버에 연결할 수 없습니다.';
 }

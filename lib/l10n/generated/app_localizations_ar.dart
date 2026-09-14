@@ -1732,6 +1732,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get scanCreditsExhausted => 'لم يتبقَ لديكَ أيّ إئتمان';
 
   @override
+  String get scanSpamDetectedTitle => 'تم اكتشاف نشاط غير معتاد';
+
+  @override
+  String get scanSpamDetectedMessage =>
+      'تم اكتشاف نشاط غير معتاد، يرجى التواصل مع الدعم للمساعدة.';
+
+  @override
   String get networkRetry => 'الاتصال بطيء حاول مرة أخرى';
 
   @override
@@ -2372,4 +2379,451 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get profileSaveFailed =>
       'تعذر حفظ الملف الشخصي. يرجى المحاولة مرة أخرى.';
+
+  @override
+  String trialDaysFree(int days) {
+    return 'تجربة مجانية لمدة $days أيام';
+  }
+
+  @override
+  String enableTrialDaysFree(int days) {
+    return 'تفعيل التجربة المجانية لمدة $days أيام';
+  }
+
+  @override
+  String get trialNoChargeTodayReminder => 'لا رسوم اليوم، تذكير قبل 24 ساعة';
+
+  @override
+  String get trialDirectChargeOnRegister => 'الدفع مباشرة عند التسجيل';
+
+  @override
+  String get trialPaymentSchedule => 'جدول دفع التجربة المجانية:';
+
+  @override
+  String get trialStepToday => 'اليوم';
+
+  @override
+  String get trialStepUnlockFree => 'فتح بقيمة 0\$';
+
+  @override
+  String trialStepDayReminder(int day) {
+    return 'اليوم $day';
+  }
+
+  @override
+  String get trialStepPushReminder => 'إشعار تذكيري';
+
+  @override
+  String get trialStepChargeStarts => 'بدء احتساب الرسوم';
+
+  @override
+  String trialDaysCountBadge(int days) {
+    return 'تجربة $days أيام بـ 0\$';
+  }
+
+  @override
+  String trialDaysNote(int days) {
+    return 'تجربة $days أيام بـ 0\$';
+  }
+
+  @override
+  String get payYearlyNote => 'الدفع سنوياً';
+
+  @override
+  String get payMonthlyNote => 'الدفع شهرياً';
+
+  @override
+  String get trialCancelAnytimeNote =>
+      'لا توجد رسوم اليوم. يمكنك الإلغاء في أي وقت من إعدادات App Store / Google Play.';
+
+  @override
+  String get changeYourselfNow => 'ابدأ تغيير نفسك الآن';
+
+  @override
+  String get tryFreeNow => 'جرب مجاناً الآن';
+
+  @override
+  String get completeSetup => 'إتمام الإعداد';
+
+  @override
+  String get servicesAndPlans => 'الخدمات والخطط';
+
+  @override
+  String get connectedStatus => 'متصل';
+
+  @override
+  String get notConnectedStatus => 'غير متصل';
+
+  @override
+  String get scanBarcodeTip =>
+      'بالنسبة للأطعمة المغلفة/المعلبة، جرب مسح الباركود للحصول على دقة غذائية 100%!';
+
+  @override
+  String get scanBarcodeNow => 'مسح الباركود الآن';
+
+  @override
+  String progressForecastPrefix(String goal) {
+    return 'توقع التقدم • $goal';
+  }
+
+  @override
+  String weeksLeftCount(int weeks) {
+    return 'باقٍ $weeks أسابيع';
+  }
+
+  @override
+  String reachTargetWeight(String weight) {
+    return '→ الوصول إلى وزن الهدف $weight كجم';
+  }
+
+  @override
+  String get badgeUnlockedTitle => 'تم فتح الشارة!';
+
+  @override
+  String get greatExclamation => 'رائع!';
+
+  @override
+  String get appleHealthPermissionDenied =>
+      'تعذر منح الإذن. يرجى التأكد من السماح بالوصول في إعدادات iPhone > الخصوصية والأمان > صحتي.';
+
+  @override
+  String get appleHealthSyncTitle => 'مزامنة Apple Health';
+
+  @override
+  String get appleHealthSyncDesc =>
+      'يقرأ CalGo فقط الطاقة النشطة المحروقة من Apple Health لإضافتها إلى هدف السعرات اليومي.';
+
+  @override
+  String get appleHealthStatusConnected => 'الحالة: متصل';
+
+  @override
+  String get appleHealthStatusNotConnected => 'الحالة: غير متصل';
+
+  @override
+  String get appleHealthConnectedDesc =>
+      'التطبيق لديه إذن لقراءة ومزامنة البيانات مع Apple Health.';
+
+  @override
+  String get appleHealthNotConnectedDesc =>
+      'اضغط على الزر أدناه لفتح نافذة التفويض من iOS.';
+
+  @override
+  String get appleHealthReconnectButton =>
+      'إعادة التفويض / إعادة الاتصال بـ iOS';
+
+  @override
+  String get appleHealthConnectButton => 'ربط Apple Health (iOS)';
+
+  @override
+  String get disconnect => 'قطع الاتصال';
+
+  @override
+  String get scanBarcodeTitle => 'مسح الرمز الشريطي';
+
+  @override
+  String get lookingUpBarcode => 'جارٍ البحث عن الرمز الشريطي...';
+
+  @override
+  String get alignBarcodeInstruction =>
+      'وجّه الكاميرا نحو الرمز الشريطي على العبوة';
+
+  @override
+  String get switchToPhotoScan => 'التبديل إلى تصوير الوجبة';
+
+  @override
+  String get barcodeNotFound =>
+      'لم يتم العثور على بيانات لهذا الرمز. جرب التقاط صورة للطعام مباشرة! 📸';
+
+  @override
+  String addedExerciseCaloriesSnackbar(int calories) {
+    return 'تمت إضافة $calories سعرة حرارية من التمارين إلى هدف اليوم.';
+  }
+
+  @override
+  String get foodNotRecognizedTitle => 'لم يتم التعرف على الطعام بوضوح';
+
+  @override
+  String get foodNotRecognizedMessage =>
+      'يرجى التقاط صورة أوضح لطعامك أو إدخاله يدويًا.';
+
+  @override
+  String get retakePhoto => 'إعادة الالتقاط';
+
+  @override
+  String get manualFoodEntry => 'إدخال يدوي';
+
+  @override
+  String get backTooltip => 'رجوع';
+
+  @override
+  String get exitTooltip => 'خروج';
+
+  @override
+  String get completeAndSaveGoal => 'إكمال وحفظ الهدف';
+
+  @override
+  String get winbackExclusiveOffer => '🔥 عرض حصري';
+
+  @override
+  String winbackStayTitle(String price) {
+    return 'انتظر! تابع مقابل $price/سنة';
+  }
+
+  @override
+  String get winbackDisclaimer =>
+      'يتم التحقق من الأسعار وشروط العرض مباشرة من قِبل المتجر.';
+
+  @override
+  String winbackSubscribeButton(String price) {
+    return 'اشتراك مقابل $price/سنة';
+  }
+
+  @override
+  String get winbackDismissButton => 'تخطي العرض';
+
+  @override
+  String get savePremiumToAccountTitle => 'حفظ Premium في حسابك';
+
+  @override
+  String get savePremiumToAccountDesc =>
+      'سجّل الدخول مرة واحدة للتحقق من المعاملات ومزامنة خطتك.';
+
+  @override
+  String get signInFailed => 'فشل تسجيل الدخول.';
+
+  @override
+  String get dailyRecapTitle => 'ملخص نهاية اليوم';
+
+  @override
+  String get recapReadyAfterTime =>
+      'سيكون الملخص جاهزًا بعد الساعة 22:00 بمجرد توفر بيانات المسح اليوم.';
+
+  @override
+  String get todayRecap => 'ملخص اليوم';
+
+  @override
+  String mealsLoggedCount(int count) {
+    return 'تم تسجيل $count وجبات';
+  }
+
+  @override
+  String get consumedToday => 'تم استهلاكه اليوم';
+
+  @override
+  String targetCaloProgress(String percent, int target) {
+    return '$percent% من هدف $target سعرة';
+  }
+
+  @override
+  String get aiReview => 'تقييم الذكاء الاصطناعي';
+
+  @override
+  String get tomorrowTipTitle => 'نصيحة للغد';
+
+  @override
+  String get finishDayButton => 'إتمام اليوم';
+
+  @override
+  String get reportButton => 'تقرير';
+
+  @override
+  String get likeTooltip => 'أعجبني';
+
+  @override
+  String get dislikeTooltip => 'لم يعجبني';
+
+  @override
+  String get addCustomFoodTitle => 'إضافة طعام يدويًا';
+
+  @override
+  String get foodNameLabel => 'اسم الطعام';
+
+  @override
+  String get foodNameHint => 'أدخل اسم الطعام...';
+
+  @override
+  String get caloriePer100gLabel => 'السعرات (سعرة / 100 جم)';
+
+  @override
+  String get addNow => 'إضافة الآن';
+
+  @override
+  String get logFoodTitle => 'تسجيل الطعام';
+
+  @override
+  String get creditsPurchasedSuccess =>
+      'تم التحقق وإضافة رصيد المسح إلى حسابك.';
+
+  @override
+  String get progressPhotosTitle => 'صور التقدم';
+
+  @override
+  String photosCount(int count) {
+    return '$count صور';
+  }
+
+  @override
+  String creditsCountSuffix(int count) {
+    return '$count رصيد';
+  }
+
+  @override
+  String quizStepCount(int current) {
+    return 'الخطوة $current / 3';
+  }
+
+  @override
+  String get quizMealPatternTitle => 'وجباتك اليومية';
+
+  @override
+  String get quizMealPatternDesc =>
+      'كم عدد الوجبات التي ترغب في تقسيم سعراتك اليومية عليها؟';
+
+  @override
+  String get quizMealPattern3Title => '3 وجبات رئيسية';
+
+  @override
+  String get quizMealPattern3Desc => 'فطور - غداء - عشاء قياسي، سهل التحكم';
+
+  @override
+  String get quizMealPattern3SnackTitle => '3 وجبات رئيسية + وجبة خفيفة';
+
+  @override
+  String get quizMealPattern3SnackDesc =>
+      'يتضمن وجبة خفيفة بعد الظهر لتجنب الجوع';
+
+  @override
+  String get quizMealPatternIFTitle => 'وجبتان رئيسيتان (صيام متقطع)';
+
+  @override
+  String get quizMealPatternIFDesc => 'يتبع نمط الصيام المتقطع 16:8';
+
+  @override
+  String get quizMealPatternSmallTitle => '4 - 5 وجبات صغيرة';
+
+  @override
+  String get quizMealPatternSmallDesc => 'توزيع الطاقة بالتساوي على مدار اليوم';
+
+  @override
+  String get quizVarietyTitle => 'مرونة قائمة الطعام';
+
+  @override
+  String get quizVarietyDesc => 'كيف تفضل اقتراحات الوجبات؟';
+
+  @override
+  String get quizVarietySimpleTitle => 'تكرار بسيط';
+
+  @override
+  String get quizVarietySimpleDesc =>
+      'اطبخ مرة واحدة وتناول 2-3 وجبات، وفر الوقت';
+
+  @override
+  String get quizVarietyRotateTitle => 'تنوع يومي';
+
+  @override
+  String get quizVarietyRotateDesc => 'قائمة جديدة كل يوم لتجنب الملل';
+
+  @override
+  String get quizVarietyLocalTitle => 'المأكولات المحلية والتقليدية';
+
+  @override
+  String get quizVarietyLocalDesc =>
+      'مكونات يسهل العثور عليها في الأسواق المحلية';
+
+  @override
+  String get quizPriorityTitle => 'أولوياتك الغذائية';
+
+  @override
+  String get quizPriorityDesc =>
+      'ما الذي ترغب في إعطائه الأولوية في خطتك الغذائية؟';
+
+  @override
+  String get quizOptSatietyTitle => 'شبع طويل وسعرات قليلة';
+
+  @override
+  String get quizOptSatietyDesc =>
+      'البروتين والخضار لسهولة الحفاظ على عجز السعرات';
+
+  @override
+  String get quizOptCalorieFitTitle => 'مطابقة السعرات المتبقية';
+
+  @override
+  String get quizOptCalorieFitDesc => 'حصص متطابقة بدقة مع ميزانية كل وجبة';
+
+  @override
+  String get quizOptSmartSwapTitle => 'بدائل ذكية للطعام';
+
+  @override
+  String get quizOptSmartSwapDesc =>
+      'اقتراح وجبات أخف عند تناول كمية إضافية في وقت سابق';
+
+  @override
+  String get quizOptHighProteinTitle => 'بروتين عالي ودهون قليلة';
+
+  @override
+  String get quizOptHighProteinDesc =>
+      'بروتين خالٍ من الدهون لبناء العضلات دون زيادة الدهون';
+
+  @override
+  String get quizOptTrainingFuelTitle => 'وقود التمارين والتعافي';
+
+  @override
+  String get quizOptTrainingFuelDesc =>
+      'توازن البروتين والكربوهيدرات للتمرين والتعافي';
+
+  @override
+  String get quizOptCalorieSurplusTitle => 'فائض صحي من السعرات';
+
+  @override
+  String get quizOptCalorieSurplusDesc =>
+      'تقسيم وجبات سهل للوصول إلى هدف الفائض اليومي';
+
+  @override
+  String get quizOptBalancedMacrosTitle => 'عناصر غذائية متوازنة';
+
+  @override
+  String get quizOptBalancedMacrosDesc =>
+      'الحفاظ على استقرار البروتين والكربوهيدرات والدهون يوميًا';
+
+  @override
+  String get quizOptWeightStabilityTitle => 'استقرار الوزن';
+
+  @override
+  String get quizOptWeightStabilityDesc =>
+      'وجبات تتطابق مع سعرات الحفاظ على الوزن الحالية';
+
+  @override
+  String get quizOptFlexibleWeekendsTitle => 'عطلات نهاية أسبوع مرنة';
+
+  @override
+  String get quizOptFlexibleWeekendsDesc =>
+      'إعادة توازن الوجبات بعد الاستمتاع بوجبة اجتماعية';
+
+  @override
+  String get quizSyncAnswersLater => 'متابعة، مزامنة الإجابات لاحقًا';
+
+  @override
+  String get quizCompleteAndGenerateMenu => 'إكمال وإنشاء القائمة';
+
+  @override
+  String get quizSettingUpMenu => 'يقوم CalGo بإعداد قائمتك...';
+
+  @override
+  String get quizPersonalizingCalories =>
+      'تخصيص السعرات الحرارية وأنسب الوجبات لك';
+
+  @override
+  String get quizFinalizingSetup => 'جارٍ إنهاء الإعداد';
+
+  @override
+  String get searchFoodOrIngredientsHint => 'البحث عن طعام أو مكونات...';
+
+  @override
+  String get searchResultsTitle => 'نتائج البحث';
+
+  @override
+  String get searchingInProgress => 'جارٍ البحث...';
+
+  @override
+  String get nutritionServerConnectError => 'تعذر الاتصال بخادم التغذية.';
 }

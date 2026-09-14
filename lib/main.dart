@@ -31,8 +31,6 @@ void main() {
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
-  unawaited(RevenueCatService.init());
-
   final apiService = ApiService();
   final analyticsService = AnalyticsService(apiService);
   final onboardingProvider = OnboardingProvider(
@@ -50,6 +48,12 @@ void main() {
   paymentProvider.setCreditsVerifiedCallback(authProvider.refreshUser);
   var restoredPaymentAuthScope = -1;
   var trackedFirstOpenAuthScope = -1;
+  final homeProvider = HomeProvider(
+    HomeService(apiService),
+    MealGuidanceService(apiService),
+    ExerciseService(apiService),
+  );
+  var lastUserAuthScope = -1;
   authProvider.addListener(() {
     if (authProvider.isAuthenticated &&
         apiService.authScope != trackedFirstOpenAuthScope) {
@@ -62,6 +66,11 @@ void main() {
     }
     if (!authProvider.isAuthenticated) {
       unawaited(RevenueCatService.logOut());
+      homeProvider.reset();
+    }
+    if (apiService.authScope != lastUserAuthScope) {
+      lastUserAuthScope = apiService.authScope;
+      homeProvider.reset();
     }
     // queryPurchases/restore is needed after a cold start and after account
     // switching so a renewed subscription refreshes the server entitlement.
@@ -74,8 +83,9 @@ void main() {
       unawaited(paymentProvider.retryPendingPurchaseVerification());
     }
   });
-  // Start both bootstrap reads before the router is built. The router shows a
+  // Start bootstrap reads and initialize RevenueCat early. The router shows a
   // neutral startup screen until they finish, never a persisted onboarding step.
+  unawaited(RevenueCatService.init());
   unawaited(onboardingProvider.init());
   unawaited(authProvider.tryRestore());
   final router = createAppRouter(onboardingProvider, authProvider);
@@ -92,13 +102,7 @@ void main() {
         ChangeNotifierProvider(create: (_) => AppSettingsProvider()),
         ChangeNotifierProvider(create: (_) => authProvider),
         ChangeNotifierProvider.value(value: onboardingProvider),
-        ChangeNotifierProvider(
-          create: (_) => HomeProvider(
-            HomeService(apiService),
-            MealGuidanceService(apiService),
-            ExerciseService(apiService),
-          ),
-        ),
+        ChangeNotifierProvider.value(value: homeProvider),
         ChangeNotifierProvider<PaymentProvider>.value(value: paymentProvider),
         Provider(create: (_) => ScanService(apiService)),
         ChangeNotifierProvider(

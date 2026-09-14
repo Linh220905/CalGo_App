@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import '../models/gamification.dart';
+import '../providers/app_settings_provider.dart';
 import 'achievement_badge.dart';
 
 Future<void> showBadgeUnlockModal(BuildContext context, Achievement badge) {
@@ -43,6 +45,7 @@ class _BadgeUnlockDialogState extends State<_BadgeUnlockDialog>
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final s = context.watch<AppSettingsProvider>().strings;
     final cardBg = isDark ? const Color(0xFF212027) : Colors.white;
     final textDark = isDark ? Colors.white : const Color(0xFF0F172A);
     final textMuted =
@@ -67,11 +70,11 @@ class _BadgeUnlockDialogState extends State<_BadgeUnlockDialog>
             ),
             const SizedBox(height: 16),
             Text(
-              'MỞ KHÓA HUY HIỆU!',
-              style: TextStyle(
+              s.badgeUnlockedTitle,
+              style: const TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w800,
-                color: const Color(0xFFD97706),
+                color: Color(0xFFD97706),
                 letterSpacing: 1.2,
               ),
             ),
@@ -106,8 +109,8 @@ class _BadgeUnlockDialogState extends State<_BadgeUnlockDialog>
                       borderRadius: BorderRadius.circular(14)),
                   elevation: 0,
                 ),
-                child: const Text('Tuyệt vời!',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
+                child: Text(s.greatExclamation,
+                    style: const TextStyle(fontWeight: FontWeight.bold)),
               ),
             ),
           ],

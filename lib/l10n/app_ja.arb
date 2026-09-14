@@ -532,6 +532,8 @@
   "manageSubscription": "サブスクリプションを管理",
   "manageSubscriptionFailed": "サブスクリプション管理を開けませんでした。",
   "scanCreditsExhausted": "スキャン用クレジットがありません。",
+  "scanSpamDetectedTitle": "異常なアクティビティが検出されました",
+  "scanSpamDetectedMessage": "異常なアクティビティが検出されました。サポートにお問い合わせください。",
   "networkRetry": "接続が遅いようです。もう一度お試しください。",
   "scanUnavailable": "この画像を分析できませんでした。",
   "notificationChannelName": "毎日の食事リマインダー",
@@ -705,5 +707,190 @@
   "dailySummaryBannerTitle": "1日のまとめ ＆ AIコーチ",
   "dailySummaryBannerSubtitle": "栄養レポートを確認してEXPを獲得",
   "cannotOpenShareSheet": "共有シートを開けません。",
-  "profileSaveFailed": "プロファイルを保存できませんでした。もう一度お試しください。"
+  "profileSaveFailed": "プロファイルを保存できませんでした。もう一度お試しください。",
+  "trialDaysFree": "{days}日間無料トライアル",
+  "@trialDaysFree": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "enableTrialDaysFree": "{days}日間の無料トライアルを有効にする",
+  "@enableTrialDaysFree": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "trialNoChargeTodayReminder": "本日は請求なし、24時間前に通知",
+  "trialDirectChargeOnRegister": "登録時に直接請求",
+  "trialPaymentSchedule": "トライアル請求スケジュール:",
+  "trialStepToday": "今日",
+  "trialStepUnlockFree": "￥0で利用開始",
+  "trialStepDayReminder": "{day}日目",
+  "@trialStepDayReminder": {
+    "placeholders": {
+      "day": {
+        "type": "int"
+      }
+    }
+  },
+  "trialStepPushReminder": "リマインダー通知",
+  "trialStepChargeStarts": "請求開始",
+  "trialDaysCountBadge": "{days}日間無料 ￥0",
+  "@trialDaysCountBadge": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "trialDaysNote": "{days}日間試す ￥0",
+  "@trialDaysNote": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "payYearlyNote": "年払い",
+  "payMonthlyNote": "月払い",
+  "trialCancelAnytimeNote": "本日の請求はありません。App Store / Google Playの設定でいつでも解約可能。",
+  "changeYourselfNow": "今すぐ自分を変える",
+  "tryFreeNow": "今すぐ無料体験",
+  "completeSetup": "設定完了",
+  "servicesAndPlans": "サービスと料金プラン",
+  "connectedStatus": "連携済み",
+  "notConnectedStatus": "未連携",
+  "scanBarcodeTip": "包装食品・缶詰などはバーコードスキャンで正確な栄養情報をチェックできます！",
+  "scanBarcodeNow": "バーコードをスキャン",
+  "progressForecastPrefix": "進捗予測 • {goal}",
+  "@progressForecastPrefix": {
+    "placeholders": {
+      "goal": {
+        "type": "String"
+      }
+    }
+  },
+  "weeksLeftCount": "あと{weeks}週間",
+  "@weeksLeftCount": {
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
+  "reachTargetWeight": "→ 目標の{weight}kgに到達",
+  "@reachTargetWeight": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
+  "badgeUnlockedTitle": "バッジ獲得！",
+  "greatExclamation": "素晴らしい！",
+  "appleHealthPermissionDenied": "権限を許可できませんでした。iPhoneの「設定」>「プライバシーとセキュリティ」>「ヘルスケア」で許可してください。",
+  "appleHealthSyncTitle": "Apple Healthと同期",
+  "appleHealthSyncDesc": "CalGoはApple Healthから消費したアクティブエネルギーのみを読み取り、1日のカロリー目標に加算します。",
+  "appleHealthStatusConnected": "ステータス: 接続済み",
+  "appleHealthStatusNotConnected": "ステータス: 未接続",
+  "appleHealthConnectedDesc": "アプリはApple Healthとのデータ同期権限を取得しています。",
+  "appleHealthNotConnectedDesc": "下のボタンをタップしてiOSの認証ダイアログを開きます。",
+  "appleHealthReconnectButton": "再認証 / iOS再接続",
+  "appleHealthConnectButton": "Apple Healthに接続 (iOS)",
+  "disconnect": "接続解除",
+  "scanBarcodeTitle": "バーコードをスキャン",
+  "lookingUpBarcode": "バーコードを検索中...",
+  "alignBarcodeInstruction": "パッケージのバーコードにカメラを合わせてください",
+  "switchToPhotoScan": "料理の写真撮影に切り替え",
+  "barcodeNotFound": "このバーコードのデータは見つかりませんでした。料理を直接撮影してみてください！📸",
+  "addedExerciseCaloriesSnackbar": "本日の目標にワークアウト {calories} kcal を追加しました。",
+  "foodNotRecognizedTitle": "料理を明確に認識できませんでした",
+  "foodNotRecognizedMessage": "料理の写真をもう少し分かりやすく撮り直すか、手動で入力してください。",
+  "retakePhoto": "撮り直す",
+  "manualFoodEntry": "手動入力",
+  "backTooltip": "戻る",
+  "exitTooltip": "終了",
+  "completeAndSaveGoal": "目標を完了して保存",
+  "winbackExclusiveOffer": "🔥 特別限定オファー",
+  "winbackStayTitle": "ちょっと待って！{price}/年 で続ける",
+  "winbackDisclaimer": "価格およびオファーの利用規約はストアによって確認されます。",
+  "winbackSubscribeButton": "{price}/年 で登録",
+  "winbackDismissButton": "オファーを見送る",
+  "savePremiumToAccountTitle": "アカウントにPremiumを保存",
+  "savePremiumToAccountDesc": "1回サインインして取引を確認し、パーソナライズ計画を同期します。",
+  "signInFailed": "サインインに失敗しました。",
+  "dailyRecapTitle": "1日のまとめ",
+  "recapReadyAfterTime": "本日のお食事データがあれば、22:00以降にまとめを確認できます。",
+  "todayRecap": "今日のまとめ",
+  "mealsLoggedCount": "{count}食 記録済み",
+  "consumedToday": "本日摂取",
+  "targetCaloProgress": "{target} kcal目標の {percent}%",
+  "aiReview": "AIからのアドバイス",
+  "tomorrowTipTitle": "明日へのアドバイス",
+  "finishDayButton": "1日を完了",
+  "reportButton": "レポート",
+  "likeTooltip": "いいね",
+  "dislikeTooltip": "いまいち",
+  "addCustomFoodTitle": "手動で料理を追加",
+  "foodNameLabel": "料理名",
+  "foodNameHint": "料理名を入力...",
+  "caloriePer100gLabel": "カロリー (kcal / 100g)",
+  "addNow": "今すぐ追加",
+  "logFoodTitle": "料理を記録",
+  "creditsPurchasedSuccess": "確認が完了し、スキャンクレジットがアカウントに追加されました。",
+  "progressPhotosTitle": "経過写真",
+  "photosCount": "{count}枚の写真",
+  "creditsCountSuffix": "{count} クレジット",
+  "quizStepCount": "ステップ {current} / 3",
+  "quizMealPatternTitle": "1日の食事スタイル",
+  "quizMealPatternDesc": "1日のカロリーを何回の食事に分けますか？",
+  "quizMealPattern3Title": "3食（朝・昼・夕）",
+  "quizMealPattern3Desc": "朝・昼・晩のスタンダードな食事管理",
+  "quizMealPattern3SnackTitle": "3食 + 間食1回",
+  "quizMealPattern3SnackDesc": "午後の空腹を防ぐ軽食付き",
+  "quizMealPatternIFTitle": "2食（16:8 断食）",
+  "quizMealPatternIFDesc": "16:8のインターミッテント・ファスティングに最適",
+  "quizMealPatternSmallTitle": "4〜5回の小分け食",
+  "quizMealPatternSmallDesc": "エネルギーを1日を通じて均等に分散",
+  "quizVarietyTitle": "メニューの柔軟性",
+  "quizVarietyDesc": "どのような食事提案がお好みですか？",
+  "quizVarietySimpleTitle": "シンプル（作り置き・時短）",
+  "quizVarietySimpleDesc": "1度作って2〜3回食べる、時短スタイル",
+  "quizVarietyRotateTitle": "毎日新しいメニュー",
+  "quizVarietyRotateDesc": "毎日違う料理を楽しみ、飽きずに継続",
+  "quizVarietyLocalTitle": "定番・家庭料理中心",
+  "quizVarietyLocalDesc": "スーパーで手軽に買える食材を活用",
+  "quizPriorityTitle": "食事プランの優先事項",
+  "quizPriorityDesc": "食事プランで最も重視したいことは何ですか？",
+  "quizOptSatietyTitle": "満腹感キープ・低カロリー",
+  "quizOptSatietyDesc": "タンパク質と野菜中心でカロリー制限を無理なく持続",
+  "quizOptCalorieFitTitle": "残りカロリーに合わせる",
+  "quizOptCalorieFitDesc": "各食事の目標カロリー枠にぴったり収まる提案",
+  "quizOptSmartSwapTitle": "スマートな置き換え",
+  "quizOptSmartSwapDesc": "食べすぎた日は自動で軽めの食事を提案してバランス調整",
+  "quizOptHighProteinTitle": "高タンパク・低脂質",
+  "quizOptHighProteinDesc": "無駄な脂肪をつけずに筋肉を増やす良質タンパク質",
+  "quizOptTrainingFuelTitle": "トレーニング用エネルギー＆回復",
+  "quizOptTrainingFuelDesc": "ワークアウト前後のパフォーマンスとリカバリーを支える",
+  "quizOptCalorieSurplusTitle": "確実なカロリー摂取（増量）",
+  "quizOptCalorieSurplusDesc": "食べやすい食事構成で毎日の増量カロリー目標を達成",
+  "quizOptBalancedMacrosTitle": "バランス良いPFC",
+  "quizOptBalancedMacrosDesc": "毎日のタンパク質・脂質・炭水化物を安定管理",
+  "quizOptWeightStabilityTitle": "体重キープ",
+  "quizOptWeightStabilityDesc": "現在の維持カロリーにぴったり合う食事を中心にする",
+  "quizOptFlexibleWeekendsTitle": "週末フレキシブル",
+  "quizOptFlexibleWeekendsDesc": "外食やごちそうを食べた後の食事をスマートに調整",
+  "quizSyncAnswersLater": "続ける（回答は後で同期）",
+  "quizCompleteAndGenerateMenu": "完了してメニューを作成",
+  "quizSettingUpMenu": "CalGoがメニューを作成しています...",
+  "quizPersonalizingCalories": "あなたに最適なカロリーとおすすめメニューを計算中",
+  "quizFinalizingSetup": "設定を完了しています",
+  "searchFoodOrIngredientsHint": "料理や食材を検索...",
+  "searchResultsTitle": "検索結果",
+  "searchingInProgress": "検索中...",
+  "nutritionServerConnectError": "栄養サーバーに接続できません。"
 }

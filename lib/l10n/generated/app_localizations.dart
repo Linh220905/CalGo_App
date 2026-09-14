@@ -3268,6 +3268,18 @@ abstract class AppLocalizations {
   /// **'You have no scan credits left.'**
   String get scanCreditsExhausted;
 
+  /// No description provided for @scanSpamDetectedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Unusual activity detected'**
+  String get scanSpamDetectedTitle;
+
+  /// No description provided for @scanSpamDetectedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Unusual activity detected, please contact support for assistance.'**
+  String get scanSpamDetectedMessage;
+
   /// No description provided for @networkRetry.
   ///
   /// In en, this message translates to:
@@ -4406,6 +4418,780 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Could not save profile. Please try again.'**
   String get profileSaveFailed;
+
+  /// No description provided for @trialDaysFree.
+  ///
+  /// In en, this message translates to:
+  /// **'Try {days} days free'**
+  String trialDaysFree(int days);
+
+  /// No description provided for @enableTrialDaysFree.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable {days}-day free trial'**
+  String enableTrialDaysFree(int days);
+
+  /// No description provided for @trialNoChargeTodayReminder.
+  ///
+  /// In en, this message translates to:
+  /// **'No charge today, reminder 24h before'**
+  String get trialNoChargeTodayReminder;
+
+  /// No description provided for @trialDirectChargeOnRegister.
+  ///
+  /// In en, this message translates to:
+  /// **'Billed immediately upon sign up'**
+  String get trialDirectChargeOnRegister;
+
+  /// No description provided for @trialPaymentSchedule.
+  ///
+  /// In en, this message translates to:
+  /// **'Trial payment schedule:'**
+  String get trialPaymentSchedule;
+
+  /// No description provided for @trialStepToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get trialStepToday;
+
+  /// No description provided for @trialStepUnlockFree.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock for \$0'**
+  String get trialStepUnlockFree;
+
+  /// No description provided for @trialStepDayReminder.
+  ///
+  /// In en, this message translates to:
+  /// **'Day {day}'**
+  String trialStepDayReminder(int day);
+
+  /// No description provided for @trialStepPushReminder.
+  ///
+  /// In en, this message translates to:
+  /// **'Push reminder'**
+  String get trialStepPushReminder;
+
+  /// No description provided for @trialStepChargeStarts.
+  ///
+  /// In en, this message translates to:
+  /// **'Billing starts'**
+  String get trialStepChargeStarts;
+
+  /// No description provided for @trialDaysCountBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'TRY {days} DAYS \$0'**
+  String trialDaysCountBadge(int days);
+
+  /// No description provided for @trialDaysNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Try {days} days \$0'**
+  String trialDaysNote(int days);
+
+  /// No description provided for @payYearlyNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Billed annually'**
+  String get payYearlyNote;
+
+  /// No description provided for @payMonthlyNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Billed monthly'**
+  String get payMonthlyNote;
+
+  /// No description provided for @trialCancelAnytimeNote.
+  ///
+  /// In en, this message translates to:
+  /// **'No charge today. Cancel anytime in App Store / Google Play settings.'**
+  String get trialCancelAnytimeNote;
+
+  /// No description provided for @changeYourselfNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Transform your body now'**
+  String get changeYourselfNow;
+
+  /// No description provided for @tryFreeNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Try free now'**
+  String get tryFreeNow;
+
+  /// No description provided for @completeSetup.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete setup'**
+  String get completeSetup;
+
+  /// No description provided for @servicesAndPlans.
+  ///
+  /// In en, this message translates to:
+  /// **'Services & Plans'**
+  String get servicesAndPlans;
+
+  /// No description provided for @connectedStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected'**
+  String get connectedStatus;
+
+  /// No description provided for @notConnectedStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Not connected'**
+  String get notConnectedStatus;
+
+  /// No description provided for @scanBarcodeTip.
+  ///
+  /// In en, this message translates to:
+  /// **'For packaged food/items, try Barcode Scan for 100% accurate nutrition!'**
+  String get scanBarcodeTip;
+
+  /// No description provided for @scanBarcodeNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan barcode now'**
+  String get scanBarcodeNow;
+
+  /// No description provided for @progressForecastPrefix.
+  ///
+  /// In en, this message translates to:
+  /// **'Progress forecast • {goal}'**
+  String progressForecastPrefix(String goal);
+
+  /// No description provided for @weeksLeftCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{weeks} weeks left'**
+  String weeksLeftCount(int weeks);
+
+  /// No description provided for @reachTargetWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'→ Reach {weight}kg target'**
+  String reachTargetWeight(String weight);
+
+  /// No description provided for @badgeUnlockedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'BADGE UNLOCKED!'**
+  String get badgeUnlockedTitle;
+
+  /// No description provided for @greatExclamation.
+  ///
+  /// In en, this message translates to:
+  /// **'Awesome!'**
+  String get greatExclamation;
+
+  /// No description provided for @appleHealthPermissionDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to grant permissions. Please make sure you have allowed access in iPhone Settings > Privacy & Security > Health.'**
+  String get appleHealthPermissionDenied;
+
+  /// No description provided for @appleHealthSyncTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Apple Health Sync'**
+  String get appleHealthSyncTitle;
+
+  /// No description provided for @appleHealthSyncDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'CalGo only reads Active Energy burned from Apple Health to add to your daily calorie budget.'**
+  String get appleHealthSyncDesc;
+
+  /// No description provided for @appleHealthStatusConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Status: Connected'**
+  String get appleHealthStatusConnected;
+
+  /// No description provided for @appleHealthStatusNotConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Status: Not connected'**
+  String get appleHealthStatusNotConnected;
+
+  /// No description provided for @appleHealthConnectedDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'The app has permission to read and sync data with Apple Health.'**
+  String get appleHealthConnectedDesc;
+
+  /// No description provided for @appleHealthNotConnectedDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the button below to open the iOS authorization dialog.'**
+  String get appleHealthNotConnectedDesc;
+
+  /// No description provided for @appleHealthReconnectButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Reauthorize / Reconnect iOS'**
+  String get appleHealthReconnectButton;
+
+  /// No description provided for @appleHealthConnectButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect Apple Health (iOS)'**
+  String get appleHealthConnectButton;
+
+  /// No description provided for @disconnect.
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnect'**
+  String get disconnect;
+
+  /// No description provided for @scanBarcodeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan Barcode'**
+  String get scanBarcodeTitle;
+
+  /// No description provided for @lookingUpBarcode.
+  ///
+  /// In en, this message translates to:
+  /// **'Looking up barcode...'**
+  String get lookingUpBarcode;
+
+  /// No description provided for @alignBarcodeInstruction.
+  ///
+  /// In en, this message translates to:
+  /// **'Align camera with barcode on package'**
+  String get alignBarcodeInstruction;
+
+  /// No description provided for @switchToPhotoScan.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch to food photo scan'**
+  String get switchToPhotoScan;
+
+  /// No description provided for @barcodeNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No data found for this barcode. Try taking a photo of the food! 📸'**
+  String get barcodeNotFound;
+
+  /// No description provided for @addedExerciseCaloriesSnackbar.
+  ///
+  /// In en, this message translates to:
+  /// **'Added {calories} kcal of workout to today\'s goal.'**
+  String addedExerciseCaloriesSnackbar(int calories);
+
+  /// No description provided for @foodNotRecognizedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Food Not Clearly Recognized'**
+  String get foodNotRecognizedTitle;
+
+  /// No description provided for @foodNotRecognizedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Please take a clearer photo of your food or enter it manually.'**
+  String get foodNotRecognizedMessage;
+
+  /// No description provided for @retakePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Retake'**
+  String get retakePhoto;
+
+  /// No description provided for @manualFoodEntry.
+  ///
+  /// In en, this message translates to:
+  /// **'Manual Entry'**
+  String get manualFoodEntry;
+
+  /// No description provided for @backTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get backTooltip;
+
+  /// No description provided for @exitTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Exit'**
+  String get exitTooltip;
+
+  /// No description provided for @completeAndSaveGoal.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete & Save Goal'**
+  String get completeAndSaveGoal;
+
+  /// No description provided for @winbackExclusiveOffer.
+  ///
+  /// In en, this message translates to:
+  /// **'🔥 EXCLUSIVE OFFER'**
+  String get winbackExclusiveOffer;
+
+  /// No description provided for @winbackStayTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Wait! Continue with {price}/year'**
+  String winbackStayTitle(String price);
+
+  /// No description provided for @winbackDisclaimer.
+  ///
+  /// In en, this message translates to:
+  /// **'Pricing and offer terms are verified directly by the store.'**
+  String get winbackDisclaimer;
+
+  /// No description provided for @winbackSubscribeButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscribe {price}/year'**
+  String winbackSubscribeButton(String price);
+
+  /// No description provided for @winbackDismissButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Dismiss offer'**
+  String get winbackDismissButton;
+
+  /// No description provided for @savePremiumToAccountTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Premium to your account'**
+  String get savePremiumToAccountTitle;
+
+  /// No description provided for @savePremiumToAccountDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in once to verify transactions and sync your personalized plan.'**
+  String get savePremiumToAccountDesc;
+
+  /// No description provided for @signInFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in failed.'**
+  String get signInFailed;
+
+  /// No description provided for @dailyRecapTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'End of Day Recap'**
+  String get dailyRecapTitle;
+
+  /// No description provided for @recapReadyAfterTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Recap will be ready after 22:00, once you have scan data today.'**
+  String get recapReadyAfterTime;
+
+  /// No description provided for @todayRecap.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s Recap'**
+  String get todayRecap;
+
+  /// No description provided for @mealsLoggedCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} meals logged'**
+  String mealsLoggedCount(int count);
+
+  /// No description provided for @consumedToday.
+  ///
+  /// In en, this message translates to:
+  /// **'consumed today'**
+  String get consumedToday;
+
+  /// No description provided for @targetCaloProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'{percent}% of {target} kcal goal'**
+  String targetCaloProgress(String percent, int target);
+
+  /// No description provided for @aiReview.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Review'**
+  String get aiReview;
+
+  /// No description provided for @tomorrowTipTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tip for tomorrow'**
+  String get tomorrowTipTitle;
+
+  /// No description provided for @finishDayButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete Day'**
+  String get finishDayButton;
+
+  /// No description provided for @reportButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Report'**
+  String get reportButton;
+
+  /// No description provided for @likeTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Like'**
+  String get likeTooltip;
+
+  /// No description provided for @dislikeTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Dislike'**
+  String get dislikeTooltip;
+
+  /// No description provided for @addCustomFoodTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add food manually'**
+  String get addCustomFoodTitle;
+
+  /// No description provided for @foodNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Food name'**
+  String get foodNameLabel;
+
+  /// No description provided for @foodNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter food name...'**
+  String get foodNameHint;
+
+  /// No description provided for @caloriePer100gLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Calories (kcal / 100g)'**
+  String get caloriePer100gLabel;
+
+  /// No description provided for @addNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Add now'**
+  String get addNow;
+
+  /// No description provided for @logFoodTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Log food'**
+  String get logFoodTitle;
+
+  /// No description provided for @creditsPurchasedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Verified and added scan credits to your account.'**
+  String get creditsPurchasedSuccess;
+
+  /// No description provided for @progressPhotosTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Progress Photos'**
+  String get progressPhotosTitle;
+
+  /// No description provided for @photosCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} photos'**
+  String photosCount(int count);
+
+  /// No description provided for @creditsCountSuffix.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} credits'**
+  String creditsCountSuffix(int count);
+
+  /// No description provided for @quizStepCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Step {current} / 3'**
+  String quizStepCount(int current);
+
+  /// No description provided for @quizMealPatternTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Daily Meals'**
+  String get quizMealPatternTitle;
+
+  /// No description provided for @quizMealPatternDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'How many meals do you want to split your daily calories into?'**
+  String get quizMealPatternDesc;
+
+  /// No description provided for @quizMealPattern3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'3 Main Meals'**
+  String get quizMealPattern3Title;
+
+  /// No description provided for @quizMealPattern3Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Standard Breakfast - Lunch - Dinner, easy to manage'**
+  String get quizMealPattern3Desc;
+
+  /// No description provided for @quizMealPattern3SnackTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'3 Main Meals + 1 Snack'**
+  String get quizMealPattern3SnackTitle;
+
+  /// No description provided for @quizMealPattern3SnackDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Includes an afternoon light snack to avoid hunger'**
+  String get quizMealPattern3SnackDesc;
+
+  /// No description provided for @quizMealPatternIFTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'2 Main Meals (Intermittent Fasting)'**
+  String get quizMealPatternIFTitle;
+
+  /// No description provided for @quizMealPatternIFDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Follows 16:8 intermittent fasting schedule'**
+  String get quizMealPatternIFDesc;
+
+  /// No description provided for @quizMealPatternSmallTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'4 - 5 Small Meals'**
+  String get quizMealPatternSmallTitle;
+
+  /// No description provided for @quizMealPatternSmallDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Distributes energy evenly throughout the day'**
+  String get quizMealPatternSmallDesc;
+
+  /// No description provided for @quizVarietyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Menu Flexibility'**
+  String get quizVarietyTitle;
+
+  /// No description provided for @quizVarietyDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'How do you prefer your meal suggestions?'**
+  String get quizVarietyDesc;
+
+  /// No description provided for @quizVarietySimpleTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Simple Repetition'**
+  String get quizVarietySimpleTitle;
+
+  /// No description provided for @quizVarietySimpleDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Cook once, eat 2-3 meals, save time'**
+  String get quizVarietySimpleDesc;
+
+  /// No description provided for @quizVarietyRotateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Variety'**
+  String get quizVarietyRotateTitle;
+
+  /// No description provided for @quizVarietyRotateDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Fresh menu every day, keep meals interesting'**
+  String get quizVarietyRotateDesc;
+
+  /// No description provided for @quizVarietyLocalTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Local & Asian Cuisine'**
+  String get quizVarietyLocalTitle;
+
+  /// No description provided for @quizVarietyLocalDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Ingredients easily found in local markets & stores'**
+  String get quizVarietyLocalDesc;
+
+  /// No description provided for @quizPriorityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Eating Goals'**
+  String get quizPriorityTitle;
+
+  /// No description provided for @quizPriorityDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'What do you want to prioritize in your nutrition plan?'**
+  String get quizPriorityDesc;
+
+  /// No description provided for @quizOptSatietyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Long Satiety, Low Calorie'**
+  String get quizOptSatietyTitle;
+
+  /// No description provided for @quizOptSatietyDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'High protein, veggies and low-oil dishes to sustain calorie deficit'**
+  String get quizOptSatietyDesc;
+
+  /// No description provided for @quizOptCalorieFitTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Match Remaining Calories'**
+  String get quizOptCalorieFitTitle;
+
+  /// No description provided for @quizOptCalorieFitDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Select portions closely matched to your meal budget'**
+  String get quizOptCalorieFitDesc;
+
+  /// No description provided for @quizOptSmartSwapTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Smart Food Swaps'**
+  String get quizOptSmartSwapTitle;
+
+  /// No description provided for @quizOptSmartSwapDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggest lighter meals when you ate a bit heavy earlier'**
+  String get quizOptSmartSwapDesc;
+
+  /// No description provided for @quizOptHighProteinTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'High Protein, Lean'**
+  String get quizOptHighProteinTitle;
+
+  /// No description provided for @quizOptHighProteinDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Focus on lean protein to support muscle growth without excess fat'**
+  String get quizOptHighProteinDesc;
+
+  /// No description provided for @quizOptTrainingFuelTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Training Fuel & Recovery'**
+  String get quizOptTrainingFuelTitle;
+
+  /// No description provided for @quizOptTrainingFuelDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Balanced protein and carbs around workouts'**
+  String get quizOptTrainingFuelDesc;
+
+  /// No description provided for @quizOptCalorieSurplusTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Healthy Calorie Surplus'**
+  String get quizOptCalorieSurplusTitle;
+
+  /// No description provided for @quizOptCalorieSurplusDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Easy-to-eat meal breakdown to hit your daily surplus target'**
+  String get quizOptCalorieSurplusDesc;
+
+  /// No description provided for @quizOptBalancedMacrosTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Balanced Macros'**
+  String get quizOptBalancedMacrosTitle;
+
+  /// No description provided for @quizOptBalancedMacrosDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep protein, carbs and fats consistent every day'**
+  String get quizOptBalancedMacrosDesc;
+
+  /// No description provided for @quizOptWeightStabilityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight Stability'**
+  String get quizOptWeightStabilityTitle;
+
+  /// No description provided for @quizOptWeightStabilityDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Target meals matching your current maintenance calories'**
+  String get quizOptWeightStabilityDesc;
+
+  /// No description provided for @quizOptFlexibleWeekendsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Flexible Weekends'**
+  String get quizOptFlexibleWeekendsTitle;
+
+  /// No description provided for @quizOptFlexibleWeekendsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Rebalance your intake after enjoying a social meal'**
+  String get quizOptFlexibleWeekendsDesc;
+
+  /// No description provided for @quizSyncAnswersLater.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue, sync answers later'**
+  String get quizSyncAnswersLater;
+
+  /// No description provided for @quizCompleteAndGenerateMenu.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete & Create Menu'**
+  String get quizCompleteAndGenerateMenu;
+
+  /// No description provided for @quizSettingUpMenu.
+  ///
+  /// In en, this message translates to:
+  /// **'CalGo is building your menu...'**
+  String get quizSettingUpMenu;
+
+  /// No description provided for @quizPersonalizingCalories.
+  ///
+  /// In en, this message translates to:
+  /// **'Personalizing calories and the most suitable meals for you'**
+  String get quizPersonalizingCalories;
+
+  /// No description provided for @quizFinalizingSetup.
+  ///
+  /// In en, this message translates to:
+  /// **'Finalizing setup'**
+  String get quizFinalizingSetup;
+
+  /// No description provided for @searchFoodOrIngredientsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search food or ingredients...'**
+  String get searchFoodOrIngredientsHint;
+
+  /// No description provided for @searchResultsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Search Results'**
+  String get searchResultsTitle;
+
+  /// No description provided for @searchingInProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Searching...'**
+  String get searchingInProgress;
+
+  /// No description provided for @nutritionServerConnectError.
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot connect to nutrition server.'**
+  String get nutritionServerConnectError;
 }
 
 class _AppLocalizationsDelegate

@@ -170,6 +170,11 @@ class ScanTaskProvider extends ChangeNotifier {
     final value = error.toString().toLowerCase();
     final statusCode = error is ApiException ? error.statusCode : null;
     final detail = error is ApiException ? error.message.toLowerCase() : value;
+    if (value.contains('spam_detected') ||
+        detail.contains('bất thường') ||
+        (statusCode == 429 && detail.contains('spam'))) {
+      return 'scanSpamDetected';
+    }
     if (value.contains('insufficient_credits') || value.contains('402')) {
       return 'scanCreditsExhausted';
     }

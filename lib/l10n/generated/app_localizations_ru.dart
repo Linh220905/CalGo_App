@@ -1774,6 +1774,13 @@ class AppLocalizationsRu extends AppLocalizations {
       'У тебя не осталось кредитов на сканирование.';
 
   @override
+  String get scanSpamDetectedTitle => 'Обнаружена подозрительная активность';
+
+  @override
+  String get scanSpamDetectedMessage =>
+      'Обнаружена подозрительная активность, пожалуйста, обратитесь в службу поддержки.';
+
+  @override
   String get networkRetry => 'Связь медленная. Попробуй снова.';
 
   @override
@@ -2419,4 +2426,458 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get profileSaveFailed =>
       'Не удалось сохранить профиль. Попробуйте еще раз.';
+
+  @override
+  String trialDaysFree(int days) {
+    return 'Пробный период $days дн. бесплатно';
+  }
+
+  @override
+  String enableTrialDaysFree(int days) {
+    return 'Включить пробный период на $days дней';
+  }
+
+  @override
+  String get trialNoChargeTodayReminder =>
+      'Без оплаты сегодня, напоминание за 24 ч';
+
+  @override
+  String get trialDirectChargeOnRegister => 'Оплата сразу при подписке';
+
+  @override
+  String get trialPaymentSchedule => 'График пробного периода:';
+
+  @override
+  String get trialStepToday => 'Сегодня';
+
+  @override
+  String get trialStepUnlockFree => 'Доступ за 0 \$';
+
+  @override
+  String trialStepDayReminder(int day) {
+    return 'День $day';
+  }
+
+  @override
+  String get trialStepPushReminder => 'Push-напоминание';
+
+  @override
+  String get trialStepChargeStarts => 'Начало списания';
+
+  @override
+  String trialDaysCountBadge(int days) {
+    return 'ПРОБА $days ДН. 0 \$';
+  }
+
+  @override
+  String trialDaysNote(int days) {
+    return 'Проба $days дн. 0 \$';
+  }
+
+  @override
+  String get payYearlyNote => 'Оплата раз в год';
+
+  @override
+  String get payMonthlyNote => 'Оплата каждый месяц';
+
+  @override
+  String get trialCancelAnytimeNote =>
+      'Сегодня плата не взимается. Отмена в любой момент в настройках App Store / Google Play.';
+
+  @override
+  String get changeYourselfNow => 'Начните трансформацию сейчас';
+
+  @override
+  String get tryFreeNow => 'Попробовать бесплатно';
+
+  @override
+  String get completeSetup => 'Завершить настройку';
+
+  @override
+  String get servicesAndPlans => 'Услуги и тарифы';
+
+  @override
+  String get connectedStatus => 'Подключено';
+
+  @override
+  String get notConnectedStatus => 'Не подключено';
+
+  @override
+  String get scanBarcodeTip =>
+      'Для упакованных продуктов попробуйте сканер штрихкодов для 100% точного состава!';
+
+  @override
+  String get scanBarcodeNow => 'Сканировать штрихкод';
+
+  @override
+  String progressForecastPrefix(String goal) {
+    return 'Прогноз прогресса • $goal';
+  }
+
+  @override
+  String weeksLeftCount(int weeks) {
+    return 'Осталось $weeks нед.';
+  }
+
+  @override
+  String reachTargetWeight(String weight) {
+    return '→ Достичь цели $weight кг';
+  }
+
+  @override
+  String get badgeUnlockedTitle => 'ЗНАЧОК РАЗБЛОКИРОВАН!';
+
+  @override
+  String get greatExclamation => 'Отлично!';
+
+  @override
+  String get appleHealthPermissionDenied =>
+      'Не удалось предоставить разрешение. Убедитесь, что доступ разрешен в Настройки iPhone > Конфиденциальность и безопасность > Здоровье.';
+
+  @override
+  String get appleHealthSyncTitle => 'Синхронизация с Apple Health';
+
+  @override
+  String get appleHealthSyncDesc =>
+      'CalGo считывает только активную энергию из Apple Health, чтобы прибавить ее к вашей суточной норме калорий.';
+
+  @override
+  String get appleHealthStatusConnected => 'Статус: Подключено';
+
+  @override
+  String get appleHealthStatusNotConnected => 'Статус: Не подключено';
+
+  @override
+  String get appleHealthConnectedDesc =>
+      'Приложение имеет разрешение на чтение и синхронизацию данных с Apple Health.';
+
+  @override
+  String get appleHealthNotConnectedDesc =>
+      'Нажмите кнопку ниже, чтобы открыть диалог авторизации iOS.';
+
+  @override
+  String get appleHealthReconnectButton =>
+      'Повторно запросить / Переподключить iOS';
+
+  @override
+  String get appleHealthConnectButton => 'Подключить Apple Health (iOS)';
+
+  @override
+  String get disconnect => 'Отключить';
+
+  @override
+  String get scanBarcodeTitle => 'Сканировать штрихкод';
+
+  @override
+  String get lookingUpBarcode => 'Поиск штрихкода...';
+
+  @override
+  String get alignBarcodeInstruction =>
+      'Наведите камеру на штрихкод на упаковке';
+
+  @override
+  String get switchToPhotoScan => 'Переключить на фото блюда';
+
+  @override
+  String get barcodeNotFound =>
+      'Данные для этого штрихкода не найдены. Попробуйте сфотографировать блюдо! 📸';
+
+  @override
+  String addedExerciseCaloriesSnackbar(int calories) {
+    return 'Добавлено $calories ккал тренировки к цели на сегодня.';
+  }
+
+  @override
+  String get foodNotRecognizedTitle => 'Блюдо не распознано';
+
+  @override
+  String get foodNotRecognizedMessage =>
+      'Пожалуйста, сделайте более четкое фото блюда или введите его вручную.';
+
+  @override
+  String get retakePhoto => 'Переснять';
+
+  @override
+  String get manualFoodEntry => 'Вручную';
+
+  @override
+  String get backTooltip => 'Назад';
+
+  @override
+  String get exitTooltip => 'Выйти';
+
+  @override
+  String get completeAndSaveGoal => 'Завершить и сохранить цель';
+
+  @override
+  String get winbackExclusiveOffer => '🔥 ЭКСКЛЮЗИВНОЕ ПРЕДЛОЖЕНИЕ';
+
+  @override
+  String winbackStayTitle(String price) {
+    return 'Подождите! Продолжите за $price/год';
+  }
+
+  @override
+  String get winbackDisclaimer =>
+      'Цены и условия акции проверяются магазином приложений.';
+
+  @override
+  String winbackSubscribeButton(String price) {
+    return 'Подписаться за $price/год';
+  }
+
+  @override
+  String get winbackDismissButton => 'Пропустить предложение';
+
+  @override
+  String get savePremiumToAccountTitle => 'Сохранить Premium в аккаунте';
+
+  @override
+  String get savePremiumToAccountDesc =>
+      'Войдите один раз для проверки транзакций и синхронизации плана.';
+
+  @override
+  String get signInFailed => 'Не удалось войти.';
+
+  @override
+  String get dailyRecapTitle => 'Итоги дня';
+
+  @override
+  String get recapReadyAfterTime =>
+      'Итоги будут готовы после 22:00, когда появятся записи за сегодня.';
+
+  @override
+  String get todayRecap => 'Итоги сегодня';
+
+  @override
+  String mealsLoggedCount(int count) {
+    return 'Записано приемов пищи: $count';
+  }
+
+  @override
+  String get consumedToday => 'съедено сегодня';
+
+  @override
+  String targetCaloProgress(String percent, int target) {
+    return '$percent% от цели $target ккал';
+  }
+
+  @override
+  String get aiReview => 'Отзыв от ИИ';
+
+  @override
+  String get tomorrowTipTitle => 'Совет на завтра';
+
+  @override
+  String get finishDayButton => 'Завершить день';
+
+  @override
+  String get reportButton => 'Отчет';
+
+  @override
+  String get likeTooltip => 'Нравится';
+
+  @override
+  String get dislikeTooltip => 'Не нравится';
+
+  @override
+  String get addCustomFoodTitle => 'Добавить блюдо вручную';
+
+  @override
+  String get foodNameLabel => 'Название блюда';
+
+  @override
+  String get foodNameHint => 'Введите название блюда...';
+
+  @override
+  String get caloriePer100gLabel => 'Калории (ккал / 100г)';
+
+  @override
+  String get addNow => 'Добавить сейчас';
+
+  @override
+  String get logFoodTitle => 'Записать блюдо';
+
+  @override
+  String get creditsPurchasedSuccess =>
+      'Проверено, сканы добавлены на ваш аккаунт.';
+
+  @override
+  String get progressPhotosTitle => 'Фото прогресса';
+
+  @override
+  String photosCount(int count) {
+    return 'Фото: $count';
+  }
+
+  @override
+  String creditsCountSuffix(int count) {
+    return '$count сканов';
+  }
+
+  @override
+  String quizStepCount(int current) {
+    return 'Шаг $current из 3';
+  }
+
+  @override
+  String get quizMealPatternTitle => 'Ваш режим питания';
+
+  @override
+  String get quizMealPatternDesc =>
+      'На сколько приемов пищи вы хотите разделить суточную норму?';
+
+  @override
+  String get quizMealPattern3Title => '3 основных приема';
+
+  @override
+  String get quizMealPattern3Desc =>
+      'Завтрак - Обед - Ужин, легко контролировать';
+
+  @override
+  String get quizMealPattern3SnackTitle => '3 приема + 1 перекус';
+
+  @override
+  String get quizMealPattern3SnackDesc =>
+      'Легкий перекус во второй половине дня';
+
+  @override
+  String get quizMealPatternIFTitle => '2 приема (Интервальное голодание)';
+
+  @override
+  String get quizMealPatternIFDesc => 'По схеме интервального голодания 16:8';
+
+  @override
+  String get quizMealPatternSmallTitle => '4 - 5 небольших приемов';
+
+  @override
+  String get quizMealPatternSmallDesc =>
+      'Равномерное распределение энергии в течение дня';
+
+  @override
+  String get quizVarietyTitle => 'Гибкость меню';
+
+  @override
+  String get quizVarietyDesc =>
+      'Как вы предпочитаете получать рекомендации по блюдам?';
+
+  @override
+  String get quizVarietySimpleTitle => 'Простой повтор';
+
+  @override
+  String get quizVarietySimpleDesc =>
+      'Готовить 1 раз на 2-3 приема, экономия времени';
+
+  @override
+  String get quizVarietyRotateTitle => 'Разнообразие каждый день';
+
+  @override
+  String get quizVarietyRotateDesc =>
+      'Новое меню каждый день, чтобы не надоедало';
+
+  @override
+  String get quizVarietyLocalTitle => 'Местная и традиционная кухня';
+
+  @override
+  String get quizVarietyLocalDesc =>
+      'Ингредиенты, доступные в ближайших магазинах';
+
+  @override
+  String get quizPriorityTitle => 'Приоритеты в питании';
+
+  @override
+  String get quizPriorityDesc => 'Что для вас важнее всего в плане питания?';
+
+  @override
+  String get quizOptSatietyTitle => 'Сытость надолго, мало калорий';
+
+  @override
+  String get quizOptSatietyDesc =>
+      'Белок, овощи и минимум масла для поддержания дефицита';
+
+  @override
+  String get quizOptCalorieFitTitle => 'Под остаток калорий';
+
+  @override
+  String get quizOptCalorieFitDesc =>
+      'Порции строго под лимит калорий каждого приема';
+
+  @override
+  String get quizOptSmartSwapTitle => 'Умная замена блюд';
+
+  @override
+  String get quizOptSmartSwapDesc =>
+      'Подсказывает легкие блюда, если днем съедено лишнее';
+
+  @override
+  String get quizOptHighProteinTitle => 'Много белка, мало жира';
+
+  @override
+  String get quizOptHighProteinDesc =>
+      'Нежирный белок для роста мышц без лишнего жира';
+
+  @override
+  String get quizOptTrainingFuelTitle =>
+      'Топливо для тренировок и восстановление';
+
+  @override
+  String get quizOptTrainingFuelDesc =>
+      'Баланс белка и углеводов для сил и восстановления';
+
+  @override
+  String get quizOptCalorieSurplusTitle => 'Здоровый профицит калорий';
+
+  @override
+  String get quizOptCalorieSurplusDesc =>
+      'Удобные приемы пищи для набора суточного профицита';
+
+  @override
+  String get quizOptBalancedMacrosTitle => 'Сбалансированные макронутриенты';
+
+  @override
+  String get quizOptBalancedMacrosDesc =>
+      'Стабильное соотношение БЖУ каждый день';
+
+  @override
+  String get quizOptWeightStabilityTitle => 'Стабильный вес';
+
+  @override
+  String get quizOptWeightStabilityDesc =>
+      'Блюда под ваши калории поддержания веса';
+
+  @override
+  String get quizOptFlexibleWeekendsTitle => 'Гибкие выходные';
+
+  @override
+  String get quizOptFlexibleWeekendsDesc =>
+      'Балансируйте рацион после плотных праздничных приемов';
+
+  @override
+  String get quizSyncAnswersLater => 'Продолжить, синхронизировать позже';
+
+  @override
+  String get quizCompleteAndGenerateMenu => 'Завершить и создать меню';
+
+  @override
+  String get quizSettingUpMenu => 'CalGo составляет ваше меню...';
+
+  @override
+  String get quizPersonalizingCalories =>
+      'Персонализация калорий и подбор подходящих блюд';
+
+  @override
+  String get quizFinalizingSetup => 'Завершение настройки';
+
+  @override
+  String get searchFoodOrIngredientsHint => 'Поиск блюд или ингредиентов...';
+
+  @override
+  String get searchResultsTitle => 'Результаты поиска';
+
+  @override
+  String get searchingInProgress => 'Поиск...';
+
+  @override
+  String get nutritionServerConnectError =>
+      'Не удалось подключиться к серверу питания.';
 }

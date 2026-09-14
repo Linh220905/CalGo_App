@@ -62,6 +62,7 @@ class _DailyRecapPageState extends State<DailyRecapPage> {
   @override
   Widget build(BuildContext context) {
     final settings = context.watch<AppSettingsProvider>();
+    final s = settings.strings;
     final gamification = context.watch<GamificationProvider>();
     final textColor = settings.isDarkMode
         ? Colors.white
@@ -72,7 +73,7 @@ class _DailyRecapPageState extends State<DailyRecapPage> {
           ? const Color(0xFF141318)
           : const Color(0xFFFAFAFB),
       appBar: AppBar(
-        title: const Text('Tổng kết cuối ngày'),
+        title: Text(s.dailyRecapTitle),
         foregroundColor: textColor,
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -84,7 +85,7 @@ class _DailyRecapPageState extends State<DailyRecapPage> {
               child: Padding(
                 padding: const EdgeInsets.all(28),
                 child: Text(
-                  'Tổng kết sẽ sẵn sàng sau 22:00, khi bạn đã có dữ liệu quét trong ngày.',
+                  s.recapReadyAfterTime,
                   textAlign: TextAlign.center,
                   style: TextStyle(color: textColor, fontSize: 15),
                 ),
@@ -152,6 +153,7 @@ class _DailyRecapSheetState extends State<DailyRecapSheet>
   @override
   Widget build(BuildContext context) {
     final settings = context.watch<AppSettingsProvider>();
+    final s = settings.strings;
     final isDark = settings.isDarkMode;
     final recap = widget.recap;
 
@@ -207,7 +209,7 @@ class _DailyRecapSheetState extends State<DailyRecapSheet>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Tổng kết hôm nay',
+                                s.todayRecap,
                                 style: TextStyle(
                                   fontSize: 22,
                                   fontWeight: FontWeight.w800,
@@ -217,7 +219,7 @@ class _DailyRecapSheetState extends State<DailyRecapSheet>
                               ),
                               const SizedBox(height: 2),
                               Text(
-                                '${recap.mealCount} bữa đã ghi',
+                                s.mealsLoggedCount(recap.mealCount),
                                 style: TextStyle(
                                   fontSize: 13,
                                   color: textMuted,
@@ -253,7 +255,7 @@ class _DailyRecapSheetState extends State<DailyRecapSheet>
                     Row(
                       children: [
                         _MacroBar(
-                          label: 'Protein',
+                          label: s.proteinMacroLabel,
                           pct: recap.proteinPct,
                           color: _kProteinColor,
                           isDark: isDark,
@@ -264,7 +266,7 @@ class _DailyRecapSheetState extends State<DailyRecapSheet>
                         ),
                         const SizedBox(width: 8),
                         _MacroBar(
-                          label: 'Carbs',
+                          label: s.carbMacroLabel,
                           pct: recap.carbPct,
                           color: _kCarbColor,
                           isDark: isDark,
@@ -275,7 +277,7 @@ class _DailyRecapSheetState extends State<DailyRecapSheet>
                         ),
                         const SizedBox(width: 8),
                         _MacroBar(
-                          label: 'Chất béo',
+                          label: s.fatMacroLabel,
                           pct: recap.fatPct,
                           color: _kFatColor,
                           isDark: isDark,
@@ -420,6 +422,7 @@ class _CaloRingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = context.watch<AppSettingsProvider>().strings;
     final pct = recap.caloPct.clamp(0.0, 1.0);
     final ringColor = pct >= 1.0
         ? _kExpColor
@@ -486,12 +489,12 @@ class _CaloRingCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'đã ăn hôm nay',
+                  s.consumedToday,
                   style: TextStyle(fontSize: 13, color: textMuted),
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  '${recap.caloPercentDisplay}% mục tiêu ${recap.targetCalo} kcal',
+                  s.targetCaloProgress('${recap.caloPercentDisplay}', recap.targetCalo),
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
@@ -590,6 +593,7 @@ class _AiCommentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = context.watch<AppSettingsProvider>().strings;
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -619,7 +623,7 @@ class _AiCommentCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Nhận xét từ AI',
+                  s.aiReview,
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
@@ -656,6 +660,7 @@ class _TomorrowTipCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = context.watch<AppSettingsProvider>().strings;
     final bgTip = isDark ? const Color(0xFF1C1A10) : const Color(0xFFFFFBEB);
     final borderTip = isDark
         ? const Color(0xFF3D3510)
@@ -677,9 +682,9 @@ class _TomorrowTipCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Gợi ý cho ngày mai',
-                  style: TextStyle(
+                Text(
+                  s.tomorrowTipTitle,
+                  style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
                     color: Color(0xFFD97706),
@@ -726,13 +731,14 @@ class _ActionButtons extends StatelessWidget {
   }
 
   Future<void> _shareRecap(BuildContext context) async {
+    final s = context.read<AppSettingsProvider>().strings;
     final recapText = [
-      'CalGo – Tổng kết ngày ${recap.dateKey}',
+      'CalGo – ${s.todayRecap} (${recap.dateKey})',
       '🔥 ${recap.totalCalo}/${recap.targetCalo} kcal',
-      '🥩 Protein: ${recap.proteinPct.round()}%',
-      '🍚 Carbs: ${recap.carbPct.round()}%',
-      '🥑 Chất béo: ${recap.fatPct.round()}%',
-      '🍽️ ${recap.mealCount} bữa đã ghi',
+      '🥩 ${s.proteinMacroLabel}: ${recap.proteinPct.round()}%',
+      '🍚 ${s.carbMacroLabel}: ${recap.carbPct.round()}%',
+      '🥑 ${s.fatMacroLabel}: ${recap.fatPct.round()}%',
+      '🍽️ ${s.mealsLoggedCount(recap.mealCount)}',
     ].join('\n');
 
     final renderObject = context.findRenderObject();
@@ -764,6 +770,7 @@ class _ActionButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = context.watch<AppSettingsProvider>().strings;
     final btnBg = isDark ? Colors.white : const Color(0xFF0F172A);
     final btnFg = isDark ? const Color(0xFF0F172A) : Colors.white;
 
@@ -777,9 +784,9 @@ class _ActionButtons extends StatelessWidget {
               _finish(context);
             },
             icon: const Icon(Icons.check_circle_outline_rounded, size: 18),
-            label: const Text(
-              'Hoàn thành ngày',
-              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
+            label: Text(
+              s.finishDayButton,
+              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
             ),
             style: ElevatedButton.styleFrom(
               backgroundColor: btnBg,
@@ -802,7 +809,7 @@ class _ActionButtons extends StatelessWidget {
                 onPressed: () => _openStats(context),
                 icon: Icon(Icons.bar_chart_rounded, size: 16, color: textDark),
                 label: Text(
-                  'Báo cáo',
+                  s.reportButton,
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w600,
@@ -831,7 +838,7 @@ class _ActionButtons extends StatelessWidget {
                 },
                 icon: Icon(Icons.share_outlined, size: 16, color: textDark),
                 label: Text(
-                  'Chia sẻ',
+                  s.share,
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w600,

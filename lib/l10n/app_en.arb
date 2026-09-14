@@ -816,6 +816,8 @@
   "manageSubscription": "Manage subscription",
   "manageSubscriptionFailed": "Could not open subscription management.",
   "scanCreditsExhausted": "You have no scan credits left.",
+  "scanSpamDetectedTitle": "Unusual activity detected",
+  "scanSpamDetectedMessage": "Unusual activity detected, please contact support for assistance.",
   "networkRetry": "The connection is slow. Try again.",
   "scanUnavailable": "This image could not be analyzed.",
   "notificationChannelName": "Daily meal reminders",
@@ -1180,5 +1182,249 @@
   "dailySummaryBannerTitle": "Daily Recap & AI Coach",
   "dailySummaryBannerSubtitle": "View nutrition insights & earn EXP",
   "cannotOpenShareSheet": "Unable to open share sheet.",
-  "profileSaveFailed": "Could not save profile. Please try again."
+  "profileSaveFailed": "Could not save profile. Please try again.",
+  "trialDaysFree": "Try {days} days free",
+  "@trialDaysFree": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "enableTrialDaysFree": "Enable {days}-day free trial",
+  "@enableTrialDaysFree": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "trialNoChargeTodayReminder": "No charge today, reminder 24h before",
+  "trialDirectChargeOnRegister": "Billed immediately upon sign up",
+  "trialPaymentSchedule": "Trial payment schedule:",
+  "trialStepToday": "Today",
+  "trialStepUnlockFree": "Unlock for $0",
+  "trialStepDayReminder": "Day {day}",
+  "@trialStepDayReminder": {
+    "placeholders": {
+      "day": {
+        "type": "int"
+      }
+    }
+  },
+  "trialStepPushReminder": "Push reminder",
+  "trialStepChargeStarts": "Billing starts",
+  "trialDaysCountBadge": "TRY {days} DAYS $0",
+  "@trialDaysCountBadge": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "trialDaysNote": "Try {days} days $0",
+  "@trialDaysNote": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "payYearlyNote": "Billed annually",
+  "payMonthlyNote": "Billed monthly",
+  "trialCancelAnytimeNote": "No charge today. Cancel anytime in App Store / Google Play settings.",
+  "changeYourselfNow": "Transform your body now",
+  "tryFreeNow": "Try free now",
+  "completeSetup": "Complete setup",
+  "servicesAndPlans": "Services & Plans",
+  "connectedStatus": "Connected",
+  "notConnectedStatus": "Not connected",
+  "scanBarcodeTip": "For packaged food/items, try Barcode Scan for 100% accurate nutrition!",
+  "scanBarcodeNow": "Scan barcode now",
+  "progressForecastPrefix": "Progress forecast • {goal}",
+  "@progressForecastPrefix": {
+    "placeholders": {
+      "goal": {
+        "type": "String"
+      }
+    }
+  },
+  "weeksLeftCount": "{weeks} weeks left",
+  "@weeksLeftCount": {
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
+  "reachTargetWeight": "→ Reach {weight}kg target",
+  "@reachTargetWeight": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
+  "badgeUnlockedTitle": "BADGE UNLOCKED!",
+  "greatExclamation": "Awesome!",
+  "appleHealthPermissionDenied": "Unable to grant permissions. Please make sure you have allowed access in iPhone Settings > Privacy & Security > Health.",
+  "appleHealthSyncTitle": "Apple Health Sync",
+  "appleHealthSyncDesc": "CalGo only reads Active Energy burned from Apple Health to add to your daily calorie budget.",
+  "appleHealthStatusConnected": "Status: Connected",
+  "appleHealthStatusNotConnected": "Status: Not connected",
+  "appleHealthConnectedDesc": "The app has permission to read and sync data with Apple Health.",
+  "appleHealthNotConnectedDesc": "Tap the button below to open the iOS authorization dialog.",
+  "appleHealthReconnectButton": "Reauthorize / Reconnect iOS",
+  "appleHealthConnectButton": "Connect Apple Health (iOS)",
+  "disconnect": "Disconnect",
+  "scanBarcodeTitle": "Scan Barcode",
+  "lookingUpBarcode": "Looking up barcode...",
+  "alignBarcodeInstruction": "Align camera with barcode on package",
+  "switchToPhotoScan": "Switch to food photo scan",
+  "barcodeNotFound": "No data found for this barcode. Try taking a photo of the food! 📸",
+  "addedExerciseCaloriesSnackbar": "Added {calories} kcal of workout to today's goal.",
+  "@addedExerciseCaloriesSnackbar": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "foodNotRecognizedTitle": "Food Not Clearly Recognized",
+  "foodNotRecognizedMessage": "Please take a clearer photo of your food or enter it manually.",
+  "retakePhoto": "Retake",
+  "manualFoodEntry": "Manual Entry",
+  "backTooltip": "Back",
+  "exitTooltip": "Exit",
+  "completeAndSaveGoal": "Complete & Save Goal",
+  "winbackExclusiveOffer": "🔥 EXCLUSIVE OFFER",
+  "winbackStayTitle": "Wait! Continue with {price}/year",
+  "@winbackStayTitle": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "winbackDisclaimer": "Pricing and offer terms are verified directly by the store.",
+  "winbackSubscribeButton": "Subscribe {price}/year",
+  "@winbackSubscribeButton": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "winbackDismissButton": "Dismiss offer",
+  "savePremiumToAccountTitle": "Save Premium to your account",
+  "savePremiumToAccountDesc": "Sign in once to verify transactions and sync your personalized plan.",
+  "signInFailed": "Sign in failed.",
+  "dailyRecapTitle": "End of Day Recap",
+  "recapReadyAfterTime": "Recap will be ready after 22:00, once you have scan data today.",
+  "todayRecap": "Today's Recap",
+  "mealsLoggedCount": "{count} meals logged",
+  "@mealsLoggedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "consumedToday": "consumed today",
+  "targetCaloProgress": "{percent}% of {target} kcal goal",
+  "@targetCaloProgress": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "aiReview": "AI Review",
+  "tomorrowTipTitle": "Tip for tomorrow",
+  "finishDayButton": "Complete Day",
+  "reportButton": "Report",
+  "likeTooltip": "Like",
+  "dislikeTooltip": "Dislike",
+  "addCustomFoodTitle": "Add food manually",
+  "foodNameLabel": "Food name",
+  "foodNameHint": "Enter food name...",
+  "caloriePer100gLabel": "Calories (kcal / 100g)",
+  "addNow": "Add now",
+  "logFoodTitle": "Log food",
+  "creditsPurchasedSuccess": "Verified and added scan credits to your account.",
+  "progressPhotosTitle": "Progress Photos",
+  "photosCount": "{count} photos",
+  "@photosCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "creditsCountSuffix": "{count} credits",
+  "@creditsCountSuffix": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "quizStepCount": "Step {current} / 3",
+  "@quizStepCount": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      }
+    }
+  },
+  "quizMealPatternTitle": "Your Daily Meals",
+  "quizMealPatternDesc": "How many meals do you want to split your daily calories into?",
+  "quizMealPattern3Title": "3 Main Meals",
+  "quizMealPattern3Desc": "Standard Breakfast - Lunch - Dinner, easy to manage",
+  "quizMealPattern3SnackTitle": "3 Main Meals + 1 Snack",
+  "quizMealPattern3SnackDesc": "Includes an afternoon light snack to avoid hunger",
+  "quizMealPatternIFTitle": "2 Main Meals (Intermittent Fasting)",
+  "quizMealPatternIFDesc": "Follows 16:8 intermittent fasting schedule",
+  "quizMealPatternSmallTitle": "4 - 5 Small Meals",
+  "quizMealPatternSmallDesc": "Distributes energy evenly throughout the day",
+  "quizVarietyTitle": "Menu Flexibility",
+  "quizVarietyDesc": "How do you prefer your meal suggestions?",
+  "quizVarietySimpleTitle": "Simple Repetition",
+  "quizVarietySimpleDesc": "Cook once, eat 2-3 meals, save time",
+  "quizVarietyRotateTitle": "Daily Variety",
+  "quizVarietyRotateDesc": "Fresh menu every day, keep meals interesting",
+  "quizVarietyLocalTitle": "Local & Asian Cuisine",
+  "quizVarietyLocalDesc": "Ingredients easily found in local markets & stores",
+  "quizPriorityTitle": "Your Eating Goals",
+  "quizPriorityDesc": "What do you want to prioritize in your nutrition plan?",
+  "quizOptSatietyTitle": "Long Satiety, Low Calorie",
+  "quizOptSatietyDesc": "High protein, veggies and low-oil dishes to sustain calorie deficit",
+  "quizOptCalorieFitTitle": "Match Remaining Calories",
+  "quizOptCalorieFitDesc": "Select portions closely matched to your meal budget",
+  "quizOptSmartSwapTitle": "Smart Food Swaps",
+  "quizOptSmartSwapDesc": "Suggest lighter meals when you ate a bit heavy earlier",
+  "quizOptHighProteinTitle": "High Protein, Lean",
+  "quizOptHighProteinDesc": "Focus on lean protein to support muscle growth without excess fat",
+  "quizOptTrainingFuelTitle": "Training Fuel & Recovery",
+  "quizOptTrainingFuelDesc": "Balanced protein and carbs around workouts",
+  "quizOptCalorieSurplusTitle": "Healthy Calorie Surplus",
+  "quizOptCalorieSurplusDesc": "Easy-to-eat meal breakdown to hit your daily surplus target",
+  "quizOptBalancedMacrosTitle": "Balanced Macros",
+  "quizOptBalancedMacrosDesc": "Keep protein, carbs and fats consistent every day",
+  "quizOptWeightStabilityTitle": "Weight Stability",
+  "quizOptWeightStabilityDesc": "Target meals matching your current maintenance calories",
+  "quizOptFlexibleWeekendsTitle": "Flexible Weekends",
+  "quizOptFlexibleWeekendsDesc": "Rebalance your intake after enjoying a social meal",
+  "quizSyncAnswersLater": "Continue, sync answers later",
+  "quizCompleteAndGenerateMenu": "Complete & Create Menu",
+  "quizSettingUpMenu": "CalGo is building your menu...",
+  "quizPersonalizingCalories": "Personalizing calories and the most suitable meals for you",
+  "quizFinalizingSetup": "Finalizing setup",
+  "searchFoodOrIngredientsHint": "Search food or ingredients...",
+  "searchResultsTitle": "Search Results",
+  "searchingInProgress": "Searching...",
+  "nutritionServerConnectError": "Cannot connect to nutrition server."
 }

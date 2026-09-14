@@ -807,6 +807,8 @@
   "manageSubscription": "管理订阅",
   "manageSubscriptionFailed": "无法打开订阅管理 。",
   "scanCreditsExhausted": "你没有扫描学分了",
+  "scanSpamDetectedTitle": "检测到异常活动",
+  "scanSpamDetectedMessage": "检测到异常活动，请联系客服获取支持。",
   "networkRetry": "相接为慢. 再试一次",
   "scanUnavailable": "此图像无法分析 。",
   "notificationChannelName": "每日餐后催复通知",
@@ -1114,5 +1116,190 @@
   "dailySummaryBannerTitle": "每日总结与AI教练",
   "dailySummaryBannerSubtitle": "查看营养分析并领取EXP",
   "cannotOpenShareSheet": "无法打开分享面板。",
-  "profileSaveFailed": "无法保存个人资料。请重试。"
+  "profileSaveFailed": "无法保存个人资料。请重试。",
+  "trialDaysFree": "免费试用 {days} 天",
+  "@trialDaysFree": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "enableTrialDaysFree": "开启 {days} 天免费试用",
+  "@enableTrialDaysFree": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "trialNoChargeTodayReminder": "今日不扣费，提前 24 小时提醒",
+  "trialDirectChargeOnRegister": "订阅时立即付费",
+  "trialPaymentSchedule": "试用扣费流程：",
+  "trialStepToday": "今日",
+  "trialStepUnlockFree": "0元解锁",
+  "trialStepDayReminder": "第 {day} 天",
+  "@trialStepDayReminder": {
+    "placeholders": {
+      "day": {
+        "type": "int"
+      }
+    }
+  },
+  "trialStepPushReminder": "通知提醒",
+  "trialStepChargeStarts": "开始扣费",
+  "trialDaysCountBadge": "试用 {days} 天 0元",
+  "@trialDaysCountBadge": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "trialDaysNote": "试用 {days} 天 0元",
+  "@trialDaysNote": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "payYearlyNote": "按年支付",
+  "payMonthlyNote": "按月支付",
+  "trialCancelAnytimeNote": "今日不收费。随时可在 App Store / Google Play 设置中取消。",
+  "changeYourselfNow": "立即改变自我",
+  "tryFreeNow": "立即免费体验",
+  "completeSetup": "完成设置",
+  "servicesAndPlans": "服务与套餐",
+  "connectedStatus": "已连接",
+  "notConnectedStatus": "未连接",
+  "scanBarcodeTip": "对于包装/盒装食品，建议扫描条形码以获取 100% 精准营养数据！",
+  "scanBarcodeNow": "立即扫条形码",
+  "progressForecastPrefix": "进度预测 • {goal}",
+  "@progressForecastPrefix": {
+    "placeholders": {
+      "goal": {
+        "type": "String"
+      }
+    }
+  },
+  "weeksLeftCount": "还剩 {weeks} 周",
+  "@weeksLeftCount": {
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
+  "reachTargetWeight": "→ 达成目标 {weight}kg",
+  "@reachTargetWeight": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
+  "badgeUnlockedTitle": "解锁成就徽章！",
+  "greatExclamation": "太棒了！",
+  "appleHealthPermissionDenied": "无法授予权限。请确保在 iPhone 设置 > 隐私与安全性 > 健康 中开启权限。",
+  "appleHealthSyncTitle": "同步 Apple 健康",
+  "appleHealthSyncDesc": "CalGo 仅读取 Apple 健康中的活动能量消耗，并将其加入每日卡路里目标。",
+  "appleHealthStatusConnected": "状态：已连接",
+  "appleHealthStatusNotConnected": "状态：未连接",
+  "appleHealthConnectedDesc": "应用已获得读取和同步 Apple 健康数据的权限。",
+  "appleHealthNotConnectedDesc": "点击下方按钮打开 iOS 系统授权弹窗。",
+  "appleHealthReconnectButton": "重新授权 / 重新连接 iOS",
+  "appleHealthConnectButton": "连接 Apple 健康 (iOS)",
+  "disconnect": "断开连接",
+  "scanBarcodeTitle": "扫描条形码",
+  "lookingUpBarcode": "正在查询条形码...",
+  "alignBarcodeInstruction": "将摄像头对准包装上的条形码",
+  "switchToPhotoScan": "切换到拍摄食物照片",
+  "barcodeNotFound": "未找到此条形码的数据。请尝试直接拍摄食物照片！📸",
+  "addedExerciseCaloriesSnackbar": "已将 {calories} kcal 运动消耗计入今日目标。",
+  "foodNotRecognizedTitle": "未能清晰识别食物",
+  "foodNotRecognizedMessage": "请重新拍摄一张更清晰的食物照片，或手动输入食物。",
+  "retakePhoto": "重新拍摄",
+  "manualFoodEntry": "手动输入",
+  "backTooltip": "返回",
+  "exitTooltip": "退出",
+  "completeAndSaveGoal": "完成并保存目标",
+  "winbackExclusiveOffer": "🔥 专属特惠",
+  "winbackStayTitle": "等等！以 {price}/年 继续",
+  "winbackDisclaimer": "价格和特惠条款由应用商店直接确认。",
+  "winbackSubscribeButton": "订阅 {price}/年",
+  "winbackDismissButton": "放弃优惠",
+  "savePremiumToAccountTitle": "将高级会员保存到您的账户",
+  "savePremiumToAccountDesc": "登录一次以验证交易并同步您的个性化计划。",
+  "signInFailed": "登录失败。",
+  "dailyRecapTitle": "每日总结",
+  "recapReadyAfterTime": "今日有记录时，总结将于 22:00 后生成。",
+  "todayRecap": "今日总结",
+  "mealsLoggedCount": "已记录 {count} 餐",
+  "consumedToday": "今日已摄入",
+  "targetCaloProgress": "{target} kcal 目标的 {percent}%",
+  "aiReview": "AI 点评",
+  "tomorrowTipTitle": "明日建议",
+  "finishDayButton": "完成今日",
+  "reportButton": "报告",
+  "likeTooltip": "喜欢",
+  "dislikeTooltip": "不喜欢",
+  "addCustomFoodTitle": "手动添加食物",
+  "foodNameLabel": "食物名称",
+  "foodNameHint": "输入食物名称...",
+  "caloriePer100gLabel": "卡路里 (kcal / 100g)",
+  "addNow": "立即添加",
+  "logFoodTitle": "记录食物",
+  "creditsPurchasedSuccess": "已验证并将扫描次数充入您的账户。",
+  "progressPhotosTitle": "进度照片",
+  "photosCount": "{count} 张照片",
+  "creditsCountSuffix": "{count} 次",
+  "quizStepCount": "步骤 {current} / 3",
+  "quizMealPatternTitle": "您每日的进餐模式",
+  "quizMealPatternDesc": "您想将每日卡路里分成几餐？",
+  "quizMealPattern3Title": "3 顿正餐",
+  "quizMealPattern3Desc": "标准 早 - 中 - 晚餐，易于掌控",
+  "quizMealPattern3SnackTitle": "3 顿正餐 + 1 次加餐",
+  "quizMealPattern3SnackDesc": "下午搭配健康轻食，有效抗饿",
+  "quizMealPatternIFTitle": "2 顿正餐 (间歇性轻断食)",
+  "quizMealPatternIFDesc": "适合 16:8 间歇性断食作息",
+  "quizMealPatternSmallTitle": "4 - 5 顿少食多餐",
+  "quizMealPatternSmallDesc": "全天均匀补充能量",
+  "quizVarietyTitle": "菜单多样性偏好",
+  "quizVarietyDesc": "您希望以何种方式推荐菜单？",
+  "quizVarietySimpleTitle": "极简重复",
+  "quizVarietySimpleDesc": "一次下厨吃 2-3 餐，省时高效",
+  "quizVarietyRotateTitle": "每日尝新",
+  "quizVarietyRotateDesc": "每天不同菜单，新鲜不重样",
+  "quizVarietyLocalTitle": "本地风味家常菜",
+  "quizVarietyLocalDesc": "选用本地菜市和超市常见易买食材",
+  "quizPriorityTitle": "饮食计划核心重点",
+  "quizPriorityDesc": "您在营养计划中最看重哪一点？",
+  "quizOptSatietyTitle": "强饱腹感，低卡路里",
+  "quizOptSatietyDesc": "注重高蛋白和高纤蔬菜，轻松保持热量缺口",
+  "quizOptCalorieFitTitle": "精确贴合剩余热量",
+  "quizOptCalorieFitDesc": "每餐严格贴合设定的卡路里预算",
+  "quizOptSmartSwapTitle": "智能替代推荐",
+  "quizOptSmartSwapDesc": "当此前摄入过多时，自动推荐更清淡的餐品平衡",
+  "quizOptHighProteinTitle": "高蛋白低脂肪",
+  "quizOptHighProteinDesc": "精益蛋白质为主，增肌同时严格防脂",
+  "quizOptTrainingFuelTitle": "训练能量与恢复",
+  "quizOptTrainingFuelDesc": "合理搭配碳水与蛋白质，赋能训练与高效恢复",
+  "quizOptCalorieSurplusTitle": "充足热量健康盈余",
+  "quizOptCalorieSurplusDesc": "容易进食的餐食组合，轻松达标每日热量盈余",
+  "quizOptBalancedMacrosTitle": "均衡宏量营养素",
+  "quizOptBalancedMacrosDesc": "每日保持稳定均衡的蛋白质、碳水和健康脂肪",
+  "quizOptWeightStabilityTitle": "稳定保持体重",
+  "quizOptWeightStabilityDesc": "精准契合当前维持体重所需的日常卡路里",
+  "quizOptFlexibleWeekendsTitle": "周末灵活调节",
+  "quizOptFlexibleWeekendsDesc": "社交大餐后，智能调节其余餐次回归平衡",
+  "quizSyncAnswersLater": "继续，稍后同步回答",
+  "quizCompleteAndGenerateMenu": "完成并生成专属菜单",
+  "quizSettingUpMenu": "CalGo 正在为您定制专属菜单...",
+  "quizPersonalizingCalories": "正在为您量身定制热量摄入与最佳餐食方案",
+  "quizFinalizingSetup": "正在完成最后设置",
+  "searchFoodOrIngredientsHint": "搜索美食或食材...",
+  "searchResultsTitle": "搜索结果",
+  "searchingInProgress": "正在搜索...",
+  "nutritionServerConnectError": "无法连接到营养数据库服务器。"
 }

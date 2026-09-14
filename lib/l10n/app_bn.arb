@@ -807,6 +807,8 @@
   "manageSubscription": "সাবস্ক্রিপশন...( S)",
   "manageSubscriptionFailed": "চলচ্চিত্র ও গান চালানো হোক",
   "scanCreditsExhausted": "আপনার কাছে কোন স্ক্যান লেঅাউট নেই।",
+  "scanSpamDetectedTitle": "অস্বাভাবিক কার্যকলাপ শনাক্ত হয়েছে",
+  "scanSpamDetectedMessage": "অস্বাভাবিক কার্যকলাপ শনাক্ত হয়েছে, সহায়তার জন্য সাপোর্টে যোগাযোগ করুন।",
   "networkRetry": "সংযোগ খুবই ধীর । আবার চেষ্টা করো।",
   "scanUnavailable": "এই ছবিটি বিশ্লেষণ করা যায়নি।",
   "notificationChannelName": "প্রতিদিনের খাবার",
@@ -1114,5 +1116,190 @@
   "dailySummaryBannerTitle": "দৈনিক সংক্ষিপ্ত বিবরণ ও এআই কোচ",
   "dailySummaryBannerSubtitle": "পুষ্টি বিশ্লেষণ দেখুন এবং EXP অর্জন করুন",
   "cannotOpenShareSheet": "শেয়ার শীট খোলা যায়নি।",
-  "profileSaveFailed": "প্রোফাইল সংরক্ষণ করা যায়নি। অনুগ্রহ করে আবার চেষ্টা করুন।"
+  "profileSaveFailed": "প্রোফাইল সংরক্ষণ করা যায়নি। অনুগ্রহ করে আবার চেষ্টা করুন।",
+  "trialDaysFree": "{days} দিন বিনামূল্যে ট্রায়াল",
+  "@trialDaysFree": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "enableTrialDaysFree": "{days} দিনের ফ্রি ট্রায়াল চালু করুন",
+  "@enableTrialDaysFree": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "trialNoChargeTodayReminder": "আজ কোনো চার্জ নেই, ২৪ ঘণ্টা আগে অনুস্মারক",
+  "trialDirectChargeOnRegister": "নিবন্ধনের সাথে সাথেই বিল পরিশোধ",
+  "trialPaymentSchedule": "ট্রায়াল পেমেন্টের সময়সূচি:",
+  "trialStepToday": "আজ",
+  "trialStepUnlockFree": "৳০ আনলক",
+  "trialStepDayReminder": "{day} দিন",
+  "@trialStepDayReminder": {
+    "placeholders": {
+      "day": {
+        "type": "int"
+      }
+    }
+  },
+  "trialStepPushReminder": "পুশ অনুস্মারক",
+  "trialStepChargeStarts": "বিল শুরু",
+  "trialDaysCountBadge": "{days} দিন চেষ্টা করুন ৳০",
+  "@trialDaysCountBadge": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "trialDaysNote": "{days} দিন চেষ্টা করুন ৳০",
+  "@trialDaysNote": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "payYearlyNote": "বার্ষিক বিল",
+  "payMonthlyNote": "মাসিক বিল",
+  "trialCancelAnytimeNote": "আজ কোনো চার্জ নেই। App Store / Google Play সেটিংস থেকে যেকোনো সময় বাতিল করুন।",
+  "changeYourselfNow": "এখনই নিজেকে পরিবর্তন করুন",
+  "tryFreeNow": "এখনই বিনামূল্যে চেষ্টা করুন",
+  "completeSetup": "সেটআপ সম্পন্ন করুন",
+  "servicesAndPlans": "পরিষেবা এবং পরিকল্পনা",
+  "connectedStatus": "সংযুক্ত",
+  "notConnectedStatus": "সংযুক্ত নয়",
+  "scanBarcodeTip": "প্যাকেটজাত খাবারের জন্য, ১০০% সঠিক পুষ্টি জানতে বারকোড স্ক্যান করুন!",
+  "scanBarcodeNow": "এখনই বারকোড স্ক্যান করুন",
+  "progressForecastPrefix": "অগ্রগতির পূর্বাভাস • {goal}",
+  "@progressForecastPrefix": {
+    "placeholders": {
+      "goal": {
+        "type": "String"
+      }
+    }
+  },
+  "weeksLeftCount": "আর {weeks} সপ্তাহ বাকি",
+  "@weeksLeftCount": {
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
+  "reachTargetWeight": "→ {weight} কেজি লক্ষ্যে পৌঁছান",
+  "@reachTargetWeight": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
+  "badgeUnlockedTitle": "ব্যাজ আনলক হয়েছে!",
+  "greatExclamation": "চমৎকার!",
+  "appleHealthPermissionDenied": "অনুমতি প্রদান করা যায়নি। আইফোন সেটিংস > গোপনীয়তা ও নিরাপত্তা > হেলথ-এ অ্যাক্সেস নিশ্চিত করুন।",
+  "appleHealthSyncTitle": "অ্যাপল হেলথ সিঙ্ক",
+  "appleHealthSyncDesc": "CalGo শুধুমাত্র Apple Health থেকে অ্যাক্টিভ শক্তি পড়ে আপনার দৈনিক ক্যালোরি লক্ষ্যে যোগ করে।",
+  "appleHealthStatusConnected": "অবস্থা: সংযুক্ত",
+  "appleHealthStatusNotConnected": "অবস্থা: সংযুক্ত নয়",
+  "appleHealthConnectedDesc": "অ্যাপটির Apple Health এর সাথে ডেটা পড়া ও সিঙ্ক করার অনুমতি রয়েছে।",
+  "appleHealthNotConnectedDesc": "iOS অনুমোদন ডায়ালগ খুলতে নিচের বোতামে ট্যাপ করুন।",
+  "appleHealthReconnectButton": "পুনরায় অনুমোদন / iOS পুনঃসংযোগ",
+  "appleHealthConnectButton": "অ্যাপল হেলথ সংযুক্ত করুন (iOS)",
+  "disconnect": "সংযোগ বিচ্ছিন্ন করুন",
+  "scanBarcodeTitle": "বারকোড স্ক্যান করুন",
+  "lookingUpBarcode": "বারকোড অনুসন্ধান করা হচ্ছে...",
+  "alignBarcodeInstruction": "প্যাকেটের বারকোডের দিকে ক্যামেরা সোজা রাখুন",
+  "switchToPhotoScan": "খাবারের ছবি স্ক্যানে যান",
+  "barcodeNotFound": "এই বারকোডের কোনো তথ্য পাওয়া যায়নি। সরাসরি খাবারের ছবি তোলার চেষ্টা করুন! 📸",
+  "addedExerciseCaloriesSnackbar": "আজকের লক্ষ্যে {calories} কিলোক্যালরি ব্যায়াম যোগ করা হয়েছে।",
+  "foodNotRecognizedTitle": "খাবার স্পষ্টভাবে চিহ্নিত করা যায়নি",
+  "foodNotRecognizedMessage": "অনুগ্রহ করে আপনার খাবারের আরও স্পষ্ট ছবি তুলুন অথবা ম্যানুয়ালি খাবার যোগ করুন।",
+  "retakePhoto": "আবার তুলুন",
+  "manualFoodEntry": "ম্যানুয়ালি যোগ করুন",
+  "backTooltip": "পেছনে",
+  "exitTooltip": "প্রস্থান",
+  "completeAndSaveGoal": "সম্পূর্ণ করুন এবং লক্ষ্য সংরক্ষণ করুন",
+  "winbackExclusiveOffer": "🔥 বিশেষ অফার",
+  "winbackStayTitle": "একটু দাঁড়ান! {price}/বছর দিয়ে চালিয়ে যান",
+  "winbackDisclaimer": "মূল্য এবং অফারের শর্তাবলী সরাসরি স্টোর দ্বারা যাচাই করা হয়।",
+  "winbackSubscribeButton": "সাবস্ক্রাইব করুন {price}/বছর",
+  "winbackDismissButton": "অফার বাতিল করুন",
+  "savePremiumToAccountTitle": "আপনার অ্যাকাউন্টে Premium সংরক্ষণ করুন",
+  "savePremiumToAccountDesc": "লেনদেন যাচাই করতে এবং আপনার পরিকল্পনা সিঙ্ক করতে একবার সাইন ইন করুন।",
+  "signInFailed": "সাইন ইন ব্যর্থ হয়েছে।",
+  "dailyRecapTitle": "দিনের সারসংক্ষেপ",
+  "recapReadyAfterTime": "আজকের স্ক্যান ডেটা থাকলে রাত ১০টার পর সারসংক্ষেপ প্রস্তুত হবে।",
+  "todayRecap": "আজকের সারসংক্ষেপ",
+  "mealsLoggedCount": "{count}টি খাবার রেকর্ড করা হয়েছে",
+  "consumedToday": "আজ খাওয়া হয়েছে",
+  "targetCaloProgress": "{target} কিলোক্যালরি লক্ষ্যের {percent}%",
+  "aiReview": "এআই পর্যালোচনা",
+  "tomorrowTipTitle": "আগামীকালের জন্য পরামর্শ",
+  "finishDayButton": "দিন সমাপ্ত করুন",
+  "reportButton": "রিপোর্ট",
+  "likeTooltip": "পছন্দ",
+  "dislikeTooltip": "অপছন্দ",
+  "addCustomFoodTitle": "ম্যানুয়ালি খাবার যোগ করুন",
+  "foodNameLabel": "খাবারের নাম",
+  "foodNameHint": "খাবারের নাম লিখুন...",
+  "caloriePer100gLabel": "ক্যালোরি (কিলোক্যালরি / ১০০ গ্রাম)",
+  "addNow": "এখনই যোগ করুন",
+  "logFoodTitle": "খাবার রেকর্ড করুন",
+  "creditsPurchasedSuccess": "যাচাই করা হয়েছে এবং আপনার অ্যাকাউন্টে স্ক্যান ক্রেডিট যোগ করা হয়েছে।",
+  "progressPhotosTitle": "অগ্রগতির ছবি",
+  "photosCount": "{count}টি ছবি",
+  "creditsCountSuffix": "{count} ক্রেডিট",
+  "quizStepCount": "ধাপ {current} / ৩",
+  "quizMealPatternTitle": "আপনার দৈনিক খাবার",
+  "quizMealPatternDesc": "আপনি আপনার দৈনিক ক্যালোরি কতটি খাবারে ভাগ করতে চান?",
+  "quizMealPattern3Title": "৩টি প্রধান খাবার",
+  "quizMealPattern3Desc": "সকাল - দুপুর - রাতের আদর্শ খাবার, নিয়ন্ত্রণ করা সহজ",
+  "quizMealPattern3SnackTitle": "৩টি প্রধান খাবার + ১টি হালকা খাবার",
+  "quizMealPattern3SnackDesc": "বিকেলের ক্ষুধা মেটাতে হালকা নাস্তা অন্তর্ভুক্ত",
+  "quizMealPatternIFTitle": "২টি প্রধান খাবার (ইন্টারমিটেন্ট ফাস্টিং)",
+  "quizMealPatternIFDesc": "১৬:৮ ইন্টারমিটেন্ট ফাস্টিং সময়সূচী মেনে চলে",
+  "quizMealPatternSmallTitle": "৪ - ৫টি ছোট খাবার",
+  "quizMealPatternSmallDesc": "সারাদিনে সমানভাবে শক্তি বিতরণ করে",
+  "quizVarietyTitle": "মেনু নমনীয়তা",
+  "quizVarietyDesc": "আপনি কীভাবে খাবারের পরামর্শ পছন্দ করেন?",
+  "quizVarietySimpleTitle": "সহজ পুনরাবৃত্তি",
+  "quizVarietySimpleDesc": "একবার রান্না করে ২-৩ বার খাওয়া, সময় সাশ্রয়",
+  "quizVarietyRotateTitle": "প্রতিদিনের বৈচিত্র্য",
+  "quizVarietyRotateDesc": "প্রতিদিন নতুন মেনু, খাবারের বৈচিত্র্য বজায় রাখুন",
+  "quizVarietyLocalTitle": "স্থানীয় ও ঐতিহ্যবাহী খাবার",
+  "quizVarietyLocalDesc": "স্থানীয় বাজার ও দোকানে সহজে পাওয়া উপাদান",
+  "quizPriorityTitle": "আপনার খাওয়ার লক্ষ্য",
+  "quizPriorityDesc": "পুষ্টি পরিকল্পনায় আপনি কী অগ্রাধিকার দিতে চান?",
+  "quizOptSatietyTitle": "দীর্ঘ তৃপ্তি, কম ক্যালোরি",
+  "quizOptSatietyDesc": "ক্যালোরি ঘাটতি রাখতে প্রোটিন ও শাকসবজিকে অগ্রাধিকার",
+  "quizOptCalorieFitTitle": "অবশিষ্ট ক্যালোরি মেলান",
+  "quizOptCalorieFitDesc": "প্রতিটি খাবারের ক্যালোরি বাজেটের সাথে সামঞ্জস্যপূর্ণ অংশ",
+  "quizOptSmartSwapTitle": "স্মার্ট খাবার পরিবর্তন",
+  "quizOptSmartSwapDesc": "বেশি খাওয়া হলে হালকা খাবারের পরামর্শ দিন",
+  "quizOptHighProteinTitle": "উচ্চ প্রোটিন, কম চর্বি",
+  "quizOptHighProteinDesc": "অতিরিক্ত চর্বি ছাড়া পেশী বৃদ্ধির জন্য চর্বিহীন প্রোটিন",
+  "quizOptTrainingFuelTitle": "ব্যায়ামের শক্তি এবং পুনরুদ্ধার",
+  "quizOptTrainingFuelDesc": "ব্যায়াম ও পুনরুদ্ধারের জন্য প্রোটিন ও কার্বসের ভারসাম্য",
+  "quizOptCalorieSurplusTitle": "স্বাস্থ্যকর ক্যালোরি উদ্বৃত্ত",
+  "quizOptCalorieSurplusDesc": "দৈনিক উদ্বৃত্ত লক্ষ্যে পৌঁছানোর জন্য সহজ খাবার",
+  "quizOptBalancedMacrosTitle": "ভারসাম্যপূর্ণ ম্যাক্রো",
+  "quizOptBalancedMacrosDesc": "প্রতিদিন প্রোটিন, কার্বস এবং চর্বি স্থিতিশীল রাখুন",
+  "quizOptWeightStabilityTitle": "ওজন স্থিতিশীলতা",
+  "quizOptWeightStabilityDesc": "আপনার বর্তমান রক্ষণাবেক্ষণ ক্যালোরির সাথে মানানসই খাবার",
+  "quizOptFlexibleWeekendsTitle": "নমনীয় সাপ্তাহিক ছুটি",
+  "quizOptFlexibleWeekendsDesc": "সামাজিক খাবারের পর অন্যান্য খাবার পুনরায় ভারসাম্য করুন",
+  "quizSyncAnswersLater": "চালিয়ে যান, পরে উত্তর সিঙ্ক করুন",
+  "quizCompleteAndGenerateMenu": "সম্পূর্ণ করুন এবং মেনু তৈরি করুন",
+  "quizSettingUpMenu": "CalGo আপনার মেনু তৈরি করছে...",
+  "quizPersonalizingCalories": "আপনার জন্য ক্যালোরি এবং সবচেয়ে উপযুক্ত খাবার তৈরি করা হচ্ছে",
+  "quizFinalizingSetup": "সেটআপ সম্পন্ন হচ্ছে",
+  "searchFoodOrIngredientsHint": "খাবার বা উপাদান খুঁজুন...",
+  "searchResultsTitle": "অনুসন্ধানের ফলাফল",
+  "searchingInProgress": "অনুসন্ধান করা হচ্ছে...",
+  "nutritionServerConnectError": "পুষ্টি সার্ভারের সাথে সংযোগ করা যাচ্ছে না।"
 }

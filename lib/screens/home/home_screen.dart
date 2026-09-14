@@ -26,6 +26,7 @@ import '../exercise/exercise_entry_screen.dart';
 import 'widgets/exercise_log_card.dart';
 import '../../models/exercise_entry.dart';
 import '../../models/home_data.dart';
+import '../onboarding/steps/premium_paywall_step.dart';
 
 const _kProteinColor = MacroColors.protein;
 const _kCarbColor = MacroColors.carb;
@@ -365,11 +366,12 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
       MaterialPageRoute(builder: (_) => ExerciseEntryScreen(type: type)),
     );
     if (!mounted || calories == null) return;
+    final s = context.read<AppSettingsProvider>().strings;
     ScaffoldMessenger.of(context)
       ..hideCurrentSnackBar()
       ..showSnackBar(
         SnackBar(
-          content: Text('Đã cộng $calories kcal tập luyện vào mục tiêu hôm nay.'),
+          content: Text(s.addedExerciseCaloriesSnackbar(calories)),
           behavior: SnackBarBehavior.floating,
           duration: const Duration(seconds: 3),
         ),
@@ -1092,50 +1094,117 @@ class _PendingScanCardState extends State<_PendingScanCard>
     }
     if (!widget.task.takeUnrecognizedFoodAlert()) return;
     final settings = context.read<AppSettingsProvider>();
+    final s = context.read<AppSettingsProvider>().strings;
     showDialog<void>(
       context: context,
       barrierDismissible: false,
       builder: (dialogContext) => AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
         backgroundColor: settings.isDarkMode
-            ? const Color(0xFF212027)
+            ? const Color(0xFF1E1D24)
             : Colors.white,
-        title: Text(
-          'Chưa nhận diện rõ món ăn',
-          style: TextStyle(
-            fontSize: 19,
-            fontWeight: FontWeight.w800,
-            color: settings.isDarkMode ? Colors.white : const Color(0xFF0F172A),
-          ),
+        titlePadding: const EdgeInsets.fromLTRB(24, 24, 24, 8),
+        contentPadding: const EdgeInsets.fromLTRB(24, 0, 24, 20),
+        actionsPadding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+        title: Row(
+          children: [
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                color: const Color(0xFF2563EB).withValues(alpha: 0.12),
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.center_focus_strong_rounded,
+                color: Color(0xFF2563EB),
+                size: 22,
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                s.foodNotRecognizedTitle,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w800,
+                  color: settings.isDarkMode ? Colors.white : const Color(0xFF0F172A),
+                ),
+              ),
+            ),
+          ],
         ),
         content: Text(
-          'Vui lòng chụp lại ảnh món ăn rõ ràng hơn nhé.',
+          s.foodNotRecognizedMessage,
           style: TextStyle(
             fontSize: 14,
-            height: 1.35,
+            height: 1.45,
             color: settings.isDarkMode
                 ? const Color(0xFFB7B5C2)
                 : const Color(0xFF64748B),
           ),
         ),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(),
-            child: const Text('Đóng'),
-          ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF2563EB),
-              foregroundColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+          Row(
+            children: [
+              Expanded(
+                child: OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 13),
+                    side: BorderSide(
+                      color: settings.isDarkMode
+                          ? const Color(0xFF383741)
+                          : const Color(0xFFE2E8F0),
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.of(dialogContext).pop();
+                    if (mounted) {
+                      context.push('/meal-guidance');
+                    }
+                  },
+                  child: Text(
+                    s.manualFoodEntry,
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: settings.isDarkMode
+                          ? Colors.white
+                          : const Color(0xFF0F172A),
+                    ),
+                  ),
+                ),
               ),
-            ),
-            onPressed: () {
-              Navigator.of(dialogContext).pop();
-              if (mounted) context.push('/scan');
-            },
-            child: const Text('Chụp lại'),
+              const SizedBox(width: 10),
+              Expanded(
+                child: ElevatedButton.icon(
+                  icon: const Icon(Icons.camera_alt_rounded, size: 16),
+                  label: Text(
+                    s.retakePhoto,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF2563EB),
+                    foregroundColor: Colors.white,
+                    elevation: 0,
+                    padding: const EdgeInsets.symmetric(vertical: 13),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.of(dialogContext).pop();
+                    if (mounted) context.push('/scan');
+                  },
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -1271,16 +1340,21 @@ class _FailedScanContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final s = context.watch<AppSettingsProvider>().strings;
+    final isOutOfCredits = error == 'scanCreditsExhausted';
+    final isSpamDetected = error == 'scanSpamDetected';
+
     final message = switch (error) {
       'scanCreditsExhausted' => s.outOfCreditsMessage,
+      'scanSpamDetected' => s.scanSpamDetectedMessage,
       'networkRetry' => s.networkRetry,
       'scanUnavailable' => s.scanUnavailable,
-      'scanUnrecognizedFood' => 'Vui lòng chụp lại ảnh món ăn rõ ràng hơn nhé.',
+      'scanUnrecognizedFood' => s.foodNotRecognizedMessage,
       _ => s.scanResultRetryHint,
     };
     final title = error == 'scanUnrecognizedFood'
-        ? 'Chưa nhận diện rõ món ăn'
-        : s.scanResultUnavailable;
+        ? s.foodNotRecognizedTitle
+        : (isSpamDetected ? s.scanSpamDetectedTitle : s.scanResultUnavailable);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -1295,18 +1369,42 @@ class _FailedScanContent extends StatelessWidget {
         const SizedBox(height: 6),
         Text(message, style: TextStyle(fontSize: 12.5, color: textMuted)),
         const SizedBox(height: 7),
-        GestureDetector(
-          onTap: () => context.read<ScanTaskProvider>().retry(),
-          child: Text(
-            s.retry,
-            style: TextStyle(
-              fontSize: 12.5,
-              fontWeight: FontWeight.w700,
-              color: textDark,
-              decoration: TextDecoration.underline,
+        if (isOutOfCredits)
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const PremiumPaywallStep(
+                    onboardingMode: false,
+                    source: 'home_scan_failed',
+                  ),
+                ),
+              );
+            },
+            child: Text(
+              s.unlockPremiumButton,
+              style: TextStyle(
+                fontSize: 12.5,
+                fontWeight: FontWeight.w700,
+                color: textDark,
+                decoration: TextDecoration.underline,
+              ),
+            ),
+          )
+        else if (!isSpamDetected)
+          GestureDetector(
+            onTap: () => context.read<ScanTaskProvider>().retry(),
+            child: Text(
+              s.retry,
+              style: TextStyle(
+                fontSize: 12.5,
+                fontWeight: FontWeight.w700,
+                color: textDark,
+                decoration: TextDecoration.underline,
+              ),
             ),
           ),
-        ),
       ],
     );
   }

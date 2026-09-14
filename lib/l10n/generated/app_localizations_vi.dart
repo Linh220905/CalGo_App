@@ -1743,6 +1743,13 @@ class AppLocalizationsVi extends AppLocalizations {
   String get scanCreditsExhausted => 'Bạn đã hết lượt quét.';
 
   @override
+  String get scanSpamDetectedTitle => 'Phát hiện dấu hiệu bất thường';
+
+  @override
+  String get scanSpamDetectedMessage =>
+      'Hệ thống phát hiện dấu hiệu bất thường, vui lòng liên hệ hỗ trợ.';
+
+  @override
   String get networkRetry => 'Kết nối chậm, thử lại nhé.';
 
   @override
@@ -2379,4 +2386,455 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get profileSaveFailed => 'Không thể lưu hồ sơ. Vui lòng thử lại.';
+
+  @override
+  String trialDaysFree(int days) {
+    return 'Dùng thử $days ngày miễn phí';
+  }
+
+  @override
+  String enableTrialDaysFree(int days) {
+    return 'Bật thử miễn phí $days ngày';
+  }
+
+  @override
+  String get trialNoChargeTodayReminder =>
+      'Không mất tiền hôm nay, nhắc trước 24h';
+
+  @override
+  String get trialDirectChargeOnRegister =>
+      'Thanh toán trực tiếp ngay khi đăng ký';
+
+  @override
+  String get trialPaymentSchedule => 'Lịch trình thanh toán dùng thử:';
+
+  @override
+  String get trialStepToday => 'Hôm nay';
+
+  @override
+  String get trialStepUnlockFree => 'Mở khóa 0đ';
+
+  @override
+  String trialStepDayReminder(int day) {
+    return 'Ngày $day';
+  }
+
+  @override
+  String get trialStepPushReminder => 'Push nhắc nhở';
+
+  @override
+  String get trialStepChargeStarts => 'Bắt đầu tính phí';
+
+  @override
+  String trialDaysCountBadge(int days) {
+    return 'THỬ $days NGÀY 0đ';
+  }
+
+  @override
+  String trialDaysNote(int days) {
+    return 'Thử $days ngày 0đ';
+  }
+
+  @override
+  String get payYearlyNote => 'Thanh toán mỗi năm';
+
+  @override
+  String get payMonthlyNote => 'Thanh toán mỗi tháng';
+
+  @override
+  String get trialCancelAnytimeNote =>
+      'Không tính phí hôm nay. Hủy bất kỳ lúc nào trong cài đặt App Store / Google Play.';
+
+  @override
+  String get changeYourselfNow => 'Thay đổi bản thân ngay';
+
+  @override
+  String get tryFreeNow => 'Dùng miễn phí ngay';
+
+  @override
+  String get completeSetup => 'Hoàn tất thiết lập';
+
+  @override
+  String get servicesAndPlans => 'Dịch vụ & Gói cước';
+
+  @override
+  String get connectedStatus => 'Đã kết nối';
+
+  @override
+  String get notConnectedStatus => 'Chưa kết nối';
+
+  @override
+  String get scanBarcodeTip =>
+      'Với thực phẩm đóng gói/hộp, bạn hãy thử Quét mã vạch để tra cứu dinh dưỡng chuẩn 100% nhé!';
+
+  @override
+  String get scanBarcodeNow => 'Quét mã vạch ngay';
+
+  @override
+  String progressForecastPrefix(String goal) {
+    return 'Dự báo tiến trình • $goal';
+  }
+
+  @override
+  String weeksLeftCount(int weeks) {
+    return '$weeks tuần nữa';
+  }
+
+  @override
+  String reachTargetWeight(String weight) {
+    return '→ Chạm mốc ${weight}kg';
+  }
+
+  @override
+  String get badgeUnlockedTitle => 'MỞ KHÓA HUY HIỆU!';
+
+  @override
+  String get greatExclamation => 'Tuyệt vời!';
+
+  @override
+  String get appleHealthPermissionDenied =>
+      'Chưa thể cấp quyền. Hãy đảm bảo bạn đã cấp quyền trong Cài đặt iPhone > Quyền riêng tư & Bật Apple Health.';
+
+  @override
+  String get appleHealthSyncTitle => 'Đồng bộ Apple Health';
+
+  @override
+  String get appleHealthSyncDesc =>
+      'CalGo chỉ đọc Năng lượng hoạt động đã đốt (Active Energy) từ Apple Health để cộng vào mục tiêu calo trong ngày.';
+
+  @override
+  String get appleHealthStatusConnected => 'Trạng thái: Đã kết nối';
+
+  @override
+  String get appleHealthStatusNotConnected => 'Trạng thái: Chưa kết nối';
+
+  @override
+  String get appleHealthConnectedDesc =>
+      'Ứng dụng đã được cấp quyền đọc & ghi dữ liệu với Apple Health.';
+
+  @override
+  String get appleHealthNotConnectedDesc =>
+      'Nhấn nút bên dưới để mở hộp thoại ủy quyền từ hệ thống iOS.';
+
+  @override
+  String get appleHealthReconnectButton => 'Cấp lại quyền / Kết nối lại iOS';
+
+  @override
+  String get appleHealthConnectButton => 'Kết nối Apple Health (iOS)';
+
+  @override
+  String get disconnect => 'Ngắt kết nối';
+
+  @override
+  String get scanBarcodeTitle => 'Quét mã vạch';
+
+  @override
+  String get lookingUpBarcode => 'Đang tra cứu mã vạch...';
+
+  @override
+  String get alignBarcodeInstruction =>
+      'Di chuyển camera vào mã vạch trên bao bì';
+
+  @override
+  String get switchToPhotoScan => 'Chuyển sang chụp ảnh món';
+
+  @override
+  String get barcodeNotFound =>
+      'Chưa tìm thấy dữ liệu cho mã vạch này. Bạn hãy thử chụp trực tiếp ảnh món ăn nhé! 📸';
+
+  @override
+  String addedExerciseCaloriesSnackbar(int calories) {
+    return 'Đã cộng $calories kcal tập luyện vào mục tiêu hôm nay.';
+  }
+
+  @override
+  String get foodNotRecognizedTitle => 'Chưa nhận diện rõ món ăn';
+
+  @override
+  String get foodNotRecognizedMessage =>
+      'Vui lòng chụp lại ảnh món ăn rõ ràng hơn hoặc nhập món ăn thủ công nhé.';
+
+  @override
+  String get retakePhoto => 'Chụp lại';
+
+  @override
+  String get manualFoodEntry => 'Nhập thủ công';
+
+  @override
+  String get backTooltip => 'Quay lại';
+
+  @override
+  String get exitTooltip => 'Thoát';
+
+  @override
+  String get completeAndSaveGoal => 'Hoàn tất & Lưu mục tiêu';
+
+  @override
+  String get winbackExclusiveOffer => '🔥 ƯU ĐÃI DÀNH RIÊNG';
+
+  @override
+  String winbackStayTitle(String price) {
+    return 'Chờ chút! Tiếp tục với gói $price/năm';
+  }
+
+  @override
+  String get winbackDisclaimer =>
+      'Mức giá và điều kiện ưu đãi được xác nhận trực tiếp bởi cửa hàng.';
+
+  @override
+  String winbackSubscribeButton(String price) {
+    return 'Đăng ký $price/năm';
+  }
+
+  @override
+  String get winbackDismissButton => 'Bỏ qua ưu đãi';
+
+  @override
+  String get savePremiumToAccountTitle => 'Lưu Premium vào tài khoản của bạn';
+
+  @override
+  String get savePremiumToAccountDesc =>
+      'Đăng nhập một lần để xác minh giao dịch và đồng bộ kế hoạch cá nhân hóa.';
+
+  @override
+  String get signInFailed => 'Đăng nhập không thành công.';
+
+  @override
+  String get dailyRecapTitle => 'Tổng kết cuối ngày';
+
+  @override
+  String get recapReadyAfterTime =>
+      'Tổng kết sẽ sẵn sàng sau 22:00, khi bạn đã có dữ liệu quét trong ngày.';
+
+  @override
+  String get todayRecap => 'Tổng kết hôm nay';
+
+  @override
+  String mealsLoggedCount(int count) {
+    return '$count bữa đã ghi';
+  }
+
+  @override
+  String get consumedToday => 'đã ăn hôm nay';
+
+  @override
+  String targetCaloProgress(String percent, int target) {
+    return '$percent% mục tiêu $target kcal';
+  }
+
+  @override
+  String get aiReview => 'Nhận xét từ AI';
+
+  @override
+  String get tomorrowTipTitle => 'Gợi ý cho ngày mai';
+
+  @override
+  String get finishDayButton => 'Hoàn thành ngày';
+
+  @override
+  String get reportButton => 'Báo cáo';
+
+  @override
+  String get likeTooltip => 'Thích';
+
+  @override
+  String get dislikeTooltip => 'Không thích';
+
+  @override
+  String get addCustomFoodTitle => 'Thêm món thủ công';
+
+  @override
+  String get foodNameLabel => 'Tên món ăn';
+
+  @override
+  String get foodNameHint => 'Nhập tên món ăn...';
+
+  @override
+  String get caloriePer100gLabel => 'Calo (kcal / 100g)';
+
+  @override
+  String get addNow => 'Thêm ngay';
+
+  @override
+  String get logFoodTitle => 'Ghi món ăn';
+
+  @override
+  String get creditsPurchasedSuccess =>
+      'Đã xác minh và cộng lượt quét vào tài khoản.';
+
+  @override
+  String get progressPhotosTitle => 'Ảnh tiến trình';
+
+  @override
+  String photosCount(int count) {
+    return '$count ảnh';
+  }
+
+  @override
+  String creditsCountSuffix(int count) {
+    return '$count lượt';
+  }
+
+  @override
+  String quizStepCount(int current) {
+    return 'Bước $current / 3';
+  }
+
+  @override
+  String get quizMealPatternTitle => 'Bữa ăn trong ngày của bạn';
+
+  @override
+  String get quizMealPatternDesc =>
+      'Bạn muốn chia lượng Calo hằng ngày thành mấy bữa?';
+
+  @override
+  String get quizMealPattern3Title => '3 Bữa chính';
+
+  @override
+  String get quizMealPattern3Desc =>
+      'Sáng - Trưa - Tối chuẩn mực, dễ kiểm soát';
+
+  @override
+  String get quizMealPattern3SnackTitle => '3 Bữa chính + 1 Bữa phụ';
+
+  @override
+  String get quizMealPattern3SnackDesc =>
+      'Có thêm snack nhẹ chống đói buổi chiều';
+
+  @override
+  String get quizMealPatternIFTitle => '2 Bữa chính (Intermittent Fasting)';
+
+  @override
+  String get quizMealPatternIFDesc => 'Theo chế độ nhịn ăn gián đoạn 16:8';
+
+  @override
+  String get quizMealPatternSmallTitle => '4 - 5 Bữa nhỏ';
+
+  @override
+  String get quizMealPatternSmallDesc =>
+      'Chia nhỏ năng lượng đều đặn trong ngày';
+
+  @override
+  String get quizVarietyTitle => 'Mức độ linh hoạt thực đơn';
+
+  @override
+  String get quizVarietyDesc => 'Bạn thích thực đơn được gợi ý như thế nào?';
+
+  @override
+  String get quizVarietySimpleTitle => 'Lặp lại tối giản';
+
+  @override
+  String get quizVarietySimpleDesc =>
+      'Nấu 1 lần ăn 2-3 bữa, tiết kiệm thời gian';
+
+  @override
+  String get quizVarietyRotateTitle => 'Đổi món liên tục';
+
+  @override
+  String get quizVarietyRotateDesc => 'Mỗi ngày 1 thực đơn mới, không lo ngán';
+
+  @override
+  String get quizVarietyLocalTitle => 'Ưu tiên món ăn Việt';
+
+  @override
+  String get quizVarietyLocalDesc => 'Nguyên liệu dễ tìm ở chợ & siêu thị Việt';
+
+  @override
+  String get quizPriorityTitle => 'Mục tiêu ăn uống của bạn';
+
+  @override
+  String get quizPriorityDesc =>
+      'Bạn muốn ưu tiên điều gì trong kế hoạch ăn uống?';
+
+  @override
+  String get quizOptSatietyTitle => 'No lâu, ít calo';
+
+  @override
+  String get quizOptSatietyDesc =>
+      'Ưu tiên protein, rau và món ít dầu để dễ giữ thâm hụt';
+
+  @override
+  String get quizOptCalorieFitTitle => 'Khớp calo còn lại';
+
+  @override
+  String get quizOptCalorieFitDesc =>
+      'Chọn khẩu phần sát ngân sách calo của từng bữa';
+
+  @override
+  String get quizOptSmartSwapTitle => 'Thay món thông minh';
+
+  @override
+  String get quizOptSmartSwapDesc =>
+      'Gợi ý món nhẹ hơn khi hôm nay đã ăn hơi nhiều';
+
+  @override
+  String get quizOptHighProteinTitle => 'Nhiều protein, ít fat';
+
+  @override
+  String get quizOptHighProteinDesc =>
+      'Ưu tiên đạm nạc để hỗ trợ tăng cơ mà không đội mỡ';
+
+  @override
+  String get quizOptTrainingFuelTitle => 'Nhiên liệu tập luyện';
+
+  @override
+  String get quizOptTrainingFuelDesc =>
+      'Cân bằng protein và carb cho buổi tập, phục hồi';
+
+  @override
+  String get quizOptCalorieSurplusTitle => 'Đủ calo tăng cân';
+
+  @override
+  String get quizOptCalorieSurplusDesc =>
+      'Chia bữa dễ ăn để đạt mức calo dư mỗi ngày';
+
+  @override
+  String get quizOptBalancedMacrosTitle => 'Cân bằng macro';
+
+  @override
+  String get quizOptBalancedMacrosDesc =>
+      'Giữ protein, carb và fat ổn định qua từng ngày';
+
+  @override
+  String get quizOptWeightStabilityTitle => 'Giữ cân ổn định';
+
+  @override
+  String get quizOptWeightStabilityDesc =>
+      'Ưu tiên món khớp mức calo duy trì hiện tại';
+
+  @override
+  String get quizOptFlexibleWeekendsTitle => 'Linh hoạt cuối tuần';
+
+  @override
+  String get quizOptFlexibleWeekendsDesc =>
+      'Cân lại các bữa sau khi có một bữa ăn thoải mái';
+
+  @override
+  String get quizSyncAnswersLater => 'Tiếp tục, đồng bộ câu trả lời sau';
+
+  @override
+  String get quizCompleteAndGenerateMenu => 'Hoàn tất & Tạo thực đơn';
+
+  @override
+  String get quizSettingUpMenu => 'CalGo đang thiết lập thực đơn...';
+
+  @override
+  String get quizPersonalizingCalories =>
+      'Đang cá nhân hóa lượng Calo và món ăn phù hợp nhất cho bạn';
+
+  @override
+  String get quizFinalizingSetup => 'Đang hoàn tất thiết lập';
+
+  @override
+  String get searchFoodOrIngredientsHint => 'Tìm món ăn hoặc nguyên liệu...';
+
+  @override
+  String get searchResultsTitle => 'Kết quả tìm kiếm';
+
+  @override
+  String get searchingInProgress => 'Đang tìm kiếm...';
+
+  @override
+  String get nutritionServerConnectError =>
+      'Không thể kết nối máy chủ dinh dưỡng.';
 }

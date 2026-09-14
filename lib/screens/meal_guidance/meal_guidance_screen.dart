@@ -826,6 +826,7 @@ class _TransformationForecastCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = context.watch<AppSettingsProvider>().strings;
     final cardBg = isDark ? const Color(0xFF212027) : Colors.white;
     final borderColor =
         isDark ? const Color(0xFF2C2A34) : const Color(0xFFE2E8F0);
@@ -834,10 +835,10 @@ class _TransformationForecastCard extends StatelessWidget {
         isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B);
 
     final goalLabel = forecast.goalType == 'lose'
-        ? 'Giảm cân'
+        ? s.goalLoseLabel
         : (forecast.goalType == 'gain'
-            ? 'Tăng cơ / Tăng cân'
-            : 'Duy trì vóc dáng');
+            ? s.goalGainLabel
+            : s.goalMaintainLabel);
 
     return Container(
       margin: const EdgeInsets.only(bottom: 20),
@@ -880,7 +881,7 @@ class _TransformationForecastCard extends StatelessWidget {
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
-                        'Dự báo tiến trình • $goalLabel',
+                        s.progressForecastPrefix(goalLabel),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
@@ -941,30 +942,30 @@ class _TransformationForecastCard extends StatelessWidget {
               textBaseline: TextBaseline.alphabetic,
               children: [
                 Text(
-                  '${forecast.projectedWeeksToGoal}',
+                  s.weeksLeftCount(forecast.projectedWeeksToGoal!.round()),
                   style: TextStyle(
-                    fontSize: 32,
+                    fontSize: 20,
                     fontWeight: FontWeight.w900,
                     color: primaryText,
-                    letterSpacing: -1,
-                  ),
-                ),
-                const SizedBox(width: 4),
-                Text(
-                  'tuần nữa',
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w700,
-                    color: secondaryText,
+                    letterSpacing: -0.5,
                   ),
                 ),
                 const SizedBox(width: 12),
-                Text(
-                  '→ Chạm mốc ${forecast.targetWeightKg}kg',
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w800,
-                    color: Color(0xFF22C55E),
+                Expanded(
+                  child: Text(
+                    s.reachTargetWeight(
+                      forecast.targetWeightKg ==
+                              forecast.targetWeightKg!.roundToDouble()
+                          ? forecast.targetWeightKg!.toStringAsFixed(0)
+                          : forecast.targetWeightKg!.toStringAsFixed(1),
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w800,
+                      color: Color(0xFF22C55E),
+                    ),
                   ),
                 ),
               ],

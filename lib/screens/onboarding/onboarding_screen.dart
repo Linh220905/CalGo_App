@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import '../../config/app_build_config.dart';
+import '../../providers/app_settings_provider.dart';
 import '../../providers/onboarding_provider.dart';
 import '../../providers/auth_provider.dart';
 import 'widgets/step_progress_bar.dart';
@@ -78,6 +79,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             });
           }
         }
+        final s = context.watch<AppSettingsProvider>().strings;
         return MediaQuery.withClampedTextScaling(
           maxScaleFactor: 1.2,
           child: AnnotatedRegion<SystemUiOverlayStyle>(
@@ -102,7 +104,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 size: 18,
                                 color: Color(0xFF111111),
                               ),
-                              tooltip: 'Quay lại',
+                              tooltip: s.backTooltip,
                               onPressed: () async {
                                 if (provider.currentStep == 2) {
                                   await provider.cancelRecalculate();
@@ -125,7 +127,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 size: 22,
                                 color: Color(0xFF71717A),
                               ),
-                              tooltip: 'Thoát',
+                              tooltip: s.exitTooltip,
                               onPressed: () async {
                                 await provider.cancelRecalculate();
                                 if (context.mounted) {

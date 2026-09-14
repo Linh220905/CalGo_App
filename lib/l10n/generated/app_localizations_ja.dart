@@ -1693,6 +1693,12 @@ class AppLocalizationsJa extends AppLocalizations {
   String get scanCreditsExhausted => 'スキャン用クレジットがありません。';
 
   @override
+  String get scanSpamDetectedTitle => '異常なアクティビティが検出されました';
+
+  @override
+  String get scanSpamDetectedMessage => '異常なアクティビティが検出されました。サポートにお問い合わせください。';
+
+  @override
   String get networkRetry => '接続が遅いようです。もう一度お試しください。';
 
   @override
@@ -2310,4 +2316,426 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get profileSaveFailed => 'プロファイルを保存できませんでした。もう一度お試しください。';
+
+  @override
+  String trialDaysFree(int days) {
+    return '$days日間無料トライアル';
+  }
+
+  @override
+  String enableTrialDaysFree(int days) {
+    return '$days日間の無料トライアルを有効にする';
+  }
+
+  @override
+  String get trialNoChargeTodayReminder => '本日は請求なし、24時間前に通知';
+
+  @override
+  String get trialDirectChargeOnRegister => '登録時に直接請求';
+
+  @override
+  String get trialPaymentSchedule => 'トライアル請求スケジュール:';
+
+  @override
+  String get trialStepToday => '今日';
+
+  @override
+  String get trialStepUnlockFree => '￥0で利用開始';
+
+  @override
+  String trialStepDayReminder(int day) {
+    return '$day日目';
+  }
+
+  @override
+  String get trialStepPushReminder => 'リマインダー通知';
+
+  @override
+  String get trialStepChargeStarts => '請求開始';
+
+  @override
+  String trialDaysCountBadge(int days) {
+    return '$days日間無料 ￥0';
+  }
+
+  @override
+  String trialDaysNote(int days) {
+    return '$days日間試す ￥0';
+  }
+
+  @override
+  String get payYearlyNote => '年払い';
+
+  @override
+  String get payMonthlyNote => '月払い';
+
+  @override
+  String get trialCancelAnytimeNote =>
+      '本日の請求はありません。App Store / Google Playの設定でいつでも解約可能。';
+
+  @override
+  String get changeYourselfNow => '今すぐ自分を変える';
+
+  @override
+  String get tryFreeNow => '今すぐ無料体験';
+
+  @override
+  String get completeSetup => '設定完了';
+
+  @override
+  String get servicesAndPlans => 'サービスと料金プラン';
+
+  @override
+  String get connectedStatus => '連携済み';
+
+  @override
+  String get notConnectedStatus => '未連携';
+
+  @override
+  String get scanBarcodeTip => '包装食品・缶詰などはバーコードスキャンで正確な栄養情報をチェックできます！';
+
+  @override
+  String get scanBarcodeNow => 'バーコードをスキャン';
+
+  @override
+  String progressForecastPrefix(String goal) {
+    return '進捗予測 • $goal';
+  }
+
+  @override
+  String weeksLeftCount(int weeks) {
+    return 'あと$weeks週間';
+  }
+
+  @override
+  String reachTargetWeight(String weight) {
+    return '→ 目標の${weight}kgに到達';
+  }
+
+  @override
+  String get badgeUnlockedTitle => 'バッジ獲得！';
+
+  @override
+  String get greatExclamation => '素晴らしい！';
+
+  @override
+  String get appleHealthPermissionDenied =>
+      '権限を許可できませんでした。iPhoneの「設定」>「プライバシーとセキュリティ」>「ヘルスケア」で許可してください。';
+
+  @override
+  String get appleHealthSyncTitle => 'Apple Healthと同期';
+
+  @override
+  String get appleHealthSyncDesc =>
+      'CalGoはApple Healthから消費したアクティブエネルギーのみを読み取り、1日のカロリー目標に加算します。';
+
+  @override
+  String get appleHealthStatusConnected => 'ステータス: 接続済み';
+
+  @override
+  String get appleHealthStatusNotConnected => 'ステータス: 未接続';
+
+  @override
+  String get appleHealthConnectedDesc => 'アプリはApple Healthとのデータ同期権限を取得しています。';
+
+  @override
+  String get appleHealthNotConnectedDesc => '下のボタンをタップしてiOSの認証ダイアログを開きます。';
+
+  @override
+  String get appleHealthReconnectButton => '再認証 / iOS再接続';
+
+  @override
+  String get appleHealthConnectButton => 'Apple Healthに接続 (iOS)';
+
+  @override
+  String get disconnect => '接続解除';
+
+  @override
+  String get scanBarcodeTitle => 'バーコードをスキャン';
+
+  @override
+  String get lookingUpBarcode => 'バーコードを検索中...';
+
+  @override
+  String get alignBarcodeInstruction => 'パッケージのバーコードにカメラを合わせてください';
+
+  @override
+  String get switchToPhotoScan => '料理の写真撮影に切り替え';
+
+  @override
+  String get barcodeNotFound => 'このバーコードのデータは見つかりませんでした。料理を直接撮影してみてください！📸';
+
+  @override
+  String addedExerciseCaloriesSnackbar(int calories) {
+    return '本日の目標にワークアウト $calories kcal を追加しました。';
+  }
+
+  @override
+  String get foodNotRecognizedTitle => '料理を明確に認識できませんでした';
+
+  @override
+  String get foodNotRecognizedMessage => '料理の写真をもう少し分かりやすく撮り直すか、手動で入力してください。';
+
+  @override
+  String get retakePhoto => '撮り直す';
+
+  @override
+  String get manualFoodEntry => '手動入力';
+
+  @override
+  String get backTooltip => '戻る';
+
+  @override
+  String get exitTooltip => '終了';
+
+  @override
+  String get completeAndSaveGoal => '目標を完了して保存';
+
+  @override
+  String get winbackExclusiveOffer => '🔥 特別限定オファー';
+
+  @override
+  String winbackStayTitle(String price) {
+    return 'ちょっと待って！$price/年 で続ける';
+  }
+
+  @override
+  String get winbackDisclaimer => '価格およびオファーの利用規約はストアによって確認されます。';
+
+  @override
+  String winbackSubscribeButton(String price) {
+    return '$price/年 で登録';
+  }
+
+  @override
+  String get winbackDismissButton => 'オファーを見送る';
+
+  @override
+  String get savePremiumToAccountTitle => 'アカウントにPremiumを保存';
+
+  @override
+  String get savePremiumToAccountDesc => '1回サインインして取引を確認し、パーソナライズ計画を同期します。';
+
+  @override
+  String get signInFailed => 'サインインに失敗しました。';
+
+  @override
+  String get dailyRecapTitle => '1日のまとめ';
+
+  @override
+  String get recapReadyAfterTime => '本日のお食事データがあれば、22:00以降にまとめを確認できます。';
+
+  @override
+  String get todayRecap => '今日のまとめ';
+
+  @override
+  String mealsLoggedCount(int count) {
+    return '$count食 記録済み';
+  }
+
+  @override
+  String get consumedToday => '本日摂取';
+
+  @override
+  String targetCaloProgress(String percent, int target) {
+    return '$target kcal目標の $percent%';
+  }
+
+  @override
+  String get aiReview => 'AIからのアドバイス';
+
+  @override
+  String get tomorrowTipTitle => '明日へのアドバイス';
+
+  @override
+  String get finishDayButton => '1日を完了';
+
+  @override
+  String get reportButton => 'レポート';
+
+  @override
+  String get likeTooltip => 'いいね';
+
+  @override
+  String get dislikeTooltip => 'いまいち';
+
+  @override
+  String get addCustomFoodTitle => '手動で料理を追加';
+
+  @override
+  String get foodNameLabel => '料理名';
+
+  @override
+  String get foodNameHint => '料理名を入力...';
+
+  @override
+  String get caloriePer100gLabel => 'カロリー (kcal / 100g)';
+
+  @override
+  String get addNow => '今すぐ追加';
+
+  @override
+  String get logFoodTitle => '料理を記録';
+
+  @override
+  String get creditsPurchasedSuccess => '確認が完了し、スキャンクレジットがアカウントに追加されました。';
+
+  @override
+  String get progressPhotosTitle => '経過写真';
+
+  @override
+  String photosCount(int count) {
+    return '$count枚の写真';
+  }
+
+  @override
+  String creditsCountSuffix(int count) {
+    return '$count クレジット';
+  }
+
+  @override
+  String quizStepCount(int current) {
+    return 'ステップ $current / 3';
+  }
+
+  @override
+  String get quizMealPatternTitle => '1日の食事スタイル';
+
+  @override
+  String get quizMealPatternDesc => '1日のカロリーを何回の食事に分けますか？';
+
+  @override
+  String get quizMealPattern3Title => '3食（朝・昼・夕）';
+
+  @override
+  String get quizMealPattern3Desc => '朝・昼・晩のスタンダードな食事管理';
+
+  @override
+  String get quizMealPattern3SnackTitle => '3食 + 間食1回';
+
+  @override
+  String get quizMealPattern3SnackDesc => '午後の空腹を防ぐ軽食付き';
+
+  @override
+  String get quizMealPatternIFTitle => '2食（16:8 断食）';
+
+  @override
+  String get quizMealPatternIFDesc => '16:8のインターミッテント・ファスティングに最適';
+
+  @override
+  String get quizMealPatternSmallTitle => '4〜5回の小分け食';
+
+  @override
+  String get quizMealPatternSmallDesc => 'エネルギーを1日を通じて均等に分散';
+
+  @override
+  String get quizVarietyTitle => 'メニューの柔軟性';
+
+  @override
+  String get quizVarietyDesc => 'どのような食事提案がお好みですか？';
+
+  @override
+  String get quizVarietySimpleTitle => 'シンプル（作り置き・時短）';
+
+  @override
+  String get quizVarietySimpleDesc => '1度作って2〜3回食べる、時短スタイル';
+
+  @override
+  String get quizVarietyRotateTitle => '毎日新しいメニュー';
+
+  @override
+  String get quizVarietyRotateDesc => '毎日違う料理を楽しみ、飽きずに継続';
+
+  @override
+  String get quizVarietyLocalTitle => '定番・家庭料理中心';
+
+  @override
+  String get quizVarietyLocalDesc => 'スーパーで手軽に買える食材を活用';
+
+  @override
+  String get quizPriorityTitle => '食事プランの優先事項';
+
+  @override
+  String get quizPriorityDesc => '食事プランで最も重視したいことは何ですか？';
+
+  @override
+  String get quizOptSatietyTitle => '満腹感キープ・低カロリー';
+
+  @override
+  String get quizOptSatietyDesc => 'タンパク質と野菜中心でカロリー制限を無理なく持続';
+
+  @override
+  String get quizOptCalorieFitTitle => '残りカロリーに合わせる';
+
+  @override
+  String get quizOptCalorieFitDesc => '各食事の目標カロリー枠にぴったり収まる提案';
+
+  @override
+  String get quizOptSmartSwapTitle => 'スマートな置き換え';
+
+  @override
+  String get quizOptSmartSwapDesc => '食べすぎた日は自動で軽めの食事を提案してバランス調整';
+
+  @override
+  String get quizOptHighProteinTitle => '高タンパク・低脂質';
+
+  @override
+  String get quizOptHighProteinDesc => '無駄な脂肪をつけずに筋肉を増やす良質タンパク質';
+
+  @override
+  String get quizOptTrainingFuelTitle => 'トレーニング用エネルギー＆回復';
+
+  @override
+  String get quizOptTrainingFuelDesc => 'ワークアウト前後のパフォーマンスとリカバリーを支える';
+
+  @override
+  String get quizOptCalorieSurplusTitle => '確実なカロリー摂取（増量）';
+
+  @override
+  String get quizOptCalorieSurplusDesc => '食べやすい食事構成で毎日の増量カロリー目標を達成';
+
+  @override
+  String get quizOptBalancedMacrosTitle => 'バランス良いPFC';
+
+  @override
+  String get quizOptBalancedMacrosDesc => '毎日のタンパク質・脂質・炭水化物を安定管理';
+
+  @override
+  String get quizOptWeightStabilityTitle => '体重キープ';
+
+  @override
+  String get quizOptWeightStabilityDesc => '現在の維持カロリーにぴったり合う食事を中心にする';
+
+  @override
+  String get quizOptFlexibleWeekendsTitle => '週末フレキシブル';
+
+  @override
+  String get quizOptFlexibleWeekendsDesc => '外食やごちそうを食べた後の食事をスマートに調整';
+
+  @override
+  String get quizSyncAnswersLater => '続ける（回答は後で同期）';
+
+  @override
+  String get quizCompleteAndGenerateMenu => '完了してメニューを作成';
+
+  @override
+  String get quizSettingUpMenu => 'CalGoがメニューを作成しています...';
+
+  @override
+  String get quizPersonalizingCalories => 'あなたに最適なカロリーとおすすめメニューを計算中';
+
+  @override
+  String get quizFinalizingSetup => '設定を完了しています';
+
+  @override
+  String get searchFoodOrIngredientsHint => '料理や食材を検索...';
+
+  @override
+  String get searchResultsTitle => '検索結果';
+
+  @override
+  String get searchingInProgress => '検索中...';
+
+  @override
+  String get nutritionServerConnectError => '栄養サーバーに接続できません。';
 }

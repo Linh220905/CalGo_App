@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import '../../../l10n/generated/app_localizations.dart';
 import '../../../models/onboarding_data.dart';
 import '../../../providers/app_settings_provider.dart';
 import '../../../providers/auth_provider.dart';
@@ -52,6 +53,16 @@ class PostPremiumQuizDialog extends StatefulWidget {
 }
 
 class _PostPremiumQuizDialogState extends State<PostPremiumQuizDialog> {
+  AppLocalizations get _s {
+    try {
+      final settings = Provider.of<AppSettingsProvider>(context, listen: false);
+      return settings.strings;
+    } catch (_) {
+      return AppLocalizations.of(context) ??
+          lookupAppLocalizations(const Locale('vi'));
+    }
+  }
+
   int _currentStep = 0;
   bool _isGenerating = false;
   bool _goalInitialized = false;
@@ -61,100 +72,100 @@ class _PostPremiumQuizDialogState extends State<PostPremiumQuizDialog> {
   String _selectedVariety = 'rotate_daily';
   String _selectedPriority = 'balanced_macros';
 
-  final List<Map<String, dynamic>> _q1Options = [
+  List<Map<String, dynamic>> _getQ1Options(dynamic s) => [
     {
       'value': 'three_meals',
-      'title': '3 Bữa chính',
-      'desc': 'Sáng - Trưa - Tối chuẩn mực, dễ kiểm soát',
+      'title': s.quizMealPattern3Title,
+      'desc': s.quizMealPattern3Desc,
     },
     {
       'value': 'three_plus_snack',
-      'title': '3 Bữa chính + 1 Bữa phụ',
-      'desc': 'Có thêm snack nhẹ chống đói buổi chiều',
+      'title': s.quizMealPattern3SnackTitle,
+      'desc': s.quizMealPattern3SnackDesc,
     },
     {
       'value': 'intermittent_fasting_16_8',
-      'title': '2 Bữa chính (Intermittent Fasting)',
-      'desc': 'Theo chế độ nhịn ăn gián đoạn 16:8',
+      'title': s.quizMealPatternIFTitle,
+      'desc': s.quizMealPatternIFDesc,
     },
     {
       'value': 'four_five_small',
-      'title': '4 - 5 Bữa nhỏ',
-      'desc': 'Chia nhỏ năng lượng đều đặn trong ngày',
+      'title': s.quizMealPatternSmallTitle,
+      'desc': s.quizMealPatternSmallDesc,
     },
   ];
 
-  final List<Map<String, dynamic>> _q2Options = [
+  List<Map<String, dynamic>> _getQ2Options(dynamic s) => [
     {
       'value': 'repeat_simple',
-      'title': 'Lặp lại tối giản',
-      'desc': 'Nấu 1 lần ăn 2-3 bữa, tiết kiệm thời gian',
+      'title': s.quizVarietySimpleTitle,
+      'desc': s.quizVarietySimpleDesc,
     },
     {
       'value': 'rotate_daily',
-      'title': 'Đổi món liên tục',
-      'desc': 'Mỗi ngày 1 thực đơn mới, không lo ngán',
+      'title': s.quizVarietyRotateTitle,
+      'desc': s.quizVarietyRotateDesc,
     },
     {
       'value': 'vietnamese_local',
-      'title': 'Ưu tiên món ăn Việt',
-      'desc': 'Nguyên liệu dễ tìm ở chợ & siêu thị Việt',
+      'title': s.quizVarietyLocalTitle,
+      'desc': s.quizVarietyLocalDesc,
     },
   ];
 
   GoalType get _goal =>
       context.read<OnboardingProvider>().data.goalType ?? GoalType.maintain;
 
-  List<Map<String, dynamic>> get _q3Options => switch (_goal) {
+  List<Map<String, dynamic>> _getQ3Options(dynamic s) => switch (_goal) {
     GoalType.lose => [
       {
         'value': 'satiety',
-        'title': 'No lâu, ít calo',
-        'desc': 'Ưu tiên protein, rau và món ít dầu để dễ giữ thâm hụt',
+        'title': s.quizOptSatietyTitle,
+        'desc': s.quizOptSatietyDesc,
       },
       {
         'value': 'calorie_fit',
-        'title': 'Khớp calo còn lại',
-        'desc': 'Chọn khẩu phần sát ngân sách calo của từng bữa',
+        'title': s.quizOptCalorieFitTitle,
+        'desc': s.quizOptCalorieFitDesc,
       },
       {
         'value': 'smart_swap',
-        'title': 'Thay món thông minh',
-        'desc': 'Gợi ý món nhẹ hơn khi hôm nay đã ăn hơi nhiều',
+        'title': s.quizOptSmartSwapTitle,
+        'desc': s.quizOptSmartSwapDesc,
       },
     ],
     GoalType.gain => [
       {
         'value': 'high_protein_low_fat',
-        'title': 'Nhiều protein, ít fat',
-        'desc': 'Ưu tiên đạm nạc để hỗ trợ tăng cơ mà không đội mỡ',
+        'title': s.quizOptHighProteinTitle,
+        'desc': s.quizOptHighProteinDesc,
       },
       {
         'value': 'training_fuel',
-        'title': 'Nhiên liệu tập luyện',
-        'desc': 'Cân bằng protein và carb cho buổi tập, phục hồi',
+        'title': s.quizOptTrainingFuelTitle,
+        'desc': s.quizOptTrainingFuelDesc,
       },
       {
         'value': 'calorie_surplus',
-        'title': 'Đủ calo tăng cân',
-        'desc': 'Chia bữa dễ ăn để đạt mức calo dư mỗi ngày',
+        'title': s.quizOptCalorieSurplusTitle,
+        'desc': s.quizOptCalorieSurplusDesc,
       },
     ],
     GoalType.maintain => [
       {
         'value': 'balanced_macros',
-        'title': 'Cân bằng macro',
-        'desc': 'Giữ protein, carb và fat ổn định qua từng ngày',
+        'title': s.quizOptBalancedMacrosTitle,
+        'desc': s.quizOptBalancedMacrosDesc,
       },
       {
         'value': 'weight_stability',
-        'title': 'Giữ cân ổn định',
-        'desc': 'Ưu tiên món khớp mức calo duy trì hiện tại',
+        'title': s.quizOptWeightStabilityTitle,
+        'desc': s.quizOptWeightStabilityDesc,
       },
       {
         'value': 'flexible_weekends',
-        'title': 'Linh hoạt cuối tuần',
-        'desc': 'Cân lại các bữa sau khi có một bữa ăn thoải mái',
+        'title': s.quizOptFlexibleWeekendsTitle,
+        'desc': s.quizOptFlexibleWeekendsDesc,
       },
     ],
   };
@@ -197,10 +208,9 @@ class _PostPremiumQuizDialogState extends State<PostPremiumQuizDialog> {
       if (mounted) Navigator.of(context).pop();
     } catch (_) {
       if (!mounted) return;
-      final s = context.read<AppSettingsProvider>().strings;
       setState(() {
         _isGenerating = false;
-        _saveError = s.profileSaveFailed;
+        _saveError = _s.profileSaveFailed;
       });
     }
   }
@@ -231,6 +241,11 @@ class _PostPremiumQuizDialogState extends State<PostPremiumQuizDialog> {
   }
 
   Widget _buildQuizView() {
+    final s = _s;
+    final q1Opts = _getQ1Options(s);
+    final q2Opts = _getQ2Options(s);
+    final q3Opts = _getQ3Options(s);
+
     return Column(
       key: ValueKey(_currentStep),
       mainAxisSize: MainAxisSize.min,
@@ -251,7 +266,7 @@ class _PostPremiumQuizDialogState extends State<PostPremiumQuizDialog> {
         Align(
           alignment: Alignment.centerRight,
           child: Text(
-            'Bước ${_currentStep + 1} / 3',
+            s.quizStepCount(_currentStep + 1),
             style: _f(12, weight: FontWeight.w600, color: _kMuted),
           ),
         ),
@@ -272,16 +287,16 @@ class _PostPremiumQuizDialogState extends State<PostPremiumQuizDialog> {
         // Title & Description
         if (_currentStep == 0) ...[
           Text(
-            'Bữa ăn trong ngày của bạn',
+            s.quizMealPatternTitle,
             style: _f(22, weight: FontWeight.w800, letterSpacing: -0.4),
           ),
           const SizedBox(height: 6),
           Text(
-            'Bạn muốn chia lượng Calo hằng ngày thành mấy bữa?',
+            s.quizMealPatternDesc,
             style: _f(13, color: _kMuted, height: 1.35),
           ),
           const SizedBox(height: 18),
-          ..._q1Options.asMap().entries.map(
+          ...q1Opts.asMap().entries.map(
             (entry) => _buildOptionCard(
               index: entry.key,
               selected: _selectedMealPattern == entry.value['value'],
@@ -293,16 +308,16 @@ class _PostPremiumQuizDialogState extends State<PostPremiumQuizDialog> {
           ),
         ] else if (_currentStep == 1) ...[
           Text(
-            'Mức độ linh hoạt thực đơn',
+            s.quizVarietyTitle,
             style: _f(22, weight: FontWeight.w800, letterSpacing: -0.4),
           ),
           const SizedBox(height: 6),
           Text(
-            'Bạn thích thực đơn được gợi ý như thế nào?',
+            s.quizVarietyDesc,
             style: _f(13, color: _kMuted, height: 1.35),
           ),
           const SizedBox(height: 18),
-          ..._q2Options.asMap().entries.map(
+          ...q2Opts.asMap().entries.map(
             (entry) => _buildOptionCard(
               index: entry.key,
               selected: _selectedVariety == entry.value['value'],
@@ -314,16 +329,16 @@ class _PostPremiumQuizDialogState extends State<PostPremiumQuizDialog> {
           ),
         ] else ...[
           Text(
-            'Mục tiêu ăn uống của bạn',
+            s.quizPriorityTitle,
             style: _f(22, weight: FontWeight.w800, letterSpacing: -0.4),
           ),
           const SizedBox(height: 6),
           Text(
-            'Bạn muốn ưu tiên điều gì trong kế hoạch ăn uống?',
+            s.quizPriorityDesc,
             style: _f(13, color: _kMuted, height: 1.35),
           ),
           const SizedBox(height: 18),
-          ..._q3Options.asMap().entries.map(
+          ...q3Opts.asMap().entries.map(
             (entry) => _buildOptionCard(
               index: entry.key,
               selected: _selectedPriority == entry.value['value'],
@@ -360,7 +375,7 @@ class _PostPremiumQuizDialogState extends State<PostPremiumQuizDialog> {
                       await widget.onCompleted();
                       if (mounted) Navigator.of(context).pop();
                     },
-              child: const Text('Tiếp tục, đồng bộ câu trả lời sau'),
+              child: Text(s.quizSyncAnswersLater),
             ),
           ),
           const SizedBox(height: 4),
@@ -384,7 +399,7 @@ class _PostPremiumQuizDialogState extends State<PostPremiumQuizDialog> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  _currentStep == 2 ? 'Hoàn tất & Tạo thực đơn' : 'Tiếp tục',
+                  _currentStep == 2 ? s.quizCompleteAndGenerateMenu : s.continueLabel,
                   style: _f(15, weight: FontWeight.w700, color: Colors.white),
                 ),
               ],
@@ -464,6 +479,7 @@ class _PostPremiumQuizDialogState extends State<PostPremiumQuizDialog> {
   }
 
   Widget _buildGeneratingView() {
+    final s = _s;
     return Container(
       key: const ValueKey('generating'),
       padding: const EdgeInsets.symmetric(vertical: 36, horizontal: 16),
@@ -490,13 +506,13 @@ class _PostPremiumQuizDialogState extends State<PostPremiumQuizDialog> {
           ),
           const SizedBox(height: 24),
           Text(
-            'CalGo đang thiết lập thực đơn...',
+            s.quizSettingUpMenu,
             textAlign: TextAlign.center,
             style: _f(20, weight: FontWeight.w800, letterSpacing: -0.3),
           ),
           const SizedBox(height: 8),
           Text(
-            'Đang cá nhân hóa lượng Calo và món ăn phù hợp nhất cho bạn',
+            s.quizPersonalizingCalories,
             textAlign: TextAlign.center,
             style: _f(13, color: _kMuted, height: 1.35),
           ),
@@ -512,7 +528,7 @@ class _PostPremiumQuizDialogState extends State<PostPremiumQuizDialog> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'Đang hoàn tất thiết lập',
+                  s.quizFinalizingSetup,
                   style: _f(11.5, weight: FontWeight.w600, color: _kInk),
                 ),
               ],

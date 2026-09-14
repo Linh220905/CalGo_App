@@ -68,7 +68,7 @@ class ProfileScreen extends StatelessWidget {
             ),
             _buildPersonalInfoRow(
               label: s.creditsLabel,
-              value: '${user?.credits ?? 0} lượt',
+              value: s.creditsCountSuffix(user?.credits ?? 0),
               isDark: isDark,
             ),
             _buildPersonalInfoRow(
@@ -491,8 +491,8 @@ class ProfileScreen extends StatelessWidget {
                       icon: Icons.favorite_outline_rounded,
                       label: 'Apple Health',
                       badge: settings.isAppleHealthConnected
-                          ? 'Đã kết nối'
-                          : 'Chưa kết nối',
+                          ? s.connectedStatus
+                          : s.notConnectedStatus,
                       textColor: textColor,
                       borderColor: borderColor,
                       isDark: isDark,
@@ -523,7 +523,7 @@ class ProfileScreen extends StatelessWidget {
               const SizedBox(height: 24),
 
               // Section: DỊCH VỤ PREMIUM & CREDIT (nếu có)
-              _buildSectionLabel('DỊCH VỤ & GÓI CƯỚC', mutedColor),
+              _buildSectionLabel(s.servicesAndPlans.toUpperCase(), mutedColor),
               const SizedBox(height: 8),
               _buildSectionCard(
                 cardBgColor: cardBgColor,

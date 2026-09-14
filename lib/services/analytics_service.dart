@@ -39,9 +39,51 @@ class AnalyticsService {
 
   Future<void> trackAppFirstOpen() => track('app_first_open');
 
+  Future<void> trackOnboardingStarted() => track(
+        'onboarding_started',
+        source: 'onboarding',
+        paywallVersion: 'v1',
+      );
+
+  Future<void> trackOnboardingQ5() => track(
+        'onboarding_q5',
+        source: 'onboarding',
+        paywallVersion: 'v1',
+      );
+
+  Future<void> trackOnboardingQ10() => track(
+        'onboarding_q10',
+        source: 'onboarding',
+        paywallVersion: 'v1',
+      );
+
+  Future<void> trackOnboardingQ15() => track(
+        'onboarding_q15',
+        source: 'onboarding',
+        paywallVersion: 'v1',
+      );
+
+  Future<void> trackOnboardingQ20() => track(
+        'onboarding_q20',
+        source: 'onboarding',
+        paywallVersion: 'v1',
+      );
+
   Future<void> trackOnboardingCompleted() => track(
         'onboarding_completed',
         source: 'onboarding',
+        paywallVersion: 'v1',
+      );
+
+  Future<void> trackAuthScreenView() => track(
+        'auth_screen_view',
+        source: 'onboarding',
+        paywallVersion: 'v1',
+      );
+
+  Future<void> trackLoginSuccess({required String method}) => track(
+        'login_success',
+        source: method,
         paywallVersion: 'v1',
       );
 
