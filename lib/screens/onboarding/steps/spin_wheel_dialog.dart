@@ -69,7 +69,7 @@ class _SpinWheelDialogState extends State<SpinWheelDialog>
     super.initState();
     _spinController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 3200),
+      duration: const Duration(milliseconds: 4500), // Quay chậm, kịch tính hơn
     );
   }
 
@@ -86,13 +86,12 @@ class _SpinWheelDialogState extends State<SpinWheelDialog>
       _hasSpun = true;
     });
 
-    // 100% force into Gift / Jackpot slice (slice index 2: 120° to 180°)
-    // Center of slice 2 is at 150° (5pi / 6)
-    // Pointer is at Top (-90° / 270°), so wheel must rotate to align center to pointer
-    // Multiple full rotations (5-7 turns) + exact offset
-    const fullTurns = 6.0 * 2 * pi;
-    // Gift slice target angle to land under top arrow
-    const targetOffset = 1.83 * pi;
+    // Center of Gift slice (index 2: 120° to 180°) = 150° (5pi/6)
+    // Top arrow is at 270° (3pi/2).
+    // Rotation angle theta so that (150° + theta) % 360° = 270°
+    // theta = 270° - 150° = 120° = (2pi / 3) = 0.6666 * pi
+    const fullTurns = 7.0 * 2 * pi;
+    const targetOffset = 2 * pi / 3;
     const targetAngle = fullTurns + targetOffset;
 
     _spinAnimation = Tween<double>(begin: 0, end: targetAngle).animate(
@@ -168,56 +167,59 @@ class _SpinWheelDialogState extends State<SpinWheelDialog>
 
               const Spacer(flex: 2),
 
-              // Wheel Widget with Pointer
+              // Wheel Widget with Pointer (Larger & Premium)
               Center(
-                child: SizedBox(
-                  width: 290,
-                  height: 290,
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      // Spinning Wheel Canvas
-                      Transform.rotate(
-                        angle: _isSpinning || _hasSpun ? _spinAnimation.value : 0,
-                        child: CustomPaint(
-                          size: const Size(280, 280),
-                          painter: _WheelPainter(slices: _slices),
-                        ),
-                      ),
-
-                      // Center CalGo Mascot Hub
-                      Container(
-                        width: 58,
-                        height: 58,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.white,
-                          border: Border.all(color: _kInk, width: 2.5),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withValues(alpha: 0.1),
-                              blurRadius: 8,
-                            ),
-                          ],
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(4),
-                          child: Image.asset(
-                            'assets/images/apple_mascot/apple_hello.png',
-                            fit: BoxFit.contain,
+                child: GestureDetector(
+                  onTap: _isSpinning ? null : _startSpin,
+                  child: SizedBox(
+                    width: 320,
+                    height: 320,
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        // Spinning Wheel Canvas
+                        Transform.rotate(
+                          angle: _isSpinning || _hasSpun ? _spinAnimation.value : 0,
+                          child: CustomPaint(
+                            size: const Size(310, 310),
+                            painter: _WheelPainter(slices: _slices),
                           ),
                         ),
-                      ),
 
-                      // Top Indicator Arrow Pointer
-                      Positioned(
-                        top: 0,
-                        child: CustomPaint(
-                          size: const Size(22, 22),
-                          painter: _ArrowPointerPainter(),
+                        // Center CalGo Mascot Hub
+                        Container(
+                          width: 66,
+                          height: 66,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.white,
+                            border: Border.all(color: _kInk, width: 3),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withValues(alpha: 0.12),
+                                blurRadius: 10,
+                              ),
+                            ],
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(5),
+                            child: Image.asset(
+                              'assets/images/apple_mascot/apple_paywall.png',
+                              fit: BoxFit.contain,
+                            ),
+                          ),
                         ),
-                      ),
-                    ],
+
+                        // Top Indicator Arrow Pointer
+                        Positioned(
+                          top: 0,
+                          child: CustomPaint(
+                            size: const Size(26, 26),
+                            painter: _ArrowPointerPainter(),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -307,27 +309,29 @@ class _WheelPainter extends CustomPainter {
       canvas.rotate(startAngle + sweepAngle / 2);
 
       if (slice.isGift) {
-        // Gift Icon
+        // High quality gift icon with ribbon details drawn cleanly
+        final iconColor = slice.isBlack ? Colors.white : _kInk;
         final iconSpan = TextSpan(
           text: String.fromCharCode(Icons.card_giftcard_rounded.codePoint),
           style: TextStyle(
-            fontSize: 26,
+            fontSize: 32,
+            fontWeight: FontWeight.w900,
             fontFamily: Icons.card_giftcard_rounded.fontFamily,
             package: Icons.card_giftcard_rounded.fontPackage,
-            color: slice.isBlack ? Colors.white : _kInk,
+            color: iconColor,
           ),
         );
         final tp = TextPainter(
           text: iconSpan,
           textDirection: TextDirection.ltr,
         )..layout();
-        tp.paint(canvas, Offset(radius * 0.55, -tp.height / 2));
+        tp.paint(canvas, Offset(radius * 0.52, -tp.height / 2));
       } else {
         final textSpan = TextSpan(
           text: slice.label,
           style: GoogleFonts.plusJakartaSans(
-            fontSize: 16,
-            fontWeight: FontWeight.w800,
+            fontSize: slice.label == '↻' ? 24 : 18,
+            fontWeight: FontWeight.w900,
             color: slice.isBlack ? Colors.white : _kInk,
           ),
         );
@@ -335,7 +339,7 @@ class _WheelPainter extends CustomPainter {
           text: textSpan,
           textDirection: TextDirection.ltr,
         )..layout();
-        tp.paint(canvas, Offset(radius * 0.55, -tp.height / 2));
+        tp.paint(canvas, Offset(radius * 0.52, -tp.height / 2));
       }
 
       canvas.restore();

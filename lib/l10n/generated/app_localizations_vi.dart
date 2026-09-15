@@ -536,6 +536,12 @@ class AppLocalizationsVi extends AppLocalizations {
   String get loginSubtitle => 'Đăng nhập để đồng bộ dữ liệu dinh dưỡng của bạn';
 
   @override
+  String get alreadyHaveAccount => 'Đã có tài khoản? ';
+
+  @override
+  String get loginAction => 'Đăng nhập';
+
+  @override
   String get loginGoogle => 'Đăng nhập với Google';
 
   @override
@@ -1720,7 +1726,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get weeklyPayment => 'thanh toán hàng tuần';
 
   @override
-  String get popularMost => 'Phổ biến nhất';
+  String get popularMost => 'GIẢM 60%';
 
   @override
   String get testingAccess => 'quyền truy cập testing';

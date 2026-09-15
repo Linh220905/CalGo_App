@@ -542,6 +542,12 @@ class AppLocalizationsRu extends AppLocalizations {
       'Войдите, чтобы синхронизировать данные о питании';
 
   @override
+  String get alreadyHaveAccount => 'Already have an account? ';
+
+  @override
+  String get loginAction => 'Log in';
+
+  @override
   String get loginGoogle => 'Продолжайте с Google';
 
   @override
@@ -1072,19 +1078,19 @@ class AppLocalizationsRu extends AppLocalizations {
       'CalGo предлагает блюда, которые соответствуют вашим целям и бюджету.';
 
   @override
-  String get budgetLow => 'Менее \$2';
+  String get budgetLow => 'Менее \$5';
 
   @override
   String get budgetLowNote => 'Простые, простые в поиске блюда';
 
   @override
-  String get budgetMid => '\$2 – \$5';
+  String get budgetMid => '\$5 – \$12';
 
   @override
   String get budgetMidNote => 'Типичный бюджет на один прием пищи';
 
   @override
-  String get budgetHigh => 'Более \$5';
+  String get budgetHigh => 'Более \$12';
 
   @override
   String get budgetHighNote => 'Больше места для качества';

@@ -1108,6 +1108,18 @@ abstract class AppLocalizations {
   /// **'Sign in to sync your nutrition data'**
   String get loginSubtitle;
 
+  /// No description provided for @alreadyHaveAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account? '**
+  String get alreadyHaveAccount;
+
+  /// No description provided for @loginAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Log in'**
+  String get loginAction;
+
   /// No description provided for @loginGoogle.
   ///
   /// In en, this message translates to:
@@ -1981,7 +1993,7 @@ abstract class AppLocalizations {
   /// No description provided for @budgetLow.
   ///
   /// In en, this message translates to:
-  /// **'Under \$2'**
+  /// **'Under \$5'**
   String get budgetLow;
 
   /// No description provided for @budgetLowNote.
@@ -1993,7 +2005,7 @@ abstract class AppLocalizations {
   /// No description provided for @budgetMid.
   ///
   /// In en, this message translates to:
-  /// **'\$2 – \$5'**
+  /// **'\$5 – \$12'**
   String get budgetMid;
 
   /// No description provided for @budgetMidNote.
@@ -2005,7 +2017,7 @@ abstract class AppLocalizations {
   /// No description provided for @budgetHigh.
   ///
   /// In en, this message translates to:
-  /// **'\$5 – \$10'**
+  /// **'\$12 – \$25'**
   String get budgetHigh;
 
   /// No description provided for @budgetHighNote.
@@ -3229,7 +3241,7 @@ abstract class AppLocalizations {
   /// No description provided for @popularMost.
   ///
   /// In en, this message translates to:
-  /// **'Most popular'**
+  /// **'60% OFF'**
   String get popularMost;
 
   /// No description provided for @testingAccess.

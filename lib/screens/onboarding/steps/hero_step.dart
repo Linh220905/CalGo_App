@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -88,43 +89,76 @@ class HeroStep extends StatelessWidget {
                           delay: 160.ms,
                         ),
                       ],
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(28),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.10),
-                              blurRadius: 16,
-                              offset: const Offset(0, 6),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(28),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.10),
+                                  blurRadius: 16,
+                                  offset: const Offset(0, 6),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                        child: SizedBox(
-                          width: double.infinity,
-                          height: metrics.buttonHeight,
-                          child: ElevatedButton(
-                            key: const Key('hero_get_started_button'),
-                            onPressed: () =>
-                                context.read<OnboardingProvider>().nextStep(),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.ink,
-                              foregroundColor: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(28),
+                            child: SizedBox(
+                              width: double.infinity,
+                              height: metrics.buttonHeight,
+                              child: ElevatedButton(
+                                key: const Key('hero_get_started_button'),
+                                onPressed: () =>
+                                    context.read<OnboardingProvider>().nextStep(),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColors.ink,
+                                  foregroundColor: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(28),
+                                  ),
+                                  elevation: 0,
+                                  textStyle: GoogleFonts.beVietnamPro(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w600,
+                                    letterSpacing: -0.2,
+                                  ),
+                                ),
+                                child: FittedBox(
+                                  fit: BoxFit.scaleDown,
+                                  child: Text(s.getStarted, maxLines: 1),
+                                ),
                               ),
-                              elevation: 0,
-                              textStyle: GoogleFonts.beVietnamPro(
-                                fontSize: 17,
-                                fontWeight: FontWeight.w600,
-                                letterSpacing: -0.2,
-                              ),
-                            ),
-                            child: FittedBox(
-                              fit: BoxFit.scaleDown,
-                              child: Text(s.getStarted, maxLines: 1),
                             ),
                           ),
-                        ),
+                          const SizedBox(height: 10),
+                          GestureDetector(
+                            onTap: () => context.push('/login'),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 4),
+                              child: RichText(
+                                textAlign: TextAlign.center,
+                                text: TextSpan(
+                                  style: GoogleFonts.beVietnamPro(
+                                    fontSize: 13.5,
+                                    color: AppColors.textSecondary,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  children: [
+                                    TextSpan(text: s.alreadyHaveAccount),
+                                    TextSpan(
+                                      text: s.loginAction,
+                                      style: TextStyle(
+                                        color: AppColors.ink,
+                                        fontWeight: FontWeight.w700,
+                                        decoration: TextDecoration.underline,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -318,19 +352,42 @@ class _HeroLayoutMetrics {
     if (veryCompact) {
       return const _HeroLayoutMetrics(
         headerHorizontalPadding: 16,
-        headerVerticalPadding: 3,
+        headerVerticalPadding: 2,
         contentHorizontalPadding: 16,
         buttonHorizontalPadding: 16,
+        buttonTopPadding: 2,
+        buttonBottomPadding: 4,
+        buttonHeight: 46,
+        welcomeFontSize: 12.5,
+        logoGap: 2,
+        logoHeight: 38,
+        mascotImageHeight: 165,
+        sectionGap: 2,
+        cardPadding: 10,
+        benefitGap: 5,
+        benefitIconSize: 18,
+        benefitIconGap: 8,
+        benefitTitleSize: 13.5,
+        benefitDescriptionSize: 11.5,
+      );
+    }
+
+    if (compact) {
+      return const _HeroLayoutMetrics(
+        headerHorizontalPadding: 18,
+        headerVerticalPadding: 3,
+        contentHorizontalPadding: 20,
+        buttonHorizontalPadding: 20,
         buttonTopPadding: 4,
-        buttonBottomPadding: 10,
-        buttonHeight: 50,
-        welcomeFontSize: 13,
+        buttonBottomPadding: 6,
+        buttonHeight: 48,
+        welcomeFontSize: 13.5,
         logoGap: 2,
         logoHeight: 44,
-        mascotImageHeight: 188,
-        sectionGap: 2,
+        mascotImageHeight: 205,
+        sectionGap: 3,
         cardPadding: 12,
-        benefitGap: 7,
+        benefitGap: 6,
         benefitIconSize: 19,
         benefitIconGap: 10,
         benefitTitleSize: 14,
@@ -338,46 +395,23 @@ class _HeroLayoutMetrics {
       );
     }
 
-    if (compact) {
-      return const _HeroLayoutMetrics(
-        headerHorizontalPadding: 18,
-        headerVerticalPadding: 4,
-        contentHorizontalPadding: 20,
-        buttonHorizontalPadding: 20,
-        buttonTopPadding: 6,
-        buttonBottomPadding: 12,
-        buttonHeight: 52,
-        welcomeFontSize: 14,
-        logoGap: 3,
-        logoHeight: 52,
-        mascotImageHeight: 234,
-        sectionGap: 4,
-        cardPadding: 14,
-        benefitGap: 8,
-        benefitIconSize: 20,
-        benefitIconGap: 12,
-        benefitTitleSize: 14.5,
-        benefitDescriptionSize: 12.5,
-      );
-    }
-
     return const _HeroLayoutMetrics(
       headerHorizontalPadding: 20,
-      headerVerticalPadding: 8,
+      headerVerticalPadding: 6,
       contentHorizontalPadding: 24,
       buttonHorizontalPadding: 24,
-      buttonTopPadding: 8,
-      buttonBottomPadding: 20,
-      buttonHeight: 58,
-      welcomeFontSize: 15,
-      logoGap: 4,
-      logoHeight: 62,
-      mascotImageHeight: 300,
-      sectionGap: 8,
-      cardPadding: 18,
-      benefitGap: 12,
-      benefitIconSize: 22,
-      benefitIconGap: 14,
+      buttonTopPadding: 6,
+      buttonBottomPadding: 10,
+      buttonHeight: 52,
+      welcomeFontSize: 14.5,
+      logoGap: 3,
+      logoHeight: 52,
+      mascotImageHeight: 250,
+      sectionGap: 5,
+      cardPadding: 15,
+      benefitGap: 9,
+      benefitIconSize: 20,
+      benefitIconGap: 12,
       benefitTitleSize: 15,
       benefitDescriptionSize: 13,
     );

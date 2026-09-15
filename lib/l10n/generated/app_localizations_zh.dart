@@ -520,6 +520,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get loginSubtitle => '签名以同步您的营养数据';
 
   @override
+  String get alreadyHaveAccount => 'Already have an account? ';
+
+  @override
+  String get loginAction => 'Log in';
+
+  @override
   String get loginGoogle => '继续谷歌';
 
   @override
@@ -1015,19 +1021,19 @@ class AppLocalizationsZh extends AppLocalizations {
   String get budgetNote => 'CalGo问,这样它就可以建议适合你的目标和预算的餐.';
 
   @override
-  String get budgetLow => '低于 \$2';
+  String get budgetLow => '低于 \$5';
 
   @override
   String get budgetLowNote => '简单易得的饭';
 
   @override
-  String get budgetMid => '\$2 – \$5';
+  String get budgetMid => '\$5 – \$12';
 
   @override
   String get budgetMidNote => '一餐的典型预算';
 
   @override
-  String get budgetHigh => '高于 \$5';
+  String get budgetHigh => '高于 \$12';
 
   @override
   String get budgetHighNote => '增加质量空间';

@@ -231,36 +231,40 @@ class _DiscountOfferPaywallStepState extends State<DiscountOfferPaywallStep> {
                     ),
                     const SizedBox(height: 16),
 
-                    // Mascot Illustration Graphic
+                    // Mascot Graphic with Gradient Glow Background (Double Size)
                     Container(
-                      padding: const EdgeInsets.all(16),
+                      width: 220,
+                      height: 220,
+                      padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFFAFAFA),
-                        borderRadius: BorderRadius.circular(24),
+                        shape: BoxShape.circle,
+                        gradient: RadialGradient(
+                          colors: [
+                            const Color(0xFFF1F5F9),
+                            Colors.white.withValues(alpha: 0.1),
+                          ],
+                        ),
                       ),
                       child: Image.asset(
-                        'assets/images/apple_mascot/apple_hello.png',
-                        height: 140,
+                        'assets/images/apple_mascot/apple_paywall.png',
                         fit: BoxFit.contain,
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 12),
 
-                    // Big Headline Price
+                    // Compact Note under Mascot
                     Text(
                       '$monthlyPrice $subUnitMonth',
                       textAlign: TextAlign.center,
-                      style: _f(22, weight: FontWeight.w800, color: _kInk),
+                      style: _f(16, weight: FontWeight.w800, color: _kInk),
                     ),
-                    const SizedBox(height: 4),
-
-                    // Urgency Note
+                    const SizedBox(height: 2),
                     Text(
                       s.oneTimeOfferSubtitle,
                       textAlign: TextAlign.center,
-                      style: _f(12, color: _kMuted, weight: FontWeight.w500),
+                      style: _f(11.5, color: _kMuted, weight: FontWeight.w500),
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 16),
 
                     // Single Offer Card
                     Container(

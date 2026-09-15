@@ -16,6 +16,12 @@ class WeightStep extends StatelessWidget {
         context.read<OnboardingProvider>().data.weightKg ?? 72.0;
     final settings = context.watch<AppSettingsProvider>();
     final s = settings.strings;
+    final locale = WidgetsBinding.instance.platformDispatcher.locale;
+    final countryCode = (locale.countryCode ?? '').toUpperCase();
+    final isImperialDefault = countryCode == 'US' ||
+        countryCode == 'LR' ||
+        countryCode == 'MM' ||
+        (countryCode.isEmpty && settings.languageCode == 'en');
 
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
@@ -62,6 +68,7 @@ class WeightStep extends StatelessWidget {
                       headerTitle: s.currentWeightHeader,
                       headerIcon: Icons.monitor_weight_outlined,
                       compact: true,
+                      initialUsePrimaryUnit: !isImperialDefault,
                       onChanged: (v) {
                         context.read<OnboardingProvider>().setWeight(v);
                       },

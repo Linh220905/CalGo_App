@@ -539,6 +539,12 @@ class AppLocalizationsHi extends AppLocalizations {
   String get loginSubtitle => 'अपने पोषण डेटा को सिंक करने के लिए साइन इन करें';
 
   @override
+  String get alreadyHaveAccount => 'Already have an account? ';
+
+  @override
+  String get loginAction => 'Log in';
+
+  @override
   String get loginGoogle => 'गूगल के साथ जारी';
 
   @override
@@ -1060,19 +1066,19 @@ class AppLocalizationsHi extends AppLocalizations {
       'CalGo पूछता है तो यह भोजन सुझाव दे सकता है जो आपके लक्ष्यों और बजट को फिट करता है।';
 
   @override
-  String get budgetLow => '\$2 से कम';
+  String get budgetLow => '\$5 से कम';
 
   @override
   String get budgetLowNote => 'सरल, आसान करने के लिए खत्म भोजन';
 
   @override
-  String get budgetMid => '\$2 – \$5';
+  String get budgetMid => '\$5 – \$12';
 
   @override
   String get budgetMidNote => 'एक भोजन के लिए विशिष्ट बजट';
 
   @override
-  String get budgetHigh => '\$5 से अधिक';
+  String get budgetHigh => '\$12 से अधिक';
 
   @override
   String get budgetHighNote => 'गुणवत्ता के लिए अधिक कमरे';

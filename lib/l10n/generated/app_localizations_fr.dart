@@ -545,6 +545,12 @@ class AppLocalizationsFr extends AppLocalizations {
       'Connectez-vous pour synchroniser vos données nutritionnelles';
 
   @override
+  String get alreadyHaveAccount => 'Already have an account? ';
+
+  @override
+  String get loginAction => 'Log in';
+
+  @override
   String get loginGoogle => 'Continuer avec Google';
 
   @override
@@ -1076,19 +1082,19 @@ class AppLocalizationsFr extends AppLocalizations {
       'CalGo demande donc il peut suggérer des repas qui correspondent à vos objectifs et budget.';
 
   @override
-  String get budgetLow => 'Moins de 2 \$';
+  String get budgetLow => 'Moins de 5 \$';
 
   @override
   String get budgetLowNote => 'Repas simples et faciles à trouver';
 
   @override
-  String get budgetMid => '2 \$ – 5 \$';
+  String get budgetMid => '5 \$ – 12 \$';
 
   @override
   String get budgetMidNote => 'Budget typique pour un repas';
 
   @override
-  String get budgetHigh => 'Plus de 5 \$';
+  String get budgetHigh => 'Plus de 12 \$';
 
   @override
   String get budgetHighNote => 'Plus de place pour la qualité';

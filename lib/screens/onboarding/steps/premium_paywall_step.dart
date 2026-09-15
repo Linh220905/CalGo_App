@@ -600,33 +600,48 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
                   children: [
                     const SizedBox(height: 4),
 
-                    // Mascot
-                    Image.asset(
-                      'assets/images/apple_mascot/apple_hello.png',
-                      height: 82,
-                      fit: BoxFit.contain,
+                    // Mascot with Subtle Radial Glow & Shadow
+                    Container(
+                      width: 110,
+                      height: 110,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        gradient: RadialGradient(
+                          colors: [
+                            const Color(0xFFF1F5F9),
+                            Colors.white.withValues(alpha: 0.1),
+                          ],
+                        ),
+                      ),
+                      child: Center(
+                        child: Image.asset(
+                          'assets/images/apple_mascot/apple_paywall.png',
+                          height: 102,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: 4),
 
                     // Headline
                     Text(
                       s.analysisPlanReady, // "Your plan is ready!"
                       textAlign: TextAlign.center,
-                      style: _f(26, weight: FontWeight.w800, letterSpacing: -0.5),
+                      style: _f(22, weight: FontWeight.w800, letterSpacing: -0.5),
                     ),
-                    const SizedBox(height: 6),
+                    const SizedBox(height: 2),
                     Text(
                       s.planReadySubtitle, // "Stay on track to reach your goal"
                       textAlign: TextAlign.center,
-                      style: _f(14, color: _kMuted, weight: FontWeight.w500),
+                      style: _f(13, color: _kMuted, weight: FontWeight.w500),
                     ),
-                    const SizedBox(height: 14),
+                    const SizedBox(height: 8),
 
                     // Calorie & Macro Target Pill
                     Container(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 8,
+                        horizontal: 14,
+                        vertical: 6,
                       ),
                       decoration: BoxDecoration(
                         color: const Color(0xFFF8FAFC),
@@ -639,41 +654,41 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
                           const Icon(
                             Icons.local_fire_department_rounded,
                             color: _kAccent,
-                            size: 18,
+                            size: 16,
                           ),
-                          const SizedBox(width: 5),
+                          const SizedBox(width: 4),
                           Text(
                             '$targetKcal kcal',
-                            style: _f(13, weight: FontWeight.w700),
+                            style: _f(12.5, weight: FontWeight.w700),
                           ),
-                          const SizedBox(width: 10),
+                          const SizedBox(width: 8),
                           Container(
-                            width: 4,
-                            height: 4,
+                            width: 3.5,
+                            height: 3.5,
                             decoration: const BoxDecoration(
                               color: _kMuted,
                               shape: BoxShape.circle,
                             ),
                           ),
-                          const SizedBox(width: 10),
+                          const SizedBox(width: 8),
                           const Icon(
                             Icons.fitness_center_rounded,
                             color: Color(0xFF3B82F6),
-                            size: 16,
+                            size: 15,
                           ),
-                          const SizedBox(width: 5),
+                          const SizedBox(width: 4),
                           Text(
                             '${proteinVal}g protein',
-                            style: _f(13, weight: FontWeight.w700),
+                            style: _f(12.5, weight: FontWeight.w700),
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 8),
 
                     // Feature Checklist
                     const _BenefitChecklist(),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 8),
 
                     // Vertical Stack of 3 Pricing Cards
                     _VerticalPricingList(
@@ -681,7 +696,7 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
                       onChanged: (p) => setState(() => _selectedPlan = p),
                       testing: testing,
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 12),
 
                     // CTA Button
                     PremiumButton(
@@ -699,19 +714,19 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
                           ? null
                           : () => _handlePrimaryAction(),
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 6),
 
                     // Terms Note
                     Text(
                       s.premiumAutoRenewNote,
                       textAlign: TextAlign.center,
-                      style: _f(11, color: _kMuted, weight: FontWeight.w500),
+                      style: _f(10, color: _kMuted, weight: FontWeight.w500),
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: 6),
 
                     // Footer Links
                     const _FooterLinks(showBilling: !testing),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 8),
                   ],
                 ),
               ),
@@ -743,13 +758,13 @@ class _BenefitChecklist extends StatelessWidget {
     return Column(
       children: benefits.map((item) {
         return Padding(
-          padding: const EdgeInsets.only(bottom: 10),
+          padding: const EdgeInsets.only(bottom: 6),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                width: 20,
-                height: 20,
+                width: 18,
+                height: 18,
                 decoration: const BoxDecoration(
                   color: _kInk,
                   shape: BoxShape.circle,
@@ -757,14 +772,14 @@ class _BenefitChecklist extends StatelessWidget {
                 child: const Icon(
                   Icons.check_rounded,
                   color: Colors.white,
-                  size: 13,
+                  size: 12,
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: 10),
               Expanded(
                 child: Text(
                   item,
-                  style: _f(13.5, weight: FontWeight.w600, color: _kInk),
+                  style: _f(12.5, weight: FontWeight.w600, color: _kInk),
                 ),
               ),
             ],
@@ -837,7 +852,7 @@ class _VerticalPricingList extends StatelessWidget {
           badge: null,
           onTap: () => onChanged(_Plan.weekly),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: 8),
 
         // 2. Year Plan (Highlighted / Selected by default)
         _VerticalPlanCard(
@@ -849,7 +864,7 @@ class _VerticalPricingList extends StatelessWidget {
           badge: s.popularMost,
           onTap: () => onChanged(_Plan.annual),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: 8),
 
         // 3. Month Plan
         _VerticalPlanCard(
@@ -894,10 +909,10 @@ class _VerticalPlanCard extends StatelessWidget {
         children: [
           AnimatedContainer(
             duration: const Duration(milliseconds: 180),
-            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(18),
+              borderRadius: BorderRadius.circular(14),
               border: Border.all(
                 color: selected ? _kInk : _kBorder,
                 width: selected ? 2 : 1,
@@ -906,8 +921,8 @@ class _VerticalPlanCard extends StatelessWidget {
                   ? [
                       BoxShadow(
                         color: _kInk.withValues(alpha: 0.05),
-                        blurRadius: 10,
-                        offset: const Offset(0, 4),
+                        blurRadius: 8,
+                        offset: const Offset(0, 3),
                       )
                     ]
                   : null,
@@ -922,14 +937,14 @@ class _VerticalPlanCard extends StatelessWidget {
                     children: [
                       Text(
                         title,
-                        style: _f(16, weight: FontWeight.w800, color: _kInk),
+                        style: _f(14.5, weight: FontWeight.w800, color: _kInk),
                       ),
                       if (subtitle != null) ...[
-                        const SizedBox(height: 4),
+                        const SizedBox(height: 1),
                         Text(
                           subtitle!,
                           style: _f(
-                            12.5,
+                            11,
                             color: _kMuted,
                             weight: FontWeight.w500,
                           ),
@@ -938,7 +953,7 @@ class _VerticalPlanCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(width: 8),
 
                 // Right Column: Big Price + Unit
                 Column(
@@ -948,7 +963,7 @@ class _VerticalPlanCard extends StatelessWidget {
                     Text(
                       priceText,
                       style: _f(
-                        16.5,
+                        15,
                         weight: FontWeight.w800,
                         color: _kInk,
                         letterSpacing: -0.3,
@@ -956,21 +971,21 @@ class _VerticalPlanCard extends StatelessWidget {
                     ),
                     Text(
                       unitText,
-                      style: _f(11.5, color: _kMuted, weight: FontWeight.w500),
+                      style: _f(10.5, color: _kMuted, weight: FontWeight.w500),
                     ),
                   ],
                 ),
-                const SizedBox(width: 14),
+                const SizedBox(width: 10),
 
                 // Radio Circle
                 Container(
-                  width: 22,
-                  height: 22,
+                  width: 18,
+                  height: 18,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     border: Border.all(
                       color: selected ? _kInk : const Color(0xFFCBD5E1),
-                      width: selected ? 6.5 : 1.5,
+                      width: selected ? 5.5 : 1.5,
                     ),
                   ),
                 ),

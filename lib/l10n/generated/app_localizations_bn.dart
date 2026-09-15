@@ -537,6 +537,12 @@ class AppLocalizationsBn extends AppLocalizations {
   String get loginSubtitle => 'আপনার পুষ্টি উপাত্ত সুসংগত করতে সাইন ইন করুন';
 
   @override
+  String get alreadyHaveAccount => 'Already have an account? ';
+
+  @override
+  String get loginAction => 'Log in';
+
+  @override
   String get loginGoogle => 'গুগলে অগ্রসর হোন';
 
   @override
@@ -1060,19 +1066,19 @@ class AppLocalizationsBn extends AppLocalizations {
       'জেজেডপিজেডজেডজেডজেডজেডজেডজেডজি জিজ্ঞেস করেছে যে এতে আপনার লক্ষ্য ও বাজেট নির্ধারণ করা যাবে।';
 
   @override
-  String get budgetLow => '\$2 এর নিচে';
+  String get budgetLow => '\$5 এর নিচে';
 
   @override
   String get budgetLowNote => 'সহজ, সহজ খাবার';
 
   @override
-  String get budgetMid => '\$2 – \$5';
+  String get budgetMid => '\$5 – \$12';
 
   @override
   String get budgetMidNote => 'সাধারণত এক খাবারের জন্য বাজেট';
 
   @override
-  String get budgetHigh => '\$5 এর উপরে';
+  String get budgetHigh => '\$12 এর উপরে';
 
   @override
   String get budgetHighNote => 'গুণমানের জন্য অতিরিক্ত ঘর';

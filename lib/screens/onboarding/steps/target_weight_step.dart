@@ -31,6 +31,12 @@ class TargetWeightStep extends StatelessWidget {
     final initialGoalLabel = initialDiff == 0
         ? s.goalMaintainLabel
         : (initialIsLose ? s.goalLoseLabel : s.goalGainLabel);
+    final locale = WidgetsBinding.instance.platformDispatcher.locale;
+    final countryCode = (locale.countryCode ?? '').toUpperCase();
+    final isImperialDefault = countryCode == 'US' ||
+        countryCode == 'LR' ||
+        countryCode == 'MM' ||
+        (countryCode.isEmpty && settings.languageCode == 'en');
 
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
@@ -84,6 +90,7 @@ class TargetWeightStep extends StatelessWidget {
                                 ? Icons.trending_down_rounded
                                 : Icons.fitness_center_rounded),
                         compact: true,
+                        initialUsePrimaryUnit: !isImperialDefault,
                         scrollHintText: goal == GoalType.maintain
                             ? s.goalMaintainHint
                             : '',

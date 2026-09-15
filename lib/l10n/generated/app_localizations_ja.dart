@@ -521,6 +521,12 @@ class AppLocalizationsJa extends AppLocalizations {
   String get loginSubtitle => 'サインインして栄養データを同期';
 
   @override
+  String get alreadyHaveAccount => 'Already have an account? ';
+
+  @override
+  String get loginAction => 'Log in';
+
+  @override
   String get loginGoogle => 'Googleで続行';
 
   @override
@@ -1019,19 +1025,19 @@ class AppLocalizationsJa extends AppLocalizations {
   String get budgetNote => 'CalGoは、あなたの目標と予算に合った食事を提案できるように質問します。';
 
   @override
-  String get budgetLow => '\$ 2未満';
+  String get budgetLow => '\$ 5未満';
 
   @override
   String get budgetLowNote => 'シンプルで予算にやさしい食事';
 
   @override
-  String get budgetMid => '\$ 2 – \$ 5';
+  String get budgetMid => '\$ 5 – \$ 12';
 
   @override
   String get budgetMidNote => '典型的な食事の予算';
 
   @override
-  String get budgetHigh => '\$ 5 – \$ 10';
+  String get budgetHigh => '\$ 12 – \$ 25';
 
   @override
   String get budgetHighNote => '品質のためのより多くの余地';

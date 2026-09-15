@@ -529,6 +529,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get loginSubtitle => 'وقع على مزامنة بيانات التغذية';
 
   @override
+  String get alreadyHaveAccount => 'Already have an account? ';
+
+  @override
+  String get loginAction => 'Log in';
+
+  @override
   String get loginGoogle => 'استمر مع جوجل';
 
   @override
@@ -1047,19 +1053,19 @@ class AppLocalizationsAr extends AppLocalizations {
       '(زززفززز) يسأل حتى يمكنه اقتراح وجبات تناسب أهدافك وميزانيتك';
 
   @override
-  String get budgetLow => 'أقل من 2\$';
+  String get budgetLow => 'أقل من 5\$';
 
   @override
   String get budgetLowNote => 'وجبات بسيطة، سهلة التكرير';
 
   @override
-  String get budgetMid => '2\$ – 5\$';
+  String get budgetMid => '5\$ – 12\$';
 
   @override
   String get budgetMidNote => 'الميزانية النموذجية لوجبة واحدة';
 
   @override
-  String get budgetHigh => 'أكثر من 5\$';
+  String get budgetHigh => 'أكثر من 12\$';
 
   @override
   String get budgetHighNote => 'مجال أكثر للجودة';
