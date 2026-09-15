@@ -497,7 +497,7 @@ class PaymentProvider extends ChangeNotifier {
       _purchaseInProgress = false;
       notifyListeners();
     } else if (purchase.status == PurchaseStatus.canceled) {
-      _purchaseState(sku, PurchaseState.canceled);
+      _purchaseState(sku, PurchaseState.idle);
       _error = null;
       _purchaseInProgress = false;
       notifyListeners();
@@ -615,6 +615,11 @@ class PaymentProvider extends ChangeNotifier {
       _error = null;
       _purchaseInProgress = false;
       await _clearPendingPurchase(accountId: accountId);
+      try {
+        await _onCreditsVerified?.call();
+      } catch (error) {
+        debugPrint('[IAP] User profile refresh failed: $error');
+      }
       // The server has already verified and granted the entitlement. Clearing
       // the local Play transaction is cleanup and must not block the success
       // UI if Play reports an already-acknowledged transaction here.
