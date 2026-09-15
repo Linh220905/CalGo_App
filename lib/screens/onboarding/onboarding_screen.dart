@@ -19,7 +19,6 @@ import 'steps/weight_step.dart';
 import 'steps/target_weight_step.dart';
 import 'steps/pace_step.dart';
 import 'steps/activity_step.dart';
-import 'steps/diet_step.dart';
 import 'steps/habit_step.dart';
 import 'steps/prep_time_step.dart';
 import 'steps/budget_step.dart';
@@ -139,8 +138,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         ),
                       )
                     else if (provider.currentStep >= 2 &&
-                        provider.currentStep <= 19)
-                      StepProgressBar(value: (provider.currentStep - 1) / 18),
+                        provider.currentStep <= 18)
+                      StepProgressBar(value: (provider.currentStep - 1) / 17),
                     Expanded(
                       child: AnimatedSwitcher(
                         duration: const Duration(milliseconds: 300),
@@ -187,36 +186,34 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       case 11:
         return ActivityStep(key: key);
       case 12:
-        return DietStep(key: key);
-      case 13:
         return PrepTimeStep(key: key);
-      case 14:
+      case 13:
         return BudgetStep(key: key);
-      case 15:
+      case 14:
         return NutritionPriorityStep(key: key);
-      case 16:
+      case 15:
         return AvoidFoodsStep(key: key);
-      case 17:
+      case 16:
         return ReferralStep(key: key);
-      case 18:
+      case 17:
         return HabitStep(key: key);
-      case 19:
+      case 18:
         // A previously persisted recalculate session may still point at the
         // old Apple Health step. Redirect it to the shared analysis/result UI.
         return context.read<OnboardingProvider>().isRecalculating
             ? AnalysisResultStep(key: key)
             : AppleHealthPermissionStep(key: key);
-      case 20:
+      case 19:
         return AnalysisResultStep(key: key);
-      case 21:
+      case 20:
         return AppBuildConfig.isTesting
             ? AccountStep(key: key)
             : PremiumPaywallStep(key: key);
-      case 22:
+      case 21:
         return AppBuildConfig.isTesting
             ? HomeStep(key: key)
             : AccountStep(key: key);
-      case 23:
+      case 22:
         return HomeStep(key: key);
       default:
         return SizedBox.shrink(key: key);

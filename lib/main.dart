@@ -86,6 +86,7 @@ void main() {
   // Start bootstrap reads and initialize RevenueCat early. The router shows a
   // neutral startup screen until they finish, never a persisted onboarding step.
   unawaited(RevenueCatService.init());
+  unawaited(analyticsService.trackAppFirstOpen());
   unawaited(onboardingProvider.init());
   unawaited(authProvider.tryRestore());
   final router = createAppRouter(onboardingProvider, authProvider);

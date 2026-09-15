@@ -13,6 +13,12 @@ class HeightStep extends StatelessWidget {
     final height = provider.data.heightCm ?? 170.0;
     final settings = context.watch<AppSettingsProvider>();
     final s = settings.strings;
+    final locale = WidgetsBinding.instance.platformDispatcher.locale;
+    final countryCode = (locale.countryCode ?? '').toUpperCase();
+    final isImperialDefault = countryCode == 'US' ||
+        countryCode == 'LR' ||
+        countryCode == 'MM' ||
+        (countryCode.isEmpty && settings.languageCode == 'en');
 
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
@@ -59,6 +65,7 @@ class HeightStep extends StatelessWidget {
                       headerTitle: s.currentHeightHeader,
                       headerIcon: Icons.straighten_rounded,
                       compact: true,
+                      initialUsePrimaryUnit: !isImperialDefault,
                       onChanged: (v) {
                         context.read<OnboardingProvider>().setHeight(v);
                       },

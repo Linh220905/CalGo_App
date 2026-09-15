@@ -351,6 +351,7 @@ class HorizontalRulerPickerCard extends StatefulWidget {
   final ValueChanged<double> onChanged; // Always returns value in primary unit
   final bool compact;
   final bool isDark;
+  final bool initialUsePrimaryUnit;
 
   const HorizontalRulerPickerCard({
     super.key,
@@ -367,6 +368,7 @@ class HorizontalRulerPickerCard extends StatefulWidget {
     required this.onChanged,
     this.compact = false,
     this.isDark = false,
+    this.initialUsePrimaryUnit = true,
   });
 
   @override
@@ -381,7 +383,7 @@ class _HorizontalRulerPickerCardState extends State<HorizontalRulerPickerCard> {
   @override
   void initState() {
     super.initState();
-    _isPrimaryUnit = true;
+    _isPrimaryUnit = widget.initialUsePrimaryUnit;
     _currentPrimaryValue = widget.initialValue.clamp(widget.min, widget.max);
     // The picker visibly starts at this value, so it must also become part of
     // onboarding data even when the user accepts it without scrolling.

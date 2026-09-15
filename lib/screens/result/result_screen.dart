@@ -8,6 +8,7 @@ import '../../providers/auth_provider.dart';
 import '../../providers/home_provider.dart';
 import '../../config/api_config.dart';
 import '../../services/api_service.dart';
+import '../../services/review_service.dart';
 import '../../widgets/share_card_modal.dart';
 import '../../utils/macro_colors.dart';
 import '../../utils/macro_icons.dart';
@@ -604,6 +605,7 @@ class _ResultScreenState extends State<ResultScreen> {
       try {
         await context.read<HomeProvider>().loadToday(forceRefresh: true);
       } catch (_) {}
+      unawaited(ReviewService.requestFirstScanReview());
       if (mounted) {
         context.go('/home');
       }
@@ -725,7 +727,10 @@ class _ResultScreenState extends State<ResultScreen> {
               size: 20,
             ),
           ),
-          onPressed: () => context.pop(),
+          onPressed: () {
+            unawaited(ReviewService.requestFirstScanReview());
+            context.pop();
+          },
         ),
         actions: [
           IconButton(
@@ -1977,59 +1982,6 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
   double _weightG = 100;
   String _selectedUnit = 'gr';
   String _selectedDisplayUnit = 'g';
-
-  static const List<Map<String, dynamic>> _mockNoodleItems = [
-    {
-      'name': 'Mỳ chính',
-      'subtitle': 'Mỳ chính',
-      'calories_kcal': 282,
-      'protein_g': 0.0,
-      'carbs_g': 70.0,
-      'fat_g': 0.0,
-      'unit': 'g',
-      'portion_str': 'g',
-    },
-    {
-      'name': 'Instant noodle, wheat, boiled',
-      'subtitle': 'Mỳ ăn liền, lúa mì, luộc',
-      'calories_kcal': 102,
-      'protein_g': 2.5,
-      'carbs_g': 15.0,
-      'fat_g': 3.5,
-      'unit': 'g',
-      'portion_str': 'g',
-    },
-    {
-      'name': 'Wonton soup',
-      'subtitle': 'Mỳ vằn thắn',
-      'calories_kcal': 473,
-      'protein_g': 22.0,
-      'carbs_g': 55.0,
-      'fat_g': 14.0,
-      'unit': 'g',
-      'portion_str': 'Phần (666g)',
-    },
-    {
-      'name': 'Wheat noodle soup with wonton',
-      'subtitle': 'Mỳ chờ',
-      'calories_kcal': 647,
-      'protein_g': 28.0,
-      'carbs_g': 75.0,
-      'fat_g': 18.0,
-      'unit': 'g',
-      'portion_str': 'Phần (583g)',
-    },
-    {
-      'name': 'Wheat noodle mixed with beef',
-      'subtitle': 'Mỳ trộn bò',
-      'calories_kcal': 512,
-      'protein_g': 32.0,
-      'carbs_g': 60.0,
-      'fat_g': 16.0,
-      'unit': 'g',
-      'portion_str': 'Phần (450g)',
-    },
-  ];
 
   @override
   void initState() {

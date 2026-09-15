@@ -103,7 +103,7 @@ class OnboardingProvider extends ChangeNotifier {
 
   // Added AppleHealthPermissionStep. Testing releases still skip the Premium
   // paywall, so Account and Home shift one slot earlier in both variants.
-  static const int totalSteps = AppBuildConfig.isTesting ? 23 : 24;
+  static const int totalSteps = AppBuildConfig.isTesting ? 22 : 23;
 
   Future<void> init() async {
     if (_initialized) return;
@@ -294,7 +294,7 @@ class OnboardingProvider extends ChangeNotifier {
 
   Future<void> _trackStepMilestones(int step) async {
     if (_isRecalculating || _analyticsService == null) return;
-    if (step == 1) {
+    if (step == 1 || step == 2) {
       unawaited(_analyticsService.trackOnboardingStarted());
     } else if (step == 5) {
       unawaited(_analyticsService.trackOnboardingQ5());
@@ -302,7 +302,7 @@ class OnboardingProvider extends ChangeNotifier {
       unawaited(_analyticsService.trackOnboardingQ10());
     } else if (step == 15) {
       unawaited(_analyticsService.trackOnboardingQ15());
-    } else if (step == 20) {
+    } else if (step == 19 || step == 20) {
       unawaited(_analyticsService.trackOnboardingQ20());
     }
   }

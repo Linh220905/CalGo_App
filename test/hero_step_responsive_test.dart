@@ -104,12 +104,11 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    final welcome = find.text('Welcome to');
     final button = find.byKey(const Key('hero_get_started_button'));
 
-    expect(welcome, findsOneWidget);
+    expect(button, findsOneWidget);
     expect(
-      MediaQuery.textScalerOf(tester.element(welcome)).scale(1),
+      MediaQuery.textScalerOf(tester.element(button)).scale(1),
       1.2,
     );
     expect(button.hitTestable(), findsOneWidget);

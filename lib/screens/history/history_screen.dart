@@ -12,7 +12,6 @@ import '../../utils/localized_date_utils.dart';
 import 'widgets/month_calendar_grid.dart';
 import 'widgets/day_detail_bottom_sheet.dart';
 
-import '../../utils/macro_colors.dart';
 import '../../utils/macro_icons.dart';
 
 String _formatYMD(DateTime dt) {

@@ -1,23 +1,41 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../services/api_service.dart';
 
-/// Best-effort product analytics. A failed analytics request never interrupts
-/// login, onboarding, paywall, or payment; paywall events emitted before the
-/// AccountStep are queued until the next authenticated session.
+/// Best-effort product analytics. Unauthenticated onboarding events are sent
+/// immediately via the anonymous endpoint.
 class AnalyticsService {
   static const _pendingKey = 'pending_analytics_events';
+  static const _anonymousIdKey = 'analytics_anonymous_id';
   static const _appVersion = String.fromEnvironment(
     'APP_VERSION',
-    defaultValue: '1.0.5+21',
+    defaultValue: '1.0.7+49',
   );
 
   final ApiService _api;
   bool _flushing = false;
+  String? _cachedAnonymousId;
 
   AnalyticsService(this._api);
+
+  Future<String> getAnonymousId() async {
+    if (_cachedAnonymousId != null && _cachedAnonymousId!.isNotEmpty) {
+      return _cachedAnonymousId!;
+    }
+    final prefs = await SharedPreferences.getInstance();
+    var id = prefs.getString(_anonymousIdKey);
+    if (id == null || id.isEmpty) {
+      final rand = Random.secure();
+      final values = List<int>.generate(16, (i) => rand.nextInt(256));
+      id = values.map((b) => b.toRadixString(16).padLeft(2, '0')).join();
+      await prefs.setString(_anonymousIdKey, id);
+    }
+    _cachedAnonymousId = id;
+    return id;
+  }
 
   String get _platform {
     if (kIsWeb) return 'web';
@@ -119,8 +137,10 @@ class AnalyticsService {
     double? price,
     String? currency,
   }) async {
+    final anonymousId = await getAnonymousId();
     final payload = <String, dynamic>{
       'event_name': eventName,
+      'anonymous_id': anonymousId,
       'platform': _platform,
       'app_version': _appVersion,
       if (source != null && source.trim().isNotEmpty) 'source': source,
@@ -132,7 +152,13 @@ class AnalyticsService {
     };
 
     if (!_api.hasAccessToken) {
-      await _enqueue(payload);
+      // Send directly to anonymous endpoint so server gets real-time onboarding funnel drop-offs
+      try {
+        await _api.post('/analytics/anonymous-events', body: payload);
+      } catch (error) {
+        debugPrint('[Analytics] anonymous $eventName failed: $error');
+        await _enqueue(payload);
+      }
       return;
     }
 
