@@ -2746,4 +2746,52 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get nutritionServerConnectError => '영양 서버에 연결할 수 없습니다.';
+
+  @override
+  String get planReadySubtitle => '목표 달성을 위해 꾸준히 나아가세요';
+
+  @override
+  String get perMonthText => '/월';
+
+  @override
+  String planMonthsNote(int months, String price) {
+    return '$months개월 • $price';
+  }
+
+  @override
+  String get planBenefitScans => '무제한 AI 음식 스캔';
+
+  @override
+  String get planBenefitSuggestions => '맞춤형 식단 추천';
+
+  @override
+  String get planBenefitMacros => '칼로리 및 영양성분 자동 기록';
+
+  @override
+  String get planBenefitProgress => '매일 신체 변화 추적';
+
+  @override
+  String get spinWheelTitle => '룰렛을 돌리고\n할인 혜택을 받으세요';
+
+  @override
+  String get spinWheelBtn => '돌리기';
+
+  @override
+  String get oneTimeOfferTitle => '회원님만을 위한 1회 한정 혜택';
+
+  @override
+  String get oneTimeOfferSubtitle => '이 창을 닫으면 혜택이 영구히 사라집니다!';
+
+  @override
+  String savePercentTag(int percent) {
+    return '$percent% 할인';
+  }
+
+  @override
+  String offPercentHeader(int percent) {
+    return '$percent% 할인';
+  }
+
+  @override
+  String get claimOfferBtn => '계속하기';
 }

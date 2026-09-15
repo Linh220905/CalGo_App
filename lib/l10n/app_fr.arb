@@ -1301,5 +1301,43 @@
   "searchFoodOrIngredientsHint": "Rechercher un plat ou des ingrédients...",
   "searchResultsTitle": "Résultats de recherche",
   "searchingInProgress": "Recherche en cours...",
-  "nutritionServerConnectError": "Impossible de se connecter au serveur de nutrition."
+  "nutritionServerConnectError": "Impossible de se connecter au serveur de nutrition.",
+  "planReadySubtitle": "Restez sur la bonne voie pour atteindre votre objectif",
+  "perMonthText": "par mois",
+  "planMonthsNote": "{months} mois • {price}",
+  "planBenefitScans": "Scans de repas par IA illimités",
+  "planBenefitSuggestions": "Suggestions de repas personnalisées",
+  "planBenefitMacros": "Suivi automatique des calories et macros",
+  "planBenefitProgress": "Suivi quotidien de vos progrès",
+  "@planMonthsNote": {
+    "placeholders": {
+      "months": {
+        "type": "int"
+      },
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "spinWheelTitle": "Tournez la roue et réclamez\nvotre réduction",
+  "spinWheelBtn": "Tourner",
+  "oneTimeOfferTitle": "Votre offre unique",
+  "oneTimeOfferSubtitle": "Une fois fermée, cette offre unique disparaîtra !",
+  "savePercentTag": "ÉCONOMISEZ {percent}%",
+  "offPercentHeader": "-{percent}%",
+  "claimOfferBtn": "Continuer",
+  "@savePercentTag": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "@offPercentHeader": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  }
 }

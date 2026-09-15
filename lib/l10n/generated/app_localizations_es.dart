@@ -2873,4 +2873,53 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get nutritionServerConnectError =>
       'No se puede conectar al servidor de nutrición.';
+
+  @override
+  String get planReadySubtitle => 'Mantén el rumbo para alcanzar tu meta';
+
+  @override
+  String get perMonthText => 'por mes';
+
+  @override
+  String planMonthsNote(int months, String price) {
+    return '$months meses • $price';
+  }
+
+  @override
+  String get planBenefitScans => 'Escaneos de comida con IA ilimitados';
+
+  @override
+  String get planBenefitSuggestions => 'Sugerencias de comidas personalizadas';
+
+  @override
+  String get planBenefitMacros => 'Seguimiento automático de calorías y macros';
+
+  @override
+  String get planBenefitProgress => 'Seguimiento del progreso diario';
+
+  @override
+  String get spinWheelTitle => 'Gira la ruleta y reclama\ntu descuento';
+
+  @override
+  String get spinWheelBtn => 'Girar';
+
+  @override
+  String get oneTimeOfferTitle => 'Tu oferta única';
+
+  @override
+  String get oneTimeOfferSubtitle =>
+      '¡Una vez que cierres esta oferta única, desaparecerá!';
+
+  @override
+  String savePercentTag(int percent) {
+    return 'AHORRA $percent%';
+  }
+
+  @override
+  String offPercentHeader(int percent) {
+    return '$percent% DTO';
+  }
+
+  @override
+  String get claimOfferBtn => 'Continuar';
 }

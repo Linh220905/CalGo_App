@@ -892,5 +892,43 @@
   "searchFoodOrIngredientsHint": "음식 또는 재료 검색...",
   "searchResultsTitle": "검색 결과",
   "searchingInProgress": "검색 중...",
-  "nutritionServerConnectError": "영양 서버에 연결할 수 없습니다."
+  "nutritionServerConnectError": "영양 서버에 연결할 수 없습니다.",
+  "planReadySubtitle": "목표 달성을 위해 꾸준히 나아가세요",
+  "perMonthText": "/월",
+  "planMonthsNote": "{months}개월 • {price}",
+  "planBenefitScans": "무제한 AI 음식 스캔",
+  "planBenefitSuggestions": "맞춤형 식단 추천",
+  "planBenefitMacros": "칼로리 및 영양성분 자동 기록",
+  "planBenefitProgress": "매일 신체 변화 추적",
+  "@planMonthsNote": {
+    "placeholders": {
+      "months": {
+        "type": "int"
+      },
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "spinWheelTitle": "룰렛을 돌리고\n할인 혜택을 받으세요",
+  "spinWheelBtn": "돌리기",
+  "oneTimeOfferTitle": "회원님만을 위한 1회 한정 혜택",
+  "oneTimeOfferSubtitle": "이 창을 닫으면 혜택이 영구히 사라집니다!",
+  "savePercentTag": "{percent}% 할인",
+  "offPercentHeader": "{percent}% 할인",
+  "claimOfferBtn": "계속하기",
+  "@savePercentTag": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "@offPercentHeader": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  }
 }

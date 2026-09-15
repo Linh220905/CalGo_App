@@ -2844,4 +2844,53 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get nutritionServerConnectError =>
       'Cannot connect to nutrition server.';
+
+  @override
+  String get planReadySubtitle => 'Stay on track to reach your goal';
+
+  @override
+  String get perMonthText => 'per month';
+
+  @override
+  String planMonthsNote(int months, String price) {
+    return '$months mo • $price';
+  }
+
+  @override
+  String get planBenefitScans => 'Unlimited AI food scans';
+
+  @override
+  String get planBenefitSuggestions => 'Personalized meal suggestions';
+
+  @override
+  String get planBenefitMacros => 'Automatic calorie & macro tracking';
+
+  @override
+  String get planBenefitProgress => 'Daily progress tracking';
+
+  @override
+  String get spinWheelTitle => 'Spin the wheel and claim\nyour discount';
+
+  @override
+  String get spinWheelBtn => 'Spin';
+
+  @override
+  String get oneTimeOfferTitle => 'Your one-time offer';
+
+  @override
+  String get oneTimeOfferSubtitle =>
+      'Once you close your one-time offer, it’s gone!';
+
+  @override
+  String savePercentTag(int percent) {
+    return 'SAVE $percent%';
+  }
+
+  @override
+  String offPercentHeader(int percent) {
+    return '$percent% OFF';
+  }
+
+  @override
+  String get claimOfferBtn => 'Continue';
 }

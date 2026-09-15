@@ -1301,5 +1301,43 @@
   "searchFoodOrIngredientsHint": "भोजन या सामग्री खोजें...",
   "searchResultsTitle": "खोज परिणाम",
   "searchingInProgress": "खोज जारी है...",
-  "nutritionServerConnectError": "पोषण सर्वर से कनेक्ट नहीं हो सका।"
+  "nutritionServerConnectError": "पोषण सर्वर से कनेक्ट नहीं हो सका।",
+  "planReadySubtitle": "अपने लक्ष्य को पाने के लिए सही राह पर रहें",
+  "perMonthText": "प्रति माह",
+  "planMonthsNote": "{months} महीने • {price}",
+  "planBenefitScans": "असीमित AI भोजन स्कैन",
+  "planBenefitSuggestions": "व्यक्तिगत भोजन सुझाव",
+  "planBenefitMacros": "स्वचालित कैलोरी और मैक्रो ट्रैकिंग",
+  "planBenefitProgress": "दैनिक प्रगति ट्रैकिंग",
+  "@planMonthsNote": {
+    "placeholders": {
+      "months": {
+        "type": "int"
+      },
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "spinWheelTitle": "पहिया घुमाएं और अपना\nडिस्काउंट पाएं",
+  "spinWheelBtn": "घुमाएं",
+  "oneTimeOfferTitle": "आपका एकमुश्त ऑफर",
+  "oneTimeOfferSubtitle": "एक बार बंद करने पर यह ऑफर हमेशा के लिए चला जाएगा!",
+  "savePercentTag": "{percent}% बचाएं",
+  "offPercentHeader": "{percent}% छूट",
+  "claimOfferBtn": "जारी रखें",
+  "@savePercentTag": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "@offPercentHeader": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  }
 }

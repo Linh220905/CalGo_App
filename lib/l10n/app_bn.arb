@@ -1301,5 +1301,43 @@
   "searchFoodOrIngredientsHint": "খাবার বা উপাদান খুঁজুন...",
   "searchResultsTitle": "অনুসন্ধানের ফলাফল",
   "searchingInProgress": "অনুসন্ধান করা হচ্ছে...",
-  "nutritionServerConnectError": "পুষ্টি সার্ভারের সাথে সংযোগ করা যাচ্ছে না।"
+  "nutritionServerConnectError": "পুষ্টি সার্ভারের সাথে সংযোগ করা যাচ্ছে না।",
+  "planReadySubtitle": "আপনার লক্ষ্য অর্জনে সঠিক পথে থাকুন",
+  "perMonthText": "প্রতি মাসে",
+  "planMonthsNote": "{months} মাস • {price}",
+  "planBenefitScans": "সীমাহীন AI খাদ্য স্ক্যান",
+  "planBenefitSuggestions": "ব্যক্তিগত খাবারের পরামর্শ",
+  "planBenefitMacros": "স্বয়ংক্রিয় ক্যালোরি এবং ম্যাক্রো ট্র্যাকিং",
+  "planBenefitProgress": "প্রতিদিনের অগ্রগতির হিসাব",
+  "@planMonthsNote": {
+    "placeholders": {
+      "months": {
+        "type": "int"
+      },
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "spinWheelTitle": "চাকা ঘোরান এবং আপনার\nছাড় সংগ্রহ করুন",
+  "spinWheelBtn": "ঘোরান",
+  "oneTimeOfferTitle": "আপনার এককালীন অফার",
+  "oneTimeOfferSubtitle": "একবার বন্ধ করলে এই অফারটি চিরতরে হারিয়ে যাবে!",
+  "savePercentTag": "{percent}% সাশ্রয় করুন",
+  "offPercentHeader": "{percent}% ছাড়",
+  "claimOfferBtn": "চালিয়ে যান",
+  "@savePercentTag": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "@offPercentHeader": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  }
 }

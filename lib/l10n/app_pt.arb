@@ -1301,5 +1301,43 @@
   "searchFoodOrIngredientsHint": "Buscar comida ou ingredientes...",
   "searchResultsTitle": "Resultados da busca",
   "searchingInProgress": "Buscando...",
-  "nutritionServerConnectError": "Não foi possível conectar ao servidor de nutrição."
+  "nutritionServerConnectError": "Não foi possível conectar ao servidor de nutrição.",
+  "planReadySubtitle": "Mantenha-se no caminho para alcançar seu objetivo",
+  "perMonthText": "por mês",
+  "planMonthsNote": "{months} meses • {price}",
+  "planBenefitScans": "Scans ilimitados de refeições com IA",
+  "planBenefitSuggestions": "Sugestões de refeições personalizadas",
+  "planBenefitMacros": "Monitoramento automático de calorias e macros",
+  "planBenefitProgress": "Acompanhamento diário do progresso",
+  "@planMonthsNote": {
+    "placeholders": {
+      "months": {
+        "type": "int"
+      },
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "spinWheelTitle": "Gire a roleta e garanta\nseu desconto",
+  "spinWheelBtn": "Girar",
+  "oneTimeOfferTitle": "Sua oferta única",
+  "oneTimeOfferSubtitle": "Depois de fechar, esta oferta única desaparecerá!",
+  "savePercentTag": "ECONOMIZE {percent}%",
+  "offPercentHeader": "{percent}% OFF",
+  "claimOfferBtn": "Continuar",
+  "@savePercentTag": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "@offPercentHeader": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  }
 }

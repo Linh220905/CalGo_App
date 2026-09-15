@@ -24,7 +24,7 @@ enum PurchaseState {
   error,
 }
 
-enum PremiumPlan { weekly, monthly, annual }
+enum PremiumPlan { weekly, monthly, annual, annualDiscount }
 
 /// One concrete Store offer. Google Play may return several entries with the
 /// same product ID (base plan, free trial, win-back, etc.), so a subscription
@@ -65,6 +65,7 @@ class PremiumOffer {
         weeklyAmount = rawMicros / 4.33;
         break;
       case PremiumPlan.annual:
+      case PremiumPlan.annualDiscount:
         weeklyAmount = rawMicros / 52;
         break;
     }
@@ -75,6 +76,35 @@ class PremiumOffer {
       return '~${formatted}k\u00a0$currencySymbol';
     }
     return '~${weeklyAmount.round()}\u00a0$currencySymbol';
+  }
+
+  /// Approximate monthly cost derived from the store's raw price micros.
+  /// Used for Annual plan breakdown ($1.66/mo or 39.000d/thang).
+  String? get monthlyPrice {
+    final rawMicros = product.rawPrice;
+    if (rawMicros <= 0) return null;
+    final currencySymbol = product.currencyCode;
+    double monthlyAmount;
+    switch (plan) {
+      case PremiumPlan.weekly:
+        monthlyAmount = rawMicros * 4.33;
+        break;
+      case PremiumPlan.monthly:
+        monthlyAmount = rawMicros;
+        break;
+      case PremiumPlan.annual:
+      case PremiumPlan.annualDiscount:
+        monthlyAmount = rawMicros / 12;
+        break;
+    }
+    // Format: if >= 1000 show as e.g. "39k" or "39.000d", or format cleanly
+    if (monthlyAmount >= 1000) {
+      final k = monthlyAmount / 1000;
+      final formatted = k >= 10 ? k.toStringAsFixed(0) : k.toStringAsFixed(1);
+      return '${formatted}k\u00a0$currencySymbol';
+    }
+    // Format small currency (e.g. USD $1.66)
+    return '${monthlyAmount.toStringAsFixed(2)}\u00a0$currencySymbol';
   }
 
   factory PremiumOffer.fromProduct(PremiumPlan plan, ProductDetails product) {
@@ -232,6 +262,7 @@ class PaymentProvider extends ChangeNotifier {
     PremiumPlan.weekly => IapIds.premiumWeekly,
     PremiumPlan.monthly => IapIds.premiumMonthly,
     PremiumPlan.annual => IapIds.premiumAnnual,
+    PremiumPlan.annualDiscount => IapIds.premiumAnnualDiscount,
   };
 
   ProductDetails? premiumProduct(PremiumPlan plan) =>

@@ -2738,4 +2738,52 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get nutritionServerConnectError => '栄養サーバーに接続できません。';
+
+  @override
+  String get planReadySubtitle => '目標達成に向けて順調に進めましょう';
+
+  @override
+  String get perMonthText => '月あたり';
+
+  @override
+  String planMonthsNote(int months, String price) {
+    return '$monthsか月 • $price';
+  }
+
+  @override
+  String get planBenefitScans => 'AIによる食事スキャンが無制限';
+
+  @override
+  String get planBenefitSuggestions => 'パーソナライズされた食事の提案';
+
+  @override
+  String get planBenefitMacros => 'カロリーとPFCバランスの自動記録';
+
+  @override
+  String get planBenefitProgress => '毎日の進捗状況を追跡';
+
+  @override
+  String get spinWheelTitle => 'ルーレットを回して\n割引をゲット';
+
+  @override
+  String get spinWheelBtn => '回す';
+
+  @override
+  String get oneTimeOfferTitle => 'あなた限定の特別オファー';
+
+  @override
+  String get oneTimeOfferSubtitle => '一度閉じると、この限定オファーは終了します！';
+
+  @override
+  String savePercentTag(int percent) {
+    return '$percent% オフ';
+  }
+
+  @override
+  String offPercentHeader(int percent) {
+    return '$percent% OFF';
+  }
+
+  @override
+  String get claimOfferBtn => '続ける';
 }

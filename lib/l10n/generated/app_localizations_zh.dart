@@ -2722,4 +2722,52 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get nutritionServerConnectError => '无法连接到营养数据库服务器。';
+
+  @override
+  String get planReadySubtitle => '保持节奏，助您达成目标';
+
+  @override
+  String get perMonthText => '每月计算';
+
+  @override
+  String planMonthsNote(int months, String price) {
+    return '$months个月 • $price';
+  }
+
+  @override
+  String get planBenefitScans => '无限制 AI 食物识别与扫描';
+
+  @override
+  String get planBenefitSuggestions => '量身定制的每日膳食建议';
+
+  @override
+  String get planBenefitMacros => '自动追踪卡路里与宏量营养素';
+
+  @override
+  String get planBenefitProgress => '每日身体蜕变进度追踪';
+
+  @override
+  String get spinWheelTitle => '旋转转盘，领取您的专属折扣';
+
+  @override
+  String get spinWheelBtn => '立即旋转';
+
+  @override
+  String get oneTimeOfferTitle => '您的专属限时特惠';
+
+  @override
+  String get oneTimeOfferSubtitle => '一旦关闭此特惠，优惠将永久失效！';
+
+  @override
+  String savePercentTag(int percent) {
+    return '立省 $percent%';
+  }
+
+  @override
+  String offPercentHeader(int percent) {
+    return '立减 $percent%';
+  }
+
+  @override
+  String get claimOfferBtn => '继续';
 }

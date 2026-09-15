@@ -2880,4 +2880,53 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get nutritionServerConnectError =>
       'Не удалось подключиться к серверу питания.';
+
+  @override
+  String get planReadySubtitle => 'Двигайтесь по плану к своей цели';
+
+  @override
+  String get perMonthText => 'в месяц';
+
+  @override
+  String planMonthsNote(int months, String price) {
+    return '$months мес. • $price';
+  }
+
+  @override
+  String get planBenefitScans => 'Неограниченное сканирование еды с помощью ИИ';
+
+  @override
+  String get planBenefitSuggestions => 'Персональные рекомендации по питанию';
+
+  @override
+  String get planBenefitMacros => 'Автоматический учет калорий и БЖУ';
+
+  @override
+  String get planBenefitProgress => 'Ежедневное отслеживание прогресса';
+
+  @override
+  String get spinWheelTitle => 'Вращайте колесо и получите\nвашу скидку';
+
+  @override
+  String get spinWheelBtn => 'Крутить';
+
+  @override
+  String get oneTimeOfferTitle => 'Ваше разовое предложение';
+
+  @override
+  String get oneTimeOfferSubtitle =>
+      'Если вы закроете это окно, предложение сгорит!';
+
+  @override
+  String savePercentTag(int percent) {
+    return 'СКИДКА $percent%';
+  }
+
+  @override
+  String offPercentHeader(int percent) {
+    return 'СКИДКА $percent%';
+  }
+
+  @override
+  String get claimOfferBtn => 'Продолжить';
 }

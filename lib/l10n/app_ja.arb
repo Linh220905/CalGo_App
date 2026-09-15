@@ -892,5 +892,43 @@
   "searchFoodOrIngredientsHint": "料理や食材を検索...",
   "searchResultsTitle": "検索結果",
   "searchingInProgress": "検索中...",
-  "nutritionServerConnectError": "栄養サーバーに接続できません。"
+  "nutritionServerConnectError": "栄養サーバーに接続できません。",
+  "planReadySubtitle": "目標達成に向けて順調に進めましょう",
+  "perMonthText": "月あたり",
+  "planMonthsNote": "{months}か月 • {price}",
+  "planBenefitScans": "AIによる食事スキャンが無制限",
+  "planBenefitSuggestions": "パーソナライズされた食事の提案",
+  "planBenefitMacros": "カロリーとPFCバランスの自動記録",
+  "planBenefitProgress": "毎日の進捗状況を追跡",
+  "@planMonthsNote": {
+    "placeholders": {
+      "months": {
+        "type": "int"
+      },
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "spinWheelTitle": "ルーレットを回して\n割引をゲット",
+  "spinWheelBtn": "回す",
+  "oneTimeOfferTitle": "あなた限定の特別オファー",
+  "oneTimeOfferSubtitle": "一度閉じると、この限定オファーは終了します！",
+  "savePercentTag": "{percent}% オフ",
+  "offPercentHeader": "{percent}% OFF",
+  "claimOfferBtn": "続ける",
+  "@savePercentTag": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "@offPercentHeader": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  }
 }

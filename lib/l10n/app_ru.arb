@@ -1301,5 +1301,43 @@
   "searchFoodOrIngredientsHint": "Поиск блюд или ингредиентов...",
   "searchResultsTitle": "Результаты поиска",
   "searchingInProgress": "Поиск...",
-  "nutritionServerConnectError": "Не удалось подключиться к серверу питания."
+  "nutritionServerConnectError": "Не удалось подключиться к серверу питания.",
+  "planReadySubtitle": "Двигайтесь по плану к своей цели",
+  "perMonthText": "в месяц",
+  "planMonthsNote": "{months} мес. • {price}",
+  "planBenefitScans": "Неограниченное сканирование еды с помощью ИИ",
+  "planBenefitSuggestions": "Персональные рекомендации по питанию",
+  "planBenefitMacros": "Автоматический учет калорий и БЖУ",
+  "planBenefitProgress": "Ежедневное отслеживание прогресса",
+  "@planMonthsNote": {
+    "placeholders": {
+      "months": {
+        "type": "int"
+      },
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "spinWheelTitle": "Вращайте колесо и получите\nвашу скидку",
+  "spinWheelBtn": "Крутить",
+  "oneTimeOfferTitle": "Ваше разовое предложение",
+  "oneTimeOfferSubtitle": "Если вы закроете это окно, предложение сгорит!",
+  "savePercentTag": "СКИДКА {percent}%",
+  "offPercentHeader": "СКИДКА {percent}%",
+  "claimOfferBtn": "Продолжить",
+  "@savePercentTag": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "@offPercentHeader": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  }
 }

@@ -1,0 +1,467 @@
+import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
+import '../../../config/app_build_config.dart';
+import '../../../providers/app_settings_provider.dart';
+import '../../../providers/auth_provider.dart';
+import '../../../providers/home_provider.dart';
+import '../../../providers/onboarding_provider.dart';
+import '../../../providers/payment_provider.dart';
+import '../../../utils/payment_platform.dart';
+
+const _kInk = Color(0xFF111111);
+const _kMuted = Color(0xFF7A7A7A);
+const _kAccent = Color(0xFFFF6A3D); // Orange Accent Tag
+
+TextStyle _f(
+  double size, {
+  FontWeight weight = FontWeight.w500,
+  Color color = _kInk,
+  double? height,
+  double? letterSpacing,
+}) => GoogleFonts.plusJakartaSans(
+  fontSize: size,
+  fontWeight: weight,
+  color: color,
+  height: height,
+  letterSpacing: letterSpacing,
+);
+
+class DiscountOfferPaywallStep extends StatefulWidget {
+  final VoidCallback onDismiss;
+
+  const DiscountOfferPaywallStep({super.key, required this.onDismiss});
+
+  static Future<void> show(BuildContext context, {required VoidCallback onDismiss}) {
+    return showGeneralDialog(
+      context: context,
+      barrierDismissible: false,
+      barrierLabel: 'DiscountOffer',
+      pageBuilder: (ctx, anim1, anim2) => DiscountOfferPaywallStep(onDismiss: onDismiss),
+      transitionDuration: const Duration(milliseconds: 300),
+      transitionBuilder: (ctx, anim1, anim2, child) =>
+          FadeTransition(opacity: anim1, child: child),
+    );
+  }
+
+  @override
+  State<DiscountOfferPaywallStep> createState() => _DiscountOfferPaywallStepState();
+}
+
+class _DiscountOfferPaywallStepState extends State<DiscountOfferPaywallStep> {
+  bool _buying = false;
+  bool _showClose = false;
+  Timer? _closeTimer;
+  PaymentProvider? _payment;
+
+  @override
+  void initState() {
+    super.initState();
+    // Delay 5s before showing close [X] button on Offer screen
+    _closeTimer = Timer(const Duration(seconds: 5), () {
+      if (mounted) setState(() => _showClose = true);
+    });
+  }
+
+  @override
+  void dispose() {
+    _closeTimer?.cancel();
+    super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final payment = context.read<PaymentProvider>();
+    if (_payment == payment) return;
+    _payment = payment;
+  }
+
+  Future<void> _handlePurchase(PremiumOffer? offer) async {
+    if (_buying) return;
+    setState(() => _buying = true);
+
+    final payment = context.read<PaymentProvider>();
+    final s = context.read<AppSettingsProvider>().strings;
+
+    if (AppBuildConfig.isTesting) {
+      _completeOfferFlow();
+      return;
+    }
+
+    try {
+      final started = await payment.buyPremium(
+        PremiumPlan.annual,
+        preferFreeTrial: false,
+        selectedOffer: offer,
+      );
+      if (!mounted) return;
+      if (started) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(paymentCopyForPlatform(s.paymentProcessing))),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(paymentCopyForPlatform(s.paymentVerificationFailed)),
+            backgroundColor: Colors.redAccent,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _buying = false);
+    }
+  }
+
+  Future<void> _completeOfferFlow() async {
+    final auth = context.read<AuthProvider>();
+    final onboarding = context.read<OnboardingProvider>();
+    final home = context.read<HomeProvider>();
+
+    final saved = await onboarding.completeOnboarding(
+      authProvider: auth,
+      homeProvider: home,
+    );
+    if (!mounted) return;
+    if (saved) {
+      await home.loadToday(forceRefresh: true);
+      if (mounted) context.go('/home');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final s = context.watch<AppSettingsProvider>().strings;
+    final payment = context.watch<PaymentProvider>();
+    final settings = context.watch<AppSettingsProvider>();
+
+    // Determine Tier: VN locale vs Global/US
+    final isVietnamese = settings.locale.languageCode == 'vi';
+
+    // Get annual discount offer from StoreKit / Play Console
+    final discountOffer = payment.premiumOffer(
+      PremiumPlan.annualDiscount,
+      preferFreeTrial: false,
+    );
+
+    // Dynamic store prices with fallback defaults if store not yet queried
+    final discountPercent = isVietnamese ? 75 : 80;
+    final fallbackYearly = isVietnamese ? '399.000đ' : '\$19.99';
+    final fallbackMonthly = isVietnamese ? '33.000đ' : '\$1.66';
+
+    final yearlyTotal = discountOffer?.recurringPrice ?? fallbackYearly;
+    final monthlyPrice = discountOffer?.monthlyPrice ?? fallbackMonthly;
+    final unitMonth = isVietnamese ? '/ tháng' : '/ mo';
+    final subUnitMonth = isVietnamese ? '/ tháng' : '/ monthly';
+
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: Column(
+          children: [
+            // Top Bar: Close [X] Button (Delayed 5s)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Image.asset(
+                    'assets/images/apple_mascot/apple_hello.png',
+                    height: 32,
+                    fit: BoxFit.contain,
+                  ),
+                  AnimatedOpacity(
+                    opacity: _showClose ? 1.0 : 0.0,
+                    duration: const Duration(milliseconds: 300),
+                    child: IgnorePointer(
+                      ignoring: !_showClose,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                          widget.onDismiss();
+                        },
+                        child: Container(
+                          width: 32,
+                          height: 32,
+                          decoration: const BoxDecoration(
+                            color: Color(0xFFF1F5F9),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.close_rounded,
+                            size: 18,
+                            color: _kInk,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 10),
+
+                    // Title
+                    Text(
+                      s.oneTimeOfferTitle, // "Your one-time offer"
+                      textAlign: TextAlign.center,
+                      style: _f(24, weight: FontWeight.w800, letterSpacing: -0.4),
+                    ),
+                    const SizedBox(height: 6),
+
+                    // Huge Discount Header (e.g. 80% OFF / GIẢM 75%)
+                    Text(
+                      s.offPercentHeader(discountPercent),
+                      textAlign: TextAlign.center,
+                      style: _f(
+                        34,
+                        weight: FontWeight.w900,
+                        color: _kInk,
+                        letterSpacing: -0.6,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+
+                    // Mascot Illustration Graphic
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFFAFAFA),
+                        borderRadius: BorderRadius.circular(24),
+                      ),
+                      child: Image.asset(
+                        'assets/images/apple_mascot/apple_hello.png',
+                        height: 140,
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+
+                    // Big Headline Price
+                    Text(
+                      '$monthlyPrice $subUnitMonth',
+                      textAlign: TextAlign.center,
+                      style: _f(22, weight: FontWeight.w800, color: _kInk),
+                    ),
+                    const SizedBox(height: 4),
+
+                    // Urgency Note
+                    Text(
+                      s.oneTimeOfferSubtitle,
+                      textAlign: TextAlign.center,
+                      style: _f(12, color: _kMuted, weight: FontWeight.w500),
+                    ),
+                    const SizedBox(height: 24),
+
+                    // Single Offer Card
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(18),
+                        border: Border.all(color: _kInk, width: 2),
+                        boxShadow: [
+                          BoxShadow(
+                            color: _kInk.withValues(alpha: 0.08),
+                            blurRadius: 12,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          // Tag Top: SAVE 80% / TIẾT KIỆM 75% (Orange Badge)
+                          Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.symmetric(vertical: 6),
+                            decoration: const BoxDecoration(
+                              color: _kAccent,
+                              borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(16),
+                              ),
+                            ),
+                            child: Text(
+                              s.savePercentTag(discountPercent),
+                              textAlign: TextAlign.center,
+                              style: _f(
+                                11.5,
+                                weight: FontWeight.w800,
+                                color: Colors.white,
+                                letterSpacing: 0.5,
+                              ),
+                            ),
+                          ),
+
+                          // Card Body
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 18,
+                              vertical: 16,
+                            ),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        s.planYear,
+                                        style: _f(16, weight: FontWeight.w800),
+                                      ),
+                                      const SizedBox(height: 3),
+                                      Text(
+                                        s.planMonthsNote(12, yearlyTotal),
+                                        style: _f(
+                                          12.5,
+                                          color: _kMuted,
+                                          weight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      monthlyPrice,
+                                      style: _f(
+                                        18,
+                                        weight: FontWeight.w800,
+                                        color: _kInk,
+                                      ),
+                                    ),
+                                    Text(
+                                      unitMonth,
+                                      style: _f(
+                                        11,
+                                        color: _kMuted,
+                                        weight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+
+                    // Primary CTA
+                    SizedBox(
+                      width: double.infinity,
+                      height: 54,
+                      child: ElevatedButton(
+                        onPressed: _buying ? null : () => _handlePurchase(discountOffer),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: _kInk,
+                          foregroundColor: Colors.white,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(28),
+                          ),
+                        ),
+                        child: _buying
+                            ? const SizedBox(
+                                width: 22,
+                                height: 22,
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                  strokeWidth: 2.5,
+                                ),
+                              )
+                            : Text(
+                                s.claimOfferBtn,
+                                style: _f(
+                                  16,
+                                  weight: FontWeight.w800,
+                                  color: Colors.white,
+                                ),
+                              ),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+
+                    // Footer Links
+                    _FooterOfferLinks(),
+                    const SizedBox(height: 20),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _FooterOfferLinks extends StatelessWidget {
+  Future<void> _openLegalPage(String path) {
+    return launchUrl(
+      Uri.parse('https://calgo.tech/$path'),
+      mode: LaunchMode.externalApplication,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final s = context.watch<AppSettingsProvider>().strings;
+    final style = _f(10.5, color: _kMuted, weight: FontWeight.w500)
+        .copyWith(decoration: TextDecoration.underline, decorationColor: _kMuted);
+
+    return Wrap(
+      alignment: WrapAlignment.center,
+      spacing: 8,
+      children: [
+        GestureDetector(
+          onTap: () async {
+            final messenger = ScaffoldMessenger.of(context);
+            try {
+              final payment = context.read<PaymentProvider>();
+              final restored = await payment.restorePurchases();
+              messenger.showSnackBar(
+                SnackBar(
+                  content: Text(
+                    restored
+                        ? paymentCopyForPlatform(s.restoreChecked)
+                        : paymentCopyForPlatform(s.restoreFailed),
+                  ),
+                  backgroundColor: restored ? _kInk : Colors.redAccent,
+                ),
+              );
+            } catch (_) {
+              messenger.showSnackBar(
+                SnackBar(
+                  content: Text(paymentCopyForPlatform(s.restoreFailed)),
+                  backgroundColor: Colors.redAccent,
+                ),
+              );
+            }
+          },
+          child: Text(s.restorePurchases, style: style),
+        ),
+        Text('•', style: _f(10, color: _kMuted)),
+        GestureDetector(
+          onTap: () => _openLegalPage('terms'),
+          child: Text(s.termsOfService, style: style),
+        ),
+        Text('•', style: _f(10, color: _kMuted)),
+        GestureDetector(
+          onTap: () => _openLegalPage('privacy'),
+          child: Text(s.privacyPolicy, style: style),
+        ),
+      ],
+    );
+  }
+}

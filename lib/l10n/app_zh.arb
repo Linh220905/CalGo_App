@@ -1301,5 +1301,43 @@
   "searchFoodOrIngredientsHint": "搜索美食或食材...",
   "searchResultsTitle": "搜索结果",
   "searchingInProgress": "正在搜索...",
-  "nutritionServerConnectError": "无法连接到营养数据库服务器。"
+  "nutritionServerConnectError": "无法连接到营养数据库服务器。",
+  "planReadySubtitle": "保持节奏，助您达成目标",
+  "perMonthText": "每月计算",
+  "planMonthsNote": "{months}个月 • {price}",
+  "planBenefitScans": "无限制 AI 食物识别与扫描",
+  "planBenefitSuggestions": "量身定制的每日膳食建议",
+  "planBenefitMacros": "自动追踪卡路里与宏量营养素",
+  "planBenefitProgress": "每日身体蜕变进度追踪",
+  "@planMonthsNote": {
+    "placeholders": {
+      "months": {
+        "type": "int"
+      },
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "spinWheelTitle": "旋转转盘，领取您的专属折扣",
+  "spinWheelBtn": "立即旋转",
+  "oneTimeOfferTitle": "您的专属限时特惠",
+  "oneTimeOfferSubtitle": "一旦关闭此特惠，优惠将永久失效！",
+  "savePercentTag": "立省 {percent}%",
+  "offPercentHeader": "立减 {percent}%",
+  "claimOfferBtn": "继续",
+  "@savePercentTag": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "@offPercentHeader": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  }
 }

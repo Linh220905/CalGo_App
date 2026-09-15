@@ -1353,5 +1353,43 @@
   "searchFoodOrIngredientsHint": "Tìm món ăn hoặc nguyên liệu...",
   "searchResultsTitle": "Kết quả tìm kiếm",
   "searchingInProgress": "Đang tìm kiếm...",
-  "nutritionServerConnectError": "Không thể kết nối máy chủ dinh dưỡng."
+  "nutritionServerConnectError": "Không thể kết nối máy chủ dinh dưỡng.",
+  "planReadySubtitle": "Duy trì lộ trình để đạt mục tiêu của bạn",
+  "perMonthText": "mỗi tháng",
+  "planMonthsNote": "{months} tháng • {price}",
+  "planBenefitScans": "Quét món ăn bằng AI không giới hạn",
+  "planBenefitSuggestions": "Gợi ý bữa ăn cá nhân hóa theo mục tiêu",
+  "planBenefitMacros": "Tự động theo dõi calo & macro chính xác",
+  "planBenefitProgress": "Theo dõi tiến trình cơ thể mỗi ngày",
+  "@planMonthsNote": {
+    "placeholders": {
+      "months": {
+        "type": "int"
+      },
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "spinWheelTitle": "Quay vòng quay để nhận\nưu đãi của bạn",
+  "spinWheelBtn": "Quay ngay",
+  "oneTimeOfferTitle": "Ưu đãi dành riêng cho bạn",
+  "oneTimeOfferSubtitle": "Sau khi bạn đóng, ưu đãi duy nhất này sẽ biến mất!",
+  "savePercentTag": "TIẾT KIỆM {percent}%",
+  "offPercentHeader": "GIẢM {percent}%",
+  "claimOfferBtn": "Nhận ưu đãi ngay",
+  "@savePercentTag": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "@offPercentHeader": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  }
 }

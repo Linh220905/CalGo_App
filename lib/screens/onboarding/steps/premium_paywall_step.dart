@@ -18,24 +18,13 @@ import '../../../services/analytics_service.dart';
 import '../../../utils/payment_platform.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import 'post_premium_quiz_dialog.dart';
-
-// ═══════════════════════════════════════════════════════════════
-// CONFIG — điền link ảnh nền tại đây
-// ═══════════════════════════════════════════════════════════════
-class _PaywallAssets {
-  /// Asset ảnh nền local dùng trong paywall
-  static const String heroImageAsset = 'assets/images/background.png';
-}
+import 'spin_wheel_dialog.dart';
 
 const _kInk = Color(0xFF111111);
 const _kMuted = Color(0xFF7A7A7A);
-const _kSurface = Color(0xFFF6F6F6);
 const _kBorder = Color(0xFFE6E6E6);
-// Một chút màu — cam ấm, dùng tiết chế cho các điểm nhấn quan trọng
 const _kAccent = Color(0xFFFF6A3D);
-const _kAccentSoft = Color(0xFFFFF1EC);
 
-// Font riêng cho toàn màn hình — khác với font hệ thống mặc định
 TextStyle _f(
   double size, {
   FontWeight weight = FontWeight.w500,
@@ -68,7 +57,7 @@ class PremiumPaywallStep extends StatefulWidget {
 
 class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
   _Plan _selectedPlan = _Plan.annual;
-  bool _enableFreeTrial = true;
+  final bool _enableFreeTrial = true;
   bool _showClose = false;
   bool _hasShownDownsell = false;
   Timer? _closeTimer;
@@ -87,9 +76,6 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
         setState(() => _showClose = true);
       }
       if (mounted) {
-        // This is deliberately best-effort. Before AccountStep there is no
-        // auth token yet, so AnalyticsService queues the event and flushes it
-        // immediately after the user signs in.
         final analytics = context.read<AnalyticsService?>();
         if (analytics != null) {
           unawaited(analytics.trackPaywallViewed(source: widget.source));
@@ -196,9 +182,6 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
 
     if (!mounted) return;
     if (!_quizCompleted) {
-      // Purchase updates can be replayed whenever the Premium page is opened.
-      // Do not show the personalization quiz again after it was completed on
-      // this device/account.
       _quizCompleted = true;
       final accountId = auth.user?.id;
       final alreadyCompleted = await context
@@ -239,7 +222,11 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
 
   void _handleClose() {
     if (!_hasShownDownsell) {
-      _showWinbackDownsellDialog();
+      setState(() => _hasShownDownsell = true);
+      SpinWheelDialog.show(
+        context,
+        onDismiss: _proceedClose,
+      );
       return;
     }
     _proceedClose();
@@ -309,7 +296,6 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
                   Navigator.pop(ctx);
                   setState(() {
                     _selectedPlan = _Plan.annual;
-                    _enableFreeTrial = winback.hasFreeTrial;
                   });
                   _handlePrimaryAction(selectedOffer: winback);
                 },
@@ -508,20 +494,11 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
     _Plan.annual => PremiumPlan.annual,
   };
 
-  /// Known trial days per plan for the QA/testing build only.
-  static int _knownTrialDays(_Plan plan) => switch (plan) {
-    _Plan.weekly => 0, // Weekly never has a trial
-    _Plan.monthly => 0, // Monthly has no trial
-    _Plan.annual => 3, // Annual has 3-day trial
-  };
-
   int _currentTrialDays(PaymentProvider payment) {
     if (!_enableFreeTrial) return 0;
     if (AppBuildConfig.isTesting) {
-      return _knownTrialDays(_selectedPlan);
+      return _selectedPlan == _Plan.annual ? 3 : 0;
     }
-    // The Store is authoritative. Never promise a trial until the platform
-    // product metadata confirms that the user can actually redeem it.
     final storeDays = payment
         .premiumOffer(_toPremiumPlan(_selectedPlan), preferFreeTrial: true)
         ?.trialDays;
@@ -530,29 +507,32 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
   }
 
   String _getButtonLabel(
-    String fallback,
-    String testingLabel,
     PaymentProvider payment,
     AppLocalizations s,
   ) {
     const testing = AppBuildConfig.isTesting;
-    if (testing) return testingLabel;
-    if (_selectedPlan == _Plan.weekly) {
-      return s.changeYourselfNow;
-    }
-    final days = _currentTrialDays(payment);
-    if (_enableFreeTrial && days > 0) {
+    if (testing) return s.continueFreePremium;
+
+    if (_selectedPlan == _Plan.annual) {
+      final days = _currentTrialDays(payment);
+      if (_enableFreeTrial && days > 0) {
+        return s.tryFreeNow; // "Dùng miễn phí ngay" / "Try free now"
+      }
       return s.tryFreeNow;
     }
+
+    // Weekly & Monthly: "Thay đổi bản thân ngay" / "Transform your body now"
     return s.changeYourselfNow;
   }
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
     const testing = AppBuildConfig.isTesting;
     final s = context.watch<AppSettingsProvider>().strings;
     final payment = context.watch<PaymentProvider>();
+    final onboarding = context.watch<OnboardingProvider>();
+    final auth = context.watch<AuthProvider>();
+
     final premiumState =
         payment.purchaseStates[PaymentProvider.productIdForPremiumPlan(
           _toPremiumPlan(_selectedPlan),
@@ -564,88 +544,152 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
         premiumState == PurchaseState.pending ||
         premiumState == PurchaseState.verifying;
     final activated = testing || premiumState == PurchaseState.purchased;
-    final trialDays = _currentTrialDays(payment);
-    // Weekly and Monthly have no trial. Annual shows the toggle only
-    // when trial is available.
-    final trialAvailable = testing
-        ? _selectedPlan == _Plan.annual
-        : trialDays > 0;
-    final trialEnabled = _enableFreeTrial && trialAvailable && trialDays > 0;
+
+    // Nutrition values from Onboarding or User model
+    final user = auth.user;
+    final kcal = (user?.dailyCalorieTarget ?? onboarding.data.targetCaloriesPerDay)
+        .round();
+    final targetKcal = kcal > 0 ? kcal : 1850;
+    final targetProtein = (user?.proteinGrams ?? onboarding.data.targetProteinG)
+        .round();
+    final proteinVal = targetProtein > 0 ? targetProtein : 125;
 
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(
-                height: (screenHeight * 0.26).clamp(190.0, 240.0),
-                child: _HeroSection(
-                  showClose: _showClose,
-                  onClose: _handleClose,
-                ),
+        child: Column(
+          children: [
+            // Top App Bar with Close [X] Button
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  AnimatedOpacity(
+                    opacity: _showClose ? 1 : 0,
+                    duration: const Duration(milliseconds: 300),
+                    child: IgnorePointer(
+                      ignoring: !_showClose,
+                      child: GestureDetector(
+                        onTap: _handleClose,
+                        child: Container(
+                          width: 32,
+                          height: 32,
+                          decoration: const BoxDecoration(
+                            color: Color(0xFFF1F5F9),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.close_rounded,
+                            size: 18,
+                            color: _kInk,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 12),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(18, 0, 18, 24),
+            ),
+
+            // Scrollable Content
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
                   children: [
-                    const _Headline(),
+                    const SizedBox(height: 4),
+
+                    // Mascot
+                    Image.asset(
+                      'assets/images/apple_mascot/apple_hello.png',
+                      height: 82,
+                      fit: BoxFit.contain,
+                    ),
                     const SizedBox(height: 12),
-                    const _ExperienceRow(),
+
+                    // Headline
+                    Text(
+                      s.analysisPlanReady, // "Your plan is ready!"
+                      textAlign: TextAlign.center,
+                      style: _f(26, weight: FontWeight.w800, letterSpacing: -0.5),
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      s.planReadySubtitle, // "Stay on track to reach your goal"
+                      textAlign: TextAlign.center,
+                      style: _f(14, color: _kMuted, weight: FontWeight.w500),
+                    ),
                     const SizedBox(height: 14),
 
-                    // Free Trial Toggle Row
-                    if (trialAvailable) ...[
-                      _FreeTrialToggleRow(
-                        enabled: trialEnabled,
-                        onChanged: (v) => setState(() => _enableFreeTrial = v),
-                        trialDays: trialDays,
+                    // Calorie & Macro Target Pill
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 8,
                       ),
-                      const SizedBox(height: 12),
-                    ],
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFF8FAFC),
+                        borderRadius: BorderRadius.circular(30),
+                        border: Border.all(color: const Color(0xFFE2E8F0)),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(
+                            Icons.local_fire_department_rounded,
+                            color: _kAccent,
+                            size: 18,
+                          ),
+                          const SizedBox(width: 5),
+                          Text(
+                            '$targetKcal kcal',
+                            style: _f(13, weight: FontWeight.w700),
+                          ),
+                          const SizedBox(width: 10),
+                          Container(
+                            width: 4,
+                            height: 4,
+                            decoration: const BoxDecoration(
+                              color: _kMuted,
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          const Icon(
+                            Icons.fitness_center_rounded,
+                            color: Color(0xFF3B82F6),
+                            size: 16,
+                          ),
+                          const SizedBox(width: 5),
+                          Text(
+                            '${proteinVal}g protein',
+                            style: _f(13, weight: FontWeight.w700),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 20),
 
-                    _PricingRow(
+                    // Feature Checklist
+                    const _BenefitChecklist(),
+                    const SizedBox(height: 24),
+
+                    // Vertical Stack of 3 Pricing Cards
+                    _VerticalPricingList(
                       selectedPlan: _selectedPlan,
-                      enableFreeTrial: _enableFreeTrial,
                       onChanged: (p) => setState(() => _selectedPlan = p),
                       testing: testing,
                     ),
+                    const SizedBox(height: 20),
 
-                    if (trialEnabled) ...[
-                      const SizedBox(height: 14),
-                      _VisualPaymentTimeline(trialDays: trialDays),
-                    ],
-
-                    const SizedBox(height: 16),
+                    // CTA Button
                     PremiumButton(
-                      label: widget.onboardingMode
-                          ? testing
-                                ? s.continueFreePremium
-                                : activated
-                                ? _quizCompleted
-                                      ? s.completeSetup
-                                      : s.premiumActivated
-                                : buying
-                                ? s.processingShort
-                                : _getButtonLabel(
-                                    s.continueLabel,
-                                    s.continueFreePremium,
-                                    payment,
-                                    s,
-                                  )
-                          : testing
-                          ? s.premiumFreeUnlocked
-                          : activated
-                          ? s.premiumActivated
-                          : buying
+                      label: buying
                           ? s.processingShort
-                          : _getButtonLabel(
-                              s.subscribePremium,
-                              s.premiumFreeUnlocked,
-                              payment,
-                              s,
-                            ),
+                          : activated && widget.onboardingMode
+                          ? (_quizCompleted ? s.completeSetup : s.premiumActivated)
+                          : _getButtonLabel(payment, s),
                       loading: buying,
                       onPressed: buying
                           ? null
@@ -656,24 +700,23 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
                           : () => _handlePrimaryAction(),
                     ),
                     const SizedBox(height: 10),
+
+                    // Terms Note
                     Text(
-                      testing
-                          ? s.premiumTestingNote
-                          : trialEnabled
-                          ? paymentCopyForPlatform(
-                              s.trialCancelAnytimeNote,
-                            )
-                          : s.premiumAutoRenewNote,
+                      s.premiumAutoRenewNote,
                       textAlign: TextAlign.center,
                       style: _f(11, color: _kMuted, weight: FontWeight.w500),
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 12),
+
+                    // Footer Links
                     const _FooterLinks(showBilling: !testing),
+                    const SizedBox(height: 24),
                   ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -681,255 +724,68 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
 }
 
 // ═══════════════════════════════════════════════════════════════
-// HERO
+// BENEFIT CHECKLIST
 // ═══════════════════════════════════════════════════════════════
 
-class _HeroSection extends StatelessWidget {
-  final bool showClose;
-  final VoidCallback onClose;
-
-  const _HeroSection({required this.showClose, required this.onClose});
+class _BenefitChecklist extends StatelessWidget {
+  const _BenefitChecklist();
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, c) {
-        final w = c.maxWidth;
-        final h = c.maxHeight;
-        return ClipRRect(
-          borderRadius: BorderRadius.circular(22),
-          child: Stack(
-            fit: StackFit.expand,
+    final s = context.watch<AppSettingsProvider>().strings;
+    final benefits = [
+      s.planBenefitScans,
+      s.planBenefitSuggestions,
+      s.planBenefitMacros,
+      s.planBenefitProgress,
+    ];
+
+    return Column(
+      children: benefits.map((item) {
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 10),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.asset(
-                _PaywallAssets.heroImageAsset,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stack) => Container(
-                  color: _kSurface,
-                  child: const Center(
-                    child: _VecIcon(
-                      type: _IconType.image,
-                      color: _kMuted,
-                      size: 30,
-                    ),
-                  ),
-                ),
-                frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-                  if (frame == null) {
-                    return Container(color: _kSurface);
-                  }
-                  return child;
-                },
-              ),
               Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.black.withValues(
-                        alpha: 0.0,
-                      ), // Start fully transparent
-                      Colors.black.withValues(alpha: 0.15), // Darken a bit
-                      Colors.white.withValues(
-                        alpha: 0.0,
-                      ), // Start white fade from transparent
-                      Colors.white.withValues(alpha: 0.6),
-                      Colors.white.withValues(alpha: 0.9),
-                      Colors.white, // End fully white
-                    ],
-                    stops: const [
-                      0.0,
-                      0.3,
-                      0.4,
-                      0.7,
-                      0.85,
-                      1.0,
-                    ], // More steps for smoother transition
-                  ),
+                width: 20,
+                height: 20,
+                decoration: const BoxDecoration(
+                  color: _kInk,
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(
+                  Icons.check_rounded,
+                  color: Colors.white,
+                  size: 13,
                 ),
               ),
-              Positioned(
-                top: h * 0.04,
-                right: w * 0.04,
-                child: AnimatedOpacity(
-                  opacity: showClose ? 1 : 0,
-                  duration: const Duration(milliseconds: 350),
-                  child: IgnorePointer(
-                    ignoring: !showClose,
-                    child: GestureDetector(
-                      onTap: onClose,
-                      child: Container(
-                        width: 28,
-                        height: 28,
-                        decoration: const BoxDecoration(
-                          color: _kInk,
-                          shape: BoxShape.circle,
-                        ),
-                        child: const Center(
-                          child: _VecIcon(
-                            type: _IconType.close,
-                            color: Colors.white,
-                            size: 12,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  item,
+                  style: _f(13.5, weight: FontWeight.w600, color: _kInk),
                 ),
               ),
             ],
           ),
         );
-      },
+      }).toList(),
     );
   }
 }
 
 // ═══════════════════════════════════════════════════════════════
-// HEADLINE — bán giá trị, tạo cảm giác hành động ngay
+// VERTICAL PRICING LIST
 // ═══════════════════════════════════════════════════════════════
 
-class _Headline extends StatelessWidget {
-  const _Headline();
-
-  @override
-  Widget build(BuildContext context) {
-    final s = context.watch<AppSettingsProvider>().strings;
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        FittedBox(
-          fit: BoxFit.scaleDown,
-          child: Wrap(
-            alignment: WrapAlignment.center,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            children: [
-              Text(
-                s.premiumHeadlineBefore,
-                style: _f(28, weight: FontWeight.w800, letterSpacing: -0.4),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                decoration: BoxDecoration(
-                  color: _kAccent,
-                  borderRadius: BorderRadius.circular(6),
-                ),
-                child: Text(
-                  s.todayLower,
-                  style: _f(
-                    28,
-                    weight: FontWeight.w800,
-                    color: Colors.white,
-                    letterSpacing: -0.4,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 12),
-      ],
-    );
-  }
-}
-
-// ═══════════════════════════════════════════════════════════════
-// TRẢI NGHIỆM CỦA BẠN + CHECKLIST
-// ═══════════════════════════════════════════════════════════════
-
-class _ExperienceRow extends StatelessWidget {
-  const _ExperienceRow();
-
-  @override
-  Widget build(BuildContext context) {
-    final s = context.watch<AppSettingsProvider>().strings;
-    final items = [
-      s.premiumBenefitCalories,
-      s.premiumBenefitSuggestions,
-      s.premiumBenefitDescriptions,
-      s.premiumBenefitProgress,
-      s.premiumBenefitSupport,
-    ];
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          width: 82,
-          child: Text(
-            s.yourExperience,
-            style: _f(
-              16,
-              weight: FontWeight.w800,
-              height: 1.15,
-              letterSpacing: -0.3,
-            ),
-          ),
-        ),
-        const SizedBox(width: 6),
-        Expanded(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: items
-                .map(
-                  (t) => Padding(
-                    padding: const EdgeInsets.only(bottom: 8),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(top: 1),
-                          width: 16,
-                          height: 16,
-                          decoration: const BoxDecoration(
-                            color: _kAccent,
-                            shape: BoxShape.circle,
-                          ),
-                          child: const Center(
-                            child: _VecIcon(
-                              type: _IconType.check,
-                              color: Colors.white,
-                              size: 8,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Text(
-                            t,
-                            style: _f(
-                              11.5,
-                              weight: FontWeight.w600,
-                              height: 1.25,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                )
-                .toList(),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-// ═══════════════════════════════════════════════════════════════
-// PRICING
-// ═══════════════════════════════════════════════════════════════
-
-class _PricingRow extends StatelessWidget {
+class _VerticalPricingList extends StatelessWidget {
   final _Plan selectedPlan;
-  final bool enableFreeTrial;
   final ValueChanged<_Plan> onChanged;
   final bool testing;
 
-  const _PricingRow({
+  const _VerticalPricingList({
     required this.selectedPlan,
-    required this.enableFreeTrial,
     required this.onChanged,
     required this.testing,
   });
@@ -939,285 +795,94 @@ class _PricingRow extends StatelessWidget {
     final s = context.watch<AppSettingsProvider>().strings;
     final payment = context.watch<PaymentProvider>();
     final loading = payment.initializing;
-    final weeklyOffer = payment.premiumOffer(
-      PremiumPlan.weekly,
-      preferFreeTrial:
-          enableFreeTrial && payment.hasTrialOffer(PremiumPlan.weekly),
-    );
-    final monthlyOffer = payment.premiumOffer(
-      PremiumPlan.monthly,
-      preferFreeTrial:
-          enableFreeTrial && payment.hasTrialOffer(PremiumPlan.monthly),
-    );
-    final annualOffer = payment.premiumOffer(
-      PremiumPlan.annual,
-      preferFreeTrial:
-          enableFreeTrial && payment.hasTrialOffer(PremiumPlan.annual),
-    );
 
-    String priceOf(PremiumOffer? offer) {
-      if (testing) return s.free;
+    final weeklyOffer = payment.premiumOffer(PremiumPlan.weekly, preferFreeTrial: false);
+    final annualOffer = payment.premiumOffer(PremiumPlan.annual, preferFreeTrial: true);
+    final monthlyOffer = payment.premiumOffer(PremiumPlan.monthly, preferFreeTrial: false);
+
+    // Formatted raw recurring price from Store
+    String formatRecurring(PremiumOffer? offer, String testingFallback) {
+      if (testing) return testingFallback;
       if (loading) return '...';
       if (offer != null && offer.recurringPrice.isNotEmpty) {
         return offer.recurringPrice;
       }
-      return s.scanUnavailable;
+      return testingFallback;
     }
 
-    String trialNote(PremiumOffer? offer, String paidNote) {
-      if (testing) return s.testingAccess;
-      if (enableFreeTrial && offer?.hasFreeTrial == true) {
-        return s.trialDaysNote(offer!.trialDays);
+    // Monthly breakdown price (e.g. 39.000d / $1.66)
+    String formatMonthly(PremiumOffer? offer, String testingFallback) {
+      if (testing) return testingFallback;
+      if (loading) return '...';
+      if (offer?.monthlyPrice != null && offer!.monthlyPrice!.isNotEmpty) {
+        return offer.monthlyPrice!;
       }
-      return paidNote;
+      return testingFallback;
     }
 
-    String weeklyOf(PremiumOffer? offer, _Plan plan) {
-      if (testing) {
-        return switch (plan) {
-          _Plan.weekly => '~29k ${s.perWeekText}',
-          _Plan.monthly => '~11k ${s.perWeekText}',
-          _Plan.annual => '~9k ${s.perWeekText}',
-        };
-      }
-      return offer?.weeklyPrice != null ? '${offer!.weeklyPrice} ${s.perWeekText}' : '';
-    }
+    final weekPrice = formatRecurring(weeklyOffer, '29.000đ');
+    final annualTotal = formatRecurring(annualOffer, '469.000đ');
+    final annualMonthly = formatMonthly(annualOffer, '39.000đ');
+    final monthPrice = formatRecurring(monthlyOffer, '59.000đ');
 
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
+    return Column(
       children: [
-        Expanded(
-          child: _PriceCard(
-            title: s.planWeek,
-            price: priceOf(weeklyOffer),
-            note: trialNote(weeklyOffer, s.weeklyPayment),
-            weeklyLabel: weeklyOf(weeklyOffer, _Plan.weekly),
-            selected: selectedPlan == _Plan.weekly,
-            highlighted: false,
-            onTap: () => onChanged(_Plan.weekly),
-          ),
+        // 1. Week Plan
+        _VerticalPlanCard(
+          title: s.planWeek,
+          subtitle: null,
+          priceText: weekPrice,
+          unitText: '/ ${s.perWeekText.replaceAll('per ', '').replaceAll('mỗi ', '')}',
+          selected: selectedPlan == _Plan.weekly,
+          badge: null,
+          onTap: () => onChanged(_Plan.weekly),
         ),
-        const SizedBox(width: 8),
-        Expanded(
-          child: _PriceCard(
-            title: s.planYear,
-            price: priceOf(annualOffer),
-            note: trialNote(annualOffer, s.payYearlyNote),
-            weeklyLabel: weeklyOf(annualOffer, _Plan.annual),
-            selected: selectedPlan == _Plan.annual,
-            highlighted: true,
-            badge:
-                enableFreeTrial &&
-                    (annualOffer?.hasFreeTrial == true || testing)
-                ? s.trialDaysCountBadge(testing ? 3 : annualOffer!.trialDays)
-                : s.popularMost,
-            onTap: () => onChanged(_Plan.annual),
-          ),
+        const SizedBox(height: 12),
+
+        // 2. Year Plan (Highlighted / Selected by default)
+        _VerticalPlanCard(
+          title: s.planYear,
+          subtitle: s.planMonthsNote(12, annualTotal),
+          priceText: annualMonthly,
+          unitText: '/ ${s.perMonthText.replaceAll('per ', '').replaceAll('mỗi ', '')}',
+          selected: selectedPlan == _Plan.annual,
+          badge: s.popularMost,
+          onTap: () => onChanged(_Plan.annual),
         ),
-        const SizedBox(width: 8),
-        Expanded(
-          child: _PriceCard(
-            title: s.planMonth,
-            price: priceOf(monthlyOffer),
-            note: trialNote(monthlyOffer, s.payMonthlyNote),
-            weeklyLabel: weeklyOf(monthlyOffer, _Plan.monthly),
-            selected: selectedPlan == _Plan.monthly,
-            highlighted: false,
-            badge: null,
-            onTap: () => onChanged(_Plan.monthly),
-          ),
+        const SizedBox(height: 12),
+
+        // 3. Month Plan
+        _VerticalPlanCard(
+          title: s.planMonth,
+          subtitle: s.planMonthsNote(1, monthPrice),
+          priceText: monthPrice,
+          unitText: '/ ${s.perMonthText.replaceAll('per ', '').replaceAll('mỗi ', '')}',
+          selected: selectedPlan == _Plan.monthly,
+          badge: null,
+          onTap: () => onChanged(_Plan.monthly),
         ),
       ],
     );
   }
 }
 
-class _FreeTrialToggleRow extends StatelessWidget {
-  final bool enabled;
-  final ValueChanged<bool> onChanged;
-  final int trialDays;
-
-  const _FreeTrialToggleRow({
-    required this.enabled,
-    required this.onChanged,
-    required this.trialDays,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final s = context.watch<AppSettingsProvider>().strings;
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-      decoration: BoxDecoration(
-        color: enabled ? _kAccentSoft : _kSurface,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: enabled ? _kAccent.withValues(alpha: 0.4) : _kBorder,
-        ),
-      ),
-      child: Row(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(6),
-            decoration: BoxDecoration(
-              color: enabled ? _kAccent : _kMuted,
-              shape: BoxShape.circle,
-            ),
-            child: const Icon(
-              Icons.bolt_rounded,
-              size: 16,
-              color: Colors.white,
-            ),
-          ),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  enabled
-                      ? s.trialDaysFree(trialDays)
-                      : s.enableTrialDaysFree(trialDays),
-                  style: _f(13, weight: FontWeight.w700, color: _kInk),
-                ),
-                Text(
-                  enabled
-                      ? s.trialNoChargeTodayReminder
-                      : s.trialDirectChargeOnRegister,
-                  style: _f(10.5, color: _kMuted),
-                ),
-              ],
-            ),
-          ),
-          Switch.adaptive(
-            value: enabled,
-            onChanged: onChanged,
-            activeThumbColor: _kAccent,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _VisualPaymentTimeline extends StatelessWidget {
-  final int trialDays;
-
-  const _VisualPaymentTimeline({required this.trialDays});
-
-  @override
-  Widget build(BuildContext context) {
-    final s = context.watch<AppSettingsProvider>().strings;
-    final reminderDay = trialDays > 1 ? trialDays - 1 : 1;
-
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: _kSurface,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: _kBorder),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            s.trialPaymentSchedule,
-            style: _f(11.5, weight: FontWeight.w700, color: _kInk),
-          ),
-          const SizedBox(height: 10),
-          Row(
-            children: [
-              _buildTimelineStep(
-                icon: Icons.lock_open_rounded,
-                title: s.trialStepToday,
-                sub: s.trialStepUnlockFree,
-                active: true,
-              ),
-              _buildConnector(),
-              _buildTimelineStep(
-                icon: Icons.notifications_active_rounded,
-                title: s.trialStepDayReminder(reminderDay),
-                sub: s.trialStepPushReminder,
-                active: false,
-              ),
-              _buildConnector(),
-              _buildTimelineStep(
-                icon: Icons.credit_card_rounded,
-                title: s.trialStepDayReminder(trialDays),
-                sub: s.trialStepChargeStarts,
-                active: false,
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTimelineStep({
-    required IconData icon,
-    required String title,
-    required String sub,
-    required bool active,
-  }) {
-    return Expanded(
-      child: Column(
-        children: [
-          Container(
-            width: 28,
-            height: 28,
-            decoration: BoxDecoration(
-              color: active ? _kAccent : Colors.white,
-              shape: BoxShape.circle,
-              border: Border.all(color: active ? _kAccent : _kBorder),
-            ),
-            child: Icon(icon, size: 14, color: active ? Colors.white : _kMuted),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            title,
-            textAlign: TextAlign.center,
-            style: _f(10.5, weight: FontWeight.w700, color: _kInk),
-          ),
-          Text(
-            sub,
-            textAlign: TextAlign.center,
-            style: _f(9.5, color: _kMuted),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildConnector() {
-    return Container(
-      width: 16,
-      height: 1,
-      margin: const EdgeInsets.only(bottom: 18),
-      color: _kBorder,
-    );
-  }
-}
-
-class _PriceCard extends StatelessWidget {
+class _VerticalPlanCard extends StatelessWidget {
   final String title;
-  final String price;
-  final String note;
-  final String weeklyLabel;
+  final String? subtitle;
+  final String priceText;
+  final String unitText;
   final bool selected;
-  final bool highlighted;
   final String? badge;
   final VoidCallback onTap;
 
-  const _PriceCard({
+  const _VerticalPlanCard({
     required this.title,
-    required this.price,
-    required this.note,
-    required this.weeklyLabel,
+    this.subtitle,
+    required this.priceText,
+    required this.unitText,
     required this.selected,
-    required this.highlighted,
-    required this.onTap,
     this.badge,
+    required this.onTap,
   });
 
   @override
@@ -1226,74 +891,107 @@ class _PriceCard extends StatelessWidget {
       onTap: onTap,
       child: Stack(
         clipBehavior: Clip.none,
-        alignment: Alignment.topCenter,
         children: [
-          Container(
-            width: double.infinity,
-            padding: EdgeInsets.fromLTRB(8, badge != null ? 18 : 12, 8, 12),
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 180),
+            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
             decoration: BoxDecoration(
-              color: highlighted ? _kAccentSoft : Colors.white,
-              borderRadius: BorderRadius.circular(16),
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(18),
               border: Border.all(
-                color: selected ? _kAccent : _kBorder,
+                color: selected ? _kInk : _kBorder,
                 width: selected ? 2 : 1,
               ),
+              boxShadow: selected
+                  ? [
+                      BoxShadow(
+                        color: _kInk.withValues(alpha: 0.05),
+                        blurRadius: 10,
+                        offset: const Offset(0, 4),
+                      )
+                    ]
+                  : null,
             ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
+            child: Row(
               children: [
-                Text(title, style: _f(13, weight: FontWeight.w700)),
-                const SizedBox(height: 6),
-                // FittedBox đảm bảo giá luôn nằm 1 dòng, không bao giờ tràn
-                FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Text(
-                    price,
-                    maxLines: 1,
-                    softWrap: false,
-                    style: _f(17, weight: FontWeight.w800, letterSpacing: -0.3),
+                // Left Column: Plan name & subtitle note
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        title,
+                        style: _f(16, weight: FontWeight.w800, color: _kInk),
+                      ),
+                      if (subtitle != null) ...[
+                        const SizedBox(height: 4),
+                        Text(
+                          subtitle!,
+                          style: _f(
+                            12.5,
+                            color: _kMuted,
+                            weight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ],
                   ),
                 ),
-                const SizedBox(height: 5),
-                Container(height: 1, color: _kBorder),
-                const SizedBox(height: 5),
-                Text(
-                  note,
-                  textAlign: TextAlign.center,
-                  maxLines: 2,
-                  style: _f(
-                    9.5,
-                    color: _kMuted,
-                    height: 1.25,
-                    weight: FontWeight.w500,
-                  ),
+                const SizedBox(width: 12),
+
+                // Right Column: Big Price + Unit
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      priceText,
+                      style: _f(
+                        16.5,
+                        weight: FontWeight.w800,
+                        color: _kInk,
+                        letterSpacing: -0.3,
+                      ),
+                    ),
+                    Text(
+                      unitText,
+                      style: _f(11.5, color: _kMuted, weight: FontWeight.w500),
+                    ),
+                  ],
                 ),
-                if (weeklyLabel.isNotEmpty) ...[
-                  const SizedBox(height: 4),
-                  FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Text(
-                      weeklyLabel,
-                      maxLines: 1,
-                      style: _f(9, color: _kAccent, weight: FontWeight.w700),
+                const SizedBox(width: 14),
+
+                // Radio Circle
+                Container(
+                  width: 22,
+                  height: 22,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: selected ? _kInk : const Color(0xFFCBD5E1),
+                      width: selected ? 6.5 : 1.5,
                     ),
                   ),
-                ],
+                ),
               ],
             ),
           ),
+
+          // Top badge (e.g. "Most popular" / "Phổ biến nhất") — Orange Accent
           if (badge != null)
             Positioned(
-              top: -9,
+              top: -10,
+              left: 16,
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3.5),
                 decoration: BoxDecoration(
                   color: _kAccent,
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
                   badge!,
-                  style: _f(8.5, weight: FontWeight.w700, color: Colors.white),
+                  style: _f(10.5, weight: FontWeight.w800, color: Colors.white),
                 ),
               ),
             ),
@@ -1304,7 +1002,7 @@ class _PriceCard extends StatelessWidget {
 }
 
 // ═══════════════════════════════════════════════════════════════
-// FOOTER — dùng Wrap để không bao giờ tràn ngang
+// FOOTER
 // ═══════════════════════════════════════════════════════════════
 
 class _FooterLinks extends StatelessWidget {
@@ -1325,21 +1023,17 @@ class _FooterLinks extends StatelessWidget {
     final s = settings.strings;
 
     final style = _f(
-      10,
+      10.5,
       color: _kMuted,
       weight: FontWeight.w500,
     ).copyWith(decoration: TextDecoration.underline, decorationColor: _kMuted);
+
     return Wrap(
       alignment: WrapAlignment.center,
-      spacing: 6,
-      runSpacing: 2,
+      spacing: 8,
+      runSpacing: 4,
       children: [
-        GestureDetector(
-          onTap: () => _openLegalPage('terms'),
-          child: Text(s.termsOfService, style: style),
-        ),
         if (showBilling) ...[
-          Text('·', style: _f(10, color: _kMuted)),
           GestureDetector(
             onTap: () async {
               final messenger = ScaffoldMessenger.of(context);
@@ -1353,9 +1047,7 @@ class _FooterLinks extends StatelessWidget {
                           ? paymentCopyForPlatform(s.restoreChecked)
                           : paymentCopyForPlatform(s.restoreFailed),
                     ),
-                    backgroundColor: restored
-                        ? const Color(0xFF111111)
-                        : Colors.redAccent,
+                    backgroundColor: restored ? _kInk : Colors.redAccent,
                   ),
                 );
               } catch (_) {
@@ -1369,21 +1061,13 @@ class _FooterLinks extends StatelessWidget {
             },
             child: Text(s.restorePurchases, style: style),
           ),
-          Text('·', style: _f(10, color: _kMuted)),
-          GestureDetector(
-            onTap: () async {
-              final opened = await context
-                  .read<PaymentProvider>()
-                  .openSubscriptionManagement();
-              if (!context.mounted || opened) return;
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(s.manageSubscriptionFailed)),
-              );
-            },
-            child: Text(s.manageSubscription, style: style),
-          ),
+          Text('•', style: _f(10, color: _kMuted)),
         ],
-        Text('·', style: _f(10, color: _kMuted)),
+        GestureDetector(
+          onTap: () => _openLegalPage('terms'),
+          child: Text(s.termsOfService, style: style),
+        ),
+        Text('•', style: _f(10, color: _kMuted)),
         GestureDetector(
           onTap: () => _openLegalPage('privacy'),
           child: Text(s.privacyPolicy, style: style),
@@ -1391,108 +1075,4 @@ class _FooterLinks extends StatelessWidget {
       ],
     );
   }
-}
-
-// ═══════════════════════════════════════════════════════════════
-// VECTOR ICONS — tự thiết kế, không dùng Material Icons
-// ═══════════════════════════════════════════════════════════════
-
-enum _IconType { close, check, grain, drumstick, droplet, image }
-
-class _VecIcon extends StatelessWidget {
-  final _IconType type;
-  final Color color;
-  final double size;
-
-  const _VecIcon({required this.type, required this.color, this.size = 20});
-
-  @override
-  Widget build(BuildContext context) {
-    return CustomPaint(
-      size: Size(size, size),
-      painter: _VecIconPainter(type: type, color: color),
-    );
-  }
-}
-
-class _VecIconPainter extends CustomPainter {
-  final _IconType type;
-  final Color color;
-
-  _VecIconPainter({required this.type, required this.color});
-
-  Paint _stroke([double w = 1.7]) => Paint()
-    ..color = color
-    ..style = PaintingStyle.stroke
-    ..strokeWidth = w
-    ..strokeCap = StrokeCap.round
-    ..strokeJoin = StrokeJoin.round;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final s = size.width / 24;
-    canvas.save();
-    canvas.scale(s, s);
-    switch (type) {
-      case _IconType.close:
-        canvas.drawLine(const Offset(6, 6), const Offset(18, 18), _stroke(2));
-        canvas.drawLine(const Offset(18, 6), const Offset(6, 18), _stroke(2));
-        break;
-      case _IconType.check:
-        final p = Path()
-          ..moveTo(4.5, 12.5)
-          ..lineTo(9.5, 17.5)
-          ..lineTo(19.5, 6.5);
-        canvas.drawPath(p, _stroke(2.4));
-        break;
-      case _IconType.grain:
-        final leaf = Path()
-          ..moveTo(12, 21)
-          ..cubicTo(5, 20, 3, 13, 4.5, 5)
-          ..cubicTo(13, 4, 20, 8, 20, 15)
-          ..cubicTo(20, 18.5, 16, 21, 12, 21)
-          ..close();
-        canvas.drawPath(leaf, _stroke());
-        canvas.drawLine(const Offset(6, 18), const Offset(18, 6), _stroke(1.3));
-        break;
-      case _IconType.drumstick:
-        canvas.drawCircle(const Offset(9.5, 9.5), 5, _stroke());
-        final handle = Path()
-          ..moveTo(13, 13)
-          ..quadraticBezierTo(18, 15, 20, 20)
-          ..quadraticBezierTo(20.5, 21.2, 19.2, 21.2)
-          ..quadraticBezierTo(18.4, 21.2, 17.8, 20.4);
-        canvas.drawPath(handle, _stroke());
-        break;
-      case _IconType.droplet:
-        final drop = Path()
-          ..moveTo(12, 3.5)
-          ..cubicTo(16, 9, 19, 12.6, 19, 15.5)
-          ..cubicTo(19, 19.6, 15.9, 21.5, 12, 21.5)
-          ..cubicTo(8.1, 21.5, 5, 19.6, 5, 15.5)
-          ..cubicTo(5, 12.6, 8, 9, 12, 3.5)
-          ..close();
-        canvas.drawPath(drop, _stroke());
-        break;
-      case _IconType.image:
-        final rect = RRect.fromRectAndRadius(
-          const Rect.fromLTWH(3, 4.5, 18, 15),
-          const Radius.circular(3),
-        );
-        canvas.drawRRect(rect, _stroke());
-        canvas.drawCircle(const Offset(8.5, 10), 1.8, _stroke(1.3));
-        final mountains = Path()
-          ..moveTo(4.5, 18)
-          ..lineTo(10, 12.5)
-          ..lineTo(13.5, 16)
-          ..lineTo(16.5, 13)
-          ..lineTo(20, 18);
-        canvas.drawPath(mountains, _stroke(1.4));
-        break;
-    }
-    canvas.restore();
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }

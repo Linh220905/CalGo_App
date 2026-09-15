@@ -2837,4 +2837,53 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String get nutritionServerConnectError =>
       'Không thể kết nối máy chủ dinh dưỡng.';
+
+  @override
+  String get planReadySubtitle => 'Duy trì lộ trình để đạt mục tiêu của bạn';
+
+  @override
+  String get perMonthText => 'mỗi tháng';
+
+  @override
+  String planMonthsNote(int months, String price) {
+    return '$months tháng • $price';
+  }
+
+  @override
+  String get planBenefitScans => 'Quét món ăn bằng AI không giới hạn';
+
+  @override
+  String get planBenefitSuggestions => 'Gợi ý bữa ăn cá nhân hóa theo mục tiêu';
+
+  @override
+  String get planBenefitMacros => 'Tự động theo dõi calo & macro chính xác';
+
+  @override
+  String get planBenefitProgress => 'Theo dõi tiến trình cơ thể mỗi ngày';
+
+  @override
+  String get spinWheelTitle => 'Quay vòng quay để nhận\nưu đãi của bạn';
+
+  @override
+  String get spinWheelBtn => 'Quay ngay';
+
+  @override
+  String get oneTimeOfferTitle => 'Ưu đãi dành riêng cho bạn';
+
+  @override
+  String get oneTimeOfferSubtitle =>
+      'Sau khi bạn đóng, ưu đãi duy nhất này sẽ biến mất!';
+
+  @override
+  String savePercentTag(int percent) {
+    return 'TIẾT KIỆM $percent%';
+  }
+
+  @override
+  String offPercentHeader(int percent) {
+    return 'GIẢM $percent%';
+  }
+
+  @override
+  String get claimOfferBtn => 'Nhận ưu đãi ngay';
 }

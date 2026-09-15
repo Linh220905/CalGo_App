@@ -5,29 +5,34 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ReviewService {
   ReviewService._();
 
-  static const String _keyHasPromptedFirstScan = 'has_prompted_first_scan_review';
+  static const String _keyHasPromptedReview = 'has_prompted_in_app_review';
 
   /// Requests in-app review popup from OS (Google Play In-App Review / iOS SKStoreReviewController)
-  /// when the user finishes their first scan.
-  static Future<void> requestFirstScanReview() async {
+  /// during onboarding (e.g. after referral question) or on first scan.
+  /// If user has already been prompted or reviewed, it will safely no-op.
+  static Future<void> requestReviewPrompt({String source = 'scan'}) async {
     if (kIsWeb) return;
 
     try {
       final prefs = await SharedPreferences.getInstance();
-      final hasPrompted = prefs.getBool(_keyHasPromptedFirstScan) ?? false;
+      final hasPrompted = prefs.getBool(_keyHasPromptedReview) ?? false;
       if (hasPrompted) return;
 
       final inAppReview = InAppReview.instance;
       final isAvailable = await inAppReview.isAvailable();
 
       if (isAvailable) {
-        // Mark as prompted so we don't repeat on subsequent scans
-        await prefs.setBool(_keyHasPromptedFirstScan, true);
+        // Mark as prompted so we don't repeat in onboarding or subsequent scans
+        await prefs.setBool(_keyHasPromptedReview, true);
         await inAppReview.requestReview();
-        debugPrint('[ReviewService] Native in-app review requested successfully.');
+        debugPrint('[ReviewService] Native in-app review requested from $source.');
       }
     } catch (e) {
-      debugPrint('[ReviewService] Error requesting review: $e');
+      debugPrint('[ReviewService] Error requesting review ($source): $e');
     }
   }
+
+  /// Legacy helper method forwarding to requestReviewPrompt
+  static Future<void> requestFirstScanReview() =>
+      requestReviewPrompt(source: 'first_scan');
 }

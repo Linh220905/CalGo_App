@@ -2853,4 +2853,53 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get nutritionServerConnectError => 'पोषण सर्वर से कनेक्ट नहीं हो सका।';
+
+  @override
+  String get planReadySubtitle => 'अपने लक्ष्य को पाने के लिए सही राह पर रहें';
+
+  @override
+  String get perMonthText => 'प्रति माह';
+
+  @override
+  String planMonthsNote(int months, String price) {
+    return '$months महीने • $price';
+  }
+
+  @override
+  String get planBenefitScans => 'असीमित AI भोजन स्कैन';
+
+  @override
+  String get planBenefitSuggestions => 'व्यक्तिगत भोजन सुझाव';
+
+  @override
+  String get planBenefitMacros => 'स्वचालित कैलोरी और मैक्रो ट्रैकिंग';
+
+  @override
+  String get planBenefitProgress => 'दैनिक प्रगति ट्रैकिंग';
+
+  @override
+  String get spinWheelTitle => 'पहिया घुमाएं और अपना\nडिस्काउंट पाएं';
+
+  @override
+  String get spinWheelBtn => 'घुमाएं';
+
+  @override
+  String get oneTimeOfferTitle => 'आपका एकमुश्त ऑफर';
+
+  @override
+  String get oneTimeOfferSubtitle =>
+      'एक बार बंद करने पर यह ऑफर हमेशा के लिए चला जाएगा!';
+
+  @override
+  String savePercentTag(int percent) {
+    return '$percent% बचाएं';
+  }
+
+  @override
+  String offPercentHeader(int percent) {
+    return '$percent% छूट';
+  }
+
+  @override
+  String get claimOfferBtn => 'जारी रखें';
 }

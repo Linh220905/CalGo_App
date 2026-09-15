@@ -12,11 +12,13 @@ class IapIds {
   static const String premiumWeekly = 'calgo_premium_weekly';
   static const String premiumMonthly = 'calgo_premium_monthly';
   static const String premiumAnnual = 'calgo_premium_annual';
+  static const String premiumAnnualDiscount = 'calgo_premium_annual_discount';
 
   static const Set<String> premiumProducts = {
     premiumWeekly,
     premiumMonthly,
     premiumAnnual,
+    premiumAnnualDiscount,
   };
 
   static bool isPremiumProduct(String productId) =>

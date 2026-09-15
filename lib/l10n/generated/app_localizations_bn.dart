@@ -2855,4 +2855,54 @@ class AppLocalizationsBn extends AppLocalizations {
   @override
   String get nutritionServerConnectError =>
       'পুষ্টি সার্ভারের সাথে সংযোগ করা যাচ্ছে না।';
+
+  @override
+  String get planReadySubtitle => 'আপনার লক্ষ্য অর্জনে সঠিক পথে থাকুন';
+
+  @override
+  String get perMonthText => 'প্রতি মাসে';
+
+  @override
+  String planMonthsNote(int months, String price) {
+    return '$months মাস • $price';
+  }
+
+  @override
+  String get planBenefitScans => 'সীমাহীন AI খাদ্য স্ক্যান';
+
+  @override
+  String get planBenefitSuggestions => 'ব্যক্তিগত খাবারের পরামর্শ';
+
+  @override
+  String get planBenefitMacros =>
+      'স্বয়ংক্রিয় ক্যালোরি এবং ম্যাক্রো ট্র্যাকিং';
+
+  @override
+  String get planBenefitProgress => 'প্রতিদিনের অগ্রগতির হিসাব';
+
+  @override
+  String get spinWheelTitle => 'চাকা ঘোরান এবং আপনার\nছাড় সংগ্রহ করুন';
+
+  @override
+  String get spinWheelBtn => 'ঘোরান';
+
+  @override
+  String get oneTimeOfferTitle => 'আপনার এককালীন অফার';
+
+  @override
+  String get oneTimeOfferSubtitle =>
+      'একবার বন্ধ করলে এই অফারটি চিরতরে হারিয়ে যাবে!';
+
+  @override
+  String savePercentTag(int percent) {
+    return '$percent% সাশ্রয় করুন';
+  }
+
+  @override
+  String offPercentHeader(int percent) {
+    return '$percent% ছাড়';
+  }
+
+  @override
+  String get claimOfferBtn => 'চালিয়ে যান';
 }

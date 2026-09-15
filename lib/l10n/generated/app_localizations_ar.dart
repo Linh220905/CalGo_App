@@ -2826,4 +2826,52 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get nutritionServerConnectError => 'تعذر الاتصال بخادم التغذية.';
+
+  @override
+  String get planReadySubtitle => 'ابقَ على المسار الصحيح لتحقيق هدفك';
+
+  @override
+  String get perMonthText => 'في الشهر';
+
+  @override
+  String planMonthsNote(int months, String price) {
+    return '$months أشهر • $price';
+  }
+
+  @override
+  String get planBenefitScans => 'مسح غير محدود للوجبات بالذكاء الاصطناعي';
+
+  @override
+  String get planBenefitSuggestions => 'اقتراحات وجبات مخصصة لهدفك';
+
+  @override
+  String get planBenefitMacros => 'تتبع تلقائي ودقيق للسعرات والمغذيات';
+
+  @override
+  String get planBenefitProgress => 'تتبع التقدم اليومي لجسمك';
+
+  @override
+  String get spinWheelTitle => 'أدر العجلة واحصل على خصمك';
+
+  @override
+  String get spinWheelBtn => 'تدوير';
+
+  @override
+  String get oneTimeOfferTitle => 'عرضك لمرة واحدة فقط';
+
+  @override
+  String get oneTimeOfferSubtitle => 'بمجرد إغلاق هذا العرض، سينتهي إلى الأبد!';
+
+  @override
+  String savePercentTag(int percent) {
+    return 'وفر $percent٪';
+  }
+
+  @override
+  String offPercentHeader(int percent) {
+    return 'خصم $percent٪';
+  }
+
+  @override
+  String get claimOfferBtn => 'متابعة';
 }

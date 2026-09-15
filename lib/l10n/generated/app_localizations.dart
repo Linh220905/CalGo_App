@@ -5192,6 +5192,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cannot connect to nutrition server.'**
   String get nutritionServerConnectError;
+
+  /// No description provided for @planReadySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Stay on track to reach your goal'**
+  String get planReadySubtitle;
+
+  /// No description provided for @perMonthText.
+  ///
+  /// In en, this message translates to:
+  /// **'per month'**
+  String get perMonthText;
+
+  /// No description provided for @planMonthsNote.
+  ///
+  /// In en, this message translates to:
+  /// **'{months} mo • {price}'**
+  String planMonthsNote(int months, String price);
+
+  /// No description provided for @planBenefitScans.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlimited AI food scans'**
+  String get planBenefitScans;
+
+  /// No description provided for @planBenefitSuggestions.
+  ///
+  /// In en, this message translates to:
+  /// **'Personalized meal suggestions'**
+  String get planBenefitSuggestions;
+
+  /// No description provided for @planBenefitMacros.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatic calorie & macro tracking'**
+  String get planBenefitMacros;
+
+  /// No description provided for @planBenefitProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily progress tracking'**
+  String get planBenefitProgress;
+
+  /// No description provided for @spinWheelTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Spin the wheel and claim\nyour discount'**
+  String get spinWheelTitle;
+
+  /// No description provided for @spinWheelBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Spin'**
+  String get spinWheelBtn;
+
+  /// No description provided for @oneTimeOfferTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your one-time offer'**
+  String get oneTimeOfferTitle;
+
+  /// No description provided for @oneTimeOfferSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Once you close your one-time offer, it’s gone!'**
+  String get oneTimeOfferSubtitle;
+
+  /// No description provided for @savePercentTag.
+  ///
+  /// In en, this message translates to:
+  /// **'SAVE {percent}%'**
+  String savePercentTag(int percent);
+
+  /// No description provided for @offPercentHeader.
+  ///
+  /// In en, this message translates to:
+  /// **'{percent}% OFF'**
+  String offPercentHeader(int percent);
+
+  /// No description provided for @claimOfferBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get claimOfferBtn;
 }
 
 class _AppLocalizationsDelegate

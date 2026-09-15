@@ -1,8 +1,10 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/app_settings_provider.dart';
 import '../../../providers/onboarding_provider.dart';
+import '../../../services/review_service.dart';
 import 'personalization_widgets.dart';
 
 class _ChannelItem {
@@ -68,6 +70,16 @@ class _ReferralStepState extends State<ReferralStep> {
     return OnboardingQuestionShell(
       title: strings.referralStepTitle,
       note: strings.referralStepSubtitle,
+      onNext: _selected == null
+          ? null
+          : () async {
+              final provider = context.read<OnboardingProvider>();
+              await provider.setReferralSource(_selected!);
+              // Request native in-app review popup right after user specifies referral channel
+              unawaited(ReviewService.requestReviewPrompt(source: 'onboarding_referral'));
+              if (context.mounted) await provider.nextStep();
+            },
+      nextLabel: strings.nextStepButton,
       children: channels
           .map((item) => _ReferralChoiceCard(
                 item: item,
@@ -75,14 +87,6 @@ class _ReferralStepState extends State<ReferralStep> {
                 onTap: () => setState(() => _selected = item.label),
               ))
           .toList(),
-      onNext: _selected == null
-          ? null
-          : () async {
-              final provider = context.read<OnboardingProvider>();
-              await provider.setReferralSource(_selected!);
-              if (context.mounted) await provider.nextStep();
-            },
-      nextLabel: strings.nextStepButton,
     );
   }
 }

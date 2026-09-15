@@ -1301,5 +1301,43 @@
   "searchFoodOrIngredientsHint": "البحث عن طعام أو مكونات...",
   "searchResultsTitle": "نتائج البحث",
   "searchingInProgress": "جارٍ البحث...",
-  "nutritionServerConnectError": "تعذر الاتصال بخادم التغذية."
+  "nutritionServerConnectError": "تعذر الاتصال بخادم التغذية.",
+  "planReadySubtitle": "ابقَ على المسار الصحيح لتحقيق هدفك",
+  "perMonthText": "في الشهر",
+  "planMonthsNote": "{months} أشهر • {price}",
+  "planBenefitScans": "مسح غير محدود للوجبات بالذكاء الاصطناعي",
+  "planBenefitSuggestions": "اقتراحات وجبات مخصصة لهدفك",
+  "planBenefitMacros": "تتبع تلقائي ودقيق للسعرات والمغذيات",
+  "planBenefitProgress": "تتبع التقدم اليومي لجسمك",
+  "@planMonthsNote": {
+    "placeholders": {
+      "months": {
+        "type": "int"
+      },
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "spinWheelTitle": "أدر العجلة واحصل على خصمك",
+  "spinWheelBtn": "تدوير",
+  "oneTimeOfferTitle": "عرضك لمرة واحدة فقط",
+  "oneTimeOfferSubtitle": "بمجرد إغلاق هذا العرض، سينتهي إلى الأبد!",
+  "savePercentTag": "وفر {percent}٪",
+  "offPercentHeader": "خصم {percent}٪",
+  "claimOfferBtn": "متابعة",
+  "@savePercentTag": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "@offPercentHeader": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  }
 }

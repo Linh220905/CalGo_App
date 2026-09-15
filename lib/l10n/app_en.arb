@@ -1426,5 +1426,43 @@
   "searchFoodOrIngredientsHint": "Search food or ingredients...",
   "searchResultsTitle": "Search Results",
   "searchingInProgress": "Searching...",
-  "nutritionServerConnectError": "Cannot connect to nutrition server."
+  "nutritionServerConnectError": "Cannot connect to nutrition server.",
+  "planReadySubtitle": "Stay on track to reach your goal",
+  "perMonthText": "per month",
+  "planMonthsNote": "{months} mo • {price}",
+  "planBenefitScans": "Unlimited AI food scans",
+  "planBenefitSuggestions": "Personalized meal suggestions",
+  "planBenefitMacros": "Automatic calorie & macro tracking",
+  "planBenefitProgress": "Daily progress tracking",
+  "@planMonthsNote": {
+    "placeholders": {
+      "months": {
+        "type": "int"
+      },
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "spinWheelTitle": "Spin the wheel and claim\nyour discount",
+  "spinWheelBtn": "Spin",
+  "oneTimeOfferTitle": "Your one-time offer",
+  "oneTimeOfferSubtitle": "Once you close your one-time offer, it’s gone!",
+  "savePercentTag": "SAVE {percent}%",
+  "offPercentHeader": "{percent}% OFF",
+  "claimOfferBtn": "Continue",
+  "@savePercentTag": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "@offPercentHeader": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  }
 }
