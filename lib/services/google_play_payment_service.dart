@@ -76,8 +76,13 @@ class GooglePlayPaymentService {
   ApiService get api => _api;
 
   /// Initialize connection to Google Play Billing.
-  Future<bool> init() async {
-    if (_initialized) return _available;
+  ///
+  /// A production app can start before Play Store/Billing has finished
+  /// connecting. Allow the purchase path to retry instead of keeping the
+  /// failed startup state forever.
+  Future<bool> init({bool retry = false}) async {
+    if (_initialized && (!retry || _available)) return _available;
+    if (retry && !_available) _initialized = false;
     _initialized = true;
 
     try {
@@ -166,25 +171,25 @@ class GooglePlayPaymentService {
     }
   }
 
-  /// Start an auto-renewable Premium subscription.  Subscriptions must not be
+  /// Start an auto-renewable Premium subscription. Subscriptions must not be
   /// consumed: StoreKit / Play Billing owns their renewal lifecycle.
   Future<bool> purchaseSubscription(
     ProductDetails product, {
-    required String applicationUserName,
+    String? applicationUserName,
   }) async {
     if (!_available) {
       _lastError = 'paymentBillingUnavailable';
       return false;
     }
     try {
-      final result = await _iap.buyNonConsumable(
-        purchaseParam: PurchaseParam(
-          productDetails: product,
-          // CalGo user IDs are random UUIDs rather than PII. Passing the ID
-          // associates the Store transaction with the signed-in app account.
-          applicationUserName: applicationUserName,
-        ),
-      );
+      final purchaseParam =
+          applicationUserName != null && applicationUserName.isNotEmpty
+          ? PurchaseParam(
+              productDetails: product,
+              applicationUserName: applicationUserName,
+            )
+          : PurchaseParam(productDetails: product);
+      final result = await _iap.buyNonConsumable(purchaseParam: purchaseParam);
       if (!result) {
         _lastError = 'paymentOpenFailed';
       } else {

@@ -50,23 +50,46 @@ class PremiumOffer {
     required this.recurringPrice,
   });
 
+  /// Google Play exposes a subscription offer as a list of pricing phases.
+  /// For a free-trial offer the first phase is intentionally 0, while
+  /// [ProductDetails.rawPrice] is populated from that first phase by the
+  /// Flutter plugin. Any price breakdown shown in the paywall must use the
+  /// first paid phase instead of the trial phase.
+  double get _recurringRawPrice {
+    final googleProduct = product;
+    if (googleProduct is GooglePlayProductDetails &&
+        googleProduct.subscriptionIndex != null) {
+      final offers = googleProduct.productDetails.subscriptionOfferDetails;
+      final index = googleProduct.subscriptionIndex!;
+      if (offers != null && index >= 0 && index < offers.length) {
+        final paidPhases = offers[index].pricingPhases
+            .where((phase) => phase.priceAmountMicros > 0)
+            .toList();
+        if (paidPhases.isNotEmpty) {
+          return paidPhases.last.priceAmountMicros / 1000000.0;
+        }
+      }
+    }
+    return product.rawPrice;
+  }
+
   /// Approximate weekly cost derived from the store's raw price micros.
   /// Returns null when the raw price is unavailable (loading or not discovered).
   String? get weeklyPrice {
-    final rawMicros = product.rawPrice;
-    if (rawMicros <= 0) return null;
+    final rawPrice = _recurringRawPrice;
+    if (rawPrice <= 0) return null;
     final currencySymbol = product.currencyCode;
     double weeklyAmount;
     switch (plan) {
       case PremiumPlan.weekly:
-        weeklyAmount = rawMicros;
+        weeklyAmount = rawPrice;
         break;
       case PremiumPlan.monthly:
-        weeklyAmount = rawMicros / 4.33;
+        weeklyAmount = rawPrice / 4.33;
         break;
       case PremiumPlan.annual:
       case PremiumPlan.annualDiscount:
-        weeklyAmount = rawMicros / 52;
+        weeklyAmount = rawPrice / 52;
         break;
     }
     // Format: if >= 1000 show as e.g. "23.1k" else as integer
@@ -81,20 +104,20 @@ class PremiumOffer {
   /// Approximate monthly cost derived from the store's raw price micros.
   /// Used for Annual plan breakdown ($1.66/mo or 39.000d/thang).
   String? get monthlyPrice {
-    final rawMicros = product.rawPrice;
-    if (rawMicros <= 0) return null;
+    final rawPrice = _recurringRawPrice;
+    if (rawPrice <= 0) return null;
     final currencySymbol = product.currencyCode;
     double monthlyAmount;
     switch (plan) {
       case PremiumPlan.weekly:
-        monthlyAmount = rawMicros * 4.33;
+        monthlyAmount = rawPrice * 4.33;
         break;
       case PremiumPlan.monthly:
-        monthlyAmount = rawMicros;
+        monthlyAmount = rawPrice;
         break;
       case PremiumPlan.annual:
       case PremiumPlan.annualDiscount:
-        monthlyAmount = rawMicros / 12;
+        monthlyAmount = rawPrice / 12;
         break;
     }
     // Format: if >= 1000 show as e.g. "39k" or "39.000d", or format cleanly
@@ -286,7 +309,11 @@ class PaymentProvider extends ChangeNotifier {
       for (final offer in offers) {
         if (offer.hasFreeTrial) return offer;
       }
-      return null;
+      // Fallback to regular base plan if free trial is not available
+      for (final offer in offers) {
+        if (!offer.hasFreeTrial && offer.offerId == null) return offer;
+      }
+      return offers.isNotEmpty ? offers.first : null;
     }
     for (final offer in offers) {
       if (!offer.hasFreeTrial && offer.offerId == null) return offer;
@@ -359,6 +386,22 @@ class PaymentProvider extends ChangeNotifier {
     }
   }
 
+  Future<void> _ensureBillingReady() async {
+    await _initialization;
+    if (!billingEnabled || _ready) return;
+
+    final connected = await _paymentService.init(retry: true);
+    if (!connected) {
+      _error = _paymentService.lastError ?? 'paymentNotReady';
+      notifyListeners();
+      return;
+    }
+
+    _ready = true;
+    _listenToPurchases();
+    await loadProducts();
+  }
+
   void _listenToPurchases() {
     _purchaseSubscription = _paymentService.purchaseStream?.listen((purchases) {
       for (final purchase in purchases) {
@@ -411,7 +454,7 @@ class PaymentProvider extends ChangeNotifier {
     required bool preferFreeTrial,
     PremiumOffer? selectedOffer,
   }) async {
-    await _initialization;
+    await _ensureBillingReady();
     if (!billingEnabled) return false;
     if (!_ready) {
       _error = _paymentService.lastError ?? 'paymentNotReady';
@@ -419,16 +462,19 @@ class PaymentProvider extends ChangeNotifier {
       return false;
     }
     final accountId = _accountId;
-    if (accountId == null) {
-      _error = 'authenticationRequired';
-      notifyListeners();
-      return false;
-    }
 
     final sku = productIdForPremiumPlan(plan);
-    final offer = selectedOffer?.plan == plan
+    var offer = selectedOffer?.plan == plan
         ? selectedOffer
         : premiumOffer(plan, preferFreeTrial: preferFreeTrial);
+    // The provider initializes at app startup, but Play can return its
+    // catalog after that first request (or the first request can fail during a
+    // transient network/Play Store outage). Re-query once at CTA time so a
+    // stale startup catalog cannot swallow the purchase button.
+    if (offer == null) {
+      await loadProducts();
+      offer = premiumOffer(plan, preferFreeTrial: preferFreeTrial);
+    }
     if (offer == null) {
       _error = preferFreeTrial
           ? 'paymentTrialUnavailable'
@@ -461,7 +507,7 @@ class PaymentProvider extends ChangeNotifier {
   Future<bool> buyCredits(String packageId, {required int creditAmount}) async {
     // PaymentProvider is created lazily. Always wait for Billing and product
     // discovery before looking up the selected SKU.
-    await _initialization;
+    await _ensureBillingReady();
 
     if (!billingEnabled) return false;
 
@@ -480,7 +526,11 @@ class PaymentProvider extends ChangeNotifier {
     // The API package id is a UUID; Google Play uses the stable SKU based on
     // the credit amount instead of assuming a fake pkg_10-style id.
     final sku = IapIds.productIdForCreditAmount(creditAmount, isDev: false);
-    final product = _products[sku];
+    var product = _products[sku];
+    if (product == null) {
+      await loadProducts();
+      product = _products[sku];
+    }
     if (product == null) {
       _error = _paymentService.lastError ?? 'paymentProductNotFound';
       notifyListeners();

@@ -194,6 +194,13 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
     if (!mounted) return;
 
     if (widget.onboardingMode) {
+      if (!auth.isAuthenticated) {
+        final authed = await _ensureAuthenticated();
+        if (!authed || !mounted) {
+          setState(() => _finishingPurchase = false);
+          return;
+        }
+      }
       final onboarding = context.read<OnboardingProvider>();
       final home = context.read<HomeProvider>();
       final saved = await onboarding.completeOnboarding(
@@ -221,6 +228,10 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
   }
 
   void _handleClose() {
+    if (!widget.onboardingMode) {
+      if (Navigator.canPop(context)) Navigator.pop(context);
+      return;
+    }
     if (!_hasShownDownsell) {
       setState(() => _hasShownDownsell = true);
       SpinWheelDialog.show(
@@ -463,8 +474,6 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
       return;
     }
 
-    if (!await _ensureAuthenticated() || !mounted) return;
-
     final plan = _toPremiumPlan(_selectedPlan);
     final preferTrial =
         selectedOffer?.hasFreeTrial ??
@@ -561,7 +570,7 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
           children: [
             // Top App Bar with Close [X] Button
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -592,143 +601,149 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
               ),
             ),
 
-            // Scrollable Content
+            // Content Layout: FittedBox to strictly prevent scroll on any screen size while filling full viewport
             Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  children: [
-                    const SizedBox(height: 4),
-
-                    // Mascot with Subtle Radial Glow & Shadow
-                    Container(
-                      width: 110,
-                      height: 110,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: RadialGradient(
-                          colors: [
-                            const Color(0xFFF1F5F9),
-                            Colors.white.withValues(alpha: 0.1),
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        // Top Section (Mascot, Title, Subtitle, Macro Pill)
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                              width: 90,
+                              height: 90,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                gradient: RadialGradient(
+                                  colors: [
+                                    const Color(0xFFF1F5F9),
+                                    Colors.white.withValues(alpha: 0.1),
+                                  ],
+                                ),
+                              ),
+                              child: Center(
+                                child: Image.asset(
+                                  'assets/images/apple_mascot/apple_paywall.png',
+                                  height: 85,
+                                  fit: BoxFit.contain,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 2),
+                            Text(
+                              s.analysisPlanReady,
+                              textAlign: TextAlign.center,
+                              style: _f(21, weight: FontWeight.w800, letterSpacing: -0.5),
+                            ),
+                            const SizedBox(height: 1),
+                            Text(
+                              s.planReadySubtitle,
+                              textAlign: TextAlign.center,
+                              style: _f(12, color: _kMuted, weight: FontWeight.w500),
+                            ),
+                            const SizedBox(height: 6),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 14,
+                                vertical: 4,
+                              ),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFF8FAFC),
+                                borderRadius: BorderRadius.circular(30),
+                                border: Border.all(color: const Color(0xFFE2E8F0)),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const Icon(
+                                    Icons.local_fire_department_rounded,
+                                    color: _kAccent,
+                                    size: 15,
+                                  ),
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    '$targetKcal kcal',
+                                    style: _f(11.5, weight: FontWeight.w700),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Container(
+                                    width: 3.5,
+                                    height: 3.5,
+                                    decoration: const BoxDecoration(
+                                      color: _kMuted,
+                                      shape: BoxShape.circle,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  const Icon(
+                                    Icons.fitness_center_rounded,
+                                    color: Color(0xFF3B82F6),
+                                    size: 14,
+                                  ),
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    '${proteinVal}g protein',
+                                    style: _f(11.5, weight: FontWeight.w700),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ],
                         ),
-                      ),
-                      child: Center(
-                        child: Image.asset(
-                          'assets/images/apple_mascot/apple_paywall.png',
-                          height: 102,
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 4),
 
-                    // Headline
-                    Text(
-                      s.analysisPlanReady, // "Your plan is ready!"
-                      textAlign: TextAlign.center,
-                      style: _f(22, weight: FontWeight.w800, letterSpacing: -0.5),
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      s.planReadySubtitle, // "Stay on track to reach your goal"
-                      textAlign: TextAlign.center,
-                      style: _f(13, color: _kMuted, weight: FontWeight.w500),
-                    ),
-                    const SizedBox(height: 8),
-
-                    // Calorie & Macro Target Pill
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 14,
-                        vertical: 6,
-                      ),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFF8FAFC),
-                        borderRadius: BorderRadius.circular(30),
-                        border: Border.all(color: const Color(0xFFE2E8F0)),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Icon(
-                            Icons.local_fire_department_rounded,
-                            color: _kAccent,
-                            size: 16,
-                          ),
-                          const SizedBox(width: 4),
-                          Text(
-                            '$targetKcal kcal',
-                            style: _f(12.5, weight: FontWeight.w700),
-                          ),
-                          const SizedBox(width: 8),
-                          Container(
-                            width: 3.5,
-                            height: 3.5,
-                            decoration: const BoxDecoration(
-                              color: _kMuted,
-                              shape: BoxShape.circle,
+                        // Middle Section (Checklist & 3 Pricing Cards)
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const _BenefitChecklist(),
+                            const SizedBox(height: 8),
+                            _VerticalPricingList(
+                              selectedPlan: _selectedPlan,
+                              onChanged: (p) => setState(() => _selectedPlan = p),
+                              testing: testing,
                             ),
-                          ),
-                          const SizedBox(width: 8),
-                          const Icon(
-                            Icons.fitness_center_rounded,
-                            color: Color(0xFF3B82F6),
-                            size: 15,
-                          ),
-                          const SizedBox(width: 4),
-                          Text(
-                            '${proteinVal}g protein',
-                            style: _f(12.5, weight: FontWeight.w700),
-                          ),
-                        ],
-                      ),
+                          ],
+                        ),
+
+                        // Bottom Section (CTA Button, Auto-renew note, Footer Links pinned to bottom)
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            PremiumButton(
+                              label: buying
+                                  ? s.processingShort
+                                  : activated && widget.onboardingMode
+                                  ? (_quizCompleted ? s.completeSetup : s.premiumActivated)
+                                  : _getButtonLabel(payment, s),
+                              loading: buying,
+                              onPressed: buying
+                                  ? null
+                                  : activated && widget.onboardingMode
+                                  ? _handlePremiumSuccess
+                                  : activated
+                                  ? null
+                                  : () => _handlePrimaryAction(),
+                            ),
+                            const SizedBox(height: 6),
+                            Text(
+                              s.premiumAutoRenewNote,
+                              textAlign: TextAlign.center,
+                              style: _f(10.5, color: _kMuted, weight: FontWeight.w500),
+                            ),
+                            const SizedBox(height: 4),
+                            const _FooterLinks(showBilling: !testing),
+                            const SizedBox(height: 4),
+                          ],
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 8),
-
-                    // Feature Checklist
-                    const _BenefitChecklist(),
-                    const SizedBox(height: 8),
-
-                    // Vertical Stack of 3 Pricing Cards
-                    _VerticalPricingList(
-                      selectedPlan: _selectedPlan,
-                      onChanged: (p) => setState(() => _selectedPlan = p),
-                      testing: testing,
-                    ),
-                    const SizedBox(height: 12),
-
-                    // CTA Button
-                    PremiumButton(
-                      label: buying
-                          ? s.processingShort
-                          : activated && widget.onboardingMode
-                          ? (_quizCompleted ? s.completeSetup : s.premiumActivated)
-                          : _getButtonLabel(payment, s),
-                      loading: buying,
-                      onPressed: buying
-                          ? null
-                          : activated && widget.onboardingMode
-                          ? _handlePremiumSuccess
-                          : activated
-                          ? null
-                          : () => _handlePrimaryAction(),
-                    ),
-                    const SizedBox(height: 6),
-
-                    // Terms Note
-                    Text(
-                      s.premiumAutoRenewNote,
-                      textAlign: TextAlign.center,
-                      style: _f(10, color: _kMuted, weight: FontWeight.w500),
-                    ),
-                    const SizedBox(height: 6),
-
-                    // Footer Links
-                    const _FooterLinks(showBilling: !testing),
-                    const SizedBox(height: 8),
-                  ],
-                ),
+                  );
+                },
               ),
             ),
           ],
@@ -758,13 +773,13 @@ class _BenefitChecklist extends StatelessWidget {
     return Column(
       children: benefits.map((item) {
         return Padding(
-          padding: const EdgeInsets.only(bottom: 6),
+          padding: const EdgeInsets.only(bottom: 4),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                width: 18,
-                height: 18,
+                width: 16,
+                height: 16,
                 decoration: const BoxDecoration(
                   color: _kInk,
                   shape: BoxShape.circle,
@@ -772,14 +787,14 @@ class _BenefitChecklist extends StatelessWidget {
                 child: const Icon(
                   Icons.check_rounded,
                   color: Colors.white,
-                  size: 12,
+                  size: 11,
                 ),
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: 8),
               Expanded(
                 child: Text(
                   item,
-                  style: _f(12.5, weight: FontWeight.w600, color: _kInk),
+                  style: _f(12, weight: FontWeight.w600, color: _kInk),
                 ),
               ),
             ],
@@ -809,7 +824,6 @@ class _VerticalPricingList extends StatelessWidget {
   Widget build(BuildContext context) {
     final s = context.watch<AppSettingsProvider>().strings;
     final payment = context.watch<PaymentProvider>();
-    final loading = payment.initializing;
 
     final weeklyOffer = payment.premiumOffer(PremiumPlan.weekly, preferFreeTrial: false);
     final annualOffer = payment.premiumOffer(PremiumPlan.annual, preferFreeTrial: true);
@@ -818,7 +832,6 @@ class _VerticalPricingList extends StatelessWidget {
     // Formatted raw recurring price from Store
     String formatRecurring(PremiumOffer? offer, String testingFallback) {
       if (testing) return testingFallback;
-      if (loading) return '...';
       if (offer != null && offer.recurringPrice.isNotEmpty) {
         return offer.recurringPrice;
       }
@@ -828,7 +841,6 @@ class _VerticalPricingList extends StatelessWidget {
     // Monthly breakdown price (e.g. 39.000d / $1.66)
     String formatMonthly(PremiumOffer? offer, String testingFallback) {
       if (testing) return testingFallback;
-      if (loading) return '...';
       if (offer?.monthlyPrice != null && offer!.monthlyPrice!.isNotEmpty) {
         return offer.monthlyPrice!;
       }
@@ -909,10 +921,10 @@ class _VerticalPlanCard extends StatelessWidget {
         children: [
           AnimatedContainer(
             duration: const Duration(milliseconds: 180),
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(14),
+              borderRadius: BorderRadius.circular(15),
               border: Border.all(
                 color: selected ? _kInk : _kBorder,
                 width: selected ? 2 : 1,
@@ -937,14 +949,14 @@ class _VerticalPlanCard extends StatelessWidget {
                     children: [
                       Text(
                         title,
-                        style: _f(14.5, weight: FontWeight.w800, color: _kInk),
+                        style: _f(15, weight: FontWeight.w800, color: _kInk),
                       ),
                       if (subtitle != null) ...[
-                        const SizedBox(height: 1),
+                        const SizedBox(height: 2),
                         Text(
                           subtitle!,
                           style: _f(
-                            11,
+                            11.5,
                             color: _kMuted,
                             weight: FontWeight.w500,
                           ),
@@ -963,7 +975,7 @@ class _VerticalPlanCard extends StatelessWidget {
                     Text(
                       priceText,
                       style: _f(
-                        15,
+                        16,
                         weight: FontWeight.w800,
                         color: _kInk,
                         letterSpacing: -0.3,
@@ -971,21 +983,21 @@ class _VerticalPlanCard extends StatelessWidget {
                     ),
                     Text(
                       unitText,
-                      style: _f(10.5, color: _kMuted, weight: FontWeight.w500),
+                      style: _f(11, color: _kMuted, weight: FontWeight.w500),
                     ),
                   ],
                 ),
-                const SizedBox(width: 10),
+                const SizedBox(width: 12),
 
                 // Radio Circle
                 Container(
-                  width: 18,
-                  height: 18,
+                  width: 20,
+                  height: 20,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     border: Border.all(
                       color: selected ? _kInk : const Color(0xFFCBD5E1),
-                      width: selected ? 5.5 : 1.5,
+                      width: selected ? 6 : 1.5,
                     ),
                   ),
                 ),

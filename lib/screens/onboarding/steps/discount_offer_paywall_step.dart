@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +11,7 @@ import '../../../providers/auth_provider.dart';
 import '../../../providers/home_provider.dart';
 import '../../../providers/onboarding_provider.dart';
 import '../../../providers/payment_provider.dart';
+import '../../../widgets/social_auth_button.dart';
 import '../../../utils/payment_platform.dart';
 
 const _kInk = Color(0xFF111111);
@@ -94,7 +96,7 @@ class _DiscountOfferPaywallStepState extends State<DiscountOfferPaywallStep> {
 
     try {
       final started = await payment.buyPremium(
-        PremiumPlan.annual,
+        PremiumPlan.annualDiscount,
         preferFreeTrial: false,
         selectedOffer: offer,
       );
@@ -118,6 +120,10 @@ class _DiscountOfferPaywallStepState extends State<DiscountOfferPaywallStep> {
 
   Future<void> _completeOfferFlow() async {
     final auth = context.read<AuthProvider>();
+    if (!auth.isAuthenticated) {
+      final authed = await _ensureAuthenticated();
+      if (!authed || !mounted) return;
+    }
     final onboarding = context.read<OnboardingProvider>();
     final home = context.read<HomeProvider>();
 
@@ -130,6 +136,125 @@ class _DiscountOfferPaywallStepState extends State<DiscountOfferPaywallStep> {
       await home.loadToday(forceRefresh: true);
       if (mounted) context.go('/home');
     }
+  }
+
+  Future<bool> _ensureAuthenticated() async {
+    final auth = context.read<AuthProvider>();
+    if (auth.isAuthenticated) return true;
+
+    final result = await showModalBottomSheet<bool>(
+      context: context,
+      isScrollControlled: true,
+      isDismissible: false,
+      enableDrag: false,
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+      ),
+      builder: (sheetContext) {
+        var googleBusy = false;
+        var appleBusy = false;
+        String? error;
+        return StatefulBuilder(
+          builder: (context, setSheetState) {
+            Future<void> signIn(String method) async {
+              if (googleBusy || appleBusy) return;
+              setSheetState(() {
+                if (method == 'google') {
+                  googleBusy = true;
+                } else {
+                  appleBusy = true;
+                }
+                error = null;
+              });
+              final provider = context.read<AuthProvider>();
+              final s = context.read<AppSettingsProvider>().strings;
+              final success = method == 'google'
+                  ? await provider.signInWithGoogle()
+                  : await provider.signInWithApple();
+              if (!sheetContext.mounted) return;
+              if (!success) {
+                setSheetState(() {
+                  if (method == 'google') {
+                    googleBusy = false;
+                  } else {
+                    appleBusy = false;
+                  }
+                  error = provider.error ?? s.signInFailed;
+                });
+                return;
+              }
+              await context.read<OnboardingProvider>().setAccountMethod(method);
+              if (sheetContext.mounted) Navigator.pop(sheetContext, true);
+            }
+
+            final showApple =
+                defaultTargetPlatform == TargetPlatform.iOS ||
+                defaultTargetPlatform == TargetPlatform.macOS;
+            final s = context.read<AppSettingsProvider>().strings;
+            return SafeArea(
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(
+                  22,
+                  18,
+                  22,
+                  MediaQuery.of(context).viewInsets.bottom + 22,
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      s.savePremiumToAccountTitle,
+                      textAlign: TextAlign.center,
+                      style: _f(21, weight: FontWeight.w800),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      s.savePremiumToAccountDesc,
+                      textAlign: TextAlign.center,
+                      style: _f(12.5, color: _kMuted, height: 1.4),
+                    ),
+                    const SizedBox(height: 20),
+                    SocialAuthButton(
+                      type: SocialAuthType.google,
+                      label: s.continueWithGoogle,
+                      isLoading: googleBusy,
+                      onTap: () => signIn('google'),
+                    ),
+                    if (showApple) ...[
+                      const SizedBox(height: 12),
+                      SocialAuthButton(
+                        type: SocialAuthType.apple,
+                        label: s.continueWithApple,
+                        isLoading: appleBusy,
+                        onTap: () => signIn('apple'),
+                      ),
+                    ],
+                    if (error != null) ...[
+                      const SizedBox(height: 10),
+                      Text(
+                        error!,
+                        textAlign: TextAlign.center,
+                        style: _f(11.5, color: Colors.redAccent),
+                      ),
+                    ],
+                    const SizedBox(height: 8),
+                    TextButton(
+                      onPressed: googleBusy || appleBusy
+                          ? null
+                          : () => Navigator.pop(sheetContext, false),
+                      child: Text(s.cancel),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+    if (!mounted) return false;
+    return result == true && auth.isAuthenticated;
   }
 
   @override
