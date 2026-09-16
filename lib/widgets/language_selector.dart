@@ -14,10 +14,7 @@ class LanguageSelectorButton extends StatelessWidget {
     final dark = isDark ?? settings.isDarkMode;
     final currentCode = settings.languageCode;
 
-    String flag = '🌐';
-    if (currentCode == 'vi') flag = '🇻🇳';
-    if (currentCode == 'en') flag = '🇬🇧';
-    if (currentCode == 'es') flag = '🇪🇸';
+    String flag = _flagForLanguage(currentCode);
 
     return InkWell(
       onTap: () => showLanguageSelectorModal(context),
@@ -233,6 +230,8 @@ String _flagForLanguage(String code) {
       return '🇧🇩';
     case 'ru':
       return '🇷🇺';
+    case 'ro':
+      return '🇷🇴';
     default:
       return '🌐';
   }

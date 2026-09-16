@@ -1,0 +1,1674 @@
+{
+  "@@locale": "ro",
+  "tabHome": "Acasă",
+  "tabAnalytics": "Analiză",
+  "tabSettings": "Setări",
+  "analysisEyebrow": "Analiză",
+  "progressTitle": "Progres",
+  "settingsEyebrow": "Setări",
+  "profileHeading": "Profil",
+  "accountSection": "Cont",
+  "preferencesSection": "Preferințe",
+  "trackingSection": "Obiective și monitorizare",
+  "supportSection": "Asistență",
+  "today": "Astăzi",
+  "yesterday": "Ieri",
+  "caloriesLeft": "Calorii rămase",
+  "proteinLeft": "Proteine rămase",
+  "carbsLeft": "Carbohidrați rămași",
+  "fatsLeft": "Grăsimi rămase",
+  "recentlyUploaded": "Încărcate recent",
+  "noMealsUploaded": "Nicio masă încărcată încă",
+  "tapToScanMeal": "Atinge pentru a scana prima ta masă cu AI",
+  "profileTitle": "Cont personal",
+  "personalInfoTitle": "Informații personale",
+  "personalInfoName": "Nume",
+  "personalInfoAge": "Vârstă",
+  "personalInfoHeight": "Înălțime",
+  "personalInfoCurrentWeight": "Greutate actuală",
+  "personalInfoTargetWeight": "Greutate țintă",
+  "personalInfoGender": "Gen",
+  "personalInfoNotSet": "Nesetat",
+  "creditsLabel": "Credite de scanare",
+  "scannedCountLabel": "Mese scanate",
+  "buyCredits": "Cumpără credite",
+  "statistics": "Realizări",
+  "calorieTarget": "Obiectiv de calorii",
+  "notifications": "Notificări",
+  "darkMode": "Mod întunecat",
+  "language": "Limbă",
+  "languageDisplayName": "Română",
+  "userGuide": "Ghid de utilizare",
+  "customerSupport": "Asistență clienți",
+  "logout": "Deconectare",
+  "selectLanguageTitle": "Selectează limba",
+  "scanTitle": "Scanează masa",
+  "scanInstructionHeader": "Păstrează mâncarea în cadru",
+  "scanInstructionSub": "Asigură o iluminare bună pentru o recunoaștere precisă AI",
+  "selectFromGallery": "Selectează din galerie",
+  "outOfCreditsTitle": "Fără credite de scanare!",
+  "outOfCreditsMessage": "Ai epuizat toate creditele de scanare. Reîncarcă pentru a continua monitorizarea nutriției!",
+  "buyMore": "Cumpără mai multe",
+  "cancel": "Anulează",
+  "pricingTitle": "Upgrade și credite",
+  "pricingSubtitle": "Alege cel mai bun plan pentru a debloca toate funcțiile AI",
+  "creditPacksTitle": "Pachete de credite de scanare",
+  "noExpiryBadge": "Fără expirare",
+  "popularBadge": "Popular",
+  "subscriptionsTitle": "Abonamente Pro",
+  "payButton": "Plătește acum",
+  "privacyPolicy": "Politica de confidențialitate",
+  "termsOfService": "Termeni și condiții",
+  "deleteAccount": "Șterge contul",
+  "openOnline": "Deschide online",
+  "onlineGuide": "Ghid online",
+  "deleteAccountSubscriptionWarning": "Ștergerea contului CalGo nu anulează abonamentul Google Play. Dacă ai Premium, anulează-l separat în Google Play pentru a evita reînnoirea.",
+  "restorePurchases": "Restaurează achizițiile",
+  "privacyPolicyContent": "Politica de confidențialitate CalGo (actualizată la 5 aug. 2026):\n\n1. Date colectate: e-mail cont, nume afișat, identificator Google sign-in, date nutriționale de onboarding, fotografii mese, rezultate scanare, istoric mese, metadate achiziții, date diagnostic și preferințe notificări.\n2. Permisiuni: camera și galeria foto sunt solicitate doar când alegi să capturezi sau să selectezi o fotografie a mesei; notificările sunt utilizate doar când sunt activate.\n3. Utilizarea datelor: pentru a oferi analiza nutrițională AI, sincronizarea contului, procesarea achizițiilor Google Play, prevenirea abuzurilor, asistență și îmbunătățirea serviciului. Imaginile pot fi procesate de furnizorii noștri de găzduire și AI.\n4. Partajare și securitate: nu vindem datele tale sau fotografiile meselor. Furnizorii necesari (găzduire, procesare AI, Google Sign-In, Google Play Billing) pot procesa date limitate. Folosim HTTPS și controale de acces.\n5. Păstrare și ștergere: datele contului și istoricul meselor sunt șterse la ștergerea contului, cu excepția datelor necesare pentru prevenirea fraudelor sau obligații legale.\n6. Drepturile tale: șterge contul din Profil sau vizitează https://calgo.tech/delete-account. Pentru întrebări, contactează support@calgo.tech. Politica completă: https://calgo.tech/privacy.",
+  "termsOfServiceContent": "Termeni și condiții CalGo:\n\n1. Serviciu și declinare medicală: rezultatele nutriționale AI sunt estimări informative și nu înlocuiesc sfatul medical profesionist. CalGo nu este un dispozitiv medical.\n2. Plăți: pachetele de credite sunt achiziții digitale unice. Planurile Premium săptămânale, lunare și anuale sunt abonamente cu reînnoire automată Google Play, cu excepția cazului în care sunt anulate înainte de reînnoire. Gestionează-le la https://play.google.com/store/account/subscriptions.\n3. Rambursări și ștergere: Google Play gestionează plățile și rambursările pe Android. Ștergerea contului CalGo nu anulează abonamentul Google Play.\n4. Conținut și proprietate intelectuală: deții drepturile asupra fotografiilor încărcate; CalGo primește o licență limitată pentru a le procesa în vederea furnizării serviciului. CalGo deține aplicația, brandul și software-ul.\n5. Contact: support@calgo.tech. Termeni compleți: https://calgo.tech/terms.",
+  "deleteAccountConfirmMessage": "Sigur dorești să ștergi definitiv contul CalGo și toate datele nutriționale? Această acțiune nu poate fi anulată.",
+  "historyTitle": "Istoric mese",
+  "historySubtitle": "Călătoria ta nutrițională",
+  "mealsCountLabel": "Mese",
+  "streakDaysLabel": "Zile la rând",
+  "kcalPerDay": "Kcal/zi",
+  "proteinPerDay": "Proteine/zi",
+  "noMealsHistory": "Nicio masă înregistrată încă",
+  "scanFirstMealPrompt": "Scanează prima ta masă pentru a începe\ncălătoria nutrițională",
+  "scanFirstMealButton": "Scanează prima masă",
+  "deleteMealConfirm": "Dorești să ștergi această masă?",
+  "cannotDeleteMeal": "Nu s-a putut șterge masa. Te rugăm să încerci din nou.",
+  "photoGalleryTitle": "Fotografii mâncare",
+  "noPhotosYet": "Nicio fotografie de mâncare scanată încă",
+  "takePhotosPrompt": "Fă poze meselor tale pentru a-ți crea colecția!",
+  "scanFoodNow": "Scanează mâncarea acum",
+  "welcomeTo": "Bun venit la",
+  "getStarted": "Începe acum",
+  "snapPhotoAiTitle": "Fă o poză. Lasă AI-ul să lucreze.",
+  "snapPhotoAiDesc": "AI-ul recunoaște automat mâncarea și calculează caloriile în câteva secunde.",
+  "trackEasilyTitle": "Monitorizează cu ușurință.",
+  "trackEasilyDesc": "Urmărește caloriile, proteinele, carbohidrații și grăsimile în fiecare zi.",
+  "reachGoalsTitle": "Atinge-ți obiectivele mai rapid.",
+  "reachGoalsDesc": "Obține ținte personalizate și monitorizează progresul arderii grăsimilor.",
+  "nextStepButton": "Următorul",
+  "goalStepTitle": "Care este obiectivul tău?",
+  "goalStepSubtitle": "Ajută CalGo să creeze un plan potrivit pentru tine",
+  "goalLoseWeight": "Slăbire",
+  "goalLoseWeightDesc": "Arde eficient grăsimea, tonifiază corpul",
+  "goalLoseWeightReason": "Ne ajută să construim un plan de slăbire sustenabil care protejează masa musculară.",
+  "goalGainMuscle": "Creștere masă musculară",
+  "goalGainMuscleDesc": "Dezvoltă mușchii și crește forța",
+  "goalGainMuscleReason": "Ne ajută să construim un plan adaptat antrenamentelor și nevoilor tale de proteine.",
+  "goalMaintain": "Menținere greutate",
+  "goalMaintainDesc": "Păstrează-ți forma fizică echilibrată",
+  "goalMaintainReason": "Ne ajută să construim un plan echilibrat pentru un stil de viață sănătos pe termen lung.",
+  "nameStepTitle": "Cum te numești?",
+  "nameStepHint": "Introdu numele tău",
+  "demoStepTitle": "Vezi CalGo în acțiune",
+  "genderStepTitle": "Care este genul tău?",
+  "genderStepSubtitle": "Pentru calcule precise",
+  "genderMale": "Bărbat",
+  "genderFemale": "Femeie",
+  "genderOther": "Altul",
+  "ageStepTitle": "Câți ani ai?",
+  "heightStepTitle": "Care este înălțimea ta?",
+  "weightStepTitle": "Care este greutatea ta actuală?",
+  "targetWeightStepTitle": "Care este greutatea ta țintă?",
+  "activityStepTitle": "Care este nivelul tău de activitate?",
+  "dietStepTitle": "Urmezi o dietă anume?",
+  "analysisTitle": "Se analizează datele tale...",
+  "accountStepTitle": "Creează cont pentru a salva planul",
+  "continueWithGoogle": "Continuă cu Google",
+  "continueWithApple": "Continuă cu Apple",
+  "heightStepDesc": "Ajută la calcularea IMC și a necesarului caloric precis",
+  "weightStepDesc": "Ajută la stabilirea obiectivelor nutriționale personalizate",
+  "currentHeightHeader": "Înălțime actuală",
+  "currentWeightHeader": "Greutate actuală",
+  "bmiIndexTitle": "Indice IMC",
+  "bmiUnderweight": "Subponderal",
+  "bmiNormal": "Normal",
+  "bmiOverweight": "Supraponderal",
+  "bmiObese": "Obezitate",
+  "targetWeightDesc": "Ajută la stabilirea țintelor tale nutriționale personale",
+  "goalMaintainLabel": "Menținere formă",
+  "goalLoseLabel": "Slăbire",
+  "goalGainLabel": "Masă musculară",
+  "goalMaintainHint": "Ținta este egală cu greutatea actuală",
+  "goalLoseDiffText": "Țintă: Slăbește {kg} kg",
+  "goalGainDiffText": "Țintă: Pune {kg} kg",
+  "paceStepTitle": "Ritm pe săptămână?",
+  "paceStepSubtitle": "Alege un ritm confortabil pentru stilul tău de viață",
+  "activityStepSubtitle": "Influențează consumul zilnic de calorii",
+  "dietStepSubtitle": "CalGo recomandă mese ideale pentru corpul și obiectivele tale.",
+  "socialProofTitle": "Ce spune comunitatea despre CalGo",
+  "socialProofSubtitle": "Recenzii autentice de la membri reali",
+  "ratingTag": "Evaluare 5★",
+  "referralStepTitle": "Cum ai aflat de CalGo?",
+  "referralStepSubtitle": "Ne ajută să înțelegem călătoria ta",
+  "referralFriend": "Recomandare de la un prieten",
+  "sportsStepTitle": "Ce sporturi practici?",
+  "sportsStepSubtitle": "Selectează activitățile pe care le faci regulat",
+  "accountStepSubtitle": "Informații securizate și sincronizarea progresului personal",
+  "dataPrivacyNote": "Datele tale sunt strict criptate și confidențiale",
+  "analysisHello": "Salut, {name}",
+  "analysisPlanReady": "Planul tău este gata",
+  "dailyCalorieTargetTitle": "OBIECTIV CALORIC ZILNIC",
+  "kcalPerDayUnit": "kcal / zi",
+  "workoutLabel": "Antrenament",
+  "workoutDaysText": "{days} zile",
+  "perWeekText": "pe săptămână",
+  "yourJourneyTitle": "CĂLĂTORIA TA",
+  "journeyCurrent": "Actual",
+  "journeyTarget": "Țintă",
+  "journeyTimeframe": "Interval de timp",
+  "weeksUnit": "{weeks} săptămâni",
+  "completedPercent": "{p}% finalizat",
+  "loginTitle": "Bun venit la CalGo",
+  "loginSubtitle": "Conectează-te pentru a sincroniza datele nutriționale",
+  "alreadyHaveAccount": "Ai deja un cont? ",
+  "loginAction": "Autentificare",
+  "loginGoogle": "Continuă cu Google",
+  "loginApple": "Continuă cu Apple",
+  "loginFailed": "Autentificare eșuată: {error}",
+  "appleComingSoon": "Autentificarea cu Apple va fi disponibilă în curând!",
+  "loginRequired": "Te rugăm să te conectezi cu Google pentru a proteja și sincroniza datele.",
+  "loginRequiredButton": "Autentificarea este necesară pentru sincronizare",
+  "progressLabel": "Progres",
+  "dataLoadFailed": "Nu s-au putut încărca datele",
+  "deleteMealQuestion": "Dorești să ștergi această masă?",
+  "deleteMealFailed": "Nu s-a putut șterge masa. Te rugăm să încerci din nou.",
+  "retry": "Încearcă din nou",
+  "mealTypeBreakfast": "Mic dejun",
+  "mealTypeLunch": "Prânz",
+  "mealTypeDinner": "Cină",
+  "mealTypeSnack": "Gustare",
+  "greetingMorning": "Bună dimineața",
+  "greetingAfternoon": "Bună ziua",
+  "greetingEvening": "Bună seara",
+  "aiCoachAlmostGoal": "Aproape ți-ai atins obiectivul! Continuă tot așa!",
+  "aiCoachPlentyCalories": "Ai destule calorii rămase astăzi. Mănâncă sănătos!",
+  "aiCoachMomentum": "Păstrează acest ritm excelent!",
+  "mascotGoalTipWater": "Bea o gură de apă pentru a rămâne hidratat!",
+  "mascotGoalTipSlow": "Mâncatul lent și ascultarea corpului sunt obiceiuri excelente.",
+  "mascotGoalTipGreat": "Te-ai descurcat minunat astăzi ✨",
+  "mascotGoalReached": "Obiectivul caloric pe azi a fost atins! Menținerea acestui ritm este excelentă ✨",
+  "mascotGoalSurplus": "Ai depășit obiectivul cu puțin, dar e în regulă! Rămâi activ mâine nhé!",
+  "mascotGuidanceOverTarget": "Ai depășit cu {calories} kcal. Am ales opțiuni ușoare pentru tine!",
+  "mascotGuidanceRemaining": "Mai ai nevoie de {calories} kcal pentru obiectiv. Vezi sugestiile mele!",
+  "mascotOverTarget": "Peste țintă cu aproximativ {calories} kcal astăzi. Fără griji, alege o masă ușoară și bogată în proteine data viitoare!",
+  "mascotMissingCalories": "Îți mai lipsesc {calories} kcal astăzi. Alege ceva delicios și hrănitor!",
+  "mascotTipWater": "Nu uita să bei 1-2 pahare de apă înainte de masă pentru o digestie mai bună.",
+  "mascotTipChew": "Mestecă bine și mănâncă fără grabă pentru a te simți sătul mai repede.",
+  "mascotTipConsistency": "Succesul vine din obiceiuri mici și constante în fiecare zi!",
+  "mealCount": "{count, plural, =0 {Nicio masă} =1 {1 masă} other {{count} mese}}",
+  "ingredientCount": "{count, plural, =0 {Niciun ingredient} =1 {1 ingredient} other {{count} ingrediente}}",
+  "unmatchedIngredientsNote": "Nu s-au găsit date nutriționale pentru: {ingredients}. Te rugăm să le adaugi manual.",
+  "deleteIngredientTooltip": "Șterge ingredientul",
+  "addIngredient": "Adaugă ingredient",
+  "dishCount": "{count, plural, =1 {1 fel de mâncare} other {{count} feluri de mâncare}}",
+  "dayStreak": "Zile la rând",
+  "monthFallback": "Luna {month}",
+  "dayAbbrevMon": "L",
+  "dayAbbrevTue": "M",
+  "dayAbbrevWed": "M",
+  "dayAbbrevThu": "J",
+  "dayAbbrevFri": "V",
+  "dayAbbrevSat": "S",
+  "dayAbbrevSun": "D",
+  "tapToScanPrompt": "Atinge pentru a scana mâncarea",
+  "cameraPermissionRequired": "Permisiune cameră necesară",
+  "cameraPermissionMessage": "CalGo are nevoie de acces la cameră pentru a scana mâncarea și a analiza nutriția.",
+  "openSettings": "Deschide setările",
+  "cameraInitError": "Eroare la inițializarea camerei: {error}",
+  "scanFailed": "Nu s-a putut analiza fotografia ({error}). Te rugăm să încerci din nou!",
+  "guidanceTitle": "Ghid nutrițional",
+  "guidanceCaloriesRemaining": "{calories} kcal rămase",
+  "guidanceProteinRemaining": "{grams}g proteine necesare",
+  "guidanceQuickPicks": "Sugestii rapide de mese",
+  "guidanceAppleSuggestionTitle": "Mănâncă 1 măr",
+  "guidanceAppleSuggestionDesc": "Opțiune simplă și sănătoasă pentru a completa caloriile rămase.",
+  "guidanceNextMealAction": "Următoarea masă recomandată",
+  "guidanceDishCalories": "{calories} kcal",
+  "guidanceDishProtein": "P {grams}g",
+  "guidanceDishCarbs": "C {grams}g",
+  "guidanceDishPrepTime": "{minutes} min",
+  "guidancePrice": "~{price}k",
+  "dishTip": "Sfat: {adjustment}",
+  "dishMacroSummary": "{calories} kcal · {protein}g proteine",
+  "nutritionTargetModalTitle": "Obiectiv nutrițional",
+  "dailyCalorieGoalMessage": "Obiectivul tău actual este de {calories} kcal/zi. Îl poți modifica din setările de onboarding sau contactând asistența.",
+  "understood": "Am înțeles",
+  "deletePhotoConfirmTitle": "Șterge fotografia",
+  "deletePhotoMessage": "Sigur dorești să ștergi fotografia mesei \"{meal}\"?",
+  "delete": "Șterge",
+  "errorWithDetails": "Eroare: {error}",
+  "purchasesRestored": "Achizițiile au fost restaurate cu succes!",
+  "premiumActive": "Abonament Premium activ",
+  "premiumActiveDesc": "Scanări AI nelimitate și analiză completă a sănătății",
+  "currentPlan": "Plan actual",
+  "packIncludes": "Include {count} scanări nutriționale AI",
+  "popularBadgeText": "CEL MAI POPULAR",
+  "restoreFailedWithDetails": "Restaurare eșuată: {error}",
+  "noActiveSubscriptionFound": "Nu a fost găsit niciun abonament sau pachet activ.",
+  "noPurchasesToRestore": "Nu există achiziții anterioare de restaurat pe acest cont Google Play.",
+  "premiumRequiredMessage": "Funcție rezervată membrilor Premium",
+  "upgradeToUnlock": "Fă upgrade la Premium pentru acces complet",
+  "viewPremiumPlans": "Vezi planurile Premium",
+  "resultLoadFailed": "Nu s-a putut încărca rezultatul analizei (ID: {id}). Te rugăm să încerci din nou!",
+  "nutritionDetailsTitle": "Detalii nutriționale",
+  "guidanceDishFat": "G {grams}g",
+  "foodBeef": "Vită",
+  "foodPork": "Porc",
+  "foodChicken": "Pui",
+  "foodFish": "Pește",
+  "foodShrimp": "Creveți",
+  "foodSeafood": "Fructe de mare",
+  "foodTofu": "Tofu",
+  "foodEggs": "Ouă",
+  "foodDairy": "Lactate",
+  "foodNuts": "Nuci și semințe",
+  "foodVegetables": "Legume",
+  "foodFruits": "Fructe",
+  "foodRice": "Orez",
+  "foodNoodles": "Tăiței și paste",
+  "foodBread": "Pâine",
+  "foodSoup": "Supă / Ciorbă",
+  "dietStandard": "Echilibrat",
+  "dietVegetarian": "Vegetarian",
+  "dietVegan": "Vegan",
+  "dietKeto": "Keto / Low-Carb",
+  "dietHighProtein": "Bogat în proteine",
+  "dietLowFat": "Sărac în grăsimi",
+  "sportGym": "Sală / Fitness",
+  "sportRunning": "Alergare",
+  "sportCycling": "Ciclism",
+  "sportSwimming": "Înot",
+  "sportBadminton": "Badminton",
+  "sportFootball": "Fotbal",
+  "sportBasketball": "Baschet",
+  "sportYoga": "Yoga / Pilates",
+  "sportMartialArts": "Arte marțiale",
+  "sportWalking": "Mers pe jos",
+  "sportTennis": "Tenis",
+  "sportNone": "Nu fac sport",
+  "motivationHealth": "Sănătate mai bună",
+  "motivationConfidence": "Încredere în sine",
+  "motivationEnergy": "Mai multă energie",
+  "motivationMuscle": "Creștere musculară",
+  "motivationEndurance": "Rezistență fizică",
+  "motivationOutfit": "Hainele să-mi vină mai bine",
+  "motivationHabit": "Creare obiceiuri sănătoase",
+  "referralTiktok": "TikTok",
+  "referralFacebook": "Facebook",
+  "referralInstagram": "Instagram",
+  "referralYoutube": "YouTube",
+  "referralGoogle": "Căutare Google",
+  "referralAppstore": "Google Play / App Store",
+  "referralOther": "Altele",
+  "paceSlow": "Lejer (~0.25 kg/săpt.)",
+  "paceNormal": "Standard (~0.5 kg/săpt.)",
+  "paceFast": "Rapid (~0.75 kg/săpt.)",
+  "paceExtreme": "Intens (~1.0 kg/săpt.)",
+  "creditsCount": "{count} credite",
+  "googleSignInFailed": "Conectare Google eșuată: {error}",
+  "restoreException": "Restaurare eșuată: {error}",
+  "paymentOpenFailed": "Nu s-a putut deschide pagina de plată.",
+  "paymentVerificationFailed": "Verificarea plății a eșuat. Te rugăm să contactezi asistența dacă ai fost taxat.",
+  "paymentPending": "Plata este în procesare. Creditele vor fi adăugate în scurt timp.",
+  "paymentSuccessful": "Plată reușită! Creditele au fost adăugate în contul tău.",
+  "motivationAdviceLose": "Mai ai doar {remaining} kg până la obiectiv. Obiceiurile zilnice mici funcționează mai bine decât dietele drastice.",
+  "motivationAdviceGain": "Construirea masei musculare necesită răbdare și aport optim de proteine în fiecare zi.",
+  "motivationAdviceMaintain": "Menținerea formei este o realizare excelentă. Continuă să-ți asculți corpul!",
+  "activitySedentary": "Sedentar",
+  "activitySedentaryDesc": "Muncă de birou, activitate fizică minimă",
+  "activityLight": "Ușor activ",
+  "activityLightDesc": "Exerciții ușoare 1-3 zile pe săptămână",
+  "activityModerate": "Moderat activ",
+  "activityModerateDesc": "Antrenamente moderate 3-5 zile pe săptămână",
+  "activityVeryActive": "Foarte activ",
+  "activityVeryActiveDesc": "Antrenamente intense 6-7 zile pe săptămână",
+  "activityExtreme": "Extrem de activ",
+  "activityExtremeDesc": "Muncă fizică grea sau antrenamente de 2 ori pe zi",
+  "creditPackageSummary": "{count} credite • {unit}",
+  "continueLabel": "Continuă",
+  "skip": "Omite",
+  "done": "Gata",
+  "save": "Salvează",
+  "edit": "Editează",
+  "close": "Închide",
+  "confirm": "Confirmă",
+  "back": "Înapoi",
+  "loading": "Se încarcă...",
+  "error": "Eroare",
+  "success": "Succes",
+  "warning": "Avertisment",
+  "calories": "Calorii",
+  "protein": "Proteine",
+  "carbs": "Carbohidrați",
+  "fat": "Grăsimi",
+  "fiber": "Fibre",
+  "sugar": "Zahăr",
+  "sodium": "Sodiu",
+  "water": "Apă",
+  "weight": "Greutate",
+  "height": "Înălțime",
+  "age": "Vârstă",
+  "gender": "Gen",
+  "bmi": "IMC",
+  "dailyTarget": "Țintă zilnică",
+  "weeklyTarget": "Țintă săptămânală",
+  "monthlyTarget": "Țintă lunară",
+  "premiumUnlockTitle": "Deblochează CalGo Premium",
+  "premiumUnlockDesc": "Scanează orice masă instantaneu cu AI de înaltă precizie",
+  "premiumFeatureAi": "Scanare nelimitată cu AI pentru mese",
+  "premiumFeatureMacros": "Defalcare completă a macronutrienților și micronutrienților",
+  "premiumFeatureTrends": "Urmărire avansată a tendințelor de greutate și sănătate",
+  "premiumFeatureSupport": "Asistență prioritară pentru clienți",
+  "premiumWeekly": "Săptămânal",
+  "premiumMonthly": "Lunar",
+  "premiumYearly": "Anual",
+  "premiumFreeUnlocked": "CalGo Premium Deblocat!",
+  "ingredientBeef": "Carne de vită",
+  "ingredientPork": "Carne de porc",
+  "ingredientChicken": "Carne de pui",
+  "ingredientFish": "Pește proaspăt",
+  "ingredientShrimp": "Creveți",
+  "ingredientEgg": "Ou",
+  "ingredientRice": "Orez alb",
+  "ingredientBrownRice": "Orez brun",
+  "ingredientBread": "Pâine",
+  "ingredientNoodles": "Tăiței",
+  "ingredientPasta": "Paste",
+  "ingredientTofu": "Tofu",
+  "ingredientPotato": "Cartof",
+  "ingredientTomato": "Roșie",
+  "ingredientCucumber": "Castravete",
+  "ingredientLettuce": "Salată verde",
+  "ingredientSpinach": "Spanac",
+  "ingredientBroccoli": "Broccoli",
+  "ingredientCarrot": "Morcov",
+  "ingredientOnion": "Ceapă",
+  "ingredientGarlic": "Usturoi",
+  "ingredientApple": "Măr",
+  "ingredientBanana": "Banană",
+  "ingredientOrange": "Portocală",
+  "ingredientMilk": "Lapte proaspăt",
+  "ingredientYogurt": "Iaurt",
+  "ingredientCheese": "Brânză",
+  "ingredientButter": "Unt",
+  "ingredientOil": "Ulei vegetal",
+  "ingredientOliveOil": "Ulei de măsline",
+  "ingredientSoySauce": "Sos de soia",
+  "ingredientFishSauce": "Sos de pește",
+  "ingredientSalt": "Sare",
+  "ingredientPepper": "Piper",
+  "ingredientSugar": "Zahăr",
+  "ingredientPeanut": "Arahide",
+  "ingredientCashew": "Caju",
+  "ingredientAlmond": "Migdale",
+  "ingredientAvocado": "Avocado",
+  "ingredientBaguette": "Baghetă",
+  "ingredientPate": "Pate",
+  "ingredientMayonnaise": "Maioneză",
+  "ingredientCilantro": "Coriandru",
+  "ingredientChili": "Ardei iute",
+  "ingredientBroth": "Supă clară",
+  "ingredientBun": "Chiflă",
+  "ingredientSalad": "Salată asortată",
+  "ingredientSauce": "Sos",
+  "ingredientWatermelon": "Pepene verde",
+  "ingredientMango": "Mango",
+  "ingredientDragonfruit": "Fructul dragonului",
+  "ingredientPapaya": "Papaya",
+  "ingredientGuava": "Guava",
+  "ingredientPineapple": "Ananas",
+  "ingredientCoconut": "Nucă de cocos",
+  "notificationChannelName": "Mementouri mese CalGo",
+  "notificationChannelDescription": "Notificări zilnice pentru a te ajuta să înregistrezi mesele și să-ți atingi obiectivele",
+  "notificationBreakfastTitle": "Timpul pentru micul dejun!",
+  "notificationBreakfastBody": "Începe-ți ziua cu o masă sănătoasă și înregistreaz-o în CalGo!",
+  "notificationLunchTitle": "Timpul pentru prânz!",
+  "notificationLunchBody": "Ce mănânci bun la prânz? Scanează și verifică nutriția!",
+  "notificationDinnerTitle": "Timpul pentru cină!",
+  "notificationDinnerBody": "Înregistrează cina pentru a-ți completa raportul nutrițional pe azi!",
+  "statsSectionTitle": "Statistici & Progres",
+  "totalScans": "Total scanări",
+  "streakDays": "Zile la rând",
+  "averageCalories": "Calorii medii",
+  "averageProtein": "Proteine medii",
+  "averageCarbs": "Carbohidrați medii",
+  "averageFat": "Grăsimi medii",
+  "goalProgress": "Progres obiectiv",
+  "onTrackStatus": "În grafic",
+  "needsAttentionStatus": "Necesită atenție",
+  "achievementsTitle": "Realizări",
+  "achievementUnlocked": "Deblocat!",
+  "achievementLocked": "Blocat",
+  "viewAll": "Vezi tot",
+  "consumedAvgLabel": "Consum mediu",
+  "targetLabelUpper": "ȚINTĂ",
+  "daysUnit": "zile",
+  "forecastSectionTitle": "Prognoză greutate",
+  "forecastSectionSubtitle": "Estimare pe baza obiceiurilor tale recente",
+  "progressTabTitle": "Progres",
+  "nutritionTabTitle": "Nutriție",
+  "weightTabTitle": "Greutate",
+  "noLogsYet": "Nicio înregistrare încă",
+  "targetTimelineTitle": "Cronologie obiectiv",
+  "projectedDate": "Dată estimată",
+  "healthyRateNote": "Ritm sănătos și sustenabil",
+  "exerciseSectionTitle": "Exerciții & Activitate",
+  "addExercise": "Adaugă exercițiu",
+  "exerciseCardio": "Cardio",
+  "exerciseStrength": "Forță / Sală",
+  "exerciseFlexibility": "Flexibilitate",
+  "exerciseDuration": "Durată",
+  "exerciseCaloriesBurned": "Calorii arse",
+  "exerciseWorkoutLow": "Intensitate scăzută",
+  "exerciseWorkoutLowDesc": "Exerciții ușoare, ritm cardiac moderat",
+  "exerciseWorkoutMod": "Intensitate moderată",
+  "exerciseWorkoutModDesc": "Antrenament standard, efort constant",
+  "exerciseWorkoutHigh": "Intensitate ridicată",
+  "exerciseWorkoutHighDesc": "Antrenament viguros, consum ridicat de calorii",
+  "appleHealthSync": "Sincronizare Apple Health",
+  "appleHealthSyncDesc": "Sincronizează automat pașii și antrenamentele",
+  "appleHealthStatusConnected": "Conectat",
+  "appleHealthStatusNotConnected": "Neconectat",
+  "quizStepCount": "Pasul {current} / 3",
+  "quizMealPatternTitle": "Câte mese mănânci de obicei pe zi?",
+  "quizMealPattern3": "3 mese principale",
+  "quizMealPattern3Snacks": "3 mese + gustări",
+  "quizMealPattern2": "2 mese (post intermitent)",
+  "quizMealPatternMany": "Mese mici și dese",
+  "planMonthsNote": "{months} luni • {price}",
+  "savePercentTag": "ECONOMISEȘTE {percent}%",
+  "offPercentHeader": "{percent}% REDUCERE",
+  "planBenefitScans": "Scanări AI nelimitate",
+  "planBenefitMacros": "Defalcare completă macronutrienți",
+  "planBenefitForecast": "Prognoză avansată greutate",
+  "planBenefitSupport": "Asistență prioritară",
+  "analysisGreeting": "Salut!",
+  "caloriesValue": "{calories} kcal",
+  "caloriesPer100g": "{calories} kcal / 100g",
+  "gramsValue": "{grams}g",
+  "weightKgValue": "{weight} kg",
+  "galleryMacroSummary": "{calories} kcal • C:{carbs}g P:{protein}g G:{fat}g",
+  "sharePayload": "🔥 {dish} · {calories} kcal | CalGo",
+  "ofTargetPercent": "{percent}% din obiectiv",
+  "daysWithData": "{logged}/{total} zile cu date",
+  "levelLabel": "Nivelul {level}",
+  "expToNextLevel": "{exp} EXP până la nivelul următor",
+  "scansTodaySummary": "Scanat {scansToday} mese astăzi · {totalScans} în total",
+  "lastLogWeight": "Ultima înregistrare: {weight} kg",
+  "selectedDateText": "{day}/{month}/{year}",
+  "burnedCaloriesPill": "+{calories} kcal arse",
+  "weeksFormat": "{weeks} săptămâni",
+  "weekAbbrev": "S{weeks}",
+  "exerciseCalcWeightNote": "Calculat pentru greutatea de {weight} kg și MET din Adult Compendium 2024. Dispozitivele purtabile pot fi mai precise.",
+  "expGainTitle": "Ai câștigat +{exp} EXP",
+  "expGainDesc": "Puncte adăugate din {reason}.",
+  "trialDaysFree": "Încearcă {days} zile gratuit",
+  "enableTrialDaysFree": "Activează perioada de probă de {days} zile",
+  "trialStepDayReminder": "Ziua {day}",
+  "trialDaysCountBadge": "PROBĂ {days} ZILE 0$",
+  "trialDaysNote": "Probă {days} zile 0$",
+  "progressForecastPrefix": "Prognoză progres • {goal}",
+  "weeksLeftCount": "mai sunt {weeks} săptămâni",
+  "reachTargetWeight": "→ Atinge ținta de {weight}kg",
+  "addedExerciseCaloriesSnackbar": "S-au adăugat {calories} kcal din antrenament la obiectivul de azi.",
+  "winbackStayTitle": "Așteaptă! Continuă cu {price}/an",
+  "winbackSubscribeButton": "Abonează-te cu {price}/an",
+  "mealsLoggedCount": "{count} mese înregistrate",
+  "targetCaloProgress": "{percent}% din obiectivul de {target} kcal",
+  "photosCount": "{count} fotografii",
+  "creditsCountSuffix": "{count} credite",
+  "mascotGuidanceIntro": "Am selectat câteva opțiuni bune pentru tine astăzi. Atinge pentru a le vedea!",
+  "mascotGuidanceOpen": "Preparatele recomandate sunt încă în ecranul de sugestii!",
+  "mascotGuidanceTipWater": "Ai băut destulă apă? Ia o gură de apă pentru hidratare!",
+  "mascotGuidanceTipSlow": "Mănâncă încet, te vei simți sătul mai mult timp!",
+  "mascotTipHydration": "Te-ai hidratat? Bea o gură de apă pentru claritate ✨",
+  "mascotNoMeals": "Nu ai înregistrat nimic încă? Fă o poză mâncării pentru a-mi arăta!",
+  "mascotOnTrack": "Disciplină impecabilă! Caloriile sunt exact la țintă!",
+  "scanProcessingRecognizing": "Se recunoaște masa...",
+  "scanProcessingRecognized": "Masă recunoscută",
+  "scanProcessingIngredients": "Se analizează ingredientele...",
+  "scanProcessingNutrition": "Se identifică valorile nutriționale...",
+  "scanProcessingCalories": "Se calculează caloriile...",
+  "scanProcessingPortion": "Se estimează porția...",
+  "scanProcessingSummary": "AI-ul compilează rezultatul...",
+  "scanProcessingReport": "Se pregătește raportul...",
+  "cameraPermissionDenied": "Accesul la cameră a fost refuzat. Deschide Setări și permite accesul pentru CalGo!",
+  "noCamera": "Nu a fost găsită nicio cameră",
+  "cameraStartFailed": "Nu s-a putut porni camera. Închide ecranul și încearcă din nou!",
+  "scanInProgress": "O altă masă este în curs de analiză. Te rugăm să aștepți un moment!",
+  "notLoggedIn": "Nu ești conectat. Conectează-te cu Google pentru a folosi această funcție!",
+  "cameraPermissionMissing": "Permisiunea pentru cameră nu este activată. Permite accesul din Setările telefonului!",
+  "networkTimeout": "Rețeaua este lentă sau a expirat timpul de conectare. Verifică conexiunea și încearcă din nou!",
+  "scanAgain": "Scanează din nou",
+  "nutritionTitle": "Nutriție",
+  "guidanceRecoverySubtitle": "O ajustare ușoară",
+  "guidanceLoggedSubtitle": "Pe baza ultimei tale mese",
+  "guidanceRefreshTooltip": "Sugestii noi",
+  "guidanceAlternativesTitle": "Sau alege una dintre aceste mese",
+  "guidanceOtherMeal": "Plănuiesc să mănânc altceva",
+  "guidanceSeeMore": "Vezi mai mult",
+  "guidanceDisclaimer": "Sugestiile sunt doar informative. Scanează masa reală pentru o înregistrare precisă.",
+  "guidanceFamiliarTag": "FAMILIAR",
+  "guidancePrepTime": "{minutes} min",
+  "guidanceFitGreat": "Potrivire excelentă",
+  "guidanceFitAdjust": "Necesită ajustare",
+  "guidanceFitGood": "Potrivire bună",
+  "guidanceAppleTitle": "Lasă-l pe Tao să calculeze cu tine",
+  "guidanceFirstScanAction": "Scanează prima ta masă",
+  "guidanceGoalReachedTitle": "Obiectivul de azi este complet!",
+  "guidanceScreenTitle": "Ce ar trebui să mănânci?",
+  "guidanceUnavailableTitle": "Nicio sugestie încă",
+  "guidanceUnavailableMessage": "Încearcă din nou după ce scanezi o masă.",
+  "guidanceScanMeal": "Scanează o masă",
+  "guidanceConsiderMeals": "Mese de luat în considerare",
+  "guidanceScanForAccuracy": "Scanează pentru înregistrare precisă",
+  "guidanceSwapWith": "Sau înlocuiește cu",
+  "guidanceChangeSuggestion": "Schimbă sugestia",
+  "guidancePremiumSwapTitle": "Schimbarea sugestiilor este o funcție Premium",
+  "guidancePremiumSwapMessage": "Fă upgrade la Premium pentru a schimba sugestiile de mese fără limite.",
+  "later": "Mai târziu",
+  "upgradePremium": "Upgrade la Premium",
+  "guidanceTodayTitle": "Sugestii personale pentru azi",
+  "guidanceTodaySubtitle": "Alege o masă care se potrivește macronutrienților tăi, apoi scanează masa reală.",
+  "guidanceScanRealMeal": "Scanează masa reală",
+  "guidanceNextMealGoal": "OBIECTIV PENTRU URMĂTOAREA MASĂ",
+  "remainingLabel": "Rămas",
+  "proteinNeededLabel": "Proteine necesare",
+  "familiarMacroLabel": "FAMILIAR · POTRIVIRE MACRO",
+  "numberOneChoice": "OPȚIUNEA NUMĂRUL 1",
+  "energyLabel": "ENERGIE",
+  "familiarLabel": "FAMILIAR",
+  "fitGoalGreat": "Excelent pentru obiectivul tău",
+  "fitGoalAdjust": "Ar trebui ajustat",
+  "fitGoalGood": "Se potrivește obiectivului tău",
+  "goalSpecificGainTitle": "Cât de des te antrenezi pe săptămână?",
+  "goalSpecificGainNone": "Nu mă antrenez încă",
+  "goalSpecificGain12": "1–2 sesiuni",
+  "goalSpecificGain34": "3–4 sesiuni",
+  "goalSpecificGain5": "5+ sesiuni",
+  "goalSpecificMaintainTitle": "Ce contează cel mai mult pentru menținerea formei?",
+  "goalSpecificStable": "Să-mi mențin greutatea stabilă",
+  "goalSpecificBalanced": "Să mănânc mese mai echilibrate",
+  "goalSpecificHabits": "Să construiesc obiceiuri pe termen lung",
+  "goalSpecificWeekends": "Să rămân pe drumul cel bun în weekend",
+  "goalSpecificLoseTitle": "Ce face slăbirea cel mai dificilă pentru tine?",
+  "goalSpecificHunger": "Mi se face foame des",
+  "goalSpecificPortions": "Controlul porțiilor",
+  "goalSpecificChoices": "Nu știu ce să mănânc",
+  "goalSpecificLogging": "Înregistrarea meselor mi se pare grea",
+  "goalSpecificOvereat": "Mănânc prea mult noaptea",
+  "goalSpecificWeekendsHard": "Weekendurile sunt dificile",
+  "avoidFoodsTitle": "Ai alergii la anumite alimente sau ingrediente?",
+  "foodRedMeat": "Carne roșie",
+  "foodFried": "Mâncare prăjită",
+  "foodSpicy": "Mâncare picantă",
+  "challengeTitle": "Care este cea mai grea parte pentru tine?",
+  "challengeCalories": "Nu știu câte calorii au alimentele",
+  "challengeSweets": "Rezistența la dulciuri",
+  "challengePortions": "Controlul porțiilor",
+  "challengeBetweenMeals": "Senzația de foame între mese",
+  "challengeCookingTime": "Lipsa timpului pentru gătit",
+  "challengeMotivation": "Menținerea motivației",
+  "budgetTitle": "Care este bugetul tău pentru o masă?",
+  "budgetNote": "CalGo întreabă pentru a-ți sugera mese adaptate bugetului și obiectivelor tale.",
+  "budgetLow": "Sub 25 lei",
+  "budgetLowNote": "Mese simple, economice",
+  "budgetMid": "25 – 60 lei",
+  "budgetMidNote": "Buget obișnuit pentru o masă",
+  "budgetHigh": "60 – 120 lei",
+  "budgetHighNote": "Mai mult loc pentru opțiuni premium",
+  "budgetAny": "Fără limită",
+  "budgetAnyNote": "Prioritizează obiectivele de nutriție",
+  "prepTitle": "Cât timp ai pentru a pregăti o masă?",
+  "prepNote": "CalGo întreabă pentru a-ți sugera mese adaptate programului tău.",
+  "prepShort": "Sub 10 minute",
+  "prepShortNote": "Rapid și convenabil când ești ocupat",
+  "prepMedium": "10–20 minute",
+  "prepMediumNote": "Suficient pentru o masă simplă",
+  "prepLong": "Peste 20 minute",
+  "prepLongNote": "Mai mult timp pentru gătit cu grijă",
+  "prepAny": "Fără preferință",
+  "prepAnyNote": "Cât timp se potrivește obiectivelor mele",
+  "nutritionPriorityTitle": "Ce prioritizezi la o masă?",
+  "nutritionPriorityNote": "CalGo întreabă pentru a nu-ți oferi sugestii generice.",
+  "priorityProtein": "Proteine multe",
+  "priorityProteinNote": "Susține sațietatea și refacerea musculară",
+  "priorityLight": "Calorii puține",
+  "priorityLightNote": "Ușor de echilibrat pe parcursul zilei",
+  "priorityBalanced": "Echilibrat",
+  "priorityBalancedNote": "Un mix echilibrat de calorii și macronutrienți",
+  "priorityFilling": "Să țină de foame",
+  "priorityFillingNote": "Proteine și suficienți carbohidrați complecși",
+  "habitTitle": "Care sunt obiceiurile tale alimentare?",
+  "habitNote": "CalGo întreabă pentru a-ți sugera mese adaptate stilului tău de viață.",
+  "habitRegular": "Mănânc mese regulate și echilibrate",
+  "habitSnacking": "Iau gustări des",
+  "habitSkipBreakfast": "Săr des peste micul dejun",
+  "habitLateNight": "Mănânc noaptea târziu",
+  "habitEatingOut": "Mănânc des în oraș",
+  "habitCook": "Gătesc acasă",
+  "motivationTitle": "Ce te motivează să faci o schimbare?",
+  "motivationClothes": "Să arăt mai bine în haine",
+  "motivationWeight": "Să slăbesc",
+  "motivationOther": "Alt motiv",
+  "painTitle": "Ți s-a întâmplat vreodată să...",
+  "painNote": "Alege situațiile prin care ai trecut",
+  "painEatLess": "Mănânci foarte puțin dar tot să nu slăbești",
+  "painCardio": "Faci mult cardio fără rezultate",
+  "painGiveUp": "Renunți după câteva zile",
+  "painUnknownCalories": "Nu știi câte calorii consumi",
+  "painHungry": "Îți fie foame pe parcursul zilei",
+  "painStressEating": "Mănânci pe fond de stres",
+  "emotionalTitle": "Dacă continui să mănânci ca acum...",
+  "emotionalCurrent": "Acum",
+  "emotionalAfterSixMonths": "După 6 luni",
+  "emotionalStillWeight": "Ai putea rămâne la greutatea actuală. Cu CalGo, poți schimba asta.",
+  "emotionalHelpChange": "Te voi ajuta să faci schimbarea",
+  "referralX": "X (Twitter)",
+  "sportsRunning": "Alergare",
+  "sportsCycling": "Ciclism",
+  "sportsSwimming": "Înot",
+  "sportsFootball": "Fotbal",
+  "sportsBadminton": "Badminton",
+  "sportsBasketball": "Baschet",
+  "sportsOther": "Altele",
+  "durationTitle": "Durată",
+  "durationNote": "Alege un interval de timp confortabil pentru tine",
+  "dailyCalorieGoal": "Obiectiv caloric zilnic",
+  "reminderNotifications": "Notificări de memento",
+  "reminderNotificationsEnabled": "Mementourile pentru mese și urmărirea caloriilor au fost activate automat.",
+  "gotIt": "Am înțeles",
+  "userGuideTitle": "Cum se utilizează CalGo",
+  "userGuideContent": "1. Atinge Scanare (+) pentru a fotografia sau alege o masă.\n2. AI analizează automat caloriile și nutriția.\n3. Ajustează cantitățile sau adaugă ingrediente înainte de salvare.\n4. Consultă istoricul meselor în fila Istoric.",
+  "great": "Excelent",
+  "customerSupportMessage": "Pentru asistență sau feedback, scrie-ne la: support@calgo.tech",
+  "deleteAccountFailed": "Nu s-a putut șterge contul. Consultă ghidul online sau contactează asistența.",
+  "galleryLoadFailed": "Nu s-a putut încărca colecția de fotografii",
+  "viewResult": "Vezi detaliile rezultatului",
+  "shareMemoryCard": "Distribuie Memory Card",
+  "deletePhoto": "Șterge această fotografie",
+  "confirmDelete": "Confirmă ștergerea",
+  "mealDeleted": "Masa a fost ștearsă din colecția ta",
+  "deleteFailed": "Nu s-a putut șterge. Te rugăm să încerci din nou.",
+  "paymentProcessing": "Se procesează plata prin Google Play...",
+  "permanentCredits": "Scanările nu expiră niciodată",
+  "testingFreeCredits": "Versiune de test: scanările Premium sunt gratuite. Nu se efectuează nicio plată.",
+  "restoreSuccess": "Restaurarea achizițiilor a fost verificată cu succes!",
+  "restoreFailed": "Nu s-au putut restaura achizițiile Google Play.",
+  "moreScanCredits": "Cumpără mai multe scanări AI",
+  "shareCreateFailed": "Nu s-a putut crea imaginea cardului. Te rugăm să încerci din nou!",
+  "shareExported": "Memory Card exportat cu succes!",
+  "shareResult": "Distribuie rezultatul",
+  "shareNutritionLabel": "Imaginea va fi salvată cu etichete nutriționale",
+  "saveImage": "Salvează imaginea",
+  "share": "Distribuie",
+  "healthScore": "Scor de sănătate",
+  "dishesInPhoto": "Preparate în fotografie",
+  "ingredientsInDish": "Ingrediente",
+  "feedbackThanks": "Mulțumim pentru feedback!",
+  "feedbackPrompt": "Scanarea AI a fost inexactă? Spune-ne ce s-a întâmplat:",
+  "feedbackHint": "Exemplu: nume greșit de preparat, lipsesc legumele...",
+  "sending": "Se trimite...",
+  "sendFeedback": "Trimite feedback",
+  "newIngredient": "Ingredient nou",
+  "choosePortion": "Alege porția",
+  "searchNutritionLibrary": "Caută în biblioteca de nutriție",
+  "adjustBeforeAdding": "Ajustează cantitatea înainte de a adăuga",
+  "ingredientSearchHint": "Caută vită, ouă, orez...",
+  "ingredientNotFound": "Ingredientul nu a fost găsit",
+  "ingredientSearchTip": "Încearcă un nume mai scurt sau mai comun",
+  "unitPiece": "bucată",
+  "defaultUserName": "tu",
+  "analyzingMessage1": "Se analizează datele profilului...",
+  "analyzingMessage2": "Se calculează țintele zilnice de calorii...",
+  "analyzingMessage3": "Se proiectează obiectivele personalizate...",
+  "analyzingMessage4": "Se construiește strategia de nutriție...",
+  "analyzingMessage5": "Aproape gata...",
+  "dietNormal": "Alimentație obișnuită",
+  "dietClean": "Eat Clean",
+  "dietLowCarb": "Low Carb",
+  "activityActive": "Antrenament de 4–5 ori",
+  "activityActiveDesc": "Exerciții fizice 4–5 zile/săptămână",
+  "paceLight": "🚶  Ușor — 0.5 kg/săpt. (Popular)",
+  "paceMedium": "🏃  Mediu — 0.75 kg/săpt.",
+  "paceHigh": "🔥  Intens — 1 kg/săpt.",
+  "paceHighest": "⚡  Maxim — 1.25–1.5 kg/săpt.",
+  "weekUnit": "săptămână",
+  "sportsGym": "Sală / Fitness",
+  "sportsYoga": "Yoga",
+  "scanResultUnavailable": "Această masă nu a putut fi analizată",
+  "scanResultRetryHint": "Încearcă să o scanezi din nou.",
+  "ok": "OK",
+  "defaultProfileName": "Utilizator CalGo",
+  "premiumMembership": "Abonament Premium",
+  "paymentMethods": "Plată prin Google Play / App Store",
+  "deleteAction": "Șterge",
+  "proteinLabel": "Proteine",
+  "onboardingSaveFailed": "Nu s-a putut salva obiectivul de nutriție. Te rugăm să încerci din nou.",
+  "onboardingSaveNetworkFailed": "Nu s-a putut salva obiectivul. Verifică conexiunea și încearcă din nou.",
+  "appleSignInPending": "Autentificarea Apple este în curs de finalizare. Folosește Google deocamdată.",
+  "firstScanTitle": "Ești gata să scanezi prima masă?",
+  "firstScanSubtitle": "Atinge Scanare mai jos pentru a începe",
+  "scanLabel": "Scanare",
+  "startScanning": "Începe scanarea",
+  "socialProofOneTag": "A slăbit 6.5 kg",
+  "socialProofOneTime": "acum 2 zile",
+  "socialProofOneTitle": "Recunoașterea mâncării este extrem de precisă!",
+  "socialProofOneBody": "Mă chinuiam să țin evidența mâncărurilor tradiționale în alte aplicații. CalGo recunoaște preparatele și caloriile exact dintr-o poză. 10/10!",
+  "socialProofTwoTag": "A câștigat 4 kg masă musculară",
+  "socialProofTwoTime": "acum 5 zile",
+  "socialProofTwoTitle": "Interfață intuitivă și calcul TDEE precis",
+  "socialProofTwoBody": "Monitorizarea IMC și sugestiile de macro sunt foarte detaliate. Mă antrenez și scanez zilnic, iar rezultatele se văd clar după o lună.",
+  "socialProofThreeTag": "Și-a menținut forma fizică",
+  "socialProofThreeTime": "acum o săptămână",
+  "socialProofThreeTitle": "Crearea de obiceiuri sănătoase",
+  "socialProofThreeBody": "Mementourile lui Tao sunt foarte utile. Aplicația nu te forțează la diete extreme, ci te ghidează spre echilibru.",
+  "premiumActivatedMessage": "Premium este activ. Bucură-te de mese sănătoase!",
+  "premiumPaymentFailed": "Nu s-a putut deschide plata Premium.",
+  "continueFreePremium": "Continuă · Premium Gratuit",
+  "premiumActivated": "Premium activat",
+  "processingShort": "Se procesează…",
+  "subscribePremium": "Abonează-te la Premium",
+  "premiumTestingNote": "Versiune de test: Premium este gratuit. Nu se efectuează plăți.",
+  "premiumNoChargeNote": "Nu vei fi taxat la acest pas.",
+  "premiumAutoRenewNote": "Reînnoire automată. Anulează oricând.",
+  "premiumHeadlineBefore": "Schimbarea începe de ",
+  "todayLower": "astăzi",
+  "yourExperience": "Experiența\nta",
+  "premiumBenefitCalories": "Află caloriile instant — scanări AI nelimitate",
+  "premiumBenefitSuggestions": "Sugestii nelimitate de mese adaptate obiectivului tău zilnic",
+  "premiumBenefitDescriptions": "Descrieri nutriționale AI fără introducere manuală",
+  "premiumBenefitProgress": "Urmărește transformarea corpului tău în fiecare zi",
+  "premiumBenefitSupport": "Asistență prioritară oricând ai nevoie",
+  "planWeek": "Săptămână",
+  "planYear": "An",
+  "planMonth": "Lună",
+  "free": "Gratuit",
+  "weeklyPayment": "plată săptămânală",
+  "popularMost": "60% REDUCERE",
+  "testingAccess": "acces de testare",
+  "restoreChecked": "Restaurarea achizițiilor a fost verificată.",
+  "manageSubscription": "Gestionează abonamentul",
+  "manageSubscriptionFailed": "Nu s-a putut deschide pagina de gestionare a abonamentelor.",
+  "scanCreditsExhausted": "Nu mai ai credite de scanare disponibile.",
+  "scanSpamDetectedTitle": "Activitate neobișnuită detectată",
+  "scanSpamDetectedMessage": "A fost detectată o activitate neobișnuită, te rugăm să contactezi asistența.",
+  "networkRetry": "Conexiunea este lentă. Încearcă din nou.",
+  "scanUnavailable": "Această imagine nu a putut fi analizată.",
+  "notificationDirectChannel": "Notificări directe",
+  "caloriesLabel": "Calorii",
+  "carbsLabel": "Carbohidrați",
+  "fatLabel": "Grăsimi",
+  "guidanceTodayShortSubtitle": "Vezi sugestiile pentru obiectivul de azi",
+  "ingredientRiceNoodles": "Tăiței proaspeți de orez",
+  "ingredientCheddar": "Brânză cheddar",
+  "ingredientPassionSauce": "Sos de fructul pasiunii",
+  "mockPhoTitle": "Supă Pho de vită cu piept",
+  "mockPhoNoodles": "Tăiței de orez",
+  "mockPhoRareBeef": "Carne de vită fragedă",
+  "mockPhoBrisket": "Piept de vită",
+  "mockPhoBroth": "Supă de vită & ceapă verde",
+  "mockRiceTitle": "Orez cu cotlet de porc la grătar și ou",
+  "mockRice": "Orez",
+  "mockGrilledPork": "Cotlet de porc la grătar",
+  "mockEggCake": "Omletă la abur",
+  "mockFriedEgg": "Ou prăjit",
+  "mockSaladTitle": "Salată de pui cu dressing de fructul pasiunii",
+  "mockChicken": "Piept de pui tras la tigaie",
+  "mockSalad": "Salată verde & roșii cherry",
+  "mockPassionSauce": "Dressing de fructul pasiunii",
+  "motivationAdviceDefault": "Să-ți atingem obiectivul de sănătate împreună prin obiceiuri sustenabile.",
+  "taoAdviceLabel": "SFATUL LUI TAO",
+  "taoReminder": "Tao îți va aminti în fiecare zi",
+  "packBasic": "Începător",
+  "packPopular": "Popular",
+  "packPremium": "Premium",
+  "perScan": "/scanare",
+  "connectAppleHealthTitle": "Conectare la Apple Health",
+  "connectAppleHealthDesc": "Sincronizează activitatea zilnică între CalGo și aplicația Health pentru date complete.",
+  "weightUpdateSuccess": "Greutatea a fost actualizată cu succes",
+  "weightUpdateFailed": "Nu s-a putut salva greutatea. Te rugăm să încerci din nou.",
+  "nutritionSectionHeader": "Nutriție",
+  "healthSectionHeader": "Sănătate",
+  "currentWeightKicker": "Greutate actuală",
+  "logWeightButton": "Înregistrează greutatea",
+  "startLabel": "Început",
+  "targetLabel": "Țintă",
+  "weightProgressTitle": "Progres greutate",
+  "notEnoughWeightData": "Nu există suficiente date despre greutate",
+  "calorieNutritionStatsTitle": "Statistici calorii & nutriție",
+  "differenceLabelUpper": "Diferență",
+  "consumedLabel": "Consumat",
+  "thisWeek": "Săptămâna aceasta",
+  "lastWeek": "Săptămâna trecută",
+  "twoWeeksAgo": "acum 2 săptămâni",
+  "threeWeeksAgo": "acum 3 săptămâni",
+  "weeklyEnergyTitle": "Energie săptămânală",
+  "consumedLabelUpper": "Consumat",
+  "loggedActivityTitle": "Activitate înregistrată",
+  "lessLabel": "Mai puțin",
+  "moreLabel": "Mai mult",
+  "weightTargetForecastTitle": "Prognoză obiectiv greutate",
+  "maxLevelReached": "Ai atins nivelul maxim!",
+  "milestonesHeader": "ETAPE",
+  "noMilestoneData": "Nicio etapă înregistrată încă.",
+  "notEnoughNutritionData": "Nu există suficiente date de nutriție",
+  "noEnergyData": "Nu există date de energie",
+  "noData": "Fără date",
+  "weightChangeTitle": "Modificări greutate",
+  "logWeightEmptyDesc": "Înregistrează greutatea de cel puțin două ori pentru a vedea progresul.",
+  "logWeightNow": "Înregistrează greutatea acum",
+  "weightDecreased": "Scădere",
+  "weightIncreased": "Creștere",
+  "weightUnchanged": "Fără schimbare",
+  "dateColumnHeader": "Dată",
+  "addPhoto": "Adaugă fotografie",
+  "photoSelected": "Fotografie selectată",
+  "photoOptional": "Opțional",
+  "dailyCalorieGoalKicker": "OBIECTIV CALORIC ZILNIC",
+  "macroDistributionKicker": "DISTRIBUȚIE MACRONUTRIENȚI",
+  "proteinMacroLabel": "Proteine",
+  "carbMacroLabel": "Carbohidrați",
+  "fatMacroLabel": "Grăsimi",
+  "recalculateTargetButton": "Recalculează obiectivul",
+  "burnedLabelUpper": "Ars",
+  "filterAll": "Toate",
+  "filterFood": "Mâncare",
+  "filterWorkout": "Antrenament",
+  "noWorkoutLoggedToday": "Niciun antrenament înregistrat azi",
+  "noFoodLoggedToday": "Nicio masă înregistrată azi",
+  "forecastProgressTitle": "Prognoză progres obiectiv",
+  "forecastPremiumUnlockDesc": "Fă upgrade la Premium pentru a debloca graficele și estimarea săptămânilor până la greutatea dorită!",
+  "unlockPremiumButton": "Deblochează Premium",
+  "currentLabel": "Acum",
+  "logWorkoutTile": "Înregistrează antrenament",
+  "scanMealTile": "Scanează masa",
+  "chooseExerciseTypeSubtitle": "Selectează tipul activității pentru calculul caloriilor arse.",
+  "exerciseRunning": "Alergare",
+  "exerciseRunningDesc": "Estimat în funcție de ritm, greutate și durată",
+  "exerciseWalking": "Mers pe jos",
+  "exerciseWalkingDesc": "Estimat în funcție de viteza de mers lejer sau alert",
+  "exerciseCycling": "Ciclism",
+  "exerciseCyclingDesc": "Estimat în funcție de intensitatea pedalării",
+  "exerciseSwimming": "Înot",
+  "exerciseSwimmingDesc": "Stil liber sau bras în funcție de efort",
+  "exerciseWorkout": "Antrenament (Sală)",
+  "exerciseWorkoutDesc": "Exerciții cu greutăți sau circuit după intensitate",
+  "exerciseManual": "Introducere manuală",
+  "exerciseManualDesc": "Introdu caloriile de pe aparate sau dispozitive",
+  "intensityTitle": "Intensitate",
+  "burnedCaloriesTitle": "Calorii arse",
+  "kcalSuffix": "kcal",
+  "minutesSuffix": "min",
+  "manualCaloriesHint": "Introdu caloriile de pe aparat sau smartwatch",
+  "durationHint": "Durată exercițiu",
+  "willAddToToday": "Se va adăuga la ziua de azi",
+  "estimatedActiveCalories": "Calorii active estimate",
+  "exerciseUpdateWeightPrompt": "Te rugăm să-ți actualizezi greutatea în profil pentru estimări corecte de calorii.",
+  "exerciseHealthSyncWarning": "Dacă Apple Health a înregistrat deja acest antrenament, nu-l mai adăuga aici pentru a evita dublarea.",
+  "saveWorkoutButton": "Salvează antrenamentul",
+  "intensityLow": "Scăzută",
+  "intensityModerate": "Moderată",
+  "intensityHigh": "Ridicată",
+  "exerciseRunLowDesc": "Alergare ușoară 6.4–6.8 km/h · ~9:20 min/km",
+  "exerciseRunModDesc": "Alergare susținută 9.7–10.1 km/h · ~6:10 min/km",
+  "exerciseRunHighDesc": "Alergare rapidă 12.9 km/h · ~4:40 min/km",
+  "exerciseWalkLowDesc": "Plimbare lejeră 4.0 km/h",
+  "exerciseWalkModDesc": "Mers alert 5.6 km/h",
+  "exerciseWalkHighDesc": "Mers foarte rapid / pantă ușoară 6.4–7.2 km/h",
+  "exerciseCycleLowDesc": "Ciclism ușor 16–19 km/h",
+  "exerciseCycleModDesc": "Ciclism moderat 19–22 km/h",
+  "exerciseCycleHighDesc": "Ciclism viguros și rapid 22–25 km/h",
+  "exerciseSwimLowDesc": "Înot recreativ ușor",
+  "exerciseSwimModDesc": "Crawl / bras în ritm moderat",
+  "exerciseSwimHighDesc": "Înot continuu de intensitate mare",
+  "exerciseCalorieRangeError": "Te rugăm să introduci calorii între 1 și 5.000 kcal.",
+  "exerciseDurationRangeError": "Durata trebuie să fie între 1 și 1.440 minute.",
+  "exerciseSaveNetworkError": "Nu s-a putut salva antrenamentul. Verifică conexiunea și încearcă din nou.",
+  "deleteExerciseConfirm": "Sigur dorești să ștergi acest antrenament?",
+  "deleteExerciseFailed": "Nu s-a putut șterge antrenamentul. Te rugăm să încerci din nou.",
+  "appleHealthSynced": "Sincronizare Apple Health",
+  "guidanceRecoveryTitle": "Recuperează ziua",
+  "guidanceReadyTitle": "Ce să mănânci pentru a atinge obiectivul de azi?",
+  "expGainClaim": "Revendică",
+  "scanMealReason": "scanare masă",
+  "dailySummaryBannerTitle": "Recapitulare zilnică & AI Coach",
+  "dailySummaryBannerSubtitle": "Vezi detalii nutriționale și câștigă EXP",
+  "cannotOpenShareSheet": "Nu s-a putut deschide meniul de distribuire.",
+  "profileSaveFailed": "Nu s-a putut salva profilul. Te rugăm să încerci din nou.",
+  "trialNoChargeTodayReminder": "Fără plată azi, memento cu 24h înainte",
+  "trialDirectChargeOnRegister": "Facturat imediat la înregistrare",
+  "trialPaymentSchedule": "Program de plată perioadă de probă:",
+  "trialStepToday": "Astăzi",
+  "trialStepUnlockFree": "Deblochează pentru 0$",
+  "trialStepPushReminder": "Notificare de memento",
+  "trialStepChargeStarts": "Începe facturarea",
+  "payYearlyNote": "Facturat anual",
+  "payMonthlyNote": "Facturat lunar",
+  "trialCancelAnytimeNote": "Fără taxă azi. Anulează oricând din setările App Store / Google Play.",
+  "changeYourselfNow": "Transformă-ți corpul acum",
+  "tryFreeNow": "Încearcă gratuit 3 zile",
+  "completeSetup": "Finalizează configurarea",
+  "servicesAndPlans": "Servicii & Planuri",
+  "connectedStatus": "Conectat",
+  "notConnectedStatus": "Neconectat",
+  "scanBarcodeTip": "Pentru alimente ambalate, scanează codul de bare pentru 100% precizie nutrițională!",
+  "scanBarcodeNow": "Scanează codul de bare acum",
+  "badgeUnlockedTitle": "INSIGNĂ DEBLOCATĂ!",
+  "greatExclamation": "Super!",
+  "appleHealthPermissionDenied": "Nu s-au putut acorda permisiunile. Asigură-te că ai permis accesul în Setări iPhone > Intimitate și securitate > Sănătate.",
+  "appleHealthSyncTitle": "Sincronizare Apple Health",
+  "appleHealthConnectedDesc": "Aplicația are permisiunea de a citi și sincroniza datele cu Apple Health.",
+  "appleHealthNotConnectedDesc": "Atinge butonul de mai jos pentru a deschide fereastra de autorizare iOS.",
+  "appleHealthReconnectButton": "Reautorizează / Reconectează iOS",
+  "appleHealthConnectButton": "Conectează Apple Health (iOS)",
+  "disconnect": "Deconectează",
+  "scanBarcodeTitle": "Scanează codul de bare",
+  "lookingUpBarcode": "Se caută codul de bare...",
+  "alignBarcodeInstruction": "Încadrează codul de bare de pe ambalaj în cameră",
+  "switchToPhotoScan": "Comută la scanarea foto a mâncării",
+  "barcodeNotFound": "Nu s-au găsit date pentru acest cod de bare. Fă o poză mâncării! 📸",
+  "foodNotRecognizedTitle": "Mâncarea nu a fost recunoscută clar",
+  "foodNotRecognizedMessage": "Te rugăm să faci o poză mai clară sau să introduci manual alimentele.",
+  "retakePhoto": "Refă poza",
+  "manualFoodEntry": "Introducere manuală",
+  "backTooltip": "Înapoi",
+  "exitTooltip": "Ieșire",
+  "completeAndSaveGoal": "Finalizează & Salvează obiectivul",
+  "winbackExclusiveOffer": "🔥 OFERTĂ EXCLUSIVĂ",
+  "winbackDisclaimer": "Prețurile și termenii ofertei sunt verificați direct de magazin.",
+  "winbackDismissButton": "Închide oferta",
+  "savePremiumToAccountTitle": "Salvează Premium în contul tău",
+  "savePremiumToAccountDesc": "Conectează-te o singură dată pentru a verifica tranzacțiile și a sincroniza planul personalizat.",
+  "signInFailed": "Autentificarea a eșuat.",
+  "dailyRecapTitle": "Recapitulare la sfârșit de zi",
+  "recapReadyAfterTime": "Recapitularea va fi gata după ora 22:00, odată ce ai scanat mese astăzi.",
+  "todayRecap": "Recapitularea de azi",
+  "consumedToday": "consumat astăzi",
+  "aiReview": "Evaluare AI",
+  "tomorrowTipTitle": "Sfat pentru mâine",
+  "finishDayButton": "Încheie ziua",
+  "reportButton": "Raport",
+  "likeTooltip": "Apreciază",
+  "dislikeTooltip": "Nu apreciază",
+  "addCustomFoodTitle": "Adaugă mâncare manual",
+  "foodNameLabel": "Nume mâncare",
+  "foodNameHint": "Introdu numele mâncării...",
+  "caloriePer100gLabel": "Calorii (kcal / 100g)",
+  "addNow": "Adaugă acum",
+  "logFoodTitle": "Înregistrează mâncarea",
+  "creditsPurchasedSuccess": "Verificat și adăugat credite de scanare în contul tău.",
+  "progressPhotosTitle": "Fotografii progres",
+  "quizMealPatternDesc": "În câte mese dorești să-ți împarți caloriile zilnice?",
+  "quizMealPattern3Title": "3 Mese principale",
+  "quizMealPattern3Desc": "Mic dejun - Prânz - Cină standard, ușor de gestionat",
+  "quizMealPattern3SnackTitle": "3 Mese principale + 1 Gustare",
+  "quizMealPattern3SnackDesc": "Include o gustare ușoară după-amiaza pentru a preveni foamea",
+  "quizMealPatternIFTitle": "2 Mese principale (Post intermitent)",
+  "quizMealPatternIFDesc": "Urmează programul de post intermitent 16:8",
+  "quizMealPatternSmallTitle": "4 - 5 Mese mici",
+  "quizMealPatternSmallDesc": "Distribuie energia uniform pe tot parcursul zilei",
+  "quizVarietyTitle": "Flexibilitatea meniului",
+  "quizVarietyDesc": "Cum preferi sugestiile de mese?",
+  "quizVarietySimpleTitle": "Simplitate & Repetiție",
+  "quizVarietySimpleDesc": "Gătește o dată, mănâncă 2-3 mese, economisește timp",
+  "quizVarietyRotateTitle": "Varietate zilnică",
+  "quizVarietyRotateDesc": "Meniu proaspăt în fiecare zi, mese variate",
+  "quizVarietyLocalTitle": "Bucătărie locală & tradițională",
+  "quizVarietyLocalDesc": "Ingrediente ușor de găsit în piețe și magazine locale",
+  "quizPriorityTitle": "Obiectivele tale alimentare",
+  "quizPriorityDesc": "Ce dorești să prioritizezi în planul tău de nutriție?",
+  "quizOptSatietyTitle": "Sațietate lungă, calorii puține",
+  "quizOptSatietyDesc": "Proteine multe, legume și mâncăruri fără mult ulei pentru deficit caloric",
+  "quizOptCalorieFitTitle": "Potrivire cu caloriile rămase",
+  "quizOptCalorieFitDesc": "Porții alese aproape de bugetul tău caloric per masă",
+  "quizOptSmartSwapTitle": "Înlocuiri inteligente",
+  "quizOptSmartSwapDesc": "Sugestii de mese mai ușoare dacă ai mâncat mai mult anterior",
+  "quizOptHighProteinTitle": "Bogat în proteine, masă musculară",
+  "quizOptHighProteinDesc": "Accent pe proteine slabe pentru mușchi fără grăsime în exces",
+  "quizOptTrainingFuelTitle": "Combustibil pentru antrenament",
+  "quizOptTrainingFuelDesc": "Echilibru optim de proteine și carbohidrați în jurul antrenamentelor",
+  "quizOptCalorieSurplusTitle": "Surplus caloric sănătos",
+  "quizOptCalorieSurplusDesc": "Mese ușor de consumat pentru a atinge surplusul zilnic",
+  "quizOptBalancedMacrosTitle": "Macronutrienți echilibrați",
+  "quizOptBalancedMacrosDesc": "Păstrează proteinele, carbohidrații și grăsimile constante",
+  "quizOptWeightStabilityTitle": "Stabilitatea greutății",
+  "quizOptWeightStabilityDesc": "Mese adaptate caloriilor tale de menținere",
+  "quizOptFlexibleWeekendsTitle": "Weekenduri flexibile",
+  "quizOptFlexibleWeekendsDesc": "Reechilibrează aportul după o masă festivă sau în oraș",
+  "quizSyncAnswersLater": "Continuă, sincronizează răspunsurile mai târziu",
+  "quizCompleteAndGenerateMenu": "Finalizează & Creează meniul",
+  "quizSettingUpMenu": "CalGo îți creează meniul...",
+  "quizPersonalizingCalories": "Se personalizează caloriile și cele mai potrivite mese pentru tine",
+  "quizFinalizingSetup": "Se finalizează configurarea",
+  "searchFoodOrIngredientsHint": "Caută mâncare sau ingrediente...",
+  "searchResultsTitle": "Rezultate căutare",
+  "searchingInProgress": "Se caută...",
+  "nutritionServerConnectError": "Nu se poate conecta la serverul de nutriție.",
+  "planReadySubtitle": "Rămâi consecvent pentru a-ți atinge obiectivul",
+  "perMonthText": "pe lună",
+  "planBenefitSuggestions": "Sugestii personalizate de mese",
+  "planBenefitProgress": "Urmărire zilnică a progresului",
+  "spinWheelTitle": "Învârte roata și revendică\nreducerea ta",
+  "spinWheelBtn": "Învârte",
+  "oneTimeOfferTitle": "Oferta ta unică",
+  "oneTimeOfferSubtitle": "Odată ce închizi această ofertă unică, va dispărea!",
+  "claimOfferBtn": "Continuă",
+  "potentialMotivationTitle": "Ai un potențial uriaș\nsă-ți atingi\nobiectivul",
+  "weightTransitionTitle": "Evoluția greutății tale",
+  "weightTransitionDesc": "Schimbarea greutății necesită timp. Consecvența în primele săptămâni contează cel mai mult",
+  "days3": "3 Zile",
+  "days7": "7 Zile",
+  "days30": "30 Zile",
+  "@goalLoseDiffText": {
+    "description": "Localized UI text: goalLoseDiffText",
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      }
+    }
+  },
+  "@goalGainDiffText": {
+    "description": "Localized UI text: goalGainDiffText",
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      }
+    }
+  },
+  "@analysisHello": {
+    "description": "Localized UI text: analysisHello",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "@workoutDaysText": {
+    "description": "Localized UI text: workoutDaysText",
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "@weeksUnit": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
+  "@completedPercent": {
+    "description": "Localized UI text: completedPercent",
+    "placeholders": {
+      "p": {
+        "type": "int"
+      }
+    }
+  },
+  "@loginFailed": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "@mascotGuidanceOverTarget": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "@mascotGuidanceRemaining": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "@mascotOverTarget": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "@mascotMissingCalories": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "@mealCount": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@ingredientCount": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@unmatchedIngredientsNote": {
+    "description": "Localized UI text for ingredients without a nutrition match",
+    "placeholders": {
+      "ingredients": {
+        "type": "String"
+      }
+    }
+  },
+  "@dishCount": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@monthFallback": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "month": {
+        "type": "int"
+      }
+    }
+  },
+  "@scanFailed": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "@guidanceCaloriesRemaining": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "@guidanceProteinRemaining": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "@guidanceDishCalories": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "@guidanceDishProtein": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "@guidanceDishCarbs": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "@guidancePrepTime": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "@guidancePrice": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "@dishTip": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "adjustment": {
+        "type": "String"
+      }
+    }
+  },
+  "@dishMacroSummary": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      },
+      "protein": {
+        "type": "String"
+      }
+    }
+  },
+  "@dailyCalorieGoalMessage": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "@deletePhotoMessage": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "meal": {
+        "type": "String"
+      }
+    }
+  },
+  "@errorWithDetails": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "@packIncludes": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@restoreFailedWithDetails": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "@resultLoadFailed": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "@guidanceDishFat": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "@creditsCount": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@googleSignInFailed": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "@restoreException": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "@motivationAdviceLose": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "remaining": {
+        "type": "String"
+      }
+    }
+  },
+  "@creditPackageSummary": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "@caloriesValue": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "@caloriesPer100g": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "@gramsValue": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "@weightKgValue": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
+  "@galleryMacroSummary": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      },
+      "carbs": {
+        "type": "String"
+      },
+      "protein": {
+        "type": "String"
+      },
+      "fat": {
+        "type": "String"
+      }
+    }
+  },
+  "@sharePayload": {
+    "placeholders": {
+      "dish": {
+        "type": "String"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "@ofTargetPercent": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "@daysWithData": {
+    "placeholders": {
+      "logged": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "@levelLabel": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "@expToNextLevel": {
+    "placeholders": {
+      "exp": {
+        "type": "int"
+      }
+    }
+  },
+  "@scansTodaySummary": {
+    "placeholders": {
+      "scansToday": {
+        "type": "int"
+      },
+      "totalScans": {
+        "type": "int"
+      }
+    }
+  },
+  "@lastLogWeight": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
+  "@selectedDateText": {
+    "placeholders": {
+      "day": {
+        "type": "int"
+      },
+      "month": {
+        "type": "int"
+      },
+      "year": {
+        "type": "int"
+      }
+    }
+  },
+  "@burnedCaloriesPill": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "@weeksFormat": {
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
+  "@weekAbbrev": {
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
+  "@exerciseCalcWeightNote": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
+  "@expGainTitle": {
+    "placeholders": {
+      "exp": {
+        "type": "int"
+      }
+    }
+  },
+  "@expGainDesc": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "@trialDaysFree": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "@enableTrialDaysFree": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "@trialStepDayReminder": {
+    "placeholders": {
+      "day": {
+        "type": "int"
+      }
+    }
+  },
+  "@trialDaysCountBadge": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "@trialDaysNote": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "@progressForecastPrefix": {
+    "placeholders": {
+      "goal": {
+        "type": "String"
+      }
+    }
+  },
+  "@weeksLeftCount": {
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
+  "@reachTargetWeight": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
+  "@addedExerciseCaloriesSnackbar": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "@winbackStayTitle": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "@winbackSubscribeButton": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "@mealsLoggedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@targetCaloProgress": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "@photosCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@creditsCountSuffix": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@quizStepCount": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      }
+    }
+  },
+  "@planMonthsNote": {
+    "placeholders": {
+      "months": {
+        "type": "int"
+      },
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "@savePercentTag": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "@offPercentHeader": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  }
+}

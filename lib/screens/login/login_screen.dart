@@ -180,152 +180,153 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFFFAFAFB),
       body: SafeArea(
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            final compact = constraints.maxHeight < 620;
-            return SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: ConstrainedBox(
-                constraints: BoxConstraints(minHeight: constraints.maxHeight),
-                child: Column(
-                  children: [
-                    // ── Top Header Row with Language Selector ──
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: const [
-                          LanguageSelectorButton(isDark: false),
-                        ],
-                      ),
-                    ),
-
-                    SizedBox(height: compact ? 16 : 44),
-
-                    // Logo & Title
-                    Column(
-                      children: [
-                        GestureDetector(
-                          onTap: () => _onLogoTap(context),
-                          behavior: HitTestBehavior.opaque,
-                          child: Image.asset(
-                            'assets/images/calgo_logo_wordmark.png',
-                            height: compact ? 76 : 110,
-                            errorBuilder: (_, __, ___) => Container(
-                              width: compact ? 72 : 90,
-                              height: compact ? 72 : 90,
-                              decoration: BoxDecoration(
-                                color: const Color(0xFF22C55E).withOpacity(0.1),
-                                shape: BoxShape.circle,
-                              ),
-                              child: const Icon(
-                                Icons.restaurant_menu,
-                                size: 48,
-                                color: Color(0xFF22C55E),
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: compact ? 14 : 24),
-                        Text(
-                          s.loginTitle,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF0F172A),
-                            letterSpacing: -0.5,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          s.loginSubtitle,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Color(0xFF64748B),
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    SizedBox(height: compact ? 22 : 48),
-
-                    // Auth Buttons
-                    SocialAuthButton(
-                      type: SocialAuthType.google,
-                      label: s.loginGoogle,
-                      isLoading: auth.googleLoading,
-                      onTap: () async {
-                        final success = await context
-                            .read<AuthProvider>()
-                            .signInWithGoogle();
-                        if (success && context.mounted) {
-                          await _completeLoginAndNavigate(context);
-                        } else if (auth.error != null && context.mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(s.loginFailed(auth.error ?? '')),
-                              backgroundColor: Colors.redAccent,
-                            ),
-                          );
-                        }
-                      },
-                    ),
-
-                    SizedBox(height: compact ? 10 : 14),
-
-                    SocialAuthButton(
-                      type: SocialAuthType.apple,
-                      label: s.loginApple,
-                      isLoading: auth.appleLoading,
-                      onTap: () async {
-                        final success = await context
-                            .read<AuthProvider>()
-                            .signInWithApple();
-                        if (success && context.mounted) {
-                          await _completeLoginAndNavigate(context);
-                        } else if (auth.error != null && context.mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(s.loginFailed(auth.error ?? '')),
-                              backgroundColor: Colors.redAccent,
-                            ),
-                          );
-                        }
-                      },
-                    ),
-
-                    SizedBox(height: compact ? 8 : 20),
-
-                    TextButton(
-                      onPressed: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(s.loginRequired),
-                          ),
-                        );
-                      },
-                      style: TextButton.styleFrom(
-                        foregroundColor: const Color(0xFF64748B),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 12),
-                      ),
-                      child: Text(
-                        s.loginRequiredButton,
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-
-                    SizedBox(height: compact ? 8 : 24),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Column(
+            children: [
+              // ── Top Header Row with Language Selector ──
+              Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: const [
+                    LanguageSelectorButton(isDark: false),
                   ],
                 ),
               ),
-            );
-          },
+
+              Expanded(
+                child: LayoutBuilder(
+                  builder: (context, constraints) => SingleChildScrollView(
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minHeight: constraints.maxHeight,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            GestureDetector(
+                              onTap: () => _onLogoTap(context),
+                              behavior: HitTestBehavior.opaque,
+                              child: Image.asset(
+                                'assets/images/calgo_logo_wordmark.png',
+                                height: 100,
+                                errorBuilder: (_, __, ___) => Container(
+                                  width: 80,
+                                  height: 80,
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFF22C55E).withOpacity(0.1),
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: const Icon(
+                                    Icons.restaurant_menu,
+                                    size: 40,
+                                    color: Color(0xFF22C55E),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 24),
+                            Text(
+                              s.loginTitle,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFF0F172A),
+                                height: 1.3,
+                                letterSpacing: -0.5,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              s.loginSubtitle,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Color(0xFF64748B),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+
+              // Auth Buttons
+              SocialAuthButton(
+                type: SocialAuthType.google,
+                label: s.loginGoogle,
+                isLoading: auth.googleLoading,
+                onTap: () async {
+                  final authProvider = context.read<AuthProvider>();
+                  final success = await authProvider.signInWithGoogle();
+                  if (success && context.mounted) {
+                    await _completeLoginAndNavigate(context);
+                  } else if (authProvider.error != null && context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(s.loginFailed(authProvider.error ?? '')),
+                        backgroundColor: Colors.redAccent,
+                      ),
+                    );
+                  }
+                },
+              ),
+
+              const SizedBox(height: 14),
+
+              SocialAuthButton(
+                type: SocialAuthType.apple,
+                label: s.loginApple,
+                isLoading: auth.appleLoading,
+                onTap: () async {
+                  final authProvider = context.read<AuthProvider>();
+                  final success = await authProvider.signInWithApple();
+                  if (success && context.mounted) {
+                    await _completeLoginAndNavigate(context);
+                  } else if (authProvider.error != null && context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(s.loginFailed(authProvider.error ?? '')),
+                        backgroundColor: Colors.redAccent,
+                      ),
+                    );
+                  }
+                },
+              ),
+
+              const SizedBox(height: 8),
+
+              TextButton(
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(s.loginRequired),
+                    ),
+                  );
+                },
+                style: TextButton.styleFrom(
+                  foregroundColor: const Color(0xFF64748B),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 16, vertical: 12),
+                ),
+                child: Text(
+                  s.loginRequiredButton,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 8),
+            ],
+          ),
         ),
       ),
     );

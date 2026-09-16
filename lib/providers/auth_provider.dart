@@ -100,6 +100,11 @@ class AuthProvider extends ChangeNotifier {
     try {
       final googleSignIn = _googleSignIn();
 
+      // Clear any stale local Google session before prompt so account picker always opens
+      try {
+        await googleSignIn.signOut();
+      } catch (_) {}
+
       final GoogleSignInAccount? account =
           await googleSignIn.signIn().timeout(const Duration(seconds: 45));
       if (account != null) {
@@ -121,6 +126,7 @@ class AuthProvider extends ChangeNotifier {
       }
       return false;
     } catch (e) {
+      debugPrint('[AuthProvider] Google Sign-In error: $e');
       final errStr = e.toString();
       _error = errStr;
       return false;

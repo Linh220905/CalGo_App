@@ -151,10 +151,10 @@ class _AccountStepState extends State<AccountStep> {
                         ),
                       );
                     }
-                  } else if (context.mounted && auth.error != null) {
+                  } else if (context.mounted && authProvider.error != null) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text(s.googleSignInFailed(auth.error ?? '')),
+                        content: Text(s.googleSignInFailed(authProvider.error ?? '')),
                         backgroundColor: Colors.redAccent,
                       ),
                     );

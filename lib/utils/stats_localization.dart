@@ -169,6 +169,19 @@ class StatsLocalization {
         'أسطورة',
         'خبير CalGo',
       ],
+      'ro': const [
+        '',
+        'Începător',
+        'Observator',
+        'Perseverent',
+        'Disciplinat',
+        'Entuziast',
+        'Pasionat de sănătate',
+        'Expert în nutriție',
+        'Campion',
+        'Legendă',
+        'Maestru CalGo',
+      ],
     };
     final list = titles[languageCode(context)] ?? titles['en']!;
     final safeLevel = level.clamp(1, list.length - 1);
@@ -229,6 +242,8 @@ class StatsLocalization {
         return '$days দিন';
       case 'ar':
         return '$days أيام';
+      case 'ro':
+        return '$days zile';
       default:
         return '$days days';
     }
@@ -248,6 +263,7 @@ class StatsLocalization {
       'hi': const ['सोम', 'मंगल', 'बुध', 'गुरु', 'शुक्र', 'शनि', 'रवि'],
       'bn': const ['সোম', 'মঙ্গল', 'বুধ', 'বৃহস্পতি', 'শুক্র', 'শনি', 'রবি'],
       'ar': const ['اثن', 'ثلث', 'أرب', 'خمي', 'جمع', 'سبت', 'أحد'],
+      'ro': const ['Lun', 'Mar', 'Mie', 'Joi', 'Vin', 'Sâm', 'Dum'],
     };
     final list = names[languageCode(context)] ?? names['en']!;
     return list[date.weekday - 1];
@@ -435,6 +451,21 @@ class StatsLocalization {
         'نوفمبر',
         'ديسمبر',
       ],
+      'ro': const [
+        '',
+        'Ian',
+        'Feb',
+        'Mar',
+        'Apr',
+        'Mai',
+        'Iun',
+        'Iul',
+        'Aug',
+        'Sep',
+        'Oct',
+        'Nov',
+        'Dec',
+      ],
     };
     final list = names[languageCode(context)] ?? names['en']!;
     return date.month >= 1 && date.month <= 12
@@ -520,6 +551,8 @@ class StatsLocalization {
         return 'প্রতিদিন গড়ে $calories kcal রাখলে প্রায় $weeks-এ $target kg-এ পৌঁছাতে পারেন।';
       case 'ar':
         return 'بمتوسط $calories سعرة يوميًا، يمكنك الوصول إلى $target كجم خلال نحو $weeks.';
+      case 'ro':
+        return 'Cu o medie de $calories kcal/zi, ai putea atinge $target kg în aproximativ $weeks.';
       default:
         return 'At an average of $calories kcal/day, you may reach $target kg in about $weeks.';
     }
@@ -893,6 +926,25 @@ class StatsLocalization {
           WeightForecastStatus.opposite =>
             'مع هذا المدخول قد ${isUp ? 'يزداد' : 'ينخفض'} وزنك ويبتعد عن $target كجم.',
         };
+      case 'ro':
+        return switch (forecast.status) {
+          WeightForecastStatus.noData =>
+            'Înregistrează o masă pentru a începe o prognoză bazată pe aportul tău real.',
+          WeightForecastStatus.reached =>
+            'Păstrează aportul și obiceiurile actuale pentru a-ți menține rezultatul.',
+          WeightForecastStatus.healthy =>
+            'Cu $periodLabel de aproximativ $calories kcal/zi, ai putea atinge $target kg în circa $weeksLabel.',
+          WeightForecastStatus.slow =>
+            'Mergi în direcția bună, dar deficitul/surplusul caloric este mic. Atingerea țintei de $target kg poate dura mai mult.',
+          WeightForecastStatus.aggressiveDeficit =>
+            'Consumi aproximativ $calories kcal/zi. Acest deficit poate să nu fie sigur. Crește treptat spre aproximativ $recommendedCalories kcal/zi.',
+          WeightForecastStatus.aggressiveSurplus =>
+            'Consumi cu aproximativ $balance kcal/zi peste nivelul de menținere. Greutatea ar putea crește mai repede decât ai planificat.',
+          WeightForecastStatus.maintenance =>
+            'Aportul tău caloric este aproape de menținere, așa că greutatea s-ar putea să nu se schimbe prea mult.',
+          WeightForecastStatus.opposite =>
+            'Cu acest aport caloric, greutatea tinde să ${isUp ? 'crească' : 'scadă'} și să se îndepărteze de $target kg.',
+        };
       default:
         return switch (forecast.status) {
           WeightForecastStatus.noData =>
@@ -929,6 +981,7 @@ class StatsLocalization {
     required String hi,
     required String bn,
     required String ar,
+    String? ro,
   }) {
     return switch (languageCode(context)) {
       'vi' => vi,
@@ -942,6 +995,7 @@ class StatsLocalization {
       'hi' => hi,
       'bn' => bn,
       'ar' => ar,
+      'ro' => ro ?? en,
       _ => en,
     };
   }
@@ -1018,6 +1072,12 @@ class StatsLocalization {
       'normal': 'طبيعي',
       'overweight': 'زيادة الوزن',
       'obese': 'السمنة',
+    },
+    'ro': {
+      'underweight': 'Subponderal',
+      'normal': 'Normal',
+      'overweight': 'Supraponderal',
+      'obese': 'Obezitate',
     },
   };
 
@@ -1153,6 +1213,23 @@ class StatsLocalization {
       'streak_7': ('سلسلة 7 أيام', 'سجّل وجباتك 7 أيام متتالية'),
       'calo_champ': ('بطل السعرات', 'حقق هدف السعرات 5 أيام متتالية'),
       'legend': ('أسطورة CalGo', 'الوصول إلى المستوى 10'),
+    },
+    'ro': {
+      'first_scan': ('Început excelent', 'Înregistrează prima ta masă'),
+      'scan_master': ('Maestru al scanării', 'Scanează 10 mese cu AI'),
+      'protein_king': (
+        'Regele proteinelor',
+        'Atinge 100% din obiectivul zilnic de proteine',
+      ),
+      'streak_7': (
+        'Serie de 7 zile',
+        'Înregistrează mese timp de 7 zile consecutive',
+      ),
+      'calo_champ': (
+        'Campionul caloriilor',
+        'Atinge obiectivul caloric 5 zile la rând',
+      ),
+      'legend': ('Legendă CalGo', 'Atinge nivelul 10'),
     },
   };
 }

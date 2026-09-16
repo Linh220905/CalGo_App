@@ -105,20 +105,22 @@ class _DiscountOfferPaywallStepState extends State<DiscountOfferPaywallStep> {
 
     try {
       final offerings = await RevenueCatService.getOfferings();
-      final currentOffering = offerings?.current;
-      if (currentOffering != null && currentOffering.availablePackages.isNotEmpty) {
-        final pkg = currentOffering.availablePackages.firstWhere(
+      final discountOffering = offerings?.getOffering('annual_discount') ??
+          offerings?.all['annual_discount'] ??
+          offerings?.current;
+      if (discountOffering != null && discountOffering.availablePackages.isNotEmpty) {
+        final pkg = discountOffering.availablePackages.firstWhere(
           (p) =>
               p.storeProduct.identifier == IapIds.premiumAnnualDiscount ||
               p.identifier.toLowerCase().contains('annual_discount') ||
               p.identifier.toLowerCase().contains('discount') ||
               p.identifier.toLowerCase().contains('offer'),
-          orElse: () => currentOffering.annual ??
-              currentOffering.availablePackages.firstWhere(
+          orElse: () => discountOffering.annual ??
+              discountOffering.availablePackages.firstWhere(
                 (p) => p.packageType == PackageType.annual,
-                orElse: () => currentOffering.availablePackages.firstWhere(
+                orElse: () => discountOffering.availablePackages.firstWhere(
                   (p) => p.storeProduct.identifier == IapIds.premiumAnnual,
-                  orElse: () => currentOffering.availablePackages.first,
+                  orElse: () => discountOffering.availablePackages.first,
                 ),
               ),
         );
@@ -303,8 +305,11 @@ class _DiscountOfferPaywallStepState extends State<DiscountOfferPaywallStep> {
     final fallbackYearly = isVietnamese ? '399.000đ' : '\$19.99';
     final fallbackMonthly = isVietnamese ? '33.000đ' : '\$1.66';
 
-    final rcOfferings = RevenueCatService.cachedOfferings?.current;
-    final available = rcOfferings?.availablePackages ?? [];
+    final rcOfferings = RevenueCatService.cachedOfferings;
+    final discountOffering = rcOfferings?.getOffering('annual_discount') ??
+        rcOfferings?.all['annual_discount'] ??
+        rcOfferings?.current;
+    final available = discountOffering?.availablePackages ?? [];
     final rcPkg = available.isEmpty
         ? null
         : available.firstWhere(
@@ -313,7 +318,7 @@ class _DiscountOfferPaywallStepState extends State<DiscountOfferPaywallStep> {
                 p.identifier.toLowerCase().contains('annual_discount') ||
                 p.identifier.toLowerCase().contains('discount') ||
                 p.identifier.toLowerCase().contains('offer'),
-            orElse: () => rcOfferings?.annual ??
+            orElse: () => discountOffering?.annual ??
                 available.firstWhere(
                   (p) => p.packageType == PackageType.annual,
                   orElse: () => available.firstWhere(
