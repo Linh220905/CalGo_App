@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/onboarding_provider.dart';
+import '../../providers/payment_provider.dart';
 import '../../widgets/social_auth_button.dart';
 import '../../widgets/language_selector.dart';
 import '../../providers/app_settings_provider.dart';
@@ -156,6 +157,11 @@ class _LoginScreenState extends State<LoginScreen> {
     if (!auth.isAuthenticated) {
       return;
     }
+    // Automatically retry/sync pending purchases (e.g. bought before login)
+    try {
+      await context.read<PaymentProvider>().retryPendingPurchaseVerification();
+    } catch (_) {}
+
     if (context.mounted) {
       if (auth.user?.hasCompletedOnboarding == true) {
         context.go('/home');

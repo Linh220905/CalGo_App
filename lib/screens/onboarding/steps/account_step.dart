@@ -7,6 +7,7 @@ import '../../../services/analytics_service.dart';
 import '../../../providers/auth_provider.dart';
 import '../../../providers/onboarding_provider.dart';
 import '../../../providers/home_provider.dart';
+import '../../../providers/payment_provider.dart';
 import '../../../providers/app_settings_provider.dart';
 import '../../../widgets/social_auth_button.dart';
 
@@ -121,6 +122,10 @@ class _AccountStepState extends State<AccountStep> {
                   final success = await authProvider.signInWithGoogle();
                   if (success && context.mounted) {
                     unawaited(analytics.trackLoginSuccess(method: 'google'));
+                    // Sync pending anonymous purchases made before login
+                    try {
+                      await context.read<PaymentProvider>().retryPendingPurchaseVerification();
+                    } catch (_) {}
                     if (authProvider.user?.hasCompletedOnboarding == true) {
                       await homeProvider.loadToday(forceRefresh: true);
                       if (context.mounted) context.go('/home');
@@ -169,6 +174,10 @@ class _AccountStepState extends State<AccountStep> {
                   final success = await authProvider.signInWithApple();
                   if (success && context.mounted) {
                     unawaited(analytics.trackLoginSuccess(method: 'apple'));
+                    // Sync pending anonymous purchases made before login
+                    try {
+                      await context.read<PaymentProvider>().retryPendingPurchaseVerification();
+                    } catch (_) {}
                     if (authProvider.user?.hasCompletedOnboarding == true) {
                       await homeProvider.loadToday(forceRefresh: true);
                       if (context.mounted) context.go('/home');

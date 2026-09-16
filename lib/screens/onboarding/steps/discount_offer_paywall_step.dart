@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 import '../../../config/app_build_config.dart';
 import '../../../config/iap_ids.dart';
 import '../../../providers/app_settings_provider.dart';
@@ -112,10 +113,14 @@ class _DiscountOfferPaywallStepState extends State<DiscountOfferPaywallStep> {
               p.identifier.toLowerCase().contains('annual_discount') ||
               p.identifier.toLowerCase().contains('discount') ||
               p.identifier.toLowerCase().contains('offer'),
-          orElse: () => currentOffering.availablePackages.firstWhere(
-            (p) => p.storeProduct.identifier == IapIds.premiumAnnualDiscount,
-            orElse: () => currentOffering.availablePackages.first,
-          ),
+          orElse: () => currentOffering.annual ??
+              currentOffering.availablePackages.firstWhere(
+                (p) => p.packageType == PackageType.annual,
+                orElse: () => currentOffering.availablePackages.firstWhere(
+                  (p) => p.storeProduct.identifier == IapIds.premiumAnnual,
+                  orElse: () => currentOffering.availablePackages.first,
+                ),
+              ),
         );
         final success = await RevenueCatService.purchasePackage(pkg);
         if (!mounted) return;
@@ -308,10 +313,14 @@ class _DiscountOfferPaywallStepState extends State<DiscountOfferPaywallStep> {
                 p.identifier.toLowerCase().contains('annual_discount') ||
                 p.identifier.toLowerCase().contains('discount') ||
                 p.identifier.toLowerCase().contains('offer'),
-            orElse: () => available.firstWhere(
-              (p) => p.storeProduct.identifier == IapIds.premiumAnnualDiscount,
-              orElse: () => available.first,
-            ),
+            orElse: () => rcOfferings?.annual ??
+                available.firstWhere(
+                  (p) => p.packageType == PackageType.annual,
+                  orElse: () => available.firstWhere(
+                    (p) => p.storeProduct.identifier == IapIds.premiumAnnual,
+                    orElse: () => available.first,
+                  ),
+                ),
           );
     final rcYearly = rcPkg?.storeProduct.priceString;
     String? rcMonthlyPrice;

@@ -594,12 +594,12 @@ class PaymentProvider extends ChangeNotifier {
     String purchaseKey,
   ) async {
     try {
-      // A StoreKit/Play transaction can be delivered after logout or account
-      // switching. Never send it with an unrelated authenticated account.
+      // A StoreKit/Play transaction can be delivered after logout or before sign-in.
       final accountId = _accountId;
       if (accountId == null) {
-        debugPrint('[IAP] Purchase held until a CalGo account is signed in');
-        _purchaseState(purchase.productID, PurchaseState.idle);
+        debugPrint('[IAP] Purchase held until a CalGo account is signed in; saving anonymous purchase');
+        await _saveAnonymousPendingPurchase(purchase);
+        _purchaseState(purchase.productID, PurchaseState.purchased);
         _purchaseInProgress = false;
         notifyListeners();
         return;
@@ -821,6 +821,7 @@ class PaymentProvider extends ChangeNotifier {
   // ── Pending purchase persistence ────────────────────────────────────────
   static const _legacyPendingPurchaseKey = 'pending_purchase_verification';
   static const _pendingPurchaseKeyPrefix = 'pending_purchase_verification_v2';
+  static const _anonymousPendingPurchaseKey = 'anonymous_pending_purchase';
 
   String _pendingPurchaseKey(String accountId) =>
       '$_pendingPurchaseKeyPrefix:$accountId';
@@ -829,6 +830,33 @@ class PaymentProvider extends ChangeNotifier {
     try {
       final prefs = await SharedPreferences.getInstance();
       await prefs.remove(_legacyPendingPurchaseKey);
+    } catch (_) {}
+  }
+
+  Future<void> _saveAnonymousPendingPurchase(PurchaseDetails purchase) async {
+    try {
+      final data = {
+        'product_id': purchase.productID,
+        'purchase_id': purchase.purchaseID,
+        'verification_data': purchase.verificationData.serverVerificationData,
+        'is_subscription': IapIds.isPremiumProduct(purchase.productID),
+        'saved_at': DateTime.now().toIso8601String(),
+      };
+      await _pendingStorage.write(
+        key: _anonymousPendingPurchaseKey,
+        value: jsonEncode(data),
+      );
+      debugPrint(
+        '[IAP] Saved anonymous pending purchase: ${purchase.productID}',
+      );
+    } catch (e) {
+      debugPrint('[IAP] Failed to save anonymous pending purchase: $e');
+    }
+  }
+
+  Future<void> _clearAnonymousPendingPurchase() async {
+    try {
+      await _pendingStorage.delete(key: _anonymousPendingPurchaseKey);
     } catch (_) {}
   }
 
@@ -870,13 +898,86 @@ class PaymentProvider extends ChangeNotifier {
     } catch (_) {}
   }
 
-  /// Called after a successful auth restore. Retries any purchase verification
-  /// that failed on a previous session due to an expired token.
+  /// Called after a successful login / auth restore. Retries any purchase verification
+  /// that failed on a previous session or was made anonymously prior to sign-in.
   Future<void> retryPendingPurchaseVerification() async {
     await _initialization;
     if (!billingEnabled || !_ready) return;
     final accountId = _accountId;
     if (accountId == null) return;
+
+    // 1. Process anonymous purchases made before sign-in (e.g. Onboarding Paywall)
+    try {
+      final anonRaw = await _pendingStorage.read(
+        key: _anonymousPendingPurchaseKey,
+      );
+      if (anonRaw != null && anonRaw.isNotEmpty) {
+        final data = jsonDecode(anonRaw) as Map<String, dynamic>;
+        final productId = data['product_id'] as String?;
+        final purchaseToken = data['verification_data'] as String?;
+        final transactionId = data['purchase_id'] as String?;
+        final isSub = data['is_subscription'] as bool? ?? false;
+
+        if (productId != null &&
+            (isAppleBillingPlatform
+                ? transactionId != null
+                : purchaseToken != null)) {
+          debugPrint('[IAP] Syncing anonymous purchase after login: $productId');
+          if (isSub) {
+            final result = await _paymentService.api.post(
+              '/subscriptions/store/verify',
+              body: {
+                'provider': isAppleBillingPlatform ? 'app_store' : 'google_play',
+                'product_id': productId,
+                if (isAppleBillingPlatform)
+                  'transaction_id': transactionId
+                else
+                  'purchase_token': purchaseToken,
+              },
+            );
+            if (result is Map<String, dynamic> && result['success'] == true) {
+              _lastSubscriptionVerification = result;
+              _purchaseState(productId, PurchaseState.purchased);
+              await _clearAnonymousPendingPurchase();
+              try {
+                await _onCreditsVerified?.call();
+              } catch (_) {}
+              debugPrint('[IAP] Anonymous subscription verified and linked to account: $accountId');
+              notifyListeners();
+            }
+          } else {
+            final endpoint = isAppleBillingPlatform
+                ? '/payments/app-store/verify'
+                : '/payments/google-play/verify';
+            final result = await _paymentService.api.post(
+              endpoint,
+              body: {
+                'product_id': productId,
+                if (isAppleBillingPlatform)
+                  'transaction_id': transactionId
+                else
+                  'purchase_token': purchaseToken,
+              },
+            );
+            if (result is Map<String, dynamic> && result['success'] == true) {
+              await _clearAnonymousPendingPurchase();
+              try {
+                await _onCreditsVerified?.call();
+              } catch (_) {}
+              _purchaseState(productId, PurchaseState.purchased);
+              debugPrint('[IAP] Anonymous credit purchase verified and linked to account: $accountId');
+              notifyListeners();
+            }
+          }
+        } else {
+          await _clearAnonymousPendingPurchase();
+        }
+      }
+    } catch (e) {
+      debugPrint('[IAP] Anonymous purchase sync failed: $e');
+    }
+
+    // 2. Process account-specific pending purchases
     try {
       final raw = await _pendingStorage.read(
         key: _pendingPurchaseKey(accountId),

@@ -29,12 +29,14 @@ Future<void> _bootstrapAuth(
   AuthProvider authProvider,
   OnboardingProvider onboardingProvider,
 ) async {
-  // If SharedPreferences has no keys, app was fresh-installed or re-installed
+  // If has_run_before is missing, app was fresh-installed or re-installed
   // after uninstall. Wipe orphaned iOS Keychain / secure storage so the app
   // clean-starts at /onboarding instead of auto-logging into a ghost session.
   final prefs = await SharedPreferences.getInstance();
-  if (prefs.getKeys().isEmpty) {
+  final hasRunBefore = prefs.getBool('has_run_before') ?? false;
+  if (!hasRunBefore) {
     await authProvider.clearAllStorage();
+    await prefs.setBool('has_run_before', true);
   }
   await onboardingProvider.init();
   await authProvider.tryRestore();

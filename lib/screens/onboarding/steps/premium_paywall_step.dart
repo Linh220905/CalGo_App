@@ -208,7 +208,11 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
           setState(() => _finishingPurchase = false);
           return;
         }
+        try {
+          await payment.retryPendingPurchaseVerification();
+        } catch (_) {}
       }
+      if (!mounted) return;
       final onboarding = context.read<OnboardingProvider>();
       final home = context.read<HomeProvider>();
       final saved = await onboarding.completeOnboarding(
