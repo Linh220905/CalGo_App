@@ -32,6 +32,12 @@ class AuthProvider extends ChangeNotifier {
   String? get error => _error;
   bool get isAuthenticated => _user != null;
 
+  Future<void> clearAllStorage() async {
+    await _authService.clearAllStorage();
+    _user = null;
+    notifyListeners();
+  }
+
   Future<void> tryRestore() async {
     final generation = ++_restoreGeneration;
     _loading = true;

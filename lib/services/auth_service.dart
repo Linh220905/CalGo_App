@@ -28,6 +28,11 @@ class AuthService {
     _api.setToken(accessToken);
   }
 
+  Future<void> clearAllStorage() async {
+    await _storage.deleteAll();
+    _api.setToken(null);
+  }
+
   Future<void> _clearToken() async {
     await _storage.delete(key: _tokenKey);
     await _storage.delete(key: _refreshTokenKey);

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'services/api_service.dart';
 import 'services/onboarding_service.dart';
 import 'services/home_service.dart';
@@ -23,6 +24,21 @@ import 'providers/progress_provider.dart';
 import 'routes/app_router.dart';
 import 'theme/app_theme.dart';
 import 'l10n/generated/app_localizations.dart';
+
+Future<void> _bootstrapAuth(
+  AuthProvider authProvider,
+  OnboardingProvider onboardingProvider,
+) async {
+  // If SharedPreferences has no keys, app was fresh-installed or re-installed
+  // after uninstall. Wipe orphaned iOS Keychain / secure storage so the app
+  // clean-starts at /onboarding instead of auto-logging into a ghost session.
+  final prefs = await SharedPreferences.getInstance();
+  if (prefs.getKeys().isEmpty) {
+    await authProvider.clearAllStorage();
+  }
+  await onboardingProvider.init();
+  await authProvider.tryRestore();
+}
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -87,8 +103,7 @@ void main() {
   // Start bootstrap reads. The router shows a neutral startup screen until
   // they finish, never a persisted onboarding step.
   unawaited(analyticsService.trackAppFirstOpen());
-  unawaited(onboardingProvider.init());
-  unawaited(authProvider.tryRestore());
+  unawaited(_bootstrapAuth(authProvider, onboardingProvider));
   unawaited(RevenueCatService.init());
   final router = createAppRouter(onboardingProvider, authProvider);
   NotificationService.onNotificationTap = (payload) {
