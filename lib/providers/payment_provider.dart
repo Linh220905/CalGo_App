@@ -599,6 +599,9 @@ class PaymentProvider extends ChangeNotifier {
       final accountId = _accountId;
       if (accountId == null) {
         debugPrint('[IAP] Purchase held until a CalGo account is signed in');
+        _purchaseState(purchase.productID, PurchaseState.idle);
+        _purchaseInProgress = false;
+        notifyListeners();
         return;
       }
 
@@ -607,6 +610,9 @@ class PaymentProvider extends ChangeNotifier {
       );
       if (_accountId != accountId) {
         debugPrint('[IAP] Purchase held because the CalGo account changed');
+        _purchaseState(purchase.productID, PurchaseState.idle);
+        _purchaseInProgress = false;
+        notifyListeners();
         return;
       }
       if (storeAccountId != null && storeAccountId != accountId) {
@@ -615,6 +621,9 @@ class PaymentProvider extends ChangeNotifier {
         // surface this unrelated transaction as a payment failure for the
         // account currently on screen.
         debugPrint('[IAP] Purchase belongs to another CalGo account; held');
+        _purchaseState(purchase.productID, PurchaseState.idle);
+        _purchaseInProgress = false;
+        notifyListeners();
         return;
       }
 
@@ -623,6 +632,11 @@ class PaymentProvider extends ChangeNotifier {
       } else {
         await _verifyAndConsume(purchase, packageId, accountId: accountId);
       }
+    } catch (e) {
+      debugPrint('[IAP] Error processing purchase: $e');
+      _purchaseState(purchase.productID, PurchaseState.error);
+      _purchaseInProgress = false;
+      notifyListeners();
     } finally {
       _processingPurchaseKeys.remove(purchaseKey);
     }

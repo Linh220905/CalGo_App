@@ -2368,7 +2368,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get changeYourselfNow => '立即改变自我';
 
   @override
-  String get tryFreeNow => '立即免费体验';
+  String get tryFreeNow => '免费试用 3 天';
 
   @override
   String get completeSetup => '完成设置';
@@ -2776,4 +2776,25 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get claimOfferBtn => '继续';
+
+  @override
+  String get potentialMotivationTitle => '你有巨大的潜力\n去实现你的目标';
+
+  @override
+  String get weightTransitionTitle => '你的体重转变';
+
+  @override
+  String get weightTransitionDesc => '体重的变化需要时间。最初几周的坚持最为重要';
+
+  @override
+  String get days3 => '3天';
+
+  @override
+  String get days7 => '7天';
+
+  @override
+  String get days30 => '30天';
+
+  @override
+  String get analysisGreeting => '欢迎来到 CalGo';
 }

@@ -1168,7 +1168,7 @@
   "payMonthlyNote": "الدفع شهرياً",
   "trialCancelAnytimeNote": "لا توجد رسوم اليوم. يمكنك الإلغاء في أي وقت من إعدادات App Store / Google Play.",
   "changeYourselfNow": "ابدأ تغيير نفسك الآن",
-  "tryFreeNow": "جرب مجاناً الآن",
+  "tryFreeNow": "تجربة مجانية لمدة 3 أيام",
   "completeSetup": "إتمام الإعداد",
   "servicesAndPlans": "الخدمات والخطط",
   "connectedStatus": "متصل",
@@ -1339,5 +1339,12 @@
         "type": "int"
       }
     }
-  }
+  },
+  "potentialMotivationTitle": "لديك إمكانات رائعة\nلتحقيق هدفك",
+  "weightTransitionTitle": "مسار تحول وزنك",
+  "weightTransitionDesc": "تغيير الوزن يتطلب وقتاً. الاستمرارية في الأسابيع الأولى هي الأهم",
+  "days3": "3 أيام",
+  "days7": "7 أيام",
+  "days30": "30 يوماً",
+  "analysisGreeting": "مرحباً بك في CalGo"
 }

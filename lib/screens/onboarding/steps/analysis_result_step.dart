@@ -502,13 +502,16 @@ class _ResultPhaseState extends State<_ResultPhase> {
 // ═══════════════════════════════════════════════════════════════
 
 class _Header extends StatelessWidget {
-  final String name;
-  const _Header({required this.name});
+  final String? name;
+  const _Header({this.name});
 
   @override
   Widget build(BuildContext context) {
     final settings = context.watch<AppSettingsProvider>();
     final s = settings.strings;
+    final hasCustomName = name != null && name!.trim().isNotEmpty;
+    final titleText = hasCustomName ? s.analysisHello(name!.trim()) : s.analysisGreeting;
+
     return Row(
       children: [
         Image.asset(
@@ -522,7 +525,7 @@ class _Header extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                s.analysisHello(name),
+                titleText,
                 style: const TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.w700,

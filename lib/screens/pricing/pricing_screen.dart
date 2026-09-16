@@ -3,8 +3,10 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../../config/app_build_config.dart';
 import '../../providers/app_settings_provider.dart';
+import '../../providers/auth_provider.dart';
 import '../../providers/payment_provider.dart';
 import '../../services/api_service.dart';
+import '../../services/revenuecat_service.dart';
 import '../../utils/payment_platform.dart';
 
 class CreditPackageItem {
@@ -52,8 +54,16 @@ class _PricingScreenState extends State<PricingScreen> {
 
   // Credit Packages list loaded instantly matching web backend
   late List<CreditPackageItem> _payPacks;
+  final Map<String, String> _rcProductPrices = {};
 
   String _storePriceLabel(CreditPackageItem pack) {
+    // 1. Try RevenueCat product price first
+    final sku = 'credit_${pack.creditAmount}';
+    if (_rcProductPrices.containsKey(sku) && _rcProductPrices[sku]!.isNotEmpty) {
+      return _rcProductPrices[sku]!;
+    }
+
+    // 2. Google Play Billing price
     return context.read<PaymentProvider>().formattedPriceForCreditAmount(
           pack.creditAmount,
         ) ??
@@ -63,6 +73,9 @@ class _PricingScreenState extends State<PricingScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _loadRcCreditPrices();
+    });
     final s = context.read<AppSettingsProvider>().strings;
     _payPacks = [
       CreditPackageItem(
@@ -160,6 +173,24 @@ class _PricingScreenState extends State<PricingScreen> {
     } catch (_) {}
   }
 
+  Future<void> _loadRcCreditPrices() async {
+    try {
+      final productIds = _payPacks.map((p) => 'credit_${p.creditAmount}').toList();
+      final products = await RevenueCatService.getProducts(productIds);
+      if (mounted && products.isNotEmpty) {
+        setState(() {
+          for (final prod in products) {
+            if (prod.priceString.isNotEmpty) {
+              _rcProductPrices[prod.identifier] = prod.priceString;
+            }
+          }
+        });
+      }
+    } catch (e) {
+      debugPrint('[PricingScreen] Failed to load RC credit prices: $e');
+    }
+  }
+
   Future<void> _processStorePurchase(
     String packageId,
     CreditPackageItem pack,
@@ -167,24 +198,68 @@ class _PricingScreenState extends State<PricingScreen> {
     final s = context.read<AppSettingsProvider>().strings;
     setState(() => _creatingPayment = true);
     try {
-      final payment = context.read<PaymentProvider>();
-      final ok = await payment.buyCredits(
-        packageId,
-        creditAmount: pack.creditAmount,
-      );
-      if (ok && mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(paymentCopyForPlatform(s.paymentProcessing))),
+      debugPrint('[CreditPurchase] Starting purchase for ${pack.creditAmount} credits...');
+      final sku = 'credit_${pack.creditAmount}';
+
+      // 1. Try RevenueCat purchase first via standalone store product
+      bool rcAttempted = false;
+      try {
+        final products = await RevenueCatService.getProducts([sku]).timeout(
+          const Duration(seconds: 8),
+          onTimeout: () => [],
         );
-      } else if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(paymentCopyForPlatform(s.paymentOpenFailed)),
-            backgroundColor: Colors.redAccent,
-          ),
-        );
+        if (products.isNotEmpty) {
+          rcAttempted = true;
+          final rcProduct = products.firstWhere(
+            (p) => p.identifier == sku,
+            orElse: () => products.first,
+          );
+
+          debugPrint('[CreditPurchase] Matched RevenueCat product: ${rcProduct.identifier}');
+          final customerInfo = await RevenueCatService.purchaseStoreProduct(rcProduct);
+          if (!mounted) return;
+          if (customerInfo != null) {
+            debugPrint('[CreditPurchase] Purchase success, refreshing user credits...');
+            final auth = context.read<AuthProvider>();
+            await auth.refreshUser();
+            if (!mounted) return;
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(s.creditsPurchasedSuccess)),
+            );
+            return;
+          } else {
+            debugPrint('[CreditPurchase] RevenueCat purchase returned null or cancelled');
+            return;
+          }
+        }
+      } catch (e) {
+        debugPrint('[CreditPurchase] RevenueCat purchase error: $e');
       }
-    } catch (_) {
+
+      // 2. Fallback to native Store billing only if RevenueCat did not handle it
+      if (!rcAttempted) {
+        debugPrint('[CreditPurchase] Fallback to native Google Play billing...');
+        if (!mounted) return;
+        final payment = context.read<PaymentProvider>();
+        final ok = await payment.buyCredits(
+          packageId,
+          creditAmount: pack.creditAmount,
+        );
+        if (ok && mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(paymentCopyForPlatform(s.paymentProcessing))),
+          );
+        } else if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(paymentCopyForPlatform(s.paymentOpenFailed)),
+              backgroundColor: Colors.redAccent,
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      debugPrint('[CreditPurchase] Top-level error: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -334,7 +409,7 @@ class _PricingScreenState extends State<PricingScreen> {
                     child: Text(
                       paymentCopyForPlatform(s.testingFreeCredits),
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 12, height: 1.35),
+                      style: const TextStyle(fontSize: 12, height: 1.35),
                     ),
                   ),
                 ] else ...[
@@ -361,7 +436,7 @@ class _PricingScreenState extends State<PricingScreen> {
                       ),
                       label: Text(
                         s.payButton,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,

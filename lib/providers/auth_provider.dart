@@ -41,10 +41,8 @@ class AuthProvider extends ChangeNotifier {
       if (generation != _restoreGeneration) return;
       if (userData != null) {
         _user = User.fromJson(userData);
-        await RevenueCatService.logIn(_user!.id);
       } else {
         _user = null;
-        await RevenueCatService.logOut();
       }
     } catch (_) {
       if (generation != _restoreGeneration) return;
@@ -107,8 +105,10 @@ class AuthProvider extends ChangeNotifier {
         if (idToken != null && idToken.isNotEmpty) {
           final userData = await _authService.loginWithGoogle(idToken);
           _user = User.fromJson(userData);
-          await RevenueCatService.logIn(_user!.id);
           _error = null;
+          if (_user?.id != null) {
+            unawaited(RevenueCatService.logIn(_user!.id));
+          }
           return true;
         }
         throw StateError('Google ID token is unavailable');
@@ -144,8 +144,10 @@ class AuthProvider extends ChangeNotifier {
           lastName: credential.familyName,
         );
         _user = User.fromJson(userData);
-        await RevenueCatService.logIn(_user!.id);
         _error = null;
+        if (_user?.id != null) {
+          unawaited(RevenueCatService.logIn(_user!.id));
+        }
         return true;
       }
       return false;
@@ -185,7 +187,6 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
       final userData = await _authService.loginWithGoogle(idToken);
       _user = User.fromJson(userData);
-      await RevenueCatService.logIn(_user!.id);
       _error = null;
       _loading = false;
       notifyListeners();
@@ -204,8 +205,10 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
       final userData = await _authService.loginWithEmail(email, password);
       _user = User.fromJson(userData);
-      await RevenueCatService.logIn(_user!.id);
       _error = null;
+      if (_user?.id != null) {
+        unawaited(RevenueCatService.logIn(_user!.id));
+      }
       _loading = false;
       notifyListeners();
       return true;
@@ -223,6 +226,7 @@ class AuthProvider extends ChangeNotifier {
     // account instead of opening the account picker.
     _restoreGeneration++;
     await _authService.logout();
+    unawaited(RevenueCatService.logOut());
     try {
       await _googleSignIn().signOut();
     } catch (_) {
@@ -230,7 +234,6 @@ class AuthProvider extends ChangeNotifier {
       // block leaving the account.
     }
     _user = null;
-    await RevenueCatService.logOut();
     _loading = _googleLoading || _appleLoading;
     notifyListeners();
   }

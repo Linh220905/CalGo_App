@@ -2383,7 +2383,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get changeYourselfNow => '今すぐ自分を変える';
 
   @override
-  String get tryFreeNow => '今すぐ無料体験';
+  String get tryFreeNow => '3日間無料体験';
 
   @override
   String get completeSetup => '設定完了';
@@ -2792,4 +2792,25 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get claimOfferBtn => '続ける';
+
+  @override
+  String get potentialMotivationTitle => 'あなたには目標を\n達成する大きな\n可能性があります';
+
+  @override
+  String get weightTransitionTitle => '体重の変化の推移';
+
+  @override
+  String get weightTransitionDesc => '体重の変化には時間がかかります。最初の数週間の継続が最も重要です';
+
+  @override
+  String get days3 => '3日';
+
+  @override
+  String get days7 => '7日';
+
+  @override
+  String get days30 => '30日';
+
+  @override
+  String get analysisGreeting => 'CalGoへようこそ';
 }

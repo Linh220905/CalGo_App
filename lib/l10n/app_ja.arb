@@ -759,7 +759,7 @@
   "payMonthlyNote": "月払い",
   "trialCancelAnytimeNote": "本日の請求はありません。App Store / Google Playの設定でいつでも解約可能。",
   "changeYourselfNow": "今すぐ自分を変える",
-  "tryFreeNow": "今すぐ無料体験",
+  "tryFreeNow": "3日間無料体験",
   "completeSetup": "設定完了",
   "servicesAndPlans": "サービスと料金プラン",
   "connectedStatus": "連携済み",
@@ -930,5 +930,12 @@
         "type": "int"
       }
     }
-  }
+  },
+  "potentialMotivationTitle": "あなたには目標を\n達成する大きな\n可能性があります",
+  "weightTransitionTitle": "体重の変化の推移",
+  "weightTransitionDesc": "体重の変化には時間がかかります。最初の数週間の継続が最も重要です",
+  "days3": "3日",
+  "days7": "7日",
+  "days30": "30日",
+  "analysisGreeting": "CalGoへようこそ"
 }

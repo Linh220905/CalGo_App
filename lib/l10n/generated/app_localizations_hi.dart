@@ -2470,7 +2470,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get changeYourselfNow => 'खुद को अभी बदलें';
 
   @override
-  String get tryFreeNow => 'अभी मुफ़्त आज़माएं';
+  String get tryFreeNow => '3 दिन निःशुल्क आज़माएं';
 
   @override
   String get completeSetup => 'सेटअप पूरा करें';
@@ -2908,4 +2908,27 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get claimOfferBtn => 'जारी रखें';
+
+  @override
+  String get potentialMotivationTitle =>
+      'आपके पास अपने लक्ष्य को\nहासिल करने की बेहतरीन\nक्षमता है';
+
+  @override
+  String get weightTransitionTitle => 'आपके वजन का बदलाव';
+
+  @override
+  String get weightTransitionDesc =>
+      'वजन बदलने में समय लगता है। शुरुआती हफ्तों में निरंतरता सबसे महत्वपूर्ण है';
+
+  @override
+  String get days3 => '3 दिन';
+
+  @override
+  String get days7 => '7 दिन';
+
+  @override
+  String get days30 => '30 दिन';
+
+  @override
+  String get analysisGreeting => 'CalGo में आपका स्वागत है';
 }

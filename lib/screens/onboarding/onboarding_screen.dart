@@ -10,21 +10,18 @@ import 'widgets/step_progress_bar.dart';
 import 'steps/splash_step.dart';
 import 'steps/hero_step.dart';
 import 'steps/goal_step.dart';
-import 'steps/goal_specific_step.dart';
-import 'steps/name_step.dart';
 import 'steps/gender_step.dart';
 import 'steps/age_step.dart';
 import 'steps/height_step.dart';
 import 'steps/weight_step.dart';
 import 'steps/target_weight_step.dart';
+import 'steps/potential_motivation_step.dart';
 import 'steps/pace_step.dart';
 import 'steps/activity_step.dart';
-import 'steps/habit_step.dart';
 import 'steps/prep_time_step.dart';
 import 'steps/budget_step.dart';
-import 'steps/nutrition_priority_step.dart';
-import 'steps/avoid_foods_step.dart';
 import 'steps/referral_step.dart';
+import 'steps/habit_step.dart';
 import 'steps/apple_health_permission_step.dart';
 import 'steps/analysis_result_step.dart';
 import 'steps/premium_paywall_step.dart';
@@ -138,8 +135,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         ),
                       )
                     else if (provider.currentStep >= 2 &&
-                        provider.currentStep <= 18)
-                      StepProgressBar(value: (provider.currentStep - 1) / 17),
+                        provider.currentStep <= 15)
+                      StepProgressBar(value: (provider.currentStep - 1) / 14),
                     Expanded(
                       child: AnimatedSwitcher(
                         duration: const Duration(milliseconds: 300),
@@ -168,52 +165,46 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       case 2:
         return GoalStep(key: key);
       case 3:
-        return GoalSpecificStep(key: key);
-      case 4:
-        return NameStep(key: key);
-      case 5:
         return GenderStep(key: key);
-      case 6:
+      case 4:
         return AgeStep(key: key);
-      case 7:
+      case 5:
         return HeightStep(key: key);
-      case 8:
+      case 6:
         return WeightStep(key: key);
-      case 9:
+      case 7:
         return TargetWeightStep(key: key);
-      case 10:
+      case 8:
+        return PotentialMotivationStep(key: key);
+      case 9:
         return PaceStep(key: key);
-      case 11:
+      case 10:
         return ActivityStep(key: key);
-      case 12:
+      case 11:
         return PrepTimeStep(key: key);
-      case 13:
+      case 12:
         return BudgetStep(key: key);
-      case 14:
-        return NutritionPriorityStep(key: key);
-      case 15:
-        return AvoidFoodsStep(key: key);
-      case 16:
+      case 13:
         return ReferralStep(key: key);
-      case 17:
+      case 14:
         return HabitStep(key: key);
-      case 18:
+      case 15:
         // A previously persisted recalculate session may still point at the
         // old Apple Health step. Redirect it to the shared analysis/result UI.
         return context.read<OnboardingProvider>().isRecalculating
             ? AnalysisResultStep(key: key)
             : AppleHealthPermissionStep(key: key);
-      case 19:
+      case 16:
         return AnalysisResultStep(key: key);
-      case 20:
+      case 17:
         return AppBuildConfig.isTesting
             ? AccountStep(key: key)
             : PremiumPaywallStep(key: key);
-      case 21:
+      case 18:
         return AppBuildConfig.isTesting
             ? HomeStep(key: key)
             : AccountStep(key: key);
-      case 22:
+      case 19:
         return HomeStep(key: key);
       default:
         return SizedBox.shrink(key: key);

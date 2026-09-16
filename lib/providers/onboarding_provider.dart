@@ -28,7 +28,7 @@ class OnboardingProvider extends ChangeNotifier {
   static const _dataKey = 'onboarding_data';
   static const _versionKey = 'onboarding_version';
   static const _premiumCustomizationKey = 'premium_meal_customization';
-  static const int _onboardingVersion = 9;
+  static const int _onboardingVersion = 10;
 
   OnboardingProvider({
     OnboardingService? onboardingService,
@@ -50,16 +50,16 @@ class OnboardingProvider extends ChangeNotifier {
     switch (_currentStep) {
       case 2:
         return 1 / 6;
-      case 7:
+      case 5:
         return 2 / 6;
-      case 8:
+      case 6:
         return 3 / 6;
-      case 9:
+      case 7:
         return 4 / 6;
-      case 10:
+      case 9:
         return 5 / 6;
-      case 11:
-      case 20:
+      case 10:
+      case 16:
         return 1.0;
       default:
         return 0.5;
@@ -101,9 +101,8 @@ class OnboardingProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Added AppleHealthPermissionStep. Testing releases still skip the Premium
-  // paywall, so Account and Home shift one slot earlier in both variants.
-  static const int totalSteps = AppBuildConfig.isTesting ? 22 : 23;
+  // Testing releases still skip the Premium paywall, so Account and Home shift one slot earlier.
+  static const int totalSteps = AppBuildConfig.isTesting ? 19 : 20;
 
   Future<void> init() async {
     if (_initialized) return;
@@ -296,13 +295,13 @@ class OnboardingProvider extends ChangeNotifier {
     if (_isRecalculating || _analyticsService == null) return;
     if (step == 1 || step == 2) {
       unawaited(_analyticsService.trackOnboardingStarted());
-    } else if (step == 5) {
+    } else if (step == 6) {
       unawaited(_analyticsService.trackOnboardingQ5());
     } else if (step == 10) {
       unawaited(_analyticsService.trackOnboardingQ10());
-    } else if (step == 15) {
+    } else if (step == 14) {
       unawaited(_analyticsService.trackOnboardingQ15());
-    } else if (step == 19 || step == 20) {
+    } else if (step == 16 || step == 17) {
       unawaited(_analyticsService.trackOnboardingQ20());
     }
   }
@@ -310,25 +309,22 @@ class OnboardingProvider extends ChangeNotifier {
   Future<void> previousStep() async {
     if (_isRecalculating) {
       switch (_currentStep) {
-        case 19:
-          _currentStep = 11;
-          break;
-        case 20:
-          _currentStep = 11;
-          break;
-        case 11:
+        case 16:
           _currentStep = 10;
           break;
         case 10:
           _currentStep = 9;
           break;
         case 9:
-          _currentStep = 8;
-          break;
-        case 8:
           _currentStep = 7;
           break;
         case 7:
+          _currentStep = 6;
+          break;
+        case 6:
+          _currentStep = 5;
+          break;
+        case 5:
           _currentStep = 2;
           break;
         case 2:
@@ -355,27 +351,26 @@ class OnboardingProvider extends ChangeNotifier {
     if (_isRecalculating) {
       switch (_currentStep) {
         case 2:
+          _currentStep = 5;
+          break;
+        case 5:
+          _currentStep = 6;
+          break;
+        case 6:
           _currentStep = 7;
           break;
         case 7:
-          _currentStep = 8;
-          break;
-        case 8:
           _currentStep = 9;
           break;
         case 9:
           _currentStep = 10;
           break;
         case 10:
-          _currentStep = 11;
+          // Recalculate reuses the onboarding analysis + result UI (step 16).
+          _currentStep = 16;
           break;
-        case 11:
-          // Recalculate reuses the onboarding analysis + result UI. Apple
-          // Health is only part of the first-time onboarding flow.
-          _currentStep = 20;
-          break;
-        case 19:
-          // Finishing recalculation step 19 completes the flow instead of advancing to Paywall/Account
+        case 16:
+          // Finishing recalculation step 16 completes the flow instead of advancing to Paywall/Account
           await completeOnboarding();
           return;
         default:

@@ -4530,7 +4530,7 @@ abstract class AppLocalizations {
   /// No description provided for @tryFreeNow.
   ///
   /// In en, this message translates to:
-  /// **'Try free now'**
+  /// **'Try 3 days for free'**
   String get tryFreeNow;
 
   /// No description provided for @completeSetup.
@@ -5288,6 +5288,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Continue'**
   String get claimOfferBtn;
+
+  /// No description provided for @potentialMotivationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You have great\npotential to crush\nyour goal'**
+  String get potentialMotivationTitle;
+
+  /// No description provided for @weightTransitionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your weight transition'**
+  String get weightTransitionTitle;
+
+  /// No description provided for @weightTransitionDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight change takes time. Consistency in the early weeks matters most'**
+  String get weightTransitionDesc;
+
+  /// No description provided for @days3.
+  ///
+  /// In en, this message translates to:
+  /// **'3 Days'**
+  String get days3;
+
+  /// No description provided for @days7.
+  ///
+  /// In en, this message translates to:
+  /// **'7 Days'**
+  String get days7;
+
+  /// No description provided for @days30.
+  ///
+  /// In en, this message translates to:
+  /// **'30 Days'**
+  String get days30;
+
+  /// No description provided for @analysisGreeting.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to CalGo'**
+  String get analysisGreeting;
 }
 
 class _AppLocalizationsDelegate

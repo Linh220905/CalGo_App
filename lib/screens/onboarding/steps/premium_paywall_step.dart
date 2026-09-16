@@ -15,6 +15,8 @@ import '../../../widgets/social_auth_button.dart';
 import '../../../widgets/premium_ui.dart';
 import '../../../services/trial_notification_service.dart';
 import '../../../services/analytics_service.dart';
+import '../../../services/revenuecat_service.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 import '../../../utils/payment_platform.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import 'post_premium_quiz_dialog.dart';
@@ -72,6 +74,12 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        context.read<PaymentProvider>().loadProducts();
+        RevenueCatService.getOfferings().then((_) {
+          if (mounted) setState(() {});
+        });
+      }
       if (mounted && Navigator.canPop(context)) {
         setState(() => _showClose = true);
       }
@@ -253,94 +261,6 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
     }
   }
 
-  void _showWinbackDownsellDialog() {
-    setState(() => _hasShownDownsell = true);
-    final payment = context.read<PaymentProvider>();
-    final s = context.read<AppSettingsProvider>().strings;
-    final winback = payment.premiumOfferWithTag(PremiumPlan.annual, 'winback');
-    if (winback == null) {
-      _proceedClose();
-      return;
-    }
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (ctx) => AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-        contentPadding: const EdgeInsets.all(22),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-              decoration: BoxDecoration(
-                color: Colors.red.shade50,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Text(
-                s.winbackExclusiveOffer,
-                style: _f(
-                  10.5,
-                  weight: FontWeight.w800,
-                  color: Colors.redAccent,
-                ),
-              ),
-            ),
-            const SizedBox(height: 12),
-            Text(
-              s.winbackStayTitle(winback.recurringPrice),
-              textAlign: TextAlign.center,
-              style: _f(18, weight: FontWeight.w800, letterSpacing: -0.3),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              s.winbackDisclaimer,
-              textAlign: TextAlign.center,
-              style: _f(12.5, color: _kMuted, height: 1.35),
-            ),
-            const SizedBox(height: 20),
-            SizedBox(
-              width: double.infinity,
-              height: 48,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(ctx);
-                  setState(() {
-                    _selectedPlan = _Plan.annual;
-                  });
-                  _handlePrimaryAction(selectedOffer: winback);
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: _kAccent,
-                  foregroundColor: Colors.white,
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                ),
-                child: Text(
-                  s.winbackSubscribeButton(winback.recurringPrice),
-                  style: _f(14, weight: FontWeight.w800, color: Colors.white),
-                ),
-              ),
-            ),
-            const SizedBox(height: 8),
-            TextButton(
-              onPressed: () {
-                Navigator.pop(ctx);
-                _proceedClose();
-              },
-              child: Text(
-                s.winbackDismissButton,
-                style: _f(12, color: _kMuted, weight: FontWeight.w600),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   Future<void> _triggerPostPurchaseQuiz() {
     return PostPremiumQuizDialog.show(context, onCompleted: () async {});
   }
@@ -464,8 +384,7 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
     return result == true && auth.isAuthenticated;
   }
 
-  Future<void> _handlePrimaryAction({PremiumOffer? selectedOffer}) async {
-    final payment = context.read<PaymentProvider>();
+  Future<void> _handlePrimaryAction() async {
     final s = context.read<AppSettingsProvider>().strings;
     const testing = AppBuildConfig.isTesting;
 
@@ -474,26 +393,52 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
       return;
     }
 
-    final plan = _toPremiumPlan(_selectedPlan);
-    final preferTrial =
-        selectedOffer?.hasFreeTrial ??
-        (_enableFreeTrial && payment.hasTrialOffer(plan));
-    final started = await payment.buyPremium(
-      plan,
-      preferFreeTrial: preferTrial,
-      selectedOffer: selectedOffer,
-    );
-    if (!mounted) return;
+    setState(() => _finishingPurchase = true);
 
-    if (started) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(paymentCopyForPlatform(s.paymentProcessing))),
-      );
-    } else {
-      final errorMsg = paymentCopyForPlatform(s.paymentVerificationFailed);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(errorMsg), backgroundColor: Colors.redAccent),
-      );
+    try {
+      final offerings = await RevenueCatService.getOfferings();
+      final currentOffering = offerings?.current;
+      if (currentOffering != null && currentOffering.availablePackages.isNotEmpty) {
+        Package? pkg;
+        if (_selectedPlan == _Plan.weekly) {
+          pkg = currentOffering.weekly ??
+              currentOffering.availablePackages.firstWhere(
+                (p) => p.packageType == PackageType.weekly,
+                orElse: () => currentOffering.availablePackages.first,
+              );
+        } else if (_selectedPlan == _Plan.monthly) {
+          pkg = currentOffering.monthly ??
+              currentOffering.availablePackages.firstWhere(
+                (p) => p.packageType == PackageType.monthly,
+                orElse: () => currentOffering.availablePackages.first,
+              );
+        } else {
+          pkg = currentOffering.annual ??
+              currentOffering.availablePackages.firstWhere(
+                (p) => p.packageType == PackageType.annual,
+                orElse: () => currentOffering.availablePackages.first,
+              );
+        }
+
+        final success = await RevenueCatService.purchasePackage(pkg);
+        if (!mounted) return;
+        if (success) {
+          await _handlePremiumSuccess();
+        }
+        return;
+      }
+    } catch (e) {
+      debugPrint('[Paywall] RevenueCat purchase failed: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(paymentCopyForPlatform(s.paymentVerificationFailed)),
+            backgroundColor: Colors.redAccent,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _finishingPurchase = false);
     }
   }
 
@@ -615,8 +560,8 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Container(
-                              width: 90,
-                              height: 90,
+                              width: 96,
+                              height: 96,
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 gradient: RadialGradient(
@@ -629,7 +574,7 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
                               child: Center(
                                 child: Image.asset(
                                   'assets/images/apple_mascot/apple_paywall.png',
-                                  height: 85,
+                                  height: 90,
                                   fit: BoxFit.contain,
                                 ),
                               ),
@@ -646,7 +591,7 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
                               textAlign: TextAlign.center,
                               style: _f(12, color: _kMuted, weight: FontWeight.w500),
                             ),
-                            const SizedBox(height: 6),
+                            const SizedBox(height: 5),
                             Container(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 14,
@@ -701,7 +646,7 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             const _BenefitChecklist(),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: 10),
                             _VerticalPricingList(
                               selectedPlan: _selectedPlan,
                               onChanged: (p) => setState(() => _selectedPlan = p),
@@ -725,8 +670,6 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
                                   ? null
                                   : activated && widget.onboardingMode
                                   ? _handlePremiumSuccess
-                                  : activated
-                                  ? null
                                   : () => _handlePrimaryAction(),
                             ),
                             const SizedBox(height: 6),
@@ -778,8 +721,8 @@ class _BenefitChecklist extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                width: 16,
-                height: 16,
+                width: 17,
+                height: 17,
                 decoration: const BoxDecoration(
                   color: _kInk,
                   shape: BoxShape.circle,
@@ -787,14 +730,14 @@ class _BenefitChecklist extends StatelessWidget {
                 child: const Icon(
                   Icons.check_rounded,
                   color: Colors.white,
-                  size: 11,
+                  size: 12,
                 ),
               ),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
                   item,
-                  style: _f(12, weight: FontWeight.w600, color: _kInk),
+                  style: _f(13, weight: FontWeight.w600, color: _kInk),
                 ),
               ),
             ],
@@ -824,14 +767,49 @@ class _VerticalPricingList extends StatelessWidget {
   Widget build(BuildContext context) {
     final s = context.watch<AppSettingsProvider>().strings;
     final payment = context.watch<PaymentProvider>();
+    final isVietnamese = context.watch<AppSettingsProvider>().locale.languageCode == 'vi';
 
     final weeklyOffer = payment.premiumOffer(PremiumPlan.weekly, preferFreeTrial: false);
     final annualOffer = payment.premiumOffer(PremiumPlan.annual, preferFreeTrial: true);
     final monthlyOffer = payment.premiumOffer(PremiumPlan.monthly, preferFreeTrial: false);
 
-    // Formatted raw recurring price from Store
-    String formatRecurring(PremiumOffer? offer, String testingFallback) {
+    final rcOfferings = RevenueCatService.cachedOfferings?.current;
+    final rcWeekly = rcOfferings?.weekly?.storeProduct.priceString;
+    final rcMonthly = rcOfferings?.monthly?.storeProduct.priceString;
+    final rcAnnual = rcOfferings?.annual?.storeProduct.priceString;
+
+    String? rcAnnualMonthly;
+    final annualPriceNum = rcOfferings?.annual?.storeProduct.price;
+    final currencyCode = rcOfferings?.annual?.storeProduct.currencyCode ?? '';
+    if (annualPriceNum != null && annualPriceNum > 0) {
+      final monthlyVal = annualPriceNum / 12.0;
+      if (currencyCode.toUpperCase() == 'VND' || currencyCode == '₫') {
+        final rounded = monthlyVal.round();
+        final formatted = rounded.toString().replaceAllMapped(
+              RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+              (m) => '${m[1]}.',
+            );
+        rcAnnualMonthly = '$formattedđ';
+      } else if (currencyCode.toUpperCase() == 'USD' || currencyCode == r'$') {
+        rcAnnualMonthly = '\$${monthlyVal.toStringAsFixed(2)}';
+      } else if (monthlyVal >= 1000) {
+        final rounded = monthlyVal.round();
+        final formatted = rounded.toString().replaceAllMapped(
+              RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+              (m) => '${m[1]},',
+            );
+        rcAnnualMonthly = '$formatted $currencyCode';
+      } else {
+        rcAnnualMonthly = '${monthlyVal.toStringAsFixed(2)} $currencyCode';
+      }
+    }
+
+    // Formatted raw recurring price from Store or RevenueCat
+    String formatRecurring(PremiumOffer? offer, String? rcPrice, String testingFallback) {
       if (testing) return testingFallback;
+      if (rcPrice != null && rcPrice.isNotEmpty) {
+        return rcPrice;
+      }
       if (offer != null && offer.recurringPrice.isNotEmpty) {
         return offer.recurringPrice;
       }
@@ -839,18 +817,26 @@ class _VerticalPricingList extends StatelessWidget {
     }
 
     // Monthly breakdown price (e.g. 39.000d / $1.66)
-    String formatMonthly(PremiumOffer? offer, String testingFallback) {
+    String formatMonthly(PremiumOffer? offer, String? rcMonthlyPrice, String testingFallback) {
       if (testing) return testingFallback;
+      if (rcMonthlyPrice != null && rcMonthlyPrice.isNotEmpty) {
+        return rcMonthlyPrice;
+      }
       if (offer?.monthlyPrice != null && offer!.monthlyPrice!.isNotEmpty) {
         return offer.monthlyPrice!;
       }
       return testingFallback;
     }
 
-    final weekPrice = formatRecurring(weeklyOffer, '29.000đ');
-    final annualTotal = formatRecurring(annualOffer, '469.000đ');
-    final annualMonthly = formatMonthly(annualOffer, '39.000đ');
-    final monthPrice = formatRecurring(monthlyOffer, '59.000đ');
+    final defaultWeek = isVietnamese ? '29.000đ' : '\$1.99';
+    final defaultAnnual = isVietnamese ? '469.000đ' : '\$29.99';
+    final defaultAnnualMonthly = isVietnamese ? '39.000đ' : '\$2.49';
+    final defaultMonth = isVietnamese ? '59.000đ' : '\$4.99';
+
+    final weekPrice = formatRecurring(weeklyOffer, rcWeekly, defaultWeek);
+    final annualTotal = formatRecurring(annualOffer, rcAnnual, defaultAnnual);
+    final annualMonthly = formatMonthly(annualOffer, rcAnnualMonthly, defaultAnnualMonthly);
+    final monthPrice = formatRecurring(monthlyOffer, rcMonthly, defaultMonth);
 
     return Column(
       children: [
@@ -921,7 +907,7 @@ class _VerticalPlanCard extends StatelessWidget {
         children: [
           AnimatedContainer(
             duration: const Duration(milliseconds: 180),
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 11),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(15),
@@ -949,14 +935,14 @@ class _VerticalPlanCard extends StatelessWidget {
                     children: [
                       Text(
                         title,
-                        style: _f(15, weight: FontWeight.w800, color: _kInk),
+                        style: _f(16, weight: FontWeight.w800, color: _kInk),
                       ),
                       if (subtitle != null) ...[
                         const SizedBox(height: 2),
                         Text(
                           subtitle!,
                           style: _f(
-                            11.5,
+                            12,
                             color: _kMuted,
                             weight: FontWeight.w500,
                           ),
@@ -975,7 +961,7 @@ class _VerticalPlanCard extends StatelessWidget {
                     Text(
                       priceText,
                       style: _f(
-                        16,
+                        17.5,
                         weight: FontWeight.w800,
                         color: _kInk,
                         letterSpacing: -0.3,
@@ -983,7 +969,7 @@ class _VerticalPlanCard extends StatelessWidget {
                     ),
                     Text(
                       unitText,
-                      style: _f(11, color: _kMuted, weight: FontWeight.w500),
+                      style: _f(11.5, color: _kMuted, weight: FontWeight.w500),
                     ),
                   ],
                 ),

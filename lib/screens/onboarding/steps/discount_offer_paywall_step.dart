@@ -6,11 +6,13 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../config/app_build_config.dart';
+import '../../../config/iap_ids.dart';
 import '../../../providers/app_settings_provider.dart';
 import '../../../providers/auth_provider.dart';
 import '../../../providers/home_provider.dart';
 import '../../../providers/onboarding_provider.dart';
 import '../../../providers/payment_provider.dart';
+import '../../../services/revenuecat_service.dart';
 import '../../../widgets/social_auth_button.dart';
 import '../../../utils/payment_platform.dart';
 
@@ -62,6 +64,13 @@ class _DiscountOfferPaywallStepState extends State<DiscountOfferPaywallStep> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        RevenueCatService.getOfferings().then((_) {
+          if (mounted) setState(() {});
+        });
+      }
+    });
     // Delay 5s before showing close [X] button on Offer screen
     _closeTimer = Timer(const Duration(seconds: 5), () {
       if (mounted) setState(() => _showClose = true);
@@ -82,11 +91,10 @@ class _DiscountOfferPaywallStepState extends State<DiscountOfferPaywallStep> {
     _payment = payment;
   }
 
-  Future<void> _handlePurchase(PremiumOffer? offer) async {
+  Future<void> _handlePurchase() async {
     if (_buying) return;
     setState(() => _buying = true);
 
-    final payment = context.read<PaymentProvider>();
     final s = context.read<AppSettingsProvider>().strings;
 
     if (AppBuildConfig.isTesting) {
@@ -95,17 +103,30 @@ class _DiscountOfferPaywallStepState extends State<DiscountOfferPaywallStep> {
     }
 
     try {
-      final started = await payment.buyPremium(
-        PremiumPlan.annualDiscount,
-        preferFreeTrial: false,
-        selectedOffer: offer,
-      );
-      if (!mounted) return;
-      if (started) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(paymentCopyForPlatform(s.paymentProcessing))),
+      final offerings = await RevenueCatService.getOfferings();
+      final currentOffering = offerings?.current;
+      if (currentOffering != null && currentOffering.availablePackages.isNotEmpty) {
+        final pkg = currentOffering.availablePackages.firstWhere(
+          (p) =>
+              p.storeProduct.identifier == IapIds.premiumAnnualDiscount ||
+              p.identifier.toLowerCase().contains('annual_discount') ||
+              p.identifier.toLowerCase().contains('discount') ||
+              p.identifier.toLowerCase().contains('offer'),
+          orElse: () => currentOffering.availablePackages.firstWhere(
+            (p) => p.storeProduct.identifier == IapIds.premiumAnnualDiscount,
+            orElse: () => currentOffering.availablePackages.first,
+          ),
         );
-      } else {
+        final success = await RevenueCatService.purchasePackage(pkg);
+        if (!mounted) return;
+        if (success) {
+          await _completeOfferFlow();
+        }
+        return;
+      }
+    } catch (e) {
+      debugPrint('[DiscountPaywall] RevenueCat purchase failed: $e');
+      if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(paymentCopyForPlatform(s.paymentVerificationFailed)),
@@ -277,8 +298,50 @@ class _DiscountOfferPaywallStepState extends State<DiscountOfferPaywallStep> {
     final fallbackYearly = isVietnamese ? '399.000đ' : '\$19.99';
     final fallbackMonthly = isVietnamese ? '33.000đ' : '\$1.66';
 
-    final yearlyTotal = discountOffer?.recurringPrice ?? fallbackYearly;
-    final monthlyPrice = discountOffer?.monthlyPrice ?? fallbackMonthly;
+    final rcOfferings = RevenueCatService.cachedOfferings?.current;
+    final available = rcOfferings?.availablePackages ?? [];
+    final rcPkg = available.isEmpty
+        ? null
+        : available.firstWhere(
+            (p) =>
+                p.storeProduct.identifier == IapIds.premiumAnnualDiscount ||
+                p.identifier.toLowerCase().contains('annual_discount') ||
+                p.identifier.toLowerCase().contains('discount') ||
+                p.identifier.toLowerCase().contains('offer'),
+            orElse: () => available.firstWhere(
+              (p) => p.storeProduct.identifier == IapIds.premiumAnnualDiscount,
+              orElse: () => available.first,
+            ),
+          );
+    final rcYearly = rcPkg?.storeProduct.priceString;
+    String? rcMonthlyPrice;
+    final rcPriceNum = rcPkg?.storeProduct.price;
+    final currencyCode = rcPkg?.storeProduct.currencyCode ?? '';
+    if (rcPriceNum != null && rcPriceNum > 0) {
+      final monthlyVal = rcPriceNum / 12.0;
+      if (currencyCode.toUpperCase() == 'VND' || currencyCode == '₫') {
+        final rounded = monthlyVal.round();
+        final formatted = rounded.toString().replaceAllMapped(
+              RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+              (m) => '${m[1]}.',
+            );
+        rcMonthlyPrice = '$formattedđ';
+      } else if (currencyCode.toUpperCase() == 'USD' || currencyCode == r'$') {
+        rcMonthlyPrice = '\$${monthlyVal.toStringAsFixed(2)}';
+      } else if (monthlyVal >= 1000) {
+        final rounded = monthlyVal.round();
+        final formatted = rounded.toString().replaceAllMapped(
+              RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+              (m) => '${m[1]},',
+            );
+        rcMonthlyPrice = '$formatted $currencyCode';
+      } else {
+        rcMonthlyPrice = '${monthlyVal.toStringAsFixed(2)} $currencyCode';
+      }
+    }
+
+    final yearlyTotal = rcYearly ?? discountOffer?.recurringPrice ?? fallbackYearly;
+    final monthlyPrice = rcMonthlyPrice ?? discountOffer?.monthlyPrice ?? fallbackMonthly;
     final unitMonth = isVietnamese ? '/ tháng' : '/ mo';
     final subUnitMonth = isVietnamese ? '/ tháng' : '/ monthly';
 
@@ -491,7 +554,7 @@ class _DiscountOfferPaywallStepState extends State<DiscountOfferPaywallStep> {
                       width: double.infinity,
                       height: 54,
                       child: ElevatedButton(
-                        onPressed: _buying ? null : () => _handlePurchase(discountOffer),
+                        onPressed: _buying ? null : _handlePurchase,
                         style: ElevatedButton.styleFrom(
                           backgroundColor: _kInk,
                           foregroundColor: Colors.white,

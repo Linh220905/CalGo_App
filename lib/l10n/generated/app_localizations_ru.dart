@@ -2494,7 +2494,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get changeYourselfNow => 'Начните трансформацию сейчас';
 
   @override
-  String get tryFreeNow => 'Попробовать бесплатно';
+  String get tryFreeNow => '3 дня бесплатно';
 
   @override
   String get completeSetup => 'Завершить настройку';
@@ -2935,4 +2935,27 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get claimOfferBtn => 'Продолжить';
+
+  @override
+  String get potentialMotivationTitle =>
+      'У вас отличный\nпотенциал для достижения\nвашей цели';
+
+  @override
+  String get weightTransitionTitle => 'Ваша динамика веса';
+
+  @override
+  String get weightTransitionDesc =>
+      'Изменение веса требует времени. Постоянство в первые недели важнее всего';
+
+  @override
+  String get days3 => '3 Дня';
+
+  @override
+  String get days7 => '7 Дней';
+
+  @override
+  String get days30 => '30 Дней';
+
+  @override
+  String get analysisGreeting => 'Добро пожаловать в CalGo';
 }

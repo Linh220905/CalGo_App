@@ -2390,7 +2390,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get changeYourselfNow => '지금 시작하기';
 
   @override
-  String get tryFreeNow => '지금 무료 체험';
+  String get tryFreeNow => '3일 무료 체험';
 
   @override
   String get completeSetup => '설정 완료';
@@ -2800,4 +2800,26 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get claimOfferBtn => '계속하기';
+
+  @override
+  String get potentialMotivationTitle => '목표를 달성할 수 있는\n엄청난 잠재력을\n가지고 있습니다';
+
+  @override
+  String get weightTransitionTitle => '체중 변화 추이';
+
+  @override
+  String get weightTransitionDesc =>
+      '체중 변화에는 시간이 걸립니다. 초기 몇 주 동안의 꾸준함이 가장 중요합니다';
+
+  @override
+  String get days3 => '3일';
+
+  @override
+  String get days7 => '7일';
+
+  @override
+  String get days30 => '30일';
+
+  @override
+  String get analysisGreeting => 'CalGo에 오신 것을 환영합니다';
 }

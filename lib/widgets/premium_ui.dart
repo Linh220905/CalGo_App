@@ -40,9 +40,11 @@ class _PremiumButtonState extends State<PremiumButton>
   Widget build(BuildContext context) {
     final enabled = widget.onPressed != null && !widget.loading;
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onTapDown: enabled ? (_) => _anim.forward() : null,
       onTapUp: enabled ? (_) => _anim.reverse() : null,
       onTapCancel: () => _anim.reverse(),
+      onTap: enabled ? widget.onPressed : null,
       child: AnimatedBuilder(
         animation: _scale,
         builder: (context, _) {
@@ -66,34 +68,27 @@ class _PremiumButtonState extends State<PremiumButton>
                       ]
                     : null,
               ),
-              child: Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(18),
-                  onTap: widget.onPressed,
-                  child: Center(
-                    child: widget.loading
-                        ? const SizedBox(
-                            width: 24,
-                            height: 24,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2.5,
-                              color: Colors.white,
-                            ),
-                          )
-                        : Text(
-                            widget.label,
-                            style: TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.w600,
-                              color: enabled
-                                  ? Colors.white
-                                  : const Color(0xFF7A7A7A),
-                              letterSpacing: -0.2,
-                            ),
-                          ),
-                  ),
-                ),
+              child: Center(
+                child: widget.loading
+                    ? const SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2.5,
+                          color: Colors.white,
+                        ),
+                      )
+                    : Text(
+                        widget.label,
+                        style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.w600,
+                          color: enabled
+                              ? Colors.white
+                              : const Color(0xFF7A7A7A),
+                          letterSpacing: -0.2,
+                        ),
+                      ),
               ),
             ),
           );

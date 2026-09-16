@@ -1168,7 +1168,7 @@
   "payMonthlyNote": "Оплата каждый месяц",
   "trialCancelAnytimeNote": "Сегодня плата не взимается. Отмена в любой момент в настройках App Store / Google Play.",
   "changeYourselfNow": "Начните трансформацию сейчас",
-  "tryFreeNow": "Попробовать бесплатно",
+  "tryFreeNow": "3 дня бесплатно",
   "completeSetup": "Завершить настройку",
   "servicesAndPlans": "Услуги и тарифы",
   "connectedStatus": "Подключено",
@@ -1339,5 +1339,12 @@
         "type": "int"
       }
     }
-  }
+  },
+  "potentialMotivationTitle": "У вас отличный\nпотенциал для достижения\nвашей цели",
+  "weightTransitionTitle": "Ваша динамика веса",
+  "weightTransitionDesc": "Изменение веса требует времени. Постоянство в первые недели важнее всего",
+  "days3": "3 Дня",
+  "days7": "7 Дней",
+  "days30": "30 Дней",
+  "analysisGreeting": "Добро пожаловать в CalGo"
 }

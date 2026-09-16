@@ -8,19 +8,16 @@ import 'package:calgo/screens/onboarding/steps/account_step.dart';
 import 'package:calgo/screens/onboarding/steps/activity_step.dart';
 import 'package:calgo/screens/onboarding/steps/age_step.dart';
 import 'package:calgo/screens/onboarding/steps/analysis_result_step.dart';
-import 'package:calgo/screens/onboarding/steps/avoid_foods_step.dart';
 import 'package:calgo/screens/onboarding/steps/budget_step.dart';
 import 'package:calgo/screens/onboarding/steps/diet_step.dart';
 import 'package:calgo/screens/onboarding/steps/gender_step.dart';
-import 'package:calgo/screens/onboarding/steps/goal_specific_step.dart';
 import 'package:calgo/screens/onboarding/steps/goal_step.dart';
 import 'package:calgo/screens/onboarding/steps/habit_step.dart';
 import 'package:calgo/screens/onboarding/steps/height_step.dart';
 import 'package:calgo/screens/onboarding/steps/hero_step.dart';
 import 'package:calgo/screens/onboarding/steps/home_step.dart';
-import 'package:calgo/screens/onboarding/steps/name_step.dart';
-import 'package:calgo/screens/onboarding/steps/nutrition_priority_step.dart';
 import 'package:calgo/screens/onboarding/steps/pace_step.dart';
+import 'package:calgo/screens/onboarding/steps/potential_motivation_step.dart';
 import 'package:calgo/screens/onboarding/steps/prep_time_step.dart';
 import 'package:calgo/screens/onboarding/steps/referral_step.dart';
 import 'package:calgo/screens/onboarding/steps/social_proof_step.dart';
@@ -45,20 +42,17 @@ void main() {
     (name: 'splash', widget: const SplashStep()),
     (name: 'welcome', widget: const HeroStep()),
     (name: 'goal', widget: const GoalStep()),
-    (name: 'goal specific', widget: const GoalSpecificStep()),
-    (name: 'name', widget: const NameStep()),
     (name: 'gender', widget: const GenderStep()),
     (name: 'age', widget: const AgeStep()),
     (name: 'height', widget: const HeightStep()),
     (name: 'weight', widget: const WeightStep()),
     (name: 'target weight', widget: const TargetWeightStep()),
+    (name: 'potential motivation', widget: const PotentialMotivationStep()),
     (name: 'pace', widget: const PaceStep()),
     (name: 'activity', widget: const ActivityStep()),
     (name: 'diet', widget: const DietStep()),
     (name: 'prep time', widget: const PrepTimeStep()),
     (name: 'budget', widget: const BudgetStep()),
-    (name: 'nutrition priority', widget: const NutritionPriorityStep()),
-    (name: 'avoid foods', widget: const AvoidFoodsStep()),
     (name: 'referral', widget: const ReferralStep()),
     (name: 'habit', widget: const HabitStep()),
     (name: 'analysis', widget: const AnalysisResultStep()),
@@ -76,18 +70,6 @@ void main() {
       },
     );
   }
-
-  testWidgets('name step remains usable above the keyboard', (tester) async {
-    await _pumpStep(
-      tester,
-      const NameStep(),
-      viewInsets: const FakeViewPadding(bottom: 280),
-    );
-
-    expect(find.byType(TextField), findsOneWidget);
-    expect(find.byType(ElevatedButton).hitTestable(), findsOneWidget);
-    expect(tester.takeException(), isNull);
-  });
 }
 
 Future<void> _pumpStep(

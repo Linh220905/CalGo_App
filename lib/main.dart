@@ -60,12 +60,8 @@ void main() {
       trackedFirstOpenAuthScope = apiService.authScope;
       unawaited(analyticsService.trackAppFirstOpen());
       unawaited(analyticsService.flushPending());
-      if (authProvider.user?.id != null) {
-        unawaited(RevenueCatService.logIn(authProvider.user!.id));
-      }
     }
     if (!authProvider.isAuthenticated) {
-      unawaited(RevenueCatService.logOut());
       homeProvider.reset();
     }
     if (apiService.authScope != lastUserAuthScope) {
@@ -78,17 +74,22 @@ void main() {
         apiService.authScope != restoredPaymentAuthScope) {
       restoredPaymentAuthScope = apiService.authScope;
       unawaited(paymentProvider.restorePurchases());
+      if (authProvider.user?.id != null) {
+        unawaited(RevenueCatService.logIn(authProvider.user!.id));
+      } else {
+        unawaited(RevenueCatService.init());
+      }
       // BUG 4 fix: retry any purchase whose server-side verification failed
       // in a previous session due to an expired auth token.
       unawaited(paymentProvider.retryPendingPurchaseVerification());
     }
   });
-  // Start bootstrap reads and initialize RevenueCat early. The router shows a
-  // neutral startup screen until they finish, never a persisted onboarding step.
-  unawaited(RevenueCatService.init());
+  // Start bootstrap reads. The router shows a neutral startup screen until
+  // they finish, never a persisted onboarding step.
   unawaited(analyticsService.trackAppFirstOpen());
   unawaited(onboardingProvider.init());
   unawaited(authProvider.tryRestore());
+  unawaited(RevenueCatService.init());
   final router = createAppRouter(onboardingProvider, authProvider);
   NotificationService.onNotificationTap = (payload) {
     if (payload == 'daily_recap') router.go('/recap');

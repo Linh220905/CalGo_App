@@ -108,26 +108,51 @@ class RevenueCatService {
     }
   }
 
+  static Offerings? _cachedOfferings;
+  static Offerings? get cachedOfferings => _cachedOfferings;
+
   /// Fetch current offerings (Weekly, Monthly, Annual packages).
   static Future<Offerings?> getOfferings() async {
     if (kIsWeb) return null;
     if (!_initialized) await init();
     try {
       final offerings = await Purchases.getOfferings();
+      _cachedOfferings = offerings;
       return offerings;
     } catch (e) {
       debugPrint('[RevenueCat] Fetch offerings error: $e');
-      return null;
+      return _cachedOfferings;
     }
   }
 
-  /// Purchase a package. Returns true if entitlement became active.
-  static Future<bool> purchasePackage(Package package) async {
-    if (kIsWeb) return false;
+  /// Fetch standalone store products (e.g. consumable credit packages).
+  static Future<List<StoreProduct>> getProducts(
+    List<String> productIdentifiers, {
+    ProductCategory productCategory = ProductCategory.nonSubscription,
+  }) async {
+    if (kIsWeb) return [];
     if (!_initialized) await init();
     try {
-      final purchaseResult = await Purchases.purchasePackage(package);
-      return purchaseResult.customerInfo.entitlements.all[entitlementId]?.isActive ?? false;
+      final products = await Purchases.getProducts(
+        productIdentifiers,
+        productCategory: productCategory,
+      );
+      return products;
+    } catch (e) {
+      debugPrint('[RevenueCat] Get products error: $e');
+      return [];
+    }
+  }
+
+  /// Purchase a standalone store product (e.g. consumable credit package).
+  static Future<CustomerInfo?> purchaseStoreProduct(StoreProduct product) async {
+    if (kIsWeb) return null;
+    if (!_initialized) await init();
+    try {
+      final purchaseResult = await Purchases.purchase(
+        PurchaseParams.storeProduct(product),
+      );
+      return purchaseResult.customerInfo;
     } on PlatformException catch (e) {
       final errorCode = PurchasesErrorHelper.getErrorCode(e);
       if (errorCode == PurchasesErrorCode.purchaseCancelledError) {
@@ -135,11 +160,40 @@ class RevenueCatService {
       } else {
         debugPrint('[RevenueCat] Purchase exception: ${e.message}');
       }
-      return false;
+      return null;
+    } catch (e) {
+      debugPrint('[RevenueCat] Purchase product failed: $e');
+      return null;
+    }
+  }
+
+  /// Purchase a package. Returns CustomerInfo if successful, null otherwise.
+  static Future<CustomerInfo?> purchasePackageRaw(Package package) async {
+    if (kIsWeb) return null;
+    if (!_initialized) await init();
+    try {
+      final purchaseResult = await Purchases.purchase(
+        PurchaseParams.package(package),
+      );
+      return purchaseResult.customerInfo;
+    } on PlatformException catch (e) {
+      final errorCode = PurchasesErrorHelper.getErrorCode(e);
+      if (errorCode == PurchasesErrorCode.purchaseCancelledError) {
+        debugPrint('[RevenueCat] User cancelled purchase');
+      } else {
+        debugPrint('[RevenueCat] Purchase exception: ${e.message}');
+      }
+      return null;
     } catch (e) {
       debugPrint('[RevenueCat] Purchase failed: $e');
-      return false;
+      return null;
     }
+  }
+
+  /// Purchase a package. Returns true if entitlement became active.
+  static Future<bool> purchasePackage(Package package) async {
+    final customerInfo = await purchasePackageRaw(package);
+    return customerInfo?.entitlements.all[entitlementId]?.isActive ?? false;
   }
 
   /// Restore previous purchases.

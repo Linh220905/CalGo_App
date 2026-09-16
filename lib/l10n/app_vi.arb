@@ -1222,7 +1222,7 @@
   "payMonthlyNote": "Thanh toán mỗi tháng",
   "trialCancelAnytimeNote": "Không tính phí hôm nay. Hủy bất kỳ lúc nào trong cài đặt App Store / Google Play.",
   "changeYourselfNow": "Thay đổi bản thân ngay",
-  "tryFreeNow": "Dùng miễn phí ngay",
+  "tryFreeNow": "Dùng thử miễn phí 3 ngày",
   "completeSetup": "Hoàn tất thiết lập",
   "servicesAndPlans": "Dịch vụ & Gói cước",
   "connectedStatus": "Đã kết nối",
@@ -1393,5 +1393,12 @@
         "type": "int"
       }
     }
-  }
+  },
+  "potentialMotivationTitle": "Bạn có tiềm năng lớn\nđể bứt phá\nmục tiêu của mình",
+  "weightTransitionTitle": "Sự chuyển đổi cân nặng",
+  "weightTransitionDesc": "Thay đổi cân nặng cần có thời gian. Kiên trì trong những tuần đầu tiên là quan trọng nhất",
+  "days3": "3 Ngày",
+  "days7": "7 Ngày",
+  "days30": "30 Ngày",
+  "analysisGreeting": "Chào mừng bạn đến với CalGo"
 }

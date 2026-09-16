@@ -1168,7 +1168,7 @@
   "payMonthlyNote": "按月支付",
   "trialCancelAnytimeNote": "今日不收费。随时可在 App Store / Google Play 设置中取消。",
   "changeYourselfNow": "立即改变自我",
-  "tryFreeNow": "立即免费体验",
+  "tryFreeNow": "免费试用 3 天",
   "completeSetup": "完成设置",
   "servicesAndPlans": "服务与套餐",
   "connectedStatus": "已连接",
@@ -1339,5 +1339,12 @@
         "type": "int"
       }
     }
-  }
+  },
+  "potentialMotivationTitle": "你有巨大的潜力\n去实现你的目标",
+  "weightTransitionTitle": "你的体重转变",
+  "weightTransitionDesc": "体重的变化需要时间。最初几周的坚持最为重要",
+  "days3": "3天",
+  "days7": "7天",
+  "days30": "30天",
+  "analysisGreeting": "欢迎来到 CalGo"
 }

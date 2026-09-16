@@ -2455,7 +2455,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get changeYourselfNow => 'Thay đổi bản thân ngay';
 
   @override
-  String get tryFreeNow => 'Dùng miễn phí ngay';
+  String get tryFreeNow => 'Dùng thử miễn phí 3 ngày';
 
   @override
   String get completeSetup => 'Hoàn tất thiết lập';
@@ -2892,4 +2892,27 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get claimOfferBtn => 'Nhận ưu đãi ngay';
+
+  @override
+  String get potentialMotivationTitle =>
+      'Bạn có tiềm năng lớn\nđể bứt phá\nmục tiêu của mình';
+
+  @override
+  String get weightTransitionTitle => 'Sự chuyển đổi cân nặng';
+
+  @override
+  String get weightTransitionDesc =>
+      'Thay đổi cân nặng cần có thời gian. Kiên trì trong những tuần đầu tiên là quan trọng nhất';
+
+  @override
+  String get days3 => '3 Ngày';
+
+  @override
+  String get days7 => '7 Ngày';
+
+  @override
+  String get days30 => '30 Ngày';
+
+  @override
+  String get analysisGreeting => 'Chào mừng bạn đến với CalGo';
 }

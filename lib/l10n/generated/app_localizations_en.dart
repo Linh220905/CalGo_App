@@ -2461,7 +2461,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get changeYourselfNow => 'Transform your body now';
 
   @override
-  String get tryFreeNow => 'Try free now';
+  String get tryFreeNow => 'Try 3 days for free';
 
   @override
   String get completeSetup => 'Complete setup';
@@ -2899,4 +2899,27 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get claimOfferBtn => 'Continue';
+
+  @override
+  String get potentialMotivationTitle =>
+      'You have great\npotential to crush\nyour goal';
+
+  @override
+  String get weightTransitionTitle => 'Your weight transition';
+
+  @override
+  String get weightTransitionDesc =>
+      'Weight change takes time. Consistency in the early weeks matters most';
+
+  @override
+  String get days3 => '3 Days';
+
+  @override
+  String get days7 => '7 Days';
+
+  @override
+  String get days30 => '30 Days';
+
+  @override
+  String get analysisGreeting => 'Welcome to CalGo';
 }
