@@ -10,6 +10,7 @@ import 'services/home_service.dart';
 import 'services/exercise_service.dart';
 import 'services/scan_service.dart';
 import 'services/notification_service.dart';
+import 'services/widget_sync_service.dart';
 import 'services/analytics_service.dart';
 import 'services/meal_guidance_service.dart';
 import 'services/revenuecat_service.dart';
@@ -150,6 +151,7 @@ void main() {
   // plain Android launch background for several seconds.
   WidgetsBinding.instance.addPostFrameCallback((_) {
     unawaited(NotificationService.instance.init());
+    unawaited(WidgetSyncService.instance.init());
   });
 }
 

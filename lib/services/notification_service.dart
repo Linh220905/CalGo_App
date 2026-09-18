@@ -98,7 +98,6 @@ class NotificationService {
     _initialized = true;
     final permissionGranted = await requestPermission();
     debugPrint('Notification permission granted: $permissionGranted');
-    await cancelLiveActivityNotification();
     await scheduleDailyMealReminders();
     await scheduleDailyRecapNotification(
       hasMeals: _recapHasMeals ?? false,

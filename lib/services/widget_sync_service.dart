@@ -33,8 +33,14 @@ class WidgetSyncService {
     required int targetCalories,
     required int consumedCalories,
     required int proteinLeft,
+    int targetProtein = 130,
+    int consumedProtein = 0,
     required int carbsLeft,
+    int targetCarbs = 200,
+    int consumedCarbs = 0,
     required int fatLeft,
+    int targetFat = 60,
+    int consumedFat = 0,
     bool isLiveActivityEnabled = true,
   }) async {
     try {
@@ -45,8 +51,14 @@ class WidgetSyncService {
       await HomeWidget.saveWidgetData<int>('target_calories', targetCalories);
       await HomeWidget.saveWidgetData<int>('consumed_calories', consumedCalories);
       await HomeWidget.saveWidgetData<int>('protein_left', proteinLeft);
+      await HomeWidget.saveWidgetData<int>('target_protein', targetProtein);
+      await HomeWidget.saveWidgetData<int>('consumed_protein', consumedProtein);
       await HomeWidget.saveWidgetData<int>('carbs_left', carbsLeft);
+      await HomeWidget.saveWidgetData<int>('target_carbs', targetCarbs);
+      await HomeWidget.saveWidgetData<int>('consumed_carbs', consumedCarbs);
       await HomeWidget.saveWidgetData<int>('fat_left', fatLeft);
+      await HomeWidget.saveWidgetData<int>('target_fat', targetFat);
+      await HomeWidget.saveWidgetData<int>('consumed_fat', consumedFat);
 
       await HomeWidget.updateWidget(
         iOSName: iOSWidgetName,
@@ -60,8 +72,14 @@ class WidgetSyncService {
           targetCalories: targetCalories,
           consumedCalories: consumedCalories,
           proteinLeft: proteinLeft,
+          targetProtein: targetProtein,
+          consumedProtein: consumedProtein,
           carbsLeft: carbsLeft,
+          targetCarbs: targetCarbs,
+          consumedCarbs: consumedCarbs,
           fatLeft: fatLeft,
+          targetFat: targetFat,
+          consumedFat: consumedFat,
           isEnabled: isLiveActivityEnabled,
         );
       } else if (defaultTargetPlatform == TargetPlatform.android) {
@@ -83,14 +101,26 @@ class WidgetSyncService {
     required int targetCalories,
     required int consumedCalories,
     required int proteinLeft,
+    required int targetProtein,
+    required int consumedProtein,
     required int carbsLeft,
+    required int targetCarbs,
+    required int consumedCarbs,
     required int fatLeft,
+    required int targetFat,
+    required int consumedFat,
     required bool isEnabled,
   }) async {
     try {
+      final areActivitiesSupported = await _liveActivities.areActivitiesSupported();
+      if (!areActivitiesSupported) {
+        debugPrint('Live Activities are not supported on device');
+        return;
+      }
+
       final areActivitiesEnabled = await _liveActivities.areActivitiesEnabled();
       if (!areActivitiesEnabled) {
-        debugPrint('Live Activities are not enabled on device');
+        debugPrint('Live Activities are not enabled on device settings');
         return;
       }
 
@@ -104,16 +134,30 @@ class WidgetSyncService {
         'targetCalories': targetCalories,
         'consumedCalories': consumedCalories,
         'proteinLeft': proteinLeft,
+        'targetProtein': targetProtein,
+        'consumedProtein': consumedProtein,
         'carbsLeft': carbsLeft,
+        'targetCarbs': targetCarbs,
+        'consumedCarbs': consumedCarbs,
         'fatLeft': fatLeft,
+        'targetFat': targetFat,
+        'consumedFat': consumedFat,
       };
 
-      // createOrUpdateActivity handles creating if missing or updating existing activity by unique ID
-      await _liveActivities.createOrUpdateActivity(
-        'calgo_live_activity',
-        activityData,
-        removeWhenAppIsKilled: false,
-      );
+      try {
+        await _liveActivities.createOrUpdateActivity(
+          'calgo_live_activity',
+          activityData,
+          removeWhenAppIsKilled: false,
+        );
+      } catch (err) {
+        debugPrint('createOrUpdateActivity failed ($err), fallback create fresh activity');
+        await _liveActivities.createActivity(
+          'calgo_live_activity',
+          activityData,
+          removeWhenAppIsKilled: false,
+        );
+      }
     } catch (e) {
       debugPrint('Live Activity update error: $e');
     }

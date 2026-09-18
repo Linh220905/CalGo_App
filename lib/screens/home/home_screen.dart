@@ -421,7 +421,8 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}';
     final selectedDayKey =
         '${hp.selectedDate.year}-${hp.selectedDate.month}-${hp.selectedDate.day}';
-    final syncKey = '$dayKey:$selectedDayKey:${hp.entries.isNotEmpty}';
+    final syncKey =
+        '$dayKey:$selectedDayKey:${hp.summary.consumedCalories}:${hp.summary.targetCalories}:${hp.summary.proteinG}:${hp.summary.carbG}:${hp.summary.fatG}:${hp.entries.length}';
     if (_lastRecapSyncKey == syncKey) return;
     _lastRecapSyncKey = syncKey;
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -452,8 +453,14 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
             targetCalories: targetCalories,
             consumedCalories: hp.summary.consumedCalories,
             proteinLeft: proteinLeft,
+            targetProtein: hp.summary.targetProteinG,
+            consumedProtein: hp.summary.proteinG,
             carbsLeft: carbsLeft,
+            targetCarbs: hp.summary.targetCarbG,
+            consumedCarbs: hp.summary.carbG,
             fatLeft: fatsLeft,
+            targetFat: hp.summary.targetFatG,
+            consumedFat: hp.summary.fatG,
             isLiveActivityEnabled: settings.isLiveActivityEnabled,
           ),
         );
