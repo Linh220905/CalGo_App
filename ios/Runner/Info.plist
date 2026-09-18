@@ -45,6 +45,9 @@
 	<true/>
 	<key>NSSupportsLiveActivities</key>
 	<true/>
+	<!-- home_widget receives calgo:// URLs and maps them to GoRouter paths. -->
+	<key>FlutterDeepLinkingEnabled</key>
+	<false/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>

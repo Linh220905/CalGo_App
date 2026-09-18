@@ -180,10 +180,10 @@ struct CalGoWidgetEntryView : View {
 
             // CARD 2 & 3 (RIGHT COLUMN): 2 Separate Action Cards
             VStack(spacing: 8) {
-                Link(destination: URL(string: "calgo://scan")!) {
+                Link(destination: URL(string: "calgo://scan?homeWidget=1")!) {
                     actionCard(icon: "camera.viewfinder", title: "Scan Food")
                 }
-                Link(destination: URL(string: "calgo://barcode")!) {
+                Link(destination: URL(string: "calgo://barcode?homeWidget=1")!) {
                     actionCard(icon: "barcode.viewfinder", title: "Barcode")
                 }
             }
@@ -198,7 +198,7 @@ struct CalGoWidgetEntryView : View {
             calorieRing(size: 76, strokeWidth: 6.5, fontSize: 16)
                 .frame(maxHeight: .infinity)
 
-            Link(destination: URL(string: "calgo://scan")!) {
+            Link(destination: URL(string: "calgo://scan?homeWidget=1")!) {
                 HStack(spacing: 4) {
                     Image(systemName: "plus")
                         .font(.system(size: 10, weight: .bold))
@@ -472,7 +472,7 @@ struct CalGoLiveActivity: Widget {
 
                 // 3. Actions Stack (2 Clean Action Cards: Scan Food & Barcode)
                 VStack(spacing: 6) {
-                    Link(destination: URL(string: "calgo://scan")!) {
+                    Link(destination: URL(string: "calgo://scan?homeWidget=1")!) {
                         VStack(spacing: 3) {
                             Image(systemName: "camera.viewfinder")
                                 .font(.system(size: 15, weight: .semibold))
@@ -488,7 +488,7 @@ struct CalGoLiveActivity: Widget {
                         .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
                     }
 
-                    Link(destination: URL(string: "calgo://barcode")!) {
+                    Link(destination: URL(string: "calgo://barcode?homeWidget=1")!) {
                         VStack(spacing: 3) {
                             Image(systemName: "barcode.viewfinder")
                                 .font(.system(size: 15, weight: .semibold))
@@ -539,7 +539,7 @@ struct CalGoLiveActivity: Widget {
                             .font(.system(size: 11))
                             .foregroundColor(.secondary)
                         Spacer()
-                        Link(destination: URL(string: "calgo://scan")!) {
+                        Link(destination: URL(string: "calgo://scan?homeWidget=1")!) {
                             Label("Quét", systemImage: "camera.fill")
                                 .font(.system(size: 12, weight: .bold))
                                 .foregroundColor(.white)
@@ -561,7 +561,7 @@ struct CalGoLiveActivity: Widget {
                 Image(systemName: "flame.fill")
                     .foregroundColor(.orange)
             }
-            .widgetURL(URL(string: "calgo://home"))
+            .widgetURL(URL(string: "calgo://home?homeWidget=1"))
         }
     }
 }
