@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CalGo Startup Screen Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+    background-color: #121218;
+    color: #FFFFFF;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 32px 16px;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+  }
+
+  .header p {
+    color: #9CA3AF;
+    font-size: 13.5px;
+  }
+
+  /* Color Palette Selector */
+  .palette-picker {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    max-width: 580px;
+    margin-bottom: 24px;
+    background: #1C1B24;
+    padding: 10px;
+    border-radius: 18px;
+    border: 1px solid #2B2938;
+  }
+
+  .palette-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 2px solid transparent;
+    background: #272533;
+    color: #E5E7EB;
+    font-weight: 700;
+    font-size: 12.5px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .palette-btn:hover {
+    background: #343144;
+  }
+
+  .palette-btn.active {
+    border-color: #FF5376;
+    background: #362933;
+    color: #FFF;
+  }
+
+  .color-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 1px solid rgba(0,0,0,0.15);
+  }
+
+  /* Phone Mockup Screen */
+  .phone-frame {
+    width: 375px;
+    height: 740px;
+    border-radius: 46px;
+    padding: 24px 34px 34px 34px;
+    box-shadow: 0 25px 60px -15px rgba(0,0,0,0.6), 0 0 0 10px #2A2836;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.35s ease;
+  }
+
+  /* Notch bar */
+  .phone-notch {
+    width: 120px;
+    height: 24px;
+    background: #1C1B24;
+    border-radius: 0 0 16px 16px;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .top-spacer {
+    flex: 3;
+  }
+
+  /* Mascot bouncing animation (matching Flutter math.sin) */
+  .mascot-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: mascotFloat 2.4s ease-in-out infinite alternate;
+  }
+
+  .mascot-img {
+    height: 310px;
+    max-width: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 14px 24px rgba(239, 68, 68, 0.12));
+  }
+
+  @keyframes mascotFloat {
+    0% {
+      transform: translateY(0px) rotate(-1.5deg);
+    }
+    50% {
+      transform: translateY(-8px) rotate(0deg);
+    }
+    100% {
+      transform: translateY(3px) rotate(1.5deg);
+    }
+  }
+
+  .mid-spacer {
+    flex: 2;
+  }
+
+  /* Startup Progress Bar (matching Flutter _StartupProgress) */
+  .progress-bar-track {
+    width: 100%;
+    height: 6px;
+    background-color: rgba(0, 0, 0, 0.08);
+    border-radius: 99px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .progress-bar-thumb {
+    width: 72px;
+    height: 100%;
+    background-color: #151518;
+    border-radius: 99px;
+    position: absolute;
+    top: 0;
+    left: -72px;
+    animation: progressSlide 1.4s ease-in-out infinite;
+  }
+
+  @keyframes progressSlide {
+    0% {
+      left: -72px;
+    }
+    100% {
+      left: 100%;
+    }
+  }
+
+  .bottom-spacer {
+    flex: 3;
+  }
+
+  /* Info tag */
+  .code-hint {
+    margin-top: 24px;
+    background: #1C1B24;
+    border: 1px solid #2B2938;
+    padding: 12px 20px;
+    border-radius: 14px;
+    font-size: 13px;
+    color: #D1D5DB;
+    text-align: center;
+  }
+  .code-hint code {
+    color: #FF708F;
+    font-weight: 700;
+  }
+</style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>CalGo Startup Screen — Đỏ Hồng Nhẹ Preview</h1>
+    <p>Chọn các tông màu nền đỏ hồng dịu dưới đây để xem thử cùng linh vật CalGo</p>
+  </div>
+
+  <div class="palette-picker">
+    <button class="palette-btn active" onclick="setBg('#FFF0F2', '#E28292', this)">
+      <span class="color-dot" style="background: #FFF0F2;"></span>
+      1. Hồng phấn dịu (#FFF0F2)
+    </button>
+    <button class="palette-btn" onclick="setBg('#FFE8EB', '#D87082', this)">
+      <span class="color-dot" style="background: #FFE8EB;"></span>
+      2. Đỏ hồng nhạt (#FFE8EB)
+    </button>
+    <button class="palette-btn" onclick="setBg('#FFF4F5', '#EAA0AE', this)">
+      <span class="color-dot" style="background: #FFF4F5;"></span>
+      3. Hồng kem sữa (#FFF4F5)
+    </button>
+    <button class="palette-btn" onclick="setBg('linear-gradient(180deg, #FFF0F3 0%, #FFE4E8 100%)', '#CC5F73', this)">
+      <span class="color-dot" style="background: linear-gradient(180deg, #FFF0F3, #FFE4E8);"></span>
+      4. Gradient Soft Blush
+    </button>
+    <button class="palette-btn" onclick="setBg('linear-gradient(180deg, #FFF6F7 0%, #FFEBEE 100%)', '#C7586D', this)">
+      <span class="color-dot" style="background: linear-gradient(180deg, #FFF6F7, #FFEBEE);"></span>
+      5. Gradient Rose Light
+    </button>
+  </div>
+
+  <!-- Phone Screen Mockup -->
+  <div class="phone-frame" id="phoneScreen" style="background: #FFF0F2;">
+    <div class="phone-notch"></div>
+
+    <div class="top-spacer"></div>
+
+    <!-- Animated Apple Mascot -->
+    <div class="mascot-wrap">
+      <img src="assets/images/apple_mascot/apple_hello.png" alt="CalGo Apple Mascot" class="mascot-img" />
+    </div>
+
+    <div class="mid-spacer"></div>
+
+    <!-- Bottom Progress Track -->
+    <div class="progress-bar-track" id="progressTrack">
+      <div class="progress-bar-thumb" id="progressThumb"></div>
+    </div>
+
+    <div class="bottom-spacer"></div>
+  </div>
+
+  <div class="code-hint">
+    Màu hiện tại trong code Flutter: <code>Color(0xFFFAFAFB)</code> (Trắng xám cũ)<br>
+    Đang thử nghiệm: <code id="activeColorCode">Color(0xFFFFF0F2)</code>
+  </div>
+
+  <script>
+    function setBg(bgValue, accentColor, btn) {
+      document.getElementById('phoneScreen').style.background = bgValue;
+      document.querySelectorAll('.palette-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      let colorCode = bgValue;
+      if (bgValue.startsWith('#')) {
+        colorCode = 'Color(0xFF' + bgValue.substring(1).toUpperCase() + ')';
+      } else {
+        colorCode = 'LinearGradient(...)';
+      }
+      document.getElementById('activeColorCode').textContent = colorCode;
+    }
+  </script>
+</body>
+</html>

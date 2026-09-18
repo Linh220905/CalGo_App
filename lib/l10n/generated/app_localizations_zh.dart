@@ -2797,4 +2797,86 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get analysisGreeting => '欢迎来到 CalGo';
+
+  @override
+  String get rateAppTitle => '你喜欢 CalGo 吗？';
+
+  @override
+  String get rateAppSubtitle => '点击星星在 App Store 上进行评价。';
+
+  @override
+  String get rateAppSubtitleAndroid => '点击星星在 Google Play 上进行评价。';
+
+  @override
+  String get rateAppSubmit => '评价';
+
+  @override
+  String get rateAppLater => '稍后';
+
+  @override
+  String get stayOnTrackTitle => '专为帮助你\n保持正轨而设计';
+
+  @override
+  String get weightTrendTitle => '体重趋势';
+
+  @override
+  String get withoutPlanLabel => '没有计划';
+
+  @override
+  String get month1 => '第 1 个月';
+
+  @override
+  String get month6 => '第 6 个月';
+
+  @override
+  String get stayOnTrackDesc => '追踪日常习惯，持之以恒达成目标。';
+
+  @override
+  String get paceHeadline => '你希望以多快的速度\n达成目标？';
+
+  @override
+  String get paceSpeedSubtitle => '每周减重速度';
+
+  @override
+  String get paceSpeedSubtitleGain => '每周增重速度';
+
+  @override
+  String get paceSpeedSubtitleMaintain => '保持目标速度';
+
+  @override
+  String get pacePaceSlow => '较慢';
+
+  @override
+  String get pacePaceRecommended => '推荐';
+
+  @override
+  String get pacePaceFast => '快速';
+
+  @override
+  String get pacePaceMax => '强力';
+
+  @override
+  String reachGoalInMonths(String time) {
+    return '预计在 $time 内达成目标';
+  }
+
+  @override
+  String get reachGoalBalancedDesc => '这是最均衡、最容易保持动力的推荐节奏。';
+
+  @override
+  String get reachGoalSlowDesc => '平稳温和的节奏，最容易长期坚持。';
+
+  @override
+  String get reachGoalFastDesc => '快速进取的目标节奏，需要较强的自律。';
+
+  @override
+  String dailyCalorieGoalText(int calories) {
+    return '每日目标热量: $calories cal';
+  }
+
+  @override
+  String get paywallHeroTitle => '与 CalGo Pro 一起\n更快达成你的目标';
+
+  @override
+  String get paywallHeroSubtitle => '无限制 AI 智能扫餐与个性化宏量营养素追踪。';
 }

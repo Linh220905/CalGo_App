@@ -132,24 +132,13 @@ class _AccountStepState extends State<AccountStep> {
                       return;
                     }
                     await provider.setAccountMethod('google');
-                    final saved = await provider.completeOnboarding(
+                    await provider.completeOnboarding(
                       authProvider: authProvider,
                       homeProvider: homeProvider,
                     );
-                    if (saved && context.mounted) {
+                    if (context.mounted) {
                       await homeProvider.loadToday(forceRefresh: true);
                       if (context.mounted) context.go('/home');
-                    } else if (context.mounted) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            provider.error == 'onboardingSaveNetworkFailed'
-                                ? s.onboardingSaveNetworkFailed
-                                : s.onboardingSaveFailed,
-                          ),
-                          backgroundColor: Colors.redAccent,
-                        ),
-                      );
                     }
                   } else if (context.mounted && authProvider.error != null) {
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -184,24 +173,13 @@ class _AccountStepState extends State<AccountStep> {
                       return;
                     }
                     await onboarding.setAccountMethod('apple');
-                    final saved = await onboarding.completeOnboarding(
+                    await onboarding.completeOnboarding(
                       authProvider: authProvider,
                       homeProvider: homeProvider,
                     );
-                    if (saved && context.mounted) {
+                    if (context.mounted) {
                       await homeProvider.loadToday(forceRefresh: true);
                       if (context.mounted) context.go('/home');
-                    } else if (context.mounted) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            onboarding.error == 'onboardingSaveNetworkFailed'
-                                ? s.onboardingSaveNetworkFailed
-                                : s.onboardingSaveFailed,
-                          ),
-                          backgroundColor: Colors.redAccent,
-                        ),
-                      );
                     }
                   } else if (authProvider.error != null && context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(

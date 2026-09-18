@@ -18,7 +18,7 @@ class HeroStep extends StatelessWidget {
     final s = settings.strings;
 
     return Scaffold(
-      backgroundColor: AppColors.bg,
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraints) {
@@ -35,6 +35,7 @@ class HeroStep extends StatelessWidget {
               maxScaleFactor: 1.2,
               child: Column(
                 children: [
+                  // Top Header: Language Selector
                   Padding(
                     padding: EdgeInsets.symmetric(
                       horizontal: metrics.headerHorizontalPadding,
@@ -45,30 +46,150 @@ class HeroStep extends StatelessWidget {
                       children: [LanguageSelectorButton(isDark: false)],
                     ),
                   ),
+
+                  // Middle Section: Welcome, Logo, Mascot, Info Card
                   Expanded(
                     child: Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: metrics.contentHorizontalPadding,
                       ),
-                      // This only scales on unusually short devices or with a
-                      // long translation. Regular phones keep authored sizes.
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        alignment: Alignment.center,
-                        child: SizedBox(
-                          width: constraints.maxWidth -
-                              (metrics.contentHorizontalPadding * 2),
-                          child: _HeroContent(
-                            metrics: metrics,
-                            welcomeText: s.welcomeTo,
-                            snapTitle: s.snapPhotoAiTitle,
-                            snapDescription: s.snapPhotoAiDesc,
-                            trackTitle: s.trackEasilyTitle,
-                            trackDescription: s.trackEasilyDesc,
-                            goalsTitle: s.reachGoalsTitle,
-                            goalsDescription: s.reachGoalsDesc,
+                      child: Column(
+                        children: [
+                          // 1. Welcome + Logo at top
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                s.welcomeTo,
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.beVietnamPro(
+                                  fontSize: metrics.welcomeFontSize,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.textSecondary,
+                                ),
+                              ),
+                              SizedBox(height: metrics.logoGap),
+                              Image.asset(
+                                'assets/images/CalGo.png',
+                                height: metrics.logoHeight,
+                                fit: BoxFit.contain,
+                              ),
+                            ],
+                          )
+                              .animate()
+                              .fadeIn(duration: 350.ms)
+                              .slideY(begin: -8, end: 0, duration: 350.ms),
+                          SizedBox(height: metrics.topSectionGap),
+
+                          // 2. Mascot + Overlapping Card in Stack (exact same structure as HTML)
+                          Expanded(
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              alignment: Alignment.topCenter,
+                              child: SizedBox(
+                                width: constraints.maxWidth -
+                                    (metrics.contentHorizontalPadding * 2),
+                                child: Stack(
+                                  clipBehavior: Clip.none,
+                                  alignment: Alignment.topCenter,
+                                  children: [
+                                    // Mascot placed at top of stack
+                                    Animate(
+                                      effects: [
+                                        FadeEffect(duration: 400.ms),
+                                        ScaleEffect(
+                                          begin: const Offset(0.92, 0.92),
+                                          end: const Offset(1, 1),
+                                          duration: 450.ms,
+                                          curve: Curves.easeOutCubic,
+                                        ),
+                                      ],
+                                      child: Image.asset(
+                                        'assets/images/apple_mascot/apple_hello.png',
+                                        height: metrics.mascotImageHeight,
+                                        fit: BoxFit.contain,
+                                      ),
+                                    ),
+
+                                    // Card placed overlapping mascot bottom
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                        top: metrics.mascotImageHeight -
+                                            metrics.mascotOverlap,
+                                      ),
+                                      child: Animate(
+                                        effects: [
+                                          FadeEffect(
+                                              duration: 350.ms, delay: 80.ms),
+                                          SlideEffect(
+                                            begin: const Offset(0, 8),
+                                            end: Offset.zero,
+                                            duration: 350.ms,
+                                            delay: 80.ms,
+                                          ),
+                                        ],
+                                        child: Container(
+                                          padding: EdgeInsets.all(
+                                              metrics.cardPadding),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(24),
+                                            border: Border.all(
+                                              color: const Color(0xFFF4F4F5),
+                                              width: 1,
+                                            ),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.black
+                                                    .withValues(alpha: 0.07),
+                                                blurRadius: 30,
+                                                offset: const Offset(0, 10),
+                                              ),
+                                              BoxShadow(
+                                                color: Colors.black
+                                                    .withValues(alpha: 0.03),
+                                                blurRadius: 3,
+                                                offset: const Offset(0, 1),
+                                              ),
+                                            ],
+                                          ),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              _BenefitRow(
+                                                icon: Icons.camera_alt_rounded,
+                                                title: s.snapPhotoAiTitle,
+                                                desc: s.snapPhotoAiDesc,
+                                                metrics: metrics,
+                                              ),
+                                              SizedBox(
+                                                  height: metrics.benefitGap),
+                                              _BenefitRow(
+                                                icon: Icons.bar_chart_rounded,
+                                                title: s.trackEasilyTitle,
+                                                desc: s.trackEasilyDesc,
+                                                metrics: metrics,
+                                              ),
+                                              SizedBox(
+                                                  height: metrics.benefitGap),
+                                              _BenefitRow(
+                                                icon: Icons.flag_rounded,
+                                                title: s.reachGoalsTitle,
+                                                desc: s.reachGoalsDesc,
+                                                metrics: metrics,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
+                        ],
                       ),
                     ),
                   ),
@@ -97,7 +218,7 @@ class HeroStep extends StatelessWidget {
                               borderRadius: BorderRadius.circular(28),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black.withOpacity(0.10),
+                                  color: Colors.black.withValues(alpha: 0.10),
                                   blurRadius: 16,
                                   offset: const Offset(0, 6),
                                 ),
@@ -172,9 +293,8 @@ class HeroStep extends StatelessWidget {
   }
 }
 
-class _HeroContent extends StatelessWidget {
+class _HeroCardContent extends StatelessWidget {
   final _HeroLayoutMetrics metrics;
-  final String welcomeText;
   final String snapTitle;
   final String snapDescription;
   final String trackTitle;
@@ -182,9 +302,8 @@ class _HeroContent extends StatelessWidget {
   final String goalsTitle;
   final String goalsDescription;
 
-  const _HeroContent({
+  const _HeroCardContent({
     required this.metrics,
-    required this.welcomeText,
     required this.snapTitle,
     required this.snapDescription,
     required this.trackTitle,
@@ -198,29 +317,7 @@ class _HeroContent extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Column(
-          children: [
-            Text(
-              welcomeText,
-              textAlign: TextAlign.center,
-              style: GoogleFonts.beVietnamPro(
-                fontSize: metrics.welcomeFontSize,
-                fontWeight: FontWeight.w500,
-                color: AppColors.textSecondary,
-              ),
-            ),
-            SizedBox(height: metrics.logoGap),
-            Image.asset(
-              'assets/images/CalGo.png',
-              height: metrics.logoHeight,
-              fit: BoxFit.contain,
-            ),
-          ],
-        )
-            .animate()
-            .fadeIn(duration: 350.ms)
-            .slideY(begin: -8, end: 0, duration: 350.ms),
-        SizedBox(height: metrics.sectionGap),
+        // Mascot apple hello standing right on top of card
         Animate(
           effects: [
             FadeEffect(duration: 400.ms),
@@ -233,8 +330,8 @@ class _HeroContent extends StatelessWidget {
           ],
           child: ClipRect(
             child: Align(
-              alignment: Alignment.center,
-              heightFactor: 0.55,
+              alignment: Alignment.topCenter,
+              heightFactor: 0.60,
               child: Image.asset(
                 'assets/images/apple_mascot/apple_hello.png',
                 height: metrics.mascotImageHeight,
@@ -243,7 +340,7 @@ class _HeroContent extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: metrics.sectionGap),
+        // Info card centered
         Animate(
           effects: [
             FadeEffect(duration: 350.ms, delay: 80.ms),
@@ -261,7 +358,7 @@ class _HeroContent extends StatelessWidget {
               borderRadius: BorderRadius.circular(24),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
+                  color: Colors.black.withValues(alpha: 0.05),
                   blurRadius: 20,
                   offset: const Offset(0, 6),
                 ),
@@ -309,8 +406,9 @@ class _HeroLayoutMetrics {
   final double welcomeFontSize;
   final double logoGap;
   final double logoHeight;
+  final double topSectionGap;
   final double mascotImageHeight;
-  final double sectionGap;
+  final double mascotOverlap;
   final double cardPadding;
   final double benefitGap;
   final double benefitIconSize;
@@ -329,8 +427,9 @@ class _HeroLayoutMetrics {
     required this.welcomeFontSize,
     required this.logoGap,
     required this.logoHeight,
+    required this.topSectionGap,
     required this.mascotImageHeight,
-    required this.sectionGap,
+    required this.mascotOverlap,
     required this.cardPadding,
     required this.benefitGap,
     required this.benefitIconSize,
@@ -352,17 +451,18 @@ class _HeroLayoutMetrics {
     if (veryCompact) {
       return const _HeroLayoutMetrics(
         headerHorizontalPadding: 16,
-        headerVerticalPadding: 2,
+        headerVerticalPadding: 8,
         contentHorizontalPadding: 16,
         buttonHorizontalPadding: 16,
         buttonTopPadding: 2,
         buttonBottomPadding: 4,
         buttonHeight: 46,
-        welcomeFontSize: 12.5,
+        welcomeFontSize: 13,
         logoGap: 2,
-        logoHeight: 38,
-        mascotImageHeight: 165,
-        sectionGap: 2,
+        logoHeight: 48,
+        topSectionGap: 2,
+        mascotImageHeight: 180,
+        mascotOverlap: 30,
         cardPadding: 10,
         benefitGap: 5,
         benefitIconSize: 18,
@@ -375,17 +475,18 @@ class _HeroLayoutMetrics {
     if (compact) {
       return const _HeroLayoutMetrics(
         headerHorizontalPadding: 18,
-        headerVerticalPadding: 3,
+        headerVerticalPadding: 10,
         contentHorizontalPadding: 20,
         buttonHorizontalPadding: 20,
         buttonTopPadding: 4,
         buttonBottomPadding: 6,
         buttonHeight: 48,
-        welcomeFontSize: 13.5,
+        welcomeFontSize: 14,
         logoGap: 2,
-        logoHeight: 44,
-        mascotImageHeight: 205,
-        sectionGap: 3,
+        logoHeight: 54,
+        topSectionGap: 4,
+        mascotImageHeight: 220,
+        mascotOverlap: 38,
         cardPadding: 12,
         benefitGap: 6,
         benefitIconSize: 19,
@@ -397,7 +498,7 @@ class _HeroLayoutMetrics {
 
     return const _HeroLayoutMetrics(
       headerHorizontalPadding: 20,
-      headerVerticalPadding: 6,
+      headerVerticalPadding: 12,
       contentHorizontalPadding: 24,
       buttonHorizontalPadding: 24,
       buttonTopPadding: 6,
@@ -405,11 +506,12 @@ class _HeroLayoutMetrics {
       buttonHeight: 52,
       welcomeFontSize: 14.5,
       logoGap: 3,
-      logoHeight: 52,
+      logoHeight: 60,
+      topSectionGap: 6,
       mascotImageHeight: 250,
-      sectionGap: 5,
-      cardPadding: 15,
-      benefitGap: 9,
+      mascotOverlap: 45,
+      cardPadding: 16,
+      benefitGap: 10,
       benefitIconSize: 20,
       benefitIconGap: 12,
       benefitTitleSize: 15,

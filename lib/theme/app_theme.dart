@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
+  // ---- Theme tokens ----
   static const Color bg = Color(0xFFFAFAFB);
   static const Color surface = Color(0xFFFFFFFF);
+
+  // Startup exclusive theme palette (Soft Blush Pink)
+  static const Color startupBg = Color(0xFFFFF5F6);
   static const Color textPrimary = Color(0xFF0F172A);
   static const Color textSecondary = Color(0xFF64748B);
   static const Color textTertiary = Color(0xFF94A3B8);
@@ -280,6 +284,7 @@ class AppColors {
   static Color get ink => AppTheme.textPrimary;
   static Color get textPrimary => AppTheme.textPrimary;
   static Color get textSecondary => AppTheme.textSecondary;
+  static Color get startupBg => AppTheme.startupBg;
 }
 
 class AppSpace {

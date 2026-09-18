@@ -2902,4 +2902,91 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get analysisGreeting => 'مرحباً بك في CalGo';
+
+  @override
+  String get rateAppTitle => 'هل يعجبك CalGo؟';
+
+  @override
+  String get rateAppSubtitle => 'المس نجمة للتقييم على App Store.';
+
+  @override
+  String get rateAppSubtitleAndroid => 'المس نجمة للتقييم على Google Play.';
+
+  @override
+  String get rateAppSubmit => 'تقييم';
+
+  @override
+  String get rateAppLater => 'ليس الآن';
+
+  @override
+  String get stayOnTrackTitle => 'مصمم لمساعدتك على\nالبقاء في المسار الصحيح';
+
+  @override
+  String get weightTrendTitle => 'مسار الوزن';
+
+  @override
+  String get withoutPlanLabel => 'بدون خطة';
+
+  @override
+  String get month1 => 'الشهر 1';
+
+  @override
+  String get month6 => 'الشهر 6';
+
+  @override
+  String get stayOnTrackDesc =>
+      'تتبع عاداتك وحافظ على الاستمرارية مع مرور الوقت.';
+
+  @override
+  String get paceHeadline => 'ما مدى السرعة التي تريد\nبها الوصول إلى هدفك؟';
+
+  @override
+  String get paceSpeedSubtitle => 'سرعة إنقاص الوزن أسبوعياً';
+
+  @override
+  String get paceSpeedSubtitleGain => 'سرعة زيادة الوزن أسبوعياً';
+
+  @override
+  String get paceSpeedSubtitleMaintain => 'وتيرة الحفاظ على الوزن';
+
+  @override
+  String get pacePaceSlow => 'بطيء';
+
+  @override
+  String get pacePaceRecommended => 'موصى به';
+
+  @override
+  String get pacePaceFast => 'سريع';
+
+  @override
+  String get pacePaceMax => 'مكثف';
+
+  @override
+  String reachGoalInMonths(String time) {
+    return 'يجب أن تصل إلى هدفك خلال $time';
+  }
+
+  @override
+  String get reachGoalBalancedDesc =>
+      'هذا هو المعدل الأكثر توازناً وتحفيزاً ومثالي لمعظم المستخدمين.';
+
+  @override
+  String get reachGoalSlowDesc =>
+      'معدل تدريجي لطيف يسهل الالتزام به على المدى الطويل.';
+
+  @override
+  String get reachGoalFastDesc =>
+      'معدل سريع وطموح يتطلب انضباطاً والتزاماً قويين.';
+
+  @override
+  String dailyCalorieGoalText(int calories) {
+    return 'هدف السعرات اليومية: $calories cal';
+  }
+
+  @override
+  String get paywallHeroTitle => 'حقق أهدافك بشكل أسرع\nمع CalGo Pro';
+
+  @override
+  String get paywallHeroSubtitle =>
+      'مسح غير محدود للوجبات بالذكاء الاصطناعي وتتبع الماكروز.';
 }

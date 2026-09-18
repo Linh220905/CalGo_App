@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CalGo Pace Animal Vector Icons</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-page: #F3F4F6;
+  --bg-card: #FFFFFF;
+  --bg-pill: #F8F9FA;
+  --bg-pill-selected: #FFFFFF;
+  --border-pill: #E5E7EB;
+  --border-selected: #111827;
+  --text-main: #111827;
+  --text-muted: #6B7280;
+  --icon-dark: #1E1B24;
+  --icon-recommended: #E59866;
+  --accent: #E59866;
+  --accent-soft: #FFF5EE;
+  --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+}
+
+:root[data-theme="dark"] {
+  --bg-page: #0F0E13;
+  --bg-card: #181622;
+  --bg-pill: #211E2D;
+  --bg-pill-selected: #2A263A;
+  --border-pill: #2E2A3E;
+  --border-selected: #FFFFFF;
+  --text-main: #F9FAFB;
+  --text-muted: #9CA3AF;
+  --icon-dark: #F3F4F6;
+  --icon-recommended: #F59E0B;
+  --accent: #F59E0B;
+  --accent-soft: #2E2115;
+  --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+  background-color: var(--bg-page);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 16px;
+  transition: background-color 0.25s ease;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.header h1 {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-bottom: 6px;
+}
+
+.header p {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.theme-switch {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  background: var(--bg-card);
+  padding: 4px;
+  border-radius: 9999px;
+  border: 1px solid var(--border-pill);
+}
+
+.theme-btn {
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-weight: 700;
+  font-size: 13px;
+  padding: 6px 16px;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.theme-btn.active {
+  background: var(--text-main);
+  color: var(--bg-card);
+}
+
+/* Phone Screen Frame */
+.phone-frame {
+  width: 100%;
+  max-width: 440px;
+  background: var(--bg-card);
+  border-radius: 36px;
+  padding: 32px 24px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-pill);
+  margin-bottom: 32px;
+}
+
+.screen-title {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.6px;
+  margin-bottom: 6px;
+}
+
+.screen-sub {
+  font-size: 14.5px;
+  color: var(--text-muted);
+  margin-bottom: 28px;
+  font-weight: 500;
+}
+
+/* 3 Animals Grid */
+.pace-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.pace-card {
+  background: var(--bg-pill);
+  border: 2px solid var(--border-pill);
+  border-radius: 24px;
+  padding: 16px 8px 14px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+  position: relative;
+}
+
+.pace-card:hover {
+  transform: translateY(-2px);
+}
+
+.pace-card.selected {
+  background: var(--bg-pill-selected);
+  border-color: var(--border-selected);
+  box-shadow: 0 8px 20px -4px rgba(0,0,0,0.08);
+}
+
+.pace-icon-wrap {
+  width: 68px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.pace-icon-wrap svg {
+  width: 100%;
+  height: 100%;
+}
+
+.pace-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.pace-badge {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--accent);
+  margin-top: 2px;
+}
+
+/* Info Box */
+.info-box {
+  background: var(--bg-pill);
+  border: 1px solid var(--border-pill);
+  border-radius: 20px;
+  padding: 18px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.info-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.info-text h4 {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.info-text p {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+/* Detail Zoom Section */
+.details-section {
+  width: 100%;
+  max-width: 860px;
+}
+
+.section-label {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+.zoom-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 720px) {
+  .zoom-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+.zoom-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-pill);
+  border-radius: 24px;
+  padding: 24px 16px 20px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+
+.zoom-box .large-svg {
+  width: 120px;
+  height: 80px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.zoom-box .large-svg svg {
+  width: 100%;
+  height: 100%;
+}
+
+.zoom-box h3 {
+  font-size: 16px;
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+
+.zoom-box .tag {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.zoom-box p {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+</style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>CalGo Pace Animal Vector Icons (1:1 Exact Reference)</h1>
+    <p>Minimalist silhouette vector recreation matching the Cal AI reference photos</p>
+  </div>
+
+  <div class="theme-switch">
+    <button class="theme-btn active" onclick="switchTheme('light')">☀️ Sáng (Light)</button>
+    <button class="theme-btn" onclick="switchTheme('dark')">🌙 Tối (Dark)</button>
+  </div>
+
+  <!-- Phone Screen Frame -->
+  <div class="phone-frame">
+    <h2 class="screen-title">Choose your pace</h2>
+    <p class="screen-sub">This will be used to calibrate your custom plan.</p>
+
+    <div class="pace-grid">
+      <!-- 1. SLOTH (SLOW) -->
+      <div class="pace-card" id="card-slow" onclick="selectPace('slow')">
+        <div class="pace-icon-wrap">
+          <svg viewBox="0 0 70 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 8 13.5 L 62 13.5 L 62 17 L 8 17 Z" fill="var(--icon-dark)" />
+            <path d="M 20 17 C 20 10, 24 10, 24 17" stroke="var(--icon-dark)" stroke-width="3" stroke-linecap="round" fill="none" />
+            <path d="M 33 17 C 33 9, 38 9, 38 17" stroke="var(--icon-dark)" stroke-width="3.2" stroke-linecap="round" fill="none" />
+            <path d="M 44 17 C 44 10, 48 10, 48 17" stroke="var(--icon-dark)" stroke-width="3" stroke-linecap="round" fill="none" />
+            <path d="
+              M 19 16
+              C 15 22, 17 33, 24 38
+              C 31 43, 45 42, 51 35
+              C 56 30, 56 20, 51 15
+              C 48 11, 44 13, 44 17
+              C 44 24, 38 27, 33 24
+              C 30 22, 30 16, 30 16
+              C 26 16, 23 20, 21 22
+              C 19 19, 21 16, 19 16 Z"
+              fill="var(--icon-dark)" />
+            <circle cx="51.5" cy="27.5" r="8" fill="var(--icon-dark)" />
+            <ellipse cx="50" cy="28" rx="5.8" ry="4.8" fill="var(--bg-card)" />
+            <path d="M 46 27 C 47 25.5, 49.5 26.5, 48.5 28.5 C 47.5 29.5, 45.5 28.5, 46 27 Z" fill="var(--icon-dark)" />
+            <path d="M 52 27 C 53 25.5, 55.5 26.5, 54.5 28.5 C 53.5 29.5, 51.5 28.5, 52 27 Z" fill="var(--icon-dark)" />
+            <circle cx="47.2" cy="27.6" r="0.65" fill="var(--bg-card)" />
+            <circle cx="53.2" cy="27.6" r="0.65" fill="var(--bg-card)" />
+            <ellipse cx="49.8" cy="30" rx="1.1" ry="0.7" fill="var(--icon-dark)" />
+          </svg>
+        </div>
+        <div class="pace-label">Slow</div>
+      </div>
+
+      <!-- 2. RABBIT (RECOMMENDED) -->
+      <div class="pace-card selected" id="card-recommended" onclick="selectPace('recommended')">
+        <div class="pace-icon-wrap">
+          <svg viewBox="0 0 70 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Back Ear -->
+            <path d="M 38 17 C 36 8 30 3 27 4.5 C 25 6.5 29 14 34 18 Z" fill="var(--icon-recommended)" opacity="0.85" />
+            <path d="M 36 15 C 34.5 9.5 30.5 6 28.5 7 C 27.5 8 30 12.5 33.5 16 Z" fill="var(--bg-card)" opacity="0.35" />
+            <!-- Front Ear -->
+            <path d="M 43 18 C 44 9 39 3 35 4 C 32 5 34 13 39 19 Z" fill="var(--icon-recommended)" />
+            <path d="M 41.5 16 C 42 10.5 38.5 6 36 6.5 C 34.5 7.2 36.5 12.5 39 17 Z" fill="var(--bg-card)" opacity="0.5" />
+            <!-- Fluffy Tail -->
+            <circle cx="17" cy="33" r="4.5" fill="var(--icon-recommended)" />
+            <!-- Sitting Bunny Body & Head Silhouette (Facing Right) -->
+            <path fill-rule="evenodd" clip-rule="evenodd" d="
+              M 43 16
+              C 38 17 37 21 38 25
+              C 35 25 28 26 23 30
+              C 18 34 18 40 22 43
+              C 26 44 32 44 35 44
+              C 38 44 38 40 36 38
+              C 34 35 33 33 36 32
+              C 40 31 43 34 44 38
+              C 45 41 45 44 49 44
+              C 52 44 52 40 50 36
+              C 49 31 49 26 49 25
+              C 53 25 54 23 53 21
+              C 52 18 48 15 43 16 Z"
+              fill="var(--icon-recommended)" />
+            <!-- Paws -->
+            <ellipse cx="47" cy="42" rx="3.5" ry="2" fill="var(--icon-recommended)" />
+            <ellipse cx="27" cy="42.5" rx="6.5" ry="2" fill="var(--icon-recommended)" />
+            <!-- Face Details -->
+            <circle cx="47" cy="20.5" r="1.3" fill="var(--bg-card)" />
+            <circle cx="46.7" cy="20.2" r="0.5" fill="var(--icon-recommended)" />
+            <circle cx="49" cy="24" r="1.8" fill="var(--bg-card)" opacity="0.3" />
+            <ellipse cx="52.5" cy="22" rx="0.8" ry="0.6" fill="var(--bg-card)" opacity="0.6" />
+          </svg>
+        </div>
+        <div class="pace-label">Recommended</div>
+        <div class="pace-badge">Popular</div>
+      </div>
+
+      <!-- 3. CHEETAH (FAST) -->
+      <div class="pace-card" id="card-fast" onclick="selectPace('fast')">
+        <div class="pace-icon-wrap">
+          <svg viewBox="0 0 70 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <line x1="42" y1="10" x2="52" y2="10" stroke="var(--icon-dark)" stroke-width="2.2" stroke-linecap="round" />
+            <line x1="45" y1="14" x2="55" y2="14" stroke="var(--icon-dark)" stroke-width="2.2" stroke-linecap="round" />
+            <line x1="12" y1="18" x2="23" y2="18" stroke="var(--icon-dark)" stroke-width="2.2" stroke-linecap="round" />
+            <line x1="14" y1="22" x2="20" y2="22" stroke="var(--icon-dark)" stroke-width="2.2" stroke-linecap="round" />
+            <path fill-rule="evenodd" clip-rule="evenodd" d="
+              M 11 31
+              C 8 29 10 27 15 28
+              C 18 29 22 30 26 30
+              C 33 30 44 24 50 24
+              C 54 24 57 26 59 28
+              C 60 31 57 33 55 32
+              C 56 34 62 39 60.5 41
+              C 58 42 54 39 52 36
+              C 49 34 46 34 43 35
+              C 39 36 34 40 28 45
+              C 26 45 24 44 25 41
+              C 27 37 29 34 26 33
+              C 21 32 15 32 11 31 Z
+              M 52.5 28
+              A 1.1 1.1 0 1 0 52.5 30.2
+              A 1.1 1.1 0 1 0 52.5 28 Z"
+              fill="var(--icon-dark)" />
+            <path d="M 50 29 L 62 37 C 63 38 62 40 60 39 L 48 32 Z" fill="var(--icon-dark)" />
+            <path d="M 21 31 L 7 40 C 6 41 5 40 6 38 L 18 30 Z" fill="var(--icon-dark)" />
+            <path d="M 52 24 C 52 21 55 21 55 24 Z" fill="var(--icon-dark)" />
+          </svg>
+        </div>
+        <div class="pace-label">Fast</div>
+      </div>
+    </div>
+
+    <!-- Detail Description Box -->
+    <div class="info-box">
+      <div class="info-icon" id="info-icon">🌿</div>
+      <div class="info-text">
+        <h4 id="info-title">Sustainable & easy to maintain</h4>
+        <p id="info-desc">You're 2.5x more likely to keep the weight off with a gradual approach than with extreme dieting.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Zoom Vector Closeups -->
+  <div class="details-section">
+    <div class="section-label">🔍 Chi tiết Silhouette Icons (Zoomed HD)</div>
+    <div class="zoom-cards">
+
+      <!-- Sloth Detail -->
+      <div class="zoom-box">
+        <div class="large-svg">
+          <svg viewBox="0 0 70 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 8 13.5 L 62 13.5 L 62 17 L 8 17 Z" fill="var(--icon-dark)" />
+            <path d="M 20 17 C 20 10, 24 10, 24 17" stroke="var(--icon-dark)" stroke-width="3" stroke-linecap="round" fill="none" />
+            <path d="M 33 17 C 33 9, 38 9, 38 17" stroke="var(--icon-dark)" stroke-width="3.2" stroke-linecap="round" fill="none" />
+            <path d="M 44 17 C 44 10, 48 10, 48 17" stroke="var(--icon-dark)" stroke-width="3" stroke-linecap="round" fill="none" />
+            <path d="
+              M 19 16
+              C 15 22, 17 33, 24 38
+              C 31 43, 45 42, 51 35
+              C 56 30, 56 20, 51 15
+              C 48 11, 44 13, 44 17
+              C 44 24, 38 27, 33 24
+              C 30 22, 30 16, 30 16
+              C 26 16, 23 20, 21 22
+              C 19 19, 21 16, 19 16 Z"
+              fill="var(--icon-dark)" />
+            <circle cx="51.5" cy="27.5" r="8" fill="var(--icon-dark)" />
+            <ellipse cx="50" cy="28" rx="5.8" ry="4.8" fill="var(--bg-card)" />
+            <path d="M 46 27 C 47 25.5, 49.5 26.5, 48.5 28.5 C 47.5 29.5, 45.5 28.5, 46 27 Z" fill="var(--icon-dark)" />
+            <path d="M 52 27 C 53 25.5, 55.5 26.5, 54.5 28.5 C 53.5 29.5, 51.5 28.5, 52 27 Z" fill="var(--icon-dark)" />
+            <circle cx="47.2" cy="27.6" r="0.65" fill="var(--bg-card)" />
+            <circle cx="53.2" cy="27.6" r="0.65" fill="var(--bg-card)" />
+            <ellipse cx="49.8" cy="30" rx="1.1" ry="0.7" fill="var(--icon-dark)" />
+          </svg>
+        </div>
+        <h3>Con Lười (Slow)</h3>
+        <div class="tag">0.2 - 0.5 kg / tuần</div>
+        <p>Biểu tượng con lười treo cành cây đen tối giản, mặt nạ trắng chuẩn phong cách Cal AI.</p>
+      </div>
+
+      <!-- Rabbit Detail -->
+      <div class="zoom-box">
+        <div class="large-svg">
+          <svg viewBox="0 0 70 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Back Ear -->
+            <path d="M 38 17 C 36 8 30 3 27 4.5 C 25 6.5 29 14 34 18 Z" fill="var(--icon-recommended)" opacity="0.85" />
+            <path d="M 36 15 C 34.5 9.5 30.5 6 28.5 7 C 27.5 8 30 12.5 33.5 16 Z" fill="var(--bg-card)" opacity="0.35" />
+            <!-- Front Ear -->
+            <path d="M 43 18 C 44 9 39 3 35 4 C 32 5 34 13 39 19 Z" fill="var(--icon-recommended)" />
+            <path d="M 41.5 16 C 42 10.5 38.5 6 36 6.5 C 34.5 7.2 36.5 12.5 39 17 Z" fill="var(--bg-card)" opacity="0.5" />
+            <!-- Fluffy Tail -->
+            <circle cx="17" cy="33" r="4.5" fill="var(--icon-recommended)" />
+            <!-- Sitting Bunny Body & Head Silhouette (Facing Right) -->
+            <path fill-rule="evenodd" clip-rule="evenodd" d="
+              M 43 16
+              C 38 17 37 21 38 25
+              C 35 25 28 26 23 30
+              C 18 34 18 40 22 43
+              C 26 44 32 44 35 44
+              C 38 44 38 40 36 38
+              C 34 35 33 33 36 32
+              C 40 31 43 34 44 38
+              C 45 41 45 44 49 44
+              C 52 44 52 40 50 36
+              C 49 31 49 26 49 25
+              C 53 25 54 23 53 21
+              C 52 18 48 15 43 16 Z"
+              fill="var(--icon-recommended)" />
+            <!-- Paws -->
+            <ellipse cx="47" cy="42" rx="3.5" ry="2" fill="var(--icon-recommended)" />
+            <ellipse cx="27" cy="42.5" rx="6.5" ry="2" fill="var(--icon-recommended)" />
+            <!-- Face Details -->
+            <circle cx="47" cy="20.5" r="1.3" fill="var(--bg-card)" />
+            <circle cx="46.7" cy="20.2" r="0.5" fill="var(--icon-recommended)" />
+            <circle cx="49" cy="24" r="1.8" fill="var(--bg-card)" opacity="0.3" />
+            <ellipse cx="52.5" cy="22" rx="0.8" ry="0.6" fill="var(--bg-card)" opacity="0.6" />
+          </svg>
+        </div>
+        <h3>Thỏ Ngồi Bông (Recommended)</h3>
+        <div class="tag">0.5 - 0.8 kg / tuần</div>
+        <p>Silhouette thỏ ngồi tai dài vểnh, đuôi tròn bông hướng về bên phải (chuẩn phong cách Cal AI).</p>
+      </div>
+
+      <!-- Cheetah Detail -->
+      <div class="zoom-box">
+        <div class="large-svg">
+          <svg viewBox="0 0 70 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <line x1="42" y1="10" x2="52" y2="10" stroke="var(--icon-dark)" stroke-width="2.2" stroke-linecap="round" />
+            <line x1="45" y1="14" x2="55" y2="14" stroke="var(--icon-dark)" stroke-width="2.2" stroke-linecap="round" />
+            <line x1="12" y1="18" x2="23" y2="18" stroke="var(--icon-dark)" stroke-width="2.2" stroke-linecap="round" />
+            <line x1="14" y1="22" x2="20" y2="22" stroke="var(--icon-dark)" stroke-width="2.2" stroke-linecap="round" />
+            <path fill-rule="evenodd" clip-rule="evenodd" d="
+              M 11 31
+              C 8 29 10 27 15 28
+              C 18 29 22 30 26 30
+              C 33 30 44 24 50 24
+              C 54 24 57 26 59 28
+              C 60 31 57 33 55 32
+              C 56 34 62 39 60.5 41
+              C 58 42 54 39 52 36
+              C 49 34 46 34 43 35
+              C 39 36 34 40 28 45
+              C 26 45 24 44 25 41
+              C 27 37 29 34 26 33
+              C 21 32 15 32 11 31 Z
+              M 52.5 28
+              A 1.1 1.1 0 1 0 52.5 30.2
+              A 1.1 1.1 0 1 0 52.5 28 Z"
+              fill="var(--icon-dark)" />
+            <path d="M 50 29 L 62 37 C 63 38 62 40 60 39 L 48 32 Z" fill="var(--icon-dark)" />
+            <path d="M 21 31 L 7 40 C 6 41 5 40 6 38 L 18 30 Z" fill="var(--icon-dark)" />
+            <path d="M 52 24 C 52 21 55 21 55 24 Z" fill="var(--icon-dark)" />
+          </svg>
+        </div>
+        <h3>Báo Phi Tốc Độ (Fast)</h3>
+        <div class="tag">0.8 - 1.2 kg / tuần</div>
+        <p>Báo săn mồi lao vút trên không trung kèm 4 vạch gió tốc độ (speed lines) đen tuyền.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function switchTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+    }
+
+    const paceData = {
+      slow: {
+        icon: "🌱",
+        title: "Gentle & steady",
+        desc: "A relaxed pace with minimal calorie restriction. Easiest on energy levels."
+      },
+      recommended: {
+        icon: "🌿",
+        title: "Sustainable & easy to maintain",
+        desc: "You're 2.5x more likely to keep the weight off with a gradual approach than with extreme dieting."
+      },
+      fast: {
+        icon: "⚡",
+        title: "Ambitious & fast results",
+        desc: "Requires strong dedication and strict deficit tracking to reach your target quickly."
+      }
+    };
+
+    function selectPace(pace) {
+      ['slow', 'recommended', 'fast'].forEach(p => {
+        document.getElementById('card-' + p).classList.remove('selected');
+      });
+      document.getElementById('card-' + pace).classList.add('selected');
+      document.getElementById('info-icon').textContent = paceData[pace].icon;
+      document.getElementById('info-title').textContent = paceData[pace].title;
+      document.getElementById('info-desc').textContent = paceData[pace].desc;
+    }
+  </script>
+</body>
+</html>

@@ -605,7 +605,7 @@ class _ResultScreenState extends State<ResultScreen> {
       try {
         await context.read<HomeProvider>().loadToday(forceRefresh: true);
       } catch (_) {}
-      unawaited(ReviewService.requestFirstScanReview());
+      unawaited(ReviewService.requestFirstScanReview(context));
       if (mounted) {
         context.go('/home');
       }
@@ -728,7 +728,7 @@ class _ResultScreenState extends State<ResultScreen> {
             ),
           ),
           onPressed: () {
-            unawaited(ReviewService.requestFirstScanReview());
+            unawaited(ReviewService.requestFirstScanReview(context));
             context.pop();
           },
         ),

@@ -18,7 +18,7 @@ import '../../../widgets/premium_ui.dart';
 // Palette
 // ─────────────────────────────────────────────────────────────────
 const _kInk = Color(0xFF111111);
-const _kMuted = Color(0xFF111111);
+const _kMuted = Color(0xFF71717A);
 const _kSurface = Color(0xFFFAFAFA);
 const _kBorder = Color(0xFFEDEDED);
 const _kTrack = Color(0xFFECECEC);
@@ -44,7 +44,7 @@ class _AnalysisResultStepState extends State<AnalysisResultStep> {
   Future<void> _prepareResult() async {
     final provider = context.read<OnboardingProvider>();
     // For recalculating existing targets, use a fast 2.5s analysis window.
-    final durationMs = provider.isRecalculating ? 2500 : 10500;
+    final durationMs = provider.isRecalculating ? 2500 : 8000;
     final delay = Completer<void>();
     _analysisDelay = delay;
     _analysisTimer = Timer(Duration(milliseconds: durationMs), () {
@@ -127,8 +127,8 @@ class _AnalyzingPhaseState extends State<_AnalyzingPhase>
       duration: const Duration(milliseconds: 1800),
     )..repeat();
 
-    // Cycle messages every 2s
-    _messageTimer = Timer.periodic(const Duration(seconds: 2), (timer) {
+    // Cycle messages every 1.5s for 8s total analyzing window (5 messages)
+    _messageTimer = Timer.periodic(const Duration(milliseconds: 1500), (timer) {
       if (mounted && _messageIndex < _messageCount - 1) {
         setState(() => _messageIndex++);
       }

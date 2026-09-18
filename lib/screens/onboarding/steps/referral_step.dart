@@ -75,8 +75,6 @@ class _ReferralStepState extends State<ReferralStep> {
           : () async {
               final provider = context.read<OnboardingProvider>();
               await provider.setReferralSource(_selected!);
-              // Request native in-app review popup right after user specifies referral channel
-              unawaited(ReviewService.requestReviewPrompt(source: 'onboarding_referral'));
               if (context.mounted) await provider.nextStep();
             },
       nextLabel: strings.nextStepButton,
@@ -104,23 +102,32 @@ class _ReferralChoiceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(bottom: 10),
+        padding: const EdgeInsets.only(bottom: 12),
         child: InkWell(
           onTap: onTap,
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: BorderRadius.circular(20),
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 180),
             curve: Curves.easeOut,
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 13),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
             decoration: BoxDecoration(
               color: selected ? const Color(0xFFFAFAFA) : Colors.white,
-              borderRadius: BorderRadius.circular(18),
+              borderRadius: BorderRadius.circular(20),
               border: Border.all(
                 color: selected
                     ? const Color(0xFF111111)
-                    : const Color(0xFFECECEC),
+                    : const Color(0xFFE5E7EB),
                 width: selected ? 1.5 : 1,
               ),
+              boxShadow: selected
+                  ? [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.04),
+                        blurRadius: 10,
+                        offset: const Offset(0, 2),
+                      )
+                    ]
+                  : null,
             ),
             child: Row(
               children: [
@@ -139,22 +146,27 @@ class _ReferralChoiceCard extends StatelessWidget {
                             color: item.brandColor, size: 20),
                   ),
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(width: 14),
                 Expanded(
-                  child: Text(item.label,
-                      style: const TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600,
-                          color: Color(0xFF111111))),
+                  child: Text(
+                    item.label,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xFF111111),
+                      letterSpacing: -0.2,
+                    ),
+                  ),
                 ),
                 if (selected)
                   Container(
-                    width: 22,
-                    height: 22,
+                    width: 24,
+                    height: 24,
                     decoration: const BoxDecoration(
-                        color: Color(0xFF111111), shape: BoxShape.circle),
-                    child:
-                        const Icon(Icons.check, color: Colors.white, size: 14),
+                      color: Color(0xFF111111),
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(Icons.check, color: Colors.white, size: 15),
                   ),
               ],
             ),

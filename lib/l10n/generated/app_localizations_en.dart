@@ -2922,4 +2922,91 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get analysisGreeting => 'Welcome to CalGo';
+
+  @override
+  String get rateAppTitle => 'Do you enjoy CalGo?';
+
+  @override
+  String get rateAppSubtitle => 'Tap a star to rate on the App Store.';
+
+  @override
+  String get rateAppSubtitleAndroid => 'Tap a star to rate on Google Play.';
+
+  @override
+  String get rateAppSubmit => 'Rate';
+
+  @override
+  String get rateAppLater => 'Not now';
+
+  @override
+  String get stayOnTrackTitle => 'Designed to help you\nstay on track';
+
+  @override
+  String get weightTrendTitle => 'Weight trend';
+
+  @override
+  String get withoutPlanLabel => 'Without a plan';
+
+  @override
+  String get month1 => 'Month 1';
+
+  @override
+  String get month6 => 'Month 6';
+
+  @override
+  String get stayOnTrackDesc =>
+      'Track your habits and stay consistent over time.';
+
+  @override
+  String get paceHeadline => 'How fast do you\nwant to reach your\ngoal?';
+
+  @override
+  String get paceSpeedSubtitle => 'Weight loss speed per week';
+
+  @override
+  String get paceSpeedSubtitleGain => 'Weight gain speed per week';
+
+  @override
+  String get paceSpeedSubtitleMaintain => 'Target maintenance pace';
+
+  @override
+  String get pacePaceSlow => 'Slow';
+
+  @override
+  String get pacePaceRecommended => 'Recommended';
+
+  @override
+  String get pacePaceFast => 'Fast';
+
+  @override
+  String get pacePaceMax => 'Aggressive';
+
+  @override
+  String reachGoalInMonths(String time) {
+    return 'You should reach your goal in $time';
+  }
+
+  @override
+  String get reachGoalBalancedDesc =>
+      'This is the most balanced pace, motivating and ideal for most users.';
+
+  @override
+  String get reachGoalSlowDesc =>
+      'A steady, gentle pace that is easiest to sustain long-term.';
+
+  @override
+  String get reachGoalFastDesc =>
+      'A fast, ambitious pace requiring strict discipline and commitment.';
+
+  @override
+  String dailyCalorieGoalText(int calories) {
+    return 'Daily calorie goal: $calories cal';
+  }
+
+  @override
+  String get paywallHeroTitle => 'Reach your goals faster\nwith CalGo Pro';
+
+  @override
+  String get paywallHeroSubtitle =>
+      'Unlimited AI food scanning & personalized macro tracking.';
 }

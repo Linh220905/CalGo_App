@@ -132,6 +132,9 @@ class _PricingScreenState extends State<PricingScreen> {
     final failed = creditStates.any(
       (entry) => entry.value == PurchaseState.error,
     );
+    // Ignore false failure notification while UI is actively handling/refreshing
+    if (failed && _creatingPayment) return;
+
     final message = purchased
         ? s.creditsPurchasedSuccess
         : failed

@@ -2931,4 +2931,96 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get analysisGreeting => 'CalGo में आपका स्वागत है';
+
+  @override
+  String get rateAppTitle => 'क्या आपको CalGo पसंद आ रहा है?';
+
+  @override
+  String get rateAppSubtitle =>
+      'App Store पर रेटिंग देने के लिए किसी तारे पर टैप करें।';
+
+  @override
+  String get rateAppSubtitleAndroid =>
+      'Google Play पर रेटिंग देने के लिए किसी तारे पर टैप करें।';
+
+  @override
+  String get rateAppSubmit => 'रेट करें';
+
+  @override
+  String get rateAppLater => 'अभी नहीं';
+
+  @override
+  String get stayOnTrackTitle =>
+      'आपको ट्रैक पर बनाए रखने के लिए\nविशेष रूप से डिज़ाइन किया गया';
+
+  @override
+  String get weightTrendTitle => 'वजन का रुझान';
+
+  @override
+  String get withoutPlanLabel => 'बिना योजना के';
+
+  @override
+  String get month1 => 'महीना 1';
+
+  @override
+  String get month6 => 'महीना 6';
+
+  @override
+  String get stayOnTrackDesc =>
+      'अपनी आदतों को ट्रैक करें और समय के साथ निरंतरता बनाए रखें।';
+
+  @override
+  String get paceHeadline =>
+      'आप अपने लक्ष्य तक\nकितनी जल्दी पहुँचना चाहते हैं?';
+
+  @override
+  String get paceSpeedSubtitle => 'प्रति सप्ताह वजन घटाने की गति';
+
+  @override
+  String get paceSpeedSubtitleGain => 'प्रति सप्ताह वजन बढ़ाने की गति';
+
+  @override
+  String get paceSpeedSubtitleMaintain => 'वजन बनाए रखने की गति';
+
+  @override
+  String get pacePaceSlow => 'धीमी';
+
+  @override
+  String get pacePaceRecommended => 'अनुशंसित';
+
+  @override
+  String get pacePaceFast => 'तेज़';
+
+  @override
+  String get pacePaceMax => 'अत्यधिक';
+
+  @override
+  String reachGoalInMonths(String time) {
+    return 'आप $time में अपने लक्ष्य तक पहुँच सकते हैं';
+  }
+
+  @override
+  String get reachGoalBalancedDesc =>
+      'यह सबसे संतुलित और प्रेरक गति है, जो अधिकांश उपयोगकर्ताओं के लिए आदर्श है।';
+
+  @override
+  String get reachGoalSlowDesc =>
+      'एक स्थिर और सहज गति जिसे लंबे समय तक बनाए रखना सबसे आसान है।';
+
+  @override
+  String get reachGoalFastDesc =>
+      'एक तेज़ और महत्वाकांक्षी गति जिसके लिए सख्त अनुशासन की आवश्यकता होती है।';
+
+  @override
+  String dailyCalorieGoalText(int calories) {
+    return 'दैनिक कैलोरी लक्ष्य: $calories cal';
+  }
+
+  @override
+  String get paywallHeroTitle =>
+      'CalGo Pro के साथ अपने\nलक्ष्य तक तेज़ी से पहुँचें';
+
+  @override
+  String get paywallHeroSubtitle =>
+      'असीमित AI भोजन स्कैनिंग और व्यक्तिगत मैक्रो ट्रैकिंग।';
 }

@@ -2972,4 +2972,95 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get analysisGreeting => 'Bienvenue sur CalGo';
+
+  @override
+  String get rateAppTitle => 'Aimez-vous CalGo ?';
+
+  @override
+  String get rateAppSubtitle =>
+      'Touchez une étoile pour donner votre avis sur l\'App Store.';
+
+  @override
+  String get rateAppSubtitleAndroid =>
+      'Touchez une étoile pour donner votre avis sur Google Play.';
+
+  @override
+  String get rateAppSubmit => 'Évaluer';
+
+  @override
+  String get rateAppLater => 'Plus tard';
+
+  @override
+  String get stayOnTrackTitle => 'Conçu pour vous aider à\ngarder le cap';
+
+  @override
+  String get weightTrendTitle => 'Tendance de poids';
+
+  @override
+  String get withoutPlanLabel => 'Sans plan';
+
+  @override
+  String get month1 => 'Mois 1';
+
+  @override
+  String get month6 => 'Mois 6';
+
+  @override
+  String get stayOnTrackDesc =>
+      'Suivez vos habitudes et restez régulier dans le temps.';
+
+  @override
+  String get paceHeadline =>
+      'À quelle vitesse voulez-vous\natteindre votre objectif ?';
+
+  @override
+  String get paceSpeedSubtitle => 'Vitesse de perte de poids par semaine';
+
+  @override
+  String get paceSpeedSubtitleGain => 'Vitesse de prise de poids par semaine';
+
+  @override
+  String get paceSpeedSubtitleMaintain => 'Rythme de maintien ciblé';
+
+  @override
+  String get pacePaceSlow => 'Lent';
+
+  @override
+  String get pacePaceRecommended => 'Recommandé';
+
+  @override
+  String get pacePaceFast => 'Rapide';
+
+  @override
+  String get pacePaceMax => 'Intensif';
+
+  @override
+  String reachGoalInMonths(String time) {
+    return 'Vous devriez atteindre votre objectif dans $time';
+  }
+
+  @override
+  String get reachGoalBalancedDesc =>
+      'C\'est le rythme le plus équilibré, motivant et idéal pour la plupart.';
+
+  @override
+  String get reachGoalSlowDesc =>
+      'Un rythme régulier et doux, le plus facile à maintenir sur la durée.';
+
+  @override
+  String get reachGoalFastDesc =>
+      'Un rythme rapide et ambitieux exigeant une grande discipline.';
+
+  @override
+  String dailyCalorieGoalText(int calories) {
+    return 'Objectif calorique quotidien : $calories cal';
+  }
+
+  @override
+  String get paywallHeroTitle =>
+      'Atteignez vos objectifs plus vite\navec CalGo Pro';
+
+  @override
+  String get paywallHeroSubtitle =>
+      'Scan IA des repas illimité et suivi personnalisé des macros.';
 }

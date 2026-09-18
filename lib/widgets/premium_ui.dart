@@ -198,47 +198,70 @@ class OptionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(18),
+      borderRadius: BorderRadius.circular(20),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         curve: Curves.easeOut,
         width: double.infinity,
         padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: BorderRadius.circular(20),
           color: selected ? const Color(0xFFFAFAFA) : const Color(0xFFFFFFFF),
           border: Border.all(
-              color:
-                  selected ? const Color(0xFF111111) : const Color(0xFFECECEC),
-              width: selected ? 1.5 : 1),
-        ),
-        child: Row(children: [
-          Expanded(
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(title,
-                  style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                      color: selected
-                          ? const Color(0xFF111111)
-                          : const Color(0xFF111111))),
-              if (subtitle != null) ...[
-                const SizedBox(height: 2),
-                Text(subtitle!,
-                    style:
-                        const TextStyle(fontSize: 12, color: Color(0xFF7A7A7A)))
-              ],
-            ]),
+            color: selected ? const Color(0xFF111111) : const Color(0xFFE5E7EB),
+            width: selected ? 1.5 : 1,
           ),
-          if (selected)
-            Container(
-                width: 22,
-                height: 22,
+          boxShadow: selected
+              ? [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.04),
+                    blurRadius: 10,
+                    offset: const Offset(0, 2),
+                  )
+                ]
+              : null,
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xFF111111),
+                      letterSpacing: -0.2,
+                    ),
+                  ),
+                  if (subtitle != null && subtitle!.isNotEmpty) ...[
+                    const SizedBox(height: 3),
+                    Text(
+                      subtitle!,
+                      style: const TextStyle(
+                        fontSize: 13,
+                        color: Color(0xFF71717A),
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+            if (selected)
+              Container(
+                width: 24,
+                height: 24,
                 decoration: const BoxDecoration(
-                    color: Color(0xFF111111), shape: BoxShape.circle),
-                child: const Icon(Icons.check, color: Colors.white, size: 14)),
-        ]),
+                  color: Color(0xFF111111),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(Icons.check, color: Colors.white, size: 15),
+              ),
+          ],
+        ),
       ),
     );
   }

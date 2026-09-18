@@ -118,12 +118,15 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
     final state = _payment?.purchaseStates.values
         .where((value) => value == PurchaseState.error)
         .isNotEmpty;
+    // Do not show false error SnackBar if user is already completing purchase or active
     if (state == true &&
         paymentError != null &&
-        paymentError != _lastShownPaymentError) {
+        paymentError != _lastShownPaymentError &&
+        !_finishingPurchase &&
+        !_handledPremiumSuccess) {
       _lastShownPaymentError = paymentError;
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (!mounted) return;
+        if (!mounted || _finishingPurchase || _handledPremiumSuccess) return;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(paymentCopyForPlatform(s.paymentVerificationFailed)),
@@ -231,11 +234,13 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
         setState(() => _finishingPurchase = false);
         return;
       }
+      await auth.refreshUser();
       await home.loadToday(forceRefresh: true);
       if (mounted) context.go('/home');
       return;
     }
 
+    await auth.refreshUser();
     if (Navigator.canPop(context)) Navigator.pop(context);
   }
 
@@ -256,12 +261,14 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
   }
 
   void _proceedClose() {
-    if (Navigator.canPop(context)) {
-      Navigator.pop(context);
-    } else {
+    if (widget.onboardingMode) {
       try {
         context.read<OnboardingProvider>().nextStep();
       } catch (_) {}
+    } else {
+      if (Navigator.canPop(context)) {
+        Navigator.pop(context);
+      }
     }
   }
 
@@ -515,151 +522,121 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Column(
-          children: [
-            // Top App Bar with Close [X] Button
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  AnimatedOpacity(
-                    opacity: _showClose ? 1 : 0,
-                    duration: const Duration(milliseconds: 300),
-                    child: IgnorePointer(
-                      ignoring: !_showClose,
-                      child: GestureDetector(
-                        onTap: _handleClose,
-                        child: Container(
-                          width: 32,
-                          height: 32,
-                          decoration: const BoxDecoration(
-                            color: Color(0xFFF1F5F9),
-                            shape: BoxShape.circle,
-                          ),
-                          child: const Icon(
-                            Icons.close_rounded,
-                            size: 18,
-                            color: _kInk,
+        top: false,
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final screenH = constraints.maxHeight;
+            final heroHeight = (screenH * 0.36).clamp(240.0, 300.0);
+
+            return Column(
+              children: [
+                // 1. Top Hero Section with background.png & Smooth Gradient Fade
+                SizedBox(
+                  height: heroHeight,
+                  width: double.infinity,
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      Image.asset(
+                        'assets/images/background.png',
+                        fit: BoxFit.cover,
+                        alignment: const Alignment(0, -0.6),
+                        errorBuilder: (context, error, stack) => Container(
+                          color: const Color(0xFFF6F6F6),
+                        ),
+                      ),
+                      // Smooth gradient loang mờ từ giữa ảnh xuống nền trắng
+                      Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            stops: const [0.0, 0.45, 0.65, 0.88, 1.0],
+                            colors: [
+                              Colors.white.withValues(alpha: 0.0),
+                              Colors.white.withValues(alpha: 0.0),
+                              Colors.white.withValues(alpha: 0.30),
+                              Colors.white.withValues(alpha: 0.85),
+                              Colors.white,
+                            ],
                           ),
                         ),
                       ),
-                    ),
+                      // Floating Close [X] Button on Top-Right
+                      Positioned(
+                        top: MediaQuery.paddingOf(context).top + 10,
+                        right: 18,
+                        child: AnimatedOpacity(
+                          opacity: _showClose ? 1 : 0,
+                          duration: const Duration(milliseconds: 300),
+                          child: IgnorePointer(
+                            ignoring: !_showClose,
+                            child: GestureDetector(
+                              onTap: _handleClose,
+                              child: Container(
+                                width: 32,
+                                height: 32,
+                                decoration: BoxDecoration(
+                                  color: Colors.black.withValues(alpha: 0.35),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: const Icon(
+                                  Icons.close_rounded,
+                                  size: 18,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
+                ),
 
-            // Content Layout: FittedBox to strictly prevent scroll on any screen size while filling full viewport
-            Expanded(
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                // 2. Main Content (Headline, 3 Cards, CTA, Footer)
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        // Top Section (Mascot, Title, Subtitle, Macro Pill)
+                        // Headline + Subtitle
                         Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Container(
-                              width: 96,
-                              height: 96,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                gradient: RadialGradient(
-                                  colors: [
-                                    const Color(0xFFF1F5F9),
-                                    Colors.white.withValues(alpha: 0.1),
-                                  ],
-                                ),
-                              ),
-                              child: Center(
-                                child: Image.asset(
-                                  'assets/images/apple_mascot/apple_paywall.png',
-                                  height: 90,
-                                  fit: BoxFit.contain,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 2),
                             Text(
-                              s.analysisPlanReady,
+                              s.paywallHeroTitle,
                               textAlign: TextAlign.center,
-                              style: _f(21, weight: FontWeight.w800, letterSpacing: -0.5),
-                            ),
-                            const SizedBox(height: 1),
-                            Text(
-                              s.planReadySubtitle,
-                              textAlign: TextAlign.center,
-                              style: _f(12, color: _kMuted, weight: FontWeight.w500),
+                              style: _f(
+                                22,
+                                weight: FontWeight.w800,
+                                letterSpacing: -0.6,
+                                height: 1.2,
+                              ),
                             ),
                             const SizedBox(height: 5),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 14,
-                                vertical: 4,
-                              ),
-                              decoration: BoxDecoration(
-                                color: const Color(0xFFF8FAFC),
-                                borderRadius: BorderRadius.circular(30),
-                                border: Border.all(color: const Color(0xFFE2E8F0)),
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  const Icon(
-                                    Icons.local_fire_department_rounded,
-                                    color: _kAccent,
-                                    size: 15,
-                                  ),
-                                  const SizedBox(width: 4),
-                                  Text(
-                                    '$targetKcal kcal',
-                                    style: _f(11.5, weight: FontWeight.w700),
-                                  ),
-                                  const SizedBox(width: 8),
-                                  Container(
-                                    width: 3.5,
-                                    height: 3.5,
-                                    decoration: const BoxDecoration(
-                                      color: _kMuted,
-                                      shape: BoxShape.circle,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 8),
-                                  const Icon(
-                                    Icons.fitness_center_rounded,
-                                    color: Color(0xFF3B82F6),
-                                    size: 14,
-                                  ),
-                                  const SizedBox(width: 4),
-                                  Text(
-                                    '${proteinVal}g protein',
-                                    style: _f(11.5, weight: FontWeight.w700),
-                                  ),
-                                ],
+                            Text(
+                              s.paywallHeroSubtitle,
+                              textAlign: TextAlign.center,
+                              style: _f(
+                                12.5,
+                                color: _kMuted,
+                                weight: FontWeight.w500,
+                                height: 1.35,
                               ),
                             ),
                           ],
                         ),
 
-                        // Middle Section (Checklist & 3 Pricing Cards)
-                        Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const _BenefitChecklist(),
-                            const SizedBox(height: 10),
-                            _VerticalPricingList(
-                              selectedPlan: _selectedPlan,
-                              onChanged: (p) => setState(() => _selectedPlan = p),
-                              testing: testing,
-                            ),
-                          ],
+                        // 3 Pricing Cards
+                        _VerticalPricingList(
+                          selectedPlan: _selectedPlan,
+                          onChanged: (p) => setState(() => _selectedPlan = p),
+                          testing: testing,
                         ),
 
-                        // Bottom Section (CTA Button, Auto-renew note, Footer Links pinned to bottom)
+                        // Bottom Actions (CTA Button, Auto-renew note, Footer Links)
                         Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
@@ -684,16 +661,15 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
                             ),
                             const SizedBox(height: 4),
                             const _FooterLinks(showBilling: !testing),
-                            const SizedBox(height: 4),
                           ],
                         ),
                       ],
                     ),
-                  );
-                },
-              ),
-            ),
-          ],
+                  ),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
@@ -910,24 +886,30 @@ class _VerticalPlanCard extends StatelessWidget {
         clipBehavior: Clip.none,
         children: [
           AnimatedContainer(
-            duration: const Duration(milliseconds: 180),
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 11),
+            duration: const Duration(milliseconds: 200),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(15),
+              color: selected ? const Color(0xFFFAFBFD) : Colors.white,
+              borderRadius: BorderRadius.circular(18),
               border: Border.all(
                 color: selected ? _kInk : _kBorder,
-                width: selected ? 2 : 1,
+                width: selected ? 1.8 : 1.2,
               ),
               boxShadow: selected
                   ? [
                       BoxShadow(
-                        color: _kInk.withValues(alpha: 0.05),
-                        blurRadius: 8,
-                        offset: const Offset(0, 3),
+                        color: _kInk.withValues(alpha: 0.08),
+                        blurRadius: 14,
+                        offset: const Offset(0, 4),
                       )
                     ]
-                  : null,
+                  : [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.02),
+                        blurRadius: 4,
+                        offset: const Offset(0, 1),
+                      )
+                    ],
             ),
             child: Row(
               children: [

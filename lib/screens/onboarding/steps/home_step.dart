@@ -16,21 +16,13 @@ class HomeStep extends StatelessWidget {
     final authProvider = context.read<AuthProvider>();
     final homeProvider = context.read<HomeProvider>();
 
-    final saved = await provider.completeOnboarding(
+    await provider.completeOnboarding(
       authProvider: authProvider,
       homeProvider: homeProvider,
     );
-    if (saved && context.mounted) {
+    if (context.mounted) {
       await homeProvider.loadToday(forceRefresh: true);
       if (context.mounted) context.go('/home');
-    } else if (context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(provider.error == 'onboardingSaveNetworkFailed'
-              ? s.onboardingSaveNetworkFailed
-              : s.onboardingSaveFailed),
-        ),
-      );
     }
   }
 

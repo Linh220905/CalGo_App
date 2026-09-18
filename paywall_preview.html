@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CalGo Pro Paywall — US High-Converting Edition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+    background-color: #0A0A0F;
+    color: #FFFFFF;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 16px 40px;
+  }
+
+  .header-info {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .header-info h1 {
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 4px;
+    background: linear-gradient(135deg, #FFF 0%, #A5B4FC 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .header-info p {
+    color: #94A3B8;
+    font-size: 13.5px;
+  }
+
+  /* Language / Currency Toggle */
+  .lang-toggle {
+    display: flex;
+    gap: 6px;
+    background: #181726;
+    padding: 4px;
+    border-radius: 999px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .lang-btn {
+    border: none;
+    background: transparent;
+    color: #94A3B8;
+    font-weight: 700;
+    font-size: 12.5px;
+    padding: 6px 18px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .lang-btn.active {
+    background: #FFFFFF;
+    color: #0A0A0F;
+  }
+
+  /* Phone Mockup Screen */
+  .phone-screen {
+    width: 388px;
+    height: 790px;
+    background: #FFFFFF;
+    color: #0F172A;
+    border-radius: 46px;
+    box-shadow: 0 30px 80px -15px rgba(0, 0, 0, 0.8), 0 0 0 9px #1E1C2C;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Top Hero with Image & Fade from mid downwards */
+  .hero-container {
+    position: relative;
+    width: 100%;
+    height: 290px;
+    overflow: hidden;
+  }
+
+  .hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+    display: block;
+  }
+
+  /* Loang mờ mềm mại bắt đầu từ giữa ảnh trở xuống */
+  .hero-fade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0) 45%,
+      rgba(255, 255, 255, 0.3) 65%,
+      rgba(255, 255, 255, 0.85) 85%,
+      #FFFFFF 100%
+    );
+  }
+
+  /* Close Button floating over image */
+  .close-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 32px;
+    height: 32px;
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(8px);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    color: #FFFFFF;
+    cursor: pointer;
+    z-index: 2;
+    transition: transform 0.2s;
+  }
+
+  .close-btn:hover {
+    transform: scale(1.08);
+  }
+
+  /* Content Body */
+  .content-body {
+    padding: 0 18px 18px 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+    margin-top: -24px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Headline Text - Ultra Punchy for US */
+  .text-sec {
+    text-align: center;
+    margin-bottom: 12px;
+  }
+
+  .text-sec h2 {
+    font-size: 22.5px;
+    font-weight: 800;
+    letter-spacing: -0.6px;
+    color: #0F172A;
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+
+  .text-sec p {
+    font-size: 12.5px;
+    color: #64748B;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  /* 3 Pricing Cards */
+  .pricing-list {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    margin-bottom: 12px;
+  }
+
+  .plan-card {
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 18px;
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .plan-card:hover {
+    transform: translateY(-1px);
+  }
+
+  .plan-card.selected {
+    border-color: #0F172A;
+    background: #FAFBFD;
+    box-shadow: 0 8px 20px -4px rgba(15, 23, 42, 0.1), inset 0 0 0 1px #0F172A;
+  }
+
+  /* Best Value Badge */
+  .badge-tag {
+    position: absolute;
+    top: -9px;
+    right: 16px;
+    background: #FF6A3D;
+    color: #FFFFFF;
+    font-size: 9.5px;
+    font-weight: 800;
+    padding: 3px 10px;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* Radio Indicator */
+  .plan-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .radio-circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #CBD5E1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+
+  .plan-card.selected .radio-circle {
+    border-color: #0F172A;
+  }
+
+  .radio-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #0F172A;
+    transform: scale(0);
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .plan-card.selected .radio-dot {
+    transform: scale(1);
+  }
+
+  .plan-info h4 {
+    font-size: 15px;
+    font-weight: 800;
+    color: #0F172A;
+    letter-spacing: -0.3px;
+    margin-bottom: 2px;
+  }
+
+  .plan-info p {
+    font-size: 11px;
+    color: #64748B;
+    font-weight: 500;
+  }
+
+  .plan-price {
+    text-align: right;
+  }
+
+  .plan-price .main-price {
+    font-size: 16px;
+    font-weight: 800;
+    color: #0F172A;
+    letter-spacing: -0.3px;
+  }
+
+  .plan-price .sub-price {
+    font-size: 11px;
+    color: #94A3B8;
+    font-weight: 500;
+    margin-top: 1px;
+  }
+
+  /* Bottom Actions */
+  .bottom-sec {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .cta-btn {
+    width: 100%;
+    height: 52px;
+    background: #0F172A;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 16px;
+    font-size: 15.5px;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+    cursor: pointer;
+    box-shadow: 0 10px 24px -4px rgba(15, 23, 42, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s ease;
+  }
+
+  .cta-btn:active {
+    transform: scale(0.985);
+  }
+
+  .guarantee-note {
+    font-size: 10.5px;
+    color: #64748B;
+    text-align: center;
+    font-weight: 500;
+  }
+
+  .footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    font-size: 10.5px;
+    color: #94A3B8;
+    font-weight: 500;
+  }
+
+  .footer-links a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: rgba(148, 163, 184, 0.4);
+  }
+</style>
+</head>
+<body>
+
+  <div class="header-info">
+    <h1>CalGo Pro — US High-Converting Paywall</h1>
+    <p>Headline đòn bẩy ngắn gọn, tập trung chuyển đổi người dùng US / Global</p>
+  </div>
+
+  <div class="lang-toggle">
+    <button class="lang-btn active" onclick="setLang('en')">🇺🇸 US ($ USD)</button>
+    <button class="lang-btn" onclick="setLang('vi')">🇻🇳 VN (₫ VND)</button>
+  </div>
+
+  <div class="phone-screen">
+    <!-- Top Hero Section -->
+    <div class="hero-container">
+      <img src="assets/images/background.png" alt="Hero Background" class="hero-img">
+      <div class="hero-fade"></div>
+      <div class="close-btn">✕</div>
+    </div>
+
+    <!-- Main Body Content -->
+    <div class="content-body">
+      <!-- Short Punchy Text -->
+      <div class="text-sec">
+        <h2 id="heroTitle">Reach your goals faster<br>with CalGo Pro</h2>
+        <p id="heroSubtitle">Unlimited AI food scanning & personalized macro tracking.</p>
+      </div>
+
+      <!-- 3 Pricing Cards -->
+      <div class="pricing-list">
+        <!-- 1. Annual (Best Value) -->
+        <div class="plan-card selected" onclick="pickPlan(this, 'annual')">
+          <span class="badge-tag" id="annualBadge">SAVE 70%</span>
+          <div class="plan-left">
+            <div class="radio-circle">
+              <div class="radio-dot"></div>
+            </div>
+            <div class="plan-info">
+              <h4 id="annualTitle">1 Year</h4>
+              <p id="annualSub">3 days free trial</p>
+            </div>
+          </div>
+          <div class="plan-price">
+            <div class="main-price" id="annualMainPrice">$2.49<span style="font-size:11px;font-weight:600;opacity:0.75;">/mo</span></div>
+            <div class="sub-price" id="annualSubPrice">$29.99 / year</div>
+          </div>
+        </div>
+
+        <!-- 2. Monthly -->
+        <div class="plan-card" onclick="pickPlan(this, 'monthly')">
+          <div class="plan-left">
+            <div class="radio-circle">
+              <div class="radio-dot"></div>
+            </div>
+            <div class="plan-info">
+              <h4 id="monthlyTitle">1 Month</h4>
+              <p id="monthlySub">Flexible billing</p>
+            </div>
+          </div>
+          <div class="plan-price">
+            <div class="main-price" id="monthlyMainPrice">$4.99</div>
+            <div class="sub-price" id="monthlySubPrice">$4.99 / month</div>
+          </div>
+        </div>
+
+        <!-- 3. Weekly -->
+        <div class="plan-card" onclick="pickPlan(this, 'weekly')">
+          <div class="plan-left">
+            <div class="radio-circle">
+              <div class="radio-dot"></div>
+            </div>
+            <div class="plan-info">
+              <h4 id="weeklyTitle">1 Week</h4>
+              <p id="weeklySub">Short-term trial</p>
+            </div>
+          </div>
+          <div class="plan-price">
+            <div class="main-price" id="weeklyMainPrice">$1.99</div>
+            <div class="sub-price" id="weeklySubPrice">$1.99 / week</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom CTA Section -->
+      <div class="bottom-sec">
+        <button class="cta-btn" id="ctaBtn">Try 3 Days Free</button>
+        <div class="guarantee-note" id="guaranteeNote">No commitment • Cancel anytime in App Store / Google Play</div>
+        <div class="footer-links">
+          <a href="#" id="linkTerms">Terms</a>
+          <a href="#" id="linkRestore">Restore</a>
+          <a href="#" id="linkPrivacy">Privacy</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentLang = 'en';
+    let currentPlan = 'annual';
+
+    const data = {
+      en: {
+        title: 'Reach your goals faster<br>with CalGo Pro',
+        sub: 'Unlimited AI food scanning & personalized macro tracking.',
+        annualBadge: 'SAVE 70%',
+        annualTitle: '1 Year',
+        annualSub: '3 days free trial',
+        annualMain: '$2.49<span style="font-size:11px;font-weight:600;opacity:0.75;">/mo</span>',
+        annualSubPrice: '$29.99 / year',
+        monthlyTitle: '1 Month',
+        monthlySub: 'Flexible billing',
+        monthlyMain: '$4.99',
+        monthlySubPrice: '$4.99 / month',
+        weeklyTitle: '1 Week',
+        weeklySub: 'Short-term trial',
+        weeklyMain: '$1.99',
+        weeklySubPrice: '$1.99 / week',
+        ctaAnnual: 'Try 3 Days Free',
+        ctaMonthly: 'Start 1 Month Plan',
+        ctaWeekly: 'Start 1 Week Plan',
+        guarantee: 'No commitment • Cancel anytime in App Store / Google Play',
+        terms: 'Terms',
+        restore: 'Restore',
+        privacy: 'Privacy'
+      },
+      vi: {
+        title: 'Đạt mục tiêu nhanh hơn<br>cùng CalGo Pro',
+        sub: 'Nhận diện bữa ăn bằng AI không giới hạn & cân đối Macro.',
+        annualBadge: 'TIẾT KIỆM 70%',
+        annualTitle: 'Gói 1 Năm',
+        annualSub: 'Dùng thử 3 ngày miễn phí',
+        annualMain: '39.000đ<span style="font-size:11px;font-weight:600;opacity:0.75;">/tháng</span>',
+        annualSubPrice: '469.000đ / năm',
+        monthlyTitle: 'Gói 1 Tháng',
+        monthlySub: 'Linh hoạt theo tháng',
+        monthlyMain: '129.000đ',
+        monthlySubPrice: '129.000đ / tháng',
+        weeklyTitle: 'Gói 1 Tuần',
+        weeklySub: 'Trải nghiệm ngắn hạn',
+        weeklyMain: '49.000đ',
+        weeklySubPrice: '49.000đ / tuần',
+        ctaAnnual: 'Dùng thử 3 ngày miễn phí',
+        ctaMonthly: 'Bắt đầu gói 1 Tháng',
+        ctaWeekly: 'Bắt đầu gói 1 Tuần',
+        guarantee: 'Không tính phí hôm nay • Hủy bất kỳ lúc nào trên Google Play',
+        terms: 'Điều khoản',
+        restore: 'Khôi phục',
+        privacy: 'Bảo mật'
+      }
+    };
+
+    function setLang(lang) {
+      currentLang = lang;
+      document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      render();
+    }
+
+    function pickPlan(card, type) {
+      currentPlan = type;
+      document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      updateCta();
+    }
+
+    function updateCta() {
+      const d = data[currentLang];
+      const btn = document.getElementById('ctaBtn');
+      if (currentPlan === 'annual') btn.textContent = d.ctaAnnual;
+      else if (currentPlan === 'monthly') btn.textContent = d.ctaMonthly;
+      else btn.textContent = d.ctaWeekly;
+    }
+
+    function render() {
+      const d = data[currentLang];
+      document.getElementById('heroTitle').innerHTML = d.title;
+      document.getElementById('heroSubtitle').textContent = d.sub;
+      document.getElementById('annualBadge').textContent = d.annualBadge;
+      document.getElementById('annualTitle').textContent = d.annualTitle;
+      document.getElementById('annualSub').textContent = d.annualSub;
+      document.getElementById('annualMainPrice').innerHTML = d.annualMain;
+      document.getElementById('annualSubPrice').textContent = d.annualSubPrice;
+
+      document.getElementById('monthlyTitle').textContent = d.monthlyTitle;
+      document.getElementById('monthlySub').textContent = d.monthlySub;
+      document.getElementById('monthlyMainPrice').textContent = d.monthlyMain;
+      document.getElementById('monthlySubPrice').textContent = d.monthlySubPrice;
+
+      document.getElementById('weeklyTitle').textContent = d.weeklyTitle;
+      document.getElementById('weeklySub').textContent = d.weeklySub;
+      document.getElementById('weeklyMainPrice').textContent = d.weeklyMain;
+      document.getElementById('weeklySubPrice').textContent = d.weeklySubPrice;
+
+      document.getElementById('guaranteeNote').textContent = d.guarantee;
+      document.getElementById('linkTerms').textContent = d.terms;
+      document.getElementById('linkRestore').textContent = d.restore;
+      document.getElementById('linkPrivacy').textContent = d.privacy;
+      updateCta();
+    }
+  </script>
+</body>
+</html>

@@ -5332,6 +5332,162 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Welcome to CalGo'**
   String get analysisGreeting;
+
+  /// No description provided for @rateAppTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you enjoy CalGo?'**
+  String get rateAppTitle;
+
+  /// No description provided for @rateAppSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap a star to rate on the App Store.'**
+  String get rateAppSubtitle;
+
+  /// No description provided for @rateAppSubtitleAndroid.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap a star to rate on Google Play.'**
+  String get rateAppSubtitleAndroid;
+
+  /// No description provided for @rateAppSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate'**
+  String get rateAppSubmit;
+
+  /// No description provided for @rateAppLater.
+  ///
+  /// In en, this message translates to:
+  /// **'Not now'**
+  String get rateAppLater;
+
+  /// No description provided for @stayOnTrackTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Designed to help you\nstay on track'**
+  String get stayOnTrackTitle;
+
+  /// No description provided for @weightTrendTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight trend'**
+  String get weightTrendTitle;
+
+  /// No description provided for @withoutPlanLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Without a plan'**
+  String get withoutPlanLabel;
+
+  /// No description provided for @month1.
+  ///
+  /// In en, this message translates to:
+  /// **'Month 1'**
+  String get month1;
+
+  /// No description provided for @month6.
+  ///
+  /// In en, this message translates to:
+  /// **'Month 6'**
+  String get month6;
+
+  /// No description provided for @stayOnTrackDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Track your habits and stay consistent over time.'**
+  String get stayOnTrackDesc;
+
+  /// No description provided for @paceHeadline.
+  ///
+  /// In en, this message translates to:
+  /// **'How fast do you\nwant to reach your\ngoal?'**
+  String get paceHeadline;
+
+  /// No description provided for @paceSpeedSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight loss speed per week'**
+  String get paceSpeedSubtitle;
+
+  /// No description provided for @paceSpeedSubtitleGain.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight gain speed per week'**
+  String get paceSpeedSubtitleGain;
+
+  /// No description provided for @paceSpeedSubtitleMaintain.
+  ///
+  /// In en, this message translates to:
+  /// **'Target maintenance pace'**
+  String get paceSpeedSubtitleMaintain;
+
+  /// No description provided for @pacePaceSlow.
+  ///
+  /// In en, this message translates to:
+  /// **'Slow'**
+  String get pacePaceSlow;
+
+  /// No description provided for @pacePaceRecommended.
+  ///
+  /// In en, this message translates to:
+  /// **'Recommended'**
+  String get pacePaceRecommended;
+
+  /// No description provided for @pacePaceFast.
+  ///
+  /// In en, this message translates to:
+  /// **'Fast'**
+  String get pacePaceFast;
+
+  /// No description provided for @pacePaceMax.
+  ///
+  /// In en, this message translates to:
+  /// **'Aggressive'**
+  String get pacePaceMax;
+
+  /// No description provided for @reachGoalInMonths.
+  ///
+  /// In en, this message translates to:
+  /// **'You should reach your goal in {time}'**
+  String reachGoalInMonths(String time);
+
+  /// No description provided for @reachGoalBalancedDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'This is the most balanced pace, motivating and ideal for most users.'**
+  String get reachGoalBalancedDesc;
+
+  /// No description provided for @reachGoalSlowDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'A steady, gentle pace that is easiest to sustain long-term.'**
+  String get reachGoalSlowDesc;
+
+  /// No description provided for @reachGoalFastDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'A fast, ambitious pace requiring strict discipline and commitment.'**
+  String get reachGoalFastDesc;
+
+  /// No description provided for @dailyCalorieGoalText.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily calorie goal: {calories} cal'**
+  String dailyCalorieGoalText(int calories);
+
+  /// No description provided for @paywallHeroTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reach your goals faster\nwith CalGo Pro'**
+  String get paywallHeroTitle;
+
+  /// No description provided for @paywallHeroSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlimited AI food scanning & personalized macro tracking.'**
+  String get paywallHeroSubtitle;
 }
 
 class _AppLocalizationsDelegate

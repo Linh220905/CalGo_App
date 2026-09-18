@@ -1473,5 +1473,45 @@
   "days3": "3 Days",
   "days7": "7 Days",
   "days30": "30 Days",
-  "analysisGreeting": "Welcome to CalGo"
+  "analysisGreeting": "Welcome to CalGo",
+  "rateAppTitle": "Do you enjoy CalGo?",
+  "rateAppSubtitle": "Tap a star to rate on the App Store.",
+  "rateAppSubtitleAndroid": "Tap a star to rate on Google Play.",
+  "rateAppSubmit": "Rate",
+  "rateAppLater": "Not now",
+  "stayOnTrackTitle": "Designed to help you\nstay on track",
+  "weightTrendTitle": "Weight trend",
+  "withoutPlanLabel": "Without a plan",
+  "month1": "Month 1",
+  "month6": "Month 6",
+  "stayOnTrackDesc": "Track your habits and stay consistent over time.",
+  "paceHeadline": "How fast do you\nwant to reach your\ngoal?",
+  "paceSpeedSubtitle": "Weight loss speed per week",
+  "paceSpeedSubtitleGain": "Weight gain speed per week",
+  "paceSpeedSubtitleMaintain": "Target maintenance pace",
+  "pacePaceSlow": "Slow",
+  "pacePaceRecommended": "Recommended",
+  "pacePaceFast": "Fast",
+  "pacePaceMax": "Aggressive",
+  "reachGoalInMonths": "You should reach your goal in {time}",
+  "@reachGoalInMonths": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "reachGoalBalancedDesc": "This is the most balanced pace, motivating and ideal for most users.",
+  "reachGoalSlowDesc": "A steady, gentle pace that is easiest to sustain long-term.",
+  "reachGoalFastDesc": "A fast, ambitious pace requiring strict discipline and commitment.",
+  "dailyCalorieGoalText": "Daily calorie goal: {calories} cal",
+  "@dailyCalorieGoalText": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "paywallHeroTitle": "Reach your goals faster\nwith CalGo Pro",
+  "paywallHeroSubtitle": "Unlimited AI food scanning & personalized macro tracking."
 }

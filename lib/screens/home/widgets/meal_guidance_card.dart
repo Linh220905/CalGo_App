@@ -3,6 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import '../../../models/meal_guidance.dart';
 import '../../../providers/app_settings_provider.dart';
+import '../../../utils/stats_localization.dart';
 
 class MealGuidanceCard extends StatelessWidget {
   final MealGuidance? guidance;
@@ -29,17 +30,23 @@ class MealGuidanceCard extends StatelessWidget {
     if (value == null) return const SizedBox.shrink();
     if (value.needsFirstScan) {
       return _FirstScanCard(
-        message: value.message,
+        message: StatsLocalization.mealGuidanceStateMessage(context, value),
         isDark: isDark,
         onScan: onScan,
       );
     }
     if (value.goalReached) {
-      return _GoalReachedCard(isDark: isDark, message: value.message);
+      return _GoalReachedCard(
+        isDark: isDark,
+        message: StatsLocalization.mealGuidanceStateMessage(context, value),
+      );
     }
     if (!value.isAvailable || value.recommendations.isEmpty) {
       return _UnavailableCard(
-          isDark: isDark, message: value.message, onScan: onScan);
+        isDark: isDark,
+        message: StatsLocalization.mealGuidanceStateMessage(context, value),
+        onScan: onScan,
+      );
     }
     return _RecommendationsCard(
       guidance: value,
@@ -160,7 +167,7 @@ class _RecommendationsCard extends StatelessWidget {
           ),
           const SizedBox(height: 14),
           Text(
-            guidance.message,
+            StatsLocalization.mealGuidanceStateMessage(context, guidance),
             style: TextStyle(
                 color: title,
                 fontSize: 14,
@@ -341,7 +348,9 @@ class _FeaturedDish extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 5),
-                    Text(dish.reason,
+                    Text(
+                        StatsLocalization.mealGuidanceDishReason(
+                            context, dish, null),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(

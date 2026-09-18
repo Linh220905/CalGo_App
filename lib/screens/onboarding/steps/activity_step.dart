@@ -41,22 +41,34 @@ class ActivityStep extends StatelessWidget {
         child: Column(
           children: [
             Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 28),
-                child: SingleChildScrollView(
-                  child: Column(children: [
-                    const SizedBox(height: 16),
-                    Text(s.activityStepTitle,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                            fontSize: 28,
-                            fontWeight: FontWeight.w700,
-                            color: Color(0xFF111111))),
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(height: 20),
+                    Text(
+                      s.activityStepTitle,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 26,
+                        fontWeight: FontWeight.w800,
+                        color: Color(0xFF111111),
+                        letterSpacing: -0.5,
+                        height: 1.2,
+                      ),
+                    ),
                     const SizedBox(height: 8),
-                    Text(s.activityStepSubtitle,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                            fontSize: 15, color: Color(0xFF7A7A7A))),
+                    Text(
+                      s.activityStepSubtitle,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Color(0xFF71717A),
+                        fontWeight: FontWeight.w500,
+                        height: 1.35,
+                      ),
+                    ),
                     const SizedBox(height: 24),
                     Consumer<OnboardingProvider>(
                       builder: (context, provider, _) => ListView(
@@ -66,25 +78,27 @@ class ActivityStep extends StatelessWidget {
                           final (_, label, desc, level) = e;
                           final sel = provider.data.activityLevel == level;
                           return Padding(
-                            padding: const EdgeInsets.only(bottom: 8),
+                            padding: const EdgeInsets.only(bottom: 12),
                             child: OptionCard(
-                                title: label,
-                                subtitle: desc,
-                                selected: sel,
-                                onTap: () => provider.setActivityLevel(level)),
+                              title: label,
+                              subtitle: desc,
+                              selected: sel,
+                              onTap: () => provider.setActivityLevel(level),
+                            ),
                           );
                         }).toList(),
                       ),
                     ),
-                  ]),
+                    const SizedBox(height: 16),
+                  ],
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(28, 0, 28, 24),
+              padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
               child: SizedBox(
                 width: double.infinity,
-                height: 60,
+                height: 58,
                 child: Consumer<OnboardingProvider>(
                   builder: (context, provider, _) => ElevatedButton(
                     onPressed: provider.data.activityLevel == null
@@ -94,14 +108,20 @@ class ActivityStep extends StatelessWidget {
                       backgroundColor: const Color(0xFF111111),
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18)),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
                       elevation: 0,
                       disabledBackgroundColor: const Color(0xFFECECEC),
                       disabledForegroundColor: const Color(0xFFAAAAAA),
                     ),
-                    child: Text(s.nextStepButton,
-                        style: const TextStyle(
-                            fontSize: 17, fontWeight: FontWeight.w600)),
+                    child: Text(
+                      s.nextStepButton,
+                      style: const TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: -0.2,
+                      ),
+                    ),
                   ),
                 ),
               ),

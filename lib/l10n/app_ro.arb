@@ -1065,6 +1065,9 @@
   "days3": "3 Zile",
   "days7": "7 Zile",
   "days30": "30 Zile",
+  "rateAppTitle": "Evaluează CalGo",
+  "rateAppSubmit": "Evaluează",
+  "rateAppLater": "Mai târziu",
   "@goalLoseDiffText": {
     "description": "Localized UI text: goalLoseDiffText",
     "placeholders": {
@@ -1670,5 +1673,31 @@
         "type": "int"
       }
     }
-  }
+  },
+  "rateAppTitle": "Îți place CalGo?",
+  "rateAppSubtitle": "Apasă pe o stea pentru a evalua pe App Store.",
+  "rateAppSubtitleAndroid": "Apasă pe o stea pentru a evalua pe Google Play.",
+  "rateAppSubmit": "Evaluează",
+  "rateAppLater": "Nu acum",
+  "stayOnTrackTitle": "Conceput pentru a te ajuta\nsă rămâi pe drumul cel bun",
+  "weightTrendTitle": "Evoluția greutății",
+  "withoutPlanLabel": "Fără un plan",
+  "month1": "Luna 1",
+  "month6": "Luna 6",
+  "stayOnTrackDesc": "Urmărește-ți obiceiurile și fii consecvent în timp.",
+  "paceHeadline": "Cât de repede vrei\nsă-ți atingi obiectivul?",
+  "paceSpeedSubtitle": "Viteza de slăbire pe săptămână",
+  "paceSpeedSubtitleGain": "Viteza de creștere în greutate pe săptămână",
+  "paceSpeedSubtitleMaintain": "Ritmul de menținere",
+  "pacePaceSlow": "Lent",
+  "pacePaceRecommended": "Recomandat",
+  "pacePaceFast": "Rapid",
+  "pacePaceMax": "Intens",
+  "reachGoalInMonths": "Ar trebui să-ți atingi obiectivul în {time}",
+  "reachGoalBalancedDesc": "Acesta este cel mai echilibrat ritm, motivant și ideal pentru majoritatea.",
+  "reachGoalSlowDesc": "Un ritm constant și blând, cel mai ușor de menținut pe termen lung.",
+  "reachGoalFastDesc": "Un ritm rapid și ambițios care necesită o disciplină strictă.",
+  "dailyCalorieGoalText": "Obiectiv zilnic de calorii: {calories} cal",
+  "paywallHeroTitle": "Atinge-ți obiectivele mai repede\ncu CalGo Pro",
+  "paywallHeroSubtitle": "Scanare nelimitată a meselor cu IA și monitorizare macro."
 }

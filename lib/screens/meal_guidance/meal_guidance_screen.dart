@@ -9,6 +9,7 @@ import '../../providers/home_provider.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../utils/macro_colors.dart';
 import '../../utils/macro_icons.dart';
+import '../../utils/stats_localization.dart';
 
 class MealGuidanceScreen extends StatefulWidget {
   const MealGuidanceScreen({super.key});
@@ -133,8 +134,9 @@ class _GuidanceBody extends StatelessWidget {
                         fontWeight: FontWeight.w800)),
                 const SizedBox(height: 8),
                 Text(
-                    value?.message.isNotEmpty == true
-                        ? value!.message
+                    value != null
+                        ? StatsLocalization.mealGuidanceStateMessage(
+                            context, value)
                         : s.guidanceUnavailableMessage,
                     textAlign: TextAlign.center,
                     style: TextStyle(color: muted, height: 1.4)),
@@ -192,7 +194,7 @@ class _GuidanceBody extends StatelessWidget {
                   ),
                   const SizedBox(height: 6),
                   Text(
-                    value.message,
+                    StatsLocalization.mealGuidanceStateMessage(context, value),
                     style: TextStyle(
                       color: muted,
                       height: 1.4,
@@ -608,7 +610,9 @@ class _DishCard extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 12),
                     child: Divider(height: 1, color: muted.withOpacity(.22)),
                   ),
-                  Text(dish.reason,
+                  Text(
+                      StatsLocalization.mealGuidanceDishReason(
+                          context, dish, null),
                       style: TextStyle(
                           color: text,
                           fontSize: 13,
@@ -626,7 +630,9 @@ class _DishCard extends StatelessWidget {
                             : const Color(0xFFF6F6F7),
                         borderRadius: BorderRadius.circular(11),
                       ),
-                      child: Text(s.dishTip(dish.adjustment),
+                      child: Text(
+                          s.dishTip(StatsLocalization.mealGuidanceDishAdjustment(
+                              context, dish.adjustment)),
                           style: TextStyle(
                               color: text, fontSize: 12, height: 1.3)),
                     ),
@@ -669,7 +675,9 @@ class _DishCard extends StatelessWidget {
                   const SizedBox(height: 8),
                   Padding(
                     padding: const EdgeInsets.only(left: 68),
-                    child: Text(dish.reason,
+                    child: Text(
+                        StatsLocalization.mealGuidanceDishReason(
+                            context, dish, null),
                         style: TextStyle(
                             color: text.withOpacity(.72),
                             fontSize: 12,
@@ -679,7 +687,9 @@ class _DishCard extends StatelessWidget {
                     const SizedBox(height: 5),
                     Padding(
                       padding: const EdgeInsets.only(left: 68),
-                      child: Text(s.dishTip(dish.adjustment),
+                      child: Text(
+                          s.dishTip(StatsLocalization.mealGuidanceDishAdjustment(
+                              context, dish.adjustment)),
                           style: TextStyle(
                               color: muted, fontSize: 11.5, height: 1.3)),
                     ),
@@ -915,7 +925,8 @@ class _TransformationForecastCard extends StatelessWidget {
                         ),
                       ),
                       child: Text(
-                        forecast.statusTag,
+                        StatsLocalization.mealGuidanceStatusTag(
+                            context, forecast.statusTag),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.center,
@@ -975,7 +986,8 @@ class _TransformationForecastCard extends StatelessWidget {
 
           // Main Forecast Encouraging Message
           Text(
-            forecast.forecastMessage,
+            StatsLocalization.mealGuidanceForecastMessage(
+                context, forecast),
             style: TextStyle(
               fontSize: 13.5,
               height: 1.45,

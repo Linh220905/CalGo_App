@@ -161,6 +161,7 @@ class _DiscountOfferPaywallStepState extends State<DiscountOfferPaywallStep> {
     );
     if (!mounted) return;
     if (saved) {
+      await auth.refreshUser();
       await home.loadToday(forceRefresh: true);
       if (mounted) context.go('/home');
     }

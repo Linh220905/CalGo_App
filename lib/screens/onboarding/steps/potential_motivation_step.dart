@@ -21,7 +21,7 @@ class PotentialMotivationStep extends StatelessWidget {
     final mutedText = isDark ? const Color(0xFF9E9DA8) : const Color(0xFF555555);
 
     return Scaffold(
-      backgroundColor: bgColor,
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -42,7 +42,7 @@ class PotentialMotivationStep extends StatelessWidget {
                 child: Text(
                   s.potentialMotivationTitle,
                   style: GoogleFonts.plusJakartaSans(
-                    fontSize: 32,
+                    fontSize: 28,
                     fontWeight: FontWeight.w800,
                     color: textColor,
                     height: 1.15,
@@ -50,7 +50,7 @@ class PotentialMotivationStep extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 36),
+              const SizedBox(height: 24),
 
               // Middle Card
               Expanded(

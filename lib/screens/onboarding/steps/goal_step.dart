@@ -77,47 +77,60 @@ class _GoalCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
           color: selected ? const Color(0xFFFAFAFA) : const Color(0xFFFFFFFF),
           border: Border.all(
-            color: selected ? const Color(0xFF111111) : const Color(0xFFECECEC),
+            color: selected ? const Color(0xFF111111) : const Color(0xFFE5E7EB),
             width: selected ? 1.5 : 1,
           ),
+          boxShadow: selected
+              ? [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.04),
+                    blurRadius: 10,
+                    offset: const Offset(0, 2),
+                  )
+                ]
+              : null,
         ),
-        child: Row(children: [
-          Container(
-            width: 36,
-            height: 36,
-            decoration: BoxDecoration(
-              color: selected
-                  ? iconColor.withOpacity(0.12)
-                  : const Color(0xFFF5F5F5),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Icon(icon,
-                size: 20,
-                color: selected ? iconColor : const Color(0xFF7A7A7A)),
-          ),
-          const SizedBox(width: 14),
-          Expanded(
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(label,
-                  style: const TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF111111),
-                  )),
-            ]),
-          ),
-          if (selected)
+        child: Row(
+          children: [
             Container(
-              width: 24,
-              height: 24,
-              decoration: const BoxDecoration(
-                color: Color(0xFF111111),
-                shape: BoxShape.circle,
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                color: selected
+                    ? iconColor.withOpacity(0.12)
+                    : const Color(0xFFF4F4F5),
+                borderRadius: BorderRadius.circular(12),
               ),
-              child: const Icon(Icons.check, color: Colors.white, size: 15),
+              child: Icon(
+                icon,
+                size: 22,
+                color: selected ? iconColor : const Color(0xFF555555),
+              ),
             ),
-        ]),
+            const SizedBox(width: 14),
+            Expanded(
+              child: Text(
+                label,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  color: Color(0xFF111111),
+                  letterSpacing: -0.2,
+                ),
+              ),
+            ),
+            if (selected)
+              Container(
+                width: 24,
+                height: 24,
+                decoration: const BoxDecoration(
+                  color: Color(0xFF111111),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(Icons.check, color: Colors.white, size: 15),
+              ),
+          ],
+        ),
       ),
     );
   }

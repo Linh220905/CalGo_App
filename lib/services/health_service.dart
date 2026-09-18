@@ -13,22 +13,43 @@ class HealthService {
     return _configuration ??= _health.configure();
   }
 
-  /// This feature only needs active energy. Keep the authorization prompt
-  /// minimal until another Health feature is actually shipped.
+  /// Read types requested from Apple Health:
+  /// - Workout / Exercise (Bài tập)
+  /// - Weight (Cân nặng)
+  /// - Flights Climbed (Bậc thang đã leo)
+  /// - Steps (Bước)
+  /// - Active Energy Burned (Năng lượng hoạt động)
+  /// - Heart Rate (Nhịp tim)
+  /// - Distance Walking / Running (Quãng đường Đi bộ + Chạy)
   static const List<HealthDataType> readTypes = [
+    HealthDataType.WORKOUT,
+    HealthDataType.WEIGHT,
+    HealthDataType.FLIGHTS_CLIMBED,
+    HealthDataType.STEPS,
     HealthDataType.ACTIVE_ENERGY_BURNED,
+    HealthDataType.HEART_RATE,
+    HealthDataType.DISTANCE_WALKING_RUNNING,
   ];
 
-  static const List<HealthDataType> writeTypes = [];
+  /// Write types synced back to Apple Health:
+  /// - Workout / Exercise (Bài tập)
+  /// - Weight (Cân nặng)
+  static const List<HealthDataType> writeTypes = [
+    HealthDataType.WORKOUT,
+    HealthDataType.WEIGHT,
+  ];
 
-  /// All types currently requested by CalGo.
+  /// All types requested by CalGo.
   static const List<HealthDataType> types = [
     ...readTypes,
     ...writeTypes,
   ];
 
   /// Permissions list matching `types`
-  static const List<HealthDataAccess> permissions = [HealthDataAccess.READ];
+  static final List<HealthDataAccess> permissions = [
+    ...List.filled(readTypes.length, HealthDataAccess.READ),
+    ...List.filled(writeTypes.length, HealthDataAccess.WRITE),
+  ];
 
   /// Check if the app currently has authorization for requested types
   Future<bool> hasPermissions() async {

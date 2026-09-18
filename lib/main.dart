@@ -93,7 +93,10 @@ void main() {
       restoredPaymentAuthScope = apiService.authScope;
       unawaited(paymentProvider.restorePurchases());
       if (authProvider.user?.id != null) {
-        unawaited(RevenueCatService.logIn(authProvider.user!.id));
+        unawaited(RevenueCatService.logIn(
+          authProvider.user!.id,
+          apiService: apiService,
+        ));
       } else {
         unawaited(RevenueCatService.init());
       }

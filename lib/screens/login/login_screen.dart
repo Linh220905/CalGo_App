@@ -163,12 +163,7 @@ class _LoginScreenState extends State<LoginScreen> {
     } catch (_) {}
 
     if (context.mounted) {
-      if (auth.user?.hasCompletedOnboarding == true) {
-        context.go('/home');
-      } else {
-        context.read<OnboardingProvider>().resetLocalProgressForIncompleteAccount();
-        context.go('/onboarding');
-      }
+      context.go('/home');
     }
   }
 

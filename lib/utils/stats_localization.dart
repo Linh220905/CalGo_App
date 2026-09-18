@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 
+import '../models/meal_guidance.dart';
 import 'weight_forecast.dart';
 
 /// Localized copy for dynamic values that come from the API catalog.
@@ -1232,4 +1233,757 @@ class StatsLocalization {
       'legend': ('Legendă CalGo', 'Atinge nivelul 10'),
     },
   };
+
+  // ── Meal Guidance & Transformation Forecast Localization ───────────────────
+
+  static String mealGuidanceStatusTag(BuildContext context, String rawTag) {
+    final tag = rawTag.trim();
+    if (tag.isEmpty) return '';
+
+    if (tag.contains('Đang đi đúng hướng')) {
+      return _text(
+        context,
+        vi: 'Đang đi đúng hướng',
+        en: 'On track',
+        ko: '순조롭게 진행 중',
+        ja: '順調に進んでいます',
+        zh: '进展顺利',
+        es: 'Vas por buen camino',
+        fr: 'En bonne voie',
+        pt: 'No caminho certo',
+        ru: 'Всё по плану',
+        hi: 'सही दिशा में',
+        bn: 'সঠিক পথে',
+        ar: 'على الطريق الصحيح',
+        ro: 'Pe drumul cel bun',
+      );
+    }
+    if (tag.contains('Cần thêm dữ liệu')) {
+      return _text(
+        context,
+        vi: 'Cần thêm dữ liệu',
+        en: 'Need more data',
+        ko: '추가 데이터 필요',
+        ja: 'データ不足',
+        zh: '需要更多数据',
+        es: 'Se necesitan más datos',
+        fr: 'Plus de données nécessaires',
+        pt: 'Mais dados necessários',
+        ru: 'Нужно больше данных',
+        hi: 'अधिक डेटा चाहिए',
+        bn: 'আরও তথ্যের প্রয়োজন',
+        ar: 'بحاجة لمزيد من البيانات',
+        ro: 'Sunt necesare mai multe date',
+      );
+    }
+    if (tag.contains('Chờ bữa đầu')) {
+      return _text(
+        context,
+        vi: 'Chờ bữa đầu',
+        en: 'Awaiting 1st meal',
+        ko: '첫 식사 대기',
+        ja: '最初の食事待ち',
+        zh: '等待首餐',
+        es: 'Esperando 1ª comida',
+        fr: 'En attente 1er repas',
+        pt: 'Aguardando 1ª refeição',
+        ru: 'Ждем первый прием',
+        hi: 'पहले भोजन की प्रतीक्षा',
+        bn: 'প্রথম খাবারের অপেক্ষা',
+        ar: 'بانتظار الوجبة الأولى',
+        ro: 'Așteptare prima masă',
+      );
+    }
+    if (tag.contains('Cần điều chỉnh') || tag.contains('Cần điều chỉnh nhẹ')) {
+      return _text(
+        context,
+        vi: 'Cần điều chỉnh nhẹ',
+        en: 'Minor adjustment',
+        ko: '가벼운 조정 필요',
+        ja: '少し調整が必要',
+        zh: '需要微调',
+        es: 'Ajuste leve',
+        fr: 'Léger ajustement',
+        pt: 'Pequeno ajuste',
+        ru: 'Небольшая корректировка',
+        hi: 'हल्का समायोजन',
+        bn: 'সামান্য সমন্বয় প্রয়োজন',
+        ar: 'تعديل بسيط',
+        ro: 'Ajustare minoră',
+      );
+    }
+    if (tag.contains('Cần bổ sung thêm')) {
+      return _text(
+        context,
+        vi: 'Cần bổ sung thêm',
+        en: 'Need more surplus',
+        ko: '추가 보충 필요',
+        ja: '追加補給が必要',
+        zh: '需要补充热量',
+        es: 'Necesitas más calorías',
+        fr: 'Apport supplémentaire requis',
+        pt: 'Precisa suplementar',
+        ru: 'Нужно больше калорий',
+        hi: 'और अधिक सेवन चाहिए',
+        bn: 'আরও অতিরিক্ত গ্রহণ প্রয়োজন',
+        ar: 'بحاجة للمزيد من السعرات',
+        ro: 'E nevoie de suplimentare',
+      );
+    }
+    if (tag.contains('Cân bằng vóc dáng')) {
+      return _text(
+        context,
+        vi: 'Cân bằng vóc dáng',
+        en: 'Balanced body',
+        ko: '체형 균형 유지',
+        ja: '体型バランス維持',
+        zh: '平衡体态',
+        es: 'Equilibrio corporal',
+        fr: 'Équilibre silhouette',
+        pt: 'Equilíbrio corporal',
+        ru: 'Баланс формы',
+        hi: 'संतुलित शारीरिक बनावट',
+        bn: 'শারীরিক ভারসাম্য',
+        ar: 'توازن القوام',
+        ro: 'Echilibru corporal',
+      );
+    }
+    if (tag.contains('Theo dõi thêm')) {
+      return _text(
+        context,
+        vi: 'Theo dõi thêm',
+        en: 'Keep tracking',
+        ko: '추가 관찰 필요',
+        ja: '継続して観察',
+        zh: '持续观察',
+        es: 'Seguir observando',
+        fr: 'Suivre de près',
+        pt: 'Acompanhar mais',
+        ru: 'Продолжайте следить',
+        hi: 'और ट्रैक करें',
+        bn: 'আরও পর্যবেক্ষণ করুন',
+        ar: 'متابعة إضافية',
+        ro: 'Urmărește în continuare',
+      );
+    }
+    if (tag.contains('Giữ nhịp chuẩn')) {
+      return _text(
+        context,
+        vi: 'Giữ nhịp chuẩn',
+        en: 'Steady pace',
+        ko: '안정적인 리듬',
+        ja: '安定したペース',
+        zh: '保持良好节奏',
+        es: 'Ritmo constante',
+        fr: 'Rythme régulier',
+        pt: 'Ritmo constante',
+        ru: 'Стабильный ритм',
+        hi: 'स्थिर लय',
+        bn: 'স্থির ছন্দ',
+        ar: 'إيقاع ثابت',
+        ro: 'Ritm stabil',
+      );
+    }
+    if (tag.contains('Đang tích lũy') || tag.contains('Đang tiến bộ')) {
+      return _text(
+        context,
+        vi: 'Đang tích lũy',
+        en: 'Building progress',
+        ko: '진행 중',
+        ja: '蓄積中',
+        zh: '正在累积',
+        es: 'Acumulando progreso',
+        fr: 'Progression en cours',
+        pt: 'Construindo progresso',
+        ru: 'Набираем темп',
+        hi: 'प्रगति जारी है',
+        bn: 'অগ্রগতি তৈরি হচ্ছে',
+        ar: 'بناء التقدم',
+        ro: 'Construire progres',
+      );
+    }
+
+    return tag;
+  }
+
+  static String mealGuidanceForecastMessage(
+    BuildContext context,
+    ProgressForecast forecast,
+  ) {
+    final msg = forecast.forecastMessage.trim();
+    if (msg.isEmpty) return '';
+
+    final weeks = forecast.projectedWeeksToGoal != null
+        ? (forecast.projectedWeeksToGoal == forecast.projectedWeeksToGoal!.roundToDouble()
+            ? forecast.projectedWeeksToGoal!.toStringAsFixed(0)
+            : forecast.projectedWeeksToGoal!.toStringAsFixed(1))
+        : '';
+    final target = forecast.targetWeightKg != null
+        ? (forecast.targetWeightKg == forecast.targetWeightKg!.roundToDouble()
+            ? forecast.targetWeightKg!.toStringAsFixed(0)
+            : forecast.targetWeightKg!.toStringAsFixed(1))
+        : '';
+    final date = forecast.projectedGoalDate ?? '';
+
+    // Pattern 1: Initial empty state awaiting first scan
+    if (msg.contains('Chụp bữa đầu tiên hôm nay') ||
+        msg.contains('Hãy chụp bữa đầu tiên')) {
+      return _text(
+        context,
+        vi: 'Hãy chụp bữa đầu tiên hôm nay để mình bắt đầu tính toán tiến trình dự báo nhé.',
+        en: 'Log your first meal today to start calculating your progress forecast.',
+        ko: '오늘의 첫 식사를 기록하여 진행 상황 예측 계산을 시작해보세요.',
+        ja: '今日の最初の食事を記録して、進捗予測の計算を始めましょう。',
+        zh: '记录今天的首餐，即可开始计算进度预测。',
+        es: 'Registra tu primera comida de hoy para calcular tu previsión de progreso.',
+        fr: 'Enregistrez votre premier repas aujourd’hui pour calculer votre progression.',
+        pt: 'Registre sua primeira refeição de hoje para calcular a previsão de progresso.',
+        ru: 'Запишите первый приём пищи за сегодня, чтобы рассчитать прогноз прогресса.',
+        hi: 'प्रगति पूर्वानुमान की गणना शुरू करने के लिए आज का अपना पहला भोजन दर्ज करें।',
+        bn: 'অগ্রগতির পূর্বাভাস গণনা শুরু করতে আজকের প্রথম খাবারটি রেকর্ড করুন।',
+        ar: 'سجّل وجبتك الأولى اليوم لبدء حساب توقعات تقدمك.',
+        ro: 'Înregistrează prima masă de azi pentru a calcula prognoza progresului.',
+      );
+    }
+
+    // Pattern 2: On track with projected weeks & target weight
+    if (msg.contains('Nếu duy trì mức nạp khoảng') && weeks.isNotEmpty && target.isNotEmpty) {
+      final code = languageCode(context);
+      final isLoss = forecast.goalType == 'lose';
+      final dateSuffix = date.isNotEmpty ? ' ($date)' : '';
+
+      switch (code) {
+        case 'vi':
+          return isLoss
+              ? 'Nếu duy trì mức nạp như hôm nay, bạn ước tính sẽ đạt $target kg sau khoảng $weeks tuần$dateSuffix.'
+              : 'Nếu duy trì mức nạp như hôm nay, bạn ước tính sẽ đạt $target kg sau khoảng $weeks tuần$dateSuffix.';
+        case 'ko':
+          return '오늘과 같은 섭취량을 유지하면 약 $weeks주 후 $target kg에 도달할 것으로 예상됩니다$dateSuffix.';
+        case 'ja':
+          return '今日のような摂取量を維持すると、約$weeks週間で$target kgに到達する見込みです$dateSuffix。';
+        case 'zh':
+          return '保持今天的摄入水平，预计约 $weeks 周后达到 $target kg$dateSuffix。';
+        case 'es':
+          return 'Si mantienes la ingesta de hoy, se estima que alcanzarás $target kg en unas $weeks semanas$dateSuffix.';
+        case 'fr':
+          return 'En maintenant l’apport d’aujourd’hui, vous devriez atteindre $target kg en environ $weeks semaines$dateSuffix.';
+        case 'pt':
+          return 'Mantendo o consumo de hoje, estima-se que você alcance $target kg em cerca de $weeks semanas$dateSuffix.';
+        case 'ru':
+          return 'Сохраняя сегодняшнее питание, вы достигнете $target кг примерно за $weeks нед.$dateSuffix.';
+        case 'hi':
+          return 'यदि आप आज जैसा सेवन जारी रखते हैं, तो लगभग $weeks सप्ताह में $target kg तक पहुँचने का अनुमान है$dateSuffix।';
+        case 'bn':
+          return 'আজকের মতো গ্রহণ বজায় রাখলে আনুমানিক $weeks সপ্তাহে $target kg-এ পৌঁছাতে পারেন$dateSuffix।';
+        case 'ar':
+          return 'إذا حافظت على مدخول اليوم، فمن المتوقع أن تصل إلى $target كجم خلال نحو $weeks أسبوعًا$dateSuffix.';
+        case 'ro':
+          return 'Dacă menții aportul de azi, se estimează că vei atinge $target kg în circa $weeks săptămâni$dateSuffix.';
+        default:
+          return 'Maintaining today’s intake, you are projected to reach $target kg in about $weeks weeks$dateSuffix.';
+      }
+    }
+
+    // Pattern 3: Low intake ratio - Need more data
+    if (msg.contains('chưa muốn đoán thời gian') ||
+        msg.contains('thấp hơn kế hoạch khá nhiều')) {
+      return _text(
+        context,
+        vi: 'Lượng calo hôm nay còn khá thấp so với kế hoạch. Hãy ghi đủ các bữa để CalGo dự báo chính xác hơn.',
+        en: 'Today’s intake is lower than planned. Log all your meals for a more accurate forecast.',
+        ko: '오늘 섭취량이 계획보다 적습니다. 더 정확한 예측을 위해 모든 식사를 기록해주세요.',
+        ja: '今日の摂取量は計画より少なめです。より正確な予測のためにすべての食事を記録してください。',
+        zh: '今天的摄入量低于计划。请完整记录所有餐次以获得更准确的预测。',
+        es: 'La ingesta de hoy es menor de lo planeado. Registra todas tus comidas para una previsión más precisa.',
+        fr: 'L’apport d’aujourd’hui est inférieur aux prévisions. Notez tous vos repas pour une prévision plus précise.',
+        pt: 'A ingestão de hoje está abaixo do planejado. Registre todas as refeições para uma previsão mais precisa.',
+        ru: 'Сегодняшний рацион ниже плана. Записывайте все приёмы пищи для точного прогноза.',
+        hi: 'आज का सेवन योजना से कम है। अधिक सटीक पूर्वानुमान के लिए अपने सभी भोजन दर्ज करें।',
+        bn: 'আজকের গ্রহণ পরিকল্পনার চেয়ে কম। আরও সঠিক পূর্বাভাসে জন্য সব খাবার রেকর্ড করুন।',
+        ar: 'مدخول اليوم أقل من المخطط. سجّل جميع وجباتك للحصول على توقع أكثر دقة.',
+        ro: 'Aportul de azi este mai mic decât planul. Înregistrează toate mesele pentru o prognoză mai exactă.',
+      );
+    }
+
+    // Pattern 4: Deficit too small / progress needs more days
+    if (msg.contains('Mức thâm hụt thực tế chỉ khoảng') ||
+        msg.contains('mức thặng dư chỉ khoảng') ||
+        msg.contains('Chưa đủ dữ liệu để dự báo chắc chắn')) {
+      return _text(
+        context,
+        vi: 'Chênh lệch calo hôm nay còn nhỏ. Hãy tiếp tục ghi nhận thêm vài ngày để dự báo rõ nét hơn.',
+        en: 'Today’s calorie balance is small. Keep logging for a few more days for a clearer projection.',
+        ko: '오늘의 칼로리 차이가 작습니다. 더 명확한 예측을 위해 며칠 더 꾸준히 기록해주세요.',
+        ja: '今日のカロリー差は小さめです。より明確な予測のため、数日間記録を続けてみましょう。',
+        zh: '今天的热量差较小。请再记录几天以获得更清晰的预测。',
+        es: 'El balance de hoy es pequeño. Sigue registrando unos días más para una proyección más clara.',
+        fr: 'L’équilibre d’aujourd’hui est léger. Continuez à noter quelques jours pour une prévision plus claire.',
+        pt: 'O balanço de hoje é pequeno. Continue registrando mais alguns dias para uma projeção mais clara.',
+        ru: 'Разница калорий за сегодня невелика. Записывайте питание ещё несколько дней для чёткого прогноза.',
+        hi: 'आज का कैलोरी संतुलन कम है। स्पष्ट अनुमान के लिए कुछ और दिनों तक रिकॉर्ड करते रहें।',
+        bn: 'আজকের ক্যালোরির ব্যবধান কম। স্পষ্ট পূর্বাভাসের জন্য আরও কয়েক দিন রেকর্ড চালিয়ে যান।',
+        ar: 'فارق السعرات اليوم صغير. واصل التسجيل لبضعة أيام أخرى للحصول على توقع أوضح.',
+        ro: 'Balanța de azi este mică. Înregistrează încă câteva zile pentru o proiecție mai clară.',
+      );
+    }
+
+    // Pattern 5: Calorie surplus on weight loss
+    if (msg.contains('cao hơn mức tiêu hao ước tính') ||
+        msg.contains('tiến độ giảm cân chưa bắt đầu')) {
+      return _text(
+        context,
+        vi: 'Lượng nạp hôm nay cao hơn mức tiêu hao. Hãy điều chỉnh nhẹ lại vào ngày mai để tiếp tục tiến trình.',
+        en: 'Today’s intake exceeded estimated burn. Make a gentle adjustment tomorrow to stay on track.',
+        ko: '오늘 섭취량이 예상 소비량보다 높습니다. 내일 가볍게 조절하여 페이스를 되찾아보세요.',
+        ja: '今日の摂取量が推定消費量を上回りました。明日少し調整してペースを維持しましょう。',
+        zh: '今天摄入量高于预估消耗。明天稍作调整即可重回正轨。',
+        es: 'La ingesta de hoy superó el gasto estimado. Ajusta suavemente mañana para retomar el rumbo.',
+        fr: 'L’apport d’aujourd’hui a dépassé la dépense estimée. Réajustez demain pour garder le cap.',
+        pt: 'A ingestão de hoje superou o gasto estimado. Faça um leve ajuste amanhã para manter o ritmo.',
+        ru: 'Сегодняшний рацион превысил расход. Скорректируйте питание завтра, чтобы вернуться к цели.',
+        hi: 'आज का सेवन अनुमानित खर्च से अधिक था। पटरी पर लौटने के लिए कल हल्का समायोजन करें।',
+        bn: 'আজকের গ্রহণ আনুমানিক ব্যয়ের চেয়ে বেশি ছিল। ট্র্যাকে ফিরতে আগামীকাল সামান্য সমন্বয় করুন।',
+        ar: 'تجاوز مدخول اليوم معدل الحرق المقدر. قم بتعديل بسيط غدًا للمحافظة على مسارك.',
+        ro: 'Aportul de azi a depășit consumul estimat. Fă o mică ajustare mâine pentru a rămâne pe drum.',
+      );
+    }
+
+    // Pattern 6: Deficit on weight gain
+    if (msg.contains('thấp hơn mức tiêu hao ước tính') ||
+        msg.contains('chưa có đủ thặng dư cần thiết để tăng cân')) {
+      return _text(
+        context,
+        vi: 'Lượng nạp hôm nay chưa đủ thặng dư để tăng cân. Ngày mai hãy bổ sung thêm dinh dưỡng trong từng bữa nhé.',
+        en: 'Today’s intake didn’t reach the surplus needed for weight gain. Add extra nutrition to each meal tomorrow.',
+        ko: '오늘 섭취량은 증량에 필요한 흑자에 도달하지 못했습니다. 내일 각 식사마다 영양을 조금 더 보충해보세요.',
+        ja: '今日の摂取量は体重増加に必要な余剰に届きませんでした。明日は各食事に栄養を少し足してみましょう。',
+        zh: '今天的摄入量未达到增重所需盈余。明天请在每餐中补充更多营养。',
+        es: 'La ingesta de hoy no alcanzó el superávit para ganar peso. Añade más nutrientes en cada comida mañana.',
+        fr: 'L’apport d’aujourd’hui n’a pas atteint le surplus pour prendre du poids. Ajoutez de la nutrition demain.',
+        pt: 'A ingestão de hoje não atingiu o superávit para ganho de peso. Adicione mais nutrição a cada refeição amanhã.',
+        ru: 'Сегодняшний рацион не создал нужного избытка для набора веса. Добавьте питательности завтра.',
+        hi: 'आज का सेवन वजन बढ़ाने के लिए आवश्यक अधिशेष तक नहीं पहुँचा। कल प्रत्येक भोजन में पोषण जोड़ें।',
+        bn: 'আজকের গ্রহণ ওজন বৃদ্ধির জন্য প্রয়োজনীয় উদ্বৃত্তে পৌঁছায়নি। আগামীকাল খাবারে পুষ্টি যোগ করুন।',
+        ar: 'لم يصل مدخول اليوم إلى الفائض المطلوب لزيادة الوزن. أضف المزيد من العناصر الغذائية غدًا.',
+        ro: 'Aportul de azi nu a atins surplusul necesar pentru creșterea în greutate. Adaugă mai multă hrană mâine.',
+      );
+    }
+
+    // Pattern 7: Maintain or general monitoring
+    if (msg.contains('Cần thêm dữ liệu cân nặng') ||
+        msg.contains('Cần thêm dữ liệu nhiều ngày') ||
+        msg.contains('Mục tiêu cân nặng của bạn là')) {
+      return _text(
+        context,
+        vi: 'Tiếp tục ghi nhận bữa ăn và cân nặng đều đặn để CalGo dự báo xu hướng thực tế của bạn.',
+        en: 'Keep logging meals and weight regularly so CalGo can forecast your true trend.',
+        ko: 'CalGo가 실제 추세를 예측할 수 있도록 식사와 체중을 꾸준히 기록해주세요.',
+        ja: 'CalGoが実際の傾向を予測できるよう、食事と体重を定期的に記録しましょう。',
+        zh: '请持续记录饮食和体重，以便 CalGo 预测您的真实趋势。',
+        es: 'Sigue registrando comidas y peso con regularidad para que CalGo proyecte tu tendencia real.',
+        fr: 'Notez vos repas et votre poids régulièrement pour que CalGo prévoie votre tendance réelle.',
+        pt: 'Continue registrando refeições e peso regularmente para o CalGo projetar sua tendência real.',
+        ru: 'Продолжайте регулярно записывать питание и вес, чтобы CalGo показал ваш реальный тренд.',
+        hi: 'नियमित रूप से भोजन और वजन दर्ज करते रहें ताकि CalGo आपकी वास्तविक प्रवृत्ति का अनुमान लगा सके।',
+        bn: 'নিয়মিত খাবার ও ওজন রেকর্ড করুন যাতে CalGo আপনার আসল প্রবণতা পূর্বাভাস দিতে পারে।',
+        ar: 'واصل تسجيل الوجبات والوزن بانتظام حتى يتمكن CalGo من توقع اتجاهك الحقيقي.',
+        ro: 'Înregistrează mesele și greutatea în mod regulat pentru ca CalGo să îți poată prognoza trendul.',
+      );
+    }
+
+    return msg;
+  }
+
+  static String mealGuidanceDishReason(
+    BuildContext context,
+    MealGuidanceDish dish,
+    MealGuidanceSummary? summary,
+  ) {
+    final reason = dish.reason.trim();
+    if (reason.isEmpty) return '';
+
+    // Familiar match from history
+    if (reason.contains('Bạn đã quét món này') ||
+        reason.contains('khẩu phần trước đó')) {
+      return _text(
+        context,
+        vi: reason,
+        en: 'Matches a portion you scanned previously and fits your remaining macros today.',
+        ko: '이전에 스캔한 식사와 일치하며 오늘 남은 영양 목표에 잘 맞습니다.',
+        ja: '以前スキャンした食事と一致し、今日の残りの栄養目標に適しています。',
+        zh: '与您之前扫描过的分量相符，且适合今天剩余的营养目标。',
+        es: 'Coincide con una porción que escaneaste antes y se ajusta a tus macros restantes de hoy.',
+        fr: 'Correspond à une portion enregistrée précédemment et convient à vos macros restantes.',
+        pt: 'Combina com uma porção escaneada antes e cabe nos seus macros restantes de hoje.',
+        ru: 'Соответствует ранее отсканированной порции и подходит под оставшиеся макросы.',
+        hi: 'यह आपके पहले स्कैन किए गए हिस्से से मेल खाता है और आज के शेष मैक्रोज़ में फिट बैठता है।',
+        bn: 'এটি আপনার আগে স্ক্যান করা খাবারের সাথে মিলে যায় এবং আজকের বাকি লক্ষ্যের জন্য উপযুক্ত।',
+        ar: 'يطابق حصة قمت بمسحها سابقًا ويناسب عناصرك الغذائية المتبقية اليوم.',
+        ro: 'Se potrivește cu o porție scanată anterior și cu macronutrienții rămași azi.',
+      );
+    }
+
+    // High protein boost
+    if (reason.contains('protein') && (reason.contains('Bổ sung khoảng') || reason.contains('vừa phần calo'))) {
+      final proteinG = dish.protein.round();
+      final code = languageCode(context);
+      switch (code) {
+        case 'vi':
+          return 'Bổ sung khoảng ${proteinG}g protein mà vẫn vừa phần calo còn lại.';
+        case 'ko':
+          return '남은 칼로리 범위 내에서 약 ${proteinG}g의 단백질을 보충해줍니다.';
+        case 'ja':
+          return '残りのカロリー内で約${proteinG}gのたんぱく質を補給できます。';
+        case 'zh':
+          return '在剩余热量范围内补充约 ${proteinG}g 蛋白质。';
+        case 'es':
+          return 'Aporta unos ${proteinG}g de proteína dentro de tus calorías restantes.';
+        case 'fr':
+          return 'Apporte environ ${proteinG}g de protéines dans votre budget calorique restant.';
+        case 'pt':
+          return 'Adiciona cerca de ${proteinG}g de proteína dentro das calorias restantes.';
+        case 'ru':
+          return 'Добавляет около ${proteinG} г белка в пределах оставшихся калорий.';
+        case 'hi':
+          return 'शेष कैलोरी के भीतर लगभग ${proteinG}g प्रोटीन प्रदान करता है।';
+        case 'bn':
+          return 'বাকি ক্যালোরির মধ্যেই প্রায় ${proteinG}g প্রোটিন সরবরাহ করে।';
+        case 'ar':
+          return 'يمدك بنحو ${proteinG} جم بروتين ضمن السعرات المتبقية.';
+        case 'ro':
+          return 'Oferă aproximativ ${proteinG}g de proteine în limita caloriilor rămase.';
+        default:
+          return 'Adds about ${proteinG}g protein while staying within your remaining calories.';
+      }
+    }
+
+    // Standard remaining fit
+    if (reason.contains('Nằm trong phần calo còn lại') ||
+        reason.contains('phù hợp cho bữa tiếp theo')) {
+      return _text(
+        context,
+        vi: 'Nằm trong phần calo còn lại và phù hợp cho bữa tiếp theo.',
+        en: 'Fits within your remaining calories and works well for your next meal.',
+        ko: '남은 칼로리 범위에 맞으며 다음 식사로 적합합니다.',
+        ja: '残りのカロリー内に収まり、次の食事に適しています。',
+        zh: '符合剩余热量预算，非常适合作为下一餐。',
+        es: 'Encaja en tus calorías restantes y es ideal para tu próxima comida.',
+        fr: 'S’intègre dans vos calories restantes et convient pour le prochain repas.',
+        pt: 'Cabe nas calorias restantes e funciona bem para a próxima refeição.',
+        ru: 'Вписывается в оставшиеся калории и отлично подходит для следующего приёма.',
+        hi: 'आपकी शेष कैलोरी के भीतर फिट बैठता है और अगले भोजन के लिए उपयुक्त है।',
+        bn: 'আপনার বাকি ক্যালোরির মধ্যে উপযুক্ত এবং পরবর্তী খাবারের জন্য ভালো।',
+        ar: 'يناسب سعراتك المتبقية ومثالي لوجبتك القادمة.',
+        ro: 'Se încadrează în caloriile rămase și este potrivit pentru următoarea masă.',
+      );
+    }
+
+    return reason;
+  }
+
+  static String mealGuidanceDishAdjustment(
+    BuildContext context,
+    String rawAdjustment,
+  ) {
+    final adj = rawAdjustment.trim();
+    if (adj.isEmpty) return '';
+
+    if (adj.contains('Để sốt riêng') || adj.contains('sốt riêng')) {
+      return _text(
+        context,
+        vi: 'Để sốt riêng để dễ kiểm soát lượng calo.',
+        en: 'Keep sauce on the side for easier calorie control.',
+        ko: '칼로리 조절을 위해 소스를 따로 덜어 드세요.',
+        ja: 'カロリー管理のため、ドレッシングは別添えにしましょう。',
+        zh: '酱汁单独分装以便更好地控制热量。',
+        es: 'Pide la salsa aparte para controlar mejor las calorías.',
+        fr: 'Gardez la sauce à part pour mieux contrôler les calories.',
+        pt: 'Deixe o molho à parte para controlar melhor as calorias.',
+        ru: 'Попросите соус отдельно, чтобы контролировать калории.',
+        hi: 'कैलोरी नियंत्रण आसान बनाने के लिए सॉस अलग रखें।',
+        bn: 'ক্যালোরি সহজে নিয়ন্ত্রণ করতে সস আলাদা রাখুন।',
+        ar: 'اجعل الصلصة جانبية للتحكم في السعرات بسهولة.',
+        ro: 'Păstrează sosul separat pentru un control mai ușor al caloriilor.',
+      );
+    }
+
+    if (adj.contains('ít dầu') || adj.contains('thêm rau để bữa ăn nhẹ hơn')) {
+      return _text(
+        context,
+        vi: 'Ưu tiên phần ít dầu và thêm rau để bữa ăn nhẹ hơn.',
+        en: 'Opt for less oil and add vegetables for a lighter meal.',
+        ko: '기름기를 줄이고 채소를 추가해 가볍게 즐겨보세요.',
+        ja: '油分を控えめにし、野菜を加えて軽めの食事にしましょう。',
+        zh: '选择少油做法并增加蔬菜，让这一餐更清爽。',
+        es: 'Elige menos aceite y añade verduras para una comida más ligera.',
+        fr: 'Privilégiez moins d’huile et ajoutez des légumes pour alléger le repas.',
+        pt: 'Prefira menos óleo e adicione vegetais para uma refeição mais leve.',
+        ru: 'Выбирайте меньше масла и добавьте овощей для лёгкости блюда.',
+        hi: 'हल्के भोजन के लिए कम तेल चुनें और सब्जियाँ जोड़ें।',
+        bn: 'হালকা খাবারের জন্য কম তেল বেছে নিন এবং শাকসবজি যোগ করুন।',
+        ar: 'اختر زيتًا أقل وأضف الخضار لوجبة أخف.',
+        ro: 'Alege mai puțin ulei și adaugă legume pentru o masă mai ușoară.',
+      );
+    }
+
+    if (adj.contains('giàu đạm') || adj.contains('ăn chậm để giữ no lâu')) {
+      return _text(
+        context,
+        vi: 'Đây là lựa chọn giàu đạm; ăn chậm để giữ no lâu.',
+        en: 'High-protein option; eat slowly to stay full longer.',
+        ko: '고단백 식단입니다. 천천히 드시면 포만감이 오래 유지됩니다.',
+        ja: '高たんぱくなメニューです。ゆっくり食べて満腹感を持続させましょう。',
+        zh: '高蛋白之选，细嚼慢咽能维持更长久的饱腹感。',
+        es: 'Opción rica en proteínas; come despacio para mayor saciedad.',
+        fr: 'Riche en protéines; mangez lentement pour prolonger la satiété.',
+        pt: 'Opção rica em proteína; coma devagar para manter a saciedade.',
+        ru: 'Блюдо богато белком; ешьте медленно для долгого насыщения.',
+        hi: 'उच्च प्रोटीन विकल्प; लंबे समय तक तृप्त रहने के लिए धीरे-धीरे खाएं।',
+        bn: 'উচ্চ প্রোটিনযুক্ত খাবার; দীর্ঘক্ষণ তৃপ্ত থাকতে ধীরে খান।',
+        ar: 'خيار غني بالبروتين؛ تناول الطعام ببطء للشبع لفترة أطول.',
+        ro: 'Opțiune bogată în proteine; mănâncă încet pentru a menține sațietatea.',
+      );
+    }
+
+    if (adj.contains('Giảm phần sốt hoặc dầu')) {
+      return _text(
+        context,
+        vi: 'Giảm phần sốt hoặc dầu nếu muốn món này nhẹ hơn.',
+        en: 'Reduce sauce or oil if you want a lighter version.',
+        ko: '더 가볍게 드시려면 소스나 기름 양을 줄여보세요.',
+        ja: 'より軽めにしたい場合は、ソースや油を控えめにしましょう。',
+        zh: '如需更清淡，可减少酱料或用油量。',
+        es: 'Reduce la salsa o el aceite si prefieres una versión más ligera.',
+        fr: 'Diminuez la sauce ou l’huile pour une version plus légère.',
+        pt: 'Reduza o molho ou o óleo se quiser uma versão mais leve.',
+        ru: 'Уменьшите количество соуса или масла, если хотите облегчить блюдо.',
+        hi: 'यदि आप हल्का विकल्प चाहते हैं तो सॉस या तेल कम करें।',
+        bn: 'হালকা সংস্করণ চাইলে সস বা তেল কমিয়ে নিন।',
+        ar: 'قلل الصلصة أو الزيت إذا أردت وجبة أخف.',
+        ro: 'Redu sosul sau uleiul dacă vrei o variantă mai ușoară.',
+      );
+    }
+
+    if (adj.contains('tinh bột vừa phải') || adj.contains('thêm rau vào bữa này')) {
+      return _text(
+        context,
+        vi: 'Giữ phần tinh bột vừa phải và thêm rau vào bữa này.',
+        en: 'Keep carbs moderate and add vegetables to this meal.',
+        ko: '탄수화물은 적당히 유지하고 채소를 곁들여보세요.',
+        ja: '炭水化物は適量にし、野菜をプラスしましょう。',
+        zh: '保持适量碳水并在此餐中加入蔬菜。',
+        es: 'Modera los carbohidratos y añade verduras a esta comida.',
+        fr: 'Modérez les féculents et ajoutez des légumes à ce repas.',
+        pt: 'Mantenha os carboidratos moderados e adicione vegetais.',
+        ru: 'Соблюдайте умеренность в углеводах и добавьте овощи.',
+        hi: 'कार्ब्स को मध्यम रखें और इस भोजन में सब्जियां शामिल करें।',
+        bn: 'কার্বোহাইড্রেট পরিমিত রাখুন এবং এই খাবারে শাকসবজি যোগ করুন।',
+        ar: 'حافظ على كربوهيدرات معتدلة وأضف الخضار إلى هذه الوجبة.',
+        ro: 'Păstrează carbohidrații moderați și adaugă legume la această masă.',
+      );
+    }
+
+    if (adj.contains('trứng, đậu hũ hoặc sữa chua') || adj.contains('đủ đạm hơn')) {
+      return _text(
+        context,
+        vi: 'Có thể ăn kèm trứng, đậu hũ hoặc sữa chua để đủ đạm hơn.',
+        en: 'Pair with eggs, tofu, or yogurt to boost protein.',
+        ko: '단백질 보충을 위해 계란, 두부 또는 요거트를 곁들여보세요.',
+        ja: '卵や豆腐、ヨーグルトを添えてたんぱく質をプラスしましょう。',
+        zh: '可搭配鸡蛋、豆腐或酸奶以补充蛋白质。',
+        es: 'Acompaña con huevo, tofu o yogur para más proteína.',
+        fr: 'Accompagnez d’œuf, de tofu ou de yaourt pour plus de protéines.',
+        pt: 'Acompanhe com ovo, tofu ou iogurte para reforçar as proteínas.',
+        ru: 'Добавьте яйцо, тофу или йогурт для повышения белка.',
+        hi: 'प्रोटीन बढ़ाने के लिए अंडे, टोफू या दही के साथ लें।',
+        bn: 'প্রোটিন বাড়াতে ডিম, তোফু বা দইয়ের সাথে খেতে পারেন।',
+        ar: 'تناولها مع البيض أو التوفو أو الزبادي لزيادة البروتين.',
+        ro: 'Combină cu ou, tofu sau iaurt pentru mai multe proteine.',
+      );
+    }
+
+    if (adj.contains('Chia khẩu phần') || adj.contains('hai phần nhỏ')) {
+      return _text(
+        context,
+        vi: 'Chia khẩu phần thành hai phần nhỏ nếu bạn còn nhiều bữa.',
+        en: 'Split into smaller portions if you have more meals ahead.',
+        ko: '남은 식사가 있다면 작은 두 부분으로 나누어 드세요.',
+        ja: 'この後まだ食事があるなら、小さめのポーションに分けましょう。',
+        zh: '如果后面还有餐次，可将分量分成两份小餐。',
+        es: 'Divide en porciones más pequeñas si te quedan más comidas.',
+        fr: 'Divisez en petites portions s’il vous reste d’autres repas.',
+        pt: 'Divida em porções menores se ainda tiver outras refeições.',
+        ru: 'Разделите на небольшие порции, если впереди ещё есть приёмы пищи.',
+        hi: 'यदि आपके आगे और भोजन हैं तो इसे छोटे भागों में बांटें।',
+        bn: 'সামনে আরও খাবার থাকলে এটিকে ছোট অংশে ভাগ করে নিন।',
+        ar: 'قسم الوجبة إلى حصص أصغر إذا كانت لديك وجبات أخرى قادمة.',
+        ro: 'Împarte în porții mai mici dacă mai ai mese de luat azi.',
+      );
+    }
+
+    if (adj.contains('nửa khẩu phần và thêm rau') || adj.contains('đã gần đủ calo')) {
+      return _text(
+        context,
+        vi: 'Nếu hôm nay đã gần đủ calo, chọn nửa khẩu phần và thêm rau.',
+        en: 'If near your calorie limit today, opt for half a portion with extra greens.',
+        ko: '오늘 칼로리가 거의 찼다면 반 공기만 드시고 채소를 더해보세요.',
+        ja: '今日すでにカロリー上限に近いなら、半分のポーションにして野菜を足しましょう。',
+        zh: '若今天热量接近达标，建议选择半份并多配蔬菜。',
+        es: 'Si estás cerca de tu límite de calorías, elige media porción con verduras.',
+        fr: 'Si vous êtes proche de votre limite calorique, prenez une demi-portion avec des légumes.',
+        pt: 'Se já estiver perto do limite calórico, escolha meia porção com mais verduras.',
+        ru: 'Если вы близки к лимиту калорий, выберите полпорции и добавьте овощей.',
+        hi: 'यदि आज आपकी कैलोरी सीमा पूरी होने वाली है, तो आधा हिस्सा लें और सब्जियां जोड़ें।',
+        bn: 'আজ ক্যালোরি প্রায় পূর্ণ হয়ে থাকলে অর্ধেক অংশ নিন এবং বেশি সবজি খান।',
+        ar: 'إذا اقتربت من حد السعرات اليوم، اختر نصف حصة مع إضافة الخضار.',
+        ro: 'Dacă ești aproape de limita calorică, alege o jumătate de porție cu legume.',
+      );
+    }
+
+    if (adj.contains('Giữ khẩu phần vừa đủ') || adj.contains('ăn chậm để nhận biết lúc no')) {
+      return _text(
+        context,
+        vi: 'Giữ khẩu phần vừa đủ và ăn chậm để nhận biết lúc no.',
+        en: 'Keep portions moderate and eat slowly to feel fullness.',
+        ko: '적당한 양을 유지하고 천천히 드시면서 포만감을 느껴보세요.',
+        ja: '適量を守り、ゆっくり食べて満腹感を感じましょう。',
+        zh: '保持适中分量，细嚼慢咽以便及时感知饱腹。',
+        es: 'Mantén porciones moderadas y come despacio para notar la saciedad.',
+        fr: 'Gardez des portions modérées et mangez lentement pour ressentir la satiété.',
+        pt: 'Mantenha porções moderadas e coma devagar para sentir a saciedade.',
+        ru: 'Контролируйте порцию и ешьте медленно, чтобы почувствовать насыщение.',
+        hi: 'मध्यम मात्रा रखें और तृप्ति महसूस करने के लिए धीरे-धीरे खाएं।',
+        bn: 'পরিমিত অংশ রাখুন এবং তৃপ্তি বুঝতে ধীরে ধীরে খান।',
+        ar: 'حافظ على حصص معتدلة وتناول الطعام ببطء للشعور بالشبع.',
+        ro: 'Păstrează porții moderate și mănâncă încet pentru a simți sațietatea.',
+      );
+    }
+
+    return adj;
+  }
+
+  static String mealGuidanceStateMessage(
+    BuildContext context,
+    MealGuidance guidance,
+  ) {
+    final msg = guidance.message.trim();
+    if (msg.isEmpty) return '';
+
+    // Needs first scan
+    if (guidance.needsFirstScan || msg.contains('Chụp bữa đầu tiên hôm nay để mình')) {
+      return _text(
+        context,
+        vi: 'Chụp bữa đầu tiên hôm nay để mình tính phần còn lại và gợi ý bữa tiếp theo cho bạn.',
+        en: 'Scan your first meal today so I can calculate what remains and suggest your next meal.',
+        ko: '오늘 첫 식사를 스캔해주시면 남은 목표를 계산해 다음 식사를 추천해 드릴게요.',
+        ja: '今日の最初の食事をスキャンしてください。残りの目標を計算して次の食事を提案します。',
+        zh: '拍摄今天的第一餐，我来帮您计算剩余配额并推荐下一餐。',
+        es: 'Escanea tu primera comida de hoy para calcular lo restante y sugerirte la siguiente.',
+        fr: 'Scannez votre premier repas pour que je calcule le reste et vous propose le suivant.',
+        pt: 'Escaneie a primeira refeição de hoje para calcular o restante e sugerir a próxima.',
+        ru: 'Отсканируйте первый приём пищи за сегодня, чтобы рассчитать остаток и предложить блюда.',
+        hi: 'आज का अपना पहला भोजन स्कैन करें ताकि मैं शेष गणना कर सकूँ और अगले भोजन का सुझाव दे सकूँ।',
+        bn: 'আজকের প্রথম খাবারটি স্ক্যান করুন যাতে আমি বাকি অংশ হিসাব করে পরের খাবারের পরামর্শ দিতে পারি।',
+        ar: 'امسح وجبتك الأولى اليوم حتى أحسب ما تبقى وأقترح وجبتك القادمة.',
+        ro: 'Scanează prima masă de azi ca să pot calcula ce a rămas și să-ți sugerez următoarea masă.',
+      );
+    }
+
+    // Goal reached
+    if (guidance.goalReached || msg.contains('Bạn đã chạm mức calo hôm nay')) {
+      return _text(
+        context,
+        vi: 'Bạn đã chạm mức calo hôm nay. Cứ giữ nhịp này nha; nếu còn đói, ưu tiên nước và món thật nhẹ.',
+        en: 'You’ve reached today’s calorie target. Keep this momentum; if still hungry, stick to water or light snacks.',
+        ko: '오늘의 칼로리 목표를 달성했습니다. 이 페이스를 유지하세요. 출출하다면 물이나 가벼운 음식을 드세요.',
+        ja: '今日のカロリー目標に到達しました！この調子を維持しましょう。空腹なら水分や軽めの軽食を選んでください。',
+        zh: '您已达到今日热量目标！继续保持好节奏；如果还饿，建议多喝水或选极轻负担的食物。',
+        es: '¡Has alcanzado tu objetivo calórico de hoy! Mantén este ritmo; si tienes hambre, opta por agua o algo ligero.',
+        fr: 'Vous avez atteint votre objectif calorique ! Gardez ce rythme ; si vous avez faim, buvez de l’eau ou prenez du léger.',
+        pt: 'Você atingiu a meta de calorias de hoje! Mantenha o ritmo; se ainda tiver fome, prefira água ou algo bem leve.',
+        ru: 'Вы достигли дневной нормы калорий! Держите темп; если ещё голодны, отдайте предпочтение воде или лёгкому перекусу.',
+        hi: 'आपने आज का कैलोरी लक्ष्य पूरा कर लिया है। इस लय को बनाए रखें; यदि अभी भी भूख लगी है, तो पानी या हल्का नाश्ता लें।',
+        bn: 'আপনি আজকের ক্যালোরির লক্ষ্য পূরণ করেছেন। এই ধারাবাহিকতা ধরে রাখুন; এখনও ক্ষুধা পেলে পানি বা হালকা খাবার বেছে নিন।',
+        ar: 'لقد حققت هدف السعرات لليوم! حافظ على هذا الإيقاع؛ إن كنت جائعًا، اختر الماء أو وجبة خفيفة جدًا.',
+        ro: 'Ai atins ținta de calorii de azi! Menține acest ritm; dacă mai ai poftă, alege apă sau ceva foarte ușor.',
+      );
+    }
+
+    // Recovery mode
+    if (guidance.isRecovery || msg.contains('Hôm nay đã gần hoặc vượt mục tiêu')) {
+      return _text(
+        context,
+        vi: 'Hôm nay đã gần hoặc vượt mục tiêu, nhưng ngày chưa hề hỏng. Nếu còn đói, ưu tiên một lựa chọn nhẹ và có protein nhé.',
+        en: 'You’re near or past your target today, but your day is still on track! If hungry, choose a light protein option.',
+        ko: '오늘 목표에 근접했거나 조금 넘었지만 괜찮습니다! 배가 고프다면 가벼운 단백질 위주로 선택해보세요.',
+        ja: '今日の目標に近づいたか少し超えましたが大丈夫！お腹が空いたら、軽めのたんぱく質を選びましょう。',
+        zh: '今天已接近或略超目标，但完全没关系！如果还饿，优先选择清淡且富含蛋白质的食物。',
+        es: 'Estás cerca o superaste tu meta de hoy, ¡pero vas bien! Si tienes hambre, elige una opción ligera con proteína.',
+        fr: 'Vous êtes proche ou avez dépassé votre objectif, mais tout va bien ! Si vous avez faim, privilégiez des protéines légères.',
+        pt: 'Você está perto ou passou da meta de hoje, mas está tudo bem! Se tiver fome, escolha algo leve com proteína.',
+        ru: 'Вы около или чуть превысили норму, но всё в порядке! Если голодны, выберите лёгкий белковый перекус.',
+        hi: 'आप आज अपने लक्ष्य के करीब हैं या उससे आगे निकल गए हैं, लेकिन सब ठीक है! भूख लगने पर हल्का प्रोटीन विकल्प चुनें।',
+        bn: 'আজ লক্ষ্যমাত্রার কাছাকাছি বা কিছুটা বেশি হলেও কোনো সমস্যা নেই! ক্ষুধা লাগলে হালকা প্রোটিনযুক্ত খাবার বেছে নিন।',
+        ar: 'أنت قريب من هدفك أو تجاوزته اليوم، لكن لا تقلق! إذا شعرت بالجوع، اختر بروتينًا خفيفًا.',
+        ro: 'Ești aproape sau ai depășit ținta de azi, dar e în regulă! Dacă ți-e foame, alege o opțiune ușoară cu proteine.',
+      );
+    }
+
+    // Dynamic calorie and protein remaining message
+    if (guidance.summary != null && (msg.contains('Bạn còn khoảng') || msg.contains('thiếu'))) {
+      final calRemaining = guidance.summary!.caloriesRemaining.clamp(0, 9999).round();
+      final protRemaining = guidance.summary!.proteinRemaining.round();
+      final code = languageCode(context);
+      switch (code) {
+        case 'vi':
+          return 'Bạn còn khoảng $calRemaining kcal và thiếu ${protRemaining}g protein.';
+        case 'ko':
+          return '약 $calRemaining kcal 남았으며, 단백질은 ${protRemaining}g 더 필요합니다.';
+        case 'ja':
+          return '残り約$calRemaining kcalで、たんぱく質はあと${protRemaining}g必要です。';
+        case 'zh':
+          return '您还剩约 $calRemaining kcal 配额，蛋白质还差 ${protRemaining}g。';
+        case 'es':
+          return 'Te quedan unas $calRemaining kcal y te faltan ${protRemaining}g de proteína.';
+        case 'fr':
+          return 'Il vous reste environ $calRemaining kcal et il vous manque ${protRemaining}g de protéines.';
+        case 'pt':
+          return 'Restam cerca de $calRemaining kcal e faltam ${protRemaining}g de proteína.';
+        case 'ru':
+          return 'У вас осталось около $calRemaining ккал и не хватает ${protRemaining} г белка.';
+        case 'hi':
+          return 'आपके पास लगभग $calRemaining kcal बचे हैं और ${protRemaining}g प्रोटीन की आवश्यकता है।';
+        case 'bn':
+          return 'আপনার প্রায় $calRemaining kcal বাকি আছে এবং ${protRemaining}g প্রোটিন প্রয়োজন।';
+        case 'ar':
+          return 'متبقي لديك نحو $calRemaining سعرة حرارية وينقصك ${protRemaining} جم بروتين.';
+        case 'ro':
+          return 'Îți mai rămân aproximativ $calRemaining kcal și ai nevoie de încă ${protRemaining}g de proteine.';
+        default:
+          return 'You have about $calRemaining kcal left and need ${protRemaining}g more protein.';
+      }
+    }
+
+    // Unavailable fallback
+    if (msg.contains('Mình chưa tìm được món phù hợp')) {
+      return _text(
+        context,
+        vi: 'Mình chưa tìm được món phù hợp từ dữ liệu hiện có. Bạn có thể chụp món tiếp theo để mình tính chính xác hơn.',
+        en: 'Could not find matching meals from current data. Scan your next meal for more accurate suggestions.',
+        ko: '현재 데이터에서 적절한 식사를 찾지 못했습니다. 더 정확한 추천을 위해 다음 식사를 스캔해주세요.',
+        ja: '現在のデータから適切なメニューが見つかりませんでした。より正確な提案のため次の食事をスキャンしてください。',
+        zh: '暂未从现有数据中找到匹配的菜品。您可以拍摄下一餐，让我帮您更准确地计算。',
+        es: 'No encontramos platos adecuados con los datos actuales. Escanea tu próxima comida para sugerencias precisas.',
+        fr: 'Aucun plat correspondant trouvé dans les données actuelles. Scannez votre prochain repas pour plus de précision.',
+        pt: 'Não encontramos pratos adequados com os dados atuais. Escaneie sua próxima refeição para sugestões mais precisas.',
+        ru: 'Не удалось подобрать блюда по текущим данным. Отсканируйте следующий приём пищи для точных рекомендаций.',
+        hi: 'वर्तमान डेटा से उपयुक्त भोजन नहीं मिला। अधिक सटीक सुझावों के लिए अपना अगला भोजन स्कैन करें।',
+        bn: 'বর্তমান তথ্য থেকে উপযুক্ত খাবার পাওয়া যায়নি। আরও সঠিক পরামর্শের জন্য আপনার পরবর্তী খাবার স্ক্যান করুন।',
+        ar: 'لم نتمكن من العثور على وجبات مناسبة من البيانات الحالية. امسح وجبتك التالية للحصول على اقتراحات أدق.',
+        ro: 'Nu am găsit mâncăruri potrivite din datele actuale. Scanează următoarea masă pentru sugestii mai exacte.',
+      );
+    }
+
+    return msg;
+  }
 }

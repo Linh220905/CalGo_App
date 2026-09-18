@@ -34,9 +34,9 @@ GoRouter createAppRouter(OnboardingProvider onboarding, AuthProvider auth) =>
         }
         if (onStartup) {
           if (auth.loading) return null;
-          // Already signed in: go home or resume onboarding.
+          // Already signed in: go straight to home
           if (auth.isAuthenticated) {
-            return auth.user!.hasCompletedOnboarding ? '/home' : '/onboarding';
+            return '/home';
           }
           // Not signed in + onboarding already completed before (token expired):
           // send to standalone login so they can sign back in quickly.
@@ -51,39 +51,24 @@ GoRouter createAppRouter(OnboardingProvider onboarding, AuthProvider auth) =>
 
         if (auth.loading) return null;
 
-        // When user is authenticated, the backend user profile is the absolute source of truth.
-        // If the authenticated user has not completed onboarding, they must be redirected to /onboarding.
-        if (auth.isAuthenticated && !auth.user!.hasCompletedOnboarding) {
-          if (!onOnboarding) {
-            onboarding.resetLocalProgressForIncompleteAccount();
-            return '/onboarding';
+        // When user is authenticated, they should be able to access the app (/home)
+        // Never trap an authenticated user on onboarding or login.
+        if (auth.isAuthenticated) {
+          if (onLogin || (onOnboarding && !onboarding.isTestingOnboarding && !onboarding.isRecalculating)) {
+            return '/home';
           }
           return null;
         }
-
-        // The server profile is the source of truth per account. A single
-        // device-level onboarding flag must never make a newly signed-in user
-        // inherit the previous user's completed profile.
-        final done = onboarding.isTestingOnboarding
-            ? false
-            : auth.isAuthenticated
-                ? auth.user!.hasCompletedOnboarding
-                : onboarding.isCompleted;
 
         // Unauthenticated users may only be on /onboarding or /login.
         // /onboarding contains the AccountStep so they sign in there.
         // Only redirect to /login when onboarding is already marked done
         // (token-expired scenario).
-        if (!auth.isAuthenticated && !onOnboarding && !onLogin) {
+        final done = onboarding.isCompleted;
+        if (!onOnboarding && !onLogin) {
           return done ? '/login' : '/onboarding';
         }
 
-        if (!done && !onOnboarding && !onLogin) {
-          return '/onboarding';
-        }
-        if (done && onOnboarding) {
-          return auth.isAuthenticated ? '/home' : '/login';
-        }
         return null;
       },
       routes: [
@@ -172,9 +157,8 @@ class _StartupScreen extends StatefulWidget {
 }
 
 class _StartupScreenState extends State<_StartupScreen>
-    with TickerProviderStateMixin {
+    with SingleTickerProviderStateMixin {
   late final AnimationController _mascotController;
-  late final AnimationController _progressController;
 
   @override
   void initState() {
@@ -183,16 +167,11 @@ class _StartupScreenState extends State<_StartupScreen>
       vsync: this,
       duration: const Duration(milliseconds: 1450),
     )..repeat(reverse: true);
-    _progressController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 1250),
-    )..repeat();
   }
 
   @override
   void dispose() {
     _mascotController.dispose();
-    _progressController.dispose();
     super.dispose();
   }
 
@@ -200,86 +179,29 @@ class _StartupScreenState extends State<_StartupScreen>
   Widget build(BuildContext context) {
     final reduceMotion = MediaQuery.of(context).disableAnimations;
     return Scaffold(
-      backgroundColor: const Color(0xFFFAFAFB),
+      backgroundColor: const Color(0xFFFFF5F6),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 34),
-          child: Column(
-            children: [
-              const Spacer(flex: 3),
-              AnimatedBuilder(
-                animation: _mascotController,
-                child: Image.asset(
-                  'assets/images/apple_mascot/apple_hello.png',
-                  height: 360,
-                  fit: BoxFit.contain,
+        child: Center(
+          child: AnimatedBuilder(
+            animation: _mascotController,
+            child: Image.asset(
+              'assets/images/apple_mascot/apple_hello.png',
+              height: 340,
+              fit: BoxFit.contain,
+            ),
+            builder: (context, child) {
+              final t = reduceMotion ? 0.5 : _mascotController.value;
+              return Transform.translate(
+                offset: Offset(0, -4 * math.sin(t * math.pi)),
+                child: Transform.rotate(
+                  angle: 0.035 * math.sin((t - .5) * math.pi),
+                  child: child,
                 ),
-                builder: (context, child) {
-                  final t = reduceMotion ? 0.5 : _mascotController.value;
-                  return Transform.translate(
-                    offset: Offset(0, -3 * math.sin(t * math.pi)),
-                    child: Transform.rotate(
-                      angle: 0.035 * math.sin((t - .5) * math.pi),
-                      child: child,
-                    ),
-                  );
-                },
-              ),
-              const Spacer(flex: 2),
-              _StartupProgress(
-                controller: _progressController,
-                reduceMotion: reduceMotion,
-              ),
-              const Spacer(flex: 3),
-            ],
+              );
+            },
           ),
         ),
       ),
     );
   }
-}
-
-class _StartupProgress extends StatelessWidget {
-  final AnimationController controller;
-  final bool reduceMotion;
-
-  const _StartupProgress({
-    required this.controller,
-    required this.reduceMotion,
-  });
-
-  @override
-  Widget build(BuildContext context) => Container(
-        height: 6,
-        decoration: BoxDecoration(
-          color: const Color(0xFFE6E6E8),
-          borderRadius: BorderRadius.circular(99),
-        ),
-        clipBehavior: Clip.antiAlias,
-        child: LayoutBuilder(
-          builder: (context, constraints) => AnimatedBuilder(
-            animation: controller,
-            builder: (context, _) {
-              const segmentWidth = 72.0;
-              final t = reduceMotion ? .28 : controller.value;
-              final left =
-                  (constraints.maxWidth + segmentWidth) * t - segmentWidth;
-              return Stack(children: [
-                Positioned(
-                  left: left,
-                  width: segmentWidth,
-                  top: 0,
-                  bottom: 0,
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF151518),
-                      borderRadius: BorderRadius.circular(99),
-                    ),
-                  ),
-                ),
-              ]);
-            },
-          ),
-        ),
-      );
 }

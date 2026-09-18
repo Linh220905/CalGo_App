@@ -2813,4 +2813,86 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get analysisGreeting => 'CalGoへようこそ';
+
+  @override
+  String get rateAppTitle => 'CalGoを気に入っていただけましたか？';
+
+  @override
+  String get rateAppSubtitle => '星をタップしてApp Storeで評価してください。';
+
+  @override
+  String get rateAppSubtitleAndroid => '星をタップしてGoogle Playで評価してください。';
+
+  @override
+  String get rateAppSubmit => '評価する';
+
+  @override
+  String get rateAppLater => '後で';
+
+  @override
+  String get stayOnTrackTitle => '目標達成を維持するための\nデザイン';
+
+  @override
+  String get weightTrendTitle => '体重の傾向';
+
+  @override
+  String get withoutPlanLabel => '計画なし';
+
+  @override
+  String get month1 => '1ヶ月目';
+
+  @override
+  String get month6 => '6ヶ月目';
+
+  @override
+  String get stayOnTrackDesc => '習慣を記録し、継続的なモチベーションを維持しましょう。';
+
+  @override
+  String get paceHeadline => 'どのくらいのスピードで\n目標を達成したいですか？';
+
+  @override
+  String get paceSpeedSubtitle => '1週間あたりの減量ペース';
+
+  @override
+  String get paceSpeedSubtitleGain => '1週間あたりの増量ペース';
+
+  @override
+  String get paceSpeedSubtitleMaintain => '維持目標ペース';
+
+  @override
+  String get pacePaceSlow => 'ゆっくり';
+
+  @override
+  String get pacePaceRecommended => 'おすすめ';
+
+  @override
+  String get pacePaceFast => '速い';
+
+  @override
+  String get pacePaceMax => '急激';
+
+  @override
+  String reachGoalInMonths(String time) {
+    return '約$timeで目標達成見込み';
+  }
+
+  @override
+  String get reachGoalBalancedDesc => '最もバランスが良く、モチベーションを維持しやすいペースです。';
+
+  @override
+  String get reachGoalSlowDesc => '長期的に最も続けやすく、無理のない緩やかなペースです。';
+
+  @override
+  String get reachGoalFastDesc => '高いモチベーションと強い意志を必要とするハイペースです。';
+
+  @override
+  String dailyCalorieGoalText(int calories) {
+    return '1日の目標カロリー: $calories cal';
+  }
+
+  @override
+  String get paywallHeroTitle => 'CalGo Proで\n目標をより早く達成';
+
+  @override
+  String get paywallHeroSubtitle => '無制限のAI食事スキャンとマクロ栄養素管理。';
 }

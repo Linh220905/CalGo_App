@@ -118,7 +118,7 @@ class AuthProvider extends ChangeNotifier {
           _user = User.fromJson(userData);
           _error = null;
           if (_user?.id != null) {
-            unawaited(RevenueCatService.logIn(_user!.id));
+            unawaited(RevenueCatService.logIn(_user!.id, apiService: _authService.api));
           }
           return true;
         }
@@ -158,7 +158,7 @@ class AuthProvider extends ChangeNotifier {
         _user = User.fromJson(userData);
         _error = null;
         if (_user?.id != null) {
-          unawaited(RevenueCatService.logIn(_user!.id));
+          unawaited(RevenueCatService.logIn(_user!.id, apiService: _authService.api));
         }
         return true;
       }
@@ -219,7 +219,7 @@ class AuthProvider extends ChangeNotifier {
       _user = User.fromJson(userData);
       _error = null;
       if (_user?.id != null) {
-        unawaited(RevenueCatService.logIn(_user!.id));
+        unawaited(RevenueCatService.logIn(_user!.id, apiService: _authService.api));
       }
       _loading = false;
       notifyListeners();

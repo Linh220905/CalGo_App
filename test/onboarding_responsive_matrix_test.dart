@@ -18,10 +18,10 @@ import 'package:calgo/screens/onboarding/steps/hero_step.dart';
 import 'package:calgo/screens/onboarding/steps/home_step.dart';
 import 'package:calgo/screens/onboarding/steps/pace_step.dart';
 import 'package:calgo/screens/onboarding/steps/potential_motivation_step.dart';
+import 'package:calgo/screens/onboarding/steps/stay_on_track_step.dart';
 import 'package:calgo/screens/onboarding/steps/prep_time_step.dart';
 import 'package:calgo/screens/onboarding/steps/referral_step.dart';
 import 'package:calgo/screens/onboarding/steps/social_proof_step.dart';
-import 'package:calgo/screens/onboarding/steps/splash_step.dart';
 import 'package:calgo/screens/onboarding/steps/target_weight_step.dart';
 import 'package:calgo/screens/onboarding/steps/weight_step.dart';
 import 'package:calgo/services/api_service.dart';
@@ -39,7 +39,6 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   final steps = <({String name, Widget widget})>[
-    (name: 'splash', widget: const SplashStep()),
     (name: 'welcome', widget: const HeroStep()),
     (name: 'goal', widget: const GoalStep()),
     (name: 'gender', widget: const GenderStep()),
@@ -47,14 +46,14 @@ void main() {
     (name: 'height', widget: const HeightStep()),
     (name: 'weight', widget: const WeightStep()),
     (name: 'target weight', widget: const TargetWeightStep()),
-    (name: 'potential motivation', widget: const PotentialMotivationStep()),
+    (name: 'stay on track', widget: const StayOnTrackStep()),
     (name: 'pace', widget: const PaceStep()),
     (name: 'activity', widget: const ActivityStep()),
     (name: 'diet', widget: const DietStep()),
     (name: 'prep time', widget: const PrepTimeStep()),
     (name: 'budget', widget: const BudgetStep()),
+    (name: 'potential motivation', widget: const PotentialMotivationStep()),
     (name: 'referral', widget: const ReferralStep()),
-    (name: 'habit', widget: const HabitStep()),
     (name: 'analysis', widget: const AnalysisResultStep()),
     (name: 'social proof', widget: const SocialProofStep()),
     (name: 'account', widget: const AccountStep()),

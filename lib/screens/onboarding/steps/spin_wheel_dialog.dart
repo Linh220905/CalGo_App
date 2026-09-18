@@ -124,35 +124,7 @@ class _SpinWheelDialogState extends State<SpinWheelDialog>
         child: SafeArea(
           child: Column(
             children: [
-              // Top Close
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                        widget.onDismiss();
-                      },
-                      child: Container(
-                        width: 32,
-                        height: 32,
-                        decoration: const BoxDecoration(
-                          color: Color(0xFFF1F5F9),
-                          shape: BoxShape.circle,
-                        ),
-                        child: const Icon(
-                          Icons.close_rounded,
-                          size: 18,
-                          color: _kInk,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
+              const SizedBox(height: 16),
               const Spacer(flex: 1),
 
               // Title
@@ -172,49 +144,57 @@ class _SpinWheelDialogState extends State<SpinWheelDialog>
                 child: GestureDetector(
                   onTap: _isSpinning ? null : _startSpin,
                   child: SizedBox(
-                    width: 320,
-                    height: 320,
+                    width: 330,
+                    height: 350,
                     child: Stack(
-                      alignment: Alignment.center,
+                      alignment: Alignment.topCenter,
+                      clipBehavior: Clip.none,
                       children: [
                         // Spinning Wheel Canvas
-                        Transform.rotate(
-                          angle: _isSpinning || _hasSpun ? _spinAnimation.value : 0,
-                          child: CustomPaint(
-                            size: const Size(310, 310),
-                            painter: _WheelPainter(slices: _slices),
-                          ),
-                        ),
-
-                        // Center CalGo Mascot Hub
-                        Container(
-                          width: 66,
-                          height: 66,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.white,
-                            border: Border.all(color: _kInk, width: 3),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withValues(alpha: 0.12),
-                                blurRadius: 10,
-                              ),
-                            ],
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(5),
-                            child: Image.asset(
-                              'assets/images/apple_mascot/apple_paywall.png',
-                              fit: BoxFit.contain,
+                        Positioned(
+                          top: 26,
+                          child: Transform.rotate(
+                            angle: _isSpinning || _hasSpun ? _spinAnimation.value : 0,
+                            child: CustomPaint(
+                              size: const Size(304, 304),
+                              painter: _WheelPainter(slices: _slices),
                             ),
                           ),
                         ),
 
-                        // Top Indicator Arrow Pointer
+                        // Center CalGo Mascot Hub
                         Positioned(
-                          top: 0,
+                          top: 26 + (304 - 68) / 2,
+                          child: Container(
+                            width: 68,
+                            height: 68,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                              border: Border.all(color: _kInk, width: 3.5),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withValues(alpha: 0.18),
+                                  blurRadius: 14,
+                                  offset: const Offset(0, 4),
+                                ),
+                              ],
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(6),
+                              child: Image.asset(
+                                'assets/images/apple_mascot/apple_paywall.png',
+                                fit: BoxFit.contain,
+                              ),
+                            ),
+                          ),
+                        ),
+
+                        // Top Indicator Arrow Pointer (Positioned OUTSIDE above the wheel)
+                        Positioned(
+                          top: 4,
                           child: CustomPaint(
-                            size: const Size(26, 26),
+                            size: const Size(32, 32),
                             painter: _ArrowPointerPainter(),
                           ),
                         ),
@@ -356,17 +336,47 @@ class _WheelPainter extends CustomPainter {
 class _ArrowPointerPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = _kInk
-      ..style = PaintingStyle.fill;
+    // Pointer: Deep Black with crisp white border and drop shadow
+    final w = size.width;
+    final h = size.height;
+
+    final shadowPaint = Paint()
+      ..color = Colors.black.withValues(alpha: 0.25)
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4);
+
+    final shadowPath = Path()
+      ..moveTo(w / 2, h + 1)
+      ..lineTo(-1, 0)
+      ..lineTo(w + 1, 0)
+      ..close();
+    canvas.drawPath(shadowPath, shadowPaint);
 
     final path = Path()
-      ..moveTo(size.width / 2, size.height)
-      ..lineTo(0, 0)
-      ..lineTo(size.width, 0)
+      ..moveTo(w / 2, h)
+      ..lineTo(0, 2)
+      ..lineTo(w, 2)
       ..close();
 
-    canvas.drawPath(path, paint);
+    // Body Fill: Solid Black
+    final fillPaint = Paint()
+      ..color = _kInk
+      ..style = PaintingStyle.fill;
+    canvas.drawPath(path, fillPaint);
+
+    // Stroke Border: Crisp white to pop cleanly outside the wheel
+    final borderPaint = Paint()
+      ..color = Colors.white
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2.5
+      ..strokeCap = StrokeCap.round
+      ..strokeJoin = StrokeJoin.round;
+    canvas.drawPath(path, borderPaint);
+
+    // Little pin head circle at top
+    final pinPaint = Paint()
+      ..color = Colors.white
+      ..style = PaintingStyle.fill;
+    canvas.drawCircle(Offset(w / 2, 4), 3, pinPaint);
   }
 
   @override

@@ -48,18 +48,18 @@ class OnboardingProvider extends ChangeNotifier {
 
   double get recalculateProgress {
     switch (_currentStep) {
-      case 2:
+      case 1:
         return 1 / 6;
-      case 5:
-        return 2 / 6;
       case 6:
-        return 3 / 6;
+        return 2 / 6;
       case 7:
+        return 3 / 6;
+      case 8:
         return 4 / 6;
       case 9:
         return 5 / 6;
       case 10:
-      case 16:
+      case 15:
         return 1.0;
       default:
         return 0.5;
@@ -95,14 +95,14 @@ class OnboardingProvider extends ChangeNotifier {
         );
       }
     }
-    _currentStep = 2; // Step 2 is GoalStep
+    _currentStep = 1; // Step 1 is GoalStep (after removing SplashStep)
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt(_stepKey, _currentStep);
     notifyListeners();
   }
 
   // Testing releases still skip the Premium paywall, so Account and Home shift one slot earlier.
-  static const int totalSteps = AppBuildConfig.isTesting ? 19 : 20;
+  static const int totalSteps = AppBuildConfig.isTesting ? 18 : 19;
 
   Future<void> init() async {
     if (_initialized) return;
@@ -293,15 +293,15 @@ class OnboardingProvider extends ChangeNotifier {
 
   Future<void> _trackStepMilestones(int step) async {
     if (_isRecalculating || _analyticsService == null) return;
-    if (step == 1 || step == 2) {
+    if (step == 0 || step == 1) {
       unawaited(_analyticsService.trackOnboardingStarted());
-    } else if (step == 6) {
+    } else if (step == 5) {
       unawaited(_analyticsService.trackOnboardingQ5());
-    } else if (step == 10) {
+    } else if (step == 9) {
       unawaited(_analyticsService.trackOnboardingQ10());
-    } else if (step == 14) {
+    } else if (step == 12) {
       unawaited(_analyticsService.trackOnboardingQ15());
-    } else if (step == 16 || step == 17) {
+    } else if (step == 14 || step == 15) {
       unawaited(_analyticsService.trackOnboardingQ20());
     }
   }
@@ -309,25 +309,25 @@ class OnboardingProvider extends ChangeNotifier {
   Future<void> previousStep() async {
     if (_isRecalculating) {
       switch (_currentStep) {
-        case 16:
+        case 15:
           _currentStep = 10;
           break;
         case 10:
           _currentStep = 9;
           break;
         case 9:
+          _currentStep = 8;
+          break;
+        case 8:
           _currentStep = 7;
           break;
         case 7:
           _currentStep = 6;
           break;
         case 6:
-          _currentStep = 5;
+          _currentStep = 1;
           break;
-        case 5:
-          _currentStep = 2;
-          break;
-        case 2:
+        case 1:
           await cancelRecalculate();
           return;
         default:
@@ -350,27 +350,27 @@ class OnboardingProvider extends ChangeNotifier {
   Future<void> nextStep() async {
     if (_isRecalculating) {
       switch (_currentStep) {
-        case 2:
-          _currentStep = 5;
-          break;
-        case 5:
+        case 1:
           _currentStep = 6;
           break;
         case 6:
           _currentStep = 7;
           break;
         case 7:
+          _currentStep = 8;
+          break;
+        case 8:
           _currentStep = 9;
           break;
         case 9:
           _currentStep = 10;
           break;
         case 10:
-          // Recalculate reuses the onboarding analysis + result UI (step 16).
-          _currentStep = 16;
+          // Recalculate reuses the onboarding analysis + result UI (step 15).
+          _currentStep = 15;
           break;
-        case 16:
-          // Finishing recalculation step 16 completes the flow instead of advancing to Paywall/Account
+        case 15:
+          // Finishing recalculation step 15 completes the flow instead of advancing to Paywall/Account
           await completeOnboarding();
           return;
         default:
@@ -495,10 +495,48 @@ class OnboardingProvider extends ChangeNotifier {
       return true;
     } catch (e) {
       debugPrint('Unable to complete onboarding: $e');
-      _error = 'onboardingSaveNetworkFailed';
+      // Even if network failed or server calculation errored, ensure local
+      // completed state is set so user is not blocked from using the app.
+      data.applyDisplayedDefaults();
+      if (authProvider?.user != null) {
+        final current = authProvider!.user!;
+        authProvider.updateUser(User(
+          id: current.id,
+          email: current.email,
+          name: current.name,
+          avatar: current.avatar,
+          credits: current.credits,
+          totalScans: current.totalScans,
+          isAdmin: current.isAdmin,
+          isDev: current.isDev,
+          hasCompletedOnboarding: true,
+          dailyCalorieTarget: data.targetCaloriesPerDay > 0 ? data.targetCaloriesPerDay : 2000,
+          subscriptionTier: current.subscriptionTier,
+          gender: data.gender?.name ?? current.gender,
+          age: data.age ?? current.age,
+          heightCm: data.heightCm ?? current.heightCm,
+          currentWeightKg: data.weightKg ?? current.currentWeightKg,
+          targetWeightKg: data.targetWeightKg ?? current.targetWeightKg,
+          activityLevel: data.activityApiValue,
+          goal: data.goalType?.name ?? current.goal,
+          weeklyGoalKg: data.lossPerWeekKg ?? current.weeklyGoalKg,
+          proteinGrams: data.targetProteinG,
+          fatGrams: data.targetFatG,
+          carbsGrams: data.targetCarbG,
+        ));
+      }
+      _isRecalculating = false;
+      _currentStep = totalSteps;
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('onboarding_done', true);
+      _completed = true;
+      _testingOnboarding = false;
+      await prefs.setInt(_versionKey, _onboardingVersion);
+      await prefs.remove(_stepKey);
+      await prefs.remove(_dataKey);
       _loading = false;
       notifyListeners();
-      return false;
+      return true;
     }
   }
 

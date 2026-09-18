@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
+import 'api_service.dart';
 
 class RevenueCatService {
   RevenueCatService._();
@@ -66,7 +67,8 @@ class RevenueCatService {
   }
 
   /// Set user ID after login, merge anonymous purchases, and verify identity.
-  static Future<LogInResult?> logIn(String userId) async {
+  /// If [apiService] is provided and user has active entitlements, triggers backend sync with server-side verification.
+  static Future<LogInResult?> logIn(String userId, {ApiService? apiService}) async {
     if (kIsWeb) return null;
     if (!_initialized) {
       await init(appUserId: userId);
@@ -77,6 +79,20 @@ class RevenueCatService {
       final currentAppUserId = await Purchases.appUserID;
       final activeEntitlements = logInResult.customerInfo.entitlements.active.keys.toList();
       debugPrint('[RC] Logged in user: $userId (appUserID: $currentAppUserId, created: ${logInResult.created}), active entitlements: $activeEntitlements');
+
+      final isEntitled = logInResult.customerInfo.entitlements.all[entitlementId]?.isActive ?? false;
+      final hasActive = logInResult.customerInfo.entitlements.active.isNotEmpty;
+
+      if ((isEntitled || hasActive) && apiService != null) {
+        try {
+          // Trigger backend to verify subscriber status directly with RevenueCat REST API
+          await apiService.post('/subscriptions/revenuecat/sync');
+          debugPrint('[RC] Successfully requested backend verification sync for user $userId');
+        } catch (e) {
+          debugPrint('[RC] Backend subscription sync error: $e');
+        }
+      }
+
       return logInResult;
     } catch (e) {
       debugPrint('[RC] Login error for $userId: $e');
@@ -190,10 +206,15 @@ class RevenueCatService {
     }
   }
 
-  /// Purchase a package. Returns true if entitlement became active.
+  /// Purchase a package. Returns true if entitlement became active or transaction was completed.
   static Future<bool> purchasePackage(Package package) async {
     final customerInfo = await purchasePackageRaw(package);
-    return customerInfo?.entitlements.all[entitlementId]?.isActive ?? false;
+    if (customerInfo == null) return false;
+    final hasActive = customerInfo.entitlements.all[entitlementId]?.isActive ?? false;
+    final hasNonEmptyEntitlements = customerInfo.entitlements.active.isNotEmpty;
+    final hasLatestTransaction = customerInfo.nonSubscriptionTransactions.isNotEmpty ||
+        customerInfo.allPurchasedProductIdentifiers.isNotEmpty;
+    return hasActive || hasNonEmptyEntitlements || hasLatestTransaction;
   }
 
   /// Restore previous purchases.

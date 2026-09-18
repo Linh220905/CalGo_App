@@ -2958,4 +2958,92 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get analysisGreeting => 'Добро пожаловать в CalGo';
+
+  @override
+  String get rateAppTitle => 'Вам нравится CalGo?';
+
+  @override
+  String get rateAppSubtitle => 'Нажмите на звезду, чтобы оценить в App Store.';
+
+  @override
+  String get rateAppSubtitleAndroid =>
+      'Нажмите на звезду, чтобы оценить в Google Play.';
+
+  @override
+  String get rateAppSubmit => 'Оценить';
+
+  @override
+  String get rateAppLater => 'Позже';
+
+  @override
+  String get stayOnTrackTitle => 'Создано, чтобы помочь вам\nне сбиться с пути';
+
+  @override
+  String get weightTrendTitle => 'Динамика веса';
+
+  @override
+  String get withoutPlanLabel => 'Без плана';
+
+  @override
+  String get month1 => 'Месяц 1';
+
+  @override
+  String get month6 => 'Месяц 6';
+
+  @override
+  String get stayOnTrackDesc =>
+      'Отслеживайте привычки и сохраняйте регулярность со временем.';
+
+  @override
+  String get paceHeadline => 'Как быстро вы хотите\nдостичь своей цели?';
+
+  @override
+  String get paceSpeedSubtitle => 'Скорость снижения веса в неделю';
+
+  @override
+  String get paceSpeedSubtitleGain => 'Скорость набора веса в неделю';
+
+  @override
+  String get paceSpeedSubtitleMaintain => 'Скорость удержания веса';
+
+  @override
+  String get pacePaceSlow => 'Медленно';
+
+  @override
+  String get pacePaceRecommended => 'Рекомендуемый';
+
+  @override
+  String get pacePaceFast => 'Быстро';
+
+  @override
+  String get pacePaceMax => 'Интенсивно';
+
+  @override
+  String reachGoalInMonths(String time) {
+    return 'Вы достигнете цели через $time';
+  }
+
+  @override
+  String get reachGoalBalancedDesc =>
+      'Это наиболее сбалансированный и мотивирующий темп для большинства.';
+
+  @override
+  String get reachGoalSlowDesc =>
+      'Плавный и комфортный темп, который легче всего поддерживать долго.';
+
+  @override
+  String get reachGoalFastDesc =>
+      'Быстрый темп, требующий строгой дисциплины и концентрации.';
+
+  @override
+  String dailyCalorieGoalText(int calories) {
+    return 'Дневная норма калорий: $calories cal';
+  }
+
+  @override
+  String get paywallHeroTitle => 'Достигайте целей быстрее\nс CalGo Pro';
+
+  @override
+  String get paywallHeroSubtitle =>
+      'Безлимитное сканирование еды с ИИ и учет БЖУ.';
 }

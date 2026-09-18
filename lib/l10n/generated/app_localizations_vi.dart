@@ -2915,4 +2915,93 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get analysisGreeting => 'Chào mừng bạn đến với CalGo';
+
+  @override
+  String get rateAppTitle => 'Bạn có thích CalGo không?';
+
+  @override
+  String get rateAppSubtitle =>
+      'Chạm vào một ngôi sao để xếp hạng trên App Store.';
+
+  @override
+  String get rateAppSubtitleAndroid =>
+      'Chạm vào một ngôi sao để xếp hạng trên Google Play.';
+
+  @override
+  String get rateAppSubmit => 'Đánh giá';
+
+  @override
+  String get rateAppLater => 'Để sau';
+
+  @override
+  String get stayOnTrackTitle => 'Thiết kế để giúp bạn\nluôn đi đúng hướng';
+
+  @override
+  String get weightTrendTitle => 'Xu hướng cân nặng';
+
+  @override
+  String get withoutPlanLabel => 'Không có kế hoạch';
+
+  @override
+  String get month1 => 'Tháng 1';
+
+  @override
+  String get month6 => 'Tháng 6';
+
+  @override
+  String get stayOnTrackDesc =>
+      'Theo dõi thói quen và duy trì sự kỷ luật theo thời gian.';
+
+  @override
+  String get paceHeadline => 'Bạn muốn đạt mục tiêu\nnhanh đến mức nào?';
+
+  @override
+  String get paceSpeedSubtitle => 'Tốc độ giảm cân mỗi tuần';
+
+  @override
+  String get paceSpeedSubtitleGain => 'Tốc độ tăng cân mỗi tuần';
+
+  @override
+  String get paceSpeedSubtitleMaintain => 'Tốc độ duy trì ổn định';
+
+  @override
+  String get pacePaceSlow => 'Chậm';
+
+  @override
+  String get pacePaceRecommended => 'Đề xuất';
+
+  @override
+  String get pacePaceFast => 'Nhanh';
+
+  @override
+  String get pacePaceMax => 'Cấp tốc';
+
+  @override
+  String reachGoalInMonths(String time) {
+    return 'Bạn sẽ đạt mục tiêu sau $time';
+  }
+
+  @override
+  String get reachGoalBalancedDesc =>
+      'Đây là tốc độ cân bằng nhất, tạo động lực và phù hợp với phần lớn mọi người.';
+
+  @override
+  String get reachGoalSlowDesc =>
+      'Tốc độ nhẹ nhàng, bền vững và dễ duy trì lâu dài nhất.';
+
+  @override
+  String get reachGoalFastDesc =>
+      'Tốc độ nhanh, nhiều động lực nhưng đòi hỏi kỷ luật cao.';
+
+  @override
+  String dailyCalorieGoalText(int calories) {
+    return 'Mục tiêu calo hàng ngày: $calories cal';
+  }
+
+  @override
+  String get paywallHeroTitle => 'Đạt mục tiêu nhanh hơn\ncùng CalGo Pro';
+
+  @override
+  String get paywallHeroSubtitle =>
+      'Nhận diện bữa ăn bằng AI không giới hạn & cân đối Macro.';
 }

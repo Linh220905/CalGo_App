@@ -2959,4 +2959,95 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get analysisGreeting => 'Salut!';
+
+  @override
+  String get rateAppTitle => 'Îți place CalGo?';
+
+  @override
+  String get rateAppSubtitle => 'Apasă pe o stea pentru a evalua pe App Store.';
+
+  @override
+  String get rateAppSubtitleAndroid =>
+      'Apasă pe o stea pentru a evalua pe Google Play.';
+
+  @override
+  String get rateAppSubmit => 'Evaluează';
+
+  @override
+  String get rateAppLater => 'Nu acum';
+
+  @override
+  String get stayOnTrackTitle =>
+      'Conceput pentru a te ajuta\nsă rămâi pe drumul cel bun';
+
+  @override
+  String get weightTrendTitle => 'Evoluția greutății';
+
+  @override
+  String get withoutPlanLabel => 'Fără un plan';
+
+  @override
+  String get month1 => 'Luna 1';
+
+  @override
+  String get month6 => 'Luna 6';
+
+  @override
+  String get stayOnTrackDesc =>
+      'Urmărește-ți obiceiurile și fii consecvent în timp.';
+
+  @override
+  String get paceHeadline => 'Cât de repede vrei\nsă-ți atingi obiectivul?';
+
+  @override
+  String get paceSpeedSubtitle => 'Viteza de slăbire pe săptămână';
+
+  @override
+  String get paceSpeedSubtitleGain =>
+      'Viteza de creștere în greutate pe săptămână';
+
+  @override
+  String get paceSpeedSubtitleMaintain => 'Ritmul de menținere';
+
+  @override
+  String get pacePaceSlow => 'Lent';
+
+  @override
+  String get pacePaceRecommended => 'Recomandat';
+
+  @override
+  String get pacePaceFast => 'Rapid';
+
+  @override
+  String get pacePaceMax => 'Intens';
+
+  @override
+  String reachGoalInMonths(String time) {
+    return 'Ar trebui să-ți atingi obiectivul în $time';
+  }
+
+  @override
+  String get reachGoalBalancedDesc =>
+      'Acesta este cel mai echilibrat ritm, motivant și ideal pentru majoritatea.';
+
+  @override
+  String get reachGoalSlowDesc =>
+      'Un ritm constant și blând, cel mai ușor de menținut pe termen lung.';
+
+  @override
+  String get reachGoalFastDesc =>
+      'Un ritm rapid și ambițios care necesită o disciplină strictă.';
+
+  @override
+  String dailyCalorieGoalText(int calories) {
+    return 'Obiectiv zilnic de calorii: $calories cal';
+  }
+
+  @override
+  String get paywallHeroTitle =>
+      'Atinge-ți obiectivele mai repede\ncu CalGo Pro';
+
+  @override
+  String get paywallHeroSubtitle =>
+      'Scanare nelimitată a meselor cu IA și monitorizare macro.';
 }
