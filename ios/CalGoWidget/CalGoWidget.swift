@@ -266,7 +266,8 @@ struct CalGoLiveActivity: Widget {
 // MARK: - Bundle Export
 @main
 struct CalGoWidgetBundle: WidgetBundle {
-    var body: some WidgetConfiguration {
+    @WidgetBundleBuilder
+    var body: some Widget {
         CalGoWidget()
         CalGoLiveActivity()
     }
