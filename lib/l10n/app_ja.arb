@@ -975,5 +975,11 @@
   "deny": "許可しない",
   "howToAddTitle": "ウィジェットの追加方法",
   "howToAddIosGuide": "iOS: ロック画面またはホーム画面を長押し -> (+) をタップ -> CalGoを選択。",
-  "howToAddAndroidGuide": "Android: ホーム画面の空きスペースを長押し -> ウィジェット -> CalGoを選択。"
+  "howToAddAndroidGuide": "Android: ホーム画面の空きスペースを長押し -> ウィジェット -> CalGoを選択。",
+  "howToAddIosStep1": "ホーム画面またはロック画面の何もない場所を長押しします。",
+  "howToAddIosStep2": "画面上部の「+」ボタン（ロック画面ではカスタマイズ）をタップします。",
+  "howToAddIosStep3": "「CalGo」を検索して選択し、サイズを選んで「ウィジェットを追加」をタップします。",
+  "howToAddAndroidStep1": "ホーム画面の何もない場所を長押しします。",
+  "howToAddAndroidStep2": "メニューから「ウィジェット」をタップします。",
+  "howToAddAndroidStep3": "「CalGo」を探し、ホーム画面の好きな位置にドラッグ＆ドロップします。"
 }

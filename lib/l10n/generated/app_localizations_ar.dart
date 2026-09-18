@@ -3029,4 +3029,28 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get howToAddAndroidGuide =>
       'Android: اضغط مطولاً على مساحة فارغة في الشاشة الرئيسية -> التطبيقات المصغرة -> اختر CalGo.';
+
+  @override
+  String get howToAddIosStep1 =>
+      'اضغط مطولاً على مساحة فارغة في الشاشة الرئيسية أو شاشة القفل.';
+
+  @override
+  String get howToAddIosStep2 =>
+      'اضغط على زر (+) في الزاوية العلوية (أو تخصيص على شاشة القفل).';
+
+  @override
+  String get howToAddIosStep3 =>
+      'ابحث عن CalGo، اختر حجم الأداة واضغط على إضافة أداة.';
+
+  @override
+  String get howToAddAndroidStep1 =>
+      'اضغط مطولاً على أي مساحة فارغة في الشاشة الرئيسية.';
+
+  @override
+  String get howToAddAndroidStep2 =>
+      'اضغط على خيار (التطبيقات المصغرة / Widgets) في القائمة.';
+
+  @override
+  String get howToAddAndroidStep3 =>
+      'ابحث عن CalGo واسحب الأداة وأفلتها في شاشتك.';
 }

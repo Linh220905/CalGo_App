@@ -1384,5 +1384,11 @@
   "deny": "Rechazar",
   "howToAddTitle": "Cómo añadir widgets",
   "howToAddIosGuide": "iOS: Mantén pulsada la pantalla de bloqueo o inicio -> pulsa Personalizar (+) -> selecciona CalGo.",
-  "howToAddAndroidGuide": "Android: Mantén pulsado un espacio vacío en la pantalla de inicio -> Widgets -> selecciona CalGo."
+  "howToAddAndroidGuide": "Android: Mantén pulsado un espacio vacío en la pantalla de inicio -> Widgets -> selecciona CalGo.",
+  "howToAddIosStep1": "Mantén pulsada una zona vacía de la pantalla de inicio o bloqueo.",
+  "howToAddIosStep2": "Toca el botón (+) en la esquina superior (o Personalizar en bloqueo).",
+  "howToAddIosStep3": "Busca CalGo, elige el tamaño del widget y pulsa Añadir widget.",
+  "howToAddAndroidStep1": "Mantén presionado un espacio vacío en la pantalla de inicio.",
+  "howToAddAndroidStep2": "Toca en Widgets en el menú emergente.",
+  "howToAddAndroidStep3": "Busca CalGo, mantén presionado y arrastra el widget a tu pantalla."
 }

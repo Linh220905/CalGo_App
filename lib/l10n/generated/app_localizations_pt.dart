@@ -3082,4 +3082,27 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get howToAddAndroidGuide =>
       'Android: Pressione e segure a tela de início -> Widgets -> escolha CalGo.';
+
+  @override
+  String get howToAddIosStep1 =>
+      'Pressione e segure uma área vazia na Tela de Início ou de Bloqueio.';
+
+  @override
+  String get howToAddIosStep2 =>
+      'Toque no botão (+) no canto superior (ou Personalizar no Bloqueio).';
+
+  @override
+  String get howToAddIosStep3 =>
+      'Procure por CalGo, escolha o tamanho e toque em Adicionar Widget.';
+
+  @override
+  String get howToAddAndroidStep1 =>
+      'Pressione e segure um espaço vazio na Tela de Início.';
+
+  @override
+  String get howToAddAndroidStep2 => 'Toque em Widgets no menu que aparecer.';
+
+  @override
+  String get howToAddAndroidStep3 =>
+      'Encontre CalGo, arraste e solte o widget na tela.';
 }

@@ -1708,5 +1708,11 @@
   "deny": "Refuză",
   "howToAddTitle": "Cum se adaugă widget-uri",
   "howToAddIosGuide": "iOS: Țineți apăsat pe ecranul de blocare sau principal -> apăsați (+) -> alegeți CalGo.",
-  "howToAddAndroidGuide": "Android: Țineți apăsat pe un spațiu liber de pe ecranul principal -> Widget-uri -> alegeți CalGo."
+  "howToAddAndroidGuide": "Android: Țineți apăsat pe un spațiu liber de pe ecranul principal -> Widget-uri -> alegeți CalGo.",
+  "howToAddIosStep1": "Atingeți și mențineți apăsat un spațiu liber pe ecranul principal sau de blocare.",
+  "howToAddIosStep2": "Apăsați butonul (+) din colțul de sus (sau Personalizați pe ecranul de blocare).",
+  "howToAddIosStep3": "Căutați CalGo, selectați dimensiunea dorită și apăsați Adăugare widget.",
+  "howToAddAndroidStep1": "Atingeți și mențineți apăsat un spațiu liber de pe ecranul principal.",
+  "howToAddAndroidStep2": "Apăsați pe Widget-uri în meniul apărut.",
+  "howToAddAndroidStep3": "Găsiți CalGo, glisați și plasați widget-ul pe ecran."
 }

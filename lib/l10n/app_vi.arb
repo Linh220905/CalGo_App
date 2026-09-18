@@ -1438,5 +1438,11 @@
   "deny": "Từ chối",
   "howToAddTitle": "Cách thêm tiện ích CalGo",
   "howToAddIosGuide": "iOS: Chạm giữ màn hình khóa hoặc màn hình chính -> chọn Tùy chỉnh/Thêm (+) -> chọn CalGo.",
-  "howToAddAndroidGuide": "Android: Chạm giữ khoảng trống trên màn hình chính -> chọn Tiện ích (Widgets) -> kéo CalGo ra ngoài."
+  "howToAddAndroidGuide": "Android: Chạm giữ khoảng trống trên màn hình chính -> chọn Tiện ích (Widgets) -> kéo CalGo ra ngoài.",
+  "howToAddIosStep1": "Chạm & giữ khoảng trống trên Màn hình chính hoặc Màn hình khóa.",
+  "howToAddIosStep2": "Nhấn nút (+) ở góc trên (hoặc chọn Tùy chỉnh trên Màn hình khóa).",
+  "howToAddIosStep3": "Tìm và chọn CalGo, chọn kích thước tiện ích rồi nhấn Thêm tiện ích.",
+  "howToAddAndroidStep1": "Chạm & giữ một khoảng trống bất kỳ trên Màn hình chính.",
+  "howToAddAndroidStep2": "Chọn mục Tiện ích (Widgets) từ menu xuất hiện.",
+  "howToAddAndroidStep3": "Tìm ứng dụng CalGo, kéo và thả tiện ích vào vị trí bạn muốn."
 }

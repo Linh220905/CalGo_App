@@ -2915,4 +2915,22 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get howToAddAndroidGuide => 'Android：长按主屏幕空白处 -> 小组件 -> 选择 CalGo。';
+
+  @override
+  String get howToAddIosStep1 => '长按主屏幕或锁定屏幕的空白区域。';
+
+  @override
+  String get howToAddIosStep2 => '点击屏幕顶部的 (+) 添加按钮（或在锁定屏幕上点击“自定”）。';
+
+  @override
+  String get howToAddIosStep3 => '搜索并选择 CalGo，挑选组件尺寸后点击“添加小组件”。';
+
+  @override
+  String get howToAddAndroidStep1 => '长按主屏幕上的任意空白区域。';
+
+  @override
+  String get howToAddAndroidStep2 => '在弹出菜单中点击“微件”或“小组件”。';
+
+  @override
+  String get howToAddAndroidStep3 => '找到 CalGo，长按并拖动小组件至桌面合适位置。';
 }

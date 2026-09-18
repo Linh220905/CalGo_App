@@ -5560,6 +5560,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Android: Touch and hold an empty space on your Home Screen -> tap Widgets -> find and add CalGo.'**
   String get howToAddAndroidGuide;
+
+  /// No description provided for @howToAddIosStep1.
+  ///
+  /// In en, this message translates to:
+  /// **'Touch & hold empty space on Home Screen or Lock Screen until apps jiggle.'**
+  String get howToAddIosStep1;
+
+  /// No description provided for @howToAddIosStep2.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the (+) Add button in the top corner (or Customize on Lock Screen).'**
+  String get howToAddIosStep2;
+
+  /// No description provided for @howToAddIosStep3.
+  ///
+  /// In en, this message translates to:
+  /// **'Search or select CalGo, choose your widget size, and tap Add Widget.'**
+  String get howToAddIosStep3;
+
+  /// No description provided for @howToAddAndroidStep1.
+  ///
+  /// In en, this message translates to:
+  /// **'Touch & hold an empty area on your Home Screen.'**
+  String get howToAddAndroidStep1;
+
+  /// No description provided for @howToAddAndroidStep2.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap Widgets in the menu that pops up.'**
+  String get howToAddAndroidStep2;
+
+  /// No description provided for @howToAddAndroidStep3.
+  ///
+  /// In en, this message translates to:
+  /// **'Find CalGo, drag and drop the widget onto your screen.'**
+  String get howToAddAndroidStep3;
 }
 
 class _AppLocalizationsDelegate

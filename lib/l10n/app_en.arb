@@ -1525,5 +1525,11 @@
   "deny": "Deny",
   "howToAddTitle": "How to Add Widgets",
   "howToAddIosGuide": "iOS: Touch and hold an empty area on your Lock Screen or Home Screen -> tap Customize/Add (+) -> choose CalGo.",
-  "howToAddAndroidGuide": "Android: Touch and hold an empty space on your Home Screen -> tap Widgets -> find and add CalGo."
+  "howToAddAndroidGuide": "Android: Touch and hold an empty space on your Home Screen -> tap Widgets -> find and add CalGo.",
+  "howToAddIosStep1": "Touch & hold empty space on Home Screen or Lock Screen until apps jiggle.",
+  "howToAddIosStep2": "Tap the (+) Add button in the top corner (or Customize on Lock Screen).",
+  "howToAddIosStep3": "Search or select CalGo, choose your widget size, and tap Add Widget.",
+  "howToAddAndroidStep1": "Touch & hold an empty area on your Home Screen.",
+  "howToAddAndroidStep2": "Tap Widgets in the menu that pops up.",
+  "howToAddAndroidStep3": "Find CalGo, drag and drop the widget onto your screen."
 }

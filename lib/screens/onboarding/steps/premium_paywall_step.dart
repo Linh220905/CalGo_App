@@ -241,6 +241,7 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
     }
 
     await auth.refreshUser();
+    if (!mounted) return;
     if (Navigator.canPop(context)) Navigator.pop(context);
   }
 
@@ -260,9 +261,21 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
     _proceedClose();
   }
 
-  void _proceedClose() {
+  void _proceedClose() async {
     if (widget.onboardingMode) {
-      if (mounted) context.go('/home');
+      final auth = context.read<AuthProvider>();
+      final onboarding = context.read<OnboardingProvider>();
+      final home = context.read<HomeProvider>();
+
+      // Ensure onboarding is marked completed when user exits spinner/paywall
+      await onboarding.completeOnboarding(
+        authProvider: auth,
+        homeProvider: home,
+      );
+      if (mounted) {
+        await home.loadToday(forceRefresh: true);
+        if (mounted) context.go('/home');
+      }
     } else {
       if (Navigator.canPop(context)) {
         Navigator.pop(context);

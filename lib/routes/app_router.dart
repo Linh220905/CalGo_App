@@ -52,9 +52,13 @@ GoRouter createAppRouter(OnboardingProvider onboarding, AuthProvider auth) =>
         if (auth.loading) return null;
 
         // When user is authenticated, they should be able to access the app (/home)
-        // Never trap an authenticated user on onboarding or login.
+        // Never trap an authenticated user on login. If onboarding is still in progress,
+        // let them complete the remaining steps (Paywall/Spinner) before going to /home.
         if (auth.isAuthenticated) {
-          if (onLogin || (onOnboarding && !onboarding.isTestingOnboarding && !onboarding.isRecalculating)) {
+          if (onLogin) {
+            return '/home';
+          }
+          if (onOnboarding && onboarding.isCompleted && !onboarding.isTestingOnboarding && !onboarding.isRecalculating) {
             return '/home';
           }
           return null;

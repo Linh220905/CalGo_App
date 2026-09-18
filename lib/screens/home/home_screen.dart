@@ -12,6 +12,7 @@ import '../../services/scan_service.dart';
 import '../../providers/scan_task_provider.dart';
 import '../../providers/gamification_provider.dart';
 import '../../services/notification_service.dart';
+import '../../services/widget_sync_service.dart';
 import '../../models/gamification.dart';
 import '../../widgets/swipeable_card.dart';
 import '../../widgets/mascot_speech_bubble.dart';
@@ -431,6 +432,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
             hasMeals: hp.entries.isNotEmpty,
           ),
         );
+
         final auth = context.read<AuthProvider>();
         final settings = context.read<AppSettingsProvider>();
         final targetCalories = auth.user?.dailyCalorieTarget.round() ??
@@ -445,12 +447,14 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
             .clamp(0, 999);
 
         unawaited(
-          NotificationService.instance.updateLiveActivityNotification(
+          WidgetSyncService.instance.syncNutritionData(
             caloriesLeft: caloriesLeft,
+            targetCalories: targetCalories,
+            consumedCalories: hp.summary.consumedCalories,
             proteinLeft: proteinLeft,
             carbsLeft: carbsLeft,
             fatLeft: fatsLeft,
-            isEnabled: settings.isLiveActivityEnabled,
+            isLiveActivityEnabled: settings.isLiveActivityEnabled,
           ),
         );
       }

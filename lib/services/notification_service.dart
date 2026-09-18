@@ -98,6 +98,7 @@ class NotificationService {
     _initialized = true;
     final permissionGranted = await requestPermission();
     debugPrint('Notification permission granted: $permissionGranted');
+    await cancelLiveActivityNotification();
     await scheduleDailyMealReminders();
     await scheduleDailyRecapNotification(
       hasMeals: _recapHasMeals ?? false,
@@ -476,73 +477,12 @@ class NotificationService {
     );
   }
 
-  /// Update persistent Lock Screen / Live Activity notification with remaining calories & macros
-  Future<void> updateLiveActivityNotification({
-    required int caloriesLeft,
-    required int proteinLeft,
-    required int carbsLeft,
-    required int fatLeft,
-    bool isEnabled = true,
-  }) async {
+  /// Cancel persistent Live Activity notification if previously set
+  Future<void> cancelLiveActivityNotification() async {
     if (!_initialized) return;
-
-    const liveNotificationId = 999;
-    if (!isEnabled) {
-      await _notificationsPlugin.cancel(liveNotificationId);
-      return;
-    }
-
-    final s = await _strings();
-    final androidDetails = AndroidNotificationDetails(
-      'calgo_live_activity',
-      s.liveActivityTitle,
-      channelDescription: s.liveActivityPromptDesc,
-      importance: Importance.low,
-      priority: Priority.low,
-      ongoing: true,
-      autoCancel: false,
-      showWhen: false,
-      visibility: NotificationVisibility.public,
-      icon: '@mipmap/ic_launcher',
-      subText: '$caloriesLeft kcal',
-      actions: <AndroidNotificationAction>[
-        AndroidNotificationAction(
-          'action_scan_food',
-          s.scanFood,
-          showsUserInterface: true,
-        ),
-        AndroidNotificationAction(
-          'action_scan_barcode',
-          s.barcode,
-          showsUserInterface: true,
-        ),
-      ],
-    );
-
-    const iosDetails = DarwinNotificationDetails(
-      presentAlert: false,
-      presentBadge: false,
-      presentSound: false,
-      presentBanner: true,
-      presentList: true,
-      interruptionLevel: InterruptionLevel.passive,
-    );
-
-    final details = NotificationDetails(
-      android: androidDetails,
-      iOS: iosDetails,
-    );
-
-    final title = '${s.caloriesLeft}: $caloriesLeft kcal';
-    final body = '🥩 P:${proteinLeft}g  🌾 C:${carbsLeft}g  💧 F:${fatLeft}g';
-
-    await _notificationsPlugin.show(
-      liveNotificationId,
-      title,
-      body,
-      details,
-      payload: '/home',
-    );
+    try {
+      await _notificationsPlugin.cancel(999);
+    } catch (_) {}
   }
 }
 

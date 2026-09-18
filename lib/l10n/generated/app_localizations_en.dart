@@ -3049,4 +3049,27 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get howToAddAndroidGuide =>
       'Android: Touch and hold an empty space on your Home Screen -> tap Widgets -> find and add CalGo.';
+
+  @override
+  String get howToAddIosStep1 =>
+      'Touch & hold empty space on Home Screen or Lock Screen until apps jiggle.';
+
+  @override
+  String get howToAddIosStep2 =>
+      'Tap the (+) Add button in the top corner (or Customize on Lock Screen).';
+
+  @override
+  String get howToAddIosStep3 =>
+      'Search or select CalGo, choose your widget size, and tap Add Widget.';
+
+  @override
+  String get howToAddAndroidStep1 =>
+      'Touch & hold an empty area on your Home Screen.';
+
+  @override
+  String get howToAddAndroidStep2 => 'Tap Widgets in the menu that pops up.';
+
+  @override
+  String get howToAddAndroidStep3 =>
+      'Find CalGo, drag and drop the widget onto your screen.';
 }

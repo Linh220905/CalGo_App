@@ -3063,4 +3063,28 @@ class AppLocalizationsHi extends AppLocalizations {
   @override
   String get howToAddAndroidGuide =>
       'Android: होम स्क्रीन पर खाली जगह दबाकर रखें -> विजेट -> CalGo चुनें।';
+
+  @override
+  String get howToAddIosStep1 =>
+      'होम स्क्रीन या लॉक स्क्रीन पर किसी खाली जगह को दबाकर रखें।';
+
+  @override
+  String get howToAddIosStep2 =>
+      'ऊपर कोने में (+) बटन दबाएं (या लॉक स्क्रीन पर कस्टमाइज़ दबाएं)।';
+
+  @override
+  String get howToAddIosStep3 =>
+      'CalGo खोजें, साइज चुनें और \'विजेट जोड़ें\' पर टैप करें।';
+
+  @override
+  String get howToAddAndroidStep1 =>
+      'होम स्क्रीन पर किसी भी खाली जगह को दबाकर रखें।';
+
+  @override
+  String get howToAddAndroidStep2 =>
+      'दिखाई देने वाले मेनू में विजेट (Widgets) पर टैप करें।';
+
+  @override
+  String get howToAddAndroidStep3 =>
+      'CalGo खोजें और विजेट को खींचकर स्क्रीन पर सेट करें।';
 }

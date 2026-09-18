@@ -235,8 +235,8 @@ class WidgetPreviewCard extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SizedBox(width: 16, height: 16, child: Center(child: icon)),
-        const SizedBox(width: 6),
+        SizedBox(width: 14, height: 14, child: Center(child: icon)),
+        const SizedBox(width: 5),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -245,7 +245,7 @@ class WidgetPreviewCard extends StatelessWidget {
               Text(
                 amount,
                 style: TextStyle(
-                  fontSize: 13,
+                  fontSize: 11.5,
                   fontWeight: FontWeight.w700,
                   color: textColor,
                   height: 1.1,
@@ -256,7 +256,7 @@ class WidgetPreviewCard extends StatelessWidget {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
-                  fontSize: 10,
+                  fontSize: 9,
                   fontWeight: FontWeight.w500,
                   color: mutedColor,
                   height: 1.1,

@@ -2933,4 +2933,22 @@ class AppLocalizationsJa extends AppLocalizations {
   @override
   String get howToAddAndroidGuide =>
       'Android: ホーム画面の空きスペースを長押し -> ウィジェット -> CalGoを選択。';
+
+  @override
+  String get howToAddIosStep1 => 'ホーム画面またはロック画面の何もない場所を長押しします。';
+
+  @override
+  String get howToAddIosStep2 => '画面上部の「+」ボタン（ロック画面ではカスタマイズ）をタップします。';
+
+  @override
+  String get howToAddIosStep3 => '「CalGo」を検索して選択し、サイズを選んで「ウィジェットを追加」をタップします。';
+
+  @override
+  String get howToAddAndroidStep1 => 'ホーム画面の何もない場所を長押しします。';
+
+  @override
+  String get howToAddAndroidStep2 => 'メニューから「ウィジェット」をタップします。';
+
+  @override
+  String get howToAddAndroidStep3 => '「CalGo」を探し、ホーム画面の好きな位置にドラッグ＆ドロップします。';
 }

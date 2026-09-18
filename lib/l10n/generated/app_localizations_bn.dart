@@ -3063,4 +3063,28 @@ class AppLocalizationsBn extends AppLocalizations {
   @override
   String get howToAddAndroidGuide =>
       'Android: হোম স্ক্রিনের খালি জায়গায় চেপে ধরে রাখুন -> উইজেট -> CalGo নির্বাচন করুন।';
+
+  @override
+  String get howToAddIosStep1 =>
+      'হোম স্ক্রিন বা লক স্ক্রিনের খালি জায়গায় চেপে ধরে রাখুন।';
+
+  @override
+  String get howToAddIosStep2 =>
+      'উপরের কোণায় থাকা (+) বোতামটি চাপুন (বা লক স্ক্রিনে কাস্টমাইজ চাপুন)।';
+
+  @override
+  String get howToAddIosStep3 =>
+      'CalGo খুঁজুন, উইজেটের সাইজ বেছে নিয়ে অ্যাড উইজেট চাপুন।';
+
+  @override
+  String get howToAddAndroidStep1 =>
+      'হোম স্ক্রিনের যেকোনো খালি জায়গায় চেপে ধরে রাখুন।';
+
+  @override
+  String get howToAddAndroidStep2 =>
+      'মেনু থেকে উইজেট (Widgets) অপশনটি নির্বাচন করুন।';
+
+  @override
+  String get howToAddAndroidStep3 =>
+      'CalGo খুঁজে নিয়ে উইজেটটি টেনে এনে স্ক্রিনে বসান।';
 }

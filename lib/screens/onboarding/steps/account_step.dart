@@ -2,11 +2,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
-import 'package:go_router/go_router.dart';
 import '../../../services/analytics_service.dart';
 import '../../../providers/auth_provider.dart';
 import '../../../providers/onboarding_provider.dart';
-import '../../../providers/home_provider.dart';
 import '../../../providers/payment_provider.dart';
 import '../../../providers/app_settings_provider.dart';
 import '../../../widgets/social_auth_button.dart';
@@ -117,7 +115,6 @@ class _AccountStepState extends State<AccountStep> {
                 isLoading: auth.googleLoading,
                 onTap: () async {
                   final authProvider = context.read<AuthProvider>();
-                  final homeProvider = context.read<HomeProvider>();
                   final analytics = context.read<AnalyticsService>();
                   final success = await authProvider.signInWithGoogle();
                   if (success && context.mounted) {
@@ -127,13 +124,10 @@ class _AccountStepState extends State<AccountStep> {
                       await context.read<PaymentProvider>().retryPendingPurchaseVerification();
                     } catch (_) {}
                     await provider.setAccountMethod('google');
-                    await provider.completeOnboarding(
-                      authProvider: authProvider,
-                      homeProvider: homeProvider,
-                    );
+                    // Save user profile data to backend without prematurely marking onboarding as completed
                     if (context.mounted) {
-                      await homeProvider.loadToday(forceRefresh: true);
-                      provider.nextStep();
+                      await provider.saveProfileToBackend(authProvider: authProvider);
+                      provider.nextStep(); // Advance to Step 17 (PremiumPaywallStep)
                     }
                   } else if (context.mounted && authProvider.error != null) {
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -152,7 +146,6 @@ class _AccountStepState extends State<AccountStep> {
                 isLoading: auth.appleLoading,
                 onTap: () async {
                   final authProvider = context.read<AuthProvider>();
-                  final homeProvider = context.read<HomeProvider>();
                   final onboarding = context.read<OnboardingProvider>();
                   final analytics = context.read<AnalyticsService>();
                   final success = await authProvider.signInWithApple();
@@ -163,13 +156,10 @@ class _AccountStepState extends State<AccountStep> {
                       await context.read<PaymentProvider>().retryPendingPurchaseVerification();
                     } catch (_) {}
                     await onboarding.setAccountMethod('apple');
-                    await onboarding.completeOnboarding(
-                      authProvider: authProvider,
-                      homeProvider: homeProvider,
-                    );
+                    // Save user profile data to backend without prematurely marking onboarding as completed
                     if (context.mounted) {
-                      await homeProvider.loadToday(forceRefresh: true);
-                      onboarding.nextStep();
+                      await onboarding.saveProfileToBackend(authProvider: authProvider);
+                      onboarding.nextStep(); // Advance to Step 17 (PremiumPaywallStep)
                     }
                   } else if (authProvider.error != null && context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(

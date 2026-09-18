@@ -3044,4 +3044,28 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String get howToAddAndroidGuide =>
       'Android: Chạm giữ khoảng trống trên màn hình chính -> chọn Tiện ích (Widgets) -> kéo CalGo ra ngoài.';
+
+  @override
+  String get howToAddIosStep1 =>
+      'Chạm & giữ khoảng trống trên Màn hình chính hoặc Màn hình khóa.';
+
+  @override
+  String get howToAddIosStep2 =>
+      'Nhấn nút (+) ở góc trên (hoặc chọn Tùy chỉnh trên Màn hình khóa).';
+
+  @override
+  String get howToAddIosStep3 =>
+      'Tìm và chọn CalGo, chọn kích thước tiện ích rồi nhấn Thêm tiện ích.';
+
+  @override
+  String get howToAddAndroidStep1 =>
+      'Chạm & giữ một khoảng trống bất kỳ trên Màn hình chính.';
+
+  @override
+  String get howToAddAndroidStep2 =>
+      'Chọn mục Tiện ích (Widgets) từ menu xuất hiện.';
+
+  @override
+  String get howToAddAndroidStep3 =>
+      'Tìm ứng dụng CalGo, kéo và thả tiện ích vào vị trí bạn muốn.';
 }

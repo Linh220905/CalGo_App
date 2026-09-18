@@ -3090,4 +3090,27 @@ class AppLocalizationsRo extends AppLocalizations {
   @override
   String get howToAddAndroidGuide =>
       'Android: Țineți apăsat pe un spațiu liber de pe ecranul principal -> Widget-uri -> alegeți CalGo.';
+
+  @override
+  String get howToAddIosStep1 =>
+      'Atingeți și mențineți apăsat un spațiu liber pe ecranul principal sau de blocare.';
+
+  @override
+  String get howToAddIosStep2 =>
+      'Apăsați butonul (+) din colțul de sus (sau Personalizați pe ecranul de blocare).';
+
+  @override
+  String get howToAddIosStep3 =>
+      'Căutați CalGo, selectați dimensiunea dorită și apăsați Adăugare widget.';
+
+  @override
+  String get howToAddAndroidStep1 =>
+      'Atingeți și mențineți apăsat un spațiu liber de pe ecranul principal.';
+
+  @override
+  String get howToAddAndroidStep2 => 'Apăsați pe Widget-uri în meniul apărut.';
+
+  @override
+  String get howToAddAndroidStep3 =>
+      'Găsiți CalGo, glisați și plasați widget-ul pe ecran.';
 }

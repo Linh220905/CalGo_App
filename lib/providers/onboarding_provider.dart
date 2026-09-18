@@ -405,6 +405,20 @@ class OnboardingProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> saveProfileToBackend({AuthProvider? authProvider}) async {
+    try {
+      data.applyDisplayedDefaults();
+      if (_onboardingService != null) {
+        final res = await _onboardingService.saveProfile(data);
+        if (res['user'] is Map<String, dynamic> && authProvider != null) {
+          authProvider.updateUserFromJson(res['user'] as Map<String, dynamic>);
+        }
+      }
+    } catch (e) {
+      debugPrint('[OnboardingProvider] saveProfileToBackend error: $e');
+    }
+  }
+
   Future<bool> completeOnboarding({
     AuthProvider? authProvider,
     HomeProvider? homeProvider,

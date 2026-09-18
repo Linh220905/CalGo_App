@@ -3086,4 +3086,27 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get howToAddAndroidGuide =>
       'Android: Удерживайте свободное место на главном экране -> Виджеты -> выберите CalGo.';
+
+  @override
+  String get howToAddIosStep1 =>
+      'Нажмите и удерживайте пустое место на экране «Домой» или блокировки.';
+
+  @override
+  String get howToAddIosStep2 =>
+      'Нажмите кнопку (+) в верхнем углу (или Настроить на экране блокировки).';
+
+  @override
+  String get howToAddIosStep3 =>
+      'Найдите CalGo, выберите размер и нажмите «Добавить виджет».';
+
+  @override
+  String get howToAddAndroidStep1 =>
+      'Нажмите и удерживайте свободное место на главном экране.';
+
+  @override
+  String get howToAddAndroidStep2 => 'Нажмите «Виджеты» во всплывающем меню.';
+
+  @override
+  String get howToAddAndroidStep3 =>
+      'Найдите CalGo, перетащите виджет на удобное место экрана.';
 }

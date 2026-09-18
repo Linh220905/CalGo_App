@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -7,7 +8,10 @@ import '../../config/app_build_config.dart';
 import '../../models/user.dart';
 import '../../providers/app_settings_provider.dart';
 import '../../providers/auth_provider.dart';
+import '../../providers/home_provider.dart';
 import '../../providers/payment_provider.dart';
+import '../../services/notification_service.dart';
+import '../../services/widget_sync_service.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../widgets/language_selector.dart';
 import '../../widgets/apple_health_modal.dart';
@@ -516,8 +520,45 @@ class ProfileScreen extends StatelessWidget {
                     textColor: textColor,
                     borderColor: borderColor,
                     isDark: isDark,
-                    isLast: true,
                     onTap: () => _showNotificationInfoDialog(context, isDark),
+                  ),
+                  _buildSwitchItem(
+                    label: s.liveActivityTitle,
+                    icon: Icons.lock_clock_outlined,
+                    value: settings.isLiveActivityEnabled,
+                    isDark: isDark,
+                    textColor: textColor,
+                    borderColor: borderColor,
+                    isLast: true,
+                    onChanged: (val) async {
+                      await settings.setLiveActivityEnabled(val);
+                      if (context.mounted) {
+                        final auth = context.read<AuthProvider>();
+                        final home = context.read<HomeProvider>();
+                        final targetCalories = auth.user?.dailyCalorieTarget.round() ??
+                            home.summary.targetCalories;
+                        final caloriesLeft = (targetCalories - home.summary.consumedCalories)
+                            .clamp(0, 99999);
+                        final proteinLeft = (home.summary.targetProteinG - home.summary.proteinG)
+                            .clamp(0, 999);
+                        final carbsLeft = (home.summary.targetCarbG - home.summary.carbG)
+                            .clamp(0, 999);
+                        final fatsLeft = (home.summary.targetFatG - home.summary.fatG)
+                            .clamp(0, 999);
+
+                        unawaited(
+                          WidgetSyncService.instance.syncNutritionData(
+                            caloriesLeft: caloriesLeft,
+                            targetCalories: targetCalories,
+                            consumedCalories: home.summary.consumedCalories,
+                            proteinLeft: proteinLeft,
+                            carbsLeft: carbsLeft,
+                            fatLeft: fatsLeft,
+                            isLiveActivityEnabled: val,
+                          ),
+                        );
+                      }
+                    },
                   ),
                 ],
               ),
