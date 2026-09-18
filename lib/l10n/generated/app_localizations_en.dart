@@ -3009,4 +3009,44 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get paywallHeroSubtitle =>
       'Unlimited AI food scanning & personalized macro tracking.';
+
+  @override
+  String get widgetsSection => 'Widgets';
+
+  @override
+  String get howToAddWidget => 'How to add?';
+
+  @override
+  String get scanFood => 'Scan Food';
+
+  @override
+  String get barcode => 'Barcode';
+
+  @override
+  String get liveActivityTitle => 'Live Lock Screen Activity';
+
+  @override
+  String get liveActivityPromptTitle =>
+      'Do you want to continue allowing Live Activities from CalGo?';
+
+  @override
+  String get liveActivityPromptDesc =>
+      'Keep CalGo on your lock screen to quickly log meals and track calories.';
+
+  @override
+  String get alwaysAllow => 'Always Allow';
+
+  @override
+  String get deny => 'Deny';
+
+  @override
+  String get howToAddTitle => 'How to Add Widgets';
+
+  @override
+  String get howToAddIosGuide =>
+      'iOS: Touch and hold an empty area on your Lock Screen or Home Screen -> tap Customize/Add (+) -> choose CalGo.';
+
+  @override
+  String get howToAddAndroidGuide =>
+      'Android: Touch and hold an empty space on your Home Screen -> tap Widgets -> find and add CalGo.';
 }

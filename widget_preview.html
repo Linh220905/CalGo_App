@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CalGo Widget Preview</title>
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: #1e1c24;
+      --card-border: #2c2a34;
+      --text: #ffffff;
+      --text-muted: #94a3b8;
+      --primary: #3b82f6;
+      --protein: #ff5c5c;
+      --carb: #f59e0b;
+      --fat: #3b82f6;
+      --accent-glow: rgba(59, 130, 246, 0.25);
+    }
+
+    [data-theme="light"] {
+      --bg: #f1f5f9;
+      --card-bg: #ffffff;
+      --card-border: #e2e8f0;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --primary: #2563eb;
+      --accent-glow: rgba(37, 99, 235, 0.15);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px 60px;
+      transition: background-color 0.3s ease;
+    }
+
+    .header-nav {
+      width: 100%;
+      max-width: 440px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .badge-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    .theme-toggle {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tab-pills {
+      display: flex;
+      gap: 6px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 4px;
+      border-radius: 30px;
+      margin-bottom: 24px;
+      width: 100%;
+      max-width: 440px;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 8px 10px;
+      border-radius: 20px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+    }
+
+    .tab-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 2px 8px var(--accent-glow);
+    }
+
+    .preview-container {
+      width: 100%;
+      max-width: 420px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* PHONE SCREEN MOCKUP */
+    .phone-mockup {
+      width: 100%;
+      background: linear-gradient(180deg, #132742 0%, #08111e 60%, #030712 100%);
+      border: 8px solid #2d3748;
+      border-radius: 46px;
+      padding: 16px 14px 28px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .phone-mockup::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 50% 30%, rgba(59, 130, 246, 0.25), transparent 70%),
+                  url('https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&w=800&q=80') center/cover no-repeat;
+      opacity: 0.85;
+      z-index: 1;
+    }
+
+    .phone-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .status-bar {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: #ffffff;
+      padding: 0 8px 12px;
+    }
+
+    .clock-lock {
+      text-align: center;
+      margin: 20px 0 35px;
+      color: #ffffff;
+    }
+
+    .clock-date {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      opacity: 0.9;
+    }
+
+    .clock-time {
+      font-size: 70px;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -2px;
+      margin-top: 4px;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+
+    /* HORIZONTAL LIVE ACTIVITY BANNER (LOCK SCREEN) */
+    .live-activity-card {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border-radius: 26px;
+      padding: 14px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      animation: slideUp 0.4s ease;
+    }
+
+    [data-theme="dark"] .live-activity-card.in-mockup-dark {
+      background: rgba(30, 28, 36, 0.85);
+      border-color: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+    }
+
+    .cal-ring-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      width: 82px;
+      height: 82px;
+      flex-shrink: 0;
+    }
+
+    .cal-ring-svg {
+      transform: rotate(-90deg);
+      width: 82px;
+      height: 82px;
+    }
+
+    .cal-ring-center {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .cal-number {
+      font-size: 17px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+    }
+
+    .cal-label {
+      font-size: 9px;
+      font-weight: 600;
+      color: #64748b;
+      margin-top: 1px;
+    }
+
+    .macro-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1;
+      padding: 0 4px;
+    }
+
+    .macro-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .macro-icon-box {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+
+    .macro-info {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+
+    .macro-val {
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .macro-name {
+      font-size: 9.5px;
+      font-weight: 600;
+      color: #64748b;
+    }
+
+    .actions-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      width: 86px;
+      flex-shrink: 0;
+    }
+
+    .action-btn-widget {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 14px;
+      padding: 7px 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      cursor: pointer;
+      transition: transform 0.15s, background 0.15s;
+    }
+
+    .action-btn-widget:active {
+      transform: scale(0.96);
+      background: #e2e8f0;
+    }
+
+    .action-btn-widget svg {
+      width: 17px;
+      height: 17px;
+      color: #0f172a;
+    }
+
+    .action-btn-widget span {
+      font-size: 9px;
+      font-weight: 700;
+      color: #0f172a;
+      white-space: nowrap;
+    }
+
+    /* IN-APP PROFILE WIDGET PREVIEW CARD */
+    .profile-card-preview {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 16px;
+      width: 100%;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .how-to-link {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary);
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    /* MODAL / DIALOG GUIDE */
+    .guide-modal {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 28px;
+      padding: 24px 20px;
+      width: 100%;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+    }
+
+    .guide-title {
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .step-item {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 14px;
+      align-items: flex-start;
+    }
+
+    .step-num {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: rgba(59, 130, 246, 0.15);
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-desc {
+      font-size: 13px;
+      line-height: 1.45;
+      color: var(--text-muted);
+    }
+
+    .step-desc strong {
+      color: var(--text);
+    }
+
+    .btn-modal {
+      width: 100%;
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      padding: 13px;
+      border-radius: 16px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .behavior-note {
+      background: rgba(59, 130, 246, 0.08);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      border-radius: 16px;
+      padding: 14px;
+      margin-top: 16px;
+      font-size: 12.5px;
+      line-height: 1.5;
+      color: var(--text-muted);
+    }
+
+    .behavior-note strong {
+      color: var(--primary);
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body data-theme="dark">
+
+  <div class="header-nav">
+    <span class="badge-title">CalGo • Live Widget Design</span>
+    <button class="theme-toggle" onclick="toggleTheme()">
+      <span id="theme-icon">☀️</span>
+      <span id="theme-text">Light Mode</span>
+    </button>
+  </div>
+
+  <!-- NAVIGATION TABS -->
+  <div class="tab-pills">
+    <button class="tab-btn active" onclick="switchTab('lockscreen')">1. Lock Screen Live Activity</button>
+    <button class="tab-btn" onclick="switchTab('profile')">2. Profile Widget Card</button>
+    <button class="tab-btn" onclick="switchTab('guide')">3. Hướng dẫn thêm Widget</button>
+  </div>
+
+  <div class="preview-container">
+
+    <!-- VIEW 1: LOCK SCREEN LIVE ACTIVITY -->
+    <div id="view-lockscreen">
+      <div class="phone-mockup">
+        <div class="phone-content">
+          <div class="status-bar">
+            <span>Viettel</span>
+            <span>5G  85%</span>
+          </div>
+
+          <div class="clock-lock">
+            <div class="clock-date">Thứ 6, 18 tháng 9</div>
+            <div class="clock-time">13:46</div>
+          </div>
+
+          <!-- HORIZONTAL LIVE ACTIVITY BANNER -->
+          <div class="live-activity-card">
+            <!-- 1. Calories Ring -->
+            <div class="cal-ring-box">
+              <svg class="cal-ring-svg" viewBox="0 0 84 84">
+                <circle cx="42" cy="42" r="34" stroke="#e2e8f0" stroke-width="7" fill="none"/>
+                <circle cx="42" cy="42" r="34" stroke="#0f172a" stroke-width="7" stroke-dasharray="213.6" stroke-dashoffset="75" stroke-linecap="round" fill="none"/>
+              </svg>
+              <div class="cal-ring-center">
+                <span class="cal-number">2000</span>
+                <span class="cal-label">Calories left</span>
+              </div>
+            </div>
+
+            <!-- 2. Macros List -->
+            <div class="macro-stack">
+              <div class="macro-row">
+                <div class="macro-icon-box" style="background: #ff5c5c18; color: #ff5c5c;">🥩</div>
+                <div class="macro-info">
+                  <span class="macro-val">60g</span>
+                  <span class="macro-name">Protein left</span>
+                </div>
+              </div>
+              <div class="macro-row">
+                <div class="macro-icon-box" style="background: #f59e0b18; color: #f59e0b;">🌾</div>
+                <div class="macro-info">
+                  <span class="macro-val">90g</span>
+                  <span class="macro-name">Carbs left</span>
+                </div>
+              </div>
+              <div class="macro-row">
+                <div class="macro-icon-box" style="background: #3b82f618; color: #3b82f6;">💧</div>
+                <div class="macro-info">
+                  <span class="macro-val">30g</span>
+                  <span class="macro-name">Fats left</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3. Actions -->
+            <div class="actions-stack">
+              <div class="action-btn-widget" onclick="alert('Mở Camera Scan Food')">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+                <span>Scan Food</span>
+              </div>
+              <div class="action-btn-widget" onclick="alert('Mở Barcode Scanner')">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/>
+                </svg>
+                <span>Barcode</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CƠ CHẾ HOẠT ĐỘNG VÀ VUỐT XÓA -->
+      <div class="behavior-note">
+        <strong>💡 Cơ chế vuốt / xóa trên màn hình khóa:</strong><br>
+        • <strong>Trên iOS (Live Activity):</strong> Hiển thị liên tục trên màn khóa & Dynamic Island. User có thể vuốt ngang để tạm ẩn hoặc app tự đóng khi hết ngày.<br>
+        • <strong>Trên Android (Ongoing Notification):</strong> Mặc định ghim cố định (ongoing) để không bị vuốt nhầm mất. Nếu user tắt trong Profile thì tự động biến mất ngay.
+      </div>
+    </div>
+
+    <!-- VIEW 2: PROFILE SCREEN WIDGETS SECTION -->
+    <div id="view-profile" style="display: none;">
+      <div class="profile-card-preview">
+        <div class="section-header">
+          <span class="section-title">WIDGETS</span>
+          <span class="how-to-link" onclick="switchTab('guide')">How to add?</span>
+        </div>
+
+        <!-- 2 SEPARATE CARDS: LEFT MACRO CARD + RIGHT 2 ACTION CARDS -->
+        <div style="display: flex; gap: 10px; align-items: stretch;">
+          <!-- 1. Left Card: Calories Ring + Macros List -->
+          <div style="flex: 1; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 22px; padding: 14px; display: flex; align-items: center; justify-content: space-between; gap: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.04);">
+            <!-- Calories Ring -->
+            <div class="cal-ring-box">
+              <svg class="cal-ring-svg" viewBox="0 0 84 84">
+                <circle cx="42" cy="42" r="34" stroke="var(--card-border)" stroke-width="7" fill="none"/>
+                <circle cx="42" cy="42" r="34" stroke="var(--text)" stroke-width="7" stroke-dasharray="213.6" stroke-dashoffset="60" stroke-linecap="round" fill="none"/>
+              </svg>
+              <div class="cal-ring-center">
+                <span class="cal-number" style="color: var(--text);">2000</span>
+                <span class="cal-label">Calories left</span>
+              </div>
+            </div>
+
+            <!-- Macros List -->
+            <div class="macro-stack">
+              <div class="macro-row">
+                <div class="macro-icon-box" style="background: rgba(255, 92, 92, 0.15); color: #ff5c5c;">🥩</div>
+                <div class="macro-info">
+                  <span class="macro-val" style="color: var(--text);">60g</span>
+                  <span class="macro-name">Protein left</span>
+                </div>
+              </div>
+              <div class="macro-row">
+                <div class="macro-icon-box" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b;">🌾</div>
+                <div class="macro-info">
+                  <span class="macro-val" style="color: var(--text);">90g</span>
+                  <span class="macro-name">Carbs left</span>
+                </div>
+              </div>
+              <div class="macro-row">
+                <div class="macro-icon-box" style="background: rgba(59, 130, 246, 0.15); color: #3b82f6;">💧</div>
+                <div class="macro-info">
+                  <span class="macro-val" style="color: var(--text);">30g</span>
+                  <span class="macro-name">Fats left</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Right: 2 Separate Action Cards -->
+          <div style="display: flex; flex-direction: column; gap: 8px; width: 84px; flex-shrink: 0;">
+            <div class="action-btn-widget" style="flex: 1; justify-content: center; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 18px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); padding: 8px 4px;" onclick="alert('Đến màn /scan')">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" style="color: var(--text); width: 20px; height: 20px;">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
+              </svg>
+              <span style="color: var(--text); font-weight: 700; font-size: 10px; margin-top: 2px;">Scan Food</span>
+            </div>
+            <div class="action-btn-widget" style="flex: 1; justify-content: center; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 18px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); padding: 8px 4px;" onclick="alert('Đến màn /barcode-scan')">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" style="color: var(--text); width: 20px; height: 20px;">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/>
+              </svg>
+              <span style="color: var(--text); font-weight: 700; font-size: 10px; margin-top: 2px;">Barcode</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 3: HOW TO ADD WIDGET GUIDE DIALOG -->
+    <div id="view-guide" style="display: none;">
+      <div class="guide-modal">
+        <div class="guide-title">
+          <span>📲</span>
+          <span>Cách thêm tiện ích CalGo</span>
+        </div>
+
+        <div style="margin-bottom: 16px;">
+          <h4 style="font-size: 14px; color: var(--primary); margin-bottom: 8px;">Dành cho iPhone (iOS):</h4>
+          <div class="step-item">
+            <div class="step-num">1</div>
+            <div class="step-desc">Chạm & giữ màn hình chính hoặc màn hình khóa đến khi các icon rung rinh.</div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">2</div>
+            <div class="step-desc">Nhấn vào nút <strong>Tùy chỉnh</strong> hoặc dấu <strong>(+)</strong> ở góc trên.</div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">3</div>
+            <div class="step-desc">Tìm ứng dụng <strong>CalGo</strong> và chọn widget Calorie / Macro bạn thích.</div>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 16px;">
+          <h4 style="font-size: 14px; color: var(--carb); margin-bottom: 8px;">Dành cho Android (Samsung, Xiaomi, Oppo...):</h4>
+          <div class="step-item">
+            <div class="step-num">1</div>
+            <div class="step-desc">Chạm & giữ vào bất kỳ khoảng trống nào trên màn hình chính.</div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">2</div>
+            <div class="step-desc">Chọn menu <strong>Tiện ích (Widgets)</strong> ở thanh công cụ dưới.</div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">3</div>
+            <div class="step-desc">Kéo widget <strong>CalGo</strong> đặt ra vị trí thuận tiện nhất trên màn hình.</div>
+          </div>
+        </div>
+
+        <button class="btn-modal" onclick="switchTab('lockscreen')">Đã hiểu</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function toggleTheme() {
+      const current = document.body.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.body.setAttribute('data-theme', next);
+      document.getElementById('theme-icon').textContent = next === 'dark' ? '☀️' : '🌙';
+      document.getElementById('theme-text').textContent = next === 'dark' ? 'Light Mode' : 'Dark Mode';
+    }
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach((btn, idx) => {
+        btn.classList.remove('active');
+      });
+      document.querySelectorAll('[id^="view-"]').forEach(el => el.style.display = 'none');
+
+      if (tabId === 'lockscreen') {
+        document.querySelectorAll('.tab-btn')[0].classList.add('active');
+        document.getElementById('view-lockscreen').style.display = 'block';
+      } else if (tabId === 'profile') {
+        document.querySelectorAll('.tab-btn')[1].classList.add('active');
+        document.getElementById('view-profile').style.display = 'block';
+      } else if (tabId === 'guide') {
+        document.querySelectorAll('.tab-btn')[2].classList.add('active');
+        document.getElementById('view-guide').style.display = 'block';
+      }
+    }
+  </script>
+</body>
+</html>

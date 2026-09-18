@@ -195,13 +195,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       case 15:
         return AnalysisResultStep(key: key);
       case 16:
-        return AppBuildConfig.isTesting
-            ? AccountStep(key: key)
-            : PremiumPaywallStep(key: key);
+        return AccountStep(key: key);
       case 17:
         return AppBuildConfig.isTesting
             ? HomeStep(key: key)
-            : AccountStep(key: key);
+            : PremiumPaywallStep(key: key);
       case 18:
         return HomeStep(key: key);
       default:

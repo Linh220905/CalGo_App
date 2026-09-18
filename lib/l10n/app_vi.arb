@@ -1426,5 +1426,17 @@
   "reachGoalFastDesc": "Tốc độ nhanh, nhiều động lực nhưng đòi hỏi kỷ luật cao.",
   "dailyCalorieGoalText": "Mục tiêu calo hàng ngày: {calories} cal",
   "paywallHeroTitle": "Đạt mục tiêu nhanh hơn\ncùng CalGo Pro",
-  "paywallHeroSubtitle": "Nhận diện bữa ăn bằng AI không giới hạn & cân đối Macro."
+  "paywallHeroSubtitle": "Nhận diện bữa ăn bằng AI không giới hạn & cân đối Macro.",
+  "widgetsSection": "Tiện ích",
+  "howToAddWidget": "Hướng dẫn thêm?",
+  "scanFood": "Quét món",
+  "barcode": "Mã vạch",
+  "liveActivityTitle": "Hoạt động trực tiếp trên màn hình khóa",
+  "liveActivityPromptTitle": "Bạn có muốn tiếp tục cho phép Hoạt động trực tiếp từ CalGo không?",
+  "liveActivityPromptDesc": "Hiển thị CalGo trên màn hình khóa để theo dõi calo và quét món ăn tiện lợi nhất.",
+  "alwaysAllow": "Luôn cho phép",
+  "deny": "Từ chối",
+  "howToAddTitle": "Cách thêm tiện ích CalGo",
+  "howToAddIosGuide": "iOS: Chạm giữ màn hình khóa hoặc màn hình chính -> chọn Tùy chỉnh/Thêm (+) -> chọn CalGo.",
+  "howToAddAndroidGuide": "Android: Chạm giữ khoảng trống trên màn hình chính -> chọn Tiện ích (Widgets) -> kéo CalGo ra ngoài."
 }

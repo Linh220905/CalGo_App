@@ -1372,5 +1372,17 @@
   "reachGoalFastDesc": "معدل سريع وطموح يتطلب انضباطاً والتزاماً قويين.",
   "dailyCalorieGoalText": "هدف السعرات اليومية: {calories} cal",
   "paywallHeroTitle": "حقق أهدافك بشكل أسرع\nمع CalGo Pro",
-  "paywallHeroSubtitle": "مسح غير محدود للوجبات بالذكاء الاصطناعي وتتبع الماكروز."
+  "paywallHeroSubtitle": "مسح غير محدود للوجبات بالذكاء الاصطناعي وتتبع الماكروز.",
+  "widgetsSection": "الأدوات",
+  "howToAddWidget": "كيفية الإضافة؟",
+  "scanFood": "مسح الوجبة",
+  "barcode": "الباركود",
+  "liveActivityTitle": "الأنشطة المباشرة على شاشة القفل",
+  "liveActivityPromptTitle": "هل ترغب في الاستمرار في السماح بالأنشطة المباشرة من CalGo؟",
+  "liveActivityPromptDesc": "احتفظ بـ CalGo على شاشة القفل لتتبع السعرات والوجبات بسرعة.",
+  "alwaysAllow": "السماح دائمًا",
+  "deny": "رفض",
+  "howToAddTitle": "كيفية إضافة الأدوات",
+  "howToAddIosGuide": "iOS: اضغط مطولاً على شاشة القفل أو الشاشة الرئيسية -> اضغط (+) -> اختر CalGo.",
+  "howToAddAndroidGuide": "Android: اضغط مطولاً على مساحة فارغة في الشاشة الرئيسية -> التطبيقات المصغرة -> اختر CalGo."
 }

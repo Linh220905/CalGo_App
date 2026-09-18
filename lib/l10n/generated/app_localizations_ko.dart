@@ -2904,4 +2904,43 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get paywallHeroSubtitle => '무제한 AI 식단 스캔 및 맞춤형 매크로 추적.';
+
+  @override
+  String get widgetsSection => '위젯';
+
+  @override
+  String get howToAddWidget => '추가 방법';
+
+  @override
+  String get scanFood => '음식 스캔';
+
+  @override
+  String get barcode => '바코드';
+
+  @override
+  String get liveActivityTitle => '잠금화면 실시간 활동';
+
+  @override
+  String get liveActivityPromptTitle =>
+      'CalGo의 실시간 활동(Live Activity)을 계속 허용하시겠습니까?';
+
+  @override
+  String get liveActivityPromptDesc => '잠금화면에서 바로 남은 칼로리와 영양소를 확인하고 식사를 기록하세요.';
+
+  @override
+  String get alwaysAllow => '항상 허용';
+
+  @override
+  String get deny => '거부';
+
+  @override
+  String get howToAddTitle => '위젯 추가 방법';
+
+  @override
+  String get howToAddIosGuide =>
+      'iOS: 잠금화면 또는 홈화면을 길게 누름 -> (+) 탭 -> CalGo 선택.';
+
+  @override
+  String get howToAddAndroidGuide =>
+      'Android: 홈화면 빈 공간을 길게 누름 -> 위젯 -> CalGo 선택.';
 }

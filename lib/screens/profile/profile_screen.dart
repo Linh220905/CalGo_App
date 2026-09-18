@@ -14,6 +14,7 @@ import '../../widgets/apple_health_modal.dart';
 import '../../widgets/recalculate_target_modal.dart';
 import '../../utils/payment_platform.dart';
 import '../onboarding/steps/premium_paywall_step.dart';
+import 'widgets/widget_preview_card.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -520,6 +521,10 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ],
               ),
+              const SizedBox(height: 24),
+
+              // Section: TIỆN ÍCH / WIDGETS
+              WidgetPreviewCard(isDark: isDark),
               const SizedBox(height: 24),
 
               // Section: DỊCH VỤ PREMIUM & CREDIT (nếu có)

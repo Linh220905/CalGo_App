@@ -431,6 +431,28 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
             hasMeals: hp.entries.isNotEmpty,
           ),
         );
+        final auth = context.read<AuthProvider>();
+        final settings = context.read<AppSettingsProvider>();
+        final targetCalories = auth.user?.dailyCalorieTarget.round() ??
+            hp.summary.targetCalories;
+        final caloriesLeft = (targetCalories - hp.summary.consumedCalories)
+            .clamp(0, 99999);
+        final proteinLeft = (hp.summary.targetProteinG - hp.summary.proteinG)
+            .clamp(0, 999);
+        final carbsLeft = (hp.summary.targetCarbG - hp.summary.carbG)
+            .clamp(0, 999);
+        final fatsLeft = (hp.summary.targetFatG - hp.summary.fatG)
+            .clamp(0, 999);
+
+        unawaited(
+          NotificationService.instance.updateLiveActivityNotification(
+            caloriesLeft: caloriesLeft,
+            proteinLeft: proteinLeft,
+            carbsLeft: carbsLeft,
+            fatLeft: fatsLeft,
+            isEnabled: settings.isLiveActivityEnabled,
+          ),
+        );
       }
       unawaited(context.read<GamificationProvider>().refreshRecap());
     });

@@ -963,5 +963,17 @@
   "reachGoalFastDesc": "철저한 식단 관리와 노력이 필요한 빠른 속도입니다.",
   "dailyCalorieGoalText": "일일 칼로리 목표: {calories} cal",
   "paywallHeroTitle": "CalGo Pro와 함께\n목표에 더 빠르게 도달하세요",
-  "paywallHeroSubtitle": "무제한 AI 식단 스캔 및 맞춤형 매크로 추적."
+  "paywallHeroSubtitle": "무제한 AI 식단 스캔 및 맞춤형 매크로 추적.",
+  "widgetsSection": "위젯",
+  "howToAddWidget": "추가 방법",
+  "scanFood": "음식 스캔",
+  "barcode": "바코드",
+  "liveActivityTitle": "잠금화면 실시간 활동",
+  "liveActivityPromptTitle": "CalGo의 실시간 활동(Live Activity)을 계속 허용하시겠습니까?",
+  "liveActivityPromptDesc": "잠금화면에서 바로 남은 칼로리와 영양소를 확인하고 식사를 기록하세요.",
+  "alwaysAllow": "항상 허용",
+  "deny": "거부",
+  "howToAddTitle": "위젯 추가 방법",
+  "howToAddIosGuide": "iOS: 잠금화면 또는 홈화면을 길게 누름 -> (+) 탭 -> CalGo 선택.",
+  "howToAddAndroidGuide": "Android: 홈화면 빈 공간을 길게 누름 -> 위젯 -> CalGo 선택."
 }

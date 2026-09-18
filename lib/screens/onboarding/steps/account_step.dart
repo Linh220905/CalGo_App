@@ -126,11 +126,6 @@ class _AccountStepState extends State<AccountStep> {
                     try {
                       await context.read<PaymentProvider>().retryPendingPurchaseVerification();
                     } catch (_) {}
-                    if (authProvider.user?.hasCompletedOnboarding == true) {
-                      await homeProvider.loadToday(forceRefresh: true);
-                      if (context.mounted) context.go('/home');
-                      return;
-                    }
                     await provider.setAccountMethod('google');
                     await provider.completeOnboarding(
                       authProvider: authProvider,
@@ -138,7 +133,7 @@ class _AccountStepState extends State<AccountStep> {
                     );
                     if (context.mounted) {
                       await homeProvider.loadToday(forceRefresh: true);
-                      if (context.mounted) context.go('/home');
+                      provider.nextStep();
                     }
                   } else if (context.mounted && authProvider.error != null) {
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -167,11 +162,6 @@ class _AccountStepState extends State<AccountStep> {
                     try {
                       await context.read<PaymentProvider>().retryPendingPurchaseVerification();
                     } catch (_) {}
-                    if (authProvider.user?.hasCompletedOnboarding == true) {
-                      await homeProvider.loadToday(forceRefresh: true);
-                      if (context.mounted) context.go('/home');
-                      return;
-                    }
                     await onboarding.setAccountMethod('apple');
                     await onboarding.completeOnboarding(
                       authProvider: authProvider,
@@ -179,7 +169,7 @@ class _AccountStepState extends State<AccountStep> {
                     );
                     if (context.mounted) {
                       await homeProvider.loadToday(forceRefresh: true);
-                      if (context.mounted) context.go('/home');
+                      onboarding.nextStep();
                     }
                   } else if (authProvider.error != null && context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(

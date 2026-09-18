@@ -3050,4 +3050,44 @@ class AppLocalizationsRo extends AppLocalizations {
   @override
   String get paywallHeroSubtitle =>
       'Scanare nelimitată a meselor cu IA și monitorizare macro.';
+
+  @override
+  String get widgetsSection => 'Widget-uri';
+
+  @override
+  String get howToAddWidget => 'Cum se adaugă?';
+
+  @override
+  String get scanFood => 'Scanare';
+
+  @override
+  String get barcode => 'Cod de bare';
+
+  @override
+  String get liveActivityTitle => 'Activitate live pe ecranul de blocare';
+
+  @override
+  String get liveActivityPromptTitle =>
+      'Doriți să permiteți în continuare Activitățile Live de la CalGo?';
+
+  @override
+  String get liveActivityPromptDesc =>
+      'Păstrați CalGo pe ecranul de blocare pentru a înregistra mesele și caloriile rapid.';
+
+  @override
+  String get alwaysAllow => 'Permite întotdeauna';
+
+  @override
+  String get deny => 'Refuză';
+
+  @override
+  String get howToAddTitle => 'Cum se adaugă widget-uri';
+
+  @override
+  String get howToAddIosGuide =>
+      'iOS: Țineți apăsat pe ecranul de blocare sau principal -> apăsați (+) -> alegeți CalGo.';
+
+  @override
+  String get howToAddAndroidGuide =>
+      'Android: Țineți apăsat pe un spațiu liber de pe ecranul principal -> Widget-uri -> alegeți CalGo.';
 }

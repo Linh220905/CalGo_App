@@ -2879,4 +2879,40 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get paywallHeroSubtitle => '无限制 AI 智能扫餐与个性化宏量营养素追踪。';
+
+  @override
+  String get widgetsSection => '小组件';
+
+  @override
+  String get howToAddWidget => '如何添加？';
+
+  @override
+  String get scanFood => '扫描食物';
+
+  @override
+  String get barcode => '条形码';
+
+  @override
+  String get liveActivityTitle => '锁屏实时活动';
+
+  @override
+  String get liveActivityPromptTitle => '您要继续允许来自 CalGo 的实时活动吗？';
+
+  @override
+  String get liveActivityPromptDesc => '在锁定屏幕上快速查看剩余卡路里并记录饮食。';
+
+  @override
+  String get alwaysAllow => '始终允许';
+
+  @override
+  String get deny => '拒绝';
+
+  @override
+  String get howToAddTitle => '如何添加小组件';
+
+  @override
+  String get howToAddIosGuide => 'iOS：长按锁定屏幕或主屏幕 -> 点击 (+) -> 选择 CalGo。';
+
+  @override
+  String get howToAddAndroidGuide => 'Android：长按主屏幕空白处 -> 小组件 -> 选择 CalGo。';
 }

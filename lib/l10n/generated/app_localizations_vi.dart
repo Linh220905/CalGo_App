@@ -3004,4 +3004,44 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String get paywallHeroSubtitle =>
       'Nhận diện bữa ăn bằng AI không giới hạn & cân đối Macro.';
+
+  @override
+  String get widgetsSection => 'Tiện ích';
+
+  @override
+  String get howToAddWidget => 'Hướng dẫn thêm?';
+
+  @override
+  String get scanFood => 'Quét món';
+
+  @override
+  String get barcode => 'Mã vạch';
+
+  @override
+  String get liveActivityTitle => 'Hoạt động trực tiếp trên màn hình khóa';
+
+  @override
+  String get liveActivityPromptTitle =>
+      'Bạn có muốn tiếp tục cho phép Hoạt động trực tiếp từ CalGo không?';
+
+  @override
+  String get liveActivityPromptDesc =>
+      'Hiển thị CalGo trên màn hình khóa để theo dõi calo và quét món ăn tiện lợi nhất.';
+
+  @override
+  String get alwaysAllow => 'Luôn cho phép';
+
+  @override
+  String get deny => 'Từ chối';
+
+  @override
+  String get howToAddTitle => 'Cách thêm tiện ích CalGo';
+
+  @override
+  String get howToAddIosGuide =>
+      'iOS: Chạm giữ màn hình khóa hoặc màn hình chính -> chọn Tùy chỉnh/Thêm (+) -> chọn CalGo.';
+
+  @override
+  String get howToAddAndroidGuide =>
+      'Android: Chạm giữ khoảng trống trên màn hình chính -> chọn Tiện ích (Widgets) -> kéo CalGo ra ngoài.';
 }

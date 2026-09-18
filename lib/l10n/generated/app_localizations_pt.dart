@@ -3042,4 +3042,44 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get paywallHeroSubtitle =>
       'Leitura ilimitada de alimentos com IA e controle de macros.';
+
+  @override
+  String get widgetsSection => 'Widgets';
+
+  @override
+  String get howToAddWidget => 'Como adicionar?';
+
+  @override
+  String get scanFood => 'Escanear';
+
+  @override
+  String get barcode => 'Código de barras';
+
+  @override
+  String get liveActivityTitle => 'Atividade ao vivo na tela de bloqueio';
+
+  @override
+  String get liveActivityPromptTitle =>
+      'Deseja continuar permitindo Atividades ao Vivo do CalGo?';
+
+  @override
+  String get liveActivityPromptDesc =>
+      'Mantenha o CalGo na tela de bloqueio para acompanhar calorias e registrar refeições.';
+
+  @override
+  String get alwaysAllow => 'Sempre permitir';
+
+  @override
+  String get deny => 'Recusar';
+
+  @override
+  String get howToAddTitle => 'Como adicionar widgets';
+
+  @override
+  String get howToAddIosGuide =>
+      'iOS: Pressione e segure a tela de bloqueio/início -> toque em (+) -> escolha CalGo.';
+
+  @override
+  String get howToAddAndroidGuide =>
+      'Android: Pressione e segure a tela de início -> Widgets -> escolha CalGo.';
 }

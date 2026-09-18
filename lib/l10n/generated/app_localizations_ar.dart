@@ -2989,4 +2989,44 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get paywallHeroSubtitle =>
       'مسح غير محدود للوجبات بالذكاء الاصطناعي وتتبع الماكروز.';
+
+  @override
+  String get widgetsSection => 'الأدوات';
+
+  @override
+  String get howToAddWidget => 'كيفية الإضافة؟';
+
+  @override
+  String get scanFood => 'مسح الوجبة';
+
+  @override
+  String get barcode => 'الباركود';
+
+  @override
+  String get liveActivityTitle => 'الأنشطة المباشرة على شاشة القفل';
+
+  @override
+  String get liveActivityPromptTitle =>
+      'هل ترغب في الاستمرار في السماح بالأنشطة المباشرة من CalGo؟';
+
+  @override
+  String get liveActivityPromptDesc =>
+      'احتفظ بـ CalGo على شاشة القفل لتتبع السعرات والوجبات بسرعة.';
+
+  @override
+  String get alwaysAllow => 'السماح دائمًا';
+
+  @override
+  String get deny => 'رفض';
+
+  @override
+  String get howToAddTitle => 'كيفية إضافة الأدوات';
+
+  @override
+  String get howToAddIosGuide =>
+      'iOS: اضغط مطولاً على شاشة القفل أو الشاشة الرئيسية -> اضغط (+) -> اختر CalGo.';
+
+  @override
+  String get howToAddAndroidGuide =>
+      'Android: اضغط مطولاً على مساحة فارغة في الشاشة الرئيسية -> التطبيقات المصغرة -> اختر CalGo.';
 }

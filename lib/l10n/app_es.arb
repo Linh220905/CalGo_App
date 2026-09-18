@@ -1372,5 +1372,17 @@
   "reachGoalFastDesc": "Un ritmo rápido y ambicioso que requiere estricta disciplina.",
   "dailyCalorieGoalText": "Meta calórica diaria: {calories} cal",
   "paywallHeroTitle": "Alcanza tus metas más rápido\ncon CalGo Pro",
-  "paywallHeroSubtitle": "Escaneo de comida con IA ilimitado y seguimiento de macros."
+  "paywallHeroSubtitle": "Escaneo de comida con IA ilimitado y seguimiento de macros.",
+  "widgetsSection": "Widgets",
+  "howToAddWidget": "¿Cómo añadir?",
+  "scanFood": "Escanear",
+  "barcode": "Código barras",
+  "liveActivityTitle": "Actividad en vivo en pantalla de bloqueo",
+  "liveActivityPromptTitle": "¿Deseas seguir permitiendo la Actividad en vivo de CalGo?",
+  "liveActivityPromptDesc": "Mantén CalGo en tu pantalla de bloqueo para registrar comidas y calorías rápidamente.",
+  "alwaysAllow": "Permitir siempre",
+  "deny": "Rechazar",
+  "howToAddTitle": "Cómo añadir widgets",
+  "howToAddIosGuide": "iOS: Mantén pulsada la pantalla de bloqueo o inicio -> pulsa Personalizar (+) -> selecciona CalGo.",
+  "howToAddAndroidGuide": "Android: Mantén pulsado un espacio vacío en la pantalla de inicio -> Widgets -> selecciona CalGo."
 }

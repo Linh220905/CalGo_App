@@ -1065,9 +1065,9 @@
   "days3": "3 Zile",
   "days7": "7 Zile",
   "days30": "30 Zile",
-  "rateAppTitle": "Evaluează CalGo",
+  "rateAppTitle": "Îți place CalGo?",
   "rateAppSubmit": "Evaluează",
-  "rateAppLater": "Mai târziu",
+  "rateAppLater": "Nu acum",
   "@goalLoseDiffText": {
     "description": "Localized UI text: goalLoseDiffText",
     "placeholders": {
@@ -1674,11 +1674,8 @@
       }
     }
   },
-  "rateAppTitle": "Îți place CalGo?",
   "rateAppSubtitle": "Apasă pe o stea pentru a evalua pe App Store.",
   "rateAppSubtitleAndroid": "Apasă pe o stea pentru a evalua pe Google Play.",
-  "rateAppSubmit": "Evaluează",
-  "rateAppLater": "Nu acum",
   "stayOnTrackTitle": "Conceput pentru a te ajuta\nsă rămâi pe drumul cel bun",
   "weightTrendTitle": "Evoluția greutății",
   "withoutPlanLabel": "Fără un plan",
@@ -1699,5 +1696,17 @@
   "reachGoalFastDesc": "Un ritm rapid și ambițios care necesită o disciplină strictă.",
   "dailyCalorieGoalText": "Obiectiv zilnic de calorii: {calories} cal",
   "paywallHeroTitle": "Atinge-ți obiectivele mai repede\ncu CalGo Pro",
-  "paywallHeroSubtitle": "Scanare nelimitată a meselor cu IA și monitorizare macro."
+  "paywallHeroSubtitle": "Scanare nelimitată a meselor cu IA și monitorizare macro.",
+  "widgetsSection": "Widget-uri",
+  "howToAddWidget": "Cum se adaugă?",
+  "scanFood": "Scanare",
+  "barcode": "Cod de bare",
+  "liveActivityTitle": "Activitate live pe ecranul de blocare",
+  "liveActivityPromptTitle": "Doriți să permiteți în continuare Activitățile Live de la CalGo?",
+  "liveActivityPromptDesc": "Păstrați CalGo pe ecranul de blocare pentru a înregistra mesele și caloriile rapid.",
+  "alwaysAllow": "Permite întotdeauna",
+  "deny": "Refuză",
+  "howToAddTitle": "Cum se adaugă widget-uri",
+  "howToAddIosGuide": "iOS: Țineți apăsat pe ecranul de blocare sau principal -> apăsați (+) -> alegeți CalGo.",
+  "howToAddAndroidGuide": "Android: Țineți apăsat pe un spațiu liber de pe ecranul principal -> Widget-uri -> alegeți CalGo."
 }

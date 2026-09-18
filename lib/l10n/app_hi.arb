@@ -1372,5 +1372,17 @@
   "reachGoalFastDesc": "एक तेज़ और महत्वाकांक्षी गति जिसके लिए सख्त अनुशासन की आवश्यकता होती है।",
   "dailyCalorieGoalText": "दैनिक कैलोरी लक्ष्य: {calories} cal",
   "paywallHeroTitle": "CalGo Pro के साथ अपने\nलक्ष्य तक तेज़ी से पहुँचें",
-  "paywallHeroSubtitle": "असीमित AI भोजन स्कैनिंग और व्यक्तिगत मैक्रो ट्रैकिंग।"
+  "paywallHeroSubtitle": "असीमित AI भोजन स्कैनिंग और व्यक्तिगत मैक्रो ट्रैकिंग।",
+  "widgetsSection": "विजेट्स",
+  "howToAddWidget": "कैसे जोड़ें?",
+  "scanFood": "खाना स्कैन",
+  "barcode": "बारकोड",
+  "liveActivityTitle": "लॉक स्क्रीन लाइव एक्टिविटी",
+  "liveActivityPromptTitle": "क्या आप CalGo की लाइव एक्टिविटी की अनुमति जारी रखना चाहते हैं?",
+  "liveActivityPromptDesc": "कैलोरी ट्रैक करने और भोजन जल्दी दर्ज करने के लिए CalGo को लॉक स्क्रीन पर रखें।",
+  "alwaysAllow": "हमेशा अनुमति दें",
+  "deny": "अस्वीकार करें",
+  "howToAddTitle": "विजेट कैसे जोड़ें",
+  "howToAddIosGuide": "iOS: लॉक स्क्रीन या होम स्क्रीन को दबाकर रखें -> (+) दबाएं -> CalGo चुनें।",
+  "howToAddAndroidGuide": "Android: होम स्क्रीन पर खाली जगह दबाकर रखें -> विजेट -> CalGo चुनें।"
 }

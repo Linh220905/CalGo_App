@@ -2895,4 +2895,42 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get paywallHeroSubtitle => '無制限のAI食事スキャンとマクロ栄養素管理。';
+
+  @override
+  String get widgetsSection => 'ウィジェット';
+
+  @override
+  String get howToAddWidget => '追加方法';
+
+  @override
+  String get scanFood => '料理スキャン';
+
+  @override
+  String get barcode => 'バーコード';
+
+  @override
+  String get liveActivityTitle => 'ロック画面のライブアクティビティ';
+
+  @override
+  String get liveActivityPromptTitle => 'CalGoからのライブアクティビティを許可し続けますか？';
+
+  @override
+  String get liveActivityPromptDesc => 'ロック画面でカロリーやPFCバランスを即座に確認・記録できます。';
+
+  @override
+  String get alwaysAllow => '常に許可';
+
+  @override
+  String get deny => '許可しない';
+
+  @override
+  String get howToAddTitle => 'ウィジェットの追加方法';
+
+  @override
+  String get howToAddIosGuide =>
+      'iOS: ロック画面またはホーム画面を長押し -> (+) をタップ -> CalGoを選択。';
+
+  @override
+  String get howToAddAndroidGuide =>
+      'Android: ホーム画面の空きスペースを長押し -> ウィジェット -> CalGoを選択。';
 }

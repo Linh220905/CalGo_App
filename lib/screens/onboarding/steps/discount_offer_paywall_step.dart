@@ -148,10 +148,6 @@ class _DiscountOfferPaywallStepState extends State<DiscountOfferPaywallStep> {
 
   Future<void> _completeOfferFlow() async {
     final auth = context.read<AuthProvider>();
-    if (!auth.isAuthenticated) {
-      final authed = await _ensureAuthenticated();
-      if (!authed || !mounted) return;
-    }
     final onboarding = context.read<OnboardingProvider>();
     final home = context.read<HomeProvider>();
 

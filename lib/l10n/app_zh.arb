@@ -1372,5 +1372,17 @@
   "reachGoalFastDesc": "快速进取的目标节奏，需要较强的自律。",
   "dailyCalorieGoalText": "每日目标热量: {calories} cal",
   "paywallHeroTitle": "与 CalGo Pro 一起\n更快达成你的目标",
-  "paywallHeroSubtitle": "无限制 AI 智能扫餐与个性化宏量营养素追踪。"
+  "paywallHeroSubtitle": "无限制 AI 智能扫餐与个性化宏量营养素追踪。",
+  "widgetsSection": "小组件",
+  "howToAddWidget": "如何添加？",
+  "scanFood": "扫描食物",
+  "barcode": "条形码",
+  "liveActivityTitle": "锁屏实时活动",
+  "liveActivityPromptTitle": "您要继续允许来自 CalGo 的实时活动吗？",
+  "liveActivityPromptDesc": "在锁定屏幕上快速查看剩余卡路里并记录饮食。",
+  "alwaysAllow": "始终允许",
+  "deny": "拒绝",
+  "howToAddTitle": "如何添加小组件",
+  "howToAddIosGuide": "iOS：长按锁定屏幕或主屏幕 -> 点击 (+) -> 选择 CalGo。",
+  "howToAddAndroidGuide": "Android：长按主屏幕空白处 -> 小组件 -> 选择 CalGo。"
 }

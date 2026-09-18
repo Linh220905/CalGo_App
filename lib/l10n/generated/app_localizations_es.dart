@@ -3040,4 +3040,44 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get paywallHeroSubtitle =>
       'Escaneo de comida con IA ilimitado y seguimiento de macros.';
+
+  @override
+  String get widgetsSection => 'Widgets';
+
+  @override
+  String get howToAddWidget => '¿Cómo añadir?';
+
+  @override
+  String get scanFood => 'Escanear';
+
+  @override
+  String get barcode => 'Código barras';
+
+  @override
+  String get liveActivityTitle => 'Actividad en vivo en pantalla de bloqueo';
+
+  @override
+  String get liveActivityPromptTitle =>
+      '¿Deseas seguir permitiendo la Actividad en vivo de CalGo?';
+
+  @override
+  String get liveActivityPromptDesc =>
+      'Mantén CalGo en tu pantalla de bloqueo para registrar comidas y calorías rápidamente.';
+
+  @override
+  String get alwaysAllow => 'Permitir siempre';
+
+  @override
+  String get deny => 'Rechazar';
+
+  @override
+  String get howToAddTitle => 'Cómo añadir widgets';
+
+  @override
+  String get howToAddIosGuide =>
+      'iOS: Mantén pulsada la pantalla de bloqueo o inicio -> pulsa Personalizar (+) -> selecciona CalGo.';
+
+  @override
+  String get howToAddAndroidGuide =>
+      'Android: Mantén pulsado un espacio vacío en la pantalla de inicio -> Widgets -> selecciona CalGo.';
 }

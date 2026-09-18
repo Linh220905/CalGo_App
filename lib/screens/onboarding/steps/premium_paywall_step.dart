@@ -262,9 +262,7 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
 
   void _proceedClose() {
     if (widget.onboardingMode) {
-      try {
-        context.read<OnboardingProvider>().nextStep();
-      } catch (_) {}
+      if (mounted) context.go('/home');
     } else {
       if (Navigator.canPop(context)) {
         Navigator.pop(context);

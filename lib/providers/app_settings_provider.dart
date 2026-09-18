@@ -12,16 +12,22 @@ class AppSettingsProvider extends ChangeNotifier {
       .toSet();
 
   static const String _kKeyAppleHealth = 'app_apple_health_connected';
+  static const String _kKeyLiveActivity = 'app_live_activity_enabled';
+  static const String _kKeyLiveActivityPromptShown = 'app_live_activity_prompt_shown';
 
   ThemeMode _themeMode = ThemeMode.light;
   String _languageCode = 'en';
   bool _isAppleHealthConnected = false;
+  bool _isLiveActivityEnabled = true;
+  bool _isLiveActivityPromptShown = false;
   final HealthService _healthService = HealthService();
 
   ThemeMode get themeMode => _themeMode;
   bool get isDarkMode => _themeMode == ThemeMode.dark;
   String get languageCode => _languageCode;
   bool get isAppleHealthConnected => _isAppleHealthConnected;
+  bool get isLiveActivityEnabled => _isLiveActivityEnabled;
+  bool get isLiveActivityPromptShown => _isLiveActivityPromptShown;
   HealthService get healthService => _healthService;
   Locale get locale => Locale(_languageCode);
   AppLocalizations get strings => lookupAppLocalizations(locale);
@@ -49,6 +55,9 @@ class AppSettingsProvider extends ChangeNotifier {
       } else {
         _isAppleHealthConnected = false;
       }
+
+      _isLiveActivityEnabled = prefs.getBool(_kKeyLiveActivity) ?? true;
+      _isLiveActivityPromptShown = prefs.getBool(_kKeyLiveActivityPromptShown) ?? false;
 
       // A saved choice is explicit. Otherwise follow the device language and
       // fall back to the template locale when it is not supported.
@@ -81,6 +90,18 @@ class AppSettingsProvider extends ChangeNotifier {
     try {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setBool(_kKeyAppleHealth, connected);
+    } catch (_) {}
+  }
+
+  Future<void> setLiveActivityEnabled(bool enabled) async {
+    _isLiveActivityEnabled = enabled;
+    _isLiveActivityPromptShown = true;
+    notifyListeners();
+
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool(_kKeyLiveActivity, enabled);
+      await prefs.setBool(_kKeyLiveActivityPromptShown, true);
     } catch (_) {}
   }
 

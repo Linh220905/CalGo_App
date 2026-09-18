@@ -114,6 +114,10 @@ void main() {
   NotificationService.onNotificationTap = (payload) {
     if (payload == 'daily_recap') router.go('/recap');
     if (payload == 'trial_expiring') router.go('/pricing');
+    if (payload == 'action_scan_food' || payload == '/scan') router.go('/scan');
+    if (payload == 'action_scan_barcode' || payload == '/barcode-scan') {
+      router.go('/barcode-scan');
+    }
   };
 
   runApp(

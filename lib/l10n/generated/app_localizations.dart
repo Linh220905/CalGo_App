@@ -5488,6 +5488,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Unlimited AI food scanning & personalized macro tracking.'**
   String get paywallHeroSubtitle;
+
+  /// No description provided for @widgetsSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Widgets'**
+  String get widgetsSection;
+
+  /// No description provided for @howToAddWidget.
+  ///
+  /// In en, this message translates to:
+  /// **'How to add?'**
+  String get howToAddWidget;
+
+  /// No description provided for @scanFood.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan Food'**
+  String get scanFood;
+
+  /// No description provided for @barcode.
+  ///
+  /// In en, this message translates to:
+  /// **'Barcode'**
+  String get barcode;
+
+  /// No description provided for @liveActivityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Live Lock Screen Activity'**
+  String get liveActivityTitle;
+
+  /// No description provided for @liveActivityPromptTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you want to continue allowing Live Activities from CalGo?'**
+  String get liveActivityPromptTitle;
+
+  /// No description provided for @liveActivityPromptDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep CalGo on your lock screen to quickly log meals and track calories.'**
+  String get liveActivityPromptDesc;
+
+  /// No description provided for @alwaysAllow.
+  ///
+  /// In en, this message translates to:
+  /// **'Always Allow'**
+  String get alwaysAllow;
+
+  /// No description provided for @deny.
+  ///
+  /// In en, this message translates to:
+  /// **'Deny'**
+  String get deny;
+
+  /// No description provided for @howToAddTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How to Add Widgets'**
+  String get howToAddTitle;
+
+  /// No description provided for @howToAddIosGuide.
+  ///
+  /// In en, this message translates to:
+  /// **'iOS: Touch and hold an empty area on your Lock Screen or Home Screen -> tap Customize/Add (+) -> choose CalGo.'**
+  String get howToAddIosGuide;
+
+  /// No description provided for @howToAddAndroidGuide.
+  ///
+  /// In en, this message translates to:
+  /// **'Android: Touch and hold an empty space on your Home Screen -> tap Widgets -> find and add CalGo.'**
+  String get howToAddAndroidGuide;
 }
 
 class _AppLocalizationsDelegate

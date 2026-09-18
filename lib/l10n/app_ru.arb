@@ -1372,5 +1372,17 @@
   "reachGoalFastDesc": "Быстрый темп, требующий строгой дисциплины и концентрации.",
   "dailyCalorieGoalText": "Дневная норма калорий: {calories} cal",
   "paywallHeroTitle": "Достигайте целей быстрее\nс CalGo Pro",
-  "paywallHeroSubtitle": "Безлимитное сканирование еды с ИИ и учет БЖУ."
+  "paywallHeroSubtitle": "Безлимитное сканирование еды с ИИ и учет БЖУ.",
+  "widgetsSection": "Виджеты",
+  "howToAddWidget": "Как добавить?",
+  "scanFood": "Скан еды",
+  "barcode": "Штрихкод",
+  "liveActivityTitle": "Live активность на экране блокировки",
+  "liveActivityPromptTitle": "Разрешить отображение Live активности CalGo на экране блокировки?",
+  "liveActivityPromptDesc": "Следите за калориями и сканируйте еду прямо с экрана блокировки.",
+  "alwaysAllow": "Всегда разрешать",
+  "deny": "Отклонить",
+  "howToAddTitle": "Как добавить виджеты",
+  "howToAddIosGuide": "iOS: Нажмите и удерживайте экран блокировки или «Домой» -> нажмите (+) -> выберите CalGo.",
+  "howToAddAndroidGuide": "Android: Удерживайте свободное место на главном экране -> Виджеты -> выберите CalGo."
 }

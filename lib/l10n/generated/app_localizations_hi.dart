@@ -3023,4 +3023,44 @@ class AppLocalizationsHi extends AppLocalizations {
   @override
   String get paywallHeroSubtitle =>
       'असीमित AI भोजन स्कैनिंग और व्यक्तिगत मैक्रो ट्रैकिंग।';
+
+  @override
+  String get widgetsSection => 'विजेट्स';
+
+  @override
+  String get howToAddWidget => 'कैसे जोड़ें?';
+
+  @override
+  String get scanFood => 'खाना स्कैन';
+
+  @override
+  String get barcode => 'बारकोड';
+
+  @override
+  String get liveActivityTitle => 'लॉक स्क्रीन लाइव एक्टिविटी';
+
+  @override
+  String get liveActivityPromptTitle =>
+      'क्या आप CalGo की लाइव एक्टिविटी की अनुमति जारी रखना चाहते हैं?';
+
+  @override
+  String get liveActivityPromptDesc =>
+      'कैलोरी ट्रैक करने और भोजन जल्दी दर्ज करने के लिए CalGo को लॉक स्क्रीन पर रखें।';
+
+  @override
+  String get alwaysAllow => 'हमेशा अनुमति दें';
+
+  @override
+  String get deny => 'अस्वीकार करें';
+
+  @override
+  String get howToAddTitle => 'विजेट कैसे जोड़ें';
+
+  @override
+  String get howToAddIosGuide =>
+      'iOS: लॉक स्क्रीन या होम स्क्रीन को दबाकर रखें -> (+) दबाएं -> CalGo चुनें।';
+
+  @override
+  String get howToAddAndroidGuide =>
+      'Android: होम स्क्रीन पर खाली जगह दबाकर रखें -> विजेट -> CalGo चुनें।';
 }

@@ -3063,4 +3063,45 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get paywallHeroSubtitle =>
       'Scan IA des repas illimité et suivi personnalisé des macros.';
+
+  @override
+  String get widgetsSection => 'Widgets';
+
+  @override
+  String get howToAddWidget => 'Comment ajouter ?';
+
+  @override
+  String get scanFood => 'Scanner';
+
+  @override
+  String get barcode => 'Code-barres';
+
+  @override
+  String get liveActivityTitle =>
+      'Activité en direct sur écran de verrouillage';
+
+  @override
+  String get liveActivityPromptTitle =>
+      'Voulez-vous continuer à autoriser les activités en direct de CalGo ?';
+
+  @override
+  String get liveActivityPromptDesc =>
+      'Gardez CalGo sur votre écran de verrouillage pour suivre calories et repas rapidement.';
+
+  @override
+  String get alwaysAllow => 'Toujours autoriser';
+
+  @override
+  String get deny => 'Refuser';
+
+  @override
+  String get howToAddTitle => 'Comment ajouter des widgets';
+
+  @override
+  String get howToAddIosGuide =>
+      'iOS : Maintenez l\'écran de verrouillage ou d\'accueil -> appuyez sur (+) -> choisissez CalGo.';
+
+  @override
+  String get howToAddAndroidGuide =>
+      'Android : Maintenez un espace vide sur l\'écran d\'accueil -> Widgets -> choisissez CalGo.';
 }

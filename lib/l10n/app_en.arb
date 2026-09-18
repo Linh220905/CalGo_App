@@ -1513,5 +1513,17 @@
     }
   },
   "paywallHeroTitle": "Reach your goals faster\nwith CalGo Pro",
-  "paywallHeroSubtitle": "Unlimited AI food scanning & personalized macro tracking."
+  "paywallHeroSubtitle": "Unlimited AI food scanning & personalized macro tracking.",
+  "widgetsSection": "Widgets",
+  "howToAddWidget": "How to add?",
+  "scanFood": "Scan Food",
+  "barcode": "Barcode",
+  "liveActivityTitle": "Live Lock Screen Activity",
+  "liveActivityPromptTitle": "Do you want to continue allowing Live Activities from CalGo?",
+  "liveActivityPromptDesc": "Keep CalGo on your lock screen to quickly log meals and track calories.",
+  "alwaysAllow": "Always Allow",
+  "deny": "Deny",
+  "howToAddTitle": "How to Add Widgets",
+  "howToAddIosGuide": "iOS: Touch and hold an empty area on your Lock Screen or Home Screen -> tap Customize/Add (+) -> choose CalGo.",
+  "howToAddAndroidGuide": "Android: Touch and hold an empty space on your Home Screen -> tap Widgets -> find and add CalGo."
 }

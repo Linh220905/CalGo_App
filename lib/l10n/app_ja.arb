@@ -963,5 +963,17 @@
   "reachGoalFastDesc": "高いモチベーションと強い意志を必要とするハイペースです。",
   "dailyCalorieGoalText": "1日の目標カロリー: {calories} cal",
   "paywallHeroTitle": "CalGo Proで\n目標をより早く達成",
-  "paywallHeroSubtitle": "無制限のAI食事スキャンとマクロ栄養素管理。"
+  "paywallHeroSubtitle": "無制限のAI食事スキャンとマクロ栄養素管理。",
+  "widgetsSection": "ウィジェット",
+  "howToAddWidget": "追加方法",
+  "scanFood": "料理スキャン",
+  "barcode": "バーコード",
+  "liveActivityTitle": "ロック画面のライブアクティビティ",
+  "liveActivityPromptTitle": "CalGoからのライブアクティビティを許可し続けますか？",
+  "liveActivityPromptDesc": "ロック画面でカロリーやPFCバランスを即座に確認・記録できます。",
+  "alwaysAllow": "常に許可",
+  "deny": "許可しない",
+  "howToAddTitle": "ウィジェットの追加方法",
+  "howToAddIosGuide": "iOS: ロック画面またはホーム画面を長押し -> (+) をタップ -> CalGoを選択。",
+  "howToAddAndroidGuide": "Android: ホーム画面の空きスペースを長押し -> ウィジェット -> CalGoを選択。"
 }

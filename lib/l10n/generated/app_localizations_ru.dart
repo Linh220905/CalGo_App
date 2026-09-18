@@ -3046,4 +3046,44 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get paywallHeroSubtitle =>
       'Безлимитное сканирование еды с ИИ и учет БЖУ.';
+
+  @override
+  String get widgetsSection => 'Виджеты';
+
+  @override
+  String get howToAddWidget => 'Как добавить?';
+
+  @override
+  String get scanFood => 'Скан еды';
+
+  @override
+  String get barcode => 'Штрихкод';
+
+  @override
+  String get liveActivityTitle => 'Live активность на экране блокировки';
+
+  @override
+  String get liveActivityPromptTitle =>
+      'Разрешить отображение Live активности CalGo на экране блокировки?';
+
+  @override
+  String get liveActivityPromptDesc =>
+      'Следите за калориями и сканируйте еду прямо с экрана блокировки.';
+
+  @override
+  String get alwaysAllow => 'Всегда разрешать';
+
+  @override
+  String get deny => 'Отклонить';
+
+  @override
+  String get howToAddTitle => 'Как добавить виджеты';
+
+  @override
+  String get howToAddIosGuide =>
+      'iOS: Нажмите и удерживайте экран блокировки или «Домой» -> нажмите (+) -> выберите CalGo.';
+
+  @override
+  String get howToAddAndroidGuide =>
+      'Android: Удерживайте свободное место на главном экране -> Виджеты -> выберите CalGo.';
 }
