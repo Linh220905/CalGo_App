@@ -73,6 +73,7 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>com.googleusercontent.apps.985323892414-vasqth1jns0c9kb5t0bej7ubgdb4k7sk</string>
+				<string>calgo</string>
 			</array>
 		</dict>
 	</array>

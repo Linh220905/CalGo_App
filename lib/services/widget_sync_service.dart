@@ -11,6 +11,8 @@ class WidgetSyncService {
   static const String iOSWidgetName = 'CalGoWidget';
   static const String androidWidgetName = 'CalGoWidgetProvider';
 
+  static void Function(String path)? onWidgetDeepLink;
+
   final LiveActivities _liveActivities = LiveActivities();
   bool _initialized = false;
 
@@ -20,10 +22,35 @@ class WidgetSyncService {
       if (defaultTargetPlatform == TargetPlatform.iOS) {
         await HomeWidget.setAppGroupId(appGroupId);
         await _liveActivities.init(appGroupId: appGroupId);
+
+        // Check initially launched URL from widget
+        final initialUri = await HomeWidget.initiallyLaunchedFromHomeWidget();
+        if (initialUri != null) {
+          _handleDeepLinkUri(initialUri);
+        }
+
+        // Listen for widget clicks while app is open / foregrounded
+        HomeWidget.widgetClicked.listen((uri) {
+          if (uri != null) {
+            _handleDeepLinkUri(uri);
+          }
+        });
       }
       _initialized = true;
     } catch (e) {
       debugPrint('WidgetSyncService init error: $e');
+    }
+  }
+
+  void _handleDeepLinkUri(Uri uri) {
+    debugPrint('WidgetSyncService deepLink received: $uri');
+    final host = uri.host.isNotEmpty ? uri.host : uri.path.replaceAll('/', '');
+    if (host == 'scan') {
+      onWidgetDeepLink?.call('/scan');
+    } else if (host == 'barcode' || host == 'barcode-scan') {
+      onWidgetDeepLink?.call('/barcode-scan');
+    } else if (host == 'home') {
+      onWidgetDeepLink?.call('/home');
     }
   }
 

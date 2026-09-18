@@ -491,7 +491,6 @@ class NotificationService {
         return;
       }
 
-      final s = await _strings();
       final androidDetails = AndroidNotificationDetails(
         'calgo_live_tracker',
         'CalGo Live Tracker',
@@ -501,6 +500,10 @@ class NotificationService {
         ongoing: true,
         autoCancel: false,
         showWhen: false,
+        // Allow Android to show the full ongoing notification on the lock
+        // screen. The user's device-level lock-screen policy can still hide
+        // notifications globally.
+        visibility: NotificationVisibility.public,
         icon: '@mipmap/ic_launcher',
         styleInformation: BigTextStyleInformation(
           '🥩 ${proteinLeft}g Protein  •  🌾 ${carbsLeft}g Carbs  •  💧 ${fatLeft}g Fats',
@@ -530,4 +533,3 @@ class NotificationService {
     } catch (_) {}
   }
 }
-

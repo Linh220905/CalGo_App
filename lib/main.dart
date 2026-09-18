@@ -121,6 +121,10 @@ void main() {
     }
   };
 
+  WidgetSyncService.onWidgetDeepLink = (routePath) {
+    router.go(routePath);
+  };
+
   runApp(
     MultiProvider(
       providers: [
