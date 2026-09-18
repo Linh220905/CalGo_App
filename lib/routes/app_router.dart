@@ -183,7 +183,7 @@ class _StartupScreenState extends State<_StartupScreen>
   Widget build(BuildContext context) {
     final reduceMotion = MediaQuery.of(context).disableAnimations;
     return Scaffold(
-      backgroundColor: const Color(0xFFFFF5F6),
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Center(
           child: AnimatedBuilder(

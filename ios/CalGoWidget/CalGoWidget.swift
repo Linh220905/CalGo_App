@@ -2,18 +2,21 @@ import ActivityKit
 import WidgetKit
 import SwiftUI
 
-// MARK: - Activity Attributes for Live Activity
-public struct CalGoLiveActivityAttributes: ActivityAttributes {
+// MARK: - Live Activity Attributes (Required by flutter_live_activities plugin)
+struct LiveActivitiesAppAttributes: ActivityAttributes, Identifiable {
+    public typealias LiveDeliveryData = ContentState
+
     public struct ContentState: Codable, Hashable {
-        public var caloriesLeft: Int
-        public var proteinLeft: Int
-        public var carbsLeft: Int
-        public var fatLeft: Int
-        public var targetCalories: Int
-        public var consumedCalories: Int
+        var appGroupId: String
     }
 
-    public var name: String
+    var id = UUID()
+}
+
+extension LiveActivitiesAppAttributes {
+    func prefixedKey(_ key: String) -> String {
+        return "\(id)_\(key)"
+    }
 }
 
 // MARK: - Home Widget Timeline Provider
@@ -69,43 +72,67 @@ struct CalGoWidgetEntryView : View {
     var entry: Provider.Entry
     @Environment(\.widgetFamily) var family
 
+    var progress: Double {
+        guard entry.targetCalories > 0 else { return 0.0 }
+        let val = Double(entry.consumedCalories) / Double(entry.targetCalories)
+        return min(max(val, 0.0), 1.0)
+    }
+
     var body: some View {
         HStack(spacing: 12) {
-            // Calorie Left Circle
-            VStack(spacing: 2) {
-                Text("\(entry.caloriesLeft)")
-                    .font(.system(size: 20, weight: .heavy, design: .rounded))
-                    .foregroundColor(.primary)
-                Text("kcal left")
-                    .font(.system(size: 9, weight: .semibold))
-                    .foregroundColor(.secondary)
+            // Left: Circular Progress with Calories Left
+            ZStack {
+                Circle()
+                    .stroke(Color.primary.opacity(0.12), lineWidth: 5.5)
+                Circle()
+                    .trim(from: 0, to: CGFloat(progress))
+                    .stroke(
+                        Color.primary,
+                        style: StrokeStyle(lineWidth: 5.5, lineCap: .round)
+                    )
+                    .rotationEffect(.degrees(-90))
+
+                VStack(spacing: 1) {
+                    Text("\(entry.caloriesLeft)")
+                        .font(.system(size: 16, weight: .black, design: .rounded))
+                        .foregroundColor(.primary)
+                        .minimumScaleFactor(0.7)
+                    Text("kcal left")
+                        .font(.system(size: 8, weight: .semibold))
+                        .foregroundColor(.secondary)
+                }
+                .padding(4)
             }
+            .frame(width: 72, height: 72)
             .frame(maxWidth: .infinity)
 
-            Divider()
-
-            // Macros List
-            VStack(alignment: .leading, spacing: 5) {
-                HStack(spacing: 4) {
-                    Text("🥩").font(.system(size: 10))
-                    Text("\(entry.proteinLeft)g P")
-                        .font(.system(size: 11, weight: .bold))
-                }
-                HStack(spacing: 4) {
-                    Text("🌾").font(.system(size: 10))
-                    Text("\(entry.carbsLeft)g C")
-                        .font(.system(size: 11, weight: .bold))
-                }
-                HStack(spacing: 4) {
-                    Text("💧").font(.system(size: 10))
-                    Text("\(entry.fatLeft)g F")
-                        .font(.system(size: 11, weight: .bold))
-                }
+            // Right: Clean Macro Rows
+            VStack(alignment: .leading, spacing: 6) {
+                macroRow(icon: "🥩", amount: "\(entry.proteinLeft)g", label: "Protein")
+                macroRow(icon: "🌾", amount: "\(entry.carbsLeft)g", label: "Carbs")
+                macroRow(icon: "💧", amount: "\(entry.fatLeft)g", label: "Fat")
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .padding()
+        .padding(.horizontal, 14)
+        .padding(.vertical, 12)
         .widgetURL(URL(string: "calgo://home"))
+    }
+
+    @ViewBuilder
+    private func macroRow(icon: String, amount: String, label: String) -> some View {
+        HStack(spacing: 5) {
+            Text(icon)
+                .font(.system(size: 11))
+            VStack(alignment: .leading, spacing: 0) {
+                Text(amount)
+                    .font(.system(size: 11, weight: .bold, design: .rounded))
+                    .foregroundColor(.primary)
+                Text(label)
+                    .font(.system(size: 8, weight: .medium))
+                    .foregroundColor(.secondary)
+            }
+        }
     }
 }
 
@@ -117,11 +144,12 @@ struct CalGoWidget: Widget {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
             if #available(iOS 17.0, *) {
                 CalGoWidgetEntryView(entry: entry)
-                    .containerBackground(.fill.tertiary, for: .widget)
+                    .containerBackground(for: .widget) {
+                        Color(UIColor.secondarySystemBackground)
+                    }
             } else {
                 CalGoWidgetEntryView(entry: entry)
-                    .padding()
-                    .background()
+                    .background(Color(UIColor.secondarySystemBackground))
             }
         }
         .configurationDisplayName("CalGo Tracker")
@@ -130,14 +158,21 @@ struct CalGoWidget: Widget {
     }
 }
 
-// MARK: - Live Activity Widget
+// MARK: - Live Activity Widget (Compatible with flutter_live_activities)
 struct CalGoLiveActivity: Widget {
+    let sharedDefault = UserDefaults(suiteName: "group.com.calgo.calgo")
+
     var body: some WidgetConfiguration {
-        ActivityConfiguration(for: CalGoLiveActivityAttributes.self) { context in
+        ActivityConfiguration(for: LiveActivitiesAppAttributes.self) { context in
             // Lock Screen / Banner UI
+            let caloriesLeft = sharedDefault?.integer(forKey: context.attributes.prefixedKey("caloriesLeft")) ?? 2000
+            let proteinLeft = sharedDefault?.integer(forKey: context.attributes.prefixedKey("proteinLeft")) ?? 60
+            let carbsLeft = sharedDefault?.integer(forKey: context.attributes.prefixedKey("carbsLeft")) ?? 90
+            let fatLeft = sharedDefault?.integer(forKey: context.attributes.prefixedKey("fatLeft")) ?? 30
+
             HStack(spacing: 14) {
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("\(context.state.caloriesLeft) kcal")
+                    Text("\(caloriesLeft) kcal")
                         .font(.system(size: 18, weight: .heavy, design: .rounded))
                         .foregroundColor(.primary)
                     Text("Còn lại hôm nay")
@@ -149,13 +184,13 @@ struct CalGoLiveActivity: Widget {
 
                 HStack(spacing: 8) {
                     VStack(alignment: .trailing, spacing: 3) {
-                        Text("🥩 \(context.state.proteinLeft)g")
+                        Text("🥩 \(proteinLeft)g")
                             .font(.system(size: 10, weight: .bold))
-                        Text("🌾 \(context.state.carbsLeft)g")
+                        Text("🌾 \(carbsLeft)g")
                             .font(.system(size: 10, weight: .bold))
                     }
                     VStack(alignment: .trailing, spacing: 3) {
-                        Text("💧 \(context.state.fatLeft)g")
+                        Text("💧 \(fatLeft)g")
                             .font(.system(size: 10, weight: .bold))
                         Link(destination: URL(string: "calgo://scan")!) {
                             Image(systemName: "camera.fill")
@@ -174,18 +209,23 @@ struct CalGoLiveActivity: Widget {
             .activitySystemActionForegroundColor(Color.white)
 
         } dynamicIsland: { context in
-            DynamicIsland {
+            let caloriesLeft = sharedDefault?.integer(forKey: context.attributes.prefixedKey("caloriesLeft")) ?? 2000
+            let proteinLeft = sharedDefault?.integer(forKey: context.attributes.prefixedKey("proteinLeft")) ?? 60
+            let carbsLeft = sharedDefault?.integer(forKey: context.attributes.prefixedKey("carbsLeft")) ?? 90
+            let fatLeft = sharedDefault?.integer(forKey: context.attributes.prefixedKey("fatLeft")) ?? 30
+
+            return DynamicIsland {
                 DynamicIslandExpandedRegion(.leading) {
                     HStack {
                         Image(systemName: "flame.fill")
                             .foregroundColor(.orange)
-                        Text("\(context.state.caloriesLeft) kcal")
+                        Text("\(caloriesLeft) kcal")
                             .font(.system(size: 14, weight: .bold))
                     }
                     .padding(.leading, 4)
                 }
                 DynamicIslandExpandedRegion(.trailing) {
-                    Text("P:\(context.state.proteinLeft) C:\(context.state.carbsLeft) F:\(context.state.fatLeft)")
+                    Text("P:\(proteinLeft) C:\(carbsLeft) F:\(fatLeft)")
                         .font(.system(size: 11, weight: .semibold))
                         .foregroundColor(.secondary)
                         .padding(.trailing, 4)
@@ -212,7 +252,7 @@ struct CalGoLiveActivity: Widget {
                 Image(systemName: "flame.fill")
                     .foregroundColor(.orange)
             } compactTrailing: {
-                Text("\(context.state.caloriesLeft)")
+                Text("\(caloriesLeft)")
                     .font(.system(size: 12, weight: .bold))
             } minimal: {
                 Image(systemName: "flame.fill")
@@ -226,7 +266,7 @@ struct CalGoLiveActivity: Widget {
 // MARK: - Bundle Export
 @main
 struct CalGoWidgetBundle: WidgetBundle {
-    var body: some Widget {
+    var body: some WidgetConfiguration {
         CalGoWidget()
         CalGoLiveActivity()
     }

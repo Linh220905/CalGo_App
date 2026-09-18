@@ -144,13 +144,15 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
         PurchaseState.purchased) {
       return;
     }
-    _handledPremiumSuccess = true;
     unawaited(_handlePremiumSuccess());
   }
 
   Future<void> _handlePremiumSuccess() async {
-    if (_finishingPurchase) return;
-    setState(() => _finishingPurchase = true);
+    if (_handledPremiumSuccess && !widget.onboardingMode) return;
+    _handledPremiumSuccess = true;
+    if (mounted && !_finishingPurchase) {
+      setState(() => _finishingPurchase = true);
+    }
     final auth = context.read<AuthProvider>();
     final payment = context.read<PaymentProvider>();
 
@@ -216,6 +218,13 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
         } catch (_) {}
       }
       if (!mounted) return;
+
+      if (auth.user?.id != null) {
+        try {
+          await RevenueCatService.logIn(auth.user!.id, apiService: auth.api);
+        } catch (_) {}
+      }
+
       final onboarding = context.read<OnboardingProvider>();
       final home = context.read<HomeProvider>();
       final saved = await onboarding.completeOnboarding(
@@ -238,6 +247,12 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
       await home.loadToday(forceRefresh: true);
       if (mounted) context.go('/home');
       return;
+    }
+
+    if (auth.user?.id != null) {
+      try {
+        await RevenueCatService.logIn(auth.user!.id, apiService: auth.api);
+      } catch (_) {}
     }
 
     await auth.refreshUser();
