@@ -2,7 +2,7 @@ import ActivityKit
 import WidgetKit
 import SwiftUI
 
-// MARK: - Live Activity Attributes (Required by flutter_live_activities plugin)
+// MARK: - Live Activity Attributes (Required by flutter_live_activities)
 struct LiveActivitiesAppAttributes: ActivityAttributes, Identifiable {
     public typealias LiveDeliveryData = ContentState
 
@@ -22,7 +22,7 @@ extension LiveActivitiesAppAttributes {
 // MARK: - Home Widget Timeline Provider
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> CalGoEntry {
-        CalGoEntry(date: Date(), caloriesLeft: 1450, proteinLeft: 85, carbsLeft: 120, fatLeft: 40, targetCalories: 2000, consumedCalories: 550)
+        CalGoEntry(date: Date(), caloriesLeft: 1850, proteinLeft: 60, carbsLeft: 90, fatLeft: 30, targetCalories: 2200, consumedCalories: 350)
     }
 
     func getSnapshot(in context: Context, completion: @escaping (CalGoEntry) -> ()) {
@@ -67,7 +67,7 @@ struct CalGoEntry: TimelineEntry {
     let consumedCalories: Int
 }
 
-// MARK: - Home Screen Widget View
+// MARK: - Home Screen Widget View (Design matches widget_preview.html)
 struct CalGoWidgetEntryView : View {
     var entry: Provider.Entry
     @Environment(\.widgetFamily) var family
@@ -79,60 +79,137 @@ struct CalGoWidgetEntryView : View {
     }
 
     var body: some View {
-        HStack(spacing: 12) {
-            // Left: Circular Progress with Calories Left
-            ZStack {
-                Circle()
-                    .stroke(Color.primary.opacity(0.12), lineWidth: 5.5)
-                Circle()
-                    .trim(from: 0, to: CGFloat(progress))
-                    .stroke(
-                        Color.primary,
-                        style: StrokeStyle(lineWidth: 5.5, lineCap: .round)
-                    )
-                    .rotationEffect(.degrees(-90))
-
-                VStack(spacing: 1) {
-                    Text("\(entry.caloriesLeft)")
-                        .font(.system(size: 16, weight: .black, design: .rounded))
-                        .foregroundColor(.primary)
-                        .minimumScaleFactor(0.7)
-                    Text("kcal left")
-                        .font(.system(size: 8, weight: .semibold))
-                        .foregroundColor(.secondary)
-                }
-                .padding(4)
-            }
-            .frame(width: 72, height: 72)
-            .frame(maxWidth: .infinity)
-
-            // Right: Clean Macro Rows
-            VStack(alignment: .leading, spacing: 6) {
-                macroRow(icon: "🥩", amount: "\(entry.proteinLeft)g", label: "Protein")
-                macroRow(icon: "🌾", amount: "\(entry.carbsLeft)g", label: "Carbs")
-                macroRow(icon: "💧", amount: "\(entry.fatLeft)g", label: "Fat")
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
+        switch family {
+        case .systemSmall:
+            smallWidgetView
+        default:
+            mediumWidgetView
         }
-        .padding(.horizontal, 14)
-        .padding(.vertical, 12)
-        .widgetURL(URL(string: "calgo://home"))
     }
 
-    @ViewBuilder
-    private func macroRow(icon: String, amount: String, label: String) -> some View {
-        HStack(spacing: 5) {
+    // MARK: - Medium Widget (3 Cards: 1 Big Left Card for Calorie Ring + Macros, 2 Small Right Action Cards)
+    private var mediumWidgetView: some View {
+        HStack(spacing: 8) {
+            // CARD 1 (BIG LEFT): Calories Ring + Macros Stack
+            HStack(spacing: 10) {
+                // Calories Ring Box
+                calorieRing(size: 74, strokeWidth: 6, fontSize: 15)
+                    .frame(width: 76)
+
+                // Macros Stack
+                VStack(alignment: .leading, spacing: 5) {
+                    macroItem(
+                        icon: "🥩",
+                        bgColor: Color(red: 1.0, green: 0.36, blue: 0.36, opacity: 0.15),
+                        amount: "\(entry.proteinLeft)g",
+                        label: "Protein left"
+                    )
+                    macroItem(
+                        icon: "🌾",
+                        bgColor: Color(red: 0.96, green: 0.62, blue: 0.04, opacity: 0.15),
+                        amount: "\(entry.carbsLeft)g",
+                        label: "Carbs left"
+                    )
+                    macroItem(
+                        icon: "💧",
+                        bgColor: Color(red: 0.23, green: 0.51, blue: 0.96, opacity: 0.15),
+                        amount: "\(entry.fatLeft)g",
+                        label: "Fats left"
+                    )
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            .padding(.horizontal, 10)
+            .padding(.vertical, 8)
+            .background(Color(UIColor.secondarySystemGroupedBackground))
+            .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+
+            // CARD 2 & 3 (RIGHT COLUMN): 2 Action Cards (Scan Food & Barcode)
+            VStack(spacing: 8) {
+                Link(destination: URL(string: "calgo://scan")!) {
+                    actionCard(icon: "camera.fill", title: "Scan Food")
+                }
+                Link(destination: URL(string: "calgo://barcode")!) {
+                    actionCard(icon: "barcode.viewfinder", title: "Barcode")
+                }
+            }
+            .frame(width: 78)
+        }
+        .padding(4)
+    }
+
+    // MARK: - Small Widget (Clean Only: Calorie Ring with Progress)
+    private var smallWidgetView: some View {
+        VStack(spacing: 0) {
+            calorieRing(size: 96, strokeWidth: 8, fontSize: 20)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding(8)
+    }
+
+    // MARK: - Circular Progress Ring Component
+    private func calorieRing(size: CGFloat, strokeWidth: CGFloat, fontSize: CGFloat) -> some View {
+        ZStack {
+            Circle()
+                .stroke(Color.primary.opacity(0.12), lineWidth: strokeWidth)
+            Circle()
+                .trim(from: 0, to: CGFloat(progress))
+                .stroke(
+                    Color.primary,
+                    style: StrokeStyle(lineWidth: strokeWidth, lineCap: .round)
+                )
+                .rotationEffect(.degrees(-90))
+
+            VStack(spacing: 1) {
+                Text("\(entry.caloriesLeft)")
+                    .font(.system(size: fontSize, weight: .black, design: .rounded))
+                    .foregroundColor(.primary)
+                    .minimumScaleFactor(0.7)
+                Text("Calories left")
+                    .font(.system(size: max(fontSize * 0.44, 8), weight: .semibold))
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+            }
+            .padding(2)
+        }
+        .frame(width: size, height: size)
+    }
+
+    // MARK: - Macro Item Row
+    private func macroItem(icon: String, bgColor: Color, amount: String, label: String) -> some View {
+        HStack(spacing: 6) {
             Text(icon)
-                .font(.system(size: 11))
+                .font(.system(size: 10))
+                .frame(width: 18, height: 18)
+                .background(bgColor)
+                .clipShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
+
             VStack(alignment: .leading, spacing: 0) {
                 Text(amount)
-                    .font(.system(size: 11, weight: .bold, design: .rounded))
+                    .font(.system(size: 11, weight: .heavy, design: .rounded))
                     .foregroundColor(.primary)
                 Text(label)
                     .font(.system(size: 8, weight: .medium))
                     .foregroundColor(.secondary)
             }
         }
+    }
+
+    // MARK: - Quick Action Card
+    private func actionCard(icon: String, title: String) -> some View {
+        VStack(spacing: 3) {
+            Image(systemName: icon)
+                .font(.system(size: 14, weight: .semibold))
+                .foregroundColor(.primary)
+            Text(title)
+                .font(.system(size: 8.5, weight: .bold))
+                .foregroundColor(.primary)
+                .lineLimit(1)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding(.vertical, 4)
+        .background(Color(UIColor.secondarySystemGroupedBackground))
+        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
     }
 }
 
@@ -145,67 +222,114 @@ struct CalGoWidget: Widget {
             if #available(iOS 17.0, *) {
                 CalGoWidgetEntryView(entry: entry)
                     .containerBackground(for: .widget) {
-                        Color(UIColor.secondarySystemBackground)
+                        Color(UIColor.systemGroupedBackground)
                     }
             } else {
                 CalGoWidgetEntryView(entry: entry)
-                    .background(Color(UIColor.secondarySystemBackground))
+                    .background(Color(UIColor.systemGroupedBackground))
             }
         }
         .configurationDisplayName("CalGo Tracker")
         .description("Theo dõi calo và macro hàng ngày tiện lợi.")
-        .supportedFamilies([.systemSmall, .systemMedium])
+        .supportedFamilies([.systemMedium, .systemSmall])
     }
 }
 
-// MARK: - Live Activity Widget (Compatible with flutter_live_activities)
+// MARK: - Live Activity Widget (Lock Screen & Dynamic Island)
 struct CalGoLiveActivity: Widget {
     let sharedDefault = UserDefaults(suiteName: "group.com.calgo.calgo")
 
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: LiveActivitiesAppAttributes.self) { context in
-            // Lock Screen / Banner UI
             let caloriesLeft = sharedDefault?.integer(forKey: context.attributes.prefixedKey("caloriesLeft")) ?? 2000
             let proteinLeft = sharedDefault?.integer(forKey: context.attributes.prefixedKey("proteinLeft")) ?? 60
             let carbsLeft = sharedDefault?.integer(forKey: context.attributes.prefixedKey("carbsLeft")) ?? 90
             let fatLeft = sharedDefault?.integer(forKey: context.attributes.prefixedKey("fatLeft")) ?? 30
+            let targetCalories = sharedDefault?.integer(forKey: context.attributes.prefixedKey("targetCalories")) ?? 2000
+            let consumedCalories = sharedDefault?.integer(forKey: context.attributes.prefixedKey("consumedCalories")) ?? 0
 
-            HStack(spacing: 14) {
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("\(caloriesLeft) kcal")
-                        .font(.system(size: 18, weight: .heavy, design: .rounded))
-                        .foregroundColor(.primary)
-                    Text("Còn lại hôm nay")
-                        .font(.system(size: 11, weight: .medium))
-                        .foregroundColor(.secondary)
-                }
+            let progress: Double = targetCalories > 0
+                ? min(max(Double(consumedCalories) / Double(targetCalories), 0.0), 1.0)
+                : 0.0
 
-                Spacer()
+            // Horizontal Lock Screen Banner matching widget_preview.html
+            HStack(spacing: 12) {
+                // Calorie Progress Ring
+                ZStack {
+                    Circle()
+                        .stroke(Color.white.opacity(0.2), lineWidth: 5.5)
+                    Circle()
+                        .trim(from: 0, to: CGFloat(progress))
+                        .stroke(
+                            Color.white,
+                            style: StrokeStyle(lineWidth: 5.5, lineCap: .round)
+                        )
+                        .rotationEffect(.degrees(-90))
 
-                HStack(spacing: 8) {
-                    VStack(alignment: .trailing, spacing: 3) {
-                        Text("🥩 \(proteinLeft)g")
-                            .font(.system(size: 10, weight: .bold))
-                        Text("🌾 \(carbsLeft)g")
-                            .font(.system(size: 10, weight: .bold))
+                    VStack(spacing: 0) {
+                        Text("\(caloriesLeft)")
+                            .font(.system(size: 15, weight: .black, design: .rounded))
+                            .foregroundColor(.white)
+                        Text("kcal left")
+                            .font(.system(size: 7.5, weight: .semibold))
+                            .foregroundColor(.white.opacity(0.7))
                     }
-                    VStack(alignment: .trailing, spacing: 3) {
-                        Text("💧 \(fatLeft)g")
-                            .font(.system(size: 10, weight: .bold))
-                        Link(destination: URL(string: "calgo://scan")!) {
+                }
+                .frame(width: 60, height: 60)
+
+                // Macros Stack
+                VStack(alignment: .leading, spacing: 4) {
+                    HStack(spacing: 5) {
+                        Text("🥩").font(.system(size: 10))
+                        Text("\(proteinLeft)g").font(.system(size: 11, weight: .bold)).foregroundColor(.white)
+                        Text("Protein").font(.system(size: 9)).foregroundColor(.white.opacity(0.7))
+                    }
+                    HStack(spacing: 5) {
+                        Text("🌾").font(.system(size: 10))
+                        Text("\(carbsLeft)g").font(.system(size: 11, weight: .bold)).foregroundColor(.white)
+                        Text("Carbs").font(.system(size: 9)).foregroundColor(.white.opacity(0.7))
+                    }
+                    HStack(spacing: 5) {
+                        Text("💧").font(.system(size: 10))
+                        Text("\(fatLeft)g").font(.system(size: 11, weight: .bold)).foregroundColor(.white)
+                        Text("Fat").font(.system(size: 9)).foregroundColor(.white.opacity(0.7))
+                    }
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+                // Quick Buttons
+                VStack(spacing: 4) {
+                    Link(destination: URL(string: "calgo://scan")!) {
+                        HStack(spacing: 4) {
                             Image(systemName: "camera.fill")
-                                .font(.system(size: 11, weight: .bold))
-                                .foregroundColor(.white)
-                                .padding(5)
-                                .background(Color.blue)
-                                .clipShape(Circle())
+                                .font(.system(size: 9, weight: .bold))
+                            Text("Scan")
+                                .font(.system(size: 9, weight: .bold))
                         }
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 5)
+                        .background(Color.blue)
+                        .cornerRadius(8)
+                    }
+                    Link(destination: URL(string: "calgo://barcode")!) {
+                        HStack(spacing: 4) {
+                            Image(systemName: "barcode.viewfinder")
+                                .font(.system(size: 9, weight: .bold))
+                            Text("Code")
+                                .font(.system(size: 9, weight: .bold))
+                        }
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 5)
+                        .background(Color.white.opacity(0.2))
+                        .cornerRadius(8)
                     }
                 }
             }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 12)
-            .activityBackgroundTint(Color.black.opacity(0.85))
+            .padding(.horizontal, 14)
+            .padding(.vertical, 10)
+            .activityBackgroundTint(Color.black.opacity(0.8))
             .activitySystemActionForegroundColor(Color.white)
 
         } dynamicIsland: { context in
@@ -252,7 +376,7 @@ struct CalGoLiveActivity: Widget {
                 Image(systemName: "flame.fill")
                     .foregroundColor(.orange)
             } compactTrailing: {
-                Text("\(caloriesLeft)")
+                Text("\(sharedDefault?.integer(forKey: context.attributes.prefixedKey("caloriesLeft")) ?? 2000)")
                     .font(.system(size: 12, weight: .bold))
             } minimal: {
                 Image(systemName: "flame.fill")

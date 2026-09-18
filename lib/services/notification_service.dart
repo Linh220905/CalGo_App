@@ -477,6 +477,52 @@ class NotificationService {
     );
   }
 
+  /// Show persistent Lock Screen Ongoing Notification for Android (equivalent to iOS Live Activity)
+  Future<void> updateAndroidLiveNotification({
+    required int caloriesLeft,
+    required int proteinLeft,
+    required int carbsLeft,
+    required int fatLeft,
+    required bool isEnabled,
+  }) async {
+    if (!_initialized) await init();
+    try {
+      if (!isEnabled) {
+        await _notificationsPlugin.cancel(999);
+        return;
+      }
+
+      final s = await _strings();
+      final androidDetails = AndroidNotificationDetails(
+        'calgo_live_tracker',
+        'CalGo Live Tracker',
+        channelDescription: 'Theo dõi tiến độ dinh dưỡng liên tục trên màn hình khóa',
+        importance: Importance.low, // Silent, stays persistent
+        priority: Priority.low,
+        ongoing: true,
+        autoCancel: false,
+        showWhen: false,
+        icon: '@mipmap/ic_launcher',
+        styleInformation: BigTextStyleInformation(
+          '🥩 ${proteinLeft}g Protein  •  🌾 ${carbsLeft}g Carbs  •  💧 ${fatLeft}g Fats',
+          contentTitle: '🔥 $caloriesLeft kcal còn lại',
+          summaryText: 'CalGo Live',
+        ),
+      );
+
+      final details = NotificationDetails(android: androidDetails);
+      await _notificationsPlugin.show(
+        999,
+        '🔥 $caloriesLeft kcal còn lại',
+        '🥩 ${proteinLeft}g P  •  🌾 ${carbsLeft}g C  •  💧 ${fatLeft}g F',
+        details,
+        payload: 'live_activity',
+      );
+    } catch (e) {
+      debugPrint('Error updating Android live notification: $e');
+    }
+  }
+
   /// Cancel persistent Live Activity notification if previously set
   Future<void> cancelLiveActivityNotification() async {
     if (!_initialized) return;

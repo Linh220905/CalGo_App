@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:home_widget/home_widget.dart';
 import 'package:live_activities/live_activities.dart';
+import 'notification_service.dart';
 
 class WidgetSyncService {
   WidgetSyncService._();
@@ -11,7 +12,6 @@ class WidgetSyncService {
   static const String androidWidgetName = 'CalGoWidgetProvider';
 
   final LiveActivities _liveActivities = LiveActivities();
-  String? _currentActivityId;
   bool _initialized = false;
 
   Future<void> init() async {
@@ -53,12 +53,20 @@ class WidgetSyncService {
         androidName: androidWidgetName,
       );
 
-      // 2. Update Live Activity on iOS Lock Screen
+      // 2. Update Live Activity / Lock Screen Banner
       if (defaultTargetPlatform == TargetPlatform.iOS) {
         await _updateLiveActivity(
           caloriesLeft: caloriesLeft,
           targetCalories: targetCalories,
           consumedCalories: consumedCalories,
+          proteinLeft: proteinLeft,
+          carbsLeft: carbsLeft,
+          fatLeft: fatLeft,
+          isEnabled: isLiveActivityEnabled,
+        );
+      } else if (defaultTargetPlatform == TargetPlatform.android) {
+        await NotificationService.instance.updateAndroidLiveNotification(
+          caloriesLeft: caloriesLeft,
           proteinLeft: proteinLeft,
           carbsLeft: carbsLeft,
           fatLeft: fatLeft,
@@ -81,15 +89,13 @@ class WidgetSyncService {
   }) async {
     try {
       final areActivitiesEnabled = await _liveActivities.areActivitiesEnabled();
-      if (!areActivitiesEnabled) return;
+      if (!areActivitiesEnabled) {
+        debugPrint('Live Activities are not enabled on device');
+        return;
+      }
 
       if (!isEnabled) {
-        if (_currentActivityId != null) {
-          await _liveActivities.endActivity(_currentActivityId!);
-          _currentActivityId = null;
-        } else {
-          await _liveActivities.endAllActivities();
-        }
+        await _liveActivities.endAllActivities();
         return;
       }
 
@@ -102,21 +108,12 @@ class WidgetSyncService {
         'fatLeft': fatLeft,
       };
 
-      if (_currentActivityId == null) {
-        final allActivities = await _liveActivities.getAllActivitiesIds();
-        if (allActivities.isNotEmpty) {
-          _currentActivityId = allActivities.first;
-          await _liveActivities.updateActivity(_currentActivityId!, activityData);
-        } else {
-          _currentActivityId = await _liveActivities.createActivity(
-            'calgo_live_activity',
-            activityData,
-            removeWhenAppIsKilled: false,
-          );
-        }
-      } else {
-        await _liveActivities.updateActivity(_currentActivityId!, activityData);
-      }
+      // createOrUpdateActivity handles creating if missing or updating existing activity by unique ID
+      await _liveActivities.createOrUpdateActivity(
+        'calgo_live_activity',
+        activityData,
+        removeWhenAppIsKilled: false,
+      );
     } catch (e) {
       debugPrint('Live Activity update error: $e');
     }
@@ -126,7 +123,6 @@ class WidgetSyncService {
     try {
       if (defaultTargetPlatform == TargetPlatform.iOS) {
         await _liveActivities.endAllActivities();
-        _currentActivityId = null;
       }
     } catch (e) {
       debugPrint('Live Activity stop error: $e');
