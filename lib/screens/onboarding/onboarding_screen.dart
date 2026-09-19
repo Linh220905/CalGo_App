@@ -38,14 +38,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   bool _resetScheduled = false;
 
   @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<OnboardingProvider>().init();
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Consumer<OnboardingProvider>(
       builder: (context, provider, _) {

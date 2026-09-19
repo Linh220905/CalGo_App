@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../config/app_build_config.dart';
@@ -153,59 +151,14 @@ GoRouter createAppRouter(OnboardingProvider onboarding, AuthProvider auth) =>
       ],
     );
 
-class _StartupScreen extends StatefulWidget {
+class _StartupScreen extends StatelessWidget {
   const _StartupScreen();
 
   @override
-  State<_StartupScreen> createState() => _StartupScreenState();
-}
-
-class _StartupScreenState extends State<_StartupScreen>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _mascotController;
-
-  @override
-  void initState() {
-    super.initState();
-    _mascotController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 1450),
-    )..repeat(reverse: true);
-  }
-
-  @override
-  void dispose() {
-    _mascotController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final reduceMotion = MediaQuery.of(context).disableAnimations;
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Center(
-          child: AnimatedBuilder(
-            animation: _mascotController,
-            child: Image.asset(
-              'assets/images/apple_mascot/apple_hello.png',
-              height: 340,
-              fit: BoxFit.contain,
-            ),
-            builder: (context, child) {
-              final t = reduceMotion ? 0.5 : _mascotController.value;
-              return Transform.translate(
-                offset: Offset(0, -4 * math.sin(t * math.pi)),
-                child: Transform.rotate(
-                  angle: 0.035 * math.sin((t - .5) * math.pi),
-                  child: child,
-                ),
-              );
-            },
-          ),
-        ),
-      ),
-    );
+    // Native launch screens already show the mascot. Keep this hand-off
+    // screen blank so it does not flash the same mascot a second time before
+    // the real onboarding HeroStep appears.
+    return const Scaffold(backgroundColor: Colors.white);
   }
 }
