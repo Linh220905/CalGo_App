@@ -1,11 +1,11 @@
 package com.calgo.calgo
 
-import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import android.widget.RemoteViews
+import es.antonborri.home_widget.HomeWidgetLaunchIntent
 import es.antonborri.home_widget.HomeWidgetProvider
 
 class CalGoWidgetProvider : HomeWidgetProvider() {
@@ -29,41 +29,27 @@ class CalGoWidgetProvider : HomeWidgetProvider() {
                 setTextViewText(R.id.tv_fat_left, "💧 ${fatLeft}g F")
 
                 // 1. Open App / Home on Left Card Click
-                val homeIntent = Intent(context, MainActivity::class.java).apply {
-                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-                }
-                val homePendingIntent = PendingIntent.getActivity(
+                val homePendingIntent = HomeWidgetLaunchIntent.getActivity(
                     context,
-                    0,
-                    homeIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                    MainActivity::class.java,
+                    Uri.parse("calgo://home")
                 )
                 setOnClickPendingIntent(R.id.card_macros, homePendingIntent)
                 setOnClickPendingIntent(R.id.widget_root, homePendingIntent)
 
                 // 2. Open Camera Scan on Scan Food Button Click
-                val scanIntent = Intent(context, MainActivity::class.java).apply {
-                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-                    putExtra("route", "/scan")
-                }
-                val scanPendingIntent = PendingIntent.getActivity(
+                val scanPendingIntent = HomeWidgetLaunchIntent.getActivity(
                     context,
-                    1,
-                    scanIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                    MainActivity::class.java,
+                    Uri.parse("calgo://scan")
                 )
                 setOnClickPendingIntent(R.id.btn_scan_food, scanPendingIntent)
 
                 // 3. Open Barcode Scanner on Barcode Button Click
-                val barcodeIntent = Intent(context, MainActivity::class.java).apply {
-                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-                    putExtra("route", "/barcode-scan")
-                }
-                val barcodePendingIntent = PendingIntent.getActivity(
+                val barcodePendingIntent = HomeWidgetLaunchIntent.getActivity(
                     context,
-                    2,
-                    barcodeIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                    MainActivity::class.java,
+                    Uri.parse("calgo://barcode")
                 )
                 setOnClickPendingIntent(R.id.btn_barcode, barcodePendingIntent)
             }

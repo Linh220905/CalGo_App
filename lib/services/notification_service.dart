@@ -31,8 +31,8 @@ class NotificationService {
     final code = codes.contains(saved)
         ? saved!
         : codes.contains(device)
-            ? device
-            : 'en';
+        ? device
+        : 'en';
     return lookupAppLocalizations(Locale(code));
   }
 
@@ -55,7 +55,6 @@ class NotificationService {
   }
 
   Future<void> _initializeInternal() async {
-
     try {
       tz.initializeTimeZones();
       tz.setLocalLocation(tz.getLocation('Asia/Ho_Chi_Minh'));
@@ -68,8 +67,9 @@ class NotificationService {
       }
     }
 
-    const androidSettings =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
+    const androidSettings = AndroidInitializationSettings(
+      '@mipmap/ic_launcher',
+    );
     const darwinSettings = DarwinInitializationSettings(
       requestAlertPermission: false,
       requestBadgePermission: false,
@@ -85,23 +85,46 @@ class NotificationService {
       initSettings,
       onDidReceiveNotificationResponse: (details) {
         debugPrint('Notification clicked: ${details.payload}');
-        onNotificationTap?.call(details.payload);
+        final actionId = details.actionId;
+        onNotificationTap?.call(
+          actionId != null && actionId.isNotEmpty ? actionId : details.payload,
+        );
       },
     );
 
-    final launchDetails =
-        await _notificationsPlugin.getNotificationAppLaunchDetails();
+    final launchDetails = await _notificationsPlugin
+        .getNotificationAppLaunchDetails();
     if (launchDetails?.didNotificationLaunchApp == true) {
-      onNotificationTap?.call(launchDetails?.notificationResponse?.payload);
+      final response = launchDetails?.notificationResponse;
+      final actionId = response?.actionId;
+      onNotificationTap?.call(
+        actionId != null && actionId.isNotEmpty ? actionId : response?.payload,
+      );
     }
 
     _initialized = true;
+    final androidPlugin = _notificationsPlugin
+        .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin
+        >();
+    if (androidPlugin != null) {
+      final s = await _strings();
+      await androidPlugin.createNotificationChannel(
+        AndroidNotificationChannel(
+          'calgo_live_tracker',
+          s.liveActivityTitle,
+          description: s.liveActivityPromptDesc,
+          importance: Importance.high,
+          playSound: false,
+          enableVibration: false,
+          showBadge: false,
+        ),
+      );
+    }
     final permissionGranted = await requestPermission();
     debugPrint('Notification permission granted: $permissionGranted');
     await scheduleDailyMealReminders();
-    await scheduleDailyRecapNotification(
-      hasMeals: _recapHasMeals ?? false,
-    );
+    await scheduleDailyRecapNotification(hasMeals: _recapHasMeals ?? false);
   }
 
   /// Rebuilds the daily schedule when the app returns from the background.
@@ -115,20 +138,23 @@ class NotificationService {
   Future<bool> requestPermission() async {
     bool granted = false;
     try {
-      final androidImplementation =
-          _notificationsPlugin.resolvePlatformSpecificImplementation<
-              AndroidFlutterLocalNotificationsPlugin>();
+      final androidImplementation = _notificationsPlugin
+          .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin
+          >();
       if (androidImplementation != null) {
         granted =
             await androidImplementation.requestNotificationsPermission() ??
-                false;
+            false;
       }
 
-      final iosImplementation =
-          _notificationsPlugin.resolvePlatformSpecificImplementation<
-              IOSFlutterLocalNotificationsPlugin>();
+      final iosImplementation = _notificationsPlugin
+          .resolvePlatformSpecificImplementation<
+            IOSFlutterLocalNotificationsPlugin
+          >();
       if (iosImplementation != null) {
-        granted = await iosImplementation.requestPermissions(
+        granted =
+            await iosImplementation.requestPermissions(
               alert: true,
               badge: true,
               sound: true,
@@ -147,7 +173,8 @@ class NotificationService {
 
     final s = await _strings();
     final prefs = await SharedPreferences.getInstance();
-    final lang = prefs.getString('app_language') ??
+    final lang =
+        prefs.getString('app_language') ??
         WidgetsBinding.instance.platformDispatcher.locale.languageCode;
 
     // Load stored onboarding profile data if present
@@ -255,7 +282,8 @@ class NotificationService {
     );
 
     debugPrint(
-        'Successfully scheduled personalized daily meal reminders (07:30, 12:00, 18:30)');
+      'Successfully scheduled personalized daily meal reminders (07:30, 12:00, 18:30)',
+    );
   }
 
   /// Schedule a one-shot 22:00 reminder only for a day on which the user has
@@ -324,8 +352,9 @@ class NotificationService {
     final isLose = goalType == 'lose';
     final isGain = goalType == 'gain';
 
-    final displayName =
-        (name != null && name.trim().isNotEmpty) ? name.trim() : null;
+    final displayName = (name != null && name.trim().isNotEmpty)
+        ? name.trim()
+        : null;
 
     String salutation;
     if (displayName != null) {
@@ -491,20 +520,35 @@ class NotificationService {
         return;
       }
 
+      final s = await _strings();
       final androidDetails = AndroidNotificationDetails(
         'calgo_live_tracker',
-        'CalGo Live Tracker',
-        channelDescription: 'Theo dõi tiến độ dinh dưỡng liên tục trên màn hình khóa',
-        importance: Importance.low, // Silent, stays persistent
-        priority: Priority.low,
+        s.liveActivityTitle,
+        channelDescription: s.liveActivityPromptDesc,
+        importance: Importance.max,
+        priority: Priority.max,
+        playSound: false,
+        enableVibration: false,
         ongoing: true,
         autoCancel: false,
         showWhen: false,
-        // Allow Android to show the full ongoing notification on the lock
-        // screen. The user's device-level lock-screen policy can still hide
-        // notifications globally.
+        category: AndroidNotificationCategory.progress,
         visibility: NotificationVisibility.public,
         icon: '@mipmap/ic_launcher',
+        actions: <AndroidNotificationAction>[
+          AndroidNotificationAction(
+            'action_scan_food',
+            s.scanFood,
+            showsUserInterface: true,
+            cancelNotification: false,
+          ),
+          AndroidNotificationAction(
+            'action_scan_barcode',
+            s.barcode,
+            showsUserInterface: true,
+            cancelNotification: false,
+          ),
+        ],
         styleInformation: BigTextStyleInformation(
           '🥩 ${proteinLeft}g Protein  •  🌾 ${carbsLeft}g Carbs  •  💧 ${fatLeft}g Fats',
           contentTitle: '🔥 $caloriesLeft kcal còn lại',

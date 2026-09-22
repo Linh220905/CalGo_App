@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -157,13 +158,12 @@ class _LoginScreenState extends State<LoginScreen> {
     if (!auth.isAuthenticated) {
       return;
     }
-    // Automatically retry/sync pending purchases (e.g. bought before login)
-    try {
-      await context.read<PaymentProvider>().retryPendingPurchaseVerification();
-    } catch (_) {}
+    // Automatically retry/sync pending purchases in background
+    unawaited(context.read<PaymentProvider>().retryPendingPurchaseVerification());
 
     if (context.mounted) {
-      context.go('/home');
+      final isPrem = auth.user?.hasPremiumAccess ?? false;
+      context.go(isPrem ? '/home' : '/premium');
     }
   }
 

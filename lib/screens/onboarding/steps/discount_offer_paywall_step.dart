@@ -36,11 +36,11 @@ TextStyle _f(
 );
 
 class DiscountOfferPaywallStep extends StatefulWidget {
-  final VoidCallback onDismiss;
+  final FutureOr<void> Function() onDismiss;
 
   const DiscountOfferPaywallStep({super.key, required this.onDismiss});
 
-  static Future<void> show(BuildContext context, {required VoidCallback onDismiss}) {
+  static Future<void> show(BuildContext context, {required FutureOr<void> Function() onDismiss}) {
     return showGeneralDialog(
       context: context,
       barrierDismissible: false,
@@ -58,6 +58,7 @@ class DiscountOfferPaywallStep extends StatefulWidget {
 
 class _DiscountOfferPaywallStepState extends State<DiscountOfferPaywallStep> {
   bool _buying = false;
+  bool _isExiting = false;
   bool _showClose = false;
   Timer? _closeTimer;
   PaymentProvider? _payment;
@@ -282,6 +283,18 @@ class _DiscountOfferPaywallStepState extends State<DiscountOfferPaywallStep> {
     return result == true && auth.isAuthenticated;
   }
 
+  Future<void> _handleDismiss() async {
+    if (_isExiting || _buying) return;
+    setState(() => _isExiting = true);
+    try {
+      await widget.onDismiss();
+    } finally {
+      if (mounted) {
+        Navigator.pop(context);
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final s = context.watch<AppSettingsProvider>().strings;
@@ -376,12 +389,9 @@ class _DiscountOfferPaywallStepState extends State<DiscountOfferPaywallStep> {
                     opacity: _showClose ? 1.0 : 0.0,
                     duration: const Duration(milliseconds: 300),
                     child: IgnorePointer(
-                      ignoring: !_showClose,
+                      ignoring: !_showClose || _isExiting,
                       child: GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                          widget.onDismiss();
-                        },
+                        onTap: _handleDismiss,
                         child: Container(
                           width: 32,
                           height: 32,
@@ -565,7 +575,7 @@ class _DiscountOfferPaywallStepState extends State<DiscountOfferPaywallStep> {
                       width: double.infinity,
                       height: 54,
                       child: ElevatedButton(
-                        onPressed: _buying ? null : _handlePurchase,
+                        onPressed: (_buying || _isExiting) ? null : _handlePurchase,
                         style: ElevatedButton.styleFrom(
                           backgroundColor: _kInk,
                           foregroundColor: Colors.white,

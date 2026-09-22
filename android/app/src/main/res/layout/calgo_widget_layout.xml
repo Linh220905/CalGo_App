@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/calgo_widget_bg"
     android:orientation="horizontal"
-    android:padding="8dp"
+    android:padding="7dp"
     android:gravity="center_vertical">
 
     <!-- CARD 1 (BIG LEFT CARD): Calories Ring/Count + Macros P C F -->
@@ -16,8 +16,8 @@
         android:layout_weight="1"
         android:background="@drawable/calgo_card_bg"
         android:orientation="horizontal"
-        android:paddingHorizontal="10dp"
-        android:paddingVertical="8dp"
+        android:paddingHorizontal="14dp"
+        android:paddingVertical="10dp"
         android:gravity="center_vertical">
 
         <!-- Calories Box -->
@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:paddingEnd="10dp"
+            android:paddingEnd="12dp"
             android:orientation="vertical">
 
             <TextView
@@ -34,22 +34,24 @@
                 android:layout_height="wrap_content"
                 android:text="2000"
                 android:textColor="#FFFFFF"
-                android:textSize="17sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_calories_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
                 android:text="Calories left"
                 android:textColor="#94A3B8"
-                android:textSize="8.5sp" />
+                android:textSize="9sp" />
         </LinearLayout>
 
         <View
             android:layout_width="1dp"
-            android:layout_height="40dp"
-            android:background="#33FFFFFF" />
+            android:layout_height="match_parent"
+            android:layout_marginVertical="6dp"
+            android:background="#2E2C38" />
 
         <!-- Macros Stack -->
         <LinearLayout
@@ -58,7 +60,7 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:orientation="vertical"
-            android:paddingStart="10dp">
+            android:paddingStart="12dp">
 
             <TextView
                 android:id="@+id/tv_protein_left"
@@ -66,38 +68,38 @@
                 android:layout_height="wrap_content"
                 android:text="🥩 60g Protein"
                 android:textColor="#FFFFFF"
-                android:textSize="10.5sp"
+                android:textSize="11sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_carbs_left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="5dp"
                 android:text="🌾 90g Carbs"
                 android:textColor="#FFFFFF"
-                android:textSize="10.5sp"
+                android:textSize="11sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_fat_left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="5dp"
                 android:text="💧 30g Fats"
                 android:textColor="#FFFFFF"
-                android:textSize="10.5sp"
+                android:textSize="11sp"
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 
     <Space
-        android:layout_width="8dp"
+        android:layout_width="7dp"
         android:layout_height="match_parent" />
 
     <!-- CARDS 2 & 3 (RIGHT COLUMN): 2 Quick Action Cards (Scan Food & Barcode) -->
     <LinearLayout
-        android:layout_width="74dp"
+        android:layout_width="80dp"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
@@ -109,23 +111,21 @@
             android:layout_weight="1"
             android:background="@drawable/calgo_card_bg"
             android:gravity="center"
-            android:orientation="vertical"
-            android:clickable="true"
-            android:focusable="true">
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="📷"
-                android:textSize="14sp" />
+                android:textSize="17sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="3dp"
                 android:text="Scan Food"
                 android:textColor="#FFFFFF"
-                android:textSize="8.5sp"
+                android:textSize="9.5sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -141,25 +141,23 @@
             android:layout_weight="1"
             android:background="@drawable/calgo_card_bg"
             android:gravity="center"
-            android:orientation="vertical"
-            android:clickable="true"
-            android:focusable="true">
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="║▌║"
                 android:textColor="#3B82F6"
-                android:textSize="13sp"
+                android:textSize="15sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="3dp"
                 android:text="Barcode"
                 android:textColor="#FFFFFF"
-                android:textSize="8.5sp"
+                android:textSize="9.5sp"
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>

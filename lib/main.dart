@@ -67,6 +67,8 @@ void main() {
   paymentProvider.setCreditsVerifiedCallback(authProvider.refreshUser);
   var restoredPaymentAuthScope = -1;
   var trackedFirstOpenAuthScope = -1;
+  String? pendingExternalRoute;
+  void Function()? flushPendingExternalRoute;
   final homeProvider = HomeProvider(
     HomeService(apiService),
     MealGuidanceService(apiService),
@@ -94,10 +96,12 @@ void main() {
       restoredPaymentAuthScope = apiService.authScope;
       unawaited(paymentProvider.restorePurchases());
       if (authProvider.user?.id != null) {
-        unawaited(RevenueCatService.logIn(
-          authProvider.user!.id,
-          apiService: apiService,
-        ));
+        unawaited(
+          RevenueCatService.logIn(
+            authProvider.user!.id,
+            apiService: apiService,
+          ),
+        );
       } else {
         unawaited(RevenueCatService.init());
       }
@@ -105,6 +109,7 @@ void main() {
       // in a previous session due to an expired auth token.
       unawaited(paymentProvider.retryPendingPurchaseVerification());
     }
+    flushPendingExternalRoute?.call();
   });
   // Start bootstrap reads. The router shows a neutral startup screen until
   // they finish, never a persisted onboarding step.
@@ -112,17 +117,54 @@ void main() {
   unawaited(_bootstrapAuth(authProvider, onboardingProvider));
   unawaited(RevenueCatService.init());
   final router = createAppRouter(onboardingProvider, authProvider);
+
+  // External entry points (widget, Live Activity, notification) should open
+  // scan screens on top of the current page. Using go() here replaces the
+  // current route, leaving ScanScreen/BarcodeScanScreen with nothing to pop
+  // back to when the user taps the close button.
+  void pushExternalRoute(String routePath) {
+    final currentPath = router.routerDelegate.currentConfiguration.uri.path;
+    if (currentPath == routePath) {
+      pendingExternalRoute = null;
+      return;
+    }
+    if (authProvider.loading ||
+        !onboardingProvider.initialized ||
+        currentPath == '/startup') {
+      pendingExternalRoute = routePath;
+      return;
+    }
+    unawaited(router.push(routePath));
+  }
+
+  flushPendingExternalRoute = () {
+    final routePath = pendingExternalRoute;
+    if (routePath == null ||
+        authProvider.loading ||
+        !onboardingProvider.initialized) {
+      return;
+    }
+    pendingExternalRoute = null;
+    pushExternalRoute(routePath);
+  };
+  onboardingProvider.addListener(() => flushPendingExternalRoute?.call());
+
   NotificationService.onNotificationTap = (payload) {
     if (payload == 'daily_recap') router.go('/recap');
     if (payload == 'trial_expiring') router.go('/pricing');
-    if (payload == 'action_scan_food' || payload == '/scan') router.go('/scan');
+    if (payload == 'action_scan_food' || payload == '/scan') {
+      pushExternalRoute('/scan');
+    }
     if (payload == 'action_scan_barcode' || payload == '/barcode-scan') {
-      router.go('/barcode-scan');
+      pushExternalRoute('/barcode-scan');
+    }
+    if (payload == 'live_activity') {
+      pushExternalRoute('/home');
     }
   };
 
   WidgetSyncService.onWidgetDeepLink = (routePath) {
-    router.go(routePath);
+    pushExternalRoute(routePath);
   };
 
   runApp(
@@ -154,6 +196,7 @@ void main() {
   // Starting it before runApp blocked Flutter's first frame and exposed the
   // plain Android launch background for several seconds.
   WidgetsBinding.instance.addPostFrameCallback((_) {
+    flushPendingExternalRoute?.call();
     unawaited(NotificationService.instance.init());
     unawaited(WidgetSyncService.instance.init());
   });

@@ -80,9 +80,6 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
           if (mounted) setState(() {});
         });
       }
-      if (mounted && Navigator.canPop(context)) {
-        setState(() => _showClose = true);
-      }
       if (mounted) {
         final analytics = context.read<AnalyticsService?>();
         if (analytics != null) {
@@ -90,7 +87,7 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
         }
       }
     });
-    _closeTimer = Timer(const Duration(seconds: 2), () {
+    _closeTimer = Timer(const Duration(seconds: 5), () {
       if (mounted) setState(() => _showClose = true);
     });
   }
@@ -213,9 +210,7 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
           setState(() => _finishingPurchase = false);
           return;
         }
-        try {
-          await payment.retryPendingPurchaseVerification();
-        } catch (_) {}
+        unawaited(payment.retryPendingPurchaseVerification());
       }
       if (!mounted) return;
 
@@ -261,10 +256,6 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
   }
 
   void _handleClose() {
-    if (!widget.onboardingMode) {
-      if (Navigator.canPop(context)) Navigator.pop(context);
-      return;
-    }
     if (!_hasShownDownsell) {
       setState(() => _hasShownDownsell = true);
       SpinWheelDialog.show(
@@ -294,6 +285,8 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
     } else {
       if (Navigator.canPop(context)) {
         Navigator.pop(context);
+      } else {
+        context.go('/home');
       }
     }
   }

@@ -54,7 +54,8 @@ GoRouter createAppRouter(OnboardingProvider onboarding, AuthProvider auth) =>
         // let them complete the remaining steps (Paywall/Spinner) before going to /home.
         if (auth.isAuthenticated) {
           if (onLogin) {
-            return '/home';
+            final isPrem = auth.user?.hasPremiumAccess ?? false;
+            return isPrem ? '/home' : '/premium';
           }
           if (onOnboarding && onboarding.isCompleted && !onboarding.isTestingOnboarding && !onboarding.isRecalculating) {
             return '/home';

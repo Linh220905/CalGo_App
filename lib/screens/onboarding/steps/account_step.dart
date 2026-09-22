@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../../../services/analytics_service.dart';
 import '../../../providers/auth_provider.dart';
+import '../../../providers/home_provider.dart';
 import '../../../providers/onboarding_provider.dart';
 import '../../../providers/payment_provider.dart';
 import '../../../providers/app_settings_provider.dart';
@@ -119,15 +121,26 @@ class _AccountStepState extends State<AccountStep> {
                   final success = await authProvider.signInWithGoogle();
                   if (success && context.mounted) {
                     unawaited(analytics.trackLoginSuccess(method: 'google'));
-                    // Sync pending anonymous purchases made before login
-                    try {
-                      await context.read<PaymentProvider>().retryPendingPurchaseVerification();
-                    } catch (_) {}
+                    // Sync pending anonymous purchases made before login (background)
+                    unawaited(context.read<PaymentProvider>().retryPendingPurchaseVerification());
                     await provider.setAccountMethod('google');
-                    // Save user profile data to backend without prematurely marking onboarding as completed
                     if (context.mounted) {
-                      await provider.saveProfileToBackend(authProvider: authProvider);
-                      provider.nextStep(); // Advance to Step 17 (PremiumPaywallStep)
+                      final hasPremium = authProvider.user?.hasPremiumAccess ?? false;
+                      if (hasPremium) {
+                        final home = context.read<HomeProvider>();
+                        await provider.completeOnboarding(
+                          authProvider: authProvider,
+                          homeProvider: home,
+                        );
+                        if (context.mounted) {
+                          await home.loadToday(forceRefresh: true);
+                          if (context.mounted) context.go('/home');
+                        }
+                      } else {
+                        // Save user profile data to backend without prematurely marking onboarding as completed
+                        await provider.saveProfileToBackend(authProvider: authProvider);
+                        provider.nextStep(); // Advance to Step 17 (PremiumPaywallStep)
+                      }
                     }
                   } else if (context.mounted && authProvider.error != null) {
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -151,15 +164,26 @@ class _AccountStepState extends State<AccountStep> {
                   final success = await authProvider.signInWithApple();
                   if (success && context.mounted) {
                     unawaited(analytics.trackLoginSuccess(method: 'apple'));
-                    // Sync pending anonymous purchases made before login
-                    try {
-                      await context.read<PaymentProvider>().retryPendingPurchaseVerification();
-                    } catch (_) {}
+                    // Sync pending anonymous purchases made before login (background)
+                    unawaited(context.read<PaymentProvider>().retryPendingPurchaseVerification());
                     await onboarding.setAccountMethod('apple');
-                    // Save user profile data to backend without prematurely marking onboarding as completed
                     if (context.mounted) {
-                      await onboarding.saveProfileToBackend(authProvider: authProvider);
-                      onboarding.nextStep(); // Advance to Step 17 (PremiumPaywallStep)
+                      final hasPremium = authProvider.user?.hasPremiumAccess ?? false;
+                      if (hasPremium) {
+                        final home = context.read<HomeProvider>();
+                        await onboarding.completeOnboarding(
+                          authProvider: authProvider,
+                          homeProvider: home,
+                        );
+                        if (context.mounted) {
+                          await home.loadToday(forceRefresh: true);
+                          if (context.mounted) context.go('/home');
+                        }
+                      } else {
+                        // Save user profile data to backend without prematurely marking onboarding as completed
+                        await onboarding.saveProfileToBackend(authProvider: authProvider);
+                        onboarding.nextStep(); // Advance to Step 17 (PremiumPaywallStep)
+                      }
                     }
                   } else if (authProvider.error != null && context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(

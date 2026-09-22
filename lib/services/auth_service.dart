@@ -56,10 +56,12 @@ class AuthService {
       refreshToken:
           res['refresh_token'] as String? ?? res['refreshToken'] as String?,
     );
-    final user = await _api.get(
-      '/users/me',
-      caller: 'AuthService._saveSessionAndGetUser',
-    );
+    final user = await _api
+        .get(
+          '/users/me',
+          caller: 'AuthService._saveSessionAndGetUser',
+        )
+        .timeout(const Duration(seconds: 15));
     return user as Map<String, dynamic>;
   }
 

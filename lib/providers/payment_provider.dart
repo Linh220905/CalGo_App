@@ -901,7 +901,11 @@ class PaymentProvider extends ChangeNotifier {
   /// Called after a successful login / auth restore. Retries any purchase verification
   /// that failed on a previous session or was made anonymously prior to sign-in.
   Future<void> retryPendingPurchaseVerification() async {
-    await _initialization;
+    try {
+      await _initialization.timeout(const Duration(seconds: 5));
+    } catch (_) {
+      return;
+    }
     if (!billingEnabled || !_ready) return;
     final accountId = _accountId;
     if (accountId == null) return;

@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 import 'package:home_widget/home_widget.dart';
 import 'package:live_activities/live_activities.dart';
 import 'notification_service.dart';
 
-class WidgetSyncService {
+class WidgetSyncService with WidgetsBindingObserver {
   WidgetSyncService._();
   static final WidgetSyncService instance = WidgetSyncService._();
 
@@ -15,30 +18,75 @@ class WidgetSyncService {
 
   final LiveActivities _liveActivities = LiveActivities();
   bool _initialized = false;
+  Future<void>? _initializationFuture;
+  Map<String, dynamic>? _lastLiveActivityData;
+  bool _lastLiveActivityEnabled = true;
 
-  Future<void> init() async {
-    if (_initialized) return;
+  Future<void> init() {
+    if (_initialized) return Future.value();
+    return _initializationFuture ??= _initialize();
+  }
+
+  Future<void> _initialize() async {
     try {
       if (defaultTargetPlatform == TargetPlatform.iOS) {
         await HomeWidget.setAppGroupId(appGroupId);
         await _liveActivities.init(appGroupId: appGroupId);
-
-        // Check initially launched URL from widget
-        final initialUri = await HomeWidget.initiallyLaunchedFromHomeWidget();
-        if (initialUri != null) {
-          _handleDeepLinkUri(initialUri);
-        }
-
-        // Listen for widget clicks while app is open / foregrounded
-        HomeWidget.widgetClicked.listen((uri) {
-          if (uri != null) {
-            _handleDeepLinkUri(uri);
-          }
-        });
       }
+
+      // HomeWidget uses the same URI launch contract on both platforms.
+      // Android widget PendingIntents are delivered through its onNewIntent
+      // listener, so this must not be restricted to iOS.
+      final initialUri = await HomeWidget.initiallyLaunchedFromHomeWidget();
+      if (initialUri != null) {
+        _handleDeepLinkUri(initialUri);
+      }
+
+      // Listen for widget clicks while the app is already running.
+      HomeWidget.widgetClicked.listen((uri) {
+        if (uri != null) {
+          _handleDeepLinkUri(uri);
+        }
+      });
+
       _initialized = true;
+      WidgetsBinding.instance.addObserver(this);
     } catch (e) {
       debugPrint('WidgetSyncService init error: $e');
+    } finally {
+      _initializationFuture = null;
+    }
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state != AppLifecycleState.resumed ||
+        !_initialized ||
+        _lastLiveActivityData == null) {
+      return;
+    }
+
+    // HomeScreen de-duplicates identical nutrition values. Re-submit the
+    // latest state on every foreground transition so a dismissed Android
+    // ongoing notification or iOS Live Activity is recreated.
+    if (defaultTargetPlatform == TargetPlatform.iOS) {
+      unawaited(
+        _updateLiveActivity(
+          activityData: Map<String, dynamic>.from(_lastLiveActivityData!),
+          isEnabled: _lastLiveActivityEnabled,
+        ),
+      );
+    } else if (defaultTargetPlatform == TargetPlatform.android) {
+      final data = _lastLiveActivityData!;
+      unawaited(
+        NotificationService.instance.updateAndroidLiveNotification(
+          caloriesLeft: (data['caloriesLeft'] as num?)?.toInt() ?? 0,
+          proteinLeft: (data['proteinLeft'] as num?)?.toInt() ?? 0,
+          carbsLeft: (data['carbsLeft'] as num?)?.toInt() ?? 0,
+          fatLeft: (data['fatLeft'] as num?)?.toInt() ?? 0,
+          isEnabled: _lastLiveActivityEnabled,
+        ),
+      );
     }
   }
 
@@ -73,10 +121,30 @@ class WidgetSyncService {
     try {
       await init();
 
+      final activityData = <String, dynamic>{
+        'caloriesLeft': caloriesLeft,
+        'targetCalories': targetCalories,
+        'consumedCalories': consumedCalories,
+        'proteinLeft': proteinLeft,
+        'targetProtein': targetProtein,
+        'consumedProtein': consumedProtein,
+        'carbsLeft': carbsLeft,
+        'targetCarbs': targetCarbs,
+        'consumedCarbs': consumedCarbs,
+        'fatLeft': fatLeft,
+        'targetFat': targetFat,
+        'consumedFat': consumedFat,
+      };
+      _lastLiveActivityData = activityData;
+      _lastLiveActivityEnabled = isLiveActivityEnabled;
+
       // 1. Update Home Screen Widget via HomeWidget (UserDefaults App Group)
       await HomeWidget.saveWidgetData<int>('calories_left', caloriesLeft);
       await HomeWidget.saveWidgetData<int>('target_calories', targetCalories);
-      await HomeWidget.saveWidgetData<int>('consumed_calories', consumedCalories);
+      await HomeWidget.saveWidgetData<int>(
+        'consumed_calories',
+        consumedCalories,
+      );
       await HomeWidget.saveWidgetData<int>('protein_left', proteinLeft);
       await HomeWidget.saveWidgetData<int>('target_protein', targetProtein);
       await HomeWidget.saveWidgetData<int>('consumed_protein', consumedProtein);
@@ -95,18 +163,7 @@ class WidgetSyncService {
       // 2. Update Live Activity / Lock Screen Banner
       if (defaultTargetPlatform == TargetPlatform.iOS) {
         await _updateLiveActivity(
-          caloriesLeft: caloriesLeft,
-          targetCalories: targetCalories,
-          consumedCalories: consumedCalories,
-          proteinLeft: proteinLeft,
-          targetProtein: targetProtein,
-          consumedProtein: consumedProtein,
-          carbsLeft: carbsLeft,
-          targetCarbs: targetCarbs,
-          consumedCarbs: consumedCarbs,
-          fatLeft: fatLeft,
-          targetFat: targetFat,
-          consumedFat: consumedFat,
+          activityData: activityData,
           isEnabled: isLiveActivityEnabled,
         );
       } else if (defaultTargetPlatform == TargetPlatform.android) {
@@ -124,22 +181,12 @@ class WidgetSyncService {
   }
 
   Future<void> _updateLiveActivity({
-    required int caloriesLeft,
-    required int targetCalories,
-    required int consumedCalories,
-    required int proteinLeft,
-    required int targetProtein,
-    required int consumedProtein,
-    required int carbsLeft,
-    required int targetCarbs,
-    required int consumedCarbs,
-    required int fatLeft,
-    required int targetFat,
-    required int consumedFat,
+    required Map<String, dynamic> activityData,
     required bool isEnabled,
   }) async {
     try {
-      final areActivitiesSupported = await _liveActivities.areActivitiesSupported();
+      final areActivitiesSupported = await _liveActivities
+          .areActivitiesSupported();
       if (!areActivitiesSupported) {
         debugPrint('Live Activities are not supported on device');
         return;
@@ -156,21 +203,6 @@ class WidgetSyncService {
         return;
       }
 
-      final activityData = <String, dynamic>{
-        'caloriesLeft': caloriesLeft,
-        'targetCalories': targetCalories,
-        'consumedCalories': consumedCalories,
-        'proteinLeft': proteinLeft,
-        'targetProtein': targetProtein,
-        'consumedProtein': consumedProtein,
-        'carbsLeft': carbsLeft,
-        'targetCarbs': targetCarbs,
-        'consumedCarbs': consumedCarbs,
-        'fatLeft': fatLeft,
-        'targetFat': targetFat,
-        'consumedFat': consumedFat,
-      };
-
       try {
         await _liveActivities.createOrUpdateActivity(
           'calgo_live_activity',
@@ -178,7 +210,9 @@ class WidgetSyncService {
           removeWhenAppIsKilled: false,
         );
       } catch (err) {
-        debugPrint('createOrUpdateActivity failed ($err), fallback create fresh activity');
+        debugPrint(
+          'createOrUpdateActivity failed ($err), fallback create fresh activity',
+        );
         await _liveActivities.createActivity(
           'calgo_live_activity',
           activityData,
@@ -194,6 +228,8 @@ class WidgetSyncService {
     try {
       if (defaultTargetPlatform == TargetPlatform.iOS) {
         await _liveActivities.endAllActivities();
+      } else if (defaultTargetPlatform == TargetPlatform.android) {
+        await NotificationService.instance.cancelLiveActivityNotification();
       }
     } catch (e) {
       debugPrint('Live Activity stop error: $e');

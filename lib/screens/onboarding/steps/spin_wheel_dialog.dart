@@ -24,11 +24,11 @@ TextStyle _f(
 );
 
 class SpinWheelDialog extends StatefulWidget {
-  final VoidCallback onDismiss;
+  final FutureOr<void> Function() onDismiss;
 
   const SpinWheelDialog({super.key, required this.onDismiss});
 
-  static Future<void> show(BuildContext context, {required VoidCallback onDismiss}) {
+  static Future<void> show(BuildContext context, {required FutureOr<void> Function() onDismiss}) {
     return showGeneralDialog(
       context: context,
       barrierDismissible: false,
