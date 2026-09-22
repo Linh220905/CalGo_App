@@ -293,10 +293,10 @@ class _DiscountOfferPaywallStepState extends State<DiscountOfferPaywallStep> {
   Future<void> _handleDismiss() async {
     if (_isExiting || _buying) return;
     setState(() => _isExiting = true);
+    await widget.onDismiss();
     if (mounted && Navigator.canPop(context)) {
       Navigator.of(context).pop();
     }
-    await widget.onDismiss();
   }
 
   @override
@@ -403,11 +403,22 @@ class _DiscountOfferPaywallStepState extends State<DiscountOfferPaywallStep> {
                             color: Color(0xFFF1F5F9),
                             shape: BoxShape.circle,
                           ),
-                          child: const Icon(
-                            Icons.close_rounded,
-                            size: 18,
-                            color: _kInk,
-                          ),
+                          child: _isExiting
+                              ? const Center(
+                                  child: SizedBox(
+                                    width: 14,
+                                    height: 14,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                      color: _kInk,
+                                    ),
+                                  ),
+                                )
+                              : const Icon(
+                                  Icons.close_rounded,
+                                  size: 18,
+                                  color: _kInk,
+                                ),
                         ),
                       ),
                     ),
