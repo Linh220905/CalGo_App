@@ -160,7 +160,10 @@ class _DiscountOfferPaywallStepState extends State<DiscountOfferPaywallStep> {
     if (saved) {
       await auth.refreshUser();
       await home.loadToday(forceRefresh: true);
-      if (mounted) context.go('/home');
+      if (mounted) {
+        Navigator.of(context).pop();
+        context.go('/home');
+      }
     }
   }
 
@@ -290,13 +293,10 @@ class _DiscountOfferPaywallStepState extends State<DiscountOfferPaywallStep> {
   Future<void> _handleDismiss() async {
     if (_isExiting || _buying) return;
     setState(() => _isExiting = true);
-    try {
-      await widget.onDismiss();
-    } finally {
-      if (mounted) {
-        Navigator.pop(context);
-      }
+    if (mounted && Navigator.canPop(context)) {
+      Navigator.of(context).pop();
     }
+    await widget.onDismiss();
   }
 
   @override
