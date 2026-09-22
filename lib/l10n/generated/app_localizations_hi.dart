@@ -1603,6 +1603,10 @@ class AppLocalizationsHi extends AppLocalizations {
   }
 
   @override
+  String get appleSignInFailed =>
+      'Apple साइन-इन विफल रहा। कृपया अपना Apple ID खाता और इंटरनेट कनेक्शन जांचें।';
+
+  @override
   String get appleSignInPending =>
       'एप्पल साइन-इन अभी भी पूरा किया जा रहा है। अब Google का उपयोग करें।';
 

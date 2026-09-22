@@ -1610,6 +1610,10 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get appleSignInFailed =>
+      'Error al iniciar sesión con Apple. Comprueba tu ID de Apple y tu conexión a internet.';
+
+  @override
   String get appleSignInPending =>
       'El inicio de sesión con Apple aún está en desarrollo. Usa Google por ahora.';
 

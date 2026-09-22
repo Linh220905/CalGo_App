@@ -484,6 +484,7 @@
   "onboardingSaveFailed": "영양 목표를 저장할 수 없습니다. 다시 시도해주세요.",
   "onboardingSaveNetworkFailed": "영양 목표를 저장할 수 없습니다. 연결을 확인하고 다시 시도하세요.",
   "googleSignInFailed": "Google 로그인 실패: {error}",
+  "appleSignInFailed": "Apple 로그인에 실패했습니다. Apple ID 계정과 인터넷 연결을 확인해주세요.",
   "appleSignInPending": "Apple 로그인이 아직 완료되지 않았습니다. 지금은 Google을 사용하세요.",
   "firstScanTitle": "첫 식사를 스캔할 준비가 되셨나요?",
   "firstScanSubtitle": "아래 스캔을 눌러 시작하세요.",

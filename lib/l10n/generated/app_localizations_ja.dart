@@ -1550,6 +1550,10 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
+  String get appleSignInFailed =>
+      'Appleサインインに失敗しました。Apple IDアカウントとインターネット接続をご確認ください。';
+
+  @override
   String get appleSignInPending => 'Appleログインを完了しています。現在はGoogleをご利用ください。';
 
   @override

@@ -1594,6 +1594,10 @@ class AppLocalizationsVi extends AppLocalizations {
   }
 
   @override
+  String get appleSignInFailed =>
+      'Đăng nhập Apple không thành công. Vui lòng kiểm tra tài khoản Apple ID hoặc kết nối mạng.';
+
+  @override
   String get appleSignInPending =>
       'Đăng nhập Apple đang được hoàn thiện. Vui lòng dùng Google.';
 

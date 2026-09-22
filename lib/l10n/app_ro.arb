@@ -311,6 +311,7 @@
   "paceExtreme": "Intens (~1.0 kg/săpt.)",
   "creditsCount": "{count} credite",
   "googleSignInFailed": "Conectare Google eșuată: {error}",
+  "appleSignInFailed": "Autentificarea cu Apple a eșuat. Verifică contul Apple ID și conexiunea la internet.",
   "restoreException": "Restaurare eșuată: {error}",
   "paymentOpenFailed": "Nu s-a putut deschide pagina de plată.",
   "paymentVerificationFailed": "Verificarea plății a eșuat. Te rugăm să contactezi asistența dacă ai fost taxat.",

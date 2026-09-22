@@ -751,6 +751,7 @@
       }
     }
   },
+  "appleSignInFailed": "Error al iniciar sesión con Apple. Comprueba tu ID de Apple y tu conexión a internet.",
   "appleSignInPending": "El inicio de sesión con Apple aún está en desarrollo. Usa Google por ahora.",
   "firstScanTitle": "¿Listo para escanear tu primera comida?",
   "firstScanSubtitle": "Toca Escanear para empezar",

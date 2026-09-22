@@ -1628,6 +1628,10 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get appleSignInFailed =>
+      'Échec de la connexion Apple. Veuillez vérifier votre identifiant Apple et votre connexion Internet.';
+
+  @override
   String get appleSignInPending =>
       'La connexion Apple est toujours en cours. Veuillez utiliser Google pour le moment.';
 

@@ -1584,6 +1584,10 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get appleSignInFailed =>
+      'فشل تسجيل الدخول باستخدام Apple. يرجى التحقق من حساب Apple ID والاتصال بالإنترنت.';
+
+  @override
   String get appleSignInPending =>
       'لا تزال عملية تسجيل التفاح جارية. الرجاء استخدام جوجل الآن.';
 

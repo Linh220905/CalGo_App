@@ -751,6 +751,7 @@
       }
     }
   },
+  "appleSignInFailed": "Apple 登录失败。请检查您的 Apple ID 账户和网络连接。",
   "appleSignInPending": "苹果签入仍在完成. 请使用谷歌目前。",
   "firstScanTitle": "准备好扫描你的一餐了吗?",
   "firstScanSubtitle": "下方扫描以启动",

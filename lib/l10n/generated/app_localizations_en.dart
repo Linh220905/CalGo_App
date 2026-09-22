@@ -1597,6 +1597,10 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get appleSignInFailed =>
+      'Apple sign-in failed. Please check your Apple ID account and internet connection.';
+
+  @override
   String get appleSignInPending =>
       'Apple sign-in is still being completed. Please use Google for now.';
 

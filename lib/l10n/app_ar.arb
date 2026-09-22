@@ -751,6 +751,7 @@
       }
     }
   },
+  "appleSignInFailed": "فشل تسجيل الدخول باستخدام Apple. يرجى التحقق من حساب Apple ID والاتصال بالإنترنت.",
   "appleSignInPending": "لا تزال عملية تسجيل التفاح جارية. الرجاء استخدام جوجل الآن.",
   "firstScanTitle": "مستعد لمسح وجبتك الأولى؟",
   "firstScanSubtitle": "تاب Scan أسفل للبدء",

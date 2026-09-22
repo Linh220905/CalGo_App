@@ -1553,6 +1553,10 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
+  String get appleSignInFailed =>
+      'Apple 로그인에 실패했습니다. Apple ID 계정과 인터넷 연결을 확인해주세요.';
+
+  @override
   String get appleSignInPending =>
       'Apple 로그인이 아직 완료되지 않았습니다. 지금은 Google을 사용하세요.';
 

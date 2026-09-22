@@ -163,9 +163,22 @@ class AuthProvider extends ChangeNotifier {
         return true;
       }
       return false;
+    } on SignInWithAppleAuthorizationException catch (e) {
+      debugPrint('[AuthProvider] Apple Sign-In authorization error: ${e.code} - ${e.message}');
+      if (e.code == AuthorizationErrorCode.canceled) {
+        // User voluntarily dismissed the Apple ID sheet. Clear error so no error snackbar appears.
+        _error = null;
+      } else {
+        _error = 'apple_auth_error';
+      }
+      return false;
     } catch (e) {
-      final errStr = e.toString();
-      _error = errStr;
+      debugPrint('[AuthProvider] Apple Sign-In error: $e');
+      if (e is ApiException) {
+        _error = e.message;
+      } else {
+        _error = 'apple_auth_error';
+      }
       return false;
     } finally {
       _endSocialLoading('apple');

@@ -1616,6 +1616,10 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
+  String get appleSignInFailed =>
+      'Falha ao iniciar sessão com a Apple. Verifique a sua conta Apple ID e a ligação à Internet.';
+
+  @override
   String get appleSignInPending =>
       'O registo da Apple ainda está a ser concluído. Por favor, use o Google por enquanto.';
 

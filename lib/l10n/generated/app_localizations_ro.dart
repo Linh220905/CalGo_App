@@ -1620,6 +1620,10 @@ class AppLocalizationsRo extends AppLocalizations {
   }
 
   @override
+  String get appleSignInFailed =>
+      'Autentificarea cu Apple a eșuat. Verifică contul Apple ID și conexiunea la internet.';
+
+  @override
   String get appleSignInPending =>
       'Autentificarea Apple este în curs de finalizare. Folosește Google deocamdată.';
 

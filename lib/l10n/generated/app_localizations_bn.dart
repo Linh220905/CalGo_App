@@ -1604,6 +1604,10 @@ class AppLocalizationsBn extends AppLocalizations {
   }
 
   @override
+  String get appleSignInFailed =>
+      'Apple সাইন-ইন ব্যর্থ হয়েছে। অনুগ্রহ করে আপনার Apple ID অ্যাকাউন্ট এবং ইন্টারনেট সংযোগ পরীক্ষা করুন।';
+
+  @override
   String get appleSignInPending =>
       'আপেল সাইন ইন ইন এখনো সমাপ্ত হচ্ছে। দয়া করে এখন গুগলে ব্যবহার করুন।';
 

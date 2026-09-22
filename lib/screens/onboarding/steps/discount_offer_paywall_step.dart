@@ -206,7 +206,11 @@ class _DiscountOfferPaywallStepState extends State<DiscountOfferPaywallStep> {
                   } else {
                     appleBusy = false;
                   }
-                  error = provider.error ?? s.signInFailed;
+                  if (provider.error == 'apple_auth_error') {
+                    error = s.appleSignInFailed;
+                  } else {
+                    error = provider.error ?? s.signInFailed;
+                  }
                 });
                 return;
               }

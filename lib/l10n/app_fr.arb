@@ -751,6 +751,7 @@
       }
     }
   },
+  "appleSignInFailed": "Échec de la connexion Apple. Veuillez vérifier votre identifiant Apple et votre connexion Internet.",
   "appleSignInPending": "La connexion Apple est toujours en cours. Veuillez utiliser Google pour le moment.",
   "firstScanTitle": "Prêt à scanner votre premier repas ?",
   "firstScanSubtitle": "Appuyez sur Scan ci-dessous pour commencer",

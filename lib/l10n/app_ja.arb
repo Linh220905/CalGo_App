@@ -484,6 +484,7 @@
   "onboardingSaveFailed": "栄養目標を保存できませんでした。もう一度お試しください。",
   "onboardingSaveNetworkFailed": "栄養目標を保存できませんでした。接続を確認してもう一度お試しください。",
   "googleSignInFailed": "Googleログインに失敗しました：{error}",
+  "appleSignInFailed": "Appleサインインに失敗しました。Apple IDアカウントとインターネット接続をご確認ください。",
   "appleSignInPending": "Appleログインを完了しています。現在はGoogleをご利用ください。",
   "firstScanTitle": "最初の食事をスキャンする準備はできましたか？",
   "firstScanSubtitle": "下の「スキャン」をタップして始めましょう",

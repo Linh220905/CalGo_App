@@ -285,9 +285,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   if (success && context.mounted) {
                     await _completeLoginAndNavigate(context);
                   } else if (authProvider.error != null && context.mounted) {
+                    final msg = authProvider.error == 'apple_auth_error'
+                        ? s.appleSignInFailed
+                        : s.loginFailed(authProvider.error ?? '');
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text(s.loginFailed(authProvider.error ?? '')),
+                        content: Text(msg),
                         backgroundColor: Colors.redAccent,
                       ),
                     );

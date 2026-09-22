@@ -751,6 +751,7 @@
       }
     }
   },
+  "appleSignInFailed": "Falha ao iniciar sessão com a Apple. Verifique a sua conta Apple ID e a ligação à Internet.",
   "appleSignInPending": "O registo da Apple ainda está a ser concluído. Por favor, use o Google por enquanto.",
   "firstScanTitle": "Pronto para analisar a sua primeira refeição?",
   "firstScanSubtitle": "Toque em Procurar abaixo para começar",

@@ -1541,6 +1541,9 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
+  String get appleSignInFailed => 'Apple 登录失败。请检查您的 Apple ID 账户和网络连接。';
+
+  @override
   String get appleSignInPending => '苹果签入仍在完成. 请使用谷歌目前。';
 
   @override

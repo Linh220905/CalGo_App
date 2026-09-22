@@ -762,6 +762,7 @@
       }
     }
   },
+  "appleSignInFailed": "Apple sign-in failed. Please check your Apple ID account and internet connection.",
   "appleSignInPending": "Apple sign-in is still being completed. Please use Google for now.",
   "firstScanTitle": "Ready to scan your first meal?",
   "firstScanSubtitle": "Tap Scan below to get started",

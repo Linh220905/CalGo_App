@@ -1621,6 +1621,10 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
+  String get appleSignInFailed =>
+      'Не удалось войти с Apple. Пожалуйста, проверьте свой Apple ID и подключение к интернету.';
+
+  @override
   String get appleSignInPending =>
       'Регистрация Apple все еще завершается. Пожалуйста, используйте Google сейчас.';
 

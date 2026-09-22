@@ -762,6 +762,7 @@
       }
     }
   },
+  "appleSignInFailed": "Đăng nhập Apple không thành công. Vui lòng kiểm tra tài khoản Apple ID hoặc kết nối mạng.",
   "appleSignInPending": "Đăng nhập Apple đang được hoàn thiện. Vui lòng dùng Google.",
   "firstScanTitle": "Thử quét bữa ăn đầu tiên nhé!",
   "firstScanSubtitle": "Nhấn vào nút Scan bên dưới để bắt đầu",
