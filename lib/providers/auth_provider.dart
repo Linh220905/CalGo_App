@@ -274,6 +274,11 @@ class AuthProvider extends ChangeNotifier {
         scopes: ['email', 'profile'],
       );
 
+  void updateUserForTest(User? user) {
+    _user = user;
+    notifyListeners();
+  }
+
   Future<bool> deleteAccount() async {
     try {
       await _authService.deleteAccount();

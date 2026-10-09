@@ -20,6 +20,7 @@ import '../../widgets/quick_add_sheet.dart';
 import '../../utils/localized_date_utils.dart';
 import 'widgets/cal_ai_hero_card.dart';
 import 'widgets/cal_ai_macro_card.dart';
+import 'widgets/nutrition_swipe_section.dart';
 import '../../utils/macro_colors.dart';
 import '../../utils/macro_icons.dart';
 import '../recap/daily_recap_screen.dart';
@@ -285,13 +286,17 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
                           const SizedBox(height: 18),
 
-                          // ── Main Hero Calorie Card ─────────────
-                          _CalorieCardSection(),
-
-                          const SizedBox(height: 14),
-
-                          // ── 3 Macro Cards (Protein, Carbs, Fats) ──
-                          _MacroCardsSection(),
+                          // ── 3-Page Swipeable Nutrition & Vitality Tracking ──
+                          if (!hp.hasLoaded && hp.loadingSummary)
+                            Column(
+                              children: [
+                                const _CardSkeleton(),
+                                const SizedBox(height: 14),
+                                const _MacroSkeleton(),
+                              ],
+                            )
+                          else
+                            NutritionSwipeSection(summary: hp.summary),
 
                           const SizedBox(height: 14),
 

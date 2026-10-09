@@ -41,7 +41,7 @@ class CalAiHeroCard extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 22),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
       decoration: BoxDecoration(
         color: cardBg,
         borderRadius: BorderRadius.circular(28),
@@ -69,30 +69,30 @@ class CalAiHeroCard extends StatelessWidget {
                     Text(
                       '$caloriesLeft',
                       style: TextStyle(
-                        fontSize: 52,
+                        fontSize: 44,
                         fontWeight: FontWeight.w900,
                         color: textDark,
                         letterSpacing: -1.5,
                         height: 1.0,
                       ),
                     ),
-                    const SizedBox(height: 6),
+                    const SizedBox(height: 4),
                     Text(
                       s.caloriesLeft,
                       style: TextStyle(
-                        fontSize: 15,
+                        fontSize: 14,
                         fontWeight: FontWeight.w500,
                         color: textMuted,
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 6),
                     RichText(
                       text: TextSpan(
                         children: [
                           TextSpan(
                             text: '$caloriesConsumed',
                             style: TextStyle(
-                              fontSize: 14,
+                              fontSize: 13,
                               fontWeight: FontWeight.w800,
                               color: textDark,
                             ),
@@ -100,7 +100,7 @@ class CalAiHeroCard extends StatelessWidget {
                           TextSpan(
                             text: ' / $targetCalories kcal',
                             style: TextStyle(
-                              fontSize: 14,
+                              fontSize: 13,
                               fontWeight: FontWeight.w500,
                               color: textMuted,
                             ),
@@ -114,8 +114,8 @@ class CalAiHeroCard extends StatelessWidget {
 
               // Right column: Circular Gauge with inner flame badge
               SizedBox(
-                width: 92,
-                height: 92,
+                width: 82,
+                height: 82,
                 child: Stack(
                   alignment: Alignment.center,
                   children: [

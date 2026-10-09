@@ -3072,4 +3072,207 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String get howToAddAndroidStep3 =>
       'Tìm ứng dụng CalGo, kéo và thả tiện ích vào vị trí bạn muốn.';
+
+  @override
+  String get heroTitle => 'Theo dõi calo\ndễ dàng hơn bao giờ hết';
+
+  @override
+  String get aiScanStep1 => 'Đang nhận diện món ăn...';
+
+  @override
+  String get aiScanStep2 => 'Đã nhận diện món ăn';
+
+  @override
+  String get aiScanStep3 => 'Đang phân tích nguyên liệu...';
+
+  @override
+  String get aiScanStep4 => 'Xác định thành phần dinh dưỡng...';
+
+  @override
+  String get aiScanStep5 => 'Đang tính toán calories...';
+
+  @override
+  String get noNewDataTag => 'Chưa có dữ liệu mới';
+
+  @override
+  String get fiberLabel => 'Chất xơ';
+
+  @override
+  String get sugarLabel => 'Đường';
+
+  @override
+  String get sodiumLabel => 'Natri';
+
+  @override
+  String get fatsLabel => 'Chất béo';
+
+  @override
+  String get healthScoreTitle => 'Điểm Dinh Dưỡng';
+
+  @override
+  String get healthScoreSubtitle =>
+      'Chất lượng bữa ăn đạt chuẩn dinh dưỡng cân bằng Nutri-Score.';
+
+  @override
+  String get bodyVitalityTitle => 'Chỉ số cơ thể';
+
+  @override
+  String get fourMetricsCount => '4 chỉ số';
+
+  @override
+  String get vitalityEnergyTitle => 'Năng lượng & Tỉnh táo';
+
+  @override
+  String get vitalityEnergyDetailTitle => 'Mức độ ổn định năng lượng';
+
+  @override
+  String get vitalityEnergyDetailDesc =>
+      'Tính theo tỷ lệ Carbs phức hợp vs Đường tự do. Giữ đường huyết ổn định và ngăn ngừa mệt mỏi sau ăn.';
+
+  @override
+  String get vitalityEnergyDetailSource =>
+      'Nguồn: Hướng dẫn Đường tự do của WHO (Free Sugars Guideline)';
+
+  @override
+  String get vitalitySatietyTitle => 'Độ no & Giảm thèm ăn';
+
+  @override
+  String get vitalitySatietyDetailTitle => 'Độ no & Kiểm soát thèm ăn';
+
+  @override
+  String get vitalitySatietyDetailDesc =>
+      'Tính theo chỉ số Satiety Index: Đạm và Chất xơ làm chậm tốc độ rỗng dạ dày và kích thích tiết hormone no tự nhiên (GLP-1 & PYY).';
+
+  @override
+  String get vitalitySatietyDetailSource =>
+      'Nguồn: ĐH Sydney (Holt et al., Eur J Clin Nutr)';
+
+  @override
+  String get vitalityRecoveryTitle => 'Tim mạch & Phục hồi cơ';
+
+  @override
+  String get vitalityRecoveryDetailTitle => 'Bảo vệ tim mạch & Phục hồi';
+
+  @override
+  String get vitalityRecoveryDetailDesc =>
+      'Đánh giá mức độ kiểm soát Chất béo bão hòa (Saturated Fat) dưới ngưỡng an toàn 10% calo để tối ưu lưu thông máu và phục hồi cơ bắp.';
+
+  @override
+  String get vitalityRecoveryDetailSource =>
+      'Nguồn: Hiệp hội Tim mạch Hoa Kỳ (AHA) & WHO 2023';
+
+  @override
+  String get vitalityBalanceTitle => 'Cân bằng Natri & Điện giải';
+
+  @override
+  String get vitalityBalanceDetailTitle => 'Cân bằng Natri & Điện giải';
+
+  @override
+  String get vitalityBalanceDetailDesc =>
+      'Đo lường độ an toàn lượng muối nạp vào so với ngưỡng khuyến nghị tối đa 2.000 mg Natri/ngày của WHO.';
+
+  @override
+  String get vitalityBalanceDetailSource =>
+      'Nguồn: Tiêu chuẩn Natri của WHO (Sodium Guideline)';
+
+  @override
+  String get fiberDetailTitle => 'Chất xơ (Dietary Fiber)';
+
+  @override
+  String get fiberDetailDesc =>
+      'Hỗ trợ hệ vi sinh đường ruột và làm chậm hấp thu đường vào máu.';
+
+  @override
+  String get fiberDetailSource => 'Nguồn: Viện Y học Hoa Kỳ (IOM) & WHO';
+
+  @override
+  String get sugarDetailTitle => 'Đường tự do (Free Sugars)';
+
+  @override
+  String get sugarDetailDesc =>
+      'WHO khuyến nghị đường tự do dưới 10% tổng năng lượng nạp vào hàng ngày.';
+
+  @override
+  String get sugarDetailSource =>
+      'Nguồn: WHO Guideline on Sugars intake for adults';
+
+  @override
+  String get sodiumDetailTitle => 'Natri (Sodium)';
+
+  @override
+  String get sodiumDetailDesc =>
+      'Kiểm soát natri dưới 2.000 mg/ngày giúp ngăn ngừa tăng huyết áp và tích nước.';
+
+  @override
+  String get sodiumDetailSource => 'Nguồn: WHO Sodium Intake Guideline';
+
+  @override
+  String get healthScoreDetailDesc =>
+      'Chất lượng bữa ăn đạt chuẩn dinh dưỡng cân bằng Nutri-Score.';
+
+  @override
+  String get healthScoreSource => 'Nguồn: Chuẩn Nutri-Score Châu Âu & WHO';
+
+  @override
+  String get nutritionBreakdownTitle => 'SỐ LIỆU DINH DƯỠNG LIÊN QUAN';
+
+  @override
+  String get intakeConsumedLabel => 'Đã nạp';
+
+  @override
+  String get dailyGoalLabel => 'Mục tiêu hàng ngày';
+
+  @override
+  String get safeLimitLabel => 'Giới hạn an toàn';
+
+  @override
+  String get maxRecommendedLabel => 'Khuyến nghị tối đa';
+
+  @override
+  String get proteinBalanceLabel => 'Tổng Đạm đã nạp';
+
+  @override
+  String get fiberQualityLabel => 'Tổng Chất xơ';
+
+  @override
+  String get freeSugarControlLabel => 'Tỷ lệ Đường tự do';
+
+  @override
+  String get complexCarbRatioLabel => 'Carbs phức hợp';
+
+  @override
+  String get complexCarbRatioValue => '82% tổng lượng tinh bột';
+
+  @override
+  String get simpleSugarIntakeLabel => 'Lượng đường đơn';
+
+  @override
+  String get whoLimit50g => 'Dưới giới hạn 50g của WHO';
+
+  @override
+  String get totalProteinLoggedLabel => 'Tổng Đạm đã nạp';
+
+  @override
+  String get standardMetLabel => 'Đạt chuẩn';
+
+  @override
+  String get totalFiberLoggedLabel => 'Tổng Chất xơ';
+
+  @override
+  String get freeSugarRatioLabel => 'Tỷ lệ Đường tự do';
+
+  @override
+  String get freeSugarRatioValue => 'Thấp (Tránh hạ đường huyết)';
+
+  @override
+  String get dietaryFiberIntakeLabel => 'Chất xơ rau củ';
+
+  @override
+  String get satFatControlLabel => 'Chất béo bão hòa';
+
+  @override
+  String get satFatControlValue => 'Dưới giới hạn AHA (<10% calo)';
+
+  @override
+  String get sodiumConsumedLabel => 'Natri tiêu thụ';
 }

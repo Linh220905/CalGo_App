@@ -1015,7 +1015,22 @@ class TargetTimelineCard extends StatelessWidget {
         : forecast.isMovingDown
         ? Icons.trending_down_rounded
         : Icons.trending_up_rounded;
-    final estimatedWeeks = forecast.estimatedWeeks;
+    final isNoData = forecast.status == WeightForecastStatus.noData;
+    final baselineForecast = isNoData
+        ? WeightForecastCalculator.calculate(
+            currentWeight: currentWeight,
+            targetWeight: targetWeight,
+            calories: targetCal,
+            calorieTarget: targetCal,
+            goal: user?.goal,
+            tdee: user?.tdee,
+            weeklyGoalKg: user?.weeklyGoalKg,
+            safeFloorCalories: safeFloor,
+          )
+        : null;
+
+    final effectiveForecast = baselineForecast ?? forecast;
+    final estimatedWeeks = effectiveForecast.estimatedWeeks;
     final statusBody = StatsLocalization.forecastStatusBody(
       context,
       forecast,
@@ -1028,11 +1043,11 @@ class TargetTimelineCard extends StatelessWidget {
           : strings.weeksUnit(estimatedWeeks),
       recommendedCalories: targetCal.round(),
     );
-
     final int chartMaxWeeks = math.min(12, math.max(6, estimatedWeeks ?? 8));
     final List<double> projectedPoints = [];
     for (int w = 0; w <= chartMaxWeeks; w++) {
-      final projected = currentWeight + (forecast.weeklyWeightChangeKg * w);
+      final projected =
+          currentWeight + (effectiveForecast.weeklyWeightChangeKg * w);
       projectedPoints.add(projected);
     }
 
@@ -1065,6 +1080,32 @@ class TargetTimelineCard extends StatelessWidget {
                         ),
                       ),
                     ),
+                    if (isNoData)
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
+                        decoration: BoxDecoration(
+                          color: isDark
+                              ? const Color(0xFF334155).withValues(alpha: 0.5)
+                              : const Color(0xFFF1F5F9),
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(
+                            color: isDark
+                                ? const Color(0xFF475569)
+                                : const Color(0xFFE2E8F0),
+                          ),
+                        ),
+                        child: Text(
+                          strings.noNewDataTag,
+                          style: TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w600,
+                            color: textMuted,
+                          ),
+                        ),
+                      ),
                   ],
                 ),
                 const SizedBox(height: 12),

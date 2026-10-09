@@ -384,11 +384,7 @@ class _DiscountOfferPaywallStepState extends State<DiscountOfferPaywallStep> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Image.asset(
-                    'assets/images/apple_mascot/apple_hello.png',
-                    height: 32,
-                    fit: BoxFit.contain,
-                  ),
+                  const SizedBox(width: 32, height: 32),
                   AnimatedOpacity(
                     opacity: _showClose ? 1.0 : 0.0,
                     duration: const Duration(milliseconds: 300),

@@ -11,6 +11,19 @@ class TodaySummary {
   final int targetCarbG;
   final int fatG;
   final int targetFatG;
+  // Micronutrients
+  final int fiberG;
+  final int targetFiberG;
+  final int sugarG;
+  final int targetSugarG;
+  final int sodiumMg;
+  final int targetSodiumMg;
+  // Health & Body Vitality Indices
+  final double healthScore;
+  final double energyVitality;
+  final double satietyVitality;
+  final double recoveryVitality;
+  final double fluidBalanceVitality;
   final int streakDays;
   final double currentWeightKg;
   final double targetWeightKg;
@@ -26,6 +39,17 @@ class TodaySummary {
     this.targetCarbG = 200,
     this.fatG = 0,
     this.targetFatG = 60,
+    this.fiberG = 0,
+    this.targetFiberG = 38,
+    this.sugarG = 0,
+    this.targetSugarG = 50,
+    this.sodiumMg = 0,
+    this.targetSodiumMg = 2000,
+    this.healthScore = 8.5,
+    this.energyVitality = 84.0,
+    this.satietyVitality = 8.3,
+    this.recoveryVitality = 72.0,
+    this.fluidBalanceVitality = 88.0,
     this.streakDays = 0,
     this.currentWeightKg = 0,
     this.targetWeightKg = 0,
@@ -46,6 +70,12 @@ class TodaySummary {
       targetCarbG > 0 ? (carbG / targetCarbG).clamp(0, 1) : 0;
   double get fatProgress =>
       targetFatG > 0 ? (fatG / targetFatG).clamp(0, 1) : 0;
+  double get fiberProgress =>
+      targetFiberG > 0 ? (fiberG / targetFiberG).clamp(0, 1) : 0;
+  double get sugarProgress =>
+      targetSugarG > 0 ? (sugarG / targetSugarG).clamp(0, 1) : 0;
+  double get sodiumProgress =>
+      targetSodiumMg > 0 ? (sodiumMg / targetSodiumMg).clamp(0, 1) : 0;
 
   factory TodaySummary.fromJson(Map<String, dynamic> json) {
     return TodaySummary(
@@ -74,6 +104,42 @@ class TodaySummary {
       targetFatG: (json['target_fat'] as num?)?.toInt() ??
           (json['targetFatG'] as num?)?.toInt() ??
           60,
+      fiberG: (json['total_fiber'] as num?)?.toInt() ??
+          (json['fiberG'] as num?)?.toInt() ??
+          (json['fiber'] as num?)?.toInt() ??
+          0,
+      targetFiberG: (json['target_fiber'] as num?)?.toInt() ??
+          (json['targetFiberG'] as num?)?.toInt() ??
+          38,
+      sugarG: (json['total_sugar'] as num?)?.toInt() ??
+          (json['sugarG'] as num?)?.toInt() ??
+          (json['sugar'] as num?)?.toInt() ??
+          0,
+      targetSugarG: (json['target_sugar'] as num?)?.toInt() ??
+          (json['targetSugarG'] as num?)?.toInt() ??
+          50,
+      sodiumMg: (json['total_sodium'] as num?)?.toInt() ??
+          (json['sodiumMg'] as num?)?.toInt() ??
+          (json['sodium'] as num?)?.toInt() ??
+          0,
+      targetSodiumMg: (json['target_sodium'] as num?)?.toInt() ??
+          (json['targetSodiumMg'] as num?)?.toInt() ??
+          2000,
+      healthScore: (json['health_score'] as num?)?.toDouble() ??
+          (json['healthScore'] as num?)?.toDouble() ??
+          8.5,
+      energyVitality: (json['energy_vitality'] as num?)?.toDouble() ??
+          (json['energyVitality'] as num?)?.toDouble() ??
+          84.0,
+      satietyVitality: (json['satiety_vitality'] as num?)?.toDouble() ??
+          (json['satietyVitality'] as num?)?.toDouble() ??
+          8.3,
+      recoveryVitality: (json['recovery_vitality'] as num?)?.toDouble() ??
+          (json['recoveryVitality'] as num?)?.toDouble() ??
+          72.0,
+      fluidBalanceVitality: (json['fluid_balance_vitality'] as num?)?.toDouble() ??
+          (json['fluidBalanceVitality'] as num?)?.toDouble() ??
+          88.0,
       streakDays: (json['streak'] as num?)?.toInt() ??
           (json['streakDays'] as num?)?.toInt() ??
           0,
@@ -97,6 +163,17 @@ class TodaySummary {
     int? targetCarbG,
     int? fatG,
     int? targetFatG,
+    int? fiberG,
+    int? targetFiberG,
+    int? sugarG,
+    int? targetSugarG,
+    int? sodiumMg,
+    int? targetSodiumMg,
+    double? healthScore,
+    double? energyVitality,
+    double? satietyVitality,
+    double? recoveryVitality,
+    double? fluidBalanceVitality,
     int? streakDays,
     double? currentWeightKg,
     double? targetWeightKg,
@@ -112,6 +189,18 @@ class TodaySummary {
       targetCarbG: targetCarbG ?? this.targetCarbG,
       fatG: fatG ?? this.fatG,
       targetFatG: targetFatG ?? this.targetFatG,
+      fiberG: fiberG ?? this.fiberG,
+      targetFiberG: targetFiberG ?? this.targetFiberG,
+      sugarG: sugarG ?? this.sugarG,
+      targetSugarG: targetSugarG ?? this.targetSugarG,
+      sodiumMg: sodiumMg ?? this.sodiumMg,
+      targetSodiumMg: targetSodiumMg ?? this.targetSodiumMg,
+      healthScore: healthScore ?? this.healthScore,
+      energyVitality: energyVitality ?? this.energyVitality,
+      satietyVitality: satietyVitality ?? this.satietyVitality,
+      recoveryVitality: recoveryVitality ?? this.recoveryVitality,
+      fluidBalanceVitality:
+          fluidBalanceVitality ?? this.fluidBalanceVitality,
       streakDays: streakDays ?? this.streakDays,
       currentWeightKg: currentWeightKg ?? this.currentWeightKg,
       targetWeightKg: targetWeightKg ?? this.targetWeightKg,
@@ -127,6 +216,9 @@ class DiaryEntry {
   final int proteinG;
   final int carbG;
   final int fatG;
+  final int fiberG;
+  final int sugarG;
+  final int sodiumMg;
   final String mealType;
   final String? imageUrl;
   final DateTime? time;
@@ -138,6 +230,9 @@ class DiaryEntry {
     this.proteinG = 0,
     this.carbG = 0,
     this.fatG = 0,
+    this.fiberG = 0,
+    this.sugarG = 0,
+    this.sodiumMg = 0,
     required this.mealType,
     this.imageUrl,
     this.time,
@@ -179,6 +274,18 @@ class DiaryEntry {
       fatG: (json['total_fat'] as num?)?.toInt() ??
           (json['fat'] as num?)?.toInt() ??
           (json['fatG'] as num?)?.toInt() ??
+          0,
+      fiberG: (json['total_fiber'] as num?)?.toInt() ??
+          (json['fiber'] as num?)?.toInt() ??
+          (json['fiberG'] as num?)?.toInt() ??
+          0,
+      sugarG: (json['total_sugar'] as num?)?.toInt() ??
+          (json['sugar'] as num?)?.toInt() ??
+          (json['sugarG'] as num?)?.toInt() ??
+          0,
+      sodiumMg: (json['total_sodium'] as num?)?.toInt() ??
+          (json['sodium'] as num?)?.toInt() ??
+          (json['sodiumMg'] as num?)?.toInt() ??
           0,
       mealType: json['mealType'] as String? ??
           json['meal_type'] as String? ??

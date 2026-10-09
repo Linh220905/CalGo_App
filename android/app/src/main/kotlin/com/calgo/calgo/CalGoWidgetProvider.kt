@@ -18,10 +18,10 @@ class CalGoWidgetProvider : HomeWidgetProvider() {
     ) {
         appWidgetIds.forEach { widgetId ->
             val views = RemoteViews(context.packageName, R.layout.calgo_widget_layout).apply {
-                val caloriesLeft = widgetData.getInt("calories_left", 2000)
-                val proteinLeft = widgetData.getInt("protein_left", 60)
-                val carbsLeft = widgetData.getInt("carbs_left", 90)
-                val fatLeft = widgetData.getInt("fat_left", 30)
+                val caloriesLeft = getSafeInt(widgetData, "calories_left", 2000)
+                val proteinLeft = getSafeInt(widgetData, "protein_left", 60)
+                val carbsLeft = getSafeInt(widgetData, "carbs_left", 90)
+                val fatLeft = getSafeInt(widgetData, "fat_left", 30)
 
                 setTextViewText(R.id.tv_calories_left, "$caloriesLeft")
                 setTextViewText(R.id.tv_protein_left, "🥩 ${proteinLeft}g P")
@@ -55,6 +55,18 @@ class CalGoWidgetProvider : HomeWidgetProvider() {
             }
 
             appWidgetManager.updateAppWidget(widgetId, views)
+        }
+    }
+
+    private fun getSafeInt(prefs: SharedPreferences, key: String, defaultVal: Int): Int {
+        return try {
+            prefs.getInt(key, defaultVal)
+        } catch (_: Exception) {
+            try {
+                prefs.getLong(key, defaultVal.toLong()).toInt()
+            } catch (_: Exception) {
+                defaultVal
+            }
         }
     }
 }

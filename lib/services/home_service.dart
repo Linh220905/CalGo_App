@@ -63,11 +63,17 @@ class HomeService {
     var protein = 0;
     var carbs = 0;
     var fat = 0;
+    var fiber = 0;
+    var sugar = 0;
+    var sodium = 0;
     for (final meal in meals) {
       calories += meal.calories;
       protein += meal.proteinG;
       carbs += meal.carbG;
       fat += meal.fatG;
+      fiber += meal.fiberG;
+      sugar += meal.sugarG;
+      sodium += meal.sodiumMg;
     }
 
     final summary = TodaySummary.fromJson({
@@ -75,10 +81,16 @@ class HomeService {
       'total_protein': protein,
       'total_carb': carbs,
       'total_fat': fat,
+      'total_fiber': fiber,
+      'total_sugar': sugar,
+      'total_sodium': sodium,
       'target_calories': user['daily_calorie_target'],
       'target_protein': user['protein_grams'],
       'target_carb': user['carbs_grams'],
       'target_fat': user['fat_grams'],
+      'target_fiber': user['fiber_grams'] ?? 38,
+      'target_sugar': user['sugar_grams'] ?? 50,
+      'target_sodium': user['sodium_mg'] ?? 2000,
       'current_weight_kg': user['current_weight_kg'],
       'target_weight_kg': user['target_weight_kg'],
       'streak': _calculateStreak(allEntries),

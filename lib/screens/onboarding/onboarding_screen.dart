@@ -67,6 +67,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           }
         }
         final s = context.watch<AppSettingsProvider>().strings;
+        final isFullScreenPaywall = provider.currentStep == 17 && !AppBuildConfig.isTesting;
+
         return MediaQuery.withClampedTextScaling(
           maxScaleFactor: 1.2,
           child: AnnotatedRegion<SystemUiOverlayStyle>(
@@ -76,6 +78,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             child: Scaffold(
               backgroundColor: Colors.white,
               body: SafeArea(
+                top: !isFullScreenPaywall,
                 child: Column(
                   children: [
                     if (provider.isRecalculating)

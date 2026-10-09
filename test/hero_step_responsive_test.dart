@@ -57,7 +57,8 @@ void main() {
           child: const MaterialApp(home: HeroStep()),
         ),
       );
-      await tester.pumpAndSettle();
+      await tester.pump(const Duration(milliseconds: 300));
+      await tester.pump(const Duration(milliseconds: 1800));
 
       final button = find.byKey(const Key('hero_get_started_button'));
       final buttonRect = tester.getRect(button);
@@ -102,7 +103,8 @@ void main() {
         child: const MaterialApp(home: OnboardingScreen()),
       ),
     );
-    await tester.pumpAndSettle();
+    await tester.pump(const Duration(milliseconds: 300));
+    await tester.pump(const Duration(milliseconds: 1800));
 
     final button = find.byKey(const Key('hero_get_started_button'));
 

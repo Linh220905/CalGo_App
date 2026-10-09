@@ -3107,4 +3107,206 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get howToAddAndroidStep3 =>
       'Busca CalGo, mantén presionado y arrastra el widget a tu pantalla.';
+
+  @override
+  String get heroTitle => 'Seguimiento de calorías\nfácil y rápido';
+
+  @override
+  String get aiScanStep1 => 'Identificando comida...';
+
+  @override
+  String get aiScanStep2 => 'Comida detectada';
+
+  @override
+  String get aiScanStep3 => 'Analizando ingredientes...';
+
+  @override
+  String get aiScanStep4 => 'Estimando valor nutricional...';
+
+  @override
+  String get aiScanStep5 => 'Calculando calorías...';
+
+  @override
+  String get noNewDataTag => 'Sin datos nuevos';
+
+  @override
+  String get fiberLabel => 'Fiber';
+
+  @override
+  String get sugarLabel => 'Sugar';
+
+  @override
+  String get sodiumLabel => 'Sodium';
+
+  @override
+  String get fatsLabel => 'Fats';
+
+  @override
+  String get healthScoreTitle => 'Health Score';
+
+  @override
+  String get healthScoreSubtitle =>
+      'Meal quality meets Nutri-Score balanced nutrition standard.';
+
+  @override
+  String get bodyVitalityTitle => 'Body Vitality';
+
+  @override
+  String get fourMetricsCount => '4 metrics';
+
+  @override
+  String get vitalityEnergyTitle => 'Energy & Alertness';
+
+  @override
+  String get vitalityEnergyDetailTitle => 'Energy Steadiness';
+
+  @override
+  String get vitalityEnergyDetailDesc =>
+      'Calculated by Complex Carbs vs Free Sugars ratio. Stabilizes blood glucose and prevents post-meal crashes.';
+
+  @override
+  String get vitalityEnergyDetailSource => 'Source: WHO Free Sugars Guideline';
+
+  @override
+  String get vitalitySatietyTitle => 'Satiety & Cravings Control';
+
+  @override
+  String get vitalitySatietyDetailTitle => 'Satiety & Appetite Control';
+
+  @override
+  String get vitalitySatietyDetailDesc =>
+      'Based on Satiety Index: Protein and Dietary Fiber slow gastric emptying and promote natural satiety hormones (GLP-1 & PYY).';
+
+  @override
+  String get vitalitySatietyDetailSource =>
+      'Source: University of Sydney (Holt et al., Eur J Clin Nutr)';
+
+  @override
+  String get vitalityRecoveryTitle => 'Heart & Muscle Recovery';
+
+  @override
+  String get vitalityRecoveryDetailTitle => 'Cardiovascular & Recovery';
+
+  @override
+  String get vitalityRecoveryDetailDesc =>
+      'Assesses Saturated Fat intake under the 10% calorie threshold to optimize blood circulation and muscle recovery.';
+
+  @override
+  String get vitalityRecoveryDetailSource =>
+      'Source: American Heart Association (AHA) & WHO';
+
+  @override
+  String get vitalityBalanceTitle => 'Sodium & Fluid Balance';
+
+  @override
+  String get vitalityBalanceDetailTitle => 'Sodium & Electrolyte Balance';
+
+  @override
+  String get vitalityBalanceDetailDesc =>
+      'Measures daily sodium intake relative to the WHO 2,000 mg/day maximum recommendation.';
+
+  @override
+  String get vitalityBalanceDetailSource => 'Source: WHO Sodium Guideline';
+
+  @override
+  String get fiberDetailTitle => 'Dietary Fiber';
+
+  @override
+  String get fiberDetailDesc =>
+      'Supports healthy gut microbiome and slows sugar absorption into the bloodstream.';
+
+  @override
+  String get fiberDetailSource =>
+      'Source: US Institute of Medicine (IOM) & WHO';
+
+  @override
+  String get sugarDetailTitle => 'Free Sugars';
+
+  @override
+  String get sugarDetailDesc =>
+      'WHO recommends free sugars below 10% of total daily energy intake.';
+
+  @override
+  String get sugarDetailSource =>
+      'Source: WHO Guideline on Sugars intake for adults';
+
+  @override
+  String get sodiumDetailTitle => 'Sodium';
+
+  @override
+  String get sodiumDetailDesc =>
+      'Limiting sodium under 2,000 mg/day helps prevent hypertension and water retention.';
+
+  @override
+  String get sodiumDetailSource => 'Source: WHO Sodium Intake Guideline';
+
+  @override
+  String get healthScoreDetailDesc =>
+      'Nutri-Score European standard balanced nutrient density calculation.';
+
+  @override
+  String get healthScoreSource => 'Source: Nutri-Score Standard & WHO';
+
+  @override
+  String get nutritionBreakdownTitle => 'NUTRITION BREAKDOWN';
+
+  @override
+  String get intakeConsumedLabel => 'Consumed';
+
+  @override
+  String get dailyGoalLabel => 'Daily Goal';
+
+  @override
+  String get safeLimitLabel => 'Safe Limit';
+
+  @override
+  String get maxRecommendedLabel => 'Max Recommended';
+
+  @override
+  String get proteinBalanceLabel => 'Protein balance';
+
+  @override
+  String get fiberQualityLabel => 'Dietary fiber';
+
+  @override
+  String get freeSugarControlLabel => 'Free sugars';
+
+  @override
+  String get complexCarbRatioLabel => 'Complex carbs';
+
+  @override
+  String get complexCarbRatioValue => 'Balanced';
+
+  @override
+  String get simpleSugarIntakeLabel => 'Simple sugars';
+
+  @override
+  String get whoLimit50g => 'Under WHO 50g limit';
+
+  @override
+  String get totalProteinLoggedLabel => 'Total protein';
+
+  @override
+  String get standardMetLabel => 'Met standard';
+
+  @override
+  String get totalFiberLoggedLabel => 'Total fiber';
+
+  @override
+  String get freeSugarRatioLabel => 'Free sugar ratio';
+
+  @override
+  String get freeSugarRatioValue => 'Low (steady energy)';
+
+  @override
+  String get dietaryFiberIntakeLabel => 'Dietary fiber';
+
+  @override
+  String get satFatControlLabel => 'Saturated fat';
+
+  @override
+  String get satFatControlValue => 'Controlled (<10% kcal)';
+
+  @override
+  String get sodiumConsumedLabel => 'Sodium consumed';
 }

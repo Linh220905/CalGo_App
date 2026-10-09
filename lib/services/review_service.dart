@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../widgets/rate_app_dialog.dart';
 
 class ReviewService {
   ReviewService._();
@@ -109,33 +108,32 @@ class ReviewService {
     }
   }
 
-  /// Shows custom 5-star rating dialog in app if eligible
-  static Future<void> showRatingDialog(BuildContext context, {String source = 'scan'}) async {
-    if (!context.mounted) return;
-    final canPrompt = await shouldPromptReview();
-    if (!canPrompt || !context.mounted) return;
+  /// Trigger native in-app review dialog directly via Google Play Core / iOS StoreKit
+  static Future<void> requestNativeReview() async {
+    if (kIsWeb) return;
+    try {
+      final canPrompt = await shouldPromptReview();
+      if (!canPrompt) return;
 
-    await recordPromptShown();
-    if (!context.mounted) return;
-
-    await showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (ctx) => const RateAppDialog(),
-    );
+      await recordPromptShown();
+      final inAppReview = InAppReview.instance;
+      if (await inAppReview.isAvailable()) {
+        await inAppReview.requestReview();
+      } else {
+        await _openDirectStoreUrl();
+      }
+    } catch (e) {
+      debugPrint('[ReviewService] Native in-app review error: $e');
+    }
   }
 
-  /// Request rating popup for first scan or specific milestone
+  /// Request review using native Google Play / App Store in-app review prompt
   static Future<void> requestFirstScanReview(BuildContext? context) async {
-    if (context != null && context.mounted) {
-      await showRatingDialog(context, source: 'first_scan');
-    }
+    await requestNativeReview();
   }
 
-  /// Legacy support
+  /// Request review using native Google Play / App Store in-app review prompt
   static Future<void> requestReviewPrompt({String source = 'scan', BuildContext? context}) async {
-    if (context != null && context.mounted) {
-      await showRatingDialog(context, source: source);
-    }
+    await requestNativeReview();
   }
 }

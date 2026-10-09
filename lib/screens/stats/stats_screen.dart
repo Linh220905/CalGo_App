@@ -401,18 +401,10 @@ class _ProgressTabState extends State<_ProgressTab> {
                     ? home.summary.targetCalories.toDouble()
                     : null;
                 final selectedWeekly = _selectedWeekly ?? widget.weekly!;
-                if (selectedWeekly.daysLogged == 0) {
-                  return _StatsInlineError(
-                    card: widget.card,
-                    border: widget.border,
-                    message: context
-                        .watch<AppSettingsProvider>()
-                        .strings
-                        .notEnoughNutritionData,
-                  );
-                }
                 return TargetTimelineCard(
-                  todayCalories: selectedWeekly.avgCalo,
+                  todayCalories: selectedWeekly.daysLogged > 0
+                      ? selectedWeekly.avgCalo
+                      : 0.0,
                   calorieTarget: (user != null && user.dailyCalorieTarget > 0)
                       ? user.dailyCalorieTarget
                       : (liveTarget ??
@@ -3113,8 +3105,9 @@ class _ProgressPhotosCard extends StatelessWidget {
                       onTap: () {
                         if (fullResolved != null) {
                           showDialog(
-                            context: ctx,
-                            builder: (_) => Dialog(
+                            context: context,
+                            useRootNavigator: true,
+                            builder: (dialogCtx) => Dialog(
                               backgroundColor: Colors.black,
                               insetPadding: const EdgeInsets.all(16),
                               child: Stack(
@@ -3133,7 +3126,7 @@ class _ProgressPhotosCard extends StatelessWidget {
                                     right: 10,
                                     child: IconButton(
                                       icon: const Icon(Icons.close, color: Colors.white),
-                                      onPressed: () => Navigator.pop(ctx),
+                                      onPressed: () => Navigator.of(dialogCtx).pop(),
                                     ),
                                   ),
                                 ],

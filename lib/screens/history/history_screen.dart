@@ -200,7 +200,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
               // ── Modern Editorial Header ─────────────────
               SliverToBoxAdapter(
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 18, 20, 0),
+                  padding: const EdgeInsets.fromLTRB(20, 14, 20, 0),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -209,27 +209,26 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              strings.historySubtitle.toUpperCase(),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: GoogleFonts.beVietnamPro(
-                                color: subtitleColor,
-                                fontSize: 11,
-                                fontWeight: FontWeight.w700,
-                                letterSpacing: 1.2,
-                              ),
-                            ),
-                            const SizedBox(height: 6),
-                            Text(
                               strings.historyTitle,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.beVietnamPro(
                                 color: primaryTextColor,
-                                fontSize: 34,
-                                height: 1.05,
+                                fontSize: 24,
+                                height: 1.1,
                                 fontWeight: FontWeight.w800,
-                                letterSpacing: -1.1,
+                                letterSpacing: -0.6,
+                              ),
+                            ),
+                            const SizedBox(height: 3),
+                            Text(
+                              strings.mealCount(totalMeals),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: GoogleFonts.beVietnamPro(
+                                color: subtitleColor,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                           ],
@@ -247,9 +246,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 ),
               ),
 
-              const SliverToBoxAdapter(child: SizedBox(height: 24)),
+              const SliverToBoxAdapter(child: SizedBox(height: 12)),
 
-              // ── Stats Grid ─────────────────────────────
+              // ── Stats Card (Option 2: Hero Streak + Metrics) ──
               if (_items.isNotEmpty)
                 SliverToBoxAdapter(
                   child: Padding(
@@ -268,7 +267,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   ),
                 ),
 
-              const SliverToBoxAdapter(child: SizedBox(height: 28)),
+              const SliverToBoxAdapter(child: SizedBox(height: 18)),
 
               // ── Empty State ─────────────────────────────
               if (_items.isEmpty)
@@ -357,7 +356,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
   }
 }
 
-// ── Stats Grid Widget ────────────────────────────────────────────────────────
+// ── Stats Grid Widget (Hero Streak + Compact Metrics) ──────────────────────────
 
 class _StatsGrid extends StatelessWidget {
   final int totalMeals;
@@ -385,206 +384,141 @@ class _StatsGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final strings = context.watch<AppSettingsProvider>().strings;
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final isNarrow = constraints.maxWidth < 340;
-        return Container(
-          padding: const EdgeInsets.all(4),
-          decoration: BoxDecoration(
-            color: cardColor,
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: borderColor),
-          ),
-          child: GridView.count(
-            crossAxisCount: 2,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            childAspectRatio: isNarrow ? 1.3 : 1.6,
-            crossAxisSpacing: 0,
-            mainAxisSpacing: 0,
-            children: [
-              _StatCell(
-                value: '$totalMeals',
-                label: strings.mealsCountLabel,
-                icon: const Icon(
-                  Icons.restaurant_menu_rounded,
-                  color: Color(0xFF63A97B),
-                  size: 20,
-                ),
-                iconBg: isDark
-                    ? const Color(0xFF24352A)
-                    : const Color(0xFFE2F1E7),
-                cardColor: cardColor,
-                borderColor: borderColor,
-                subtitleColor: subtitleColor,
-                primaryTextColor: primaryTextColor,
-                isTopLeft: true,
-              ),
-              _StatCell(
-                value: '$streak',
-                label: strings.streakDaysLabel,
-                icon: const Icon(
-                  Icons.local_fire_department_rounded,
-                  color: Color(0xFFF97316),
-                  size: 20,
-                ),
-                iconBg: isDark
-                    ? const Color(0xFF332014)
-                    : const Color(0xFFFFF7ED),
-                cardColor: cardColor,
-                borderColor: borderColor,
-                subtitleColor: subtitleColor,
-                primaryTextColor: primaryTextColor,
-                isTopRight: true,
-              ),
-              _StatCell(
-                value: '$avgCalo',
-                label: strings.kcalPerDay,
-                icon: const Icon(
-                  Icons.bolt_rounded,
-                  color: Color(0xFFF59E0B),
-                  size: 20,
-                ),
-                iconBg: isDark
-                    ? const Color(0xFF332614)
-                    : const Color(0xFFFEF3C7),
-                cardColor: cardColor,
-                borderColor: borderColor,
-                subtitleColor: subtitleColor,
-                primaryTextColor: primaryTextColor,
-                isBottomLeft: true,
-              ),
-              _StatCell(
-                value: '${avgProtein}g',
-                label: strings.proteinPerDay,
-                icon: MacroIcons.protein(size: 20),
-                iconBg: isDark
-                    ? const Color(0xFF351F24)
-                    : const Color(0xFFFFECEC),
-                cardColor: cardColor,
-                borderColor: borderColor,
-                subtitleColor: subtitleColor,
-                primaryTextColor: primaryTextColor,
-                isBottomRight: true,
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-}
+    const fireColor = Color(0xFFF97316);
+    final fireBg = isDark ? const Color(0xFF332014) : const Color(0xFFFFF7ED);
+    const fireBorder = Color(0x33F97316);
 
-class _StatCell extends StatelessWidget {
-  final String value;
-  final String label;
-  final Widget icon;
-  final Color iconBg;
-  final Color cardColor;
-  final Color borderColor;
-  final Color subtitleColor;
-  final Color primaryTextColor;
-  final bool isTopLeft;
-  final bool isTopRight;
-  final bool isBottomLeft;
-  final bool isBottomRight;
-
-  const _StatCell({
-    required this.value,
-    required this.label,
-    required this.icon,
-    required this.iconBg,
-    required this.cardColor,
-    required this.borderColor,
-    required this.subtitleColor,
-    required this.primaryTextColor,
-    this.isTopLeft = false,
-    this.isTopRight = false,
-    this.isBottomLeft = false,
-    this.isBottomRight = false,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final radius = BorderRadius.only(
-      topLeft: isTopLeft ? const Radius.circular(16) : Radius.zero,
-      topRight: isTopRight ? const Radius.circular(16) : Radius.zero,
-      bottomLeft: isBottomLeft ? const Radius.circular(16) : Radius.zero,
-      bottomRight: isBottomRight ? const Radius.circular(16) : Radius.zero,
-    );
-
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final isCompact = constraints.maxWidth < 150;
-        return Container(
-          decoration: BoxDecoration(
-            color: cardColor,
-            borderRadius: radius,
-            border: Border(
-              right: (isTopLeft || isBottomLeft)
-                  ? BorderSide(color: borderColor, width: 0.8)
-                  : BorderSide.none,
-              bottom: (isTopLeft || isTopRight)
-                  ? BorderSide(color: borderColor, width: 0.8)
-                  : BorderSide.none,
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+      decoration: BoxDecoration(
+        color: cardColor,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: borderColor, width: 0.8),
+      ),
+      child: Row(
+        children: [
+          // ── Streak Hero Block ──
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            decoration: BoxDecoration(
+              color: fireBg,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: fireBorder),
             ),
-          ),
-          padding: EdgeInsets.symmetric(
-            horizontal: isCompact ? 12 : 16,
-            vertical: isCompact ? 10 : 12,
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                width: 38,
-                height: 38,
-                decoration: BoxDecoration(
-                  color: iconBg,
-                  borderRadius: BorderRadius.circular(12),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(
+                  Icons.local_fire_department_rounded,
+                  color: fireColor,
+                  size: 24,
                 ),
-                child: Center(child: icon),
-              ),
-              SizedBox(width: isCompact ? 8 : 12),
-              Expanded(
-                child: Column(
+                const SizedBox(width: 8),
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    FittedBox(
-                      fit: BoxFit.scaleDown,
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        value,
-                        maxLines: 1,
-                        style: GoogleFonts.beVietnamPro(
-                          fontSize: 22,
-                          fontWeight: FontWeight.w800,
-                          color: primaryTextColor,
-                          letterSpacing: -0.5,
-                          height: 1.0,
-                        ),
+                    Text(
+                      '$streak',
+                      style: GoogleFonts.beVietnamPro(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w800,
+                        color: fireColor,
+                        height: 1.0,
+                        letterSpacing: -0.5,
                       ),
                     ),
-                    const SizedBox(height: 3),
+                    const SizedBox(height: 2),
                     Text(
-                      label,
+                      strings.streakDaysLabel,
                       style: GoogleFonts.beVietnamPro(
-                        fontSize: 11,
-                        fontWeight: FontWeight.w600,
-                        color: subtitleColor,
-                        height: 1.2,
+                        fontSize: 10,
+                        fontWeight: FontWeight.w700,
+                        color: fireColor,
+                        height: 1.1,
+                        letterSpacing: 0.2,
                       ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
                     ),
                   ],
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        );
-      },
+
+          const SizedBox(width: 14),
+
+          // ── Metric Rows (Calo & Protein) ──
+          Expanded(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(
+                          Icons.bolt_rounded,
+                          color: Color(0xFFF59E0B),
+                          size: 14,
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          strings.kcalPerDay,
+                          style: GoogleFonts.beVietnamPro(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w600,
+                            color: subtitleColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Text(
+                      '$avgCalo kcal',
+                      style: GoogleFonts.beVietnamPro(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w800,
+                        color: primaryTextColor,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 6),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        MacroIcons.protein(size: 14),
+                        const SizedBox(width: 4),
+                        Text(
+                          strings.proteinPerDay,
+                          style: GoogleFonts.beVietnamPro(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w600,
+                            color: subtitleColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Text(
+                      '${avgProtein}g',
+                      style: GoogleFonts.beVietnamPro(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w800,
+                        color: const Color(0xFFFF5C5C),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -5602,6 +5602,384 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Find CalGo, drag and drop the widget onto your screen.'**
   String get howToAddAndroidStep3;
+
+  /// No description provided for @heroTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Calorie tracking\nmade easy'**
+  String get heroTitle;
+
+  /// No description provided for @aiScanStep1.
+  ///
+  /// In en, this message translates to:
+  /// **'Identifying food...'**
+  String get aiScanStep1;
+
+  /// No description provided for @aiScanStep2.
+  ///
+  /// In en, this message translates to:
+  /// **'Food detected'**
+  String get aiScanStep2;
+
+  /// No description provided for @aiScanStep3.
+  ///
+  /// In en, this message translates to:
+  /// **'Analyzing ingredients...'**
+  String get aiScanStep3;
+
+  /// No description provided for @aiScanStep4.
+  ///
+  /// In en, this message translates to:
+  /// **'Estimating nutritional value...'**
+  String get aiScanStep4;
+
+  /// No description provided for @aiScanStep5.
+  ///
+  /// In en, this message translates to:
+  /// **'Calculating calories...'**
+  String get aiScanStep5;
+
+  /// No description provided for @noNewDataTag.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for new data'**
+  String get noNewDataTag;
+
+  /// No description provided for @fiberLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Fiber'**
+  String get fiberLabel;
+
+  /// No description provided for @sugarLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Sugar'**
+  String get sugarLabel;
+
+  /// No description provided for @sodiumLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Sodium'**
+  String get sodiumLabel;
+
+  /// No description provided for @fatsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Fats'**
+  String get fatsLabel;
+
+  /// No description provided for @healthScoreTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Health Score'**
+  String get healthScoreTitle;
+
+  /// No description provided for @healthScoreSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Meal quality meets Nutri-Score balanced nutrition standard.'**
+  String get healthScoreSubtitle;
+
+  /// No description provided for @bodyVitalityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Body Vitality'**
+  String get bodyVitalityTitle;
+
+  /// No description provided for @fourMetricsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'4 metrics'**
+  String get fourMetricsCount;
+
+  /// No description provided for @vitalityEnergyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Energy & Alertness'**
+  String get vitalityEnergyTitle;
+
+  /// No description provided for @vitalityEnergyDetailTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Energy Steadiness'**
+  String get vitalityEnergyDetailTitle;
+
+  /// No description provided for @vitalityEnergyDetailDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Calculated by Complex Carbs vs Free Sugars ratio. Stabilizes blood glucose and prevents post-meal crashes.'**
+  String get vitalityEnergyDetailDesc;
+
+  /// No description provided for @vitalityEnergyDetailSource.
+  ///
+  /// In en, this message translates to:
+  /// **'Source: WHO Free Sugars Guideline'**
+  String get vitalityEnergyDetailSource;
+
+  /// No description provided for @vitalitySatietyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Satiety & Cravings Control'**
+  String get vitalitySatietyTitle;
+
+  /// No description provided for @vitalitySatietyDetailTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Satiety & Appetite Control'**
+  String get vitalitySatietyDetailTitle;
+
+  /// No description provided for @vitalitySatietyDetailDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Based on Satiety Index: Protein and Dietary Fiber slow gastric emptying and promote natural satiety hormones (GLP-1 & PYY).'**
+  String get vitalitySatietyDetailDesc;
+
+  /// No description provided for @vitalitySatietyDetailSource.
+  ///
+  /// In en, this message translates to:
+  /// **'Source: University of Sydney (Holt et al., Eur J Clin Nutr)'**
+  String get vitalitySatietyDetailSource;
+
+  /// No description provided for @vitalityRecoveryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Heart & Muscle Recovery'**
+  String get vitalityRecoveryTitle;
+
+  /// No description provided for @vitalityRecoveryDetailTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Cardiovascular & Recovery'**
+  String get vitalityRecoveryDetailTitle;
+
+  /// No description provided for @vitalityRecoveryDetailDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Assesses Saturated Fat intake under the 10% calorie threshold to optimize blood circulation and muscle recovery.'**
+  String get vitalityRecoveryDetailDesc;
+
+  /// No description provided for @vitalityRecoveryDetailSource.
+  ///
+  /// In en, this message translates to:
+  /// **'Source: American Heart Association (AHA) & WHO'**
+  String get vitalityRecoveryDetailSource;
+
+  /// No description provided for @vitalityBalanceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sodium & Fluid Balance'**
+  String get vitalityBalanceTitle;
+
+  /// No description provided for @vitalityBalanceDetailTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sodium & Electrolyte Balance'**
+  String get vitalityBalanceDetailTitle;
+
+  /// No description provided for @vitalityBalanceDetailDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Measures daily sodium intake relative to the WHO 2,000 mg/day maximum recommendation.'**
+  String get vitalityBalanceDetailDesc;
+
+  /// No description provided for @vitalityBalanceDetailSource.
+  ///
+  /// In en, this message translates to:
+  /// **'Source: WHO Sodium Guideline'**
+  String get vitalityBalanceDetailSource;
+
+  /// No description provided for @fiberDetailTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Dietary Fiber'**
+  String get fiberDetailTitle;
+
+  /// No description provided for @fiberDetailDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Supports healthy gut microbiome and slows sugar absorption into the bloodstream.'**
+  String get fiberDetailDesc;
+
+  /// No description provided for @fiberDetailSource.
+  ///
+  /// In en, this message translates to:
+  /// **'Source: US Institute of Medicine (IOM) & WHO'**
+  String get fiberDetailSource;
+
+  /// No description provided for @sugarDetailTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Free Sugars'**
+  String get sugarDetailTitle;
+
+  /// No description provided for @sugarDetailDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'WHO recommends free sugars below 10% of total daily energy intake.'**
+  String get sugarDetailDesc;
+
+  /// No description provided for @sugarDetailSource.
+  ///
+  /// In en, this message translates to:
+  /// **'Source: WHO Guideline on Sugars intake for adults'**
+  String get sugarDetailSource;
+
+  /// No description provided for @sodiumDetailTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sodium'**
+  String get sodiumDetailTitle;
+
+  /// No description provided for @sodiumDetailDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Limiting sodium under 2,000 mg/day helps prevent hypertension and water retention.'**
+  String get sodiumDetailDesc;
+
+  /// No description provided for @sodiumDetailSource.
+  ///
+  /// In en, this message translates to:
+  /// **'Source: WHO Sodium Intake Guideline'**
+  String get sodiumDetailSource;
+
+  /// No description provided for @healthScoreDetailDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Nutri-Score European standard balanced nutrient density calculation.'**
+  String get healthScoreDetailDesc;
+
+  /// No description provided for @healthScoreSource.
+  ///
+  /// In en, this message translates to:
+  /// **'Source: Nutri-Score Standard & WHO'**
+  String get healthScoreSource;
+
+  /// No description provided for @nutritionBreakdownTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'NUTRITION BREAKDOWN'**
+  String get nutritionBreakdownTitle;
+
+  /// No description provided for @intakeConsumedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Consumed'**
+  String get intakeConsumedLabel;
+
+  /// No description provided for @dailyGoalLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Goal'**
+  String get dailyGoalLabel;
+
+  /// No description provided for @safeLimitLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Safe Limit'**
+  String get safeLimitLabel;
+
+  /// No description provided for @maxRecommendedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Max Recommended'**
+  String get maxRecommendedLabel;
+
+  /// No description provided for @proteinBalanceLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Protein balance'**
+  String get proteinBalanceLabel;
+
+  /// No description provided for @fiberQualityLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Dietary fiber'**
+  String get fiberQualityLabel;
+
+  /// No description provided for @freeSugarControlLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Free sugars'**
+  String get freeSugarControlLabel;
+
+  /// No description provided for @complexCarbRatioLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Complex carbs'**
+  String get complexCarbRatioLabel;
+
+  /// No description provided for @complexCarbRatioValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Balanced'**
+  String get complexCarbRatioValue;
+
+  /// No description provided for @simpleSugarIntakeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Simple sugars'**
+  String get simpleSugarIntakeLabel;
+
+  /// No description provided for @whoLimit50g.
+  ///
+  /// In en, this message translates to:
+  /// **'Under WHO 50g limit'**
+  String get whoLimit50g;
+
+  /// No description provided for @totalProteinLoggedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Total protein'**
+  String get totalProteinLoggedLabel;
+
+  /// No description provided for @standardMetLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Met standard'**
+  String get standardMetLabel;
+
+  /// No description provided for @totalFiberLoggedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Total fiber'**
+  String get totalFiberLoggedLabel;
+
+  /// No description provided for @freeSugarRatioLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Free sugar ratio'**
+  String get freeSugarRatioLabel;
+
+  /// No description provided for @freeSugarRatioValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Low (steady energy)'**
+  String get freeSugarRatioValue;
+
+  /// No description provided for @dietaryFiberIntakeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Dietary fiber'**
+  String get dietaryFiberIntakeLabel;
+
+  /// No description provided for @satFatControlLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Saturated fat'**
+  String get satFatControlLabel;
+
+  /// No description provided for @satFatControlValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Controlled (<10% kcal)'**
+  String get satFatControlValue;
+
+  /// No description provided for @sodiumConsumedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Sodium consumed'**
+  String get sodiumConsumedLabel;
 }
 
 class _AppLocalizationsDelegate
