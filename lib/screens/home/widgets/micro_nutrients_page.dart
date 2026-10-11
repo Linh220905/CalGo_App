@@ -83,6 +83,7 @@ class MicroNutrientsPage extends StatelessWidget {
                             score: '${fiberG}g / ${targetFiber}g',
                             description: strings.fiberDetailDesc,
                             source: strings.fiberDetailSource,
+                            sourceUrl: 'https://www.hsph.harvard.edu/nutritionsource/carbohydrates/fiber/',
                             items: [
                               MapEntry(strings.intakeConsumedLabel, '${fiberG}g'),
                               MapEntry(strings.dailyGoalLabel, '${targetFiber}g'),
@@ -121,6 +122,7 @@ class MicroNutrientsPage extends StatelessWidget {
                             score: '${sugarG}g / ${targetSugar}g',
                             description: strings.sugarDetailDesc,
                             source: strings.sugarDetailSource,
+                            sourceUrl: 'https://www.who.int/news-room/fact-sheets/detail/healthy-diet',
                             items: [
                               MapEntry(strings.intakeConsumedLabel, '${sugarG}g'),
                               MapEntry(strings.safeLimitLabel, '${targetSugar}g/day'),
@@ -159,6 +161,7 @@ class MicroNutrientsPage extends StatelessWidget {
                             score: '${sodiumMg}mg / ${targetSodium}mg',
                             description: strings.sodiumDetailDesc,
                             source: strings.sodiumDetailSource,
+                            sourceUrl: 'https://www.who.int/news-room/fact-sheets/detail/salt-reduction',
                             items: [
                               MapEntry(strings.intakeConsumedLabel, '${sodiumMg}mg'),
                               MapEntry(strings.maxRecommendedLabel, '${targetSodium}mg/day'),
@@ -186,6 +189,7 @@ class MicroNutrientsPage extends StatelessWidget {
                         score: '${summary.healthScore.toStringAsFixed(1)} / 10',
                         description: strings.healthScoreDetailDesc,
                         source: strings.healthScoreSource,
+                        sourceUrl: 'https://www.who.int/news-room/fact-sheets/detail/healthy-diet',
                         items: [
                           MapEntry(strings.proteinBalanceLabel, '${summary.proteinG}g / ${summary.targetProteinG}g'),
                           MapEntry(strings.fiberQualityLabel, '${summary.fiberG}g / ${targetFiber}g'),

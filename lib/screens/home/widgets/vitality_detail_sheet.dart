@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../providers/app_settings_provider.dart';
 
 class VitalityDetailData {
@@ -8,6 +9,7 @@ class VitalityDetailData {
   final String score;
   final String description;
   final String source;
+  final String? sourceUrl;
   final List<MapEntry<String, String>> items;
 
   const VitalityDetailData({
@@ -16,6 +18,7 @@ class VitalityDetailData {
     required this.score,
     required this.description,
     required this.source,
+    this.sourceUrl,
     required this.items,
   });
 }
@@ -135,25 +138,48 @@ class VitalityDetailSheet extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 8),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.menu_book_rounded,
-                      size: 14,
-                      color: sourceColor,
-                    ),
-                    const SizedBox(width: 5),
-                    Expanded(
-                      child: Text(
-                        data.source,
-                        style: TextStyle(
-                          fontSize: 11.5,
-                          fontWeight: FontWeight.w700,
+                InkWell(
+                  onTap: data.sourceUrl != null && data.sourceUrl!.isNotEmpty
+                      ? () => launchUrl(
+                            Uri.parse(data.sourceUrl!),
+                            mode: LaunchMode.externalApplication,
+                          )
+                      : null,
+                  borderRadius: BorderRadius.circular(6),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 2),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.menu_book_rounded,
+                          size: 14,
                           color: sourceColor,
                         ),
-                      ),
+                        const SizedBox(width: 5),
+                        Expanded(
+                          child: Text(
+                            data.source,
+                            style: TextStyle(
+                              fontSize: 11.5,
+                              fontWeight: FontWeight.w700,
+                              color: sourceColor,
+                              decoration: data.sourceUrl != null
+                                  ? TextDecoration.underline
+                                  : null,
+                            ),
+                          ),
+                        ),
+                        if (data.sourceUrl != null) ...[
+                          const SizedBox(width: 4),
+                          Icon(
+                            Icons.open_in_new_rounded,
+                            size: 13,
+                            color: sourceColor,
+                          ),
+                        ],
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ],
             ),

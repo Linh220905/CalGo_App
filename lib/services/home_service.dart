@@ -76,25 +76,92 @@ class HomeService {
       sodium += meal.sodiumMg;
     }
 
-    final summary = TodaySummary.fromJson({
-      'total_calo': calories,
-      'total_protein': protein,
-      'total_carb': carbs,
-      'total_fat': fat,
-      'total_fiber': fiber,
-      'total_sugar': sugar,
-      'total_sodium': sodium,
-      'target_calories': user['daily_calorie_target'],
-      'target_protein': user['protein_grams'],
-      'target_carb': user['carbs_grams'],
-      'target_fat': user['fat_grams'],
-      'target_fiber': user['fiber_grams'] ?? 38,
-      'target_sugar': user['sugar_grams'] ?? 50,
-      'target_sodium': user['sodium_mg'] ?? 2000,
-      'current_weight_kg': user['current_weight_kg'],
-      'target_weight_kg': user['target_weight_kg'],
-      'streak': _calculateStreak(allEntries),
-    });
+    final targetCalories = (user['daily_calorie_target'] as num?)?.toInt() ?? 2000;
+    final targetProtein = (user['protein_grams'] as num?)?.toInt() ?? 130;
+    final targetCarb = (user['carbs_grams'] as num?)?.toInt() ?? 200;
+    final targetFat = (user['fat_grams'] as num?)?.toInt() ?? 60;
+
+    // Scientific targets based on user's daily calorie target & WHO / USDA guidelines
+    final targetFiber = (user['fiber_grams'] as num?)?.toInt() ??
+        ((targetCalories / 1000.0) * 14.0).round().clamp(20, 45);
+    final targetSugar = (user['sugar_grams'] as num?)?.toInt() ??
+        ((targetCalories * 0.10) / 4.0).round().clamp(25, 50);
+    final targetSodium = (user['sodium_mg'] as num?)?.toInt() ?? 2000;
+
+    // Scientific calculations for Health & Vitality scores
+    final double healthScore;
+    final double energyVitality;
+    final double satietyVitality;
+    final double recoveryVitality;
+    final double fluidBalanceVitality;
+
+    if (calories == 0 || meals.isEmpty) {
+      healthScore = 0.0;
+      energyVitality = 0.0;
+      satietyVitality = 0.0;
+      recoveryVitality = 0.0;
+      fluidBalanceVitality = 0.0;
+    } else {
+      // 1. Health Score (Nutri-Score European Standard 0.0 - 10.0)
+      // Balance components: Protein quality (35%), Fiber quality (35%), Sugar control (30%)
+      final proteinRatio = targetProtein > 0 ? (protein / targetProtein).clamp(0.0, 1.2) : 0.0;
+      final fiberRatio = targetFiber > 0 ? (fiber / targetFiber).clamp(0.0, 1.2) : 0.0;
+      final sugarPenalty = targetSugar > 0 ? (sugar / targetSugar).clamp(0.0, 2.0) : 0.0;
+
+      final proteinScore = (proteinRatio / 1.0).clamp(0.0, 1.0) * 3.5;
+      final fiberScore = (fiberRatio / 1.0).clamp(0.0, 1.0) * 3.5;
+      final sugarScore = (1.0 - (sugarPenalty - 1.0).clamp(0.0, 1.0)) * 3.0;
+      healthScore = (proteinScore + fiberScore + sugarScore).clamp(0.0, 10.0);
+
+      // 2. Energy & Alertness (Carb to Glycemic & Calorie Distribution) (0 - 100%)
+      final caloProgress = targetCalories > 0 ? (calories / targetCalories).clamp(0.0, 1.2) : 0.0;
+      final carbProgress = targetCarb > 0 ? (carbs / targetCarb).clamp(0.0, 1.2) : 0.0;
+      final sugarExcess = targetSugar > 0 && sugar > targetSugar ? ((sugar - targetSugar) / targetSugar).clamp(0.0, 1.0) : 0.0;
+      final rawEnergy = (caloProgress * 50.0 + carbProgress * 50.0) * (1.0 - (sugarExcess * 0.3));
+      energyVitality = rawEnergy.clamp(0.0, 100.0);
+
+      // 3. Satiety & Cravings Control (Fiber + Protein index) (0.0 - 10.0)
+      final proteinSatiety = (proteinRatio * 5.0).clamp(0.0, 5.0);
+      final fiberSatiety = (fiberRatio * 5.0).clamp(0.0, 5.0);
+      satietyVitality = (proteinSatiety + fiberSatiety).clamp(0.0, 10.0);
+
+      // 4. Heart & Muscle Recovery (Protein intake + Fat quality balance) (0 - 100%)
+      final proteinRecovery = (proteinRatio * 70.0).clamp(0.0, 70.0);
+      final fatBalance = targetFat > 0 ? (1.0 - ((fat - targetFat).abs() / targetFat).clamp(0.0, 1.0)) * 30.0 : 30.0;
+      recoveryVitality = (proteinRecovery + fatBalance).clamp(0.0, 100.0);
+
+      // 5. Sodium & Fluid Balance (0 - 100%)
+      final sodiumExcessRatio = targetSodium > 0 ? (sodium / targetSodium) : 0.0;
+      final sodiumScore = sodiumExcessRatio <= 1.0
+          ? 100.0
+          : (100.0 - ((sodiumExcessRatio - 1.0) * 70.0)).clamp(20.0, 100.0);
+      fluidBalanceVitality = sodiumScore;
+    }
+
+    final summary = TodaySummary(
+      consumedCalories: calories,
+      proteinG: protein,
+      carbG: carbs,
+      fatG: fat,
+      fiberG: fiber,
+      sugarG: sugar,
+      sodiumMg: sodium,
+      targetCalories: targetCalories,
+      targetProteinG: targetProtein,
+      targetCarbG: targetCarb,
+      targetFatG: targetFat,
+      targetFiberG: targetFiber,
+      targetSugarG: targetSugar,
+      targetSodiumMg: targetSodium,
+      healthScore: healthScore,
+      energyVitality: energyVitality,
+      satietyVitality: satietyVitality,
+      recoveryVitality: recoveryVitality,
+      fluidBalanceVitality: fluidBalanceVitality,
+      currentWeightKg: (user['current_weight_kg'] as num?)?.toDouble() ?? 0.0,
+      targetWeightKg: (user['target_weight_kg'] as num?)?.toDouble() ?? 0.0,
+      streakDays: _calculateStreak(allEntries),
+    );
 
     return HomeDayData(summary: summary, meals: meals);
   }

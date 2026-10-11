@@ -103,6 +103,7 @@ class BodyVitalityPage extends StatelessWidget {
                         score: '${summary.energyVitality.round()}%',
                         description: s.vitalityEnergyDetailDesc,
                         source: s.vitalityEnergyDetailSource,
+                        sourceUrl: 'https://pubmed.ncbi.nlm.nih.gov/31952249/',
                         items: [
                           MapEntry(s.complexCarbRatioLabel, s.complexCarbRatioValue),
                           MapEntry(s.simpleSugarIntakeLabel, '${summary.sugarG}g (${s.whoLimit50g})'),
@@ -134,6 +135,7 @@ class BodyVitalityPage extends StatelessWidget {
                         score: '${summary.satietyVitality.toStringAsFixed(1)} / 10',
                         description: s.vitalitySatietyDetailDesc,
                         source: s.vitalitySatietyDetailSource,
+                        sourceUrl: 'https://pubmed.ncbi.nlm.nih.gov/18469249/',
                         items: [
                           MapEntry(s.totalProteinLoggedLabel, '${summary.proteinG}g (${s.standardMetLabel})'),
                           MapEntry(s.totalFiberLoggedLabel, '${summary.fiberG}g / ${summary.targetFiberG}g'),
@@ -166,6 +168,7 @@ class BodyVitalityPage extends StatelessWidget {
                         score: '${summary.recoveryVitality.round()}%',
                         description: s.vitalityRecoveryDetailDesc,
                         source: s.vitalityRecoveryDetailSource,
+                        sourceUrl: 'https://pubmed.ncbi.nlm.nih.gov/28642676/',
                         items: [
                           MapEntry(s.dietaryFiberIntakeLabel, '${summary.fiberG}g'),
                           MapEntry(s.satFatControlLabel, s.satFatControlValue),
@@ -197,6 +200,7 @@ class BodyVitalityPage extends StatelessWidget {
                         score: '${summary.fluidBalanceVitality.round()}%',
                         description: s.vitalityBalanceDetailDesc,
                         source: s.vitalityBalanceDetailSource,
+                        sourceUrl: 'https://www.who.int/news-room/fact-sheets/detail/salt-reduction',
                         items: [
                           MapEntry(s.sodiumConsumedLabel, '${summary.sodiumMg}mg'),
                           MapEntry(s.maxRecommendedLabel, '${summary.targetSodiumMg}mg/day'),

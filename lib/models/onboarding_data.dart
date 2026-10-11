@@ -202,6 +202,30 @@ class OnboardingData {
     return remaining > 0 ? remaining / 4 : 0;
   }
 
+  /// Target Dietary Fiber: 14g per 1,000 kcal (Institute of Medicine & USDA standard)
+  double get targetFiberG {
+    final calories = targetCaloriesPerDay;
+    if (calories <= 0) {
+      return gender == Gender.female ? 25.0 : 38.0;
+    }
+    final calculated = (calories / 1000.0) * 14.0;
+    return calculated.clamp(20.0, 45.0);
+  }
+
+  /// Target Sugar Limit: max 10% of total calories (WHO & Dietary Guidelines for Americans)
+  double get targetSugarG {
+    final calories = targetCaloriesPerDay;
+    if (calories <= 0) {
+      return gender == Gender.female ? 25.0 : 36.0;
+    }
+    // 10% total calories converted to grams of sugar (4 kcal/g)
+    final calculated = (calories * 0.10) / 4.0;
+    return calculated.clamp(25.0, 50.0);
+  }
+
+  /// Target Sodium Limit: 2,000mg/day (WHO standard, max 2,300mg AHA)
+  double get targetSodiumMg => 2000.0;
+
   String get activityApiValue => switch (activityLevel) {
         ActivityLevel.sedentary => 'sedentary',
         ActivityLevel.light => 'lightly_active',
