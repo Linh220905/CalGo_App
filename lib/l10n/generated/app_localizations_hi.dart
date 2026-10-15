@@ -3293,4 +3293,88 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get sodiumConsumedLabel => 'Sodium consumed';
+
+  @override
+  String get dishNutrientsDetailTitle =>
+      'भोजन सूक्ष्म पोषक तत्व और जीवन शक्ति विवरण';
+
+  @override
+  String get dishNutrientsDetailSubtitle =>
+      '6 सूक्ष्म पोषक तत्व और ऊर्जा चयापचय';
+
+  @override
+  String get dishMicronutrientsHeader => '6 सूक्ष्म पोषक तत्व संकेतक';
+
+  @override
+  String get dishMicronutrientsCount => '6 मेट्रिक्स';
+
+  @override
+  String get calciumLabel => 'कैल्शियम';
+
+  @override
+  String get ironLabel => 'आयरन';
+
+  @override
+  String get potassiumLabel => 'पोटेशियम';
+
+  @override
+  String get dishVitalityHeader => 'ऊर्जा और शारीरिक जीवन शक्ति';
+
+  @override
+  String get dishVitalityFocus => 'फोकस और संतुलन';
+
+  @override
+  String get unlockPremiumNutrientsTitle => 'Cal AI प्रीमियम सुविधा';
+
+  @override
+  String get unlockPremiumNutrientsSubtitle =>
+      'भोजन के लिए विस्तृत 6 सूक्ष्म पोषक तत्व और ऊर्जा जीवन शक्ति अनलॉक करें।';
+
+  @override
+  String get equivalentLabel => 'समतुल्य';
+
+  @override
+  String get perYearText => 'प्रति वर्ष';
+
+  @override
+  String get billedWeeklyNote => 'साप्ताहिक बिल किया जाता है';
+
+  @override
+  String get billedMonthlyNote => 'मासिक बिल किया जाता है';
+
+  @override
+  String get billedYearlyNote => 'वार्षिक बिल किया जाता है';
+
+  @override
+  String iosAutoRenewTermsYearly(String price) =>
+      '$price/वर्ष के रूप में बिल किया जाएगा। स्वतः नवीनीकरण। App Store सेटिंग्स में कभी भी रद्द करें।';
+
+  @override
+  String iosAutoRenewTermsTrial(String price) =>
+      '7 दिन निःशुल्क, फिर $price/वर्ष। स्वतः नवीनीकरण। App Store में कभी भी रद्द करें।';
+
+  @override
+  String iosAutoRenewTermsWeekly(String price) =>
+      '$price/सप्ताह के रूप में बिल किया जाएगा। स्वतः नवीनीकरण। App Store में कभी भी रद्द करें।';
+
+  @override
+  String iosAutoRenewTermsMonthly(String price) =>
+      '$price/माह के रूप में बिल किया जाएगा। स्वतः नवीनीकरण। App Store में कभी भी रद्द करें।';
+
+  @override
+  String get bmiReferenceSource => 'स्रोत: WHO – मोटापा और अधिक वजन';
+
+  @override
+  String get bmiAdultOnlyDisclaimer =>
+      'वयस्क मानक (18+ वर्ष)। बच्चों और किशोरों के लिए लागू नहीं है।';
+
+  @override
+  String get bmiAdultOnlyShort => 'वयस्क 18+';
+
+  @override
+  String get startFreeTrialBtn => 'निःशुल्क परीक्षण शुरू करें और सदस्यता लें';
+
+  @override
+  String get medicalDisclaimerNote =>
+      'CalGo केवल सूचनात्मक उद्देश्यों के लिए पोषण और कैलोरी अनुमान प्रदान करता है और कोई चिकित्सीय सलाह नहीं देता है। कोई भी आहार योजना शुरू करने से पहले डॉक्टर से परामर्श लें।';
 }

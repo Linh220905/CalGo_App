@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -124,7 +125,36 @@ class _SpinWheelDialogState extends State<SpinWheelDialog>
         child: SafeArea(
           child: Column(
             children: [
-              const SizedBox(height: 16),
+              if (Platform.isIOS)
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      GestureDetector(
+                        onTap: () async {
+                          Navigator.pop(context);
+                          await widget.onDismiss();
+                        },
+                        child: Container(
+                          width: 32,
+                          height: 32,
+                          decoration: const BoxDecoration(
+                            color: Color(0xFFF1F5F9),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.close_rounded,
+                            size: 18,
+                            color: _kInk,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              else
+                const SizedBox(height: 16),
               const Spacer(flex: 1),
 
               // Title

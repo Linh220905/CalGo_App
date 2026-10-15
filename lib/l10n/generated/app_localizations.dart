@@ -5980,6 +5980,128 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sodium consumed'**
   String get sodiumConsumedLabel;
+
+  /// No description provided for @dishNutrientsDetailTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Dish Micronutrients & Vitality'**
+  String get dishNutrientsDetailTitle;
+
+  /// No description provided for @dishNutrientsDetailSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'6 micronutrients & energy metabolism'**
+  String get dishNutrientsDetailSubtitle;
+
+  /// No description provided for @dishMicronutrientsHeader.
+  ///
+  /// In en, this message translates to:
+  /// **'6 Micronutrient Indicators'**
+  String get dishMicronutrientsHeader;
+
+  /// No description provided for @dishMicronutrientsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'6 metrics'**
+  String get dishMicronutrientsCount;
+
+  /// No description provided for @calciumLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Calcium'**
+  String get calciumLabel;
+
+  /// No description provided for @ironLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Iron'**
+  String get ironLabel;
+
+  /// No description provided for @potassiumLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Potassium'**
+  String get potassiumLabel;
+
+  /// No description provided for @dishVitalityHeader.
+  ///
+  /// In en, this message translates to:
+  /// **'Energy & Body Vitality'**
+  String get dishVitalityHeader;
+
+  /// No description provided for @dishVitalityFocus.
+  ///
+  /// In en, this message translates to:
+  /// **'Focus & Balance'**
+  String get dishVitalityFocus;
+
+  /// No description provided for @unlockPremiumNutrientsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Cal AI Premium Feature'**
+  String get unlockPremiumNutrientsTitle;
+
+  /// No description provided for @unlockPremiumNutrientsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock detailed 6 micronutrients and energy vitality for meals.'**
+  String get unlockPremiumNutrientsSubtitle;
+
+  /// In en, this message translates to:
+  /// **'equivalent'**
+  String get equivalentLabel;
+
+  /// In en, this message translates to:
+  /// **'per year'**
+  String get perYearText;
+
+  /// In en, this message translates to:
+  /// **'Billed weekly'**
+  String get billedWeeklyNote;
+
+  /// In en, this message translates to:
+  /// **'Billed monthly'**
+  String get billedMonthlyNote;
+
+  /// In en, this message translates to:
+  /// **'Billed annually'**
+  String get billedYearlyNote;
+
+  /// In en, this message translates to:
+  /// **'Billed as {price}/year. Auto-renews annually. Cancel anytime in App Store Settings.'**
+  String iosAutoRenewTermsYearly(String price);
+
+  /// In en, this message translates to:
+  /// **'7 days free, then {price}/year. Auto-renews. Cancel anytime in App Store Settings.'**
+  String iosAutoRenewTermsTrial(String price);
+
+  /// In en, this message translates to:
+  /// **'Billed as {price}/week. Auto-renews weekly. Cancel anytime in App Store Settings.'**
+  String iosAutoRenewTermsWeekly(String price);
+
+  /// In en, this message translates to:
+  /// **'Billed as {price}/month. Auto-renews monthly. Cancel anytime in App Store Settings.'**
+  String iosAutoRenewTermsMonthly(String price);
+
+  /// In en, this message translates to:
+  /// **'Source: WHO – Obesity and overweight'**
+  String get bmiReferenceSource;
+
+  /// In en, this message translates to:
+  /// **'Adult standard (age 18+). Not applicable for children and teens.'**
+  String get bmiAdultOnlyDisclaimer;
+
+  /// In en, this message translates to:
+  /// **'Adults 18+'**
+  String get bmiAdultOnlyShort;
+
+  /// In en, this message translates to:
+  /// **'Start Free Trial & Subscribe'**
+  String get startFreeTrialBtn;
+
+  /// In en, this message translates to:
+  /// **'CalGo provides nutrition and calorie estimates for informational purposes only and does not provide medical advice. Consult a healthcare professional before starting any diet plan.'**
+  String get medicalDisclaimerNote;
 }
 
 class _AppLocalizationsDelegate

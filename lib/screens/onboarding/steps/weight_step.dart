@@ -1,5 +1,7 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../providers/onboarding_provider.dart';
 import '../../../providers/app_settings_provider.dart';
 import '../../../l10n/generated/app_localizations.dart';
@@ -195,7 +197,9 @@ class _BmiCard extends StatelessWidget {
                   const SizedBox(width: 8),
                   Flexible(
                     child: Text(
-                      s.bmiIndexTitle,
+                      Platform.isIOS
+                          ? '${s.bmiIndexTitle} (${s.bmiAdultOnlyShort})'
+                          : s.bmiIndexTitle,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
@@ -410,6 +414,48 @@ class _BmiCard extends StatelessWidget {
               );
             },
           ),
+          if (Platform.isIOS) ...[
+            const SizedBox(height: 12),
+            InkWell(
+              onTap: () => launchUrl(
+                Uri.parse(
+                  'https://www.who.int/news-room/fact-sheets/detail/obesity-and-overweight',
+                ),
+                mode: LaunchMode.externalApplication,
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(
+                    Icons.open_in_new_rounded,
+                    size: 13,
+                    color: Color(0xFF2563EB),
+                  ),
+                  const SizedBox(width: 4),
+                  Flexible(
+                    child: Text(
+                      s.bmiReferenceSource,
+                      style: const TextStyle(
+                        fontSize: 11.5,
+                        fontWeight: FontWeight.w600,
+                        color: Color(0xFF2563EB),
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              s.bmiAdultOnlyDisclaimer,
+              style: const TextStyle(
+                fontSize: 10.5,
+                fontWeight: FontWeight.w500,
+                color: Color(0xFF94A3B8),
+              ),
+            ),
+          ],
         ],
       ),
     );

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -501,6 +502,17 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
     const testing = AppBuildConfig.isTesting;
     if (testing) return s.continueFreePremium;
 
+    if (Platform.isIOS) {
+      if (_selectedPlan == _Plan.annual) {
+        final days = _currentTrialDays(payment);
+        if (_enableFreeTrial && days > 0) {
+          return s.startFreeTrialBtn;
+        }
+        return s.subscribePremium;
+      }
+      return s.subscribePremium;
+    }
+
     if (_selectedPlan == _Plan.annual) {
       final days = _currentTrialDays(payment);
       if (_enableFreeTrial && days > 0) {
@@ -511,6 +523,41 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
 
     // Weekly & Monthly: "Thay đổi bản thân ngay" / "Transform your body now"
     return s.changeYourselfNow;
+  }
+
+  String _getAutoRenewNote(PaymentProvider payment, AppLocalizations s) {
+    if (!Platform.isIOS) {
+      return s.premiumAutoRenewNote;
+    }
+    final annualOffer = payment.premiumOffer(PremiumPlan.annual, preferFreeTrial: true);
+    final weeklyOffer = payment.premiumOffer(PremiumPlan.weekly, preferFreeTrial: false);
+    final monthlyOffer = payment.premiumOffer(PremiumPlan.monthly, preferFreeTrial: false);
+
+    final rcOfferings = RevenueCatService.cachedOfferings?.current;
+    final rcWeekly = rcOfferings?.weekly?.storeProduct.priceString;
+    final rcMonthly = rcOfferings?.monthly?.storeProduct.priceString;
+    final rcAnnual = rcOfferings?.annual?.storeProduct.priceString;
+
+    final isVietnamese = s.localeName == 'vi';
+    final defaultWeek = isVietnamese ? '29.000đ' : '\$1.99';
+    final defaultAnnual = isVietnamese ? '469.000đ' : '\$29.99';
+    final defaultMonth = isVietnamese ? '59.000đ' : '\$4.99';
+
+    final weekPrice = rcWeekly ?? (weeklyOffer?.recurringPrice.isNotEmpty == true ? weeklyOffer!.recurringPrice : defaultWeek);
+    final annualTotal = rcAnnual ?? (annualOffer?.recurringPrice.isNotEmpty == true ? annualOffer!.recurringPrice : defaultAnnual);
+    final monthPrice = rcMonthly ?? (monthlyOffer?.recurringPrice.isNotEmpty == true ? monthlyOffer!.recurringPrice : defaultMonth);
+
+    if (_selectedPlan == _Plan.annual) {
+      final days = _currentTrialDays(payment);
+      if (_enableFreeTrial && days > 0) {
+        return s.iosAutoRenewTermsTrial(annualTotal);
+      }
+      return s.iosAutoRenewTermsYearly(annualTotal);
+    } else if (_selectedPlan == _Plan.weekly) {
+      return s.iosAutoRenewTermsWeekly(weekPrice);
+    } else {
+      return s.iosAutoRenewTermsMonthly(monthPrice);
+    }
   }
 
   @override
@@ -678,7 +725,7 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
                             ),
                             const SizedBox(height: 6),
                             Text(
-                              s.premiumAutoRenewNote,
+                              _getAutoRenewNote(payment, s),
                               textAlign: TextAlign.center,
                               style: _f(10.5, color: _kMuted, weight: FontWeight.w500),
                             ),
@@ -840,13 +887,14 @@ class _VerticalPricingList extends StatelessWidget {
     final annualTotal = formatRecurring(annualOffer, rcAnnual, defaultAnnual);
     final annualMonthly = formatMonthly(annualOffer, rcAnnualMonthly, defaultAnnualMonthly);
     final monthPrice = formatRecurring(monthlyOffer, rcMonthly, defaultMonth);
+    final isIos = Platform.isIOS;
 
     return Column(
       children: [
         // 1. Week Plan
         _VerticalPlanCard(
           title: s.planWeek,
-          subtitle: null,
+          subtitle: isIos ? s.billedWeeklyNote : null,
           priceText: weekPrice,
           unitText: '/ ${s.perWeekText.replaceAll('per ', '').replaceAll('mỗi ', '')}',
           selected: selectedPlan == _Plan.weekly,
@@ -858,9 +906,13 @@ class _VerticalPricingList extends StatelessWidget {
         // 2. Year Plan (Highlighted / Selected by default)
         _VerticalPlanCard(
           title: s.planYear,
-          subtitle: s.planMonthsNote(12, annualTotal),
-          priceText: annualMonthly,
-          unitText: '/ ${s.perMonthText.replaceAll('per ', '').replaceAll('mỗi ', '')}',
+          subtitle: isIos
+              ? '$annualMonthly / ${s.perMonthText.replaceAll('per ', '').replaceAll('mỗi ', '')} (${s.equivalentLabel})'
+              : s.planMonthsNote(12, annualTotal),
+          priceText: isIos ? annualTotal : annualMonthly,
+          unitText: isIos
+              ? '/ ${s.perYearText.replaceAll('per ', '').replaceAll('mỗi ', '')}'
+              : '/ ${s.perMonthText.replaceAll('per ', '').replaceAll('mỗi ', '')}',
           selected: selectedPlan == _Plan.annual,
           badge: s.popularMost,
           onTap: () => onChanged(_Plan.annual),
@@ -870,7 +922,7 @@ class _VerticalPricingList extends StatelessWidget {
         // 3. Month Plan
         _VerticalPlanCard(
           title: s.planMonth,
-          subtitle: s.planMonthsNote(1, monthPrice),
+          subtitle: isIos ? s.billedMonthlyNote : s.planMonthsNote(1, monthPrice),
           priceText: monthPrice,
           unitText: '/ ${s.perMonthText.replaceAll('per ', '').replaceAll('mỗi ', '')}',
           selected: selectedPlan == _Plan.monthly,

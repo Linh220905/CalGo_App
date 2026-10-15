@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -249,10 +250,12 @@ class _PaceStepState extends State<PaceStep> {
                 child: ElevatedButton(
                   onPressed: () {
                     provider.setLossPerWeek(_lossPerWeekKg);
-                    unawaited(ReviewService.requestReviewPrompt(
-                      source: 'onboarding_pace',
-                      context: context,
-                    ));
+                    if (!Platform.isIOS) {
+                      unawaited(ReviewService.requestReviewPrompt(
+                        source: 'onboarding_pace',
+                        context: context,
+                      ));
+                    }
                     provider.nextStep();
                   },
                   style: ElevatedButton.styleFrom(

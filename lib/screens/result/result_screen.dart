@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -12,6 +13,8 @@ import '../../services/review_service.dart';
 import '../../widgets/share_card_modal.dart';
 import '../../utils/macro_colors.dart';
 import '../../utils/macro_icons.dart';
+import '../../utils/nutrient_svg_icons.dart';
+import '../onboarding/steps/premium_paywall_step.dart';
 
 class IngredientItem {
   String ten;
@@ -20,6 +23,12 @@ class IngredientItem {
   double carb;
   double protein;
   double fat;
+  double fiber;
+  double sugar;
+  double sodium;
+  double calcium;
+  double iron;
+  double potassium;
   String unit;
 
   IngredientItem({
@@ -29,6 +38,12 @@ class IngredientItem {
     required this.carb,
     required this.protein,
     required this.fat,
+    this.fiber = 0,
+    this.sugar = 0,
+    this.sodium = 0,
+    this.calcium = 0,
+    this.iron = 0,
+    this.potassium = 0,
     this.unit = 'gr',
   });
 
@@ -43,7 +58,13 @@ class IngredientItem {
       carb: (json['carb'] ?? json['carbs_g'] ?? 0).toDouble(),
       protein: (json['protein'] ?? json['protein_g'] ?? 0).toDouble(),
       fat: (json['fat'] ?? json['fat_g'] ?? 0).toDouble(),
-      unit: (json['unit'] ?? 'gr').toString(),
+      fiber: (json['fiber'] ?? json['fiber_g'] ?? 0).toDouble(),
+      sugar: (json['sugar'] ?? json['sugar_g'] ?? 0).toDouble(),
+      sodium: (json['sodium'] ?? json['sodium_mg'] ?? 0).toDouble(),
+      calcium: (json['calcium'] ?? json['calcium_mg'] ?? 0).toDouble(),
+      iron: (json['iron'] ?? json['iron_mg'] ?? 0).toDouble(),
+      potassium: (json['potassium'] ?? json['potassium_mg'] ?? 0).toDouble(),
+      unit: (json['unit'] ?? json['don_vi'] ?? 'gr').toString(),
     );
   }
 
@@ -54,6 +75,12 @@ class IngredientItem {
     'carb': carb,
     'protein': protein,
     'fat': fat,
+    'fiber': fiber,
+    'sugar': sugar,
+    'sodium': sodium,
+    'calcium': calcium,
+    'iron': iron,
+    'potassium': potassium,
     'unit': unit,
   };
 }
@@ -65,6 +92,12 @@ class DishDetailItem {
   double carb;
   double protein;
   double fat;
+  double fiber;
+  double sugar;
+  double sodium;
+  double calcium;
+  double iron;
+  double potassium;
   List<IngredientItem> ingredients;
   bool expanded;
 
@@ -75,6 +108,12 @@ class DishDetailItem {
     required this.carb,
     required this.protein,
     required this.fat,
+    this.fiber = 0,
+    this.sugar = 0,
+    this.sodium = 0,
+    this.calcium = 0,
+    this.iron = 0,
+    this.potassium = 0,
     this.ingredients = const [],
     this.expanded = false,
   });
@@ -89,6 +128,12 @@ class DishDetailItem {
       carb: number('carb'),
       protein: number('protein'),
       fat: number('fat'),
+      fiber: number('fiber'),
+      sugar: number('sugar'),
+      sodium: number('sodium'),
+      calcium: number('calcium'),
+      iron: number('iron'),
+      potassium: number('potassium'),
       ingredients: (json['ingredients'] as List? ?? const [])
           .whereType<Map>()
           .map(
@@ -105,6 +150,12 @@ class DishDetailItem {
     'carb': carb,
     'protein': protein,
     'fat': fat,
+    'fiber': fiber,
+    'sugar': sugar,
+    'sodium': sodium,
+    'calcium': calcium,
+    'iron': iron,
+    'potassium': potassium,
     'ingredients': ingredients.map((item) => item.toJson()).toList(),
   };
 }
@@ -135,12 +186,19 @@ class _ResultScreenState extends State<ResultScreen> {
   double _apiTotalCarb = 0;
   double _apiTotalProtein = 0;
   double _apiTotalFat = 0;
+  double _apiTotalFiber = 0;
+  double _apiTotalSugar = 0;
+  double _apiTotalSodium = 0;
+  double _apiTotalCalcium = 0;
+  double _apiTotalIron = 0;
+  double _apiTotalPotassium = 0;
   String? _feedback; // 'like' | 'dislike'
   bool _suggestBarcode = false;
   String? _tipBarcode;
   List<String> _unmatchedIngredients = [];
 
   bool _showDetail = true;
+  bool _showNutrientsAndVitality = false;
   bool _editingDishName = false;
   final TextEditingController _dishNameController = TextEditingController();
 
@@ -189,6 +247,12 @@ class _ResultScreenState extends State<ResultScreen> {
             'carb': 48,
             'protein': 4.5,
             'fat': 1.0,
+            'fiber': 1.5,
+            'sugar': 0.5,
+            'sodium': 30.0,
+            'calcium': 15.0,
+            'iron': 0.8,
+            'potassium': 50.0,
             'unit': 'g',
           },
           {
@@ -198,6 +262,12 @@ class _ResultScreenState extends State<ResultScreen> {
             'carb': 0,
             'protein': 21.0,
             'fat': 8.0,
+            'fiber': 0.0,
+            'sugar': 0.0,
+            'sodium': 60.0,
+            'calcium': 12.0,
+            'iron': 1.8,
+            'potassium': 250.0,
             'unit': 'g',
           },
           {
@@ -207,6 +277,12 @@ class _ResultScreenState extends State<ResultScreen> {
             'carb': 0,
             'protein': 11.0,
             'fat': 7.0,
+            'fiber': 0.0,
+            'sugar': 0.0,
+            'sodium': 45.0,
+            'calcium': 8.0,
+            'iron': 1.2,
+            'potassium': 160.0,
             'unit': 'g',
           },
           {
@@ -216,6 +292,12 @@ class _ResultScreenState extends State<ResultScreen> {
             'carb': 2,
             'protein': 1.5,
             'fat': 1.0,
+            'fiber': 0.3,
+            'sugar': 2.0,
+            'sodium': 680.0,
+            'calcium': 25.0,
+            'iron': 0.5,
+            'potassium': 120.0,
             'unit': 'ml',
           },
         ],
@@ -232,6 +314,12 @@ class _ResultScreenState extends State<ResultScreen> {
             'carb': 52,
             'protein': 4.5,
             'fat': 1.0,
+            'fiber': 1.2,
+            'sugar': 0.2,
+            'sodium': 10.0,
+            'calcium': 16.0,
+            'iron': 0.8,
+            'potassium': 55.0,
             'unit': 'g',
           },
           {
@@ -241,6 +329,12 @@ class _ResultScreenState extends State<ResultScreen> {
             'carb': 5,
             'protein': 24.0,
             'fat': 21.0,
+            'fiber': 0.0,
+            'sugar': 3.5,
+            'sodium': 480.0,
+            'calcium': 18.0,
+            'iron': 1.5,
+            'potassium': 320.0,
             'unit': 'g',
           },
           {
@@ -250,6 +344,12 @@ class _ResultScreenState extends State<ResultScreen> {
             'carb': 3,
             'protein': 7.0,
             'fat': 8.0,
+            'fiber': 0.2,
+            'sugar': 1.0,
+            'sodium': 220.0,
+            'calcium': 30.0,
+            'iron': 1.1,
+            'potassium': 110.0,
             'unit': 'g',
           },
           {
@@ -259,6 +359,12 @@ class _ResultScreenState extends State<ResultScreen> {
             'carb': 0.5,
             'protein': 6.0,
             'fat': 5.0,
+            'fiber': 0.0,
+            'sugar': 0.2,
+            'sodium': 70.0,
+            'calcium': 28.0,
+            'iron': 0.9,
+            'potassium': 70.0,
             'unit': 'g',
           },
         ],
@@ -275,6 +381,12 @@ class _ResultScreenState extends State<ResultScreen> {
             'carb': 0,
             'protein': 36.0,
             'fat': 4.5,
+            'fiber': 0.0,
+            'sugar': 0.0,
+            'sodium': 110.0,
+            'calcium': 15.0,
+            'iron': 1.4,
+            'potassium': 380.0,
             'unit': 'g',
           },
           {
@@ -284,6 +396,12 @@ class _ResultScreenState extends State<ResultScreen> {
             'carb': 5,
             'protein': 1.8,
             'fat': 0.3,
+            'fiber': 3.2,
+            'sugar': 2.1,
+            'sodium': 25.0,
+            'calcium': 45.0,
+            'iron': 1.8,
+            'potassium': 290.0,
             'unit': 'g',
           },
           {
@@ -293,6 +411,12 @@ class _ResultScreenState extends State<ResultScreen> {
             'carb': 12,
             'protein': 0.5,
             'fat': 7.5,
+            'fiber': 0.5,
+            'sugar': 6.8,
+            'sodium': 180.0,
+            'calcium': 10.0,
+            'iron': 0.4,
+            'potassium': 85.0,
             'unit': 'g',
           },
         ],
@@ -348,6 +472,12 @@ class _ResultScreenState extends State<ResultScreen> {
       _apiTotalCarb = (data['total_carb'] as num?)?.toDouble() ?? 0;
       _apiTotalProtein = (data['total_protein'] as num?)?.toDouble() ?? 0;
       _apiTotalFat = (data['total_fat'] as num?)?.toDouble() ?? 0;
+      _apiTotalFiber = (data['total_fiber'] as num?)?.toDouble() ?? 0;
+      _apiTotalSugar = (data['total_sugar'] as num?)?.toDouble() ?? 0;
+      _apiTotalSodium = (data['total_sodium'] as num?)?.toDouble() ?? 0;
+      _apiTotalCalcium = (data['total_calcium'] as num?)?.toDouble() ?? 0;
+      _apiTotalIron = (data['total_iron'] as num?)?.toDouble() ?? 0;
+      _apiTotalPotassium = (data['total_potassium'] as num?)?.toDouble() ?? 0;
 
       // Fallback: If _isMultiDish but _apiTotalCalo is 0 and _dishDetails has calo
       if (_apiTotalCalo == 0 && _dishDetails.isNotEmpty) {
@@ -400,6 +530,65 @@ class _ResultScreenState extends State<ResultScreen> {
   double get _totalFat => _isMultiDish
       ? _apiTotalFat
       : _ingredients.fold(0, (sum, item) => sum + item.fat);
+  double get _totalFiber {
+    if (_isMultiDish) return _apiTotalFiber;
+    final sum = _ingredients.fold<double>(0, (s, item) => s + item.fiber);
+    return sum > 0 ? sum : _apiTotalFiber;
+  }
+
+  double get _totalSugar {
+    if (_isMultiDish) return _apiTotalSugar;
+    final sum = _ingredients.fold<double>(0, (s, item) => s + item.sugar);
+    return sum > 0 ? sum : _apiTotalSugar;
+  }
+
+  double get _totalSodium {
+    if (_isMultiDish) return _apiTotalSodium;
+    final sum = _ingredients.fold<double>(0, (s, item) => s + item.sodium);
+    return sum > 0 ? sum : _apiTotalSodium;
+  }
+
+  double get _totalCalcium {
+    if (_isMultiDish) return _apiTotalCalcium;
+    final sum = _ingredients.fold<double>(0, (s, item) => s + item.calcium);
+    return sum > 0 ? sum : _apiTotalCalcium;
+  }
+
+  double get _totalIron {
+    if (_isMultiDish) return _apiTotalIron;
+    final sum = _ingredients.fold<double>(0, (s, item) => s + item.iron);
+    return sum > 0 ? sum : _apiTotalIron;
+  }
+
+  double get _totalPotassium {
+    if (_isMultiDish) return _apiTotalPotassium;
+    final sum = _ingredients.fold<double>(0, (s, item) => s + item.potassium);
+    return sum > 0 ? sum : _apiTotalPotassium;
+  }
+
+  double get _vitalityEnergyScore {
+    var score = 75.0;
+    if (_totalFiber >= 3) score += 10;
+    if (_totalProtein >= 15) score += 10;
+    if (_totalSugar <= 10) score += 5;
+    if (_totalSugar > 25) score -= 15;
+    return score.clamp(50.0, 95.0);
+  }
+
+  double get _vitalitySatietyScore {
+    var score = 5.0;
+    if (_totalProtein >= 20) score += 2.0;
+    if (_totalProtein >= 30) score += 1.0;
+    if (_totalFiber >= 3) score += 1.0;
+    return score.clamp(1.0, 10.0);
+  }
+
+  double get _vitalityFocusScore {
+    var score = 72.0;
+    if (_totalSodium <= 1000) score += 10;
+    if (_totalCarb >= 20 && _totalCarb <= 80) score += 8;
+    return score.clamp(45.0, 95.0);
+  }
   int get _healthScore {
     if (_totalCalo <= 0) return 0;
     var score = 4;
@@ -439,6 +628,12 @@ class _ResultScreenState extends State<ResultScreen> {
       ing.carb = double.parse((ing.carb * ratio).toStringAsFixed(1));
       ing.protein = double.parse((ing.protein * ratio).toStringAsFixed(1));
       ing.fat = double.parse((ing.fat * ratio).toStringAsFixed(1));
+      ing.fiber = double.parse((ing.fiber * ratio).toStringAsFixed(1));
+      ing.sugar = double.parse((ing.sugar * ratio).toStringAsFixed(1));
+      ing.sodium = double.parse((ing.sodium * ratio).toStringAsFixed(1));
+      ing.calcium = double.parse((ing.calcium * ratio).toStringAsFixed(1));
+      ing.iron = double.parse((ing.iron * ratio).toStringAsFixed(1));
+      ing.potassium = double.parse((ing.potassium * ratio).toStringAsFixed(1));
     });
   }
 
@@ -461,6 +656,12 @@ class _ResultScreenState extends State<ResultScreen> {
       ingredient.carb *= ratio;
       ingredient.protein *= ratio;
       ingredient.fat *= ratio;
+      ingredient.fiber *= ratio;
+      ingredient.sugar *= ratio;
+      ingredient.sodium *= ratio;
+      ingredient.calcium *= ratio;
+      ingredient.iron *= ratio;
+      ingredient.potassium *= ratio;
       _recalculateDish(dish);
       _recalculateMultiDishTotals();
     });
@@ -489,6 +690,12 @@ class _ResultScreenState extends State<ResultScreen> {
     dish.carb = dish.ingredients.fold(0, (sum, item) => sum + item.carb);
     dish.protein = dish.ingredients.fold(0, (sum, item) => sum + item.protein);
     dish.fat = dish.ingredients.fold(0, (sum, item) => sum + item.fat);
+    dish.fiber = dish.ingredients.fold(0, (sum, item) => sum + item.fiber);
+    dish.sugar = dish.ingredients.fold(0, (sum, item) => sum + item.sugar);
+    dish.sodium = dish.ingredients.fold(0, (sum, item) => sum + item.sodium);
+    dish.calcium = dish.ingredients.fold(0, (sum, item) => sum + item.calcium);
+    dish.iron = dish.ingredients.fold(0, (sum, item) => sum + item.iron);
+    dish.potassium = dish.ingredients.fold(0, (sum, item) => sum + item.potassium);
   }
 
   void _recalculateMultiDishTotals() {
@@ -496,6 +703,12 @@ class _ResultScreenState extends State<ResultScreen> {
     _apiTotalCarb = _dishDetails.fold(0, (sum, dish) => sum + dish.carb);
     _apiTotalProtein = _dishDetails.fold(0, (sum, dish) => sum + dish.protein);
     _apiTotalFat = _dishDetails.fold(0, (sum, dish) => sum + dish.fat);
+    _apiTotalFiber = _dishDetails.fold(0, (sum, dish) => sum + dish.fiber);
+    _apiTotalSugar = _dishDetails.fold(0, (sum, dish) => sum + dish.sugar);
+    _apiTotalSodium = _dishDetails.fold(0, (sum, dish) => sum + dish.sodium);
+    _apiTotalCalcium = _dishDetails.fold(0, (sum, dish) => sum + dish.calcium);
+    _apiTotalIron = _dishDetails.fold(0, (sum, dish) => sum + dish.iron);
+    _apiTotalPotassium = _dishDetails.fold(0, (sum, dish) => sum + dish.potassium);
   }
 
   Future<void> _saveDishName() async {
@@ -638,6 +851,8 @@ class _ResultScreenState extends State<ResultScreen> {
     final settings = context.watch<AppSettingsProvider>();
     final s = settings.strings;
     final isDark = settings.isDarkMode;
+    final auth = context.watch<AuthProvider>();
+    final isPremium = auth.user?.hasPremiumAccess ?? false;
 
     final bgColor = isDark ? const Color(0xFF121116) : const Color(0xFFF8FAFC);
     final cardBgColor = isDark ? const Color(0xFF1E1D24) : Colors.white;
@@ -1178,6 +1393,28 @@ class _ResultScreenState extends State<ResultScreen> {
                             isDark: isDark,
                             tipText: _tipBarcode ?? s.scanBarcodeTip,
                             onTap: () => context.push('/barcode-scan'),
+                          ),
+                        ],
+                        const SizedBox(height: 6),
+                        _buildNutrientsEntryCard(
+                          isDark: isDark,
+                          cardBgColor: cardBgColor,
+                          borderColor: borderColor,
+                          textDark: textDark,
+                          textMuted: textMuted,
+                          s: s,
+                        ),
+                        if (_showNutrientsAndVitality) ...[
+                          const SizedBox(height: 6),
+                          _buildNutrientsAndVitalitySection(
+                            context: context,
+                            isDark: isDark,
+                            isPremium: isPremium,
+                            cardBgColor: cardBgColor,
+                            borderColor: borderColor,
+                            textDark: textDark,
+                            textMuted: textMuted,
+                            s: s,
                           ),
                         ],
                         const SizedBox(height: 6),
@@ -1820,6 +2057,661 @@ class _ResultScreenState extends State<ResultScreen> {
               ),
             ),
         ],
+      ),
+    );
+  }
+
+  void _openPaywall() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => const PremiumPaywallStep(
+          onboardingMode: false,
+          source: 'scan_result_nutrients',
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNutrientsEntryCard({
+    required bool isDark,
+    required Color cardBgColor,
+    required Color borderColor,
+    required Color textDark,
+    required Color textMuted,
+    required dynamic s,
+  }) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () {
+          setState(() {
+            _showNutrientsAndVitality = !_showNutrientsAndVitality;
+          });
+        },
+        borderRadius: BorderRadius.circular(18),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          decoration: BoxDecoration(
+            color: cardBgColor,
+            borderRadius: BorderRadius.circular(18),
+            border: Border.all(
+              color: _showNutrientsAndVitality
+                  ? const Color(0xFF2563EB)
+                  : borderColor,
+              width: 1.5,
+            ),
+          ),
+          child: Row(
+            children: [
+              Container(
+                width: 38,
+                height: 38,
+                decoration: BoxDecoration(
+                  color: const Color(0xFF2563EB).withValues(alpha: 0.12),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                alignment: Alignment.center,
+                child: NutrientSvgIcons.flask(
+                  size: 20,
+                  color: const Color(0xFF2563EB),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Flexible(
+                          child: Text(
+                            s.dishNutrientsDetailTitle,
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w800,
+                              color: textDark,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        const SizedBox(width: 6),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 6,
+                            vertical: 2,
+                          ),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFF59E0B),
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          child: const Text(
+                            'PRO',
+                            style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.w800,
+                              color: Colors.white,
+                              letterSpacing: 0.5,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      s.dishNutrientsDetailSubtitle,
+                      style: TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w500,
+                        color: textMuted,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 8),
+              AnimatedRotation(
+                turns: _showNutrientsAndVitality ? 0.5 : 0.0,
+                duration: const Duration(milliseconds: 200),
+                child: Icon(
+                  Icons.keyboard_arrow_down_rounded,
+                  color: textMuted,
+                  size: 22,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMetricRow({
+    required Widget iconWidget,
+    required Color iconBg,
+    required String title,
+    required String valueText,
+    required double progressFactor,
+    required Color progressColor,
+    required bool isPremium,
+    required Color textDark,
+    required Color textMuted,
+    required Color trackColor,
+    VoidCallback? onTap,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(14),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 7),
+        child: Row(
+          children: [
+            Container(
+              width: 36,
+              height: 36,
+              decoration: BoxDecoration(
+                color: iconBg,
+                shape: BoxShape.circle,
+              ),
+              alignment: Alignment.center,
+              child: iconWidget,
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          title,
+                          style: TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w700,
+                            color: textDark,
+                            letterSpacing: -0.2,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          if (!isPremium)
+                            ImageFiltered(
+                              imageFilter: ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
+                              child: Text(
+                                '-- / --',
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w800,
+                                  color: textMuted.withValues(alpha: 0.5),
+                                  letterSpacing: 1.5,
+                                ),
+                              ),
+                            )
+                          else
+                            Text(
+                              valueText,
+                              style: TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w800,
+                                color: textDark,
+                              ),
+                            ),
+                          const SizedBox(width: 4),
+                          Icon(
+                            Icons.chevron_right_rounded,
+                            size: 14,
+                            color: isPremium
+                                ? textMuted
+                                : textMuted.withValues(alpha: 0.35),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 6),
+                  if (!isPremium)
+                    ImageFiltered(
+                      imageFilter: ImageFilter.blur(sigmaX: 3.0, sigmaY: 3.0),
+                      child: Opacity(
+                        opacity: 0.6,
+                        child: Container(
+                          height: 6,
+                          decoration: BoxDecoration(
+                            color: trackColor,
+                            borderRadius: BorderRadius.circular(99),
+                          ),
+                        ),
+                      ),
+                    )
+                  else
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(99),
+                      child: Container(
+                        height: 6,
+                        color: trackColor,
+                        child: FractionallySizedBox(
+                          alignment: Alignment.centerLeft,
+                          widthFactor: progressFactor.clamp(0.0, 1.0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: progressColor,
+                              borderRadius: BorderRadius.circular(99),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNutrientsAndVitalitySection({
+    required BuildContext context,
+    required bool isDark,
+    required bool isPremium,
+    required Color cardBgColor,
+    required Color borderColor,
+    required Color textDark,
+    required Color textMuted,
+    required dynamic s,
+  }) {
+    final trackColor =
+        isDark ? const Color(0xFF2C2A34) : const Color(0xFFE2E8F0);
+    final vitalityIconBg =
+        isDark ? const Color(0xFF064E3B) : const Color(0xFFECFDF5);
+    final vitalityIconColor =
+        isDark ? const Color(0xFF34D399) : const Color(0xFF059669);
+    final vitalityFillColor =
+        isDark ? const Color(0xFF22C55E) : const Color(0xFF15803D);
+
+    final fiberPct = ((_totalFiber / 28.0) * 100).round();
+    final sugarPct = ((_totalSugar / 50.0) * 100).round();
+    final sodiumPct = ((_totalSodium / 2000.0) * 100).round();
+    final calciumPct = ((_totalCalcium / 1000.0) * 100).round();
+    final ironPct = ((_totalIron / 18.0) * 100).round();
+    final potassiumPct = ((_totalPotassium / 3400.0) * 100).round();
+
+    return Container(
+      decoration: BoxDecoration(
+        color: cardBgColor,
+        borderRadius: BorderRadius.circular(22),
+        border: Border.all(color: borderColor),
+        boxShadow: [
+          BoxShadow(
+            color: isDark ? const Color(0x33000000) : const Color(0x0A000000),
+            blurRadius: 16,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(22),
+        child: Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 14),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // ── Group 1: 6 Micronutrients ───────────────────
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        s.dishMicronutrientsHeader,
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w800,
+                          color: textDark,
+                          letterSpacing: -0.3,
+                        ),
+                      ),
+                      Text(
+                        s.dishMicronutrientsCount,
+                        style: TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.w700,
+                          color: textMuted,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+
+                  // 1. Fiber (Chất xơ)
+                  _buildMetricRow(
+                    iconWidget: NutrientSvgIcons.fiber(
+                      size: 18,
+                      color: const Color(0xFF10B981),
+                    ),
+                    iconBg: isDark
+                        ? const Color(0xFF064E3B)
+                        : const Color(0xFFD1FAE5),
+                    title: s.fiberLabel,
+                    valueText:
+                        '${_totalFiber.toStringAsFixed(1)}g ($fiberPct%)',
+                    progressFactor: _totalFiber / 28.0,
+                    progressColor: const Color(0xFF10B981),
+                    isPremium: isPremium,
+                    textDark: textDark,
+                    textMuted: textMuted,
+                    trackColor: trackColor,
+                    onTap: !isPremium ? _openPaywall : null,
+                  ),
+
+                  // 2. Sugar (Đường)
+                  _buildMetricRow(
+                    iconWidget: NutrientSvgIcons.sugar(
+                      size: 18,
+                      color: const Color(0xFFF59E0B),
+                    ),
+                    iconBg: isDark
+                        ? const Color(0xFF78350F)
+                        : const Color(0xFFFEF3C7),
+                    title: s.sugarLabel,
+                    valueText:
+                        '${_totalSugar.toStringAsFixed(1)}g ($sugarPct%)',
+                    progressFactor: _totalSugar / 50.0,
+                    progressColor: const Color(0xFFF59E0B),
+                    isPremium: isPremium,
+                    textDark: textDark,
+                    textMuted: textMuted,
+                    trackColor: trackColor,
+                    onTap: !isPremium ? _openPaywall : null,
+                  ),
+
+                  // 3. Sodium (Natri)
+                  _buildMetricRow(
+                    iconWidget: NutrientSvgIcons.sodium(
+                      size: 18,
+                      color: const Color(0xFF3B82F6),
+                    ),
+                    iconBg: isDark
+                        ? const Color(0xFF1E3A8A)
+                        : const Color(0xFFDBEAFE),
+                    title: s.sodiumLabel,
+                    valueText: '${_totalSodium.round()}mg ($sodiumPct%)',
+                    progressFactor: _totalSodium / 2000.0,
+                    progressColor: const Color(0xFF3B82F6),
+                    isPremium: isPremium,
+                    textDark: textDark,
+                    textMuted: textMuted,
+                    trackColor: trackColor,
+                    onTap: !isPremium ? _openPaywall : null,
+                  ),
+
+                  // 4. Calcium (Canxi)
+                  _buildMetricRow(
+                    iconWidget: NutrientSvgIcons.calcium(
+                      size: 18,
+                      color: const Color(0xFF6366F1),
+                    ),
+                    iconBg: isDark
+                        ? const Color(0xFF312E81)
+                        : const Color(0xFFE0E7FF),
+                    title: s.calciumLabel,
+                    valueText: '${_totalCalcium.round()}mg ($calciumPct%)',
+                    progressFactor: _totalCalcium / 1000.0,
+                    progressColor: const Color(0xFF6366F1),
+                    isPremium: isPremium,
+                    textDark: textDark,
+                    textMuted: textMuted,
+                    trackColor: trackColor,
+                    onTap: !isPremium ? _openPaywall : null,
+                  ),
+
+                  // 5. Iron (Sắt)
+                  _buildMetricRow(
+                    iconWidget: NutrientSvgIcons.iron(
+                      size: 18,
+                      color: const Color(0xFFEF4444),
+                    ),
+                    iconBg: isDark
+                        ? const Color(0xFF7F1D1D)
+                        : const Color(0xFFFEE2E2),
+                    title: s.ironLabel,
+                    valueText:
+                        '${_totalIron.toStringAsFixed(1)}mg ($ironPct%)',
+                    progressFactor: _totalIron / 18.0,
+                    progressColor: const Color(0xFFEF4444),
+                    isPremium: isPremium,
+                    textDark: textDark,
+                    textMuted: textMuted,
+                    trackColor: trackColor,
+                    onTap: !isPremium ? _openPaywall : null,
+                  ),
+
+                  // 6. Potassium (Kali)
+                  _buildMetricRow(
+                    iconWidget: NutrientSvgIcons.potassium(
+                      size: 18,
+                      color: const Color(0xFF8B5CF6),
+                    ),
+                    iconBg: isDark
+                        ? const Color(0xFF4C1D95)
+                        : const Color(0xFFEDE9FE),
+                    title: s.potassiumLabel,
+                    valueText:
+                        '${_totalPotassium.round()}mg ($potassiumPct%)',
+                    progressFactor: _totalPotassium / 3400.0,
+                    progressColor: const Color(0xFF8B5CF6),
+                    isPremium: isPremium,
+                    textDark: textDark,
+                    textMuted: textMuted,
+                    trackColor: trackColor,
+                    onTap: !isPremium ? _openPaywall : null,
+                  ),
+
+                  const SizedBox(height: 10),
+                  Divider(height: 1, color: borderColor),
+                  const SizedBox(height: 12),
+
+                  // ── Group 2: Vitality & Energy Metrics ──────────
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        s.dishVitalityHeader,
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w800,
+                          color: textDark,
+                          letterSpacing: -0.3,
+                        ),
+                      ),
+                      Text(
+                        'Vitality',
+                        style: TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.w700,
+                          color: textMuted,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+
+                  // Energy Steadiness
+                  _buildMetricRow(
+                    iconWidget: NutrientSvgIcons.energy(
+                      size: 18,
+                      color: vitalityIconColor,
+                    ),
+                    iconBg: vitalityIconBg,
+                    title: s.vitalityEnergyDetailTitle,
+                    valueText: '${_vitalityEnergyScore.round()}%',
+                    progressFactor: _vitalityEnergyScore / 100.0,
+                    progressColor: vitalityFillColor,
+                    isPremium: isPremium,
+                    textDark: textDark,
+                    textMuted: textMuted,
+                    trackColor: trackColor,
+                    onTap: !isPremium ? _openPaywall : null,
+                  ),
+
+                  // Satiety & Mood
+                  _buildMetricRow(
+                    iconWidget: NutrientSvgIcons.satiety(
+                      size: 18,
+                      color: vitalityIconColor,
+                    ),
+                    iconBg: vitalityIconBg,
+                    title: s.vitalitySatietyDetailTitle,
+                    valueText: '${_vitalitySatietyScore.toStringAsFixed(1)}/10',
+                    progressFactor: _vitalitySatietyScore / 10.0,
+                    progressColor: vitalityFillColor,
+                    isPremium: isPremium,
+                    textDark: textDark,
+                    textMuted: textMuted,
+                    trackColor: trackColor,
+                    onTap: !isPremium ? _openPaywall : null,
+                  ),
+
+                  // Focus & Balance
+                  _buildMetricRow(
+                    iconWidget: NutrientSvgIcons.focus(
+                      size: 18,
+                      color: vitalityIconColor,
+                    ),
+                    iconBg: vitalityIconBg,
+                    title: s.dishVitalityFocus,
+                    valueText: '${_vitalityFocusScore.round()}%',
+                    progressFactor: _vitalityFocusScore / 100.0,
+                    progressColor: vitalityFillColor,
+                    isPremium: isPremium,
+                    textDark: textDark,
+                    textMuted: textMuted,
+                    trackColor: trackColor,
+                    onTap: !isPremium ? _openPaywall : null,
+                  ),
+                ],
+              ),
+            ),
+
+            // ── Glassmorphic Paywall Blur & Lock Overlay (Free Users) ───
+            if (!isPremium)
+              Positioned.fill(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(22),
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 4.5, sigmaY: 4.5),
+                    child: Container(
+                      color: isDark
+                          ? const Color(0xFF1E1D24).withValues(alpha: 0.65)
+                          : Colors.white.withValues(alpha: 0.55),
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 44,
+                            height: 44,
+                            decoration: BoxDecoration(
+                              color: cardBgColor,
+                              shape: BoxShape.circle,
+                              border: Border.all(color: borderColor),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Color(0x14000000),
+                                  blurRadius: 14,
+                                  offset: Offset(0, 4),
+                                ),
+                              ],
+                            ),
+                            alignment: Alignment.center,
+                            child: NutrientSvgIcons.lock(
+                              size: 20,
+                              color: const Color(0xFFF59E0B),
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          Text(
+                            s.unlockPremiumNutrientsTitle,
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w800,
+                              color: textDark,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            s.unlockPremiumNutrientsSubtitle,
+                            style: TextStyle(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w500,
+                              color: textMuted,
+                              height: 1.4,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(height: 14),
+                          GestureDetector(
+                            onTap: _openPaywall,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 18,
+                                vertical: 9,
+                              ),
+                              decoration: BoxDecoration(
+                                gradient: const LinearGradient(
+                                  colors: [
+                                    Color(0xFFF59E0B),
+                                    Color(0xFFD97706),
+                                  ],
+                                ),
+                                borderRadius: BorderRadius.circular(99),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Color(0x59F59E0B),
+                                    blurRadius: 14,
+                                    offset: Offset(0, 4),
+                                  ),
+                                ],
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  NutrientSvgIcons.crown(
+                                    size: 14,
+                                    color: Colors.white,
+                                  ),
+                                  const SizedBox(width: 6),
+                                  Text(
+                                    s.unlockPremiumButton,
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w800,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }

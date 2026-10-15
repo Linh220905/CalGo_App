@@ -3138,4 +3138,84 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get sodiumConsumedLabel => 'Sodium consumed';
+
+  @override
+  String get dishNutrientsDetailTitle => '菜肴微量营养素与活力详情';
+
+  @override
+  String get dishNutrientsDetailSubtitle => '6项微量营养素与能量代谢';
+
+  @override
+  String get dishMicronutrientsHeader => '6项微量营养素指标';
+
+  @override
+  String get dishMicronutrientsCount => '6项指标';
+
+  @override
+  String get calciumLabel => '钙';
+
+  @override
+  String get ironLabel => '铁';
+
+  @override
+  String get potassiumLabel => '钾';
+
+  @override
+  String get dishVitalityHeader => '能量与身体活力';
+
+  @override
+  String get dishVitalityFocus => '专注与平衡';
+
+  @override
+  String get unlockPremiumNutrientsTitle => 'Cal AI 高级版功能';
+
+  @override
+  String get unlockPremiumNutrientsSubtitle => '解锁餐食的详细6项微量营养素和能量活力指标。';
+
+  @override
+  String get equivalentLabel => '折合';
+
+  @override
+  String get perYearText => '每年';
+
+  @override
+  String get billedWeeklyNote => '每周计费';
+
+  @override
+  String get billedMonthlyNote => '每月计费';
+
+  @override
+  String get billedYearlyNote => '每年计费';
+
+  @override
+  String iosAutoRenewTermsYearly(String price) =>
+      '按 $price/年计费。自动续订。可随时在 App Store 设置中取消。';
+
+  @override
+  String iosAutoRenewTermsTrial(String price) =>
+      '免费试用 7 天，之后 $price/年。自动续订。可在 App Store 中随时取消。';
+
+  @override
+  String iosAutoRenewTermsWeekly(String price) =>
+      '按 $price/周计费。自动续订。可在 App Store 中随时取消。';
+
+  @override
+  String iosAutoRenewTermsMonthly(String price) =>
+      '按 $price/月计费。自动续订。可在 App Store 中随时取消。';
+
+  @override
+  String get bmiReferenceSource => '来源：世卫组织 (WHO) – 肥胖和超重';
+
+  @override
+  String get bmiAdultOnlyDisclaimer => '成人标准（18岁及以上）。不适用于儿童和青少年。';
+
+  @override
+  String get bmiAdultOnlyShort => '成人 18+';
+
+  @override
+  String get startFreeTrialBtn => '开始免费试用并订阅';
+
+  @override
+  String get medicalDisclaimerNote =>
+      'CalGo仅供参考提供营养和卡路里估计值，不构成任何医疗建议。在开始任何饮食计划之前，请咨询专业医护人员。';
 }

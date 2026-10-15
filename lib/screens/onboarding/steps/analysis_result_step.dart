@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../providers/onboarding_provider.dart';
 import '../../../providers/app_settings_provider.dart';
 import '../../../providers/auth_provider.dart';
@@ -385,7 +387,7 @@ class _ResultPhaseState extends State<_ResultPhase> {
                         Expanded(
                           child: _StatCard(
                             icon: Icons.monitor_heart_outlined,
-                            label: 'BMI',
+                            label: Platform.isIOS ? 'BMI (${s.bmiAdultOnlyShort})' : 'BMI',
                             value: bmi > 0 ? bmi.toStringAsFixed(1) : '--',
                             tag: isHealthy ? s.bmiNormal : bmiCat,
                           ),
@@ -401,6 +403,38 @@ class _ResultPhaseState extends State<_ResultPhase> {
                         ),
                       ],
                     ).animate().fadeIn(duration: 450.ms, delay: 300.ms),
+                    if (Platform.isIOS) ...[
+                      const SizedBox(height: 8),
+                      InkWell(
+                        onTap: () => launchUrl(
+                          Uri.parse(
+                            'https://www.who.int/news-room/fact-sheets/detail/obesity-and-overweight',
+                          ),
+                          mode: LaunchMode.externalApplication,
+                        ),
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.open_in_new_rounded,
+                              size: 13,
+                              color: Color(0xFF2563EB),
+                            ),
+                            const SizedBox(width: 4),
+                            Expanded(
+                              child: Text(
+                                '${s.bmiReferenceSource} • ${s.bmiAdultOnlyDisclaimer}',
+                                style: const TextStyle(
+                                  fontSize: 10.5,
+                                  fontWeight: FontWeight.w500,
+                                  color: Color(0xFF2563EB),
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                     const SizedBox(height: 14),
 
                     // ── Hành trình ──
@@ -436,34 +470,53 @@ class _ResultPhaseState extends State<_ResultPhase> {
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
-              child: PremiumButton(
-                label: isRecalc ? s.completeAndSaveGoal : s.nextStepButton,
-                loading: _isSaving,
-                onPressed: _isSaving
-                    ? null
-                    : () async {
-                        if (isRecalc) {
-                          setState(() => _isSaving = true);
-                          final authProvider = context.read<AuthProvider>();
-                          final homeProvider = context.read<HomeProvider>();
-                          final gamificationProvider = context.read<GamificationProvider>();
-                          final progressProvider = context.read<ProgressProvider>();
-                          final ok = await onboardingProvider.completeOnboarding(
-                            authProvider: authProvider,
-                            homeProvider: homeProvider,
-                            gamificationProvider: gamificationProvider,
-                            progressProvider: progressProvider,
-                          );
-                            if (mounted) {
-                              setState(() => _isSaving = false);
-                              if (ok && context.mounted) {
-                                context.go('/profile');
-                              }
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (Platform.isIOS)
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: Text(
+                        s.medicalDisclaimerNote,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w400,
+                          color: Color(0xFF94A3B8),
+                          height: 1.35,
+                        ),
+                      ),
+                    ),
+                  PremiumButton(
+                    label: isRecalc ? s.completeAndSaveGoal : s.nextStepButton,
+                    loading: _isSaving,
+                    onPressed: _isSaving
+                        ? null
+                        : () async {
+                            if (isRecalc) {
+                              setState(() => _isSaving = true);
+                              final authProvider = context.read<AuthProvider>();
+                              final homeProvider = context.read<HomeProvider>();
+                              final gamificationProvider = context.read<GamificationProvider>();
+                              final progressProvider = context.read<ProgressProvider>();
+                              final ok = await onboardingProvider.completeOnboarding(
+                                authProvider: authProvider,
+                                homeProvider: homeProvider,
+                                gamificationProvider: gamificationProvider,
+                                progressProvider: progressProvider,
+                              );
+                                if (mounted) {
+                                  setState(() => _isSaving = false);
+                                  if (ok && context.mounted) {
+                                    context.go('/profile');
+                                  }
+                                }
+                            } else {
+                              onboardingProvider.nextStep();
                             }
-                        } else {
-                          onboardingProvider.nextStep();
-                        }
-                      },
+                          },
+                  ),
+                ],
               ),
             ),
           ],

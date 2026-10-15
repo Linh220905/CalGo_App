@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -73,10 +74,14 @@ class _DiscountOfferPaywallStepState extends State<DiscountOfferPaywallStep> {
         });
       }
     });
-    // Delay 5s before showing close [X] button on Offer screen
-    _closeTimer = Timer(const Duration(seconds: 5), () {
-      if (mounted) setState(() => _showClose = true);
-    });
+    // Delay 5s before showing close [X] button on Android; immediate on iOS for Guideline 4.0/3.1.2
+    if (Platform.isIOS) {
+      _showClose = true;
+    } else {
+      _closeTimer = Timer(const Duration(seconds: 5), () {
+        if (mounted) setState(() => _showClose = true);
+      });
+    }
   }
 
   @override
@@ -474,13 +479,17 @@ class _DiscountOfferPaywallStepState extends State<DiscountOfferPaywallStep> {
 
                     // Compact Note under Mascot
                     Text(
-                      '$monthlyPrice $subUnitMonth',
+                      Platform.isIOS
+                          ? '$yearlyTotal / ${s.perYearText.replaceAll('per ', '').replaceAll('mỗi ', '')}'
+                          : '$monthlyPrice $subUnitMonth',
                       textAlign: TextAlign.center,
-                      style: _f(16, weight: FontWeight.w800, color: _kInk),
+                      style: _f(17, weight: FontWeight.w800, color: _kInk),
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      s.oneTimeOfferSubtitle,
+                      Platform.isIOS
+                          ? '$monthlyPrice $subUnitMonth (${s.equivalentLabel}) • ${s.oneTimeOfferSubtitle}'
+                          : s.oneTimeOfferSubtitle,
                       textAlign: TextAlign.center,
                       style: _f(11.5, color: _kMuted, weight: FontWeight.w500),
                     ),
@@ -542,7 +551,9 @@ class _DiscountOfferPaywallStepState extends State<DiscountOfferPaywallStep> {
                                       ),
                                       const SizedBox(height: 3),
                                       Text(
-                                        s.planMonthsNote(12, yearlyTotal),
+                                        Platform.isIOS
+                                            ? '$monthlyPrice $unitMonth (${s.equivalentLabel})'
+                                            : s.planMonthsNote(12, yearlyTotal),
                                         style: _f(
                                           12.5,
                                           color: _kMuted,
@@ -556,7 +567,7 @@ class _DiscountOfferPaywallStepState extends State<DiscountOfferPaywallStep> {
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     Text(
-                                      monthlyPrice,
+                                      Platform.isIOS ? yearlyTotal : monthlyPrice,
                                       style: _f(
                                         18,
                                         weight: FontWeight.w800,
@@ -564,7 +575,9 @@ class _DiscountOfferPaywallStepState extends State<DiscountOfferPaywallStep> {
                                       ),
                                     ),
                                     Text(
-                                      unitMonth,
+                                      Platform.isIOS
+                                          ? '/ ${s.perYearText.replaceAll('per ', '').replaceAll('mỗi ', '')}'
+                                          : unitMonth,
                                       style: _f(
                                         11,
                                         color: _kMuted,
@@ -605,7 +618,7 @@ class _DiscountOfferPaywallStepState extends State<DiscountOfferPaywallStep> {
                                 ),
                               )
                             : Text(
-                                s.claimOfferBtn,
+                                Platform.isIOS ? s.subscribePremium : s.claimOfferBtn,
                                 style: _f(
                                   16,
                                   weight: FontWeight.w800,
@@ -614,6 +627,14 @@ class _DiscountOfferPaywallStepState extends State<DiscountOfferPaywallStep> {
                               ),
                       ),
                     ),
+                    if (Platform.isIOS) ...[
+                      const SizedBox(height: 8),
+                      Text(
+                        s.iosAutoRenewTermsYearly(yearlyTotal),
+                        textAlign: TextAlign.center,
+                        style: _f(10.5, color: _kMuted, weight: FontWeight.w500),
+                      ),
+                    ],
                     const SizedBox(height: 16),
 
                     // Footer Links

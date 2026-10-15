@@ -1,0 +1,6 @@
+/* Vietnamese permission descriptions */
+"NSCameraUsageDescription" = "CalGo cần quyền truy cập Camera để chụp ảnh món ăn và phân tích dinh dưỡng.";
+"NSPhotoLibraryUsageDescription" = "CalGo cần quyền truy cập Thư viện ảnh để chọn ảnh món ăn phân tích dinh dưỡng.";
+"NSPhotoLibraryAddUsageDescription" = "CalGo cần quyền lưu ảnh món ăn và kết quả phân tích vào Thư viện ảnh.";
+"NSHealthShareUsageDescription" = "CalGo cần đọc Năng lượng hoạt động đã đốt từ Apple Health để cộng vào mục tiêu calo trong ngày.";
+"NSHealthUpdateUsageDescription" = "CalGo cần đồng bộ dữ liệu sức khỏe và các bài tập luyện với Apple Health.";

@@ -3275,4 +3275,87 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get sodiumConsumedLabel => 'Natri tiêu thụ';
+
+  @override
+  String get dishNutrientsDetailTitle => 'Chi tiết vi chất & năng lượng món ăn';
+
+  @override
+  String get dishNutrientsDetailSubtitle =>
+      '6 chỉ số vi chất & chuyển hóa năng lượng';
+
+  @override
+  String get dishMicronutrientsHeader => '6 Chỉ số vi chất dinh dưỡng';
+
+  @override
+  String get dishMicronutrientsCount => '6 chỉ số';
+
+  @override
+  String get calciumLabel => 'Canxi';
+
+  @override
+  String get ironLabel => 'Sắt';
+
+  @override
+  String get potassiumLabel => 'Kali';
+
+  @override
+  String get dishVitalityHeader => 'Chỉ số năng lượng & Cơ thể';
+
+  @override
+  String get dishVitalityFocus => 'Độ tập trung & Cân bằng';
+
+  @override
+  String get unlockPremiumNutrientsTitle => 'Tính Năng Cal AI Premium';
+
+  @override
+  String get unlockPremiumNutrientsSubtitle =>
+      'Mở khóa chi tiết 6 chỉ số vi chất và thanh năng lượng cho món ăn.';
+
+  @override
+  String get equivalentLabel => 'quy đổi';
+
+  @override
+  String get perYearText => 'mỗi năm';
+
+  @override
+  String get billedWeeklyNote => 'Thanh toán mỗi tuần';
+
+  @override
+  String get billedMonthlyNote => 'Thanh toán mỗi tháng';
+
+  @override
+  String get billedYearlyNote => 'Thanh toán mỗi năm';
+
+  @override
+  String iosAutoRenewTermsYearly(String price) =>
+      'Thanh toán $price/năm. Tự động gia hạn hàng năm. Hủy bất cứ lúc nào trong Cài đặt App Store.';
+
+  @override
+  String iosAutoRenewTermsTrial(String price) =>
+      'Dùng thử 7 ngày miễn phí, sau đó $price/năm. Tự động gia hạn. Hủy bất cứ lúc nào trong Cài đặt App Store.';
+
+  @override
+  String iosAutoRenewTermsWeekly(String price) =>
+      'Thanh toán $price/tuần. Tự động gia hạn hàng tuần. Hủy bất cứ lúc nào trong Cài đặt App Store.';
+
+  @override
+  String iosAutoRenewTermsMonthly(String price) =>
+      'Thanh toán $price/tháng. Tự động gia hạn hàng tháng. Hủy bất cứ lúc nào trong Cài đặt App Store.';
+
+  @override
+  String get bmiReferenceSource => 'Nguồn tham khảo: WHO – Béo phì & Thừa cân';
+
+  @override
+  String get bmiAdultOnlyDisclaimer =>
+      'Tiêu chuẩn áp dụng cho người lớn (≥18 tuổi). Không áp dụng cho trẻ em và thanh thiếu niên.';
+
+  @override
+  String get bmiAdultOnlyShort => 'Người lớn ≥18 tuổi';
+
+  @override
+  String get startFreeTrialBtn => 'Dùng thử miễn phí & Đăng ký';
+
+  @override
+  String get medicalDisclaimerNote =>
+      'CalGo chỉ cung cấp thông tin ước tính dinh dưỡng và calo cho mục đích tham khảo, không thay thế lời khuyên y tế. Vui lòng tham khảo ý kiến bác sĩ trước khi bắt đầu kế hoạch ăn uống mới.';
 }

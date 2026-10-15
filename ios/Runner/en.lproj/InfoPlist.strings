@@ -1,0 +1,6 @@
+/* English permission descriptions for iOS App Store Review */
+"NSCameraUsageDescription" = "CalGo needs camera access to photograph your meals for AI nutrition and calorie analysis.";
+"NSPhotoLibraryUsageDescription" = "CalGo needs photo library access to select meal photos for AI nutrition and calorie analysis.";
+"NSPhotoLibraryAddUsageDescription" = "CalGo needs access to save meal photos and nutrition analysis results to your photo library.";
+"NSHealthShareUsageDescription" = "CalGo reads active burned energy from Apple Health to adjust your daily calorie target.";
+"NSHealthUpdateUsageDescription" = "CalGo syncs your health and workout data with Apple Health.";

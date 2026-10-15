@@ -3167,4 +3167,86 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get sodiumConsumedLabel => 'Sodium consumed';
+
+  @override
+  String get dishNutrientsDetailTitle => '요리 미량 영양소 및 활력 상세';
+
+  @override
+  String get dishNutrientsDetailSubtitle => '6가지 미량 영양소 및 에너지 대사';
+
+  @override
+  String get dishMicronutrientsHeader => '6가지 미량 영양소 지표';
+
+  @override
+  String get dishMicronutrientsCount => '6가지 지표';
+
+  @override
+  String get calciumLabel => '칼슘';
+
+  @override
+  String get ironLabel => '철분';
+
+  @override
+  String get potassiumLabel => '칼륨';
+
+  @override
+  String get dishVitalityHeader => '에너지 및 신체 활력';
+
+  @override
+  String get dishVitalityFocus => '집중력 및 균형';
+
+  @override
+  String get unlockPremiumNutrientsTitle => 'Cal AI 프리미엄 기능';
+
+  @override
+  String get unlockPremiumNutrientsSubtitle =>
+      '식사의 상세 6가지 미량 영양소와 에너지 활력을 잠금 해제하세요.';
+
+  @override
+  String get equivalentLabel => '환산';
+
+  @override
+  String get perYearText => '연간';
+
+  @override
+  String get billedWeeklyNote => '매주 청구';
+
+  @override
+  String get billedMonthlyNote => '매월 청구';
+
+  @override
+  String get billedYearlyNote => '매년 청구';
+
+  @override
+  String iosAutoRenewTermsYearly(String price) =>
+      '$price/년으로 청구. 자동 갱신. App Store 설정에서 언제든지 취소 가능.';
+
+  @override
+  String iosAutoRenewTermsTrial(String price) =>
+      '7일 무료 체험 후 $price/년. 자동 갱신. App Store 설정에서 언제든지 취소 가능.';
+
+  @override
+  String iosAutoRenewTermsWeekly(String price) =>
+      '$price/주로 청구. 자동 갱신. App Store 설정에서 언제든지 취소 가능.';
+
+  @override
+  String iosAutoRenewTermsMonthly(String price) =>
+      '$price/월로 청구. 자동 갱신. App Store 설정에서 언제든지 취소 가능.';
+
+  @override
+  String get bmiReferenceSource => '출처: WHO – 비만 및 과체중';
+
+  @override
+  String get bmiAdultOnlyDisclaimer =>
+      '성인(18세 이상) 기준. 어린이 및 청소년에게는 적용되지 않습니다.';
+
+  @override
+  String get bmiAdultOnlyShort => '성인 18세 이상';
+
+  @override
+  String get startFreeTrialBtn => '무료 체험 시작 및 구독';
+
+  @override
+  String get medicalDisclaimerNote =>
+      'CalGo는 정보 제공 목적으로만 영양 및 칼로리 추정치를 제공하며 의학적 조언을 대신하지 않습니다. 새로운 식단 계획을 시작하기 전에 의료 전문가와 상담하세요.';
 }

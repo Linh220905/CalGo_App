@@ -134,6 +134,10 @@ class ReviewService {
 
   /// Request review using native Google Play / App Store in-app review prompt
   static Future<void> requestReviewPrompt({String source = 'scan', BuildContext? context}) async {
+    // Apple Guideline 5.6.3: Never prompt rating during onboarding on iOS
+    if (Platform.isIOS && source.startsWith('onboarding')) {
+      return;
+    }
     await requestNativeReview();
   }
 }

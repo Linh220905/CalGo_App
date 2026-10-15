@@ -3309,4 +3309,88 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get sodiumConsumedLabel => 'Sodium consumed';
+
+  @override
+  String get dishNutrientsDetailTitle =>
+      'Micronutrientes y vitalidad del plato';
+
+  @override
+  String get dishNutrientsDetailSubtitle =>
+      '6 micronutrientes y metabolismo energético';
+
+  @override
+  String get dishMicronutrientsHeader => '6 Indicadores de micronutrientes';
+
+  @override
+  String get dishMicronutrientsCount => '6 métricas';
+
+  @override
+  String get calciumLabel => 'Calcio';
+
+  @override
+  String get ironLabel => 'Hierro';
+
+  @override
+  String get potassiumLabel => 'Potasio';
+
+  @override
+  String get dishVitalityHeader => 'Energía y vitalidad corporal';
+
+  @override
+  String get dishVitalityFocus => 'Enfoque y equilibrio';
+
+  @override
+  String get unlockPremiumNutrientsTitle => 'Función Premium de Cal AI';
+
+  @override
+  String get unlockPremiumNutrientsSubtitle =>
+      'Desbloquea los 6 micronutrientes detallados y la vitalidad energética de las comidas.';
+
+  @override
+  String get equivalentLabel => 'equivalente';
+
+  @override
+  String get perYearText => 'por año';
+
+  @override
+  String get billedWeeklyNote => 'Facturado semanalmente';
+
+  @override
+  String get billedMonthlyNote => 'Facturado mensualmente';
+
+  @override
+  String get billedYearlyNote => 'Facturado anualmente';
+
+  @override
+  String iosAutoRenewTermsYearly(String price) =>
+      'Facturado como $price/año. Se renueva automáticamente. Cancela en cualquier momento en Configuración de App Store.';
+
+  @override
+  String iosAutoRenewTermsTrial(String price) =>
+      '7 días gratis, luego $price/año. Se renueva automáticamente. Cancela en cualquier momento en App Store.';
+
+  @override
+  String iosAutoRenewTermsWeekly(String price) =>
+      'Facturado como $price/semana. Se renueva automáticamente. Cancela en cualquier momento en App Store.';
+
+  @override
+  String iosAutoRenewTermsMonthly(String price) =>
+      'Facturado como $price/mes. Se renueva automáticamente. Cancela en cualquier momento en App Store.';
+
+  @override
+  String get bmiReferenceSource => 'Fuente: OMS – Obesidad y sobrepeso';
+
+  @override
+  String get bmiAdultOnlyDisclaimer =>
+      'Estándar para adultos (18+ años). No aplicable a niños y adolescentes.';
+
+  @override
+  String get bmiAdultOnlyShort => 'Adultos 18+';
+
+  @override
+  String get startFreeTrialBtn => 'Comenzar prueba gratis y suscribirse';
+
+  @override
+  String get medicalDisclaimerNote =>
+      'CalGo proporciona estimaciones nutricionales y calóricas solo con fines informativos y no ofrece asesoramiento médico. Consulte a un profesional de la salud antes de comenzar una dieta.';
 }

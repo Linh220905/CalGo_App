@@ -3157,4 +3157,84 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get sodiumConsumedLabel => 'Sodium consumed';
+
+  @override
+  String get dishNutrientsDetailTitle => '料理の微量栄養素と活力の詳細';
+
+  @override
+  String get dishNutrientsDetailSubtitle => '6つの微量栄養素とエネルギー代謝';
+
+  @override
+  String get dishMicronutrientsHeader => '6つの微量栄養素指標';
+
+  @override
+  String get dishMicronutrientsCount => '6指標';
+
+  @override
+  String get calciumLabel => 'カルシウム';
+
+  @override
+  String get ironLabel => '鉄分';
+
+  @override
+  String get potassiumLabel => 'カリウム';
+
+  @override
+  String get dishVitalityHeader => 'エネルギーと身体の活力';
+
+  @override
+  String get dishVitalityFocus => '集中力とバランス';
+
+  @override
+  String get unlockPremiumNutrientsTitle => 'Cal AI プレミアム機能';
+
+  @override
+  String get unlockPremiumNutrientsSubtitle => '料理の6つの微量栄養素とエネルギー活力をアンロックします。';
+
+  @override
+  String get equivalentLabel => '換算';
+
+  @override
+  String get perYearText => '年額';
+
+  @override
+  String get billedWeeklyNote => '毎週請求';
+
+  @override
+  String get billedMonthlyNote => '毎月請求';
+
+  @override
+  String get billedYearlyNote => '毎年請求';
+
+  @override
+  String iosAutoRenewTermsYearly(String price) =>
+      '$price/年で請求。自動更新。App Storeの設定からいつでも解約可能。';
+
+  @override
+  String iosAutoRenewTermsTrial(String price) =>
+      '7日間無料、その後$price/年。自動更新。App Storeの設定からいつでも解約可能。';
+
+  @override
+  String iosAutoRenewTermsWeekly(String price) =>
+      '$price/週で請求。自動更新。App Storeの設定からいつでも解約可能。';
+
+  @override
+  String iosAutoRenewTermsMonthly(String price) =>
+      '$price/月で請求。自動更新。App Storeの設定からいつでも解約可能。';
+
+  @override
+  String get bmiReferenceSource => '出典：WHO（世界保健機関）– 肥満と過体重';
+
+  @override
+  String get bmiAdultOnlyDisclaimer => '成人（18歳以上）基準。小児および青少年には適用されません。';
+
+  @override
+  String get bmiAdultOnlyShort => '成人 18歳以上';
+
+  @override
+  String get startFreeTrialBtn => '無料体験を開始して登録';
+
+  @override
+  String get medicalDisclaimerNote =>
+      'CalGoは情報提供のみを目的として栄養およびカロリーの推定値を提供しており、医学的アドバイスではありません。新しい食事計画を始める前に医師にご相談ください。';
 }

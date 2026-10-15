@@ -1595,5 +1595,58 @@
   "dietaryFiberIntakeLabel": "Dietary fiber",
   "satFatControlLabel": "Saturated fat",
   "satFatControlValue": "Controlled (<10% kcal)",
-  "sodiumConsumedLabel": "Sodium consumed"
+  "sodiumConsumedLabel": "Sodium consumed",
+  "dishNutrientsDetailTitle": "Dish Micronutrients & Vitality",
+  "dishNutrientsDetailSubtitle": "6 micronutrients & energy metabolism",
+  "dishMicronutrientsHeader": "6 Micronutrient Indicators",
+  "dishMicronutrientsCount": "6 metrics",
+  "calciumLabel": "Calcium",
+  "ironLabel": "Iron",
+  "potassiumLabel": "Potassium",
+  "dishVitalityHeader": "Energy & Body Vitality",
+  "dishVitalityFocus": "Focus & Balance",
+  "unlockPremiumNutrientsTitle": "Cal AI Premium Feature",
+  "unlockPremiumNutrientsSubtitle": "Unlock detailed 6 micronutrients and energy vitality for meals.",
+  "equivalentLabel": "equivalent",
+  "perYearText": "per year",
+  "billedWeeklyNote": "Billed weekly",
+  "billedMonthlyNote": "Billed monthly",
+  "billedYearlyNote": "Billed annually",
+  "iosAutoRenewTermsYearly": "Billed as {price}/year. Auto-renews annually. Cancel anytime in App Store Settings.",
+  "@iosAutoRenewTermsYearly": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "iosAutoRenewTermsTrial": "7 days free, then {price}/year. Auto-renews. Cancel anytime in App Store Settings.",
+  "@iosAutoRenewTermsTrial": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "iosAutoRenewTermsWeekly": "Billed as {price}/week. Auto-renews weekly. Cancel anytime in App Store Settings.",
+  "@iosAutoRenewTermsWeekly": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "iosAutoRenewTermsMonthly": "Billed as {price}/month. Auto-renews monthly. Cancel anytime in App Store Settings.",
+  "@iosAutoRenewTermsMonthly": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "bmiReferenceSource": "Source: WHO – Obesity and overweight",
+  "bmiAdultOnlyDisclaimer": "Adult standard (age 18+). Not applicable for children and teens.",
+  "bmiAdultOnlyShort": "Adults 18+",
+  "startFreeTrialBtn": "Start Free Trial & Subscribe",
+  "medicalDisclaimerNote": "CalGo provides nutrition and calorie estimates for informational purposes only and does not provide medical advice. Consult a healthcare professional before starting any diet plan."
 }

@@ -3315,4 +3315,88 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get sodiumConsumedLabel => 'Sodium consumed';
+
+  @override
+  String get dishNutrientsDetailTitle =>
+      'Микроэлементы и жизненная энергия блюда';
+
+  @override
+  String get dishNutrientsDetailSubtitle =>
+      '6 микроэлементов и энергетический обмен';
+
+  @override
+  String get dishMicronutrientsHeader => '6 показателей микроэлементов';
+
+  @override
+  String get dishMicronutrientsCount => '6 показателей';
+
+  @override
+  String get calciumLabel => 'Кальций';
+
+  @override
+  String get ironLabel => 'Железо';
+
+  @override
+  String get potassiumLabel => 'Калий';
+
+  @override
+  String get dishVitalityHeader => 'Энергия и жизненная сила тела';
+
+  @override
+  String get dishVitalityFocus => 'Фокус и баланс';
+
+  @override
+  String get unlockPremiumNutrientsTitle => 'Премиум-функция Cal AI';
+
+  @override
+  String get unlockPremiumNutrientsSubtitle =>
+      'Разблокируйте подробные 6 микроэлементов и жизненную энергию для блюд.';
+
+  @override
+  String get equivalentLabel => 'в эквиваленте';
+
+  @override
+  String get perYearText => 'в год';
+
+  @override
+  String get billedWeeklyNote => 'Оплата еженедельно';
+
+  @override
+  String get billedMonthlyNote => 'Оплата ежемесячно';
+
+  @override
+  String get billedYearlyNote => 'Оплата ежегодно';
+
+  @override
+  String iosAutoRenewTermsYearly(String price) =>
+      'Оплата $price/год. Автопродление. Отмена в любое время в настройках App Store.';
+
+  @override
+  String iosAutoRenewTermsTrial(String price) =>
+      '7 дней бесплатно, затем $price/год. Автопродление. Отмена в любое время в App Store.';
+
+  @override
+  String iosAutoRenewTermsWeekly(String price) =>
+      'Оплата $price/неделю. Автопродление. Отмена в любое время в App Store.';
+
+  @override
+  String iosAutoRenewTermsMonthly(String price) =>
+      'Оплата $price/месяц. Автопродление. Отмена в любое время в App Store.';
+
+  @override
+  String get bmiReferenceSource => 'Источник: ВОЗ – Ожирение и избыточный вес';
+
+  @override
+  String get bmiAdultOnlyDisclaimer =>
+      'Стандарт для взрослых (18+ лет). Не применяется для детей и подростков.';
+
+  @override
+  String get bmiAdultOnlyShort => 'Взрослые 18+';
+
+  @override
+  String get startFreeTrialBtn => 'Начать бесплатный период и оформить';
+
+  @override
+  String get medicalDisclaimerNote =>
+      'CalGo предоставляет расчеты калорий и питательных веществ исключительно в ознакомительных целях и не дает медицинских рекомендаций. Проконсультируйтесь с врачом перед началом диеты.';
 }

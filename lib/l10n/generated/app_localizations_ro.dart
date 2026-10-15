@@ -3319,4 +3319,89 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get sodiumConsumedLabel => 'Sodium consumed';
+
+  @override
+  String get dishNutrientsDetailTitle =>
+      'Micronutrienți și vitalitate preparat';
+
+  @override
+  String get dishNutrientsDetailSubtitle =>
+      '6 micronutrienți și metabolism energetic';
+
+  @override
+  String get dishMicronutrientsHeader => '6 indicatori de micronutrienți';
+
+  @override
+  String get dishMicronutrientsCount => '6 metrici';
+
+  @override
+  String get calciumLabel => 'Calciu';
+
+  @override
+  String get ironLabel => 'Fier';
+
+  @override
+  String get potassiumLabel => 'Potasiu';
+
+  @override
+  String get dishVitalityHeader => 'Energie și vitalitate corporală';
+
+  @override
+  String get dishVitalityFocus => 'Concentrare și echilibru';
+
+  @override
+  String get unlockPremiumNutrientsTitle => 'Funcție Cal AI Premium';
+
+  @override
+  String get unlockPremiumNutrientsSubtitle =>
+      'Deblochează detaliile despre 6 micronutrienți și vitalitatea energetică pentru mese.';
+
+  @override
+  String get equivalentLabel => 'echivalent';
+
+  @override
+  String get perYearText => 'pe an';
+
+  @override
+  String get billedWeeklyNote => 'Facturat săptămânal';
+
+  @override
+  String get billedMonthlyNote => 'Facturat lunar';
+
+  @override
+  String get billedYearlyNote => 'Facturat anual';
+
+  @override
+  String iosAutoRenewTermsYearly(String price) =>
+      'Facturat ca $price/an. Reînnoire automată. Anulează oricând din Configurări App Store.';
+
+  @override
+  String iosAutoRenewTermsTrial(String price) =>
+      '7 zile gratuit, apoi $price/an. Reînnoire automată. Anulează oricând în App Store.';
+
+  @override
+  String iosAutoRenewTermsWeekly(String price) =>
+      'Facturat ca $price/săptămână. Reînnoire automată. Anulează oricând în App Store.';
+
+  @override
+  String iosAutoRenewTermsMonthly(String price) =>
+      'Facturat ca $price/lună. Reînnoire automată. Anulează oricând în App Store.';
+
+  @override
+  String get bmiReferenceSource =>
+      'Sursă: OMS – Obezitate și supraponderalitate';
+
+  @override
+  String get bmiAdultOnlyDisclaimer =>
+      'Standard pentru adulți (18+ ani). Nu se aplică copiilor și adolescenților.';
+
+  @override
+  String get bmiAdultOnlyShort => 'Adulți 18+';
+
+  @override
+  String get startFreeTrialBtn => 'Începe perioada de probă și abonează-te';
+
+  @override
+  String get medicalDisclaimerNote =>
+      'CalGo oferă estimări nutriționale și calorice doar în scop informativ și nu oferă sfaturi medicale. Consultați un medic înainte de a începe orice dietă.';
 }

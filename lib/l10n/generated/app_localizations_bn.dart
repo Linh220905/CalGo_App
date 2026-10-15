@@ -3293,4 +3293,89 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get sodiumConsumedLabel => 'Sodium consumed';
+
+  @override
+  String get dishNutrientsDetailTitle =>
+      'খাবারের মাইক্রোনিউট্রিয়েন্ট ও জীবনীশক্তি';
+
+  @override
+  String get dishNutrientsDetailSubtitle =>
+      '৬টি মাইক্রোনিউট্রিয়েন্ট ও শক্তি বিপাক';
+
+  @override
+  String get dishMicronutrientsHeader => '৬টি মাইক্রোনিউট্রিয়েন্ট সূচক';
+
+  @override
+  String get dishMicronutrientsCount => '৬টি পরিমাপ';
+
+  @override
+  String get calciumLabel => 'ক্যালসিয়াম';
+
+  @override
+  String get ironLabel => 'আয়রন';
+
+  @override
+  String get potassiumLabel => 'পটাসিয়াম';
+
+  @override
+  String get dishVitalityHeader => 'শক্তি ও শরীরের জীবনীশক্তি';
+
+  @override
+  String get dishVitalityFocus => 'মনোযোগ ও ভারসাম্য';
+
+  @override
+  String get unlockPremiumNutrientsTitle => 'Cal AI প্রিমিয়াম ফিচার';
+
+  @override
+  String get unlockPremiumNutrientsSubtitle =>
+      'খাবারের বিস্তারিত ৬টি মাইক্রোনিউট্রিয়েন্ট ও শক্তির মাত্রা আনলক করুন।';
+
+  @override
+  String get equivalentLabel => 'সমতুল্য';
+
+  @override
+  String get perYearText => 'প্রতি বছর';
+
+  @override
+  String get billedWeeklyNote => 'সাপ্তাহিক বিল করা হয়';
+
+  @override
+  String get billedMonthlyNote => 'মাসিক বিল করা হয়';
+
+  @override
+  String get billedYearlyNote => 'বার্ষিক বিল করা হয়';
+
+  @override
+  String iosAutoRenewTermsYearly(String price) =>
+      '$price/বছর বিল করা হবে। স্বয়ংক্রিয় পুনর্নবীকরণ। App Store সেটিংসে যেকোনো সময় বাতিল করুন।';
+
+  @override
+  String iosAutoRenewTermsTrial(String price) =>
+      '৭ দিন বিনামূল্যে, তারপর $price/বছর। স্বয়ংক্রিয় পুনর্নবীকরণ। App Store-এ যেকোনো সময় বাতিল করুন।';
+
+  @override
+  String iosAutoRenewTermsWeekly(String price) =>
+      '$price/সপ্তাহ বিল করা হবে। স্বয়ংক্রিয় পুনর্নবীকরণ। App Store-এ যেকোনো সময় বাতিল করুন।';
+
+  @override
+  String iosAutoRenewTermsMonthly(String price) =>
+      '$price/মাস বিল করা হবে। স্বয়ংক্রিয় পুনর্নবীকরণ। App Store-এ যেকোনো সময় বাতিল করুন।';
+
+  @override
+  String get bmiReferenceSource =>
+      'উৎস: WHO – স্থূলতা এবং অতিরিক্ত ওজন';
+
+  @override
+  String get bmiAdultOnlyDisclaimer =>
+      'প্রাপ্তবয়স্কদের মানদণ্ড (১৮+ বছর)। শিশু এবং কিশোর-কিশোরীদের জন্য প্রযোজ্য নয়।';
+
+  @override
+  String get bmiAdultOnlyShort => 'প্রাপ্তবয়স্ক ১৮+';
+
+  @override
+  String get startFreeTrialBtn => 'বিনামূল্যে ট্রায়াল শুরু করুন ও সাবস্ক্রাইব করুন';
+
+  @override
+  String get medicalDisclaimerNote =>
+      'CalGo শুধুমাত্র তথ্যের উদ্দেশ্যে পুষ্টি ও ক্যালোরির অনুমান প্রদান করে এবং কোনো চিকিৎসা পরামর্শ দেয় না। কোনো খাদ্য পরিকল্পনা শুরু করার আগে চিকিৎসকের পরামর্শ নিন।';
 }

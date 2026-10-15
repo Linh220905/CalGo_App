@@ -3278,4 +3278,87 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sodiumConsumedLabel => 'Sodium consumed';
+
+  @override
+  String get dishNutrientsDetailTitle => 'Dish Micronutrients & Vitality';
+
+  @override
+  String get dishNutrientsDetailSubtitle =>
+      '6 micronutrients & energy metabolism';
+
+  @override
+  String get dishMicronutrientsHeader => '6 Micronutrient Indicators';
+
+  @override
+  String get dishMicronutrientsCount => '6 metrics';
+
+  @override
+  String get calciumLabel => 'Calcium';
+
+  @override
+  String get ironLabel => 'Iron';
+
+  @override
+  String get potassiumLabel => 'Potassium';
+
+  @override
+  String get dishVitalityHeader => 'Energy & Body Vitality';
+
+  @override
+  String get dishVitalityFocus => 'Focus & Balance';
+
+  @override
+  String get unlockPremiumNutrientsTitle => 'Cal AI Premium Feature';
+
+  @override
+  String get unlockPremiumNutrientsSubtitle =>
+      'Unlock detailed 6 micronutrients and energy vitality for meals.';
+
+  @override
+  String get equivalentLabel => 'equivalent';
+
+  @override
+  String get perYearText => 'per year';
+
+  @override
+  String get billedWeeklyNote => 'Billed weekly';
+
+  @override
+  String get billedMonthlyNote => 'Billed monthly';
+
+  @override
+  String get billedYearlyNote => 'Billed annually';
+
+  @override
+  String iosAutoRenewTermsYearly(String price) =>
+      'Billed as $price/year. Auto-renews annually. Cancel anytime in App Store Settings.';
+
+  @override
+  String iosAutoRenewTermsTrial(String price) =>
+      '7 days free, then $price/year. Auto-renews. Cancel anytime in App Store Settings.';
+
+  @override
+  String iosAutoRenewTermsWeekly(String price) =>
+      'Billed as $price/week. Auto-renews weekly. Cancel anytime in App Store Settings.';
+
+  @override
+  String iosAutoRenewTermsMonthly(String price) =>
+      'Billed as $price/month. Auto-renews monthly. Cancel anytime in App Store Settings.';
+
+  @override
+  String get bmiReferenceSource => 'Source: WHO – Obesity and overweight';
+
+  @override
+  String get bmiAdultOnlyDisclaimer =>
+      'Adult standard (age 18+). Not applicable for children and teens.';
+
+  @override
+  String get bmiAdultOnlyShort => 'Adults 18+';
+
+  @override
+  String get startFreeTrialBtn => 'Start Free Trial & Subscribe';
+
+  @override
+  String get medicalDisclaimerNote =>
+      'CalGo provides nutrition and calorie estimates for informational purposes only and does not provide medical advice. Consult a healthcare professional before starting any diet plan.';
 }

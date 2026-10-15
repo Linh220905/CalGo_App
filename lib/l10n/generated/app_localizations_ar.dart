@@ -3259,4 +3259,89 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get sodiumConsumedLabel => 'Sodium consumed';
+
+  @override
+  String get dishNutrientsDetailTitle =>
+      'تفاصيل المغذيات الدقيقة وحيوية الوجبة';
+
+  @override
+  String get dishNutrientsDetailSubtitle =>
+      '6 عناصر غذائية دقيقة واستقلاب الطاقة';
+
+  @override
+  String get dishMicronutrientsHeader => '6 مؤشرات للمغذيات الدقيقة';
+
+  @override
+  String get dishMicronutrientsCount => '6 مؤشرات';
+
+  @override
+  String get calciumLabel => 'كالسيوم';
+
+  @override
+  String get ironLabel => 'حديد';
+
+  @override
+  String get potassiumLabel => 'بوتاسيوم';
+
+  @override
+  String get dishVitalityHeader => 'الطاقة وحيوية الجسم';
+
+  @override
+  String get dishVitalityFocus => 'التركيز والتوازن';
+
+  @override
+  String get unlockPremiumNutrientsTitle => 'ميزة Cal AI بريميوم';
+
+  @override
+  String get unlockPremiumNutrientsSubtitle =>
+      'افتح تفاصيل 6 عناصر غذائية دقيقة وحيوية الطاقة للوجبات.';
+
+  @override
+  String get equivalentLabel => 'ما يعادل';
+
+  @override
+  String get perYearText => 'سنوياً';
+
+  @override
+  String get billedWeeklyNote => 'تتم الفاتورة أسبوعياً';
+
+  @override
+  String get billedMonthlyNote => 'تتم الفاتورة شهرياً';
+
+  @override
+  String get billedYearlyNote => 'تتم الفاتورة سنوياً';
+
+  @override
+  String iosAutoRenewTermsYearly(String price) =>
+      'تتم الفاتورة بمبلغ $price/سنة. تجديد تلقائي. الإلغاء في أي وقت من إعدادات App Store.';
+
+  @override
+  String iosAutoRenewTermsTrial(String price) =>
+      '7 أيام مجاناً، ثم $price/سنة. تجديد تلقائي. الإلغاء في أي وقت في App Store.';
+
+  @override
+  String iosAutoRenewTermsWeekly(String price) =>
+      'تتم الفاتورة بمبلغ $price/أسبوع. تجديد تلقائي. الإلغاء في أي وقت في App Store.';
+
+  @override
+  String iosAutoRenewTermsMonthly(String price) =>
+      'تتم الفاتورة بمبلغ $price/شهر. تجديد تلقائي. الإلغاء في أي وقت في App Store.';
+
+  @override
+  String get bmiReferenceSource =>
+      'المصدر: منظمة الصحة العالمية – السمنة وزيادة الوزن';
+
+  @override
+  String get bmiAdultOnlyDisclaimer =>
+      'معيار للبالغين (18 عاماً فأكثر). لا ينطبق على الأطفال والمراهقين.';
+
+  @override
+  String get bmiAdultOnlyShort => 'البالغون 18+';
+
+  @override
+  String get startFreeTrialBtn => 'بدء الفترة التجريبية والاشتراك';
+
+  @override
+  String get medicalDisclaimerNote =>
+      'يقدم تطبيق CalGo تقديرات السعرات الحرارية والتغذية لأغراض إعلامية فقط ولا يقدم مشورة طبية. استشر طبيباً قبل البدء بأي نظام غذائي.';
 }
