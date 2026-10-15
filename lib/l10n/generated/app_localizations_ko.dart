@@ -3218,27 +3218,30 @@ class AppLocalizationsKo extends AppLocalizations {
   String get billedYearlyNote => '매년 청구';
 
   @override
-  String iosAutoRenewTermsYearly(String price) =>
-      '$price/년으로 청구. 자동 갱신. App Store 설정에서 언제든지 취소 가능.';
+  String iosAutoRenewTermsYearly(String price) {
+    return '$price/년으로 청구. 자동 갱신. App Store 설정에서 언제든지 취소 가능.';
+  }
 
   @override
-  String iosAutoRenewTermsTrial(String price) =>
-      '7일 무료 체험 후 $price/년. 자동 갱신. App Store 설정에서 언제든지 취소 가능.';
+  String iosAutoRenewTermsTrial(String price) {
+    return '7일 무료 체험 후 $price/년. 자동 갱신. App Store 설정에서 언제든지 취소 가능.';
+  }
 
   @override
-  String iosAutoRenewTermsWeekly(String price) =>
-      '$price/주로 청구. 자동 갱신. App Store 설정에서 언제든지 취소 가능.';
+  String iosAutoRenewTermsWeekly(String price) {
+    return '$price/주로 청구. 자동 갱신. App Store 설정에서 언제든지 취소 가능.';
+  }
 
   @override
-  String iosAutoRenewTermsMonthly(String price) =>
-      '$price/월로 청구. 자동 갱신. App Store 설정에서 언제든지 취소 가능.';
+  String iosAutoRenewTermsMonthly(String price) {
+    return '$price/월로 청구. 자동 갱신. App Store 설정에서 언제든지 취소 가능.';
+  }
 
   @override
   String get bmiReferenceSource => '출처: WHO – 비만 및 과체중';
 
   @override
-  String get bmiAdultOnlyDisclaimer =>
-      '성인(18세 이상) 기준. 어린이 및 청소년에게는 적용되지 않습니다.';
+  String get bmiAdultOnlyDisclaimer => '성인(18세 이상) 기준. 어린이 및 청소년에게는 적용되지 않습니다.';
 
   @override
   String get bmiAdultOnlyShort => '성인 18세 이상';

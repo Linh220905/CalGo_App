@@ -3312,20 +3312,24 @@ class AppLocalizationsAr extends AppLocalizations {
   String get billedYearlyNote => 'تتم الفاتورة سنوياً';
 
   @override
-  String iosAutoRenewTermsYearly(String price) =>
-      'تتم الفاتورة بمبلغ $price/سنة. تجديد تلقائي. الإلغاء في أي وقت من إعدادات App Store.';
+  String iosAutoRenewTermsYearly(String price) {
+    return 'تتم الفاتورة بمبلغ $price/سنة. تجديد تلقائي. الإلغاء في أي وقت من إعدادات App Store.';
+  }
 
   @override
-  String iosAutoRenewTermsTrial(String price) =>
-      '7 أيام مجاناً، ثم $price/سنة. تجديد تلقائي. الإلغاء في أي وقت في App Store.';
+  String iosAutoRenewTermsTrial(String price) {
+    return '7 أيام مجاناً، ثم $price/سنة. تجديد تلقائي. الإلغاء في أي وقت في App Store.';
+  }
 
   @override
-  String iosAutoRenewTermsWeekly(String price) =>
-      'تتم الفاتورة بمبلغ $price/أسبوع. تجديد تلقائي. الإلغاء في أي وقت في App Store.';
+  String iosAutoRenewTermsWeekly(String price) {
+    return 'تتم الفاتورة بمبلغ $price/أسبوع. تجديد تلقائي. الإلغاء في أي وقت في App Store.';
+  }
 
   @override
-  String iosAutoRenewTermsMonthly(String price) =>
-      'تتم الفاتورة بمبلغ $price/شهر. تجديد تلقائي. الإلغاء في أي وقت في App Store.';
+  String iosAutoRenewTermsMonthly(String price) {
+    return 'تتم الفاتورة بمبلغ $price/شهر. تجديد تلقائي. الإلغاء في أي وقت في App Store.';
+  }
 
   @override
   String get bmiReferenceSource =>

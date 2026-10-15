@@ -3207,20 +3207,24 @@ class AppLocalizationsJa extends AppLocalizations {
   String get billedYearlyNote => '毎年請求';
 
   @override
-  String iosAutoRenewTermsYearly(String price) =>
-      '$price/年で請求。自動更新。App Storeの設定からいつでも解約可能。';
+  String iosAutoRenewTermsYearly(String price) {
+    return '$price/年で請求。自動更新。App Storeの設定からいつでも解約可能。';
+  }
 
   @override
-  String iosAutoRenewTermsTrial(String price) =>
-      '7日間無料、その後$price/年。自動更新。App Storeの設定からいつでも解約可能。';
+  String iosAutoRenewTermsTrial(String price) {
+    return '7日間無料、その後$price/年。自動更新。App Storeの設定からいつでも解約可能。';
+  }
 
   @override
-  String iosAutoRenewTermsWeekly(String price) =>
-      '$price/週で請求。自動更新。App Storeの設定からいつでも解約可能。';
+  String iosAutoRenewTermsWeekly(String price) {
+    return '$price/週で請求。自動更新。App Storeの設定からいつでも解約可能。';
+  }
 
   @override
-  String iosAutoRenewTermsMonthly(String price) =>
-      '$price/月で請求。自動更新。App Storeの設定からいつでも解約可能。';
+  String iosAutoRenewTermsMonthly(String price) {
+    return '$price/月で請求。自動更新。App Storeの設定からいつでも解約可能。';
+  }
 
   @override
   String get bmiReferenceSource => '出典：WHO（世界保健機関）– 肥満と過体重';

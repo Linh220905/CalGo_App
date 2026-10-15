@@ -3330,20 +3330,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get billedYearlyNote => 'Billed annually';
 
   @override
-  String iosAutoRenewTermsYearly(String price) =>
-      'Billed as $price/year. Auto-renews annually. Cancel anytime in App Store Settings.';
+  String iosAutoRenewTermsYearly(String price) {
+    return 'Billed as $price/year. Auto-renews annually. Cancel anytime in App Store Settings.';
+  }
 
   @override
-  String iosAutoRenewTermsTrial(String price) =>
-      '7 days free, then $price/year. Auto-renews. Cancel anytime in App Store Settings.';
+  String iosAutoRenewTermsTrial(String price) {
+    return '7 days free, then $price/year. Auto-renews. Cancel anytime in App Store Settings.';
+  }
 
   @override
-  String iosAutoRenewTermsWeekly(String price) =>
-      'Billed as $price/week. Auto-renews weekly. Cancel anytime in App Store Settings.';
+  String iosAutoRenewTermsWeekly(String price) {
+    return 'Billed as $price/week. Auto-renews weekly. Cancel anytime in App Store Settings.';
+  }
 
   @override
-  String iosAutoRenewTermsMonthly(String price) =>
-      'Billed as $price/month. Auto-renews monthly. Cancel anytime in App Store Settings.';
+  String iosAutoRenewTermsMonthly(String price) {
+    return 'Billed as $price/month. Auto-renews monthly. Cancel anytime in App Store Settings.';
+  }
 
   @override
   String get bmiReferenceSource => 'Source: WHO – Obesity and overweight';

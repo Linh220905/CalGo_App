@@ -3188,20 +3188,24 @@ class AppLocalizationsZh extends AppLocalizations {
   String get billedYearlyNote => '每年计费';
 
   @override
-  String iosAutoRenewTermsYearly(String price) =>
-      '按 $price/年计费。自动续订。可随时在 App Store 设置中取消。';
+  String iosAutoRenewTermsYearly(String price) {
+    return '按 $price/年计费。自动续订。可随时在 App Store 设置中取消。';
+  }
 
   @override
-  String iosAutoRenewTermsTrial(String price) =>
-      '免费试用 7 天，之后 $price/年。自动续订。可在 App Store 中随时取消。';
+  String iosAutoRenewTermsTrial(String price) {
+    return '免费试用 7 天，之后 $price/年。自动续订。可在 App Store 中随时取消。';
+  }
 
   @override
-  String iosAutoRenewTermsWeekly(String price) =>
-      '按 $price/周计费。自动续订。可在 App Store 中随时取消。';
+  String iosAutoRenewTermsWeekly(String price) {
+    return '按 $price/周计费。自动续订。可在 App Store 中随时取消。';
+  }
 
   @override
-  String iosAutoRenewTermsMonthly(String price) =>
-      '按 $price/月计费。自动续订。可在 App Store 中随时取消。';
+  String iosAutoRenewTermsMonthly(String price) {
+    return '按 $price/月计费。自动续订。可在 App Store 中随时取消。';
+  }
 
   @override
   String get bmiReferenceSource => '来源：世卫组织 (WHO) – 肥胖和超重';

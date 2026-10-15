@@ -3368,20 +3368,24 @@ class AppLocalizationsRu extends AppLocalizations {
   String get billedYearlyNote => 'Оплата ежегодно';
 
   @override
-  String iosAutoRenewTermsYearly(String price) =>
-      'Оплата $price/год. Автопродление. Отмена в любое время в настройках App Store.';
+  String iosAutoRenewTermsYearly(String price) {
+    return 'Оплата $price/год. Автопродление. Отмена в любое время в настройках App Store.';
+  }
 
   @override
-  String iosAutoRenewTermsTrial(String price) =>
-      '7 дней бесплатно, затем $price/год. Автопродление. Отмена в любое время в App Store.';
+  String iosAutoRenewTermsTrial(String price) {
+    return '7 дней бесплатно, затем $price/год. Автопродление. Отмена в любое время в App Store.';
+  }
 
   @override
-  String iosAutoRenewTermsWeekly(String price) =>
-      'Оплата $price/неделю. Автопродление. Отмена в любое время в App Store.';
+  String iosAutoRenewTermsWeekly(String price) {
+    return 'Оплата $price/неделю. Автопродление. Отмена в любое время в App Store.';
+  }
 
   @override
-  String iosAutoRenewTermsMonthly(String price) =>
-      'Оплата $price/месяц. Автопродление. Отмена в любое время в App Store.';
+  String iosAutoRenewTermsMonthly(String price) {
+    return 'Оплата $price/месяц. Автопродление. Отмена в любое время в App Store.';
+  }
 
   @override
   String get bmiReferenceSource => 'Источник: ВОЗ – Ожирение и избыточный вес';

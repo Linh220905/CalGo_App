@@ -3346,20 +3346,24 @@ class AppLocalizationsHi extends AppLocalizations {
   String get billedYearlyNote => 'वार्षिक बिल किया जाता है';
 
   @override
-  String iosAutoRenewTermsYearly(String price) =>
-      '$price/वर्ष के रूप में बिल किया जाएगा। स्वतः नवीनीकरण। App Store सेटिंग्स में कभी भी रद्द करें।';
+  String iosAutoRenewTermsYearly(String price) {
+    return '$price/वर्ष के रूप में बिल किया जाएगा। स्वतः नवीनीकरण। App Store सेटिंग्स में कभी भी रद्द करें।';
+  }
 
   @override
-  String iosAutoRenewTermsTrial(String price) =>
-      '7 दिन निःशुल्क, फिर $price/वर्ष। स्वतः नवीनीकरण। App Store में कभी भी रद्द करें।';
+  String iosAutoRenewTermsTrial(String price) {
+    return '7 दिन निःशुल्क, फिर $price/वर्ष। स्वतः नवीनीकरण। App Store में कभी भी रद्द करें।';
+  }
 
   @override
-  String iosAutoRenewTermsWeekly(String price) =>
-      '$price/सप्ताह के रूप में बिल किया जाएगा। स्वतः नवीनीकरण। App Store में कभी भी रद्द करें।';
+  String iosAutoRenewTermsWeekly(String price) {
+    return '$price/सप्ताह के रूप में बिल किया जाएगा। स्वतः नवीनीकरण। App Store में कभी भी रद्द करें।';
+  }
 
   @override
-  String iosAutoRenewTermsMonthly(String price) =>
-      '$price/माह के रूप में बिल किया जाएगा। स्वतः नवीनीकरण। App Store में कभी भी रद्द करें।';
+  String iosAutoRenewTermsMonthly(String price) {
+    return '$price/माह के रूप में बिल किया जाएगा। स्वतः नवीनीकरण। App Store में कभी भी रद्द करें।';
+  }
 
   @override
   String get bmiReferenceSource => 'स्रोत: WHO – मोटापा और अधिक वजन';

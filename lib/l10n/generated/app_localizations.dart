@@ -6047,58 +6047,86 @@ abstract class AppLocalizations {
   /// **'Unlock detailed 6 micronutrients and energy vitality for meals.'**
   String get unlockPremiumNutrientsSubtitle;
 
+  /// No description provided for @equivalentLabel.
+  ///
   /// In en, this message translates to:
   /// **'equivalent'**
   String get equivalentLabel;
 
+  /// No description provided for @perYearText.
+  ///
   /// In en, this message translates to:
   /// **'per year'**
   String get perYearText;
 
+  /// No description provided for @billedWeeklyNote.
+  ///
   /// In en, this message translates to:
   /// **'Billed weekly'**
   String get billedWeeklyNote;
 
+  /// No description provided for @billedMonthlyNote.
+  ///
   /// In en, this message translates to:
   /// **'Billed monthly'**
   String get billedMonthlyNote;
 
+  /// No description provided for @billedYearlyNote.
+  ///
   /// In en, this message translates to:
   /// **'Billed annually'**
   String get billedYearlyNote;
 
+  /// No description provided for @iosAutoRenewTermsYearly.
+  ///
   /// In en, this message translates to:
   /// **'Billed as {price}/year. Auto-renews annually. Cancel anytime in App Store Settings.'**
   String iosAutoRenewTermsYearly(String price);
 
+  /// No description provided for @iosAutoRenewTermsTrial.
+  ///
   /// In en, this message translates to:
   /// **'7 days free, then {price}/year. Auto-renews. Cancel anytime in App Store Settings.'**
   String iosAutoRenewTermsTrial(String price);
 
+  /// No description provided for @iosAutoRenewTermsWeekly.
+  ///
   /// In en, this message translates to:
   /// **'Billed as {price}/week. Auto-renews weekly. Cancel anytime in App Store Settings.'**
   String iosAutoRenewTermsWeekly(String price);
 
+  /// No description provided for @iosAutoRenewTermsMonthly.
+  ///
   /// In en, this message translates to:
   /// **'Billed as {price}/month. Auto-renews monthly. Cancel anytime in App Store Settings.'**
   String iosAutoRenewTermsMonthly(String price);
 
+  /// No description provided for @bmiReferenceSource.
+  ///
   /// In en, this message translates to:
   /// **'Source: WHO – Obesity and overweight'**
   String get bmiReferenceSource;
 
+  /// No description provided for @bmiAdultOnlyDisclaimer.
+  ///
   /// In en, this message translates to:
   /// **'Adult standard (age 18+). Not applicable for children and teens.'**
   String get bmiAdultOnlyDisclaimer;
 
+  /// No description provided for @bmiAdultOnlyShort.
+  ///
   /// In en, this message translates to:
   /// **'Adults 18+'**
   String get bmiAdultOnlyShort;
 
+  /// No description provided for @startFreeTrialBtn.
+  ///
   /// In en, this message translates to:
   /// **'Start Free Trial & Subscribe'**
   String get startFreeTrialBtn;
 
+  /// No description provided for @medicalDisclaimerNote.
+  ///
   /// In en, this message translates to:
   /// **'CalGo provides nutrition and calorie estimates for informational purposes only and does not provide medical advice. Consult a healthcare professional before starting any diet plan.'**
   String get medicalDisclaimerNote;

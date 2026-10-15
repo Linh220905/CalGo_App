@@ -3327,20 +3327,24 @@ class AppLocalizationsVi extends AppLocalizations {
   String get billedYearlyNote => 'Thanh toán mỗi năm';
 
   @override
-  String iosAutoRenewTermsYearly(String price) =>
-      'Thanh toán $price/năm. Tự động gia hạn hàng năm. Hủy bất cứ lúc nào trong Cài đặt App Store.';
+  String iosAutoRenewTermsYearly(String price) {
+    return 'Thanh toán $price/năm. Tự động gia hạn hàng năm. Hủy bất cứ lúc nào trong Cài đặt App Store.';
+  }
 
   @override
-  String iosAutoRenewTermsTrial(String price) =>
-      'Dùng thử 7 ngày miễn phí, sau đó $price/năm. Tự động gia hạn. Hủy bất cứ lúc nào trong Cài đặt App Store.';
+  String iosAutoRenewTermsTrial(String price) {
+    return 'Dùng thử 7 ngày miễn phí, sau đó $price/năm. Tự động gia hạn. Hủy bất cứ lúc nào trong Cài đặt App Store.';
+  }
 
   @override
-  String iosAutoRenewTermsWeekly(String price) =>
-      'Thanh toán $price/tuần. Tự động gia hạn hàng tuần. Hủy bất cứ lúc nào trong Cài đặt App Store.';
+  String iosAutoRenewTermsWeekly(String price) {
+    return 'Thanh toán $price/tuần. Tự động gia hạn hàng tuần. Hủy bất cứ lúc nào trong Cài đặt App Store.';
+  }
 
   @override
-  String iosAutoRenewTermsMonthly(String price) =>
-      'Thanh toán $price/tháng. Tự động gia hạn hàng tháng. Hủy bất cứ lúc nào trong Cài đặt App Store.';
+  String iosAutoRenewTermsMonthly(String price) {
+    return 'Thanh toán $price/tháng. Tự động gia hạn hàng tháng. Hủy bất cứ lúc nào trong Cài đặt App Store.';
+  }
 
   @override
   String get bmiReferenceSource => 'Nguồn tham khảo: WHO – Béo phì & Thừa cân';

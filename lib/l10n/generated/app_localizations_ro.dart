@@ -3372,20 +3372,24 @@ class AppLocalizationsRo extends AppLocalizations {
   String get billedYearlyNote => 'Facturat anual';
 
   @override
-  String iosAutoRenewTermsYearly(String price) =>
-      'Facturat ca $price/an. Reînnoire automată. Anulează oricând din Configurări App Store.';
+  String iosAutoRenewTermsYearly(String price) {
+    return 'Facturat ca $price/an. Reînnoire automată. Anulează oricând din Configurări App Store.';
+  }
 
   @override
-  String iosAutoRenewTermsTrial(String price) =>
-      '7 zile gratuit, apoi $price/an. Reînnoire automată. Anulează oricând în App Store.';
+  String iosAutoRenewTermsTrial(String price) {
+    return '7 zile gratuit, apoi $price/an. Reînnoire automată. Anulează oricând în App Store.';
+  }
 
   @override
-  String iosAutoRenewTermsWeekly(String price) =>
-      'Facturat ca $price/săptămână. Reînnoire automată. Anulează oricând în App Store.';
+  String iosAutoRenewTermsWeekly(String price) {
+    return 'Facturat ca $price/săptămână. Reînnoire automată. Anulează oricând în App Store.';
+  }
 
   @override
-  String iosAutoRenewTermsMonthly(String price) =>
-      'Facturat ca $price/lună. Reînnoire automată. Anulează oricând în App Store.';
+  String iosAutoRenewTermsMonthly(String price) {
+    return 'Facturat ca $price/lună. Reînnoire automată. Anulează oricând în App Store.';
+  }
 
   @override
   String get bmiReferenceSource =>

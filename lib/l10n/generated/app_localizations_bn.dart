@@ -3346,24 +3346,27 @@ class AppLocalizationsBn extends AppLocalizations {
   String get billedYearlyNote => 'বার্ষিক বিল করা হয়';
 
   @override
-  String iosAutoRenewTermsYearly(String price) =>
-      '$price/বছর বিল করা হবে। স্বয়ংক্রিয় পুনর্নবীকরণ। App Store সেটিংসে যেকোনো সময় বাতিল করুন।';
+  String iosAutoRenewTermsYearly(String price) {
+    return '$price/বছর বিল করা হবে। স্বয়ংক্রিয় পুনর্নবীকরণ। App Store সেটিংসে যেকোনো সময় বাতিল করুন।';
+  }
 
   @override
-  String iosAutoRenewTermsTrial(String price) =>
-      '৭ দিন বিনামূল্যে, তারপর $price/বছর। স্বয়ংক্রিয় পুনর্নবীকরণ। App Store-এ যেকোনো সময় বাতিল করুন।';
+  String iosAutoRenewTermsTrial(String price) {
+    return '৭ দিন বিনামূল্যে, তারপর $price/বছর। স্বয়ংক্রিয় পুনর্নবীকরণ। App Store-এ যেকোনো সময় বাতিল করুন।';
+  }
 
   @override
-  String iosAutoRenewTermsWeekly(String price) =>
-      '$price/সপ্তাহ বিল করা হবে। স্বয়ংক্রিয় পুনর্নবীকরণ। App Store-এ যেকোনো সময় বাতিল করুন।';
+  String iosAutoRenewTermsWeekly(String price) {
+    return '$price/সপ্তাহ বিল করা হবে। স্বয়ংক্রিয় পুনর্নবীকরণ। App Store-এ যেকোনো সময় বাতিল করুন।';
+  }
 
   @override
-  String iosAutoRenewTermsMonthly(String price) =>
-      '$price/মাস বিল করা হবে। স্বয়ংক্রিয় পুনর্নবীকরণ। App Store-এ যেকোনো সময় বাতিল করুন।';
+  String iosAutoRenewTermsMonthly(String price) {
+    return '$price/মাস বিল করা হবে। স্বয়ংক্রিয় পুনর্নবীকরণ। App Store-এ যেকোনো সময় বাতিল করুন।';
+  }
 
   @override
-  String get bmiReferenceSource =>
-      'উৎস: WHO – স্থূলতা এবং অতিরিক্ত ওজন';
+  String get bmiReferenceSource => 'উৎস: WHO – স্থূলতা এবং অতিরিক্ত ওজন';
 
   @override
   String get bmiAdultOnlyDisclaimer =>
@@ -3373,7 +3376,8 @@ class AppLocalizationsBn extends AppLocalizations {
   String get bmiAdultOnlyShort => 'প্রাপ্তবয়স্ক ১৮+';
 
   @override
-  String get startFreeTrialBtn => 'বিনামূল্যে ট্রায়াল শুরু করুন ও সাবস্ক্রাইব করুন';
+  String get startFreeTrialBtn =>
+      'বিনামূল্যে ট্রায়াল শুরু করুন ও সাবস্ক্রাইব করুন';
 
   @override
   String get medicalDisclaimerNote =>

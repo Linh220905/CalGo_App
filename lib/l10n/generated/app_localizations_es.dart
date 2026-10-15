@@ -3362,20 +3362,24 @@ class AppLocalizationsEs extends AppLocalizations {
   String get billedYearlyNote => 'Facturado anualmente';
 
   @override
-  String iosAutoRenewTermsYearly(String price) =>
-      'Facturado como $price/año. Se renueva automáticamente. Cancela en cualquier momento en Configuración de App Store.';
+  String iosAutoRenewTermsYearly(String price) {
+    return 'Facturado como $price/año. Se renueva automáticamente. Cancela en cualquier momento en Configuración de App Store.';
+  }
 
   @override
-  String iosAutoRenewTermsTrial(String price) =>
-      '7 días gratis, luego $price/año. Se renueva automáticamente. Cancela en cualquier momento en App Store.';
+  String iosAutoRenewTermsTrial(String price) {
+    return '7 días gratis, luego $price/año. Se renueva automáticamente. Cancela en cualquier momento en App Store.';
+  }
 
   @override
-  String iosAutoRenewTermsWeekly(String price) =>
-      'Facturado como $price/semana. Se renueva automáticamente. Cancela en cualquier momento en App Store.';
+  String iosAutoRenewTermsWeekly(String price) {
+    return 'Facturado como $price/semana. Se renueva automáticamente. Cancela en cualquier momento en App Store.';
+  }
 
   @override
-  String iosAutoRenewTermsMonthly(String price) =>
-      'Facturado como $price/mes. Se renueva automáticamente. Cancela en cualquier momento en App Store.';
+  String iosAutoRenewTermsMonthly(String price) {
+    return 'Facturado como $price/mes. Se renueva automáticamente. Cancela en cualquier momento en App Store.';
+  }
 
   @override
   String get bmiReferenceSource => 'Fuente: OMS – Obesidad y sobrepeso';
