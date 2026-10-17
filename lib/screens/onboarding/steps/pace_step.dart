@@ -7,6 +7,7 @@ import '../../../models/onboarding_data.dart';
 import '../../../providers/app_settings_provider.dart';
 import '../../../providers/onboarding_provider.dart';
 import '../../../services/review_service.dart';
+import '../../../widgets/calculation_sources.dart';
 
 class PaceStep extends StatefulWidget {
   const PaceStep({super.key});
@@ -235,6 +236,7 @@ class _PaceStepState extends State<PaceStep> {
                         },
                       ),
                     ),
+                    CalculationSources(type: CalculationSourceType.weightPace, dark: isDark),
                     const SizedBox(height: 20),
                   ],
                 ),

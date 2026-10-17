@@ -3130,64 +3130,64 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get healthScoreSubtitle =>
-      'Meal quality meets Nutri-Score balanced nutrition standard.';
+      'CalGo estimate from logged protein, fiber and sugar; not a medical score.';
 
   @override
-  String get bodyVitalityTitle => 'Body Vitality';
+  String get bodyVitalityTitle => 'Nutrition indicators';
 
   @override
   String get fourMetricsCount => '4 metrics';
 
   @override
-  String get vitalityEnergyTitle => 'Energy & Alertness';
+  String get vitalityEnergyTitle => 'Calorie & carb progress';
 
   @override
-  String get vitalityEnergyDetailTitle => 'Energy Steadiness';
+  String get vitalityEnergyDetailTitle => 'Calorie & carb progress';
 
   @override
   String get vitalityEnergyDetailDesc =>
-      'Calculated by Complex Carbs vs Free Sugars ratio. Stabilizes blood glucose and prevents post-meal crashes.';
+      'CalGo compares logged calories and carbs with personal targets and subtracts points for sugar above its target. This does not measure alertness or blood glucose.';
 
   @override
-  String get vitalityEnergyDetailSource => 'Source: WHO Free Sugars Guideline';
+  String get vitalityEnergyDetailSource => 'Reference: WHO — Healthy diet';
 
   @override
-  String get vitalitySatietyTitle => 'Satiety & Cravings Control';
+  String get vitalitySatietyTitle => 'Protein & fiber progress';
 
   @override
-  String get vitalitySatietyDetailTitle => 'Satiety & Appetite Control';
+  String get vitalitySatietyDetailTitle => 'Protein & fiber progress';
 
   @override
   String get vitalitySatietyDetailDesc =>
-      'Based on Satiety Index: Protein and Dietary Fiber slow gastric emptying and promote natural satiety hormones (GLP-1 & PYY).';
+      'CalGo combines logged protein and fiber relative to personal targets. This score does not measure fullness or hormones.';
 
   @override
   String get vitalitySatietyDetailSource =>
-      'Source: University of Sydney (Holt et al., Eur J Clin Nutr)';
+      'Reference: Dietary Reference Intakes';
 
   @override
-  String get vitalityRecoveryTitle => 'Heart & Muscle Recovery';
+  String get vitalityRecoveryTitle => 'Protein & fat balance';
 
   @override
-  String get vitalityRecoveryDetailTitle => 'Cardiovascular & Recovery';
+  String get vitalityRecoveryDetailTitle => 'Protein & fat balance';
 
   @override
   String get vitalityRecoveryDetailDesc =>
-      'Assesses Saturated Fat intake under the 10% calorie threshold to optimize blood circulation and muscle recovery.';
+      'CalGo combines protein progress with how close total fat intake is to its target. This does not measure heart health or muscle recovery.';
 
   @override
   String get vitalityRecoveryDetailSource =>
-      'Source: American Heart Association (AHA) & WHO';
+      'Reference: Dietary Reference Intakes';
 
   @override
-  String get vitalityBalanceTitle => 'Sodium & Fluid Balance';
+  String get vitalityBalanceTitle => 'Sodium intake';
 
   @override
-  String get vitalityBalanceDetailTitle => 'Sodium & Electrolyte Balance';
+  String get vitalityBalanceDetailTitle => 'Sodium intake';
 
   @override
   String get vitalityBalanceDetailDesc =>
-      'Measures daily sodium intake relative to the WHO 2,000 mg/day maximum recommendation.';
+      'CalGo compares logged sodium with the WHO 2,000 mg/day reference. This does not measure hydration or electrolyte balance.';
 
   @override
   String get vitalityBalanceDetailSource => 'Source: WHO Sodium Guideline';
@@ -3200,15 +3200,14 @@ class AppLocalizationsBn extends AppLocalizations {
       'Supports healthy gut microbiome and slows sugar absorption into the bloodstream.';
 
   @override
-  String get fiberDetailSource =>
-      'Source: US Institute of Medicine (IOM) & WHO';
+  String get fiberDetailSource => 'Source: Dietary Reference Intakes — fiber';
 
   @override
-  String get sugarDetailTitle => 'Free Sugars';
+  String get sugarDetailTitle => 'Logged sugars';
 
   @override
   String get sugarDetailDesc =>
-      'WHO recommends free sugars below 10% of total daily energy intake.';
+      'WHO guidance concerns free sugars. CalGo logs total sugars, including naturally occurring sugars, so this comparison is approximate.';
 
   @override
   String get sugarDetailSource =>
@@ -3226,10 +3225,10 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get healthScoreDetailDesc =>
-      'Nutri-Score European standard balanced nutrient density calculation.';
+      'CalGo internal score based on protein, fiber and sugar relative to goals; not Nutri-Score.';
 
   @override
-  String get healthScoreSource => 'Source: Nutri-Score Standard & WHO';
+  String get healthScoreSource => 'Reference: WHO — Healthy diet';
 
   @override
   String get nutritionBreakdownTitle => 'NUTRITION BREAKDOWN';
@@ -3253,7 +3252,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get fiberQualityLabel => 'Dietary fiber';
 
   @override
-  String get freeSugarControlLabel => 'Free sugars';
+  String get freeSugarControlLabel => 'Logged sugars';
 
   @override
   String get complexCarbRatioLabel => 'Complex carbs';
@@ -3366,7 +3365,7 @@ class AppLocalizationsBn extends AppLocalizations {
   }
 
   @override
-  String get bmiReferenceSource => 'উৎস: WHO – স্থূলতা এবং অতিরিক্ত ওজন';
+  String get bmiReferenceSource => 'Source: WHO — Obesity and overweight';
 
   @override
   String get bmiAdultOnlyDisclaimer =>
@@ -3382,4 +3381,60 @@ class AppLocalizationsBn extends AppLocalizations {
   @override
   String get medicalDisclaimerNote =>
       'CalGo শুধুমাত্র তথ্যের উদ্দেশ্যে পুষ্টি ও ক্যালোরির অনুমান প্রদান করে এবং কোনো চিকিৎসা পরামর্শ দেয় না। কোনো খাদ্য পরিকল্পনা শুরু করার আগে চিকিৎসকের পরামর্শ নিন।';
+
+  @override
+  String get calculationSourcesTitle => 'উৎস ও হিসাব';
+
+  @override
+  String get calorieCalculationNote =>
+      'CalGo Mifflin–St Jeor সূত্রে বিশ্রামের শক্তি অনুমান করে, কার্যকলাপের গুণক ও ওজনের লক্ষ্য অনুযায়ী সমন্বয় করে। ক্যালরি ও পুষ্টির লক্ষ্য আনুমানিক; ওজন পরিবর্তন নিশ্চিত নয়।';
+
+  @override
+  String get nutrientCalculationNote =>
+      'ম্যাক্রো ও আঁশের মান খাদ্য গ্রহণের রেফারেন্স থেকে এবং চিনি ও সোডিয়ামের সীমা WHO থেকে নেওয়া। CalGo নিজস্ব লক্ষ্য ও স্কোর গণনা করে। WHO-এর চিনির নির্দেশনা মুক্ত চিনির জন্য, কিন্তু CalGo মোট চিনি নথিভুক্ত করে; তাই তুলনা আনুমানিক।';
+
+  @override
+  String get exerciseCalculationNote =>
+      'MET, ওজন ও সময় দিয়ে সক্রিয় ক্যালরি অনুমান করা হয়; প্রকৃত খরচ ভিন্ন হতে পারে।';
+
+  @override
+  String get foodCalculationNote =>
+      'খাবারের মান ছবি বা দেওয়া পরিমাণ থেকে AI-এর অনুমান। লিংকগুলো পুষ্টি নির্দেশনা ব্যাখ্যা করে, এই খাবারের উপাদান নিশ্চিত করে না। পরিমাণ ও লেবেল যাচাই করুন। শতাংশ অ্যাপের সাধারণ মান ব্যবহার করে; আপনার ব্যক্তিগত প্রয়োজন ভিন্ন হতে পারে।';
+
+  @override
+  String get sourceMifflin => 'Mifflin ও সহকর্মীরা — বিশ্রামের শক্তি';
+
+  @override
+  String get sourceCdcWeight => 'CDC — ধীরে ওজন কমানো';
+
+  @override
+  String get sourceMacroDri => 'খাদ্য রেফারেন্স — ম্যাক্রো ও আঁশ';
+
+  @override
+  String get sourceWhoDiet => 'WHO — স্বাস্থ্যকর খাদ্য';
+
+  @override
+  String get sourceActivityCompendium => '২০২৪ কার্যকলাপ সংকলন — MET মান';
+
+  @override
+  String get bmiAsianReferenceSource =>
+      'Source: WHO Expert Consultation — Asian BMI (2004)';
+
+  @override
+  String get paceCalculationNote =>
+      'CDC প্রতি সপ্তাহে প্রায় ০.৫–১ কেজি ধীরে ওজন কমানোর কথা বলে। এই স্লাইডার CalGo-এর পরিকল্পনার অনুমান, ফলাফলের পূর্বাভাস নয়।';
+
+  @override
+  String get sourceMineralDri => 'Dietary Reference Intakes — minerals';
+
+  @override
+  String get sourceActivityFactor =>
+      'UAE স্বাস্থ্য মন্ত্রণালয় — কার্যকলাপের গুণক';
+
+  @override
+  String get activityGuidanceNote =>
+      'ব্যায়ামের দিনের সংখ্যা আপনার কার্যকলাপ অনুযায়ী CalGo-এর পরামর্শ। WHO প্রতি সপ্তাহে মোট সময়ের নির্দেশনা দেয়, নির্দিষ্ট দিনের নয়।';
+
+  @override
+  String get sourceWhoActivity => 'WHO — শারীরিক কার্যকলাপ';
 }

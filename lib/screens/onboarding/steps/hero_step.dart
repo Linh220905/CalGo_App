@@ -25,6 +25,7 @@ class _HeroStepState extends State<HeroStep> with TickerProviderStateMixin {
   late final AnimationController _textFadeController;
 
   Timer? _aiMessageTimer;
+  Timer? _entryDelay;
   int _currentMessageIndex = 0;
 
   @override
@@ -60,7 +61,7 @@ class _HeroStepState extends State<HeroStep> with TickerProviderStateMixin {
     if (AppBuildConfig.isTesting) {
       _entryController.value = 1.0;
     } else {
-      Future.delayed(const Duration(milliseconds: 200), () {
+      _entryDelay = Timer(const Duration(milliseconds: 200), () {
         if (mounted) {
           _entryController.forward();
         }
@@ -86,6 +87,7 @@ class _HeroStepState extends State<HeroStep> with TickerProviderStateMixin {
 
   @override
   void dispose() {
+    _entryDelay?.cancel();
     _aiMessageTimer?.cancel();
     _entryController.dispose();
     _laserController.dispose();

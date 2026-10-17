@@ -16,6 +16,7 @@ import '../../providers/gamification_provider.dart';
 import '../../providers/home_provider.dart';
 import '../../providers/progress_provider.dart';
 import '../../widgets/achievement_badge.dart';
+import '../../widgets/calculation_sources.dart';
 import '../../utils/macro_colors.dart';
 import '../../utils/stats_localization.dart';
 import '../recap/daily_recap_screen.dart';
@@ -1030,6 +1031,8 @@ class _NutritionSummaryCardState extends State<_NutritionSummaryCard> {
               ),
             ),
           ),
+          const SizedBox(height: 14),
+          CalculationSources(type: CalculationSourceType.calorieGoal, dark: widget.dark),
         ],
       ),
     );

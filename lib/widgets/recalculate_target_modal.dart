@@ -6,6 +6,7 @@ import '../providers/app_settings_provider.dart';
 import '../providers/auth_provider.dart';
 import '../providers/onboarding_provider.dart';
 import '../utils/macro_colors.dart';
+import 'calculation_sources.dart';
 
 /// Shows the main Target Nutrition Overview sheet in Profile Settings.
 void showTargetNutritionModal(BuildContext context, bool isDark) {
@@ -61,7 +62,8 @@ class _TargetNutritionModalContent extends StatelessWidget {
         24,
         MediaQuery.of(context).padding.bottom + 24,
       ),
-      child: Column(
+      child: SingleChildScrollView(
+        child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -253,6 +255,8 @@ class _TargetNutritionModalContent extends StatelessWidget {
             isDark: isDark,
             borderColor: borderColor,
           ),
+          const SizedBox(height: 14),
+          CalculationSources(type: CalculationSourceType.calorieGoal, dark: isDark),
           const SizedBox(height: 24),
 
           // Recalculate Button
@@ -283,6 +287,7 @@ class _TargetNutritionModalContent extends StatelessWidget {
             ),
           ),
         ],
+        ),
       ),
     );
   }

@@ -83,7 +83,7 @@ class MicroNutrientsPage extends StatelessWidget {
                             score: '${fiberG}g / ${targetFiber}g',
                             description: strings.fiberDetailDesc,
                             source: strings.fiberDetailSource,
-                            sourceUrl: 'https://www.hsph.harvard.edu/nutritionsource/carbohydrates/fiber/',
+                            sourceUrl: 'https://www.canada.ca/en/health-canada/services/food-nutrition/healthy-eating/dietary-reference-intakes/tables/reference-values-macronutrients.html',
                             items: [
                               MapEntry(strings.intakeConsumedLabel, '${fiberG}g'),
                               MapEntry(strings.dailyGoalLabel, '${targetFiber}g'),
@@ -193,7 +193,7 @@ class MicroNutrientsPage extends StatelessWidget {
                         items: [
                           MapEntry(strings.proteinBalanceLabel, '${summary.proteinG}g / ${summary.targetProteinG}g'),
                           MapEntry(strings.fiberQualityLabel, '${summary.fiberG}g / ${targetFiber}g'),
-                          MapEntry(strings.freeSugarControlLabel, '${summary.sugarG}g / ${targetSugar}g'),
+                          MapEntry(strings.sugarLabel, '${summary.sugarG}g / ${targetSugar}g'),
                         ],
                       ),
                     )

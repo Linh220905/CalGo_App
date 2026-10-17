@@ -5678,13 +5678,13 @@ abstract class AppLocalizations {
   /// No description provided for @healthScoreSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Meal quality meets Nutri-Score balanced nutrition standard.'**
+  /// **'CalGo estimate from logged protein, fiber and sugar; not a medical score.'**
   String get healthScoreSubtitle;
 
   /// No description provided for @bodyVitalityTitle.
   ///
   /// In en, this message translates to:
-  /// **'Body Vitality'**
+  /// **'Nutrition indicators'**
   String get bodyVitalityTitle;
 
   /// No description provided for @fourMetricsCount.
@@ -5696,91 +5696,91 @@ abstract class AppLocalizations {
   /// No description provided for @vitalityEnergyTitle.
   ///
   /// In en, this message translates to:
-  /// **'Energy & Alertness'**
+  /// **'Calorie & carb progress'**
   String get vitalityEnergyTitle;
 
   /// No description provided for @vitalityEnergyDetailTitle.
   ///
   /// In en, this message translates to:
-  /// **'Energy Steadiness'**
+  /// **'Calorie & carb progress'**
   String get vitalityEnergyDetailTitle;
 
   /// No description provided for @vitalityEnergyDetailDesc.
   ///
   /// In en, this message translates to:
-  /// **'Calculated by Complex Carbs vs Free Sugars ratio. Stabilizes blood glucose and prevents post-meal crashes.'**
+  /// **'CalGo compares logged calories and carbs with personal targets and subtracts points for sugar above its target. This does not measure alertness or blood glucose.'**
   String get vitalityEnergyDetailDesc;
 
   /// No description provided for @vitalityEnergyDetailSource.
   ///
   /// In en, this message translates to:
-  /// **'Source: WHO Free Sugars Guideline'**
+  /// **'Reference: WHO — Healthy diet'**
   String get vitalityEnergyDetailSource;
 
   /// No description provided for @vitalitySatietyTitle.
   ///
   /// In en, this message translates to:
-  /// **'Satiety & Cravings Control'**
+  /// **'Protein & fiber progress'**
   String get vitalitySatietyTitle;
 
   /// No description provided for @vitalitySatietyDetailTitle.
   ///
   /// In en, this message translates to:
-  /// **'Satiety & Appetite Control'**
+  /// **'Protein & fiber progress'**
   String get vitalitySatietyDetailTitle;
 
   /// No description provided for @vitalitySatietyDetailDesc.
   ///
   /// In en, this message translates to:
-  /// **'Based on Satiety Index: Protein and Dietary Fiber slow gastric emptying and promote natural satiety hormones (GLP-1 & PYY).'**
+  /// **'CalGo combines logged protein and fiber relative to personal targets. This score does not measure fullness or hormones.'**
   String get vitalitySatietyDetailDesc;
 
   /// No description provided for @vitalitySatietyDetailSource.
   ///
   /// In en, this message translates to:
-  /// **'Source: University of Sydney (Holt et al., Eur J Clin Nutr)'**
+  /// **'Reference: Dietary Reference Intakes'**
   String get vitalitySatietyDetailSource;
 
   /// No description provided for @vitalityRecoveryTitle.
   ///
   /// In en, this message translates to:
-  /// **'Heart & Muscle Recovery'**
+  /// **'Protein & fat balance'**
   String get vitalityRecoveryTitle;
 
   /// No description provided for @vitalityRecoveryDetailTitle.
   ///
   /// In en, this message translates to:
-  /// **'Cardiovascular & Recovery'**
+  /// **'Protein & fat balance'**
   String get vitalityRecoveryDetailTitle;
 
   /// No description provided for @vitalityRecoveryDetailDesc.
   ///
   /// In en, this message translates to:
-  /// **'Assesses Saturated Fat intake under the 10% calorie threshold to optimize blood circulation and muscle recovery.'**
+  /// **'CalGo combines protein progress with how close total fat intake is to its target. This does not measure heart health or muscle recovery.'**
   String get vitalityRecoveryDetailDesc;
 
   /// No description provided for @vitalityRecoveryDetailSource.
   ///
   /// In en, this message translates to:
-  /// **'Source: American Heart Association (AHA) & WHO'**
+  /// **'Reference: Dietary Reference Intakes'**
   String get vitalityRecoveryDetailSource;
 
   /// No description provided for @vitalityBalanceTitle.
   ///
   /// In en, this message translates to:
-  /// **'Sodium & Fluid Balance'**
+  /// **'Sodium intake'**
   String get vitalityBalanceTitle;
 
   /// No description provided for @vitalityBalanceDetailTitle.
   ///
   /// In en, this message translates to:
-  /// **'Sodium & Electrolyte Balance'**
+  /// **'Sodium intake'**
   String get vitalityBalanceDetailTitle;
 
   /// No description provided for @vitalityBalanceDetailDesc.
   ///
   /// In en, this message translates to:
-  /// **'Measures daily sodium intake relative to the WHO 2,000 mg/day maximum recommendation.'**
+  /// **'CalGo compares logged sodium with the WHO 2,000 mg/day reference. This does not measure hydration or electrolyte balance.'**
   String get vitalityBalanceDetailDesc;
 
   /// No description provided for @vitalityBalanceDetailSource.
@@ -5804,19 +5804,19 @@ abstract class AppLocalizations {
   /// No description provided for @fiberDetailSource.
   ///
   /// In en, this message translates to:
-  /// **'Source: US Institute of Medicine (IOM) & WHO'**
+  /// **'Source: Dietary Reference Intakes — fiber'**
   String get fiberDetailSource;
 
   /// No description provided for @sugarDetailTitle.
   ///
   /// In en, this message translates to:
-  /// **'Free Sugars'**
+  /// **'Logged sugars'**
   String get sugarDetailTitle;
 
   /// No description provided for @sugarDetailDesc.
   ///
   /// In en, this message translates to:
-  /// **'WHO recommends free sugars below 10% of total daily energy intake.'**
+  /// **'WHO guidance concerns free sugars. CalGo logs total sugars, including naturally occurring sugars, so this comparison is approximate.'**
   String get sugarDetailDesc;
 
   /// No description provided for @sugarDetailSource.
@@ -5846,13 +5846,13 @@ abstract class AppLocalizations {
   /// No description provided for @healthScoreDetailDesc.
   ///
   /// In en, this message translates to:
-  /// **'Nutri-Score European standard balanced nutrient density calculation.'**
+  /// **'CalGo internal score based on protein, fiber and sugar relative to goals; not Nutri-Score.'**
   String get healthScoreDetailDesc;
 
   /// No description provided for @healthScoreSource.
   ///
   /// In en, this message translates to:
-  /// **'Source: Nutri-Score Standard & WHO'**
+  /// **'Reference: WHO — Healthy diet'**
   String get healthScoreSource;
 
   /// No description provided for @nutritionBreakdownTitle.
@@ -5900,7 +5900,7 @@ abstract class AppLocalizations {
   /// No description provided for @freeSugarControlLabel.
   ///
   /// In en, this message translates to:
-  /// **'Free sugars'**
+  /// **'Logged sugars'**
   String get freeSugarControlLabel;
 
   /// No description provided for @complexCarbRatioLabel.
@@ -6104,7 +6104,7 @@ abstract class AppLocalizations {
   /// No description provided for @bmiReferenceSource.
   ///
   /// In en, this message translates to:
-  /// **'Source: WHO – Obesity and overweight'**
+  /// **'Source: WHO — Obesity and overweight'**
   String get bmiReferenceSource;
 
   /// No description provided for @bmiAdultOnlyDisclaimer.
@@ -6130,6 +6130,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'CalGo provides nutrition and calorie estimates for informational purposes only and does not provide medical advice. Consult a healthcare professional before starting any diet plan.'**
   String get medicalDisclaimerNote;
+
+  /// No description provided for @calculationSourcesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sources and calculation'**
+  String get calculationSourcesTitle;
+
+  /// No description provided for @calorieCalculationNote.
+  ///
+  /// In en, this message translates to:
+  /// **'CalGo estimates resting energy with Mifflin–St Jeor, applies an activity factor, then adjusts for the selected weight goal. The exact calorie and macro targets are CalGo estimates; weight change is not guaranteed.'**
+  String get calorieCalculationNote;
+
+  /// No description provided for @nutrientCalculationNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Macro and fiber reference ranges come from Dietary Reference Intakes. Sugar and sodium limits refer to WHO guidance. CalGo combines these into its own targets and scores. WHO sugar guidance applies to free sugars, while CalGo tracks total sugars; that comparison is approximate.'**
+  String get nutrientCalculationNote;
+
+  /// No description provided for @exerciseCalculationNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Active calories are estimated from MET, body weight and duration; actual energy use varies.'**
+  String get exerciseCalculationNote;
+
+  /// No description provided for @foodCalculationNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Food values are AI estimates from your photo or entered amounts. These links explain nutrient guidance, not the measured composition of this meal. Check quantities and labels. Percentages use general app benchmarks and may differ from your personal needs.'**
+  String get foodCalculationNote;
+
+  /// No description provided for @sourceMifflin.
+  ///
+  /// In en, this message translates to:
+  /// **'Mifflin et al. — resting energy equation'**
+  String get sourceMifflin;
+
+  /// No description provided for @sourceCdcWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'CDC — gradual weight loss'**
+  String get sourceCdcWeight;
+
+  /// No description provided for @sourceMacroDri.
+  ///
+  /// In en, this message translates to:
+  /// **'Dietary Reference Intakes — macros and fiber'**
+  String get sourceMacroDri;
+
+  /// No description provided for @sourceWhoDiet.
+  ///
+  /// In en, this message translates to:
+  /// **'WHO — healthy diet'**
+  String get sourceWhoDiet;
+
+  /// No description provided for @sourceActivityCompendium.
+  ///
+  /// In en, this message translates to:
+  /// **'2024 Adult Compendium — MET values'**
+  String get sourceActivityCompendium;
+
+  /// No description provided for @bmiAsianReferenceSource.
+  ///
+  /// In en, this message translates to:
+  /// **'Source: WHO Expert Consultation — Asian BMI (2004)'**
+  String get bmiAsianReferenceSource;
+
+  /// No description provided for @paceCalculationNote.
+  ///
+  /// In en, this message translates to:
+  /// **'CDC describes gradual loss of about 1–2 lb (0.5–1 kg) per week. This slider is a CalGo planning estimate, not a prediction.'**
+  String get paceCalculationNote;
+
+  /// No description provided for @sourceMineralDri.
+  ///
+  /// In en, this message translates to:
+  /// **'Dietary Reference Intakes — minerals'**
+  String get sourceMineralDri;
+
+  /// No description provided for @sourceActivityFactor.
+  ///
+  /// In en, this message translates to:
+  /// **'UAE Ministry of Health — activity factors'**
+  String get sourceActivityFactor;
+
+  /// No description provided for @activityGuidanceNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Workout days are CalGo suggestions based on your selected activity level. WHO guidance focuses on total weekly activity, not a fixed number of days.'**
+  String get activityGuidanceNote;
+
+  /// No description provided for @sourceWhoActivity.
+  ///
+  /// In en, this message translates to:
+  /// **'WHO — Physical activity'**
+  String get sourceWhoActivity;
 }
 
 class _AppLocalizationsDelegate

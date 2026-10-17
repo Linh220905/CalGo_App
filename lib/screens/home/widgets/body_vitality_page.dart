@@ -103,10 +103,10 @@ class BodyVitalityPage extends StatelessWidget {
                         score: '${summary.energyVitality.round()}%',
                         description: s.vitalityEnergyDetailDesc,
                         source: s.vitalityEnergyDetailSource,
-                        sourceUrl: 'https://pubmed.ncbi.nlm.nih.gov/31952249/',
+                        sourceUrl: 'https://www.who.int/health-topics/healthy-diet',
                         items: [
-                          MapEntry(s.complexCarbRatioLabel, s.complexCarbRatioValue),
-                          MapEntry(s.simpleSugarIntakeLabel, '${summary.sugarG}g (${s.whoLimit50g})'),
+                          MapEntry(s.carbMacroLabel, '${summary.carbG}g / ${summary.targetCarbG}g'),
+                          MapEntry(s.sugarLabel, '${summary.sugarG}g'),
                         ],
                       ),
                     )
@@ -135,11 +135,11 @@ class BodyVitalityPage extends StatelessWidget {
                         score: '${summary.satietyVitality.toStringAsFixed(1)} / 10',
                         description: s.vitalitySatietyDetailDesc,
                         source: s.vitalitySatietyDetailSource,
-                        sourceUrl: 'https://pubmed.ncbi.nlm.nih.gov/18469249/',
+                        sourceUrl: 'https://www.canada.ca/en/health-canada/services/food-nutrition/healthy-eating/dietary-reference-intakes/tables/reference-values-macronutrients.html',
                         items: [
                           MapEntry(s.totalProteinLoggedLabel, '${summary.proteinG}g (${s.standardMetLabel})'),
                           MapEntry(s.totalFiberLoggedLabel, '${summary.fiberG}g / ${summary.targetFiberG}g'),
-                          MapEntry(s.freeSugarRatioLabel, s.freeSugarRatioValue),
+                          MapEntry(s.sugarLabel, '${summary.sugarG}g'),
                         ],
                       ),
                     )
@@ -168,10 +168,10 @@ class BodyVitalityPage extends StatelessWidget {
                         score: '${summary.recoveryVitality.round()}%',
                         description: s.vitalityRecoveryDetailDesc,
                         source: s.vitalityRecoveryDetailSource,
-                        sourceUrl: 'https://pubmed.ncbi.nlm.nih.gov/28642676/',
+                        sourceUrl: 'https://www.canada.ca/en/health-canada/services/food-nutrition/healthy-eating/dietary-reference-intakes/tables/reference-values-macronutrients.html',
                         items: [
-                          MapEntry(s.dietaryFiberIntakeLabel, '${summary.fiberG}g'),
-                          MapEntry(s.satFatControlLabel, s.satFatControlValue),
+                          MapEntry(s.proteinMacroLabel, '${summary.proteinG}g / ${summary.targetProteinG}g'),
+                          MapEntry(s.fatMacroLabel, '${summary.fatG}g / ${summary.targetFatG}g'),
                         ],
                       ),
                     )

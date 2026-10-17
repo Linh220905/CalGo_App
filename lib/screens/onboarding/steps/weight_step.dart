@@ -419,7 +419,7 @@ class _BmiCard extends StatelessWidget {
             InkWell(
               onTap: () => launchUrl(
                 Uri.parse(
-                  'https://www.who.int/news-room/fact-sheets/detail/obesity-and-overweight',
+                  'https://pubmed.ncbi.nlm.nih.gov/14726171/',
                 ),
                 mode: LaunchMode.externalApplication,
               ),
@@ -434,7 +434,7 @@ class _BmiCard extends StatelessWidget {
                   const SizedBox(width: 4),
                   Flexible(
                     child: Text(
-                      s.bmiReferenceSource,
+                      s.bmiAsianReferenceSource,
                       style: const TextStyle(
                         fontSize: 11.5,
                         fontWeight: FontWeight.w600,

@@ -7,6 +7,7 @@ import '../../providers/auth_provider.dart';
 import '../../providers/home_provider.dart';
 import '../../utils/exercise_calorie_calculator.dart';
 import '../../widgets/quick_add_sheet.dart';
+import '../../widgets/calculation_sources.dart';
 
 class ExerciseEntryScreen extends StatefulWidget {
   final ExerciseEntryType type;
@@ -237,6 +238,8 @@ class _ExerciseEntryScreenState extends State<ExerciseEntryScreen> {
                 settings.strings.exerciseHealthSyncWarning,
                 style: TextStyle(color: muted, fontSize: 12.5, height: 1.4),
               ),
+              const SizedBox(height: 12),
+              CalculationSources(type: CalculationSourceType.exercise, dark: isDark),
             ],
             if (_error != null) ...[
               const SizedBox(height: 14),

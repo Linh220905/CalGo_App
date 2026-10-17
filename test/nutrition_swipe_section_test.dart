@@ -77,6 +77,29 @@ void main() {
     expect(find.byType(PageView), findsOneWidget);
   });
 
+  testWidgets('nutrition references remain available without Premium', (tester) async {
+    await tester.pumpWidget(
+      _buildTestApp(
+        child: SingleChildScrollView(
+          child: NutritionSwipeSection(summary: testSummary),
+        ),
+        isPremium: false,
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Sources and calculation'), findsOneWidget);
+    expect(find.text('Dietary Reference Intakes — macros and fiber'), findsOneWidget);
+    expect(find.text('WHO — healthy diet'), findsOneWidget);
+    final sourceLink = tester.widget<InkWell>(
+      find.ancestor(
+        of: find.text('WHO — healthy diet'),
+        matching: find.byType(InkWell),
+      ).first,
+    );
+    expect(sourceLink.onTap, isNotNull);
+  });
+
   testWidgets('MicroNutrientsPage displays blurred placeholders for Free user', (tester) async {
     await tester.pumpWidget(
       _buildTestApp(

@@ -5,6 +5,7 @@ import '../../../providers/app_settings_provider.dart';
 import '../../../providers/auth_provider.dart';
 import '../../../utils/macro_colors.dart';
 import '../../../utils/macro_icons.dart';
+import '../../../widgets/calculation_sources.dart';
 import '../../onboarding/steps/premium_paywall_step.dart';
 import 'cal_ai_hero_card.dart';
 import 'cal_ai_macro_card.dart';
@@ -111,6 +112,11 @@ class _NutritionSwipeSectionState extends State<NutritionSwipeSection> {
               ),
             );
           }),
+        ),
+        const SizedBox(height: 12),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 4),
+          child: CalculationSources(type: CalculationSourceType.nutrients, dark: isDark),
         ),
       ],
     );

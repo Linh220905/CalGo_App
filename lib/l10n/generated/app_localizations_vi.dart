@@ -3111,65 +3111,63 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get healthScoreSubtitle =>
-      'Chất lượng bữa ăn đạt chuẩn dinh dưỡng cân bằng Nutri-Score.';
+      'Ước tính của CalGo từ protein, chất xơ và đường đã ghi; không phải điểm y khoa.';
 
   @override
-  String get bodyVitalityTitle => 'Chỉ số cơ thể';
+  String get bodyVitalityTitle => 'Chỉ số dinh dưỡng';
 
   @override
   String get fourMetricsCount => '4 chỉ số';
 
   @override
-  String get vitalityEnergyTitle => 'Năng lượng & Tỉnh táo';
+  String get vitalityEnergyTitle => 'Tiến độ calo và carb';
 
   @override
-  String get vitalityEnergyDetailTitle => 'Mức độ ổn định năng lượng';
+  String get vitalityEnergyDetailTitle => 'Tiến độ calo và carb';
 
   @override
   String get vitalityEnergyDetailDesc =>
-      'Tính theo tỷ lệ Carbs phức hợp vs Đường tự do. Giữ đường huyết ổn định và ngăn ngừa mệt mỏi sau ăn.';
+      'CalGo so lượng calo và carb đã ghi với mục tiêu cá nhân, trừ điểm khi đường vượt mục tiêu. Chỉ số này không đo độ tỉnh táo hoặc đường huyết.';
 
   @override
   String get vitalityEnergyDetailSource =>
-      'Nguồn: Hướng dẫn Đường tự do của WHO (Free Sugars Guideline)';
+      'Tham khảo: WHO — Chế độ ăn lành mạnh';
 
   @override
-  String get vitalitySatietyTitle => 'Độ no & Giảm thèm ăn';
+  String get vitalitySatietyTitle => 'Tiến độ đạm và chất xơ';
 
   @override
-  String get vitalitySatietyDetailTitle => 'Độ no & Kiểm soát thèm ăn';
+  String get vitalitySatietyDetailTitle => 'Tiến độ đạm và chất xơ';
 
   @override
   String get vitalitySatietyDetailDesc =>
-      'Tính theo chỉ số Satiety Index: Đạm và Chất xơ làm chậm tốc độ rỗng dạ dày và kích thích tiết hormone no tự nhiên (GLP-1 & PYY).';
+      'CalGo kết hợp mức đạm và chất xơ đã ghi so với mục tiêu. Điểm này không đo cảm giác no hay hormone.';
 
   @override
-  String get vitalitySatietyDetailSource =>
-      'Nguồn: ĐH Sydney (Holt et al., Eur J Clin Nutr)';
+  String get vitalitySatietyDetailSource => 'Tham khảo: Khuyến nghị DRI';
 
   @override
-  String get vitalityRecoveryTitle => 'Tim mạch & Phục hồi cơ';
+  String get vitalityRecoveryTitle => 'Cân bằng đạm và chất béo';
 
   @override
-  String get vitalityRecoveryDetailTitle => 'Bảo vệ tim mạch & Phục hồi';
+  String get vitalityRecoveryDetailTitle => 'Cân bằng đạm và chất béo';
 
   @override
   String get vitalityRecoveryDetailDesc =>
-      'Đánh giá mức độ kiểm soát Chất béo bão hòa (Saturated Fat) dưới ngưỡng an toàn 10% calo để tối ưu lưu thông máu và phục hồi cơ bắp.';
+      'CalGo kết hợp tiến độ đạm với mức chất béo tổng so với mục tiêu. Chỉ số này không đo sức khỏe tim hay hồi phục cơ.';
 
   @override
-  String get vitalityRecoveryDetailSource =>
-      'Nguồn: Hiệp hội Tim mạch Hoa Kỳ (AHA) & WHO 2023';
+  String get vitalityRecoveryDetailSource => 'Tham khảo: Khuyến nghị DRI';
 
   @override
-  String get vitalityBalanceTitle => 'Cân bằng Natri & Điện giải';
+  String get vitalityBalanceTitle => 'Lượng natri';
 
   @override
-  String get vitalityBalanceDetailTitle => 'Cân bằng Natri & Điện giải';
+  String get vitalityBalanceDetailTitle => 'Lượng natri';
 
   @override
   String get vitalityBalanceDetailDesc =>
-      'Đo lường độ an toàn lượng muối nạp vào so với ngưỡng khuyến nghị tối đa 2.000 mg Natri/ngày của WHO.';
+      'CalGo so lượng natri đã ghi với mốc WHO 2.000 mg/ngày. Chỉ số này không đo mức nước hay cân bằng điện giải.';
 
   @override
   String get vitalityBalanceDetailSource =>
@@ -3183,14 +3181,14 @@ class AppLocalizationsVi extends AppLocalizations {
       'Hỗ trợ hệ vi sinh đường ruột và làm chậm hấp thu đường vào máu.';
 
   @override
-  String get fiberDetailSource => 'Nguồn: Viện Y học Hoa Kỳ (IOM) & WHO';
+  String get fiberDetailSource => 'Nguồn: Khuyến nghị DRI — chất xơ';
 
   @override
-  String get sugarDetailTitle => 'Đường tự do (Free Sugars)';
+  String get sugarDetailTitle => 'Đường đã ghi';
 
   @override
   String get sugarDetailDesc =>
-      'WHO khuyến nghị đường tự do dưới 10% tổng năng lượng nạp vào hàng ngày.';
+      'Khuyến nghị WHO áp dụng cho đường tự do. CalGo ghi đường tổng, gồm cả đường tự nhiên, nên so sánh này chỉ gần đúng.';
 
   @override
   String get sugarDetailSource =>
@@ -3208,10 +3206,10 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get healthScoreDetailDesc =>
-      'Chất lượng bữa ăn đạt chuẩn dinh dưỡng cân bằng Nutri-Score.';
+      'Điểm nội bộ của CalGo dựa trên mức protein, chất xơ và đường so với mục tiêu; không phải Nutri-Score.';
 
   @override
-  String get healthScoreSource => 'Nguồn: Chuẩn Nutri-Score Châu Âu & WHO';
+  String get healthScoreSource => 'Tham khảo: WHO — Chế độ ăn lành mạnh';
 
   @override
   String get nutritionBreakdownTitle => 'SỐ LIỆU DINH DƯỠNG LIÊN QUAN';
@@ -3235,7 +3233,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get fiberQualityLabel => 'Tổng Chất xơ';
 
   @override
-  String get freeSugarControlLabel => 'Tỷ lệ Đường tự do';
+  String get freeSugarControlLabel => 'Đường đã ghi';
 
   @override
   String get complexCarbRatioLabel => 'Carbs phức hợp';
@@ -3347,7 +3345,7 @@ class AppLocalizationsVi extends AppLocalizations {
   }
 
   @override
-  String get bmiReferenceSource => 'Nguồn tham khảo: WHO – Béo phì & Thừa cân';
+  String get bmiReferenceSource => 'Nguồn: WHO — Béo phì và thừa cân';
 
   @override
   String get bmiAdultOnlyDisclaimer =>
@@ -3362,4 +3360,58 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String get medicalDisclaimerNote =>
       'CalGo chỉ cung cấp thông tin ước tính dinh dưỡng và calo cho mục đích tham khảo, không thay thế lời khuyên y tế. Vui lòng tham khảo ý kiến bác sĩ trước khi bắt đầu kế hoạch ăn uống mới.';
+
+  @override
+  String get calculationSourcesTitle => 'Nguồn và cách tính';
+
+  @override
+  String get calorieCalculationNote =>
+      'CalGo ước tính năng lượng nghỉ theo Mifflin–St Jeor, nhân hệ số vận động rồi điều chỉnh theo mục tiêu cân nặng. Mức calo và macro cụ thể là ước tính của CalGo; cân nặng thực tế có thể khác.';
+
+  @override
+  String get nutrientCalculationNote =>
+      'Khoảng tham chiếu macro và chất xơ theo Dietary Reference Intakes; giới hạn đường và natri theo WHO. CalGo dùng các mốc này để tính mục tiêu và điểm số riêng. Giới hạn đường của WHO áp dụng cho đường tự do, còn CalGo ghi đường tổng nên so sánh này chỉ gần đúng.';
+
+  @override
+  String get exerciseCalculationNote =>
+      'Calo vận động được ước tính từ MET, cân nặng và thời gian; mức tiêu hao thực tế có thể khác.';
+
+  @override
+  String get foodCalculationNote =>
+      'Dinh dưỡng món ăn là ước tính AI từ ảnh hoặc lượng bạn nhập. Các nguồn bên dưới giải thích hướng dẫn dinh dưỡng, không xác nhận thành phần của món này. Hãy kiểm tra khẩu phần và nhãn. Phần trăm dùng mốc chung của app, có thể khác nhu cầu cá nhân.';
+
+  @override
+  String get sourceMifflin => 'Mifflin và cộng sự — công thức năng lượng nghỉ';
+
+  @override
+  String get sourceCdcWeight => 'CDC — giảm cân từ từ';
+
+  @override
+  String get sourceMacroDri => 'Khuyến nghị DRI — macro và chất xơ';
+
+  @override
+  String get sourceWhoDiet => 'WHO — chế độ ăn lành mạnh';
+
+  @override
+  String get sourceActivityCompendium => 'Bảng hoạt động 2024 — chỉ số MET';
+
+  @override
+  String get bmiAsianReferenceSource => 'Nguồn: WHO — ngưỡng BMI châu Á (2004)';
+
+  @override
+  String get paceCalculationNote =>
+      'CDC khuyến nghị giảm cân từ từ, khoảng 0,5–1 kg mỗi tuần. Thanh chọn này chỉ là ước tính kế hoạch của CalGo, không dự đoán kết quả.';
+
+  @override
+  String get sourceMineralDri => 'Khuyến nghị DRI — khoáng chất';
+
+  @override
+  String get sourceActivityFactor => 'Bộ Y tế UAE — hệ số vận động';
+
+  @override
+  String get activityGuidanceNote =>
+      'Số ngày tập là gợi ý của CalGo theo mức vận động bạn chọn. WHO khuyến nghị tổng thời lượng vận động mỗi tuần, không ấn định số ngày.';
+
+  @override
+  String get sourceWhoActivity => 'WHO — Hoạt động thể chất';
 }

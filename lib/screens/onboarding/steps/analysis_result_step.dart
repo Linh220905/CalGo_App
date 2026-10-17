@@ -15,6 +15,7 @@ import '../../../providers/progress_provider.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../../models/onboarding_data.dart';
 import '../../../widgets/premium_ui.dart';
+import '../../../widgets/calculation_sources.dart';
 
 // ─────────────────────────────────────────────────────────────────
 // Palette
@@ -379,6 +380,11 @@ class _ResultPhaseState extends State<_ResultPhase> {
                         .animate()
                         .fadeIn(duration: 450.ms, delay: 150.ms)
                         .slideY(begin: 0.04, end: 0),
+                    const SizedBox(height: 10),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 4),
+                      child: CalculationSources(type: CalculationSourceType.calorieGoal),
+                    ),
                     const SizedBox(height: 14),
 
                     // ── BMI + tập luyện ──
@@ -408,7 +414,7 @@ class _ResultPhaseState extends State<_ResultPhase> {
                       InkWell(
                         onTap: () => launchUrl(
                           Uri.parse(
-                            'https://www.who.int/news-room/fact-sheets/detail/obesity-and-overweight',
+                            'https://pubmed.ncbi.nlm.nih.gov/14726171/',
                           ),
                           mode: LaunchMode.externalApplication,
                         ),
@@ -422,7 +428,7 @@ class _ResultPhaseState extends State<_ResultPhase> {
                             const SizedBox(width: 4),
                             Expanded(
                               child: Text(
-                                '${s.bmiReferenceSource} • ${s.bmiAdultOnlyDisclaimer}',
+                                '${s.bmiAsianReferenceSource} • ${s.bmiAdultOnlyDisclaimer}',
                                 style: const TextStyle(
                                   fontSize: 10.5,
                                   fontWeight: FontWeight.w500,
@@ -435,6 +441,11 @@ class _ResultPhaseState extends State<_ResultPhase> {
                         ),
                       ),
                     ],
+                    const SizedBox(height: 8),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 4),
+                      child: CalculationSources(type: CalculationSourceType.activityGuidance),
+                    ),
                     const SizedBox(height: 14),
 
                     // ── Hành trình ──
