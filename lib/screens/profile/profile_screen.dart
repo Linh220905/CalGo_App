@@ -16,6 +16,7 @@ import '../../l10n/generated/app_localizations.dart';
 import '../../widgets/language_selector.dart';
 import '../../widgets/apple_health_modal.dart';
 import '../../widgets/recalculate_target_modal.dart';
+import '../../widgets/nutrition_sources_sheet.dart';
 import '../../utils/payment_platform.dart';
 import '../onboarding/steps/premium_paywall_step.dart';
 import 'widgets/widget_preview_card.dart';
@@ -513,6 +514,14 @@ class ProfileScreen extends StatelessWidget {
                     borderColor: borderColor,
                     isDark: isDark,
                     onTap: () => showTargetNutritionModal(context, isDark),
+                  ),
+                  _buildMenuItem(
+                    icon: Icons.menu_book_rounded,
+                    label: s.nutritionSourcesTitle,
+                    textColor: textColor,
+                    borderColor: borderColor,
+                    isDark: isDark,
+                    onTap: () => NutritionSourcesSheet.show(context),
                   ),
                   _buildMenuItem(
                     icon: Icons.notifications_none_rounded,

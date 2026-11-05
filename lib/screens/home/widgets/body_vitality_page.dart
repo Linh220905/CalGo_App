@@ -58,17 +58,21 @@ class BodyVitalityPage extends StatelessWidget {
         children: [
           // Header Row
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                s.bodyVitalityTitle,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w800,
-                  color: textDark,
-                  letterSpacing: -0.3,
+              Expanded(
+                child: Text(
+                  s.bodyVitalityTitle,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w800,
+                    color: textDark,
+                    letterSpacing: -0.3,
+                  ),
                 ),
               ),
+              const SizedBox(width: 8),
               Text(
                 s.fourMetricsCount,
                 style: TextStyle(

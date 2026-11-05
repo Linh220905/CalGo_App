@@ -3393,7 +3393,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get sourceMineralDri => 'Dietary Reference Intakes — minerals';
 
   @override
-  String get sourceActivityFactor => 'وزارة الصحة الإماراتية — معاملات النشاط';
+  String get sourceActivityFactor =>
+      'منظمة الأغذية والزراعة / منظمة الصحة العالمية — متطلبات الطاقة ومعاملات النشاط';
 
   @override
   String get activityGuidanceNote =>
@@ -3401,4 +3402,68 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get sourceWhoActivity => 'منظمة الصحة العالمية — النشاط البدني';
+
+  @override
+  String get mealGuidanceSourcesNote =>
+      'تعتمد اقتراحات الوجبات على أهدافك المتبقية والقيم الغذائية التقديرية. تشرح هذه المصادر الإرشادات العامة ولا تؤكد مكونات الطبق. تحقق من الحصص والملصقات.';
+
+  @override
+  String get weightForecastSourcesNote =>
+      'يستخدم التوقع تقديرًا ثابتًا قدره 7700 سعرة لكل كغ. يوضح NIH أن تغير الوزن يتباطأ مع تكيف الجسم؛ التواريخ تقريبية.';
+
+  @override
+  String get sourceNihWeightPlanner => 'NIH — مخطط وزن الجسم';
+
+  @override
+  String get nutritionSourcesTitle => 'المصادر العلمية والطبية';
+
+  @override
+  String get nutritionSourcesSubtitle =>
+      'المعادلات والإرشادات الغذائية المعتمدة في CalGo';
+
+  @override
+  String get calorieCalculationSourceTitle =>
+      'الهدف اليومي للسُّعرات ومعدل الأيض الأساسي (BMR)';
+
+  @override
+  String get calorieCalculationSourceDesc =>
+      'يتم حساب معدل الأيض الأساسي باستخدام معادلة ميفلين-سانت جور، وتعديلها بمعاملات مستوى النشاط البدني المعتمدة من منظمة الصحة العالمية.';
+
+  @override
+  String get macroDistributionSourceTitle => 'توزيع المغذيات الكبرى';
+
+  @override
+  String get macroDistributionSourceDesc =>
+      'تتبع أهداف البروتين والكربوهيدرات والدهون نطاقات التوزيع المقبولة للمغذيات الكبرى (AMDR) الصادرة عن وزارة الزراعة الأمريكية.';
+
+  @override
+  String get safeWeightRateSourceTitle => 'معدل آمن لتغير الوزن';
+
+  @override
+  String get safeWeightRateSourceDesc =>
+      'يتم تحديد عجز السعرات الحرارية بأمان بين 500 و1000 سعرة/يوم (0.5 إلى 1.0 كجم/أسبوع) وفقًا لإرشادات CDC وNIH.';
+
+  @override
+  String get mifflinStJeorCitation =>
+      'PubMed: ميفلين وآخرون — معادلة استهلاك الطاقة أثناء الراحة (1990)';
+
+  @override
+  String get faoWhoEnergyCitation =>
+      'الفاو / الصحة العالمية — متطلبات الطاقة البشرية ومعاملات النشاط';
+
+  @override
+  String get usdaDietaryCitation =>
+      'الإرشادات الغذائية الأمريكية الصادرة عن USDA (المغذيات الكبرى)';
+
+  @override
+  String get cdcWeightLossCitation =>
+      'CDC — إرشادات فقدان الوزن الصحي (0.5–1 كجم/أسبوع)';
+
+  @override
+  String get bmiMicronutrientSourceTitle =>
+      'معايير مؤشر كتلة الجسم والمغذيات الدقيقة';
+
+  @override
+  String get bmiMicronutrientSourceDesc =>
+      'تصنيف مؤشر كتلة الجسم (المعدل الطبيعي 18.5–24.9) والحدود اليومية (ألياف 14 جم/1000 سعرة، سكريات حرة <10%، صوديوم <2000 ملجم).';
 }

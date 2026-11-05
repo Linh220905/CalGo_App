@@ -3429,7 +3429,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get sourceActivityFactor =>
-      'UAE স্বাস্থ্য মন্ত্রণালয় — কার্যকলাপের গুণক';
+      'FAO/WHO — শক্তির প্রয়োজনীয়তা এবং কার্যকলাপের গুণক';
 
   @override
   String get activityGuidanceNote =>
@@ -3437,4 +3437,68 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get sourceWhoActivity => 'WHO — শারীরিক কার্যকলাপ';
+
+  @override
+  String get mealGuidanceSourcesNote =>
+      'খাবারের পরামর্শ অবশিষ্ট লক্ষ্য ও খাবারের আনুমানিক পুষ্টিমান ব্যবহার করে। এই সূত্রগুলি সাধারণ নির্দেশনা দেয়, নির্দিষ্ট খাবারের উপাদান নিশ্চিত করে না। পরিমাণ ও লেবেল যাচাই করুন।';
+
+  @override
+  String get weightForecastSourcesNote =>
+      'পূর্বাভাসে প্রতি কেজিতে ৭,৭০০ ক্যালোরির স্থির অনুমান ব্যবহার করা হয়। NIH জানায়, শরীর মানিয়ে নিলে প্রকৃত ওজন পরিবর্তন ধীর হয়; তারিখ আনুমানিক।';
+
+  @override
+  String get sourceNihWeightPlanner => 'NIH — শরীরের ওজন পরিকল্পনাকারী';
+
+  @override
+  String get nutritionSourcesTitle => 'বৈজ্ঞানিক ও চিকিৎসা তথ্যসূত্র';
+
+  @override
+  String get nutritionSourcesSubtitle =>
+      'CalGo-তে ব্যবহৃত গণনার সূত্র এবং পুষ্টি নির্দেশিকা';
+
+  @override
+  String get calorieCalculationSourceTitle =>
+      'দৈনিক ক্যালোরি লক্ষ্য ও বিএমআর (BMR)';
+
+  @override
+  String get calorieCalculationSourceDesc =>
+      'বেসাল মেটাবলিক রেট Mifflin–St Jeor সূত্রের মাধ্যমে গণনা করা হয় এবং FAO/WHO এর কার্যকলাপের মাত্রা অনুযায়ী সমন্বয় করা হয়।';
+
+  @override
+  String get macroDistributionSourceTitle => 'ম্যাক্রোনিউট্রিয়েন্ট বণ্টন';
+
+  @override
+  String get macroDistributionSourceDesc =>
+      'প্রোটিন, কার্বোহাইড্রেট এবং ফ্যাটের লক্ষ্য USDA এবং আমেরিকান ডায়েটরি নির্দেশিকার AMDR অনুসরণ করে।';
+
+  @override
+  String get safeWeightRateSourceTitle => 'ওজন পরিবর্তনের নিরাপদ হার';
+
+  @override
+  String get safeWeightRateSourceDesc =>
+      'CDC এবং NIH নির্দেশিকা অনুসারে ক্যালোরির ঘাটতি নিরাপদে ৫০০–১০০০ ক্যালোরি/দিন (০.৫–১.০ কেজি/সপ্তাহ) এর মধ্যে সীমাবদ্ধ থাকে।';
+
+  @override
+  String get mifflinStJeorCitation =>
+      'PubMed: Mifflin et al. — বিশ্রামের শক্তি ব্যয় সমীকরণ (১৯৯০)';
+
+  @override
+  String get faoWhoEnergyCitation =>
+      'FAO/WHO/UNU — মানব শক্তি প্রয়োজনীয়তা ও কার্যকলাপ গুণক';
+
+  @override
+  String get usdaDietaryCitation =>
+      'আমেরিকানদের জন্য USDA ডায়েটরি নির্দেশিকা (ম্যাক্রোনিউট্রিয়েন্ট)';
+
+  @override
+  String get cdcWeightLossCitation =>
+      'CDC — স্বাস্থ্যকর ওজন কমানোর নির্দেশিকা (সপ্তাহে ০.৫–১ কেজি)';
+
+  @override
+  String get bmiMicronutrientSourceTitle =>
+      'বিএমআই এবং মাইক্রোনিউট্রিয়েন্ট মান';
+
+  @override
+  String get bmiMicronutrientSourceDesc =>
+      'বডি ম্যাস ইনডেক্স শ্রেণিবিভাগ (স্বাভাবিক ১৮.৫–২৪.৯) এবং দৈনিক মাইক্রোনিউট্রিয়েন্ট সীমা (ফাইবার ১৪ গ্রাম/১০০০ক্যালোরি, চিনি <১০%, সোডিয়াম <২০০০মিলিগ্রাম)।';
 }

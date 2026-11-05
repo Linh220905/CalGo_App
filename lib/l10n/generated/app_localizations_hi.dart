@@ -3427,7 +3427,8 @@ class AppLocalizationsHi extends AppLocalizations {
   String get sourceMineralDri => 'Dietary Reference Intakes — minerals';
 
   @override
-  String get sourceActivityFactor => 'यूएई स्वास्थ्य मंत्रालय — गतिविधि गुणक';
+  String get sourceActivityFactor =>
+      'FAO/WHO — ऊर्जा आवश्यकताएं और गतिविधि गुणक';
 
   @override
   String get activityGuidanceNote =>
@@ -3435,4 +3436,67 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get sourceWhoActivity => 'WHO — शारीरिक गतिविधि';
+
+  @override
+  String get mealGuidanceSourcesNote =>
+      'भोजन सुझाव शेष लक्ष्यों और व्यंजन के अनुमानित पोषण पर आधारित हैं। ये स्रोत सामान्य पोषण मार्गदर्शन देते हैं, किसी विशेष व्यंजन की संरचना नहीं बताते। मात्रा और लेबल जाँचें।';
+
+  @override
+  String get weightForecastSourcesNote =>
+      'पूर्वानुमान में प्रति किग्रा 7,700 कैलोरी का स्थिर अनुमान है। NIH के अनुसार शरीर के अनुकूल होने पर वास्तविक वज़न परिवर्तन धीमा होता है; तारीखें अनुमानित हैं।';
+
+  @override
+  String get sourceNihWeightPlanner => 'NIH — शरीर वज़न योजनाकार';
+
+  @override
+  String get nutritionSourcesTitle => 'वैज्ञानिक और चिकित्सा स्रोत';
+
+  @override
+  String get nutritionSourcesSubtitle =>
+      'CalGo में उपयोग किए जाने वाले सूत्र और पोषण दिशानिर्देश';
+
+  @override
+  String get calorieCalculationSourceTitle =>
+      'दैनिक कैलोरी लक्ष्य और बीएमआर (BMR)';
+
+  @override
+  String get calorieCalculationSourceDesc =>
+      'बेसल मेटाबॉलिक रेट की गणना Mifflin–St Jeor सूत्र द्वारा की जाती है और FAO/WHO गतिविधि स्तरों से समायोजित की जाती है।';
+
+  @override
+  String get macroDistributionSourceTitle => 'मैक्रोन्यूट्रिएंट वितरण';
+
+  @override
+  String get macroDistributionSourceDesc =>
+      'प्रोटीन, कार्ब्स और फैट के लक्ष्य USDA और अमेरिकी आहार दिशानिर्देशों के AMDR मानकों का पालन करते हैं।';
+
+  @override
+  String get safeWeightRateSourceTitle => 'वजन घटाने की सुरक्षित दर';
+
+  @override
+  String get safeWeightRateSourceDesc =>
+      'CDC और NIH दिशानिर्देशों के अनुसार कैलोरी की कमी को सुरक्षित रूप से 500-1000 किलोकैलोरी/दिन (0.5-1.0 किग्रा/सप्ताह) तक सीमित रखा जाता है।';
+
+  @override
+  String get mifflinStJeorCitation =>
+      'PubMed: Mifflin et al. — विश्राम ऊर्जा व्यय समीकरण (1990)';
+
+  @override
+  String get faoWhoEnergyCitation =>
+      'FAO/WHO/UNU — मानव ऊर्जा आवश्यकताएं और गतिविधि कारक';
+
+  @override
+  String get usdaDietaryCitation =>
+      'अमेरिकियों के लिए USDA आहार दिशानिर्देश (मैक्रोन्यूट्रिएंट्स)';
+
+  @override
+  String get cdcWeightLossCitation =>
+      'CDC — स्वस्थ वजन घटाने के दिशानिर्देश (0.5-1 किग्रा/सप्ताह)';
+
+  @override
+  String get bmiMicronutrientSourceTitle => 'बीएमआई और माइक्रोन्यूट्रिएंट मानक';
+
+  @override
+  String get bmiMicronutrientSourceDesc =>
+      'बीएमआई वर्गीकरण (सामान्य 18.5-24.9) और दैनिक सीमाएं (फाइबर 14g/1000kcal, मुक्त शर्करा <10%, सोडियम <2000mg)।';
 }

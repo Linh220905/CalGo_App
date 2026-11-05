@@ -3468,7 +3468,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get sourceActivityFactor =>
-      'Ministère de la Santé des EAU — facteurs d’activité';
+      'FAO/OMS — Besoins énergétiques et facteurs d\'activité';
 
   @override
   String get activityGuidanceNote =>
@@ -3476,4 +3476,68 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get sourceWhoActivity => 'OMS — Activité physique';
+
+  @override
+  String get mealGuidanceSourcesNote =>
+      'Les repas suggérés utilisent vos objectifs restants et des valeurs estimées. Ces sources expliquent les conseils généraux, pas la composition du plat. Vérifiez les portions et les étiquettes.';
+
+  @override
+  String get weightForecastSourcesNote =>
+      'La prévision utilise une estimation fixe de 7 700 kcal/kg. Selon le NIH, la perte de poids ralentit quand le corps s’adapte ; les dates sont approximatives.';
+
+  @override
+  String get sourceNihWeightPlanner => 'NIH — Planificateur de poids corporel';
+
+  @override
+  String get nutritionSourcesTitle => 'Sources scientifiques et médicales';
+
+  @override
+  String get nutritionSourcesSubtitle =>
+      'Formules et directives nutritionnelles utilisées dans CalGo';
+
+  @override
+  String get calorieCalculationSourceTitle =>
+      'Objectif calorique quotidien et MB';
+
+  @override
+  String get calorieCalculationSourceDesc =>
+      'Le métabolisme de base est calculé selon la formule de Mifflin–St Jeor, ajustée avec les facteurs de niveau d\'activité physique (PAL) de la FAO/OMS.';
+
+  @override
+  String get macroDistributionSourceTitle => 'Répartition des macronutriments';
+
+  @override
+  String get macroDistributionSourceDesc =>
+      'Les objectifs en protéines, glucides et lipides respectent les fourchettes acceptables de distribution des macronutriments (AMDR) de l\'USDA.';
+
+  @override
+  String get safeWeightRateSourceTitle => 'Rythme de perte de poids sécurisé';
+
+  @override
+  String get safeWeightRateSourceDesc =>
+      'Le déficit calorique est plafonné en toute sécurité entre 500 et 1000 kcal/jour (0,5 à 1,0 kg/semaine) selon le CDC et le NIH.';
+
+  @override
+  String get mifflinStJeorCitation =>
+      'PubMed : Mifflin et al. — Équation d\'énergie au repos (1990)';
+
+  @override
+  String get faoWhoEnergyCitation =>
+      'FAO/OMS/UNU — Besoins énergétiques humains et facteurs d\'activité';
+
+  @override
+  String get usdaDietaryCitation =>
+      'Directives diététiques de l\'USDA pour les Américains (Macronutriments)';
+
+  @override
+  String get cdcWeightLossCitation =>
+      'CDC — Recommandations pour une perte de poids saine (0,5–1 kg/semaine)';
+
+  @override
+  String get bmiMicronutrientSourceTitle =>
+      'Normes d\'IMC et de micronutriments';
+
+  @override
+  String get bmiMicronutrientSourceDesc =>
+      'Classification de l\'IMC (18,5–24,9 normal) et seuils de micronutriments (Fibres 14g/1000kcal, Sucres libres <10%, Sodium <2000mg).';
 }

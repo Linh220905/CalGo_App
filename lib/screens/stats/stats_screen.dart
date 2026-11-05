@@ -16,7 +16,6 @@ import '../../providers/gamification_provider.dart';
 import '../../providers/home_provider.dart';
 import '../../providers/progress_provider.dart';
 import '../../widgets/achievement_badge.dart';
-import '../../widgets/calculation_sources.dart';
 import '../../utils/macro_colors.dart';
 import '../../utils/stats_localization.dart';
 import '../recap/daily_recap_screen.dart';
@@ -31,6 +30,7 @@ class StatsScreen extends StatefulWidget {
   @override
   State<StatsScreen> createState() => _StatsScreenState();
 }
+
 class _StatsScreenState extends State<StatsScreen>
     with SingleTickerProviderStateMixin {
   late final TabController _tabs;
@@ -1031,8 +1031,6 @@ class _NutritionSummaryCardState extends State<_NutritionSummaryCard> {
               ),
             ),
           ),
-          const SizedBox(height: 14),
-          CalculationSources(type: CalculationSourceType.calorieGoal, dark: widget.dark),
         ],
       ),
     );
@@ -2684,7 +2682,9 @@ class _WeightChangeCard extends StatelessWidget {
                       height: 24,
                       child: CustomPaint(
                         painter: _WeightSparklinePainter(
-                          values: item.sparkline.isNotEmpty ? item.sparkline : [0.0, 0.0],
+                          values: item.sparkline.isNotEmpty
+                              ? item.sparkline
+                              : [0.0, 0.0],
                           color: changeColor,
                         ),
                       ),
@@ -2707,8 +2707,8 @@ class _WeightChangeCard extends StatelessWidget {
                         isZero
                             ? Icons.remove_rounded
                             : (isLoss
-                                ? Icons.call_received_rounded
-                                : Icons.call_made_rounded),
+                                  ? Icons.call_received_rounded
+                                  : Icons.call_made_rounded),
                         size: 15,
                         color: changeColor,
                       ),
@@ -2717,8 +2717,8 @@ class _WeightChangeCard extends StatelessWidget {
                         isZero
                             ? strings.weightUnchanged
                             : (isLoss
-                                ? strings.weightDecreased
-                                : strings.weightIncreased),
+                                  ? strings.weightDecreased
+                                  : strings.weightIncreased),
                         style: TextStyle(
                           color: changeColor,
                           fontSize: 14,
@@ -3144,7 +3144,9 @@ class _ProgressPhotosCard extends StatelessWidget {
               itemBuilder: (ctx, idx) {
                 final photo = photos[idx];
                 final resolved = ApiConfig.resolveMediaUrl(
-                  photo.thumbnailUrl.isNotEmpty ? photo.thumbnailUrl : photo.imageUrl,
+                  photo.thumbnailUrl.isNotEmpty
+                      ? photo.thumbnailUrl
+                      : photo.imageUrl,
                 );
                 final fullResolved = ApiConfig.resolveMediaUrl(photo.imageUrl);
 
@@ -3174,8 +3176,12 @@ class _ProgressPhotosCard extends StatelessWidget {
                                     top: 10,
                                     right: 10,
                                     child: IconButton(
-                                      icon: const Icon(Icons.close, color: Colors.white),
-                                      onPressed: () => Navigator.of(dialogCtx).pop(),
+                                      icon: const Icon(
+                                        Icons.close,
+                                        color: Colors.white,
+                                      ),
+                                      onPressed: () =>
+                                          Navigator.of(dialogCtx).pop(),
                                     ),
                                   ),
                                 ],
@@ -3189,7 +3195,9 @@ class _ProgressPhotosCard extends StatelessWidget {
                         height: 140,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(16),
-                          color: dark ? const Color(0xFF2C2A34) : const Color(0xFFE2E8F0),
+                          color: dark
+                              ? const Color(0xFF2C2A34)
+                              : const Color(0xFFE2E8F0),
                         ),
                         clipBehavior: Clip.antiAlias,
                         child: resolved != null
@@ -3208,7 +3216,10 @@ class _ProgressPhotosCard extends StatelessWidget {
                       bottom: 6,
                       left: 6,
                       child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 6,
+                          vertical: 2,
+                        ),
                         decoration: BoxDecoration(
                           color: Colors.black54,
                           borderRadius: BorderRadius.circular(8),
@@ -3234,7 +3245,11 @@ class _ProgressPhotosCard extends StatelessWidget {
                             color: Colors.black54,
                             shape: BoxShape.circle,
                           ),
-                          child: const Icon(Icons.delete_outline, color: Colors.white, size: 14),
+                          child: const Icon(
+                            Icons.delete_outline,
+                            color: Colors.white,
+                            size: 14,
+                          ),
                         ),
                       ),
                     ),

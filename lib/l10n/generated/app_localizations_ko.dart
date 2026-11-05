@@ -3298,7 +3298,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get sourceMineralDri => 'Dietary Reference Intakes — minerals';
 
   @override
-  String get sourceActivityFactor => 'UAE 보건부 — 활동 계수';
+  String get sourceActivityFactor => 'FAO/WHO — 에너지 필요량 및 활동 계수';
 
   @override
   String get activityGuidanceNote =>
@@ -3306,4 +3306,62 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get sourceWhoActivity => 'WHO — 신체 활동';
+
+  @override
+  String get mealGuidanceSourcesNote =>
+      '식사 추천은 남은 앱 목표와 음식의 추정 영양값을 사용합니다. 이 출처는 일반적인 영양 지침이며 추천 음식의 실제 성분을 보증하지 않습니다. 분량과 표시를 확인하세요.';
+
+  @override
+  String get weightForecastSourcesNote =>
+      '예측은 kg당 7,700 kcal의 고정 추정치를 사용합니다. NIH에 따르면 신체 적응으로 실제 체중 변화는 느려질 수 있습니다. 날짜는 대략적인 값입니다.';
+
+  @override
+  String get sourceNihWeightPlanner => 'NIH — 체중 계획 도구';
+
+  @override
+  String get nutritionSourcesTitle => '과학 및 의학적 근거';
+
+  @override
+  String get nutritionSourcesSubtitle => 'CalGo에 적용된 계산 공식 및 영양 가이드라인';
+
+  @override
+  String get calorieCalculationSourceTitle => '일일 목표 칼로리 및 기초대사량(BMR)';
+
+  @override
+  String get calorieCalculationSourceDesc =>
+      '기초대사량은 검증된 Mifflin–St Jeor 공식으로 계산되며, FAO/WHO 신체활동수준(PAL) 계수로 조정됩니다.';
+
+  @override
+  String get macroDistributionSourceTitle => '주요 영양소(탄단지) 배분';
+
+  @override
+  String get macroDistributionSourceDesc =>
+      '단백질, 탄수화물, 지방 목표는 USDA 및 미국 식이지침의 적정 다량영양소 섭취비율(AMDR)을 따릅니다.';
+
+  @override
+  String get safeWeightRateSourceTitle => '안전한 체중 감량 속도';
+
+  @override
+  String get safeWeightRateSourceDesc =>
+      'CDC 및 NIH 지침에 따라 일일 500~1000kcal(주당 0.5~1.0kg) 내에서 안전하게 제한됩니다.';
+
+  @override
+  String get mifflinStJeorCitation =>
+      'PubMed: Mifflin et al. — 휴식기 에너지 소비량 공식 (1990)';
+
+  @override
+  String get faoWhoEnergyCitation => 'FAO/WHO/UNU — 인간 에너지 필요량 및 활동 계수';
+
+  @override
+  String get usdaDietaryCitation => 'USDA 미국 식생활 지침 (다량영양소)';
+
+  @override
+  String get cdcWeightLossCitation => 'CDC — 건강한 체중 감량 가이드라인 (주당 0.5~1kg)';
+
+  @override
+  String get bmiMicronutrientSourceTitle => 'BMI 및 미량영양소 기준';
+
+  @override
+  String get bmiMicronutrientSourceDesc =>
+      '체질량지수(BMI) 분류(정상 18.5~24.9) 및 일일 미량영양소 권장 기준(식이섬유 14g/1000kcal, 유리당 <10%, 나트륨 <2000mg).';
 }

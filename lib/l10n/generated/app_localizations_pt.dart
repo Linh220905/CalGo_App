@@ -3446,7 +3446,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get sourceActivityFactor =>
-      'Ministério da Saúde dos EAU — fatores de atividade';
+      'FAO/OMS — Requisitos de energia e fatores de atividade';
 
   @override
   String get activityGuidanceNote =>
@@ -3454,4 +3454,66 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get sourceWhoActivity => 'OMS — Atividade física';
+
+  @override
+  String get mealGuidanceSourcesNote =>
+      'As sugestões usam as metas restantes e valores estimados dos pratos. Estas fontes explicam orientações gerais, não a composição de cada prato. Confira porções e rótulos.';
+
+  @override
+  String get weightForecastSourcesNote =>
+      'A previsão usa uma estimativa fixa de 7.700 kcal/kg. O NIH explica que a mudança de peso desacelera com a adaptação do corpo; as datas são aproximadas.';
+
+  @override
+  String get sourceNihWeightPlanner => 'NIH — Planejador de peso corporal';
+
+  @override
+  String get nutritionSourcesTitle => 'Fontes Científicas e Médicas';
+
+  @override
+  String get nutritionSourcesSubtitle =>
+      'Fórmulas e diretrizes nutricionais usadas no CalGo';
+
+  @override
+  String get calorieCalculationSourceTitle => 'Meta Diária de Calorias e TMB';
+
+  @override
+  String get calorieCalculationSourceDesc =>
+      'A Taxa Metabólica Basal é calculada pela fórmula Mifflin–St Jeor, ajustada pelos fatores de nível de atividade física da FAO/OMS.';
+
+  @override
+  String get macroDistributionSourceTitle => 'Distribuição de Macronutrientes';
+
+  @override
+  String get macroDistributionSourceDesc =>
+      'As metas de proteínas, carboidratos e gorduras seguem as faixas de distribuição aceitável de macronutrientes (AMDR) do USDA.';
+
+  @override
+  String get safeWeightRateSourceTitle => 'Ritmo Seguro de Mudança de Peso';
+
+  @override
+  String get safeWeightRateSourceDesc =>
+      'O déficit calórico é limitado com segurança entre 500 e 1000 kcal/dia (0,5 a 1,0 kg/semana), conforme diretrizes do CDC e NIH.';
+
+  @override
+  String get mifflinStJeorCitation =>
+      'PubMed: Mifflin et al. — Equação de Gasto Energético em Repouso (1990)';
+
+  @override
+  String get faoWhoEnergyCitation =>
+      'FAO/OMS/UNU — Requisitos de Energia Humana e Fatores de Atividade';
+
+  @override
+  String get usdaDietaryCitation =>
+      'Diretrizes Dietéticas do USDA para Americanos (Macronutrientes)';
+
+  @override
+  String get cdcWeightLossCitation =>
+      'CDC — Diretrizes para Perda de Peso Saudável (0,5–1 kg/semana)';
+
+  @override
+  String get bmiMicronutrientSourceTitle => 'Padrões de IMC e Micronutrientes';
+
+  @override
+  String get bmiMicronutrientSourceDesc =>
+      'Classificação de IMC (18,5–24,9 normal) e limites diários de micronutrientes (Fibras 14g/1000kcal, Açúcares livres <10%, Sódio <2000mg).';
 }

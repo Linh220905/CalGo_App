@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../l10n/generated/app_localizations.dart';
+import 'nutrition_sources_sheet.dart';
 
 enum CalculationSourceType {
   calorieGoal,
@@ -10,6 +11,8 @@ enum CalculationSourceType {
   nutrients,
   exercise,
   foodEstimate,
+  mealGuidance,
+  weightForecast,
 }
 
 /// Keeps the references next to the estimates they explain, including for
@@ -30,7 +33,7 @@ class CalculationSources extends StatelessWidget {
           (s.sourceMifflin, 'https://pubmed.ncbi.nlm.nih.gov/2305711/'),
           (
             s.sourceActivityFactor,
-            'https://mohap.gov.ae/en/awareness-centre/daily-calorie-requirements-calculator',
+            'https://www.fao.org/3/y5686e/y5686e00.htm',
           ),
           (
             s.sourceCdcWeight,
@@ -93,6 +96,29 @@ class CalculationSources extends StatelessWidget {
           ),
         ],
       ),
+      CalculationSourceType.mealGuidance => (
+        s.mealGuidanceSourcesNote,
+        <(String, String)>[
+          (s.sourceWhoDiet, 'https://www.who.int/health-topics/healthy-diet'),
+          (
+            s.sourceMacroDri,
+            'https://www.canada.ca/en/health-canada/services/food-nutrition/healthy-eating/dietary-reference-intakes/tables/reference-values-macronutrients.html',
+          ),
+        ],
+      ),
+      CalculationSourceType.weightForecast => (
+        s.weightForecastSourcesNote,
+        <(String, String)>[
+          (
+            s.sourceNihWeightPlanner,
+            'https://www.niddk.nih.gov/health-information/professionals/diabetes-discoveries-practice/nih-body-weight-planner',
+          ),
+          (
+            s.sourceCdcWeight,
+            'https://www.cdc.gov/healthy-weight-growth/losing-weight/index.html',
+          ),
+        ],
+      ),
     };
     final muted = dark ? const Color(0xFFCBD5E1) : const Color(0xFF64748B);
     final link = dark ? const Color(0xFF93C5FD) : const Color(0xFF2563EB);
@@ -104,13 +130,41 @@ class CalculationSources extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
-            s.calculationSourcesTitle,
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w700,
-              color: muted,
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                s.calculationSourcesTitle,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w700,
+                  color: muted,
+                ),
+              ),
+              InkWell(
+                onTap: () => NutritionSourcesSheet.show(context),
+                borderRadius: BorderRadius.circular(6),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.menu_book_rounded, size: 13, color: link),
+                      const SizedBox(width: 4),
+                      Text(
+                        s.nutritionSourcesTitle,
+                        style: TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.w600,
+                          color: link,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 4),
           Text(
@@ -125,7 +179,7 @@ class CalculationSources extends StatelessWidget {
                 mode: LaunchMode.externalApplication,
               ),
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 3),
+                padding: const EdgeInsets.symmetric(vertical: 12),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [

@@ -3454,7 +3454,7 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get sourceActivityFactor =>
-      'Ministerul Sănătății EAU — factori de activitate';
+      'FAO/OMS — Necesarul de energie și factorii de activitate';
 
   @override
   String get activityGuidanceNote =>
@@ -3462,4 +3462,67 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get sourceWhoActivity => 'OMS — Activitate fizică';
+
+  @override
+  String get mealGuidanceSourcesNote =>
+      'Sugestiile folosesc obiectivele rămase și valorile nutriționale estimate. Aceste surse explică recomandări generale, nu compoziția unui preparat. Verifică porțiile și etichetele.';
+
+  @override
+  String get weightForecastSourcesNote =>
+      'Prognoza folosește o estimare fixă de 7.700 kcal/kg. NIH explică faptul că schimbarea reală a greutății încetinește pe măsură ce corpul se adaptează; datele sunt aproximative.';
+
+  @override
+  String get sourceNihWeightPlanner =>
+      'NIH — Planificatorul greutății corporale';
+
+  @override
+  String get nutritionSourcesTitle => 'Surse științifice și medicale';
+
+  @override
+  String get nutritionSourcesSubtitle =>
+      'Formule și ghiduri nutriționale utilizate în CalGo';
+
+  @override
+  String get calorieCalculationSourceTitle => 'Obiectiv caloric zilnic și RMB';
+
+  @override
+  String get calorieCalculationSourceDesc =>
+      'Rata metabolică bazală este calculată utilizând ecuația Mifflin–St Jeor, ajustată cu factorii de activitate fizică FAO/OMS.';
+
+  @override
+  String get macroDistributionSourceTitle => 'Distribuția macronutrienților';
+
+  @override
+  String get macroDistributionSourceDesc =>
+      'Obiectivele pentru proteine, carbohidrați și grăsimi respectă intervalele acceptabile de distribuție a macronutrienților (AMDR) ale USDA.';
+
+  @override
+  String get safeWeightRateSourceTitle => 'Ritm sigur de schimbare a greutății';
+
+  @override
+  String get safeWeightRateSourceDesc =>
+      'Deficitul caloric este limitat în siguranță între 500 și 1000 kcal/zi (0,5–1,0 kg/săptămână), conform ghidurilor CDC și NIH.';
+
+  @override
+  String get mifflinStJeorCitation =>
+      'PubMed: Mifflin et al. — Ecuația de energie în repaus (1990)';
+
+  @override
+  String get faoWhoEnergyCitation =>
+      'FAO/OMS/UNU — Necesarul de energie umană și factorii de activitate';
+
+  @override
+  String get usdaDietaryCitation =>
+      'Ghidurile dietetice USDA pentru americani (Macronutrienți)';
+
+  @override
+  String get cdcWeightLossCitation =>
+      'CDC — Ghid pentru o scădere sănătoasă în greutate (0,5–1 kg/săptămână)';
+
+  @override
+  String get bmiMicronutrientSourceTitle => 'Standarde IMC și micronutrienți';
+
+  @override
+  String get bmiMicronutrientSourceDesc =>
+      'Clasificarea indicelui de masă corporală (18,5–24,9 normal) și limitele zilnice de micronutrienți (Fibre 14g/1000kcal, Zaharuri libere <10%, Sodiu <2000mg).';
 }

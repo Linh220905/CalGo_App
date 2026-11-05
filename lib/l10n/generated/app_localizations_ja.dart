@@ -3286,7 +3286,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get sourceMineralDri => 'Dietary Reference Intakes — minerals';
 
   @override
-  String get sourceActivityFactor => 'UAE保健省 — 活動係数';
+  String get sourceActivityFactor => 'FAO/WHO — エネルギー必要量と身体活動レベル';
 
   @override
   String get activityGuidanceNote =>
@@ -3294,4 +3294,62 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get sourceWhoActivity => 'WHO — 身体活動';
+
+  @override
+  String get mealGuidanceSourcesNote =>
+      '食事の提案は残りの目標と料理の推定栄養値に基づきます。これらの資料は一般的な栄養指針であり、個々の料理の成分を保証しません。量と表示を確認してください。';
+
+  @override
+  String get weightForecastSourcesNote =>
+      '予測には 1 kg あたり 7,700 kcal の固定値を使用します。NIH は体の適応により実際の体重変化は鈍ると説明しています。日付は目安です。';
+
+  @override
+  String get sourceNihWeightPlanner => 'NIH — 体重プランナー';
+
+  @override
+  String get nutritionSourcesTitle => '科学的・医学的根拠';
+
+  @override
+  String get nutritionSourcesSubtitle => 'CalGoで使用されている計算式と栄養ガイドライン';
+
+  @override
+  String get calorieCalculationSourceTitle => '1日の目標カロリーと基礎代謝（BMR）';
+
+  @override
+  String get calorieCalculationSourceDesc =>
+      '基礎代謝率はMifflin–St Jeor式に基づいて算出され、FAO/WHOの身体活動レベル（PAL）係数で調整されています。';
+
+  @override
+  String get macroDistributionSourceTitle => '三大栄養素の比率（PFCバランス）';
+
+  @override
+  String get macroDistributionSourceDesc =>
+      'タンパク質、炭水化物、脂質の目標値は、USDAおよび米国食事摂取基準のAMDRガイドラインに準拠しています。';
+
+  @override
+  String get safeWeightRateSourceTitle => '安全な体重変化ペース';
+
+  @override
+  String get safeWeightRateSourceDesc =>
+      'カロリー制限はCDCおよびNIHの安全基準に基づき、1日500〜1000kcal（週0.5〜1.0kg）を上限として安全に設定されています。';
+
+  @override
+  String get mifflinStJeorCitation =>
+      'PubMed: Mifflin et al. — 安静時エネルギー消費量算出式 (1990)';
+
+  @override
+  String get faoWhoEnergyCitation => 'FAO/WHO/UNU — ヒトのエネルギー必要量と活動係数';
+
+  @override
+  String get usdaDietaryCitation => 'USDA 米国食事ガイドライン（三大栄養素）';
+
+  @override
+  String get cdcWeightLossCitation => 'CDC — 健康的な体重減少ガイドライン (週0.5〜1kg)';
+
+  @override
+  String get bmiMicronutrientSourceTitle => 'BMIおよび微量栄養素基準';
+
+  @override
+  String get bmiMicronutrientSourceDesc =>
+      'BMI分類（普通体重18.5〜24.9）および微量栄養素の推奨基準値（食物繊維14g/1000kcal、遊離糖類<10%、ナトリウム<2000mg）。';
 }

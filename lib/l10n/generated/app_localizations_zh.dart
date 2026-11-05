@@ -3267,7 +3267,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get sourceMineralDri => 'Dietary Reference Intakes — minerals';
 
   @override
-  String get sourceActivityFactor => '阿联酋卫生部 — 活动系数';
+  String get sourceActivityFactor => '粮农组织/世卫组织 — 人体能量需求与活动系数';
 
   @override
   String get activityGuidanceNote =>
@@ -3275,4 +3275,62 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get sourceWhoActivity => '世卫组织 — 身体活动';
+
+  @override
+  String get mealGuidanceSourcesNote =>
+      '餐食建议依据剩余目标和菜品营养估算。这些来源解释一般营养建议，不证明具体菜品的成分。请核对份量和标签。';
+
+  @override
+  String get weightForecastSourcesNote =>
+      '预测使用每公斤 7,700 千卡的固定估算。NIH 指出身体适应后实际体重变化会放缓；日期仅供参考。';
+
+  @override
+  String get sourceNihWeightPlanner => 'NIH — 体重规划工具';
+
+  @override
+  String get nutritionSourcesTitle => '科学与医学来源';
+
+  @override
+  String get nutritionSourcesSubtitle => 'CalGo中使用的计算公式和饮食指南';
+
+  @override
+  String get calorieCalculationSourceTitle => '每日卡路里目标与基础代谢率（BMR）';
+
+  @override
+  String get calorieCalculationSourceDesc =>
+      '基础代谢率采用Mifflin–St Jeor公式计算，并根据FAO/WHO身体活动水平（PAL）系数进行调整。';
+
+  @override
+  String get macroDistributionSourceTitle => '宏量营养素分布';
+
+  @override
+  String get macroDistributionSourceDesc =>
+      '蛋白质、碳水化合物和脂肪目标符合美国农业部（USDA）和膳食指南的可接受宏量营养素分布范围（AMDR）。';
+
+  @override
+  String get safeWeightRateSourceTitle => '安全减重速率';
+
+  @override
+  String get safeWeightRateSourceDesc =>
+      '根据CDC和NIH指南，热量缺口安全限制在每天500–1000 kcal（每周0.5–1.0 kg），并设有最低安全摄入底线。';
+
+  @override
+  String get mifflinStJeorCitation =>
+      'PubMed: Mifflin et al. — 静息能量消耗公式 (1990)';
+
+  @override
+  String get faoWhoEnergyCitation => '粮农组织/世卫组织/联合国大学 — 人体能量需求与活动系数';
+
+  @override
+  String get usdaDietaryCitation => 'USDA 美国人饮食指南（宏量营养素）';
+
+  @override
+  String get cdcWeightLossCitation => 'CDC — 健康减重指南 (每周0.5–1公斤)';
+
+  @override
+  String get bmiMicronutrientSourceTitle => 'BMI与微量营养素标准';
+
+  @override
+  String get bmiMicronutrientSourceDesc =>
+      '身体质量指数BMI分类（正常范围18.5–24.9）及每日微量营养素限额（膳食纤维14g/1000kcal，游离糖<10%，钠<2000mg）。';
 }

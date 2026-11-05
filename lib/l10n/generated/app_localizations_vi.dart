@@ -3406,7 +3406,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get sourceMineralDri => 'Khuyến nghị DRI — khoáng chất';
 
   @override
-  String get sourceActivityFactor => 'Bộ Y tế UAE — hệ số vận động';
+  String get sourceActivityFactor =>
+      'FAO/WHO — Nhu cầu năng lượng & hệ số vận động';
 
   @override
   String get activityGuidanceNote =>
@@ -3414,4 +3415,66 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get sourceWhoActivity => 'WHO — Hoạt động thể chất';
+
+  @override
+  String get mealGuidanceSourcesNote =>
+      'Gợi ý bữa ăn dựa trên mục tiêu còn lại và dinh dưỡng ước tính của món. Các nguồn này giải thích hướng dẫn chung, không xác nhận thành phần của món gợi ý. Hãy kiểm tra khẩu phần và nhãn.';
+
+  @override
+  String get weightForecastSourcesNote =>
+      'Dự báo dùng mức quy đổi cố định 7.700 kcal/kg. NIH giải thích cân nặng thực tế thay đổi chậm hơn khi cơ thể thích nghi; thời điểm chỉ là ước tính.';
+
+  @override
+  String get sourceNihWeightPlanner => 'NIH — Công cụ lập kế hoạch cân nặng';
+
+  @override
+  String get nutritionSourcesTitle => 'Nguồn khoa học & Y khoa';
+
+  @override
+  String get nutritionSourcesSubtitle =>
+      'Công thức tính toán và hướng dẫn dinh dưỡng trong CalGo';
+
+  @override
+  String get calorieCalculationSourceTitle => 'Mục tiêu calo hàng ngày & BMR';
+
+  @override
+  String get calorieCalculationSourceDesc =>
+      'Tỷ lệ trao đổi chất cơ bản (BMR) được tính theo công thức Mifflin–St Jeor, kết hợp hệ số hoạt động thể chất (PAL) của FAO/WHO.';
+
+  @override
+  String get macroDistributionSourceTitle => 'Phân bổ nhóm chất đa lượng';
+
+  @override
+  String get macroDistributionSourceDesc =>
+      'Mục tiêu đạm, tinh bột và chất béo tuân theo Khung phân bổ chấp nhận được (AMDR) từ USDA và Hướng dẫn dinh dưỡng Hoa Kỳ.';
+
+  @override
+  String get safeWeightRateSourceTitle => 'Tốc độ thay đổi cân nặng an toàn';
+
+  @override
+  String get safeWeightRateSourceDesc =>
+      'Mức thâm hụt calo được giới hạn an toàn 500–1000 kcal/ngày (0.5–1.0 kg/tuần) theo khuyến nghị của CDC và NIH, kèm mức calo sàn tối thiểu.';
+
+  @override
+  String get mifflinStJeorCitation =>
+      'PubMed: Mifflin et al. — Công thức năng lượng nghỉ ngơi (1990)';
+
+  @override
+  String get faoWhoEnergyCitation =>
+      'FAO/WHO/UNU — Nhu cầu năng lượng con người & Hệ số vận động';
+
+  @override
+  String get usdaDietaryCitation =>
+      'USDA Hướng dẫn dinh dưỡng cho người Mỹ (Đa lượng)';
+
+  @override
+  String get cdcWeightLossCitation =>
+      'CDC — Hướng dẫn giảm cân lành mạnh (0.5–1 kg/tuần)';
+
+  @override
+  String get bmiMicronutrientSourceTitle => 'Tiêu chuẩn BMI & Vi chất';
+
+  @override
+  String get bmiMicronutrientSourceDesc =>
+      'Phân loại chỉ số khối cơ thể BMI (chuẩn 18.5–24.9) và ngưỡng vi chất hàng ngày (Chất xơ 14g/1000kcal, Đường tự do <10%, Natri <2000mg).';
 }

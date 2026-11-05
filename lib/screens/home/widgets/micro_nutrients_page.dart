@@ -26,8 +26,9 @@ class MicroNutrientsPage extends StatelessWidget {
 
     final targetFiber = summary.targetFiberG > 0 ? summary.targetFiberG : 38;
     final targetSugar = summary.targetSugarG > 0 ? summary.targetSugarG : 50;
-    final targetSodium =
-        summary.targetSodiumMg > 0 ? summary.targetSodiumMg : 2000;
+    final targetSodium = summary.targetSodiumMg > 0
+        ? summary.targetSodiumMg
+        : 2000;
 
     final fiberG = summary.fiberG;
     final sugarG = summary.sugarG;
@@ -42,16 +43,19 @@ class MicroNutrientsPage extends StatelessWidget {
     const sodiumColor = Color(0xFF10B981);
 
     final cardBg = isDark ? const Color(0xFF212027) : Colors.white;
-    final borderColor =
-        isDark ? const Color(0xFF2C2A34) : const Color(0xFFE2E8F0);
+    final borderColor = isDark
+        ? const Color(0xFF2C2A34)
+        : const Color(0xFFE2E8F0);
     final textDark = isDark ? Colors.white : const Color(0xFF0F172A);
-    final textMuted =
-        isDark ? const Color(0xFF8E8D9A) : const Color(0xFF64748B);
-    final ringTrackColor =
-        isDark ? const Color(0xFF2C2A34) : const Color(0xFFE2E8F0);
+    final textMuted = isDark
+        ? const Color(0xFF8E8D9A)
+        : const Color(0xFF64748B);
+    final ringTrackColor = isDark
+        ? const Color(0xFF2C2A34)
+        : const Color(0xFFE2E8F0);
 
     return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         // 3 Micro Cards (Fiber, Sugar, Sodium)
         Row(
@@ -76,20 +80,21 @@ class MicroNutrientsPage extends StatelessWidget {
                 ),
                 onTap: isPremium
                     ? () => VitalityDetailSheet.show(
-                          context,
-                          VitalityDetailData(
-                            key: 'fiber',
-                            title: strings.fiberDetailTitle,
-                            score: '${fiberG}g / ${targetFiber}g',
-                            description: strings.fiberDetailDesc,
-                            source: strings.fiberDetailSource,
-                            sourceUrl: 'https://www.canada.ca/en/health-canada/services/food-nutrition/healthy-eating/dietary-reference-intakes/tables/reference-values-macronutrients.html',
-                            items: [
-                              MapEntry(strings.intakeConsumedLabel, '${fiberG}g'),
-                              MapEntry(strings.dailyGoalLabel, '${targetFiber}g'),
-                            ],
-                          ),
-                        )
+                        context,
+                        VitalityDetailData(
+                          key: 'fiber',
+                          title: strings.fiberDetailTitle,
+                          score: '${fiberG}g / ${targetFiber}g',
+                          description: strings.fiberDetailDesc,
+                          source: strings.fiberDetailSource,
+                          sourceUrl:
+                              'https://www.canada.ca/en/health-canada/services/food-nutrition/healthy-eating/dietary-reference-intakes/tables/reference-values-macronutrients.html',
+                          items: [
+                            MapEntry(strings.intakeConsumedLabel, '${fiberG}g'),
+                            MapEntry(strings.dailyGoalLabel, '${targetFiber}g'),
+                          ],
+                        ),
+                      )
                     : onLockedTap,
               ),
             ),
@@ -115,20 +120,24 @@ class MicroNutrientsPage extends StatelessWidget {
                 ),
                 onTap: isPremium
                     ? () => VitalityDetailSheet.show(
-                          context,
-                          VitalityDetailData(
-                            key: 'sugar',
-                            title: strings.sugarDetailTitle,
-                            score: '${sugarG}g / ${targetSugar}g',
-                            description: strings.sugarDetailDesc,
-                            source: strings.sugarDetailSource,
-                            sourceUrl: 'https://www.who.int/news-room/fact-sheets/detail/healthy-diet',
-                            items: [
-                              MapEntry(strings.intakeConsumedLabel, '${sugarG}g'),
-                              MapEntry(strings.safeLimitLabel, '${targetSugar}g/day'),
-                            ],
-                          ),
-                        )
+                        context,
+                        VitalityDetailData(
+                          key: 'sugar',
+                          title: strings.sugarDetailTitle,
+                          score: '${sugarG}g / ${targetSugar}g',
+                          description: strings.sugarDetailDesc,
+                          source: strings.sugarDetailSource,
+                          sourceUrl:
+                              'https://www.who.int/news-room/fact-sheets/detail/healthy-diet',
+                          items: [
+                            MapEntry(strings.intakeConsumedLabel, '${sugarG}g'),
+                            MapEntry(
+                              strings.safeLimitLabel,
+                              '${targetSugar}g/day',
+                            ),
+                          ],
+                        ),
+                      )
                     : onLockedTap,
               ),
             ),
@@ -154,20 +163,27 @@ class MicroNutrientsPage extends StatelessWidget {
                 ),
                 onTap: isPremium
                     ? () => VitalityDetailSheet.show(
-                          context,
-                          VitalityDetailData(
-                            key: 'sodium',
-                            title: strings.sodiumDetailTitle,
-                            score: '${sodiumMg}mg / ${targetSodium}mg',
-                            description: strings.sodiumDetailDesc,
-                            source: strings.sodiumDetailSource,
-                            sourceUrl: 'https://www.who.int/news-room/fact-sheets/detail/salt-reduction',
-                            items: [
-                              MapEntry(strings.intakeConsumedLabel, '${sodiumMg}mg'),
-                              MapEntry(strings.maxRecommendedLabel, '${targetSodium}mg/day'),
-                            ],
-                          ),
-                        )
+                        context,
+                        VitalityDetailData(
+                          key: 'sodium',
+                          title: strings.sodiumDetailTitle,
+                          score: '${sodiumMg}mg / ${targetSodium}mg',
+                          description: strings.sodiumDetailDesc,
+                          source: strings.sodiumDetailSource,
+                          sourceUrl:
+                              'https://www.who.int/news-room/fact-sheets/detail/salt-reduction',
+                          items: [
+                            MapEntry(
+                              strings.intakeConsumedLabel,
+                              '${sodiumMg}mg',
+                            ),
+                            MapEntry(
+                              strings.maxRecommendedLabel,
+                              '${targetSodium}mg/day',
+                            ),
+                          ],
+                        ),
+                      )
                     : onLockedTap,
               ),
             ),
@@ -182,21 +198,31 @@ class MicroNutrientsPage extends StatelessWidget {
           child: InkWell(
             onTap: isPremium
                 ? () => VitalityDetailSheet.show(
-                      context,
-                      VitalityDetailData(
-                        key: 'health_score',
-                        title: strings.healthScoreTitle,
-                        score: '${summary.healthScore.toStringAsFixed(1)} / 10',
-                        description: strings.healthScoreDetailDesc,
-                        source: strings.healthScoreSource,
-                        sourceUrl: 'https://www.who.int/news-room/fact-sheets/detail/healthy-diet',
-                        items: [
-                          MapEntry(strings.proteinBalanceLabel, '${summary.proteinG}g / ${summary.targetProteinG}g'),
-                          MapEntry(strings.fiberQualityLabel, '${summary.fiberG}g / ${targetFiber}g'),
-                          MapEntry(strings.sugarLabel, '${summary.sugarG}g / ${targetSugar}g'),
-                        ],
-                      ),
-                    )
+                    context,
+                    VitalityDetailData(
+                      key: 'health_score',
+                      title: strings.healthScoreTitle,
+                      score: '${summary.healthScore.toStringAsFixed(1)} / 10',
+                      description: strings.healthScoreDetailDesc,
+                      source: strings.healthScoreSource,
+                      sourceUrl:
+                          'https://www.who.int/news-room/fact-sheets/detail/healthy-diet',
+                      items: [
+                        MapEntry(
+                          strings.proteinBalanceLabel,
+                          '${summary.proteinG}g / ${summary.targetProteinG}g',
+                        ),
+                        MapEntry(
+                          strings.fiberQualityLabel,
+                          '${summary.fiberG}g / ${targetFiber}g',
+                        ),
+                        MapEntry(
+                          strings.sugarLabel,
+                          '${summary.sugarG}g / ${targetSugar}g',
+                        ),
+                      ],
+                    ),
+                  )
                 : onLockedTap,
             borderRadius: BorderRadius.circular(22),
             child: Container(
@@ -207,7 +233,9 @@ class MicroNutrientsPage extends StatelessWidget {
                 border: Border.all(color: borderColor, width: 1),
                 boxShadow: [
                   BoxShadow(
-                    color: isDark ? const Color(0x22000000) : const Color(0x060F172A),
+                    color: isDark
+                        ? const Color(0x22000000)
+                        : const Color(0x060F172A),
                     blurRadius: 16,
                     offset: const Offset(0, 4),
                   ),
@@ -230,7 +258,10 @@ class MicroNutrientsPage extends StatelessWidget {
                       ),
                       if (!isPremium)
                         ImageFiltered(
-                          imageFilter: ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
+                          imageFilter: ImageFilter.blur(
+                            sigmaX: 4.0,
+                            sigmaY: 4.0,
+                          ),
                           child: Text(
                             '-- / 10',
                             style: TextStyle(
@@ -275,7 +306,10 @@ class MicroNutrientsPage extends StatelessWidget {
                         color: ringTrackColor,
                         child: FractionallySizedBox(
                           alignment: Alignment.centerLeft,
-                          widthFactor: (summary.healthScore / 10.0).clamp(0.0, 1.0),
+                          widthFactor: (summary.healthScore / 10.0).clamp(
+                            0.0,
+                            1.0,
+                          ),
                           child: Container(
                             decoration: BoxDecoration(
                               color: const Color(0xFF10B981),

@@ -5,7 +5,6 @@ import '../../../providers/app_settings_provider.dart';
 import '../../../providers/auth_provider.dart';
 import '../../../utils/macro_colors.dart';
 import '../../../utils/macro_icons.dart';
-import '../../../widgets/calculation_sources.dart';
 import '../../onboarding/steps/premium_paywall_step.dart';
 import 'cal_ai_hero_card.dart';
 import 'cal_ai_macro_card.dart';
@@ -19,10 +18,7 @@ const _kFatColor = MacroColors.fat;
 class NutritionSwipeSection extends StatefulWidget {
   final TodaySummary summary;
 
-  const NutritionSwipeSection({
-    super.key,
-    required this.summary,
-  });
+  const NutritionSwipeSection({super.key, required this.summary});
 
   @override
   State<NutritionSwipeSection> createState() => _NutritionSwipeSectionState();
@@ -58,79 +54,80 @@ class _NutritionSwipeSectionState extends State<NutritionSwipeSection> {
     final isPremium = auth.user?.hasPremiumAccess ?? false;
 
     final dotActiveColor = isDark ? Colors.white : const Color(0xFF0F172A);
-    final dotInactiveColor =
-        isDark ? const Color(0xFF8E8D9A) : const Color(0xFF64748B);
+    final dotInactiveColor = isDark
+        ? const Color(0xFF8E8D9A)
+        : const Color(0xFF64748B);
+    final textScale = MediaQuery.textScalerOf(context).scale(1).clamp(1.0, 1.5);
 
-    return Column(
-      children: [
-        SizedBox(
-          height: 324,
-          child: PageView(
-            controller: _pageController,
-            physics: const BouncingScrollPhysics(),
-            onPageChanged: (index) {
-              setState(() => _currentPage = index);
-            },
-            children: [
-              // ── Page 1: CalAiHeroCard + 3 CalAiMacroCards (Protein, Carbs, Fat) ──
-              _buildPageOne(strings),
+    return LayoutBuilder(
+      builder: (context, constraints) => Column(
+        children: [
+          SizedBox(
+            height: (constraints.maxWidth < 360 ? 380.0 : 336.0) * textScale,
+            child: PageView(
+              controller: _pageController,
+              physics: const BouncingScrollPhysics(),
+              onPageChanged: (index) {
+                setState(() => _currentPage = index);
+              },
+              children: [
+                // ── Page 1: CalAiHeroCard + 3 CalAiMacroCards (Protein, Carbs, Fat) ──
+                _buildPageOne(strings),
 
-              // ── Page 2: 3 Micronutrients (Fiber, Sugar, Sodium) + Health Score ──
-              MicroNutrientsPage(
-                summary: widget.summary,
-                isPremium: isPremium,
-                onLockedTap: () => _openPaywall(context),
-              ),
+                // ── Page 2: 3 Micronutrients (Fiber, Sugar, Sodium) + Health Score ──
+                MicroNutrientsPage(
+                  summary: widget.summary,
+                  isPremium: isPremium,
+                  onLockedTap: () => _openPaywall(context),
+                ),
 
-              // ── Page 3: 4 Body Vitality Indices ──
-              BodyVitalityPage(
-                summary: widget.summary,
-                isPremium: isPremium,
-                onLockedTap: () => _openPaywall(context),
-              ),
-            ],
+                // ── Page 3: 4 Body Vitality Indices ──
+                BodyVitalityPage(
+                  summary: widget.summary,
+                  isPremium: isPremium,
+                  onLockedTap: () => _openPaywall(context),
+                ),
+              ],
+            ),
           ),
-        ),
 
-        const SizedBox(height: 8),
+          const SizedBox(height: 8),
 
-        // Dots Indicator
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: List.generate(3, (index) {
-            final isActive = _currentPage == index;
-            return AnimatedContainer(
-              duration: const Duration(milliseconds: 200),
-              margin: const EdgeInsets.symmetric(horizontal: 3),
-              width: isActive ? 7 : 6,
-              height: isActive ? 7 : 6,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: isActive
-                    ? dotActiveColor
-                    : dotInactiveColor.withValues(alpha: 0.35),
-              ),
-            );
-          }),
-        ),
-        const SizedBox(height: 12),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 4),
-          child: CalculationSources(type: CalculationSourceType.nutrients, dark: isDark),
-        ),
-      ],
+          // Dots Indicator
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(3, (index) {
+              final isActive = _currentPage == index;
+              return AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                margin: const EdgeInsets.symmetric(horizontal: 3),
+                width: isActive ? 7 : 6,
+                height: isActive ? 7 : 6,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: isActive
+                      ? dotActiveColor
+                      : dotInactiveColor.withValues(alpha: 0.35),
+                ),
+              );
+            }),
+          ),
+        ],
+      ),
     );
   }
 
   Widget _buildPageOne(dynamic strings) {
     final s = widget.summary;
-    final target =
-        s.effectiveTargetCalories > 0 ? s.effectiveTargetCalories : 2000;
+    final target = s.effectiveTargetCalories > 0
+        ? s.effectiveTargetCalories
+        : 2000;
     final remaining = s.remainingCalories;
     final pct = s.caloriesProgress;
 
-    final targetProtein =
-        s.targetProteinG > 0 ? s.targetProteinG.toDouble() : 120;
+    final targetProtein = s.targetProteinG > 0
+        ? s.targetProteinG.toDouble()
+        : 120;
     final targetCarb = s.targetCarbG > 0 ? s.targetCarbG.toDouble() : 250;
     final targetFat = s.targetFatG > 0 ? s.targetFatG.toDouble() : 55;
 
@@ -142,7 +139,7 @@ class _NutritionSwipeSectionState extends State<NutritionSwipeSection> {
     final fatLeft = (targetFat - fatG).clamp(0.0, targetFat);
 
     return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         CalAiHeroCard(
           caloriesConsumed: s.consumedCalories,

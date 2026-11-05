@@ -494,7 +494,10 @@ class _CaloRingCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  s.targetCaloProgress('${recap.caloPercentDisplay}', recap.targetCalo),
+                  s.targetCaloProgress(
+                    '${recap.caloPercentDisplay}',
+                    recap.targetCalo,
+                  ),
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
@@ -755,9 +758,9 @@ class _ActionButtons extends StatelessWidget {
       debugPrint('Unable to share daily recap: $error');
       if (context.mounted) {
         final s = context.read<AppSettingsProvider>().strings;
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(s.cannotOpenShareSheet)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(s.cannotOpenShareSheet)));
       }
     }
   }

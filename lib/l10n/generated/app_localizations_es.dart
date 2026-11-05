@@ -3444,7 +3444,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get sourceActivityFactor =>
-      'Ministerio de Salud de EAU — factores de actividad';
+      'FAO/OMS — Requerimientos energéticos y factores de actividad';
 
   @override
   String get activityGuidanceNote =>
@@ -3452,4 +3452,67 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get sourceWhoActivity => 'OMS — Actividad física';
+
+  @override
+  String get mealGuidanceSourcesNote =>
+      'Las sugerencias usan tus objetivos restantes y valores estimados de los platos. Estas fuentes explican pautas generales, no la composición de cada plato. Comprueba las porciones y etiquetas.';
+
+  @override
+  String get weightForecastSourcesNote =>
+      'La proyección usa una estimación fija de 7700 kcal/kg. NIH explica que el peso cambia más lentamente cuando el cuerpo se adapta; las fechas son aproximadas.';
+
+  @override
+  String get sourceNihWeightPlanner => 'NIH — Planificador de peso corporal';
+
+  @override
+  String get nutritionSourcesTitle => 'Fuentes científicas y médicas';
+
+  @override
+  String get nutritionSourcesSubtitle =>
+      'Fórmulas y pautas dietéticas utilizadas en CalGo';
+
+  @override
+  String get calorieCalculationSourceTitle => 'Objetivo calórico diario y TMB';
+
+  @override
+  String get calorieCalculationSourceDesc =>
+      'La tasa metabólica basal se calcula con la ecuación de Mifflin–St Jeor, ajustada con factores de nivel de actividad física (PAL) de la FAO/OMS.';
+
+  @override
+  String get macroDistributionSourceTitle => 'Distribución de macronutrientes';
+
+  @override
+  String get macroDistributionSourceDesc =>
+      'Los objetivos de proteínas, carbohidratos y grasas siguen los rangos de distribución aceptable de macronutrientes (AMDR) del USDA.';
+
+  @override
+  String get safeWeightRateSourceTitle => 'Ritmo seguro de cambio de peso';
+
+  @override
+  String get safeWeightRateSourceDesc =>
+      'El déficit calórico se limita de forma segura a 500–1000 kcal/día (0,5–1,0 kg/semana) según las guías del CDC y los NIH.';
+
+  @override
+  String get mifflinStJeorCitation =>
+      'PubMed: Mifflin et al. — Ecuación de energía en reposo (1990)';
+
+  @override
+  String get faoWhoEnergyCitation =>
+      'FAO/OMS/UNU — Requerimientos de energía humana y factores de actividad';
+
+  @override
+  String get usdaDietaryCitation =>
+      'Pautas dietéticas del USDA para estadounidenses (Macronutrientes)';
+
+  @override
+  String get cdcWeightLossCitation =>
+      'CDC — Pautas para una pérdida de peso saludable (0,5–1 kg/semana)';
+
+  @override
+  String get bmiMicronutrientSourceTitle =>
+      'Estándares de IMC y micronutrientes';
+
+  @override
+  String get bmiMicronutrientSourceDesc =>
+      'Clasificación del IMC (rango normal 18,5–24,9) y límites de micronutrientes (Fibra 14g/1000kcal, Azúcares libres <10%, Sodio <2000mg).';
 }

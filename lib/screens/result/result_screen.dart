@@ -11,7 +11,6 @@ import '../../config/api_config.dart';
 import '../../services/api_service.dart';
 import '../../services/review_service.dart';
 import '../../widgets/share_card_modal.dart';
-import '../../widgets/calculation_sources.dart';
 import '../../utils/macro_colors.dart';
 import '../../utils/macro_icons.dart';
 import '../../utils/nutrient_svg_icons.dart';
@@ -1311,9 +1310,7 @@ class _ResultScreenState extends State<ResultScreen> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 12),
-                        CalculationSources(type: CalculationSourceType.foodEstimate, dark: isDark),
-                        const SizedBox(height: 10),
+                        const SizedBox(height: 14),
                         // ── Enlarged Health Score / Điểm sức khỏe Card ──────
                         Container(
                           padding: const EdgeInsets.symmetric(

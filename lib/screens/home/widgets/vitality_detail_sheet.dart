@@ -54,6 +54,9 @@ class VitalityDetailSheet extends StatelessWidget {
     final sourceColor = isDark ? const Color(0xFF60A5FA) : const Color(0xFF2563EB);
 
     return Container(
+      constraints: BoxConstraints(
+        maxHeight: MediaQuery.sizeOf(context).height * 0.9,
+      ),
       decoration: BoxDecoration(
         color: sheetBg,
         borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
@@ -71,7 +74,8 @@ class VitalityDetailSheet extends StatelessWidget {
         20,
         28 + MediaQuery.of(context).viewPadding.bottom,
       ),
-      child: Column(
+      child: SingleChildScrollView(
+        child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -257,6 +261,7 @@ class VitalityDetailSheet extends StatelessWidget {
             ),
           ),
         ],
+        ),
       ),
     );
   }

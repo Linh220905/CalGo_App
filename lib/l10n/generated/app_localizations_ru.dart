@@ -3449,7 +3449,8 @@ class AppLocalizationsRu extends AppLocalizations {
   String get sourceMineralDri => 'Dietary Reference Intakes — minerals';
 
   @override
-  String get sourceActivityFactor => 'Минздрав ОАЭ — коэффициенты активности';
+  String get sourceActivityFactor =>
+      'ФАО/ВОЗ — Потребность в энергии и коэффициенты активности';
 
   @override
   String get activityGuidanceNote =>
@@ -3457,4 +3458,67 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get sourceWhoActivity => 'ВОЗ — Физическая активность';
+
+  @override
+  String get mealGuidanceSourcesNote =>
+      'Рекомендации учитывают оставшиеся цели и оценку состава блюд. Эти источники описывают общие нормы питания, а не состав конкретного блюда. Проверяйте порции и этикетки.';
+
+  @override
+  String get weightForecastSourcesNote =>
+      'Прогноз использует фиксированную оценку 7700 ккал/кг. NIH поясняет, что при адаптации организма изменение веса замедляется; сроки приблизительны.';
+
+  @override
+  String get sourceNihWeightPlanner => 'NIH — Планировщик массы тела';
+
+  @override
+  String get nutritionSourcesTitle => 'Научные и медицинские источники';
+
+  @override
+  String get nutritionSourcesSubtitle =>
+      'Формулы и рекомендации по питанию, используемые в CalGo';
+
+  @override
+  String get calorieCalculationSourceTitle => 'Целевые суточные калории и BMR';
+
+  @override
+  String get calorieCalculationSourceDesc =>
+      'Базовый уровень метаболизма рассчитывается по формуле Миффлина–Сент-Джеора с учетом коэффициентов физической активности ФАО/ВОЗ.';
+
+  @override
+  String get macroDistributionSourceTitle =>
+      'Распределение макронутриентов (БЖУ)';
+
+  @override
+  String get macroDistributionSourceDesc =>
+      'Целевые показатели белков, жиров и углеводов соответствуют нормам AMDR Министерства сельского хозяйства США (USDA).';
+
+  @override
+  String get safeWeightRateSourceTitle => 'Безопасный темп изменения веса';
+
+  @override
+  String get safeWeightRateSourceDesc =>
+      'Дефицит калорий безопасно ограничен 500–1000 ккал/день (0,5–1,0 кг/неделю) согласно рекомендациям CDC и NIH.';
+
+  @override
+  String get mifflinStJeorCitation =>
+      'PubMed: Mifflin et al. — Формула расхода энергии в покое (1990)';
+
+  @override
+  String get faoWhoEnergyCitation =>
+      'ФАО/ВОЗ/УООН — Потребность человека в энергии и коэффициенты активности';
+
+  @override
+  String get usdaDietaryCitation =>
+      'Диетические рекомендации USDA для американцев (Макронутриенты)';
+
+  @override
+  String get cdcWeightLossCitation =>
+      'CDC — Рекомендации по здоровому снижению веса (0,5–1 кг/неделю)';
+
+  @override
+  String get bmiMicronutrientSourceTitle => 'Стандарты ИМТ и микронутриентов';
+
+  @override
+  String get bmiMicronutrientSourceDesc =>
+      'Классификация ИМТ (норма 18,5–24,9) и суточные нормы микронутриентов (Клетчатка 14г/1000ккал, Сахар <10%, Натрий <2000мг).';
 }

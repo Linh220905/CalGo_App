@@ -6212,7 +6212,7 @@ abstract class AppLocalizations {
   /// No description provided for @sourceActivityFactor.
   ///
   /// In en, this message translates to:
-  /// **'UAE Ministry of Health — activity factors'**
+  /// **'FAO/WHO — Energy requirements & activity factors'**
   String get sourceActivityFactor;
 
   /// No description provided for @activityGuidanceNote.
@@ -6226,6 +6226,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'WHO — Physical activity'**
   String get sourceWhoActivity;
+
+  /// No description provided for @mealGuidanceSourcesNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Meal suggestions use your remaining app targets and estimated dish values. These sources explain general nutrition guidance, not the composition of a suggested dish. Check portions and labels.'**
+  String get mealGuidanceSourcesNote;
+
+  /// No description provided for @weightForecastSourcesNote.
+  ///
+  /// In en, this message translates to:
+  /// **'The timeline uses a fixed 7,700 kcal per kg estimate. NIH explains that real weight change slows as the body adapts; dates are approximate.'**
+  String get weightForecastSourcesNote;
+
+  /// No description provided for @sourceNihWeightPlanner.
+  ///
+  /// In en, this message translates to:
+  /// **'NIH — Body Weight Planner'**
+  String get sourceNihWeightPlanner;
+
+  /// No description provided for @nutritionSourcesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Scientific & Medical Sources'**
+  String get nutritionSourcesTitle;
+
+  /// No description provided for @nutritionSourcesSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Formulas and dietary guidelines used in CalGo'**
+  String get nutritionSourcesSubtitle;
+
+  /// No description provided for @calorieCalculationSourceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Calorie Target & BMR'**
+  String get calorieCalculationSourceTitle;
+
+  /// No description provided for @calorieCalculationSourceDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Basal Metabolic Rate is calculated using the Mifflin–St Jeor equation, adjusted with FAO/WHO Physical Activity Level (PAL) factors.'**
+  String get calorieCalculationSourceDesc;
+
+  /// No description provided for @macroDistributionSourceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Macronutrient Distribution'**
+  String get macroDistributionSourceTitle;
+
+  /// No description provided for @macroDistributionSourceDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Protein, carbohydrate, and fat targets follow Acceptable Macronutrient Distribution Ranges (AMDR) from the USDA and Dietary Guidelines for Americans.'**
+  String get macroDistributionSourceDesc;
+
+  /// No description provided for @safeWeightRateSourceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Safe Rate of Weight Change'**
+  String get safeWeightRateSourceTitle;
+
+  /// No description provided for @safeWeightRateSourceDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Calorie deficits are safely capped between 500–1000 kcal/day (0.5–1.0 kg/week) in accordance with CDC and NIH guidelines, with minimum safety floors.'**
+  String get safeWeightRateSourceDesc;
+
+  /// No description provided for @mifflinStJeorCitation.
+  ///
+  /// In en, this message translates to:
+  /// **'PubMed: Mifflin et al. — Resting Energy Equation (1990)'**
+  String get mifflinStJeorCitation;
+
+  /// No description provided for @faoWhoEnergyCitation.
+  ///
+  /// In en, this message translates to:
+  /// **'FAO/WHO/UNU — Human Energy Requirements & Activity Factors'**
+  String get faoWhoEnergyCitation;
+
+  /// No description provided for @usdaDietaryCitation.
+  ///
+  /// In en, this message translates to:
+  /// **'USDA Dietary Guidelines for Americans (Macronutrients)'**
+  String get usdaDietaryCitation;
+
+  /// No description provided for @cdcWeightLossCitation.
+  ///
+  /// In en, this message translates to:
+  /// **'CDC — Healthy Weight Loss Guidelines (0.5–1 kg/week)'**
+  String get cdcWeightLossCitation;
+
+  /// No description provided for @bmiMicronutrientSourceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'BMI & Micronutrient Standards'**
+  String get bmiMicronutrientSourceTitle;
+
+  /// No description provided for @bmiMicronutrientSourceDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Body Mass Index classification (18.5–24.9 normal range) and daily micronutrient thresholds (Fiber 14g/1000kcal, Free Sugars <10%, Sodium <2000mg).'**
+  String get bmiMicronutrientSourceDesc;
 }
 
 class _AppLocalizationsDelegate

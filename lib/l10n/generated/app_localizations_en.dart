@@ -3412,7 +3412,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sourceActivityFactor =>
-      'UAE Ministry of Health — activity factors';
+      'FAO/WHO — Energy requirements & activity factors';
 
   @override
   String get activityGuidanceNote =>
@@ -3420,4 +3420,66 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sourceWhoActivity => 'WHO — Physical activity';
+
+  @override
+  String get mealGuidanceSourcesNote =>
+      'Meal suggestions use your remaining app targets and estimated dish values. These sources explain general nutrition guidance, not the composition of a suggested dish. Check portions and labels.';
+
+  @override
+  String get weightForecastSourcesNote =>
+      'The timeline uses a fixed 7,700 kcal per kg estimate. NIH explains that real weight change slows as the body adapts; dates are approximate.';
+
+  @override
+  String get sourceNihWeightPlanner => 'NIH — Body Weight Planner';
+
+  @override
+  String get nutritionSourcesTitle => 'Scientific & Medical Sources';
+
+  @override
+  String get nutritionSourcesSubtitle =>
+      'Formulas and dietary guidelines used in CalGo';
+
+  @override
+  String get calorieCalculationSourceTitle => 'Daily Calorie Target & BMR';
+
+  @override
+  String get calorieCalculationSourceDesc =>
+      'Basal Metabolic Rate is calculated using the Mifflin–St Jeor equation, adjusted with FAO/WHO Physical Activity Level (PAL) factors.';
+
+  @override
+  String get macroDistributionSourceTitle => 'Macronutrient Distribution';
+
+  @override
+  String get macroDistributionSourceDesc =>
+      'Protein, carbohydrate, and fat targets follow Acceptable Macronutrient Distribution Ranges (AMDR) from the USDA and Dietary Guidelines for Americans.';
+
+  @override
+  String get safeWeightRateSourceTitle => 'Safe Rate of Weight Change';
+
+  @override
+  String get safeWeightRateSourceDesc =>
+      'Calorie deficits are safely capped between 500–1000 kcal/day (0.5–1.0 kg/week) in accordance with CDC and NIH guidelines, with minimum safety floors.';
+
+  @override
+  String get mifflinStJeorCitation =>
+      'PubMed: Mifflin et al. — Resting Energy Equation (1990)';
+
+  @override
+  String get faoWhoEnergyCitation =>
+      'FAO/WHO/UNU — Human Energy Requirements & Activity Factors';
+
+  @override
+  String get usdaDietaryCitation =>
+      'USDA Dietary Guidelines for Americans (Macronutrients)';
+
+  @override
+  String get cdcWeightLossCitation =>
+      'CDC — Healthy Weight Loss Guidelines (0.5–1 kg/week)';
+
+  @override
+  String get bmiMicronutrientSourceTitle => 'BMI & Micronutrient Standards';
+
+  @override
+  String get bmiMicronutrientSourceDesc =>
+      'Body Mass Index classification (18.5–24.9 normal range) and daily micronutrient thresholds (Fiber 14g/1000kcal, Free Sugars <10%, Sodium <2000mg).';
 }
