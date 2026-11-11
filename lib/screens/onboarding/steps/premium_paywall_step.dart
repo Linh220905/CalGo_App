@@ -909,7 +909,7 @@ class _VerticalPricingList extends StatelessWidget {
 
         // 2. Year Plan (Highlighted / Selected by default)
         _VerticalPlanCard(
-          title: s.tryFreeNow,
+          title: s.planYear,
           subtitle: '$annualTotal / ${s.perYearText.replaceAll('per ', '').replaceAll('mỗi ', '')}',
           priceText: annualMonthly,
           unitText: '/ ${s.perMonthText.replaceAll('per ', '').replaceAll('mỗi ', '')}',
