@@ -71,6 +71,14 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state != AppLifecycleState.resumed || !mounted) return;
+    final hp = context.read<HomeProvider>();
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final selectedDay = DateTime(hp.selectedDate.year, hp.selectedDate.month, hp.selectedDate.day);
+    if (selectedDay.isBefore(today)) {
+      hp.selectDate(today);
+      unawaited(hp.loadToday(forceRefresh: true));
+    }
     if (!context.read<AppSettingsProvider>().isAppleHealthConnected) return;
     setState(() => _healthSyncScheduledKey = null);
   }
@@ -291,7 +299,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                             Column(
                               children: [
                                 const _CardSkeleton(),
-                                const SizedBox(height: 14),
+                                const SizedBox(height: 10),
                                 const _MacroSkeleton(),
                               ],
                             )
@@ -1567,7 +1575,7 @@ class _MacroSkeleton extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = context.watch<AppSettingsProvider>().isDarkMode;
     return Container(
-      height: 130,
+      height: 115,
       width: double.infinity,
       decoration: BoxDecoration(
         color: isDark ? const Color(0xFF212027) : Colors.white,

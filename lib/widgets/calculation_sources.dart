@@ -130,8 +130,11 @@ class CalculationSources extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Wrap(
+            alignment: WrapAlignment.spaceBetween,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: 8,
+            runSpacing: 4,
             children: [
               Text(
                 s.calculationSourcesTitle,
@@ -146,21 +149,27 @@ class CalculationSources extends StatelessWidget {
                 borderRadius: BorderRadius.circular(6),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(Icons.menu_book_rounded, size: 13, color: link),
-                      const SizedBox(width: 4),
-                      Text(
-                        s.nutritionSourcesTitle,
-                        style: TextStyle(
-                          fontSize: 11,
-                          fontWeight: FontWeight.w600,
-                          color: link,
-                          decoration: TextDecoration.underline,
+                  child: Text.rich(
+                    TextSpan(
+                      children: [
+                        WidgetSpan(
+                          alignment: PlaceholderAlignment.middle,
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 4),
+                            child: Icon(Icons.menu_book_rounded, size: 13, color: link),
+                          ),
                         ),
-                      ),
-                    ],
+                        TextSpan(
+                          text: s.nutritionSourcesTitle,
+                          style: TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w600,
+                            color: link,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -181,11 +190,10 @@ class CalculationSources extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 12),
                 child: Row(
-                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Icon(Icons.open_in_new_rounded, size: 13, color: link),
                     const SizedBox(width: 5),
-                    Flexible(
+                    Expanded(
                       child: Text(
                         label,
                         style: TextStyle(

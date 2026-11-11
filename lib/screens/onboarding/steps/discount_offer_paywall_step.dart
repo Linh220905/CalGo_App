@@ -479,17 +479,13 @@ class _DiscountOfferPaywallStepState extends State<DiscountOfferPaywallStep> {
 
                     // Compact Note under Mascot
                     Text(
-                      Platform.isIOS
-                          ? '$yearlyTotal / ${s.perYearText.replaceAll('per ', '').replaceAll('mỗi ', '')}'
-                          : '$monthlyPrice $subUnitMonth',
+                      '$monthlyPrice $subUnitMonth',
                       textAlign: TextAlign.center,
                       style: _f(17, weight: FontWeight.w800, color: _kInk),
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      Platform.isIOS
-                          ? '$monthlyPrice $subUnitMonth (${s.equivalentLabel}) • ${s.oneTimeOfferSubtitle}'
-                          : s.oneTimeOfferSubtitle,
+                      s.oneTimeOfferSubtitle,
                       textAlign: TextAlign.center,
                       style: _f(11.5, color: _kMuted, weight: FontWeight.w500),
                     ),
@@ -551,9 +547,7 @@ class _DiscountOfferPaywallStepState extends State<DiscountOfferPaywallStep> {
                                       ),
                                       const SizedBox(height: 3),
                                       Text(
-                                        Platform.isIOS
-                                            ? '$monthlyPrice $unitMonth (${s.equivalentLabel})'
-                                            : s.planMonthsNote(12, yearlyTotal),
+                                        s.planMonthsNote(12, yearlyTotal),
                                         style: _f(
                                           12.5,
                                           color: _kMuted,
@@ -567,7 +561,7 @@ class _DiscountOfferPaywallStepState extends State<DiscountOfferPaywallStep> {
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     Text(
-                                      Platform.isIOS ? yearlyTotal : monthlyPrice,
+                                      monthlyPrice,
                                       style: _f(
                                         18,
                                         weight: FontWeight.w800,
@@ -575,9 +569,7 @@ class _DiscountOfferPaywallStepState extends State<DiscountOfferPaywallStep> {
                                       ),
                                     ),
                                     Text(
-                                      Platform.isIOS
-                                          ? '/ ${s.perYearText.replaceAll('per ', '').replaceAll('mỗi ', '')}'
-                                          : unitMonth,
+                                      unitMonth,
                                       style: _f(
                                         11,
                                         color: _kMuted,

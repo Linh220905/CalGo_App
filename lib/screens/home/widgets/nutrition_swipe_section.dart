@@ -63,7 +63,7 @@ class _NutritionSwipeSectionState extends State<NutritionSwipeSection> {
       builder: (context, constraints) => Column(
         children: [
           SizedBox(
-            height: (constraints.maxWidth < 360 ? 380.0 : 336.0) * textScale,
+            height: (constraints.maxWidth < 360 ? 340.0 : 318.0) * textScale,
             child: PageView(
               controller: _pageController,
               physics: const BouncingScrollPhysics(),

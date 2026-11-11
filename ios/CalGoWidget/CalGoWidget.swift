@@ -46,27 +46,38 @@ struct Provider: TimelineProvider {
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         let entry = readCurrentData()
-        let timeline = Timeline(entries: [entry], policy: .atEnd)
+        let now = Date()
+        let calendar = Calendar.current
+        let nextMidnight = calendar.nextDate(after: now, matching: DateComponents(hour: 0, minute: 0, second: 1), matchingPolicy: .nextTime) ?? now.addingTimeInterval(3600)
+        let timeline = Timeline(entries: [entry], policy: .after(nextMidnight))
         completion(timeline)
     }
 
     private func readCurrentData() -> CalGoEntry {
         let userDefaults = UserDefaults(suiteName: "group.com.calgo.calgo")
-        let caloriesLeft = userDefaults?.integer(forKey: "calories_left") ?? 2000
+        let syncDateStr = userDefaults?.string(forKey: "sync_date")
+        let todayStr: String = {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd"
+            return formatter.string(from: Date())
+        }()
+        let isNewDay = (syncDateStr != nil && syncDateStr != todayStr)
+
         let targetCalories = userDefaults?.integer(forKey: "target_calories") ?? 2000
-        let consumedCalories = userDefaults?.integer(forKey: "consumed_calories") ?? 0
+        let consumedCalories = isNewDay ? 0 : (userDefaults?.integer(forKey: "consumed_calories") ?? 0)
+        let caloriesLeft = isNewDay ? targetCalories : (userDefaults?.integer(forKey: "calories_left") ?? 2000)
 
-        let proteinLeft = userDefaults?.integer(forKey: "protein_left") ?? 60
+        let proteinLeft = isNewDay ? (userDefaults?.integer(forKey: "target_protein") ?? 130) : (userDefaults?.integer(forKey: "protein_left") ?? 60)
         let targetProtein = userDefaults?.integer(forKey: "target_protein") ?? 130
-        let consumedProtein = userDefaults?.integer(forKey: "consumed_protein") ?? 0
+        let consumedProtein = isNewDay ? 0 : (userDefaults?.integer(forKey: "consumed_protein") ?? 0)
 
-        let carbsLeft = userDefaults?.integer(forKey: "carbs_left") ?? 90
+        let carbsLeft = isNewDay ? (userDefaults?.integer(forKey: "target_carbs") ?? 200) : (userDefaults?.integer(forKey: "carbs_left") ?? 90)
         let targetCarbs = userDefaults?.integer(forKey: "target_carbs") ?? 200
-        let consumedCarbs = userDefaults?.integer(forKey: "consumed_carbs") ?? 0
+        let consumedCarbs = isNewDay ? 0 : (userDefaults?.integer(forKey: "consumed_carbs") ?? 0)
 
-        let fatLeft = userDefaults?.integer(forKey: "fat_left") ?? 30
+        let fatLeft = isNewDay ? (userDefaults?.integer(forKey: "target_fat") ?? 60) : (userDefaults?.integer(forKey: "fat_left") ?? 30)
         let targetFat = userDefaults?.integer(forKey: "target_fat") ?? 60
-        let consumedFat = userDefaults?.integer(forKey: "consumed_fat") ?? 0
+        let consumedFat = isNewDay ? 0 : (userDefaults?.integer(forKey: "consumed_fat") ?? 0)
 
         return CalGoEntry(
             date: Date(),
@@ -323,39 +334,102 @@ struct CalGoWidget: Widget {
 }
 
 // MARK: - Live Activity Widget (Lock Screen & Dynamic Island)
+struct CalGoLiveActivityData {
+    let caloriesLeft: Int
+    let targetCalories: Int
+    let consumedCalories: Int
+    let proteinLeft: Int
+    let targetProtein: Int
+    let consumedProtein: Int
+    let carbsLeft: Int
+    let targetCarbs: Int
+    let consumedCarbs: Int
+    let fatLeft: Int
+    let targetFat: Int
+    let consumedFat: Int
+    let calProgress: Double
+    let proteinProgress: Double
+    let carbsProgress: Double
+    let fatProgress: Double
+
+    static func read(context: ActivityViewContext<LiveActivitiesAppAttributes>, sharedDefault: UserDefaults?) -> CalGoLiveActivityData {
+        let syncDateStr = sharedDefault?.string(forKey: context.attributes.prefixedKey("syncDate"))
+            ?? sharedDefault?.string(forKey: "sync_date")
+        let todayStr: String = {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd"
+            return formatter.string(from: Date())
+        }()
+        let isNewDay = (syncDateStr != nil && syncDateStr != todayStr)
+
+        let targetCalories = sharedDefault?.integer(forKey: context.attributes.prefixedKey("targetCalories")) ?? 2000
+        let consumedCalories = isNewDay ? 0 : (sharedDefault?.integer(forKey: context.attributes.prefixedKey("consumedCalories")) ?? 0)
+        let caloriesLeft = isNewDay ? targetCalories : (sharedDefault?.integer(forKey: context.attributes.prefixedKey("caloriesLeft")) ?? 2000)
+
+        let targetProtein = sharedDefault?.integer(forKey: context.attributes.prefixedKey("targetProtein")) ?? 130
+        let consumedProtein = isNewDay ? 0 : (sharedDefault?.integer(forKey: context.attributes.prefixedKey("consumedProtein")) ?? 0)
+        let proteinLeft = isNewDay ? targetProtein : (sharedDefault?.integer(forKey: context.attributes.prefixedKey("proteinLeft")) ?? 60)
+
+        let targetCarbs = sharedDefault?.integer(forKey: context.attributes.prefixedKey("targetCarbs")) ?? 200
+        let consumedCarbs = isNewDay ? 0 : (sharedDefault?.integer(forKey: context.attributes.prefixedKey("consumedCarbs")) ?? 0)
+        let carbsLeft = isNewDay ? targetCarbs : (sharedDefault?.integer(forKey: context.attributes.prefixedKey("carbsLeft")) ?? 90)
+
+        let targetFat = sharedDefault?.integer(forKey: context.attributes.prefixedKey("targetFat")) ?? 60
+        let consumedFat = isNewDay ? 0 : (sharedDefault?.integer(forKey: context.attributes.prefixedKey("consumedFat")) ?? 0)
+        let fatLeft = isNewDay ? targetFat : (sharedDefault?.integer(forKey: context.attributes.prefixedKey("fatLeft")) ?? 30)
+
+        let calProg: Double = targetCalories > 0 ? min(max(Double(consumedCalories) / Double(targetCalories), 0.0), 1.0) : 0.0
+        let protProg: Double = targetProtein > 0 ? min(max(Double(consumedProtein) / Double(targetProtein), 0.0), 1.0) : 0.0
+        let carbProg: Double = targetCarbs > 0 ? min(max(Double(consumedCarbs) / Double(targetCarbs), 0.0), 1.0) : 0.0
+        let fatProg: Double = targetFat > 0 ? min(max(Double(consumedFat) / Double(targetFat), 0.0), 1.0) : 0.0
+
+        return CalGoLiveActivityData(
+            caloriesLeft: caloriesLeft,
+            targetCalories: targetCalories,
+            consumedCalories: consumedCalories,
+            proteinLeft: proteinLeft,
+            targetProtein: targetProtein,
+            consumedProtein: consumedProtein,
+            carbsLeft: carbsLeft,
+            targetCarbs: targetCarbs,
+            consumedCarbs: consumedCarbs,
+            fatLeft: fatLeft,
+            targetFat: targetFat,
+            consumedFat: consumedFat,
+            calProgress: calProg,
+            proteinProgress: protProg,
+            carbsProgress: carbProg,
+            fatProgress: fatProg
+        )
+    }
+}
+
 struct CalGoLiveActivity: Widget {
     let sharedDefault = UserDefaults(suiteName: "group.com.calgo.calgo")
 
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: LiveActivitiesAppAttributes.self) { context in
-            let caloriesLeft = sharedDefault?.integer(forKey: context.attributes.prefixedKey("caloriesLeft")) ?? 2000
-            let targetCalories = sharedDefault?.integer(forKey: context.attributes.prefixedKey("targetCalories")) ?? 2000
-            let consumedCalories = sharedDefault?.integer(forKey: context.attributes.prefixedKey("consumedCalories")) ?? 0
+            let liveData = CalGoLiveActivityData.read(context: context, sharedDefault: sharedDefault)
+            let caloriesLeft = liveData.caloriesLeft
+            let targetCalories = liveData.targetCalories
+            let consumedCalories = liveData.consumedCalories
 
-            let proteinLeft = sharedDefault?.integer(forKey: context.attributes.prefixedKey("proteinLeft")) ?? 60
-            let targetProtein = sharedDefault?.integer(forKey: context.attributes.prefixedKey("targetProtein")) ?? 130
-            let consumedProtein = sharedDefault?.integer(forKey: context.attributes.prefixedKey("consumedProtein")) ?? 0
+            let proteinLeft = liveData.proteinLeft
+            let targetProtein = liveData.targetProtein
+            let consumedProtein = liveData.consumedProtein
 
-            let carbsLeft = sharedDefault?.integer(forKey: context.attributes.prefixedKey("carbsLeft")) ?? 90
-            let targetCarbs = sharedDefault?.integer(forKey: context.attributes.prefixedKey("targetCarbs")) ?? 200
-            let consumedCarbs = sharedDefault?.integer(forKey: context.attributes.prefixedKey("consumedCarbs")) ?? 0
+            let carbsLeft = liveData.carbsLeft
+            let targetCarbs = liveData.targetCarbs
+            let consumedCarbs = liveData.consumedCarbs
 
-            let fatLeft = sharedDefault?.integer(forKey: context.attributes.prefixedKey("fatLeft")) ?? 30
-            let targetFat = sharedDefault?.integer(forKey: context.attributes.prefixedKey("targetFat")) ?? 60
-            let consumedFat = sharedDefault?.integer(forKey: context.attributes.prefixedKey("consumedFat")) ?? 0
+            let fatLeft = liveData.fatLeft
+            let targetFat = liveData.targetFat
+            let consumedFat = liveData.consumedFat
 
-            let calProgress: Double = targetCalories > 0
-                ? min(max(Double(consumedCalories) / Double(targetCalories), 0.0), 1.0)
-                : 0.0
-            let proteinProgress: Double = targetProtein > 0
-                ? min(max(Double(consumedProtein) / Double(targetProtein), 0.0), 1.0)
-                : 0.0
-            let carbsProgress: Double = targetCarbs > 0
-                ? min(max(Double(consumedCarbs) / Double(targetCarbs), 0.0), 1.0)
-                : 0.0
-            let fatProgress: Double = targetFat > 0
-                ? min(max(Double(consumedFat) / Double(targetFat), 0.0), 1.0)
-                : 0.0
+            let calProgress = liveData.calProgress
+            let proteinProgress = liveData.proteinProgress
+            let carbsProgress = liveData.carbsProgress
+            let fatProgress = liveData.fatProgress
 
             // Horizontal Lock Screen Banner matching widget_preview.html
             HStack(spacing: 8) {
@@ -512,10 +586,11 @@ struct CalGoLiveActivity: Widget {
             .activitySystemActionForegroundColor(Color.primary)
 
         } dynamicIsland: { context in
-            let caloriesLeft = sharedDefault?.integer(forKey: context.attributes.prefixedKey("caloriesLeft")) ?? 2000
-            let proteinLeft = sharedDefault?.integer(forKey: context.attributes.prefixedKey("proteinLeft")) ?? 60
-            let carbsLeft = sharedDefault?.integer(forKey: context.attributes.prefixedKey("carbsLeft")) ?? 90
-            let fatLeft = sharedDefault?.integer(forKey: context.attributes.prefixedKey("fatLeft")) ?? 30
+            let liveData = CalGoLiveActivityData.read(context: context, sharedDefault: sharedDefault)
+            let caloriesLeft = liveData.caloriesLeft
+            let proteinLeft = liveData.proteinLeft
+            let carbsLeft = liveData.carbsLeft
+            let fatLeft = liveData.fatLeft
 
             return DynamicIsland {
                 DynamicIslandExpandedRegion(.leading) {
@@ -555,7 +630,7 @@ struct CalGoLiveActivity: Widget {
                 Image(systemName: "flame.fill")
                     .foregroundColor(.orange)
             } compactTrailing: {
-                Text("\(sharedDefault?.integer(forKey: context.attributes.prefixedKey("caloriesLeft")) ?? 2000)")
+                Text("\(caloriesLeft)")
                     .font(.system(size: 12, weight: .bold))
             } minimal: {
                 Image(systemName: "flame.fill")

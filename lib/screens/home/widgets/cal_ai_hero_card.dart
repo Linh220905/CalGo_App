@@ -41,7 +41,7 @@ class CalAiHeroCard extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
       decoration: BoxDecoration(
         color: cardBg,
         borderRadius: BorderRadius.circular(28),
@@ -152,14 +152,14 @@ class CalAiHeroCard extends StatelessWidget {
 
           // Optional Burned Calories Orange Pill (as requested by user)
           if (caloriesBurned > 0) ...[
-            const SizedBox(height: 14),
+            const SizedBox(height: 8),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
               decoration: BoxDecoration(
                 color: isDark
                     ? const Color(0xFF332014)
                     : const Color(0xFFFFF7ED),
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(16),
                 border: Border.all(
                   color: isDark
                       ? const Color(0xFF522B14)
@@ -171,17 +171,17 @@ class CalAiHeroCard extends StatelessWidget {
                 children: [
                   const Icon(
                     Icons.local_fire_department_rounded,
-                    size: 15,
+                    size: 14,
                     color: Color(0xFFF97316),
                   ),
-                  const SizedBox(width: 5),
+                  const SizedBox(width: 4),
                   Text(
                     s.burnedCaloriesPill(caloriesBurned),
                     style: TextStyle(
                       color: isDark
                           ? const Color(0xFFFF9D5C)
                           : const Color(0xFFC2410C),
-                      fontSize: 12,
+                      fontSize: 11,
                       fontWeight: FontWeight.w700,
                     ),
                   ),

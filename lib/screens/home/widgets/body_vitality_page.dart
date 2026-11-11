@@ -40,7 +40,7 @@ class BodyVitalityPage extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
       decoration: BoxDecoration(
         color: cardBg,
         borderRadius: BorderRadius.circular(28),
@@ -65,7 +65,7 @@ class BodyVitalityPage extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 15,
                     fontWeight: FontWeight.w800,
                     color: textDark,
                     letterSpacing: -0.3,
@@ -83,7 +83,7 @@ class BodyVitalityPage extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 4),
 
           // 1. Energy & Alertness
           _buildMetricRow(
@@ -238,12 +238,12 @@ class BodyVitalityPage extends StatelessWidget {
         onTap: onTap,
         borderRadius: BorderRadius.circular(14),
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+          padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 2),
           child: Row(
             children: [
               Container(
-                width: 36,
-                height: 36,
+                width: 32,
+                height: 32,
                 decoration: BoxDecoration(
                   color: iconCircleBg,
                   shape: BoxShape.circle,
@@ -251,12 +251,12 @@ class BodyVitalityPage extends StatelessWidget {
                 child: Center(
                   child: Icon(
                     icon,
-                    size: 18,
+                    size: 16,
                     color: iconColor,
                   ),
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: 10),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -270,7 +270,7 @@ class BodyVitalityPage extends StatelessWidget {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
-                              fontSize: 13,
+                              fontSize: 12.5,
                               fontWeight: FontWeight.w700,
                               color: textDark,
                               letterSpacing: -0.2,
@@ -287,7 +287,7 @@ class BodyVitalityPage extends StatelessWidget {
                                 child: Text(
                                   '-- / --',
                                   style: TextStyle(
-                                    fontSize: 13,
+                                    fontSize: 12,
                                     fontWeight: FontWeight.w800,
                                     color: textMuted.withValues(alpha: 0.5),
                                     letterSpacing: 1.5,
@@ -298,7 +298,7 @@ class BodyVitalityPage extends StatelessWidget {
                               Text(
                                 valueText,
                                 style: TextStyle(
-                                  fontSize: 13,
+                                  fontSize: 12,
                                   fontWeight: FontWeight.w800,
                                   color: textDark,
                                 ),
@@ -315,7 +315,7 @@ class BodyVitalityPage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 6),
+                    const SizedBox(height: 4),
                     // Progress Track
                     if (!isPremium)
                       ImageFiltered(
@@ -323,7 +323,7 @@ class BodyVitalityPage extends StatelessWidget {
                         child: Opacity(
                           opacity: 0.6,
                           child: Container(
-                            height: 6,
+                            height: 5,
                             decoration: BoxDecoration(
                               color: trackColor,
                               borderRadius: BorderRadius.circular(99),
@@ -335,7 +335,7 @@ class BodyVitalityPage extends StatelessWidget {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(99),
                         child: Container(
-                          height: 6,
+                          height: 5,
                           color: trackColor,
                           child: FractionallySizedBox(
                             alignment: Alignment.centerLeft,

@@ -88,9 +88,13 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
         }
       }
     });
-    _closeTimer = Timer(const Duration(seconds: 5), () {
-      if (mounted) setState(() => _showClose = true);
-    });
+    if (!widget.onboardingMode) {
+      _showClose = true;
+    } else {
+      _closeTimer = Timer(const Duration(seconds: 5), () {
+        if (mounted) setState(() => _showClose = true);
+      });
+    }
   }
 
   @override
@@ -257,7 +261,7 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
   }
 
   void _handleClose() {
-    if (!_hasShownDownsell) {
+    if (widget.onboardingMode && !_hasShownDownsell) {
       setState(() => _hasShownDownsell = true);
       SpinWheelDialog.show(
         context,
@@ -596,148 +600,156 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
         child: LayoutBuilder(
           builder: (context, constraints) {
             final screenH = constraints.maxHeight;
-            final heroHeight = (screenH * 0.36).clamp(240.0, 300.0);
+            final heroHeight = (screenH * 0.32).clamp(180.0, 280.0);
 
-            return Column(
-              children: [
-                // 1. Top Hero Section with background.png & Smooth Gradient Fade
-                SizedBox(
-                  height: heroHeight,
-                  width: double.infinity,
-                  child: Stack(
-                    fit: StackFit.expand,
+            return SingleChildScrollView(
+              physics: const ClampingScrollPhysics(),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                child: IntrinsicHeight(
+                  child: Column(
                     children: [
-                      Image.asset(
-                        'assets/images/background.png',
-                        fit: BoxFit.cover,
-                        alignment: const Alignment(0, -0.6),
-                        errorBuilder: (context, error, stack) => Container(
-                          color: const Color(0xFFF6F6F6),
-                        ),
-                      ),
-                      // Smooth gradient loang mờ từ giữa ảnh xuống nền trắng
-                      Container(
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            stops: const [0.0, 0.45, 0.65, 0.88, 1.0],
-                            colors: [
-                              Colors.white.withValues(alpha: 0.0),
-                              Colors.white.withValues(alpha: 0.0),
-                              Colors.white.withValues(alpha: 0.30),
-                              Colors.white.withValues(alpha: 0.85),
-                              Colors.white,
-                            ],
-                          ),
-                        ),
-                      ),
-                      // Floating Close [X] Button on Top-Right
-                      Positioned(
-                        top: MediaQuery.paddingOf(context).top + 10,
-                        right: 18,
-                        child: AnimatedOpacity(
-                          opacity: _showClose ? 1 : 0,
-                          duration: const Duration(milliseconds: 300),
-                          child: IgnorePointer(
-                            ignoring: !_showClose,
-                            child: GestureDetector(
-                              onTap: _handleClose,
-                              child: Container(
-                                width: 32,
-                                height: 32,
-                                decoration: BoxDecoration(
-                                  color: Colors.black.withValues(alpha: 0.35),
-                                  shape: BoxShape.circle,
-                                ),
-                                child: const Icon(
-                                  Icons.close_rounded,
-                                  size: 18,
-                                  color: Colors.white,
+                      // 1. Top Hero Section with background.png & Smooth Gradient Fade
+                      SizedBox(
+                        height: heroHeight,
+                        width: double.infinity,
+                        child: Stack(
+                          fit: StackFit.expand,
+                          children: [
+                            Image.asset(
+                              'assets/images/background.png',
+                              fit: BoxFit.cover,
+                              alignment: const Alignment(0, -0.6),
+                              errorBuilder: (context, error, stack) => Container(
+                                color: const Color(0xFFF6F6F6),
+                              ),
+                            ),
+                            // Smooth gradient loang mờ từ giữa ảnh xuống nền trắng
+                            Container(
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  stops: const [0.0, 0.45, 0.65, 0.88, 1.0],
+                                  colors: [
+                                    Colors.white.withValues(alpha: 0.0),
+                                    Colors.white.withValues(alpha: 0.0),
+                                    Colors.white.withValues(alpha: 0.30),
+                                    Colors.white.withValues(alpha: 0.85),
+                                    Colors.white,
+                                  ],
                                 ),
                               ),
                             ),
+                            // Floating Close [X] Button on Top-Right
+                            Positioned(
+                              top: MediaQuery.paddingOf(context).top + 10,
+                              right: 18,
+                              child: AnimatedOpacity(
+                                opacity: _showClose ? 1 : 0,
+                                duration: const Duration(milliseconds: 300),
+                                child: IgnorePointer(
+                                  ignoring: !_showClose,
+                                  child: GestureDetector(
+                                    onTap: _handleClose,
+                                    child: Container(
+                                      width: 32,
+                                      height: 32,
+                                      decoration: BoxDecoration(
+                                        color: Colors.black.withValues(alpha: 0.35),
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: const Icon(
+                                        Icons.close_rounded,
+                                        size: 18,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      // 2. Main Content (Headline, 3 Cards, CTA, Footer)
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              // Headline + Subtitle
+                              Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    s.paywallHeroTitle,
+                                    textAlign: TextAlign.center,
+                                    style: _f(
+                                      22,
+                                      weight: FontWeight.w800,
+                                      letterSpacing: -0.6,
+                                      height: 1.2,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Text(
+                                    s.paywallHeroSubtitle,
+                                    textAlign: TextAlign.center,
+                                    style: _f(
+                                      12.5,
+                                      color: _kMuted,
+                                      weight: FontWeight.w500,
+                                      height: 1.35,
+                                    ),
+                                  ),
+                                ],
+                              ),
+
+                              // 3 Pricing Cards
+                              _VerticalPricingList(
+                                selectedPlan: _selectedPlan,
+                                onChanged: (p) => setState(() => _selectedPlan = p),
+                                testing: testing,
+                              ),
+
+                              // Bottom Actions (CTA Button, Auto-renew note, Footer Links)
+                              Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  PremiumButton(
+                                    label: buying
+                                        ? s.processingShort
+                                        : activated && widget.onboardingMode
+                                        ? (_quizCompleted ? s.completeSetup : s.premiumActivated)
+                                        : _getButtonLabel(payment, s),
+                                    loading: buying,
+                                    onPressed: buying
+                                        ? null
+                                        : activated && widget.onboardingMode
+                                        ? _handlePremiumSuccess
+                                        : () => _handlePrimaryAction(),
+                                  ),
+                                  const SizedBox(height: 6),
+                                  Text(
+                                    _getAutoRenewNote(payment, s),
+                                    textAlign: TextAlign.center,
+                                    style: _f(10.5, color: _kMuted, weight: FontWeight.w500),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  const _FooterLinks(showBilling: !testing),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
                       ),
                     ],
                   ),
                 ),
-
-                // 2. Main Content (Headline, 3 Cards, CTA, Footer)
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        // Headline + Subtitle
-                        Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              s.paywallHeroTitle,
-                              textAlign: TextAlign.center,
-                              style: _f(
-                                22,
-                                weight: FontWeight.w800,
-                                letterSpacing: -0.6,
-                                height: 1.2,
-                              ),
-                            ),
-                            const SizedBox(height: 5),
-                            Text(
-                              s.paywallHeroSubtitle,
-                              textAlign: TextAlign.center,
-                              style: _f(
-                                12.5,
-                                color: _kMuted,
-                                weight: FontWeight.w500,
-                                height: 1.35,
-                              ),
-                            ),
-                          ],
-                        ),
-
-                        // 3 Pricing Cards
-                        _VerticalPricingList(
-                          selectedPlan: _selectedPlan,
-                          onChanged: (p) => setState(() => _selectedPlan = p),
-                          testing: testing,
-                        ),
-
-                        // Bottom Actions (CTA Button, Auto-renew note, Footer Links)
-                        Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            PremiumButton(
-                              label: buying
-                                  ? s.processingShort
-                                  : activated && widget.onboardingMode
-                                  ? (_quizCompleted ? s.completeSetup : s.premiumActivated)
-                                  : _getButtonLabel(payment, s),
-                              loading: buying,
-                              onPressed: buying
-                                  ? null
-                                  : activated && widget.onboardingMode
-                                  ? _handlePremiumSuccess
-                                  : () => _handlePrimaryAction(),
-                            ),
-                            const SizedBox(height: 6),
-                            Text(
-                              _getAutoRenewNote(payment, s),
-                              textAlign: TextAlign.center,
-                              style: _f(10.5, color: _kMuted, weight: FontWeight.w500),
-                            ),
-                            const SizedBox(height: 4),
-                            const _FooterLinks(showBilling: !testing),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+              ),
             );
           },
         ),
@@ -906,13 +918,9 @@ class _VerticalPricingList extends StatelessWidget {
         // 2. Year Plan (Highlighted / Selected by default)
         _VerticalPlanCard(
           title: s.planYear,
-          subtitle: isIos
-              ? '$annualMonthly / ${s.perMonthText.replaceAll('per ', '').replaceAll('mỗi ', '')} (${s.equivalentLabel})'
-              : s.planMonthsNote(12, annualTotal),
-          priceText: isIos ? annualTotal : annualMonthly,
-          unitText: isIos
-              ? '/ ${s.perYearText.replaceAll('per ', '').replaceAll('mỗi ', '')}'
-              : '/ ${s.perMonthText.replaceAll('per ', '').replaceAll('mỗi ', '')}',
+          subtitle: '$annualTotal / ${s.perYearText.replaceAll('per ', '').replaceAll('mỗi ', '')}',
+          priceText: annualMonthly,
+          unitText: '/ ${s.perMonthText.replaceAll('per ', '').replaceAll('mỗi ', '')}',
           selected: selectedPlan == _Plan.annual,
           badge: s.popularMost,
           onTap: () => onChanged(_Plan.annual),
