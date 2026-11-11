@@ -12,7 +12,7 @@ import 'package:calgo/services/analytics_service.dart';
 import 'package:calgo/services/exercise_service.dart';
 import 'package:calgo/services/home_service.dart';
 import 'package:calgo/services/meal_guidance_service.dart';
-import 'package:calgo/widgets/app_rating_dialog.dart';
+import 'package:calgo/services/review_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -76,34 +76,22 @@ void main() {
     );
   }
 
-  testWidgets('AppRatingDialog renders 5 stars and allows selection and dismiss', (tester) async {
-    await tester.pumpWidget(
-      createTestWidget(
-        Builder(
-          builder: (context) => ElevatedButton(
-            onPressed: () => AppRatingDialog.show(context),
-            child: const Text('Show Dialog'),
-          ),
-        ),
-      ),
-    );
+  test('ReviewService handles prompt checks, cooldown and rating flags', () async {
+    // 1. Initially should prompt
+    final canPromptInitial = await ReviewService.shouldPromptReview();
+    expect(canPromptInitial, isTrue);
 
-    // Tap to open dialog
-    await tester.tap(find.text('Show Dialog'));
-    await tester.pumpAndSettle();
+    // 2. After marking rated, should NOT prompt
+    await ReviewService.markRated();
+    final canPromptAfterRated = await ReviewService.shouldPromptReview();
+    expect(canPromptAfterRated, isFalse);
 
-    // Verify dialog elements exist
-    expect(find.byType(AppRatingDialog), findsOneWidget);
-    expect(find.byIcon(Icons.star_rounded), findsNWidgets(6)); // 1 big header badge + 5 stars
-
-    // Tap on Not Now / later button
-    final notNowFinder = find.text('Not now');
-    expect(notNowFinder, findsOneWidget);
-    await tester.tap(notNowFinder);
-    await tester.pumpAndSettle();
-
-    // Dialog should be dismissed
-    expect(find.byType(AppRatingDialog), findsNothing);
+    // 3. Reset and check cooldown
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('has_rated_app');
+    await ReviewService.recordPromptShown();
+    final canPromptDuringCooldown = await ReviewService.shouldPromptReview();
+    expect(canPromptDuringCooldown, isFalse);
   });
 
   testWidgets('In-app paywall (onboardingMode: false) shows close button immediately and exits without spinner', (tester) async {
@@ -161,8 +149,9 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    // Year plan should show month price unit
+    // Year plan should show month price unit and 3 days trial title
     expect(find.textContaining(RegExp(r'month', caseSensitive: false)), findsWidgets);
     expect(find.textContaining(RegExp(r'year', caseSensitive: false)), findsWidgets);
+    expect(find.textContaining(RegExp(r'3 days', caseSensitive: false)), findsWidgets);
   });
 }

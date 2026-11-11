@@ -109,7 +109,7 @@ class ReviewService {
   }
 
   /// Trigger native in-app review dialog directly via Google Play Core / iOS StoreKit
-  static Future<void> requestNativeReview() async {
+  static Future<void> requestNativeReview({bool fallbackToStoreUrl = false}) async {
     if (kIsWeb) return;
     try {
       final canPrompt = await shouldPromptReview();
@@ -119,7 +119,7 @@ class ReviewService {
       final inAppReview = InAppReview.instance;
       if (await inAppReview.isAvailable()) {
         await inAppReview.requestReview();
-      } else {
+      } else if (fallbackToStoreUrl) {
         await _openDirectStoreUrl();
       }
     } catch (e) {
@@ -134,10 +134,6 @@ class ReviewService {
 
   /// Request review using native Google Play / App Store in-app review prompt
   static Future<void> requestReviewPrompt({String source = 'scan', BuildContext? context}) async {
-    // Apple Guideline 5.6.3: Never prompt rating during onboarding on iOS
-    if (Platform.isIOS && source.startsWith('onboarding')) {
-      return;
-    }
-    await requestNativeReview();
+    await requestNativeReview(fallbackToStoreUrl: false);
   }
 }

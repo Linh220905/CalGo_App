@@ -508,20 +508,12 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
 
     if (Platform.isIOS) {
       if (_selectedPlan == _Plan.annual) {
-        final days = _currentTrialDays(payment);
-        if (_enableFreeTrial && days > 0) {
-          return s.startFreeTrialBtn;
-        }
-        return s.subscribePremium;
+        return s.tryFreeNow;
       }
       return s.subscribePremium;
     }
 
     if (_selectedPlan == _Plan.annual) {
-      final days = _currentTrialDays(payment);
-      if (_enableFreeTrial && days > 0) {
-        return s.tryFreeNow; // "Dùng miễn phí ngay" / "Try free now"
-      }
       return s.tryFreeNow;
     }
 
@@ -917,7 +909,7 @@ class _VerticalPricingList extends StatelessWidget {
 
         // 2. Year Plan (Highlighted / Selected by default)
         _VerticalPlanCard(
-          title: s.planYear,
+          title: s.tryFreeNow,
           subtitle: '$annualTotal / ${s.perYearText.replaceAll('per ', '').replaceAll('mỗi ', '')}',
           priceText: annualMonthly,
           unitText: '/ ${s.perMonthText.replaceAll('per ', '').replaceAll('mỗi ', '')}',

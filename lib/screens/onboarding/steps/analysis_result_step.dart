@@ -15,7 +15,6 @@ import '../../../providers/progress_provider.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../../models/onboarding_data.dart';
 import '../../../services/review_service.dart';
-import '../../../widgets/app_rating_dialog.dart';
 import '../../../widgets/premium_ui.dart';
 import '../../../widgets/calculation_sources.dart';
 
@@ -325,6 +324,18 @@ class _ResultPhaseState extends State<_ResultPhase> {
   bool _isSaving = false;
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future.delayed(const Duration(milliseconds: 1000), () {
+        if (mounted) {
+          unawaited(ReviewService.requestReviewPrompt(source: 'onboarding_analysis'));
+        }
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final onboardingProvider = context.watch<OnboardingProvider>();
     final isRecalc = onboardingProvider.isRecalculating;
@@ -525,12 +536,8 @@ class _ResultPhaseState extends State<_ResultPhase> {
                                   }
                                 }
                             } else {
-                              if (await ReviewService.shouldPromptReview() && context.mounted) {
-                                await AppRatingDialog.show(context);
-                              }
-                              if (context.mounted) {
-                                onboardingProvider.nextStep();
-                              }
+                              unawaited(ReviewService.requestReviewPrompt(source: 'onboarding_analysis'));
+                              onboardingProvider.nextStep();
                             }
                           },
                   ),
