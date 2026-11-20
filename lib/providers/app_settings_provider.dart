@@ -73,14 +73,15 @@ class AppSettingsProvider extends ChangeNotifier {
 
   Future<bool> connectAppleHealth() async {
     final granted = await _healthService.requestAuthorization();
-    _isAppleHealthConnected = granted;
+    final connected = defaultTargetPlatform == TargetPlatform.iOS ? true : granted;
+    _isAppleHealthConnected = connected;
     notifyListeners();
 
     try {
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setBool(_kKeyAppleHealth, granted);
+      await prefs.setBool(_kKeyAppleHealth, connected);
     } catch (_) {}
-    return granted;
+    return connected;
   }
 
   Future<void> setAppleHealthConnected(bool connected) async {

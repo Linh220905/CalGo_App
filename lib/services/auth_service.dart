@@ -3,7 +3,11 @@ import 'api_service.dart';
 
 class AuthService {
   final ApiService _api;
-  final FlutterSecureStorage _storage = const FlutterSecureStorage();
+  final FlutterSecureStorage _storage = const FlutterSecureStorage(
+    iOptions: IOSOptions(
+      accessibility: KeychainAccessibility.first_unlock,
+    ),
+  );
   static const _tokenKey = 'access_token';
   static const _refreshTokenKey = 'refresh_token';
 

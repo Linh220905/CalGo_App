@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/app_settings_provider.dart';
 import '../../../providers/onboarding_provider.dart';
-import '../../../services/health_service.dart';
 
 class AppleHealthPermissionStep extends StatefulWidget {
   const AppleHealthPermissionStep({super.key});
@@ -34,7 +33,7 @@ class _AppleHealthPermissionStepState
     if (_loading) return;
     setState(() => _loading = true);
     try {
-      await HealthService().requestAuthorization();
+      await context.read<AppSettingsProvider>().connectAppleHealth();
     } catch (e) {
       debugPrint('Error requesting HealthKit permission: $e');
     }
