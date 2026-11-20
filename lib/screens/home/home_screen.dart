@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -133,8 +134,12 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
           }
         }
 
-        return Scaffold(
-          backgroundColor: bgColor,
+        return AnnotatedRegion<SystemUiOverlayStyle>(
+          value: isDark
+              ? SystemUiOverlayStyle.light
+              : SystemUiOverlayStyle.dark,
+          child: Scaffold(
+            backgroundColor: bgColor,
           body: SafeArea(
             child: hp.error != null && !hp.hasLoaded
                 ? const _ErrorView()
@@ -147,18 +152,10 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                     ),
                     child: SingleChildScrollView(
                       physics: const AlwaysScrollableScrollPhysics(),
-                      padding: const EdgeInsets.fromLTRB(20, 16, 20, 100),
+                      padding: const EdgeInsets.fromLTRB(20, 16, 20, 140),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // ── Top-Left Floating Tag: "Hôm nay ăn gì" ──
-                          Row(
-                            children: [
-                              WhatToEatTag(isDark: isDark),
-                            ],
-                          ),
-                          const SizedBox(height: 10),
-
                           // ── Top Header Bar with Mascot Speech Bubble ─────
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -358,17 +355,27 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                   ),
           ),
 
-          // ── Floating Action Button (+) ─────────────────────────
-          floatingActionButton: FloatingActionButton(
-            onPressed: () => _openQuickAdd(isDark),
-            backgroundColor: textDark,
-            elevation: 6,
-            shape: const CircleBorder(),
-            child: Icon(
-              Icons.add_rounded,
-              color: isDark ? Colors.black : Colors.white,
-              size: 30,
-            ),
+          // ── Floating Action Buttons: What-To-Eat + Quick Add (+) ──
+          floatingActionButton: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              WhatToEatTag(isDark: isDark),
+              const SizedBox(height: 12),
+              FloatingActionButton(
+                heroTag: 'home_quick_add_fab',
+                onPressed: () => _openQuickAdd(isDark),
+                backgroundColor: textDark,
+                elevation: 6,
+                shape: const CircleBorder(),
+                child: Icon(
+                  Icons.add_rounded,
+                  color: isDark ? Colors.black : Colors.white,
+                  size: 30,
+                ),
+              ),
+            ],
+          ),
           ),
         );
       },

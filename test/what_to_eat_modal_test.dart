@@ -5,7 +5,9 @@ import 'package:calgo/l10n/generated/app_localizations.dart';
 import 'package:calgo/models/what_to_eat_dish.dart';
 import 'package:calgo/providers/app_settings_provider.dart';
 import 'package:calgo/screens/home/widgets/what_to_eat_modal.dart';
+import 'package:calgo/screens/home/widgets/what_to_eat_tag.dart';
 import 'package:calgo/services/what_to_eat_service.dart';
+import 'package:calgo/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -151,6 +153,7 @@ void main() {
         ChangeNotifierProvider<AppSettingsProvider>.value(
           value: settings,
           child: MaterialApp(
+            theme: AppTheme.lightTheme,
             localizationsDelegates: const [
               AppLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,
@@ -159,15 +162,19 @@ void main() {
             ],
             supportedLocales: AppLocalizations.supportedLocales,
             locale: const Locale('vi'),
-            home: Builder(
-              builder: (context) => Scaffold(
-                body: Center(
-                  child: ElevatedButton(
-                    onPressed: () =>
-                        WhatToEatModal.show(context, isDark: false),
-                    child: const Text('Open'),
+            home: const Scaffold(
+              body: SizedBox.expand(),
+              floatingActionButton: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  WhatToEatTag(isDark: false),
+                  SizedBox(height: 12),
+                  FloatingActionButton(
+                    heroTag: 'test_fab',
+                    onPressed: null,
+                    child: Icon(Icons.add_rounded),
                   ),
-                ),
+                ],
               ),
             ),
           ),
@@ -175,8 +182,8 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      // Open modal
-      await tester.tap(find.text('Open'));
+      // Open modal via circular SVG FAB above '+'
+      await tester.tap(find.byType(WhatToEatTag));
       await tester.pumpAndSettle();
 
       expect(find.byType(WhatToEatModal), findsOneWidget);
@@ -189,19 +196,21 @@ void main() {
       expect(find.text('Cơm tấm sườn nướng trứng'), findsWidgets);
       expect(tester.takeException(), isNull);
 
-      // Tap a dish card directly to open floating popup dialog
-      await tester.tap(find.text('Cơm tấm sườn nướng trứng').first);
+      // Reel must NOT scroll when dragged manually
+      final listFinder = find.byType(ListView);
+      final scrollable = tester.widget<ListView>(listFinder).controller!;
+      final offsetBeforeDrag = scrollable.offset;
+      await tester.drag(listFinder, const Offset(-300, 0), warnIfMissed: false);
       await tester.pumpAndSettle();
-      expect(find.text('Gợi ý cho bạn!'), findsOneWidget);
-      expect(find.text('Scan món thực tế'), findsOneWidget);
-      expect(tester.takeException(), isNull);
+      expect(scrollable.offset, equals(offsetBeforeDrag));
 
-      // Spin 1 via "Quay lại"
-      await tester.tap(find.text('Quay lại'));
+      // Spin 1 via primary CTA "Quay ngẫu nhiên"
+      await tester.tap(find.text('Quay ngẫu nhiên'));
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 3200));
       await tester.pumpAndSettle();
       expect(find.text('Gợi ý cho bạn!'), findsOneWidget);
+      expect(find.text('Scan món thực tế'), findsOneWidget);
       expect(tester.takeException(), isNull);
 
       // Spin 2 consecutively via "Quay lại"

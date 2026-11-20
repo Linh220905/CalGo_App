@@ -19,6 +19,7 @@ class WhatToEatModal extends StatefulWidget {
   static Future<void> show(BuildContext context, {required bool isDark}) {
     return showModalBottomSheet<void>(
       context: context,
+      useRootNavigator: true,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (ctx) => WhatToEatModal(isDark: isDark),
@@ -196,6 +197,7 @@ class _WhatToEatModalState extends State<WhatToEatModal> {
     final outerBg = widget.isDark ? const Color(0xFF1A1922) : Colors.white;
     showGeneralDialog<void>(
       context: context,
+      useRootNavigator: true,
       barrierDismissible: true,
       barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
       barrierColor: Colors.black.withValues(alpha: 0.58),
@@ -397,37 +399,35 @@ class _WhatToEatModalState extends State<WhatToEatModal> {
                           ).createShader(rect);
                         },
                         blendMode: BlendMode.dstIn,
-                        child: SizedBox(
-                          height: _cardHeight + 8,
-                          child: ListView.separated(
-                            controller: _scrollController,
-                            scrollDirection: Axis.horizontal,
-                            physics: _isSpinning
-                                ? const NeverScrollableScrollPhysics()
-                                : const BouncingScrollPhysics(),
-                            padding: EdgeInsets.symmetric(horizontal: sidePad),
-                            itemCount: repeatedItems.length,
-                            separatorBuilder: (_, __) =>
-                                const SizedBox(width: _cardSpacing),
-                            itemBuilder: (context, index) {
-                              final dish = repeatedItems[index];
-                              return Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 4),
-                                child: _DishCard(
-                                  dish: dish,
-                                  strings: s,
-                                  isDark: isDark,
-                                  width: _cardWidth,
-                                  height: _cardHeight,
-                                  onTap: () {
-                                    if (!_isSpinning) {
-                                      HapticFeedback.selectionClick();
-                                      _showResultPopup(dish);
-                                    }
-                                  },
-                                ),
-                              );
-                            },
+                        child: IgnorePointer(
+                          child: SizedBox(
+                            height: _cardHeight + 8,
+                            child: ListView.separated(
+                              controller: _scrollController,
+                              scrollDirection: Axis.horizontal,
+                              physics: const NeverScrollableScrollPhysics(),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: sidePad,
+                              ),
+                              itemCount: repeatedItems.length,
+                              separatorBuilder: (_, __) =>
+                                  const SizedBox(width: _cardSpacing),
+                              itemBuilder: (context, index) {
+                                final dish = repeatedItems[index];
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 4,
+                                  ),
+                                  child: _DishCard(
+                                    dish: dish,
+                                    strings: s,
+                                    isDark: isDark,
+                                    width: _cardWidth,
+                                    height: _cardHeight,
+                                  ),
+                                );
+                              },
+                            ),
                           ),
                         ),
                       ),
@@ -447,14 +447,6 @@ class _WhatToEatModalState extends State<WhatToEatModal> {
                                     color: const Color(0xFFF97316),
                                     width: 2.5,
                                   ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: const Color(0xFFF97316)
-                                          .withValues(alpha: 0.22),
-                                      blurRadius: 16,
-                                      spreadRadius: 1,
-                                    ),
-                                  ],
                                 ),
                               ),
                               const Positioned(
@@ -485,22 +477,7 @@ class _WhatToEatModalState extends State<WhatToEatModal> {
                   );
                 },
               ),
-              const SizedBox(height: 10),
-
-              // Hint text
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Text(
-                  s.whatToEatHint,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                    color: textMuted,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 18),
+              const SizedBox(height: 22),
 
               // Spin CTA Button
               Padding(
@@ -515,6 +492,9 @@ class _WhatToEatModalState extends State<WhatToEatModal> {
                       foregroundColor: Colors.white,
                       disabledBackgroundColor:
                           const Color(0xFFF97316).withValues(alpha: 0.5),
+                      minimumSize: const Size(double.infinity, 52),
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
                       ),
@@ -651,7 +631,6 @@ class _DishCard extends StatelessWidget {
   final bool isDark;
   final double width;
   final double height;
-  final VoidCallback onTap;
 
   const _DishCard({
     required this.dish,
@@ -659,7 +638,6 @@ class _DishCard extends StatelessWidget {
     required this.isDark,
     required this.width,
     required this.height,
-    required this.onTap,
   });
 
   @override
@@ -670,12 +648,10 @@ class _DishCard extends StatelessWidget {
     final textMuted =
         isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B);
 
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: width,
-        height: height,
-        decoration: BoxDecoration(
+    return Container(
+      width: width,
+      height: height,
+      decoration: BoxDecoration(
           color: cardBg,
           borderRadius: BorderRadius.circular(18),
           border: Border.all(color: border),
@@ -759,8 +735,7 @@ class _DishCard extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
+      );
   }
 
   Widget _fallbackEmojiBox() {
@@ -850,7 +825,7 @@ class _DishResultDialog extends StatelessWidget {
                               left: 0,
                               right: 0,
                               bottom: 0,
-                              height: 76,
+                              height: 60,
                               child: DecoratedBox(
                                 decoration: BoxDecoration(
                                   gradient: LinearGradient(
@@ -858,7 +833,7 @@ class _DishResultDialog extends StatelessWidget {
                                     end: Alignment.bottomCenter,
                                     colors: [
                                       Colors.transparent,
-                                      Colors.black.withValues(alpha: 0.55),
+                                      Colors.black.withValues(alpha: 0.36),
                                     ],
                                   ),
                                 ),
@@ -1021,7 +996,7 @@ class _DishResultDialog extends StatelessWidget {
                             // Primary CTA: Scan real meal
                             SizedBox(
                               width: double.infinity,
-                              height: 48,
+                              height: 50,
                               child: ElevatedButton.icon(
                                 onPressed: onScanMeal,
                                 icon: const Icon(
@@ -1040,6 +1015,12 @@ class _DishResultDialog extends StatelessWidget {
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: const Color(0xFF10B981),
                                   foregroundColor: Colors.white,
+                                  minimumSize: const Size(double.infinity, 50),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 16,
+                                  ),
+                                  tapTargetSize:
+                                      MaterialTapTargetSize.shrinkWrap,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(15),
                                   ),
@@ -1052,7 +1033,7 @@ class _DishResultDialog extends StatelessWidget {
                             // Secondary Outlined CTA: Spin Again
                             SizedBox(
                               width: double.infinity,
-                              height: 44,
+                              height: 46,
                               child: OutlinedButton.icon(
                                 onPressed: onSpinAgain,
                                 icon: Icon(
@@ -1065,12 +1046,18 @@ class _DishResultDialog extends StatelessWidget {
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
-                                    fontSize: 14,
+                                    fontSize: 14.5,
                                     fontWeight: FontWeight.w600,
                                     color: textDark,
                                   ),
                                 ),
                                 style: OutlinedButton.styleFrom(
+                                  minimumSize: const Size(double.infinity, 46),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 16,
+                                  ),
+                                  tapTargetSize:
+                                      MaterialTapTargetSize.shrinkWrap,
                                   side: BorderSide(color: stripBorder),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(14),
