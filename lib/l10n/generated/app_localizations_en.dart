@@ -3482,4 +3482,378 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get bmiMicronutrientSourceDesc =>
       'Body Mass Index classification (18.5–24.9 normal range) and daily micronutrient thresholds (Fiber 14g/1000kcal, Free Sugars <10%, Sodium <2000mg).';
+
+  @override
+  String get statsOnTrack => 'On track';
+
+  @override
+  String get statsNeedsAdjustment => 'Needs adjustment';
+
+  @override
+  String get statsGoalReached => 'Goal reached';
+
+  @override
+  String statsAdjustmentBody(String target) {
+    return 'Your current intake does not support a reliable estimate for reaching $target kg. Keep logging and adjust toward your goal.';
+  }
+
+  @override
+  String get statsNoDataBody =>
+      'Log more weight and nutrition data to start a reliable forecast.';
+
+  @override
+  String get statsCaloriePeriod => 'the past 7-day average';
+
+  @override
+  String get statsCaloriePeriodToday => 'today';
+
+  @override
+  String get statsNoCalories => 'No calorie data yet';
+
+  @override
+  String get statsSlow => 'Progressing slowly but steadily';
+
+  @override
+  String get statsHighDeficit => 'Calorie deficit is too high';
+
+  @override
+  String get statsHighSurplus => 'Calorie surplus is quite high';
+
+  @override
+  String get statsStalled => 'Progress is currently stalled';
+
+  @override
+  String get statsOpposite => 'Moving away from your goal';
+
+  @override
+  String get statsGuidanceOnTrack => 'On track';
+
+  @override
+  String get statsNeedData => 'Need more data';
+
+  @override
+  String get statsFirstMeal => 'Awaiting 1st meal';
+
+  @override
+  String get statsMinorAdjustment => 'Minor adjustment';
+
+  @override
+  String get statsMoreSurplus => 'Need more surplus';
+
+  @override
+  String get statsBalanced => 'Balanced body';
+
+  @override
+  String get statsKeepTracking => 'Keep tracking';
+
+  @override
+  String get statsSteady => 'Steady pace';
+
+  @override
+  String get statsBuilding => 'Building progress';
+
+  @override
+  String get statsFirstMealForecast =>
+      'Log your first meal today to start calculating your progress forecast.';
+
+  @override
+  String get statsLowIntake =>
+      'Today’s intake is lower than planned. Log all your meals for a more accurate forecast.';
+
+  @override
+  String get statsSmallBalance =>
+      'Today’s calorie balance is small. Keep logging for a few more days for a clearer projection.';
+
+  @override
+  String get statsOverIntake =>
+      'Today’s intake exceeded estimated burn. Make a gentle adjustment tomorrow to stay on track.';
+
+  @override
+  String get statsUnderSurplus =>
+      'Today’s intake didn’t reach the surplus needed for weight gain. Add extra nutrition to each meal tomorrow.';
+
+  @override
+  String get statsKeepLogging =>
+      'Keep logging meals and weight regularly so CalGo can forecast your true trend.';
+
+  @override
+  String statsFamiliarReason(String reason) {
+    return 'Matches a portion you scanned previously and fits your remaining macros today.';
+  }
+
+  @override
+  String get statsFitsReason =>
+      'Fits within your remaining calories and works well for your next meal.';
+
+  @override
+  String get statsSauceSide =>
+      'Keep sauce on the side for easier calorie control.';
+
+  @override
+  String get statsLessOil =>
+      'Opt for less oil and add vegetables for a lighter meal.';
+
+  @override
+  String get statsHighProtein =>
+      'High-protein option; eat slowly to stay full longer.';
+
+  @override
+  String get statsReduceSauce =>
+      'Reduce sauce or oil if you want a lighter version.';
+
+  @override
+  String get statsModerateCarbs =>
+      'Keep carbs moderate and add vegetables to this meal.';
+
+  @override
+  String get statsBoostProtein =>
+      'Pair with eggs, tofu, or yogurt to boost protein.';
+
+  @override
+  String get statsSplitPortions =>
+      'Split into smaller portions if you have more meals ahead.';
+
+  @override
+  String get statsHalfPortion =>
+      'If near your calorie limit today, opt for half a portion with extra greens.';
+
+  @override
+  String get statsEatSlowly =>
+      'Keep portions moderate and eat slowly to feel fullness.';
+
+  @override
+  String get statsScanFirst =>
+      'Scan your first meal today so I can calculate what remains and suggest your next meal.';
+
+  @override
+  String get statsReachedToday =>
+      'You’ve reached today’s calorie target. Keep this momentum; if still hungry, stick to water or light snacks.';
+
+  @override
+  String get statsNearTarget =>
+      'You’re near or past your target today, but your day is still on track! If hungry, choose a light protein option.';
+
+  @override
+  String get statsNoMatchingMeals =>
+      'Could not find matching meals from current data. Scan your next meal for more accurate suggestions.';
+
+  @override
+  String statsPeriodDays(String days) {
+    return '$days days';
+  }
+
+  @override
+  String statsOnTrackBody(String calories, String target, String weeks) {
+    return 'At an average of $calories kcal/day, you may reach $target kg in about $weeks.';
+  }
+
+  @override
+  String statsGuidanceProjection(
+    String dateSuffix,
+    String target,
+    String weeks,
+  ) {
+    return 'Maintaining today’s intake, you are projected to reach $target kg in about $weeks weeks$dateSuffix.';
+  }
+
+  @override
+  String statsProteinReason(String proteinG) {
+    return 'Adds about ${proteinG}g protein while staying within your remaining calories.';
+  }
+
+  @override
+  String statsRemainingMessage(String calRemaining, String protRemaining) {
+    return 'You have about $calRemaining kcal left and need ${protRemaining}g more protein.';
+  }
+
+  @override
+  String get statsLevel1 => 'Beginner';
+
+  @override
+  String get statsLevel2 => 'Tracker';
+
+  @override
+  String get statsLevel3 => 'Consistent';
+
+  @override
+  String get statsLevel4 => 'Disciplined';
+
+  @override
+  String get statsLevel5 => 'Energetic';
+
+  @override
+  String get statsLevel6 => 'Health Enthusiast';
+
+  @override
+  String get statsLevel7 => 'Nutrition Expert';
+
+  @override
+  String get statsLevel8 => 'Champion';
+
+  @override
+  String get statsLevel9 => 'Legend';
+
+  @override
+  String get statsLevel10 => 'Master CalGo';
+
+  @override
+  String get statsAchievementFirstScanName => 'Bright Start';
+
+  @override
+  String get statsAchievementFirstScanDescription => 'Record your first meal';
+
+  @override
+  String get statsAchievementScanMasterName => 'Scan Master';
+
+  @override
+  String get statsAchievementScanMasterDescription => 'Scan 10 meals with AI';
+
+  @override
+  String get statsAchievementProteinKingName => 'Protein King';
+
+  @override
+  String get statsAchievementProteinKingDescription =>
+      'Reach 100% of your daily protein goal';
+
+  @override
+  String get statsAchievementStreak7Name => '7-Day Streak';
+
+  @override
+  String get statsAchievementStreak7Description =>
+      'Log meals for 7 consecutive days';
+
+  @override
+  String get statsAchievementCaloChampName => 'Calorie Champion';
+
+  @override
+  String get statsAchievementCaloChampDescription =>
+      'Reach your calorie goal for 5 consecutive days';
+
+  @override
+  String get statsAchievementLegendName => 'CalGo Legend';
+
+  @override
+  String get statsAchievementLegendDescription => 'Reach level 10';
+
+  @override
+  String get statsForecastNoDataBody =>
+      'Log a meal to start a forecast based on your actual intake.';
+
+  @override
+  String get statsForecastReachedBody =>
+      'Keep your current intake and habits to maintain your result.';
+
+  @override
+  String statsForecastHealthyBody(
+    String balance,
+    String calories,
+    String goal,
+    String periodLabel,
+    String target,
+    String weeksLabel,
+  ) {
+    return 'At about $calories kcal/day over $periodLabel, you may reach $target kg in about $weeksLabel.';
+  }
+
+  @override
+  String statsForecastSlowBody(String goal, String target) {
+    return 'You are moving toward your goal, but the calorie balance is small. Reaching $target kg may take longer.';
+  }
+
+  @override
+  String statsForecastAggressiveDeficitBody(
+    String calories,
+    String recommendedCalories,
+  ) {
+    return 'You are eating about $calories kcal/day. This deficit may not be safe. Gradually move toward about $recommendedCalories kcal/day.';
+  }
+
+  @override
+  String statsForecastAggressiveSurplusBody(String balance) {
+    return 'You are about $balance kcal/day above maintenance. Your weight may rise faster than planned.';
+  }
+
+  @override
+  String get statsForecastMaintenanceBody =>
+      'Your intake is close to maintenance, so your weight may not change much.';
+
+  @override
+  String statsForecastOppositeBody(
+    String balance,
+    String direction,
+    String target,
+  ) {
+    String _temp0 = intl.Intl.selectLogic(direction, {
+      'up': 'increase',
+      'other': 'decrease',
+    });
+    return 'At this intake, your weight is likely to $_temp0 and move farther from $target kg.';
+  }
+
+  @override
+  String get planThreeMonths => '3 Months';
+
+  @override
+  String get planDurationThreeMonths => '3 months';
+
+  @override
+  String get billedThreeMonthsNote => 'Billed every 3 months';
+
+  @override
+  String iosAutoRenewTermsThreeMonths(String price) {
+    return 'Billed as $price/3 months. Auto-renews every 3 months. Cancel anytime in App Store Settings.';
+  }
+
+  @override
+  String get whatToEatTitle => 'What to eat today?';
+
+  @override
+  String get whatToEatTag => 'What to eat?';
+
+  @override
+  String get spinRandomAction => 'Spin random';
+
+  @override
+  String get spinAgainAction => 'Spin again';
+
+  @override
+  String get mealBreakfast => 'Breakfast';
+
+  @override
+  String get mealLunch => 'Lunch';
+
+  @override
+  String get mealDinner => 'Dinner';
+
+  @override
+  String get selectedDishTitle => 'Suggested for you!';
+
+  @override
+  String get logThisMeal => 'Log this meal';
+
+  @override
+  String approxCalories(int calories) {
+    return '~$calories kcal';
+  }
+
+  @override
+  String get whatToEatHint => 'Tap any dish or press Spin random';
+
+  @override
+  String get dishTagHighProtein => 'High protein';
+
+  @override
+  String get dishTagQuick => 'Quick & filling';
+
+  @override
+  String get dishTagEnergetic => 'Energy boost';
+
+  @override
+  String get dishTagLight => 'Light & easy';
+
+  @override
+  String get dishTagBalanced => 'Rich & balanced';
+
+  @override
+  String get dishTagHealthy => 'Healthy & lean';
 }

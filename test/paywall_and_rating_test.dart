@@ -154,4 +154,12 @@ void main() {
     expect(find.textContaining(RegExp(r'year', caseSensitive: false)), findsWidgets);
     expect(find.textContaining(RegExp(r'3 days', caseSensitive: false)), findsWidgets);
   });
+
+  test('Croatian localization is supported and loads correctly', () {
+    expect(AppLocalizations.supportedLocales.contains(const Locale('hr')), isTrue);
+    final hr = lookupAppLocalizations(const Locale('hr'));
+    expect(hr.languageDisplayName, 'Hrvatski');
+    expect(hr.tryFreeNow, 'Isprobajte 3 dana besplatno');
+    expect(hr.planYear, 'Godina');
+  });
 }

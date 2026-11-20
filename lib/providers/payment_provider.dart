@@ -24,7 +24,7 @@ enum PurchaseState {
   error,
 }
 
-enum PremiumPlan { weekly, monthly, annual, annualDiscount }
+enum PremiumPlan { weekly, monthly, annual, annualDiscount, threeMonth }
 
 /// One concrete Store offer. Google Play may return several entries with the
 /// same product ID (base plan, free trial, win-back, etc.), so a subscription
@@ -84,6 +84,9 @@ class PremiumOffer {
       case PremiumPlan.weekly:
         weeklyAmount = rawPrice;
         break;
+      case PremiumPlan.threeMonth:
+        weeklyAmount = rawPrice / 13;
+        break;
       case PremiumPlan.monthly:
         weeklyAmount = rawPrice / 4.33;
         break;
@@ -111,6 +114,9 @@ class PremiumOffer {
     switch (plan) {
       case PremiumPlan.weekly:
         monthlyAmount = rawPrice * 4.33;
+        break;
+      case PremiumPlan.threeMonth:
+        monthlyAmount = rawPrice / 3;
         break;
       case PremiumPlan.monthly:
         monthlyAmount = rawPrice;
@@ -283,6 +289,7 @@ class PaymentProvider extends ChangeNotifier {
 
   static String productIdForPremiumPlan(PremiumPlan plan) => switch (plan) {
     PremiumPlan.weekly => IapIds.premiumWeekly,
+    PremiumPlan.threeMonth => IapIds.premiumThreeMonth,
     PremiumPlan.monthly => IapIds.premiumMonthly,
     PremiumPlan.annual => IapIds.premiumAnnual,
     PremiumPlan.annualDiscount => IapIds.premiumAnnualDiscount,

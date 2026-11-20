@@ -1512,5 +1512,230 @@
   "usdaDietaryCitation": "अमेरिकियों के लिए USDA आहार दिशानिर्देश (मैक्रोन्यूट्रिएंट्स)",
   "cdcWeightLossCitation": "CDC — स्वस्थ वजन घटाने के दिशानिर्देश (0.5-1 किग्रा/सप्ताह)",
   "bmiMicronutrientSourceTitle": "बीएमआई और माइक्रोन्यूट्रिएंट मानक",
-  "bmiMicronutrientSourceDesc": "बीएमआई वर्गीकरण (सामान्य 18.5-24.9) और दैनिक सीमाएं (फाइबर 14g/1000kcal, मुक्त शर्करा <10%, सोडियम <2000mg)।"
+  "bmiMicronutrientSourceDesc": "बीएमआई वर्गीकरण (सामान्य 18.5-24.9) और दैनिक सीमाएं (फाइबर 14g/1000kcal, मुक्त शर्करा <10%, सोडियम <2000mg)।",
+  "statsOnTrack": "सही दिशा में",
+  "statsNeedsAdjustment": "समायोजन की आवश्यकता",
+  "statsGoalReached": "लक्ष्य प्राप्त",
+  "statsAdjustmentBody": "आपका वर्तमान सेवन {target} kg तक पहुँचने का विश्वसनीय अनुमान देने के लिए पर्याप्त नहीं है। रिकॉर्ड करते रहें और लक्ष्य के अनुसार समायोजित करें।",
+  "@statsAdjustmentBody": {
+    "placeholders": {
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "statsNoDataBody": "विश्वसनीय पूर्वानुमान शुरू करने के लिए अधिक वजन और पोषण डेटा दर्ज करें।",
+  "statsCaloriePeriod": "पिछले 7 दिनों के औसत",
+  "statsCaloriePeriodToday": "आज",
+  "statsNoCalories": "अभी कैलोरी डेटा नहीं है",
+  "statsSlow": "धीमी लेकिन स्थिर प्रगति",
+  "statsHighDeficit": "कैलोरी की कमी बहुत अधिक है",
+  "statsHighSurplus": "कैलोरी अधिशेष काफी अधिक है",
+  "statsStalled": "प्रगति फिलहाल रुक गई है",
+  "statsOpposite": "आप अपने लक्ष्य से दूर जा रहे हैं",
+  "statsGuidanceOnTrack": "सही दिशा में",
+  "statsNeedData": "अधिक डेटा चाहिए",
+  "statsFirstMeal": "पहले भोजन की प्रतीक्षा",
+  "statsMinorAdjustment": "हल्का समायोजन",
+  "statsMoreSurplus": "और अधिक सेवन चाहिए",
+  "statsBalanced": "संतुलित शारीरिक बनावट",
+  "statsKeepTracking": "और ट्रैक करें",
+  "statsSteady": "स्थिर लय",
+  "statsBuilding": "प्रगति जारी है",
+  "statsFirstMealForecast": "प्रगति पूर्वानुमान की गणना शुरू करने के लिए आज का अपना पहला भोजन दर्ज करें।",
+  "statsLowIntake": "आज का सेवन योजना से कम है। अधिक सटीक पूर्वानुमान के लिए अपने सभी भोजन दर्ज करें।",
+  "statsSmallBalance": "आज का कैलोरी संतुलन कम है। स्पष्ट अनुमान के लिए कुछ और दिनों तक रिकॉर्ड करते रहें।",
+  "statsOverIntake": "आज का सेवन अनुमानित खर्च से अधिक था। पटरी पर लौटने के लिए कल हल्का समायोजन करें।",
+  "statsUnderSurplus": "आज का सेवन वजन बढ़ाने के लिए आवश्यक अधिशेष तक नहीं पहुँचा। कल प्रत्येक भोजन में पोषण जोड़ें।",
+  "statsKeepLogging": "नियमित रूप से भोजन और वजन दर्ज करते रहें ताकि CalGo आपकी वास्तविक प्रवृत्ति का अनुमान लगा सके।",
+  "statsFamiliarReason": "यह आपके पहले स्कैन किए गए हिस्से से मेल खाता है और आज के शेष मैक्रोज़ में फिट बैठता है।",
+  "@statsFamiliarReason": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "statsFitsReason": "आपकी शेष कैलोरी के भीतर फिट बैठता है और अगले भोजन के लिए उपयुक्त है।",
+  "statsSauceSide": "कैलोरी नियंत्रण आसान बनाने के लिए सॉस अलग रखें।",
+  "statsLessOil": "हल्के भोजन के लिए कम तेल चुनें और सब्जियाँ जोड़ें।",
+  "statsHighProtein": "उच्च प्रोटीन विकल्प; लंबे समय तक तृप्त रहने के लिए धीरे-धीरे खाएं।",
+  "statsReduceSauce": "यदि आप हल्का विकल्प चाहते हैं तो सॉस या तेल कम करें।",
+  "statsModerateCarbs": "कार्ब्स को मध्यम रखें और इस भोजन में सब्जियां शामिल करें।",
+  "statsBoostProtein": "प्रोटीन बढ़ाने के लिए अंडे, टोफू या दही के साथ लें।",
+  "statsSplitPortions": "यदि आपके आगे और भोजन हैं तो इसे छोटे भागों में बांटें।",
+  "statsHalfPortion": "यदि आज आपकी कैलोरी सीमा पूरी होने वाली है, तो आधा हिस्सा लें और सब्जियां जोड़ें।",
+  "statsEatSlowly": "मध्यम मात्रा रखें और तृप्ति महसूस करने के लिए धीरे-धीरे खाएं।",
+  "statsScanFirst": "आज का अपना पहला भोजन स्कैन करें ताकि मैं शेष गणना कर सकूँ और अगले भोजन का सुझाव दे सकूँ।",
+  "statsReachedToday": "आपने आज का कैलोरी लक्ष्य पूरा कर लिया है। इस लय को बनाए रखें; यदि अभी भी भूख लगी है, तो पानी या हल्का नाश्ता लें।",
+  "statsNearTarget": "आप आज अपने लक्ष्य के करीब हैं या उससे आगे निकल गए हैं, लेकिन सब ठीक है! भूख लगने पर हल्का प्रोटीन विकल्प चुनें।",
+  "statsNoMatchingMeals": "वर्तमान डेटा से उपयुक्त भोजन नहीं मिला। अधिक सटीक सुझावों के लिए अपना अगला भोजन स्कैन करें।",
+  "statsPeriodDays": "{days} दिन",
+  "@statsPeriodDays": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "statsOnTrackBody": "प्रतिदिन औसतन {calories} kcal पर आप लगभग {weeks} में {target} kg तक पहुँच सकते हैं।",
+  "@statsOnTrackBody": {
+    "placeholders": {
+      "calories": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "weeks": {
+        "type": "String"
+      }
+    }
+  },
+  "statsGuidanceProjection": "यदि आप आज जैसा सेवन जारी रखते हैं, तो लगभग {weeks} सप्ताह में {target} kg तक पहुँचने का अनुमान है{dateSuffix}।",
+  "@statsGuidanceProjection": {
+    "placeholders": {
+      "dateSuffix": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "weeks": {
+        "type": "String"
+      }
+    }
+  },
+  "statsProteinReason": "शेष कैलोरी के भीतर लगभग {proteinG}g प्रोटीन प्रदान करता है।",
+  "@statsProteinReason": {
+    "placeholders": {
+      "proteinG": {
+        "type": "String"
+      }
+    }
+  },
+  "statsRemainingMessage": "आपके पास लगभग {calRemaining} kcal बचे हैं और {protRemaining}g प्रोटीन की आवश्यकता है।",
+  "@statsRemainingMessage": {
+    "placeholders": {
+      "calRemaining": {
+        "type": "String"
+      },
+      "protRemaining": {
+        "type": "String"
+      }
+    }
+  },
+  "statsLevel1": "शुरुआती",
+  "statsLevel2": "ट्रैकर",
+  "statsLevel3": "निरंतर",
+  "statsLevel4": "अनुशासित",
+  "statsLevel5": "उत्साही",
+  "statsLevel6": "स्वास्थ्य प्रेमी",
+  "statsLevel7": "पोषण विशेषज्ञ",
+  "statsLevel8": "चैंपियन",
+  "statsLevel9": "किंवदंती",
+  "statsLevel10": "CalGo मास्टर",
+  "statsAchievementFirstScanName": "शानदार शुरुआत",
+  "statsAchievementFirstScanDescription": "अपना पहला भोजन दर्ज करें",
+  "statsAchievementScanMasterName": "स्कैन मास्टर",
+  "statsAchievementScanMasterDescription": "AI से 10 भोजन स्कैन करें",
+  "statsAchievementProteinKingName": "प्रोटीन किंग",
+  "statsAchievementProteinKingDescription": "दैनिक प्रोटीन लक्ष्य का 100% पूरा करें",
+  "statsAchievementStreak7Name": "7 दिन की स्ट्रीक",
+  "statsAchievementStreak7Description": "लगातार 7 दिन भोजन दर्ज करें",
+  "statsAchievementCaloChampName": "कैलोरी चैंपियन",
+  "statsAchievementCaloChampDescription": "लगातार 5 दिन कैलोरी लक्ष्य पूरा करें",
+  "statsAchievementLegendName": "CalGo लीजेंड",
+  "statsAchievementLegendDescription": "लेवल 10 तक पहुँचें",
+  "statsForecastNoDataBody": "वास्तविक सेवन के आधार पर पूर्वानुमान शुरू करने के लिए भोजन दर्ज करें।",
+  "statsForecastReachedBody": "परिणाम बनाए रखने के लिए अपना वर्तमान सेवन और आदतें जारी रखें।",
+  "statsForecastHealthyBody": "{periodLabel} लगभग {calories} kcal प्रतिदिन रखने पर आप लगभग {weeksLabel} में {target} kg तक पहुँच सकते हैं।",
+  "@statsForecastHealthyBody": {
+    "placeholders": {
+      "balance": {
+        "type": "String"
+      },
+      "calories": {
+        "type": "String"
+      },
+      "goal": {
+        "type": "String"
+      },
+      "periodLabel": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "weeksLabel": {
+        "type": "String"
+      }
+    }
+  },
+  "statsForecastSlowBody": "आप लक्ष्य की ओर बढ़ रहे हैं, लेकिन कैलोरी अंतर कम है। {target} kg तक पहुँचने में अधिक समय लग सकता है।",
+  "@statsForecastSlowBody": {
+    "placeholders": {
+      "goal": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "statsForecastAggressiveDeficitBody": "आप लगभग {calories} kcal प्रतिदिन ले रहे हैं। यह कमी सुरक्षित नहीं हो सकती। धीरे-धीरे {recommendedCalories} kcal तक बढ़ाएँ।",
+  "@statsForecastAggressiveDeficitBody": {
+    "placeholders": {
+      "calories": {
+        "type": "String"
+      },
+      "recommendedCalories": {
+        "type": "String"
+      }
+    }
+  },
+  "statsForecastAggressiveSurplusBody": "आप रखरखाव स्तर से लगभग {balance} kcal अधिक ले रहे हैं। वजन योजना से तेज़ी से बढ़ सकता है।",
+  "@statsForecastAggressiveSurplusBody": {
+    "placeholders": {
+      "balance": {
+        "type": "String"
+      }
+    }
+  },
+  "statsForecastMaintenanceBody": "आपका सेवन रखरखाव स्तर के करीब है, इसलिए वजन में अधिक बदलाव नहीं हो सकता।",
+  "statsForecastOppositeBody": "इस सेवन पर वजन {direction, select, up {बढ़} other {घट}} सकता है और {target} kg से दूर जा सकता है।",
+  "@statsForecastOppositeBody": {
+    "placeholders": {
+      "balance": {
+        "type": "String"
+      },
+      "direction": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "planThreeMonths": "3 महीने",
+  "planDurationThreeMonths": "3 महीने",
+  "billedThreeMonthsNote": "हर 3 महीने में बिल किया जाता है",
+  "iosAutoRenewTermsThreeMonths": "{price}/3 महीने के रूप में बिल किया जाएगा। हर 3 महीने में स्वतः नवीनीकरण। App Store सेटिंग्स में कभी भी रद्द करें।",
+  "whatToEatTitle": "आज क्या खाएं?",
+  "whatToEatTag": "क्या खाएं?",
+  "spinRandomAction": "रैंडम घुमाएं",
+  "spinAgainAction": "फिर से घुमाएं",
+  "mealBreakfast": "नाश्ता",
+  "mealLunch": "दोपहर का भोजन",
+  "mealDinner": "रात का भोजन",
+  "selectedDishTitle": "आपके लिए सुझाव!",
+  "logThisMeal": "यह भोजन रिकॉर्ड करें",
+  "approxCalories": "~{calories} किलोकैलोरी",
+  "whatToEatHint": "किसी भी डिश पर टैप करें या रैंडम स्पिन दबाएं",
+  "dishTagHighProtein": "हाई प्रोटीन",
+  "dishTagQuick": "झटपट और पेट भरने वाला",
+  "dishTagEnergetic": "भरपूर ऊर्जा",
+  "dishTagLight": "हल्का और सुपाच्य",
+  "dishTagBalanced": "स्वादिष्ट और संतुलित",
+  "dishTagHealthy": "हेल्दी और कम फैट"
 }

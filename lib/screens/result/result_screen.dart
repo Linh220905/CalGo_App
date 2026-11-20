@@ -3271,15 +3271,16 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
                                   hit['ten'] ??
                                   '')
                               .toString();
-                          final subtitle = (hit['name'] != null &&
-                                  hit['display_name'] != null &&
-                                  hit['display_name'] != hit['name'])
-                              ? hit['name'].toString()
-                              : (hit['subtitle'] ??
-                                      hit['vi_name'] ??
-                                      hit['aliases']?['vi'] ??
-                                      title)
-                                  .toString();
+                          final enName = (hit['name_en'] ??
+                                  hit['canonical_name_en'] ??
+                                  hit['aliases']?['en'] ??
+                                  '')
+                              .toString()
+                              .trim();
+                          final subtitle = (enName.isNotEmpty &&
+                                  enName.toLowerCase() != title.toLowerCase())
+                              ? enName
+                              : '';
                           final calories = hit['calories_kcal'] is num
                               ? (hit['calories_kcal'] as num).round()
                               : hit['calo'] is num
@@ -3322,16 +3323,18 @@ class _AddIngredientModalState extends State<_AddIngredientModal> {
                                               color: textDark,
                                             ),
                                           ),
-                                          const SizedBox(height: 2),
-                                          Text(
-                                            subtitle,
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                              fontSize: 13,
-                                              color: textMuted,
+                                          if (subtitle.isNotEmpty) ...[
+                                            const SizedBox(height: 2),
+                                            Text(
+                                              subtitle,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                fontSize: 13,
+                                                color: textMuted,
+                                              ),
                                             ),
-                                          ),
+                                          ],
                                           const SizedBox(height: 6),
                                           Row(
                                             children: [

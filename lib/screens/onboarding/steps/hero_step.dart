@@ -68,7 +68,9 @@ class _HeroStepState extends State<HeroStep> with TickerProviderStateMixin {
       });
 
       // Cycle AI scanning messages every 2.4 seconds
-      _aiMessageTimer = Timer.periodic(const Duration(milliseconds: 2400), (timer) {
+      _aiMessageTimer = Timer.periodic(const Duration(milliseconds: 2400), (
+        timer,
+      ) {
         if (!mounted) return;
         _cycleNextMessage();
       });
@@ -108,45 +110,14 @@ class _HeroStepState extends State<HeroStep> with TickerProviderStateMixin {
     ];
   }
 
-  String _getHeroTitle(String languageCode) {
-    switch (languageCode) {
-      case 'vi':
-        return 'Theo dõi calo\ndễ dàng hơn bao giờ hết';
-      case 'es':
-        return 'Seguimiento de calorías\nfácil y rápido';
-      case 'fr':
-        return 'Le suivi des calories\nen toute simplicité';
-      case 'ja':
-        return 'カロリー記録を\nもっと手軽に';
-      case 'ko':
-        return '칼로리 기록을\n쉽고 간편하게';
-      case 'pt':
-        return 'Contagem de calorias\nmais fácil do que nunca';
-      case 'ru':
-        return 'Подсчет калорий\nпроще простого';
-      case 'zh':
-        return '轻松记录\n每一餐卡路里';
-      case 'ar':
-        return 'تتبع السعرات الحرارية\nأسهل من أي وقت مضى';
-      case 'bn':
-        return 'ক্যালোরি ট্র্যাকিং\nএখন আরও সহজ';
-      case 'hi':
-        return 'कैलोरी ट्रैकिंग\nअब और भी आसान';
-      case 'ro':
-        return 'Urmărirea caloriilor\nmai simplă ca niciodată';
-      case 'en':
-      default:
-        return 'Calorie tracking\nmade easy';
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final settings = context.watch<AppSettingsProvider>();
     final s = settings.strings;
     final aiMessages = _getAiMessages(settings);
-    final currentStatusText = aiMessages[_currentMessageIndex % aiMessages.length];
-    final heroTitle = _getHeroTitle(settings.languageCode);
+    final currentStatusText =
+        aiMessages[_currentMessageIndex % aiMessages.length];
+    final heroTitle = s.heroTitle;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -186,9 +157,15 @@ class _HeroStepState extends State<HeroStep> with TickerProviderStateMixin {
                           // start: translateY(140px), rotateX(32deg), rotateY(-8deg), rotateZ(3deg), scale(0.82)
                           // end: translateY(0), rotateX(0deg), rotateY(0deg), rotateZ(0deg), scale(1.0)
                           final translateY = 140.0 * (1.0 - curvedVal);
-                          final rotateX = (32.0 * (1.0 - curvedVal)) * (3.14159265359 / 180.0);
-                          final rotateY = (-8.0 * (1.0 - curvedVal)) * (3.14159265359 / 180.0);
-                          final rotateZ = (3.0 * (1.0 - curvedVal)) * (3.14159265359 / 180.0);
+                          final rotateX =
+                              (32.0 * (1.0 - curvedVal)) *
+                              (3.14159265359 / 180.0);
+                          final rotateY =
+                              (-8.0 * (1.0 - curvedVal)) *
+                              (3.14159265359 / 180.0);
+                          final rotateZ =
+                              (3.0 * (1.0 - curvedVal)) *
+                              (3.14159265359 / 180.0);
                           final scale = 0.82 + (0.18 * curvedVal);
                           final opacity = curvedVal.clamp(0.0, 1.0);
 
@@ -505,12 +482,16 @@ class _IPhoneProMockup extends StatelessWidget {
                                 color: const Color(0xFF4ADE80),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: const Color(0xFF4ADE80).withValues(alpha: 0.9),
+                                    color: const Color(
+                                      0xFF4ADE80,
+                                    ).withValues(alpha: 0.9),
                                     blurRadius: 6,
                                     spreadRadius: 1,
                                   ),
                                   BoxShadow(
-                                    color: const Color(0xFF4ADE80).withValues(alpha: 0.45),
+                                    color: const Color(
+                                      0xFF4ADE80,
+                                    ).withValues(alpha: 0.45),
                                     blurRadius: 14,
                                     spreadRadius: 2,
                                   ),
@@ -565,7 +546,10 @@ class _IPhoneProMockup extends StatelessWidget {
                                 builder: (context, _) {
                                   final v = pingController.value;
                                   final pingScale = 1.0 + (1.2 * v);
-                                  final pingOpacity = (1.0 - v).clamp(0.0, 0.75);
+                                  final pingOpacity = (1.0 - v).clamp(
+                                    0.0,
+                                    0.75,
+                                  );
 
                                   return Transform.scale(
                                     scale: pingScale,
@@ -574,8 +558,9 @@ class _IPhoneProMockup extends StatelessWidget {
                                       height: 9,
                                       decoration: BoxDecoration(
                                         shape: BoxShape.circle,
-                                        color: const Color(0xFF4ADE80)
-                                            .withValues(alpha: pingOpacity),
+                                        color: const Color(
+                                          0xFF4ADE80,
+                                        ).withValues(alpha: pingOpacity),
                                       ),
                                     ),
                                   );
@@ -590,7 +575,9 @@ class _IPhoneProMockup extends StatelessWidget {
                                   color: const Color(0xFF4ADE80),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: const Color(0xFF4ADE80).withValues(alpha: 0.9),
+                                      color: const Color(
+                                        0xFF4ADE80,
+                                      ).withValues(alpha: 0.9),
                                       blurRadius: 5,
                                     ),
                                   ],

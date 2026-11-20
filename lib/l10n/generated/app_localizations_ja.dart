@@ -3352,4 +3352,352 @@ class AppLocalizationsJa extends AppLocalizations {
   @override
   String get bmiMicronutrientSourceDesc =>
       'BMI分類（普通体重18.5〜24.9）および微量栄養素の推奨基準値（食物繊維14g/1000kcal、遊離糖類<10%、ナトリウム<2000mg）。';
+
+  @override
+  String get statsOnTrack => '順調に進んでいます';
+
+  @override
+  String get statsNeedsAdjustment => '調整が必要です';
+
+  @override
+  String get statsGoalReached => '目標達成';
+
+  @override
+  String statsAdjustmentBody(String target) {
+    return '現在の摂取量では$target kgに到達する時期を正確に予測できません。記録を続けて目標に合わせて調整しましょう。';
+  }
+
+  @override
+  String get statsNoDataBody => '信頼できる予測を始めるには、体重と栄養データをさらに記録してください。';
+
+  @override
+  String get statsCaloriePeriod => '過去7日間の平均';
+
+  @override
+  String get statsCaloriePeriodToday => '今日';
+
+  @override
+  String get statsNoCalories => 'カロリーデータがありません';
+
+  @override
+  String get statsSlow => 'ゆっくりですが順調です';
+
+  @override
+  String get statsHighDeficit => 'カロリー赤字が大きすぎます';
+
+  @override
+  String get statsHighSurplus => 'カロリー余剰がやや多めです';
+
+  @override
+  String get statsStalled => '進捗が一時的に停滞しています';
+
+  @override
+  String get statsOpposite => '目標から遠ざかっています';
+
+  @override
+  String get statsGuidanceOnTrack => '順調に進んでいます';
+
+  @override
+  String get statsNeedData => 'データ不足';
+
+  @override
+  String get statsFirstMeal => '最初の食事待ち';
+
+  @override
+  String get statsMinorAdjustment => '少し調整が必要';
+
+  @override
+  String get statsMoreSurplus => '追加補給が必要';
+
+  @override
+  String get statsBalanced => '体型バランス維持';
+
+  @override
+  String get statsKeepTracking => '継続して観察';
+
+  @override
+  String get statsSteady => '安定したペース';
+
+  @override
+  String get statsBuilding => '蓄積中';
+
+  @override
+  String get statsFirstMealForecast => '今日の最初の食事を記録して、進捗予測の計算を始めましょう。';
+
+  @override
+  String get statsLowIntake => '今日の摂取量は計画より少なめです。より正確な予測のためにすべての食事を記録してください。';
+
+  @override
+  String get statsSmallBalance => '今日のカロリー差は小さめです。より明確な予測のため、数日間記録を続けてみましょう。';
+
+  @override
+  String get statsOverIntake => '今日の摂取量が推定消費量を上回りました。明日少し調整してペースを維持しましょう。';
+
+  @override
+  String get statsUnderSurplus =>
+      '今日の摂取量は体重増加に必要な余剰に届きませんでした。明日は各食事に栄養を少し足してみましょう。';
+
+  @override
+  String get statsKeepLogging => 'CalGoが実際の傾向を予測できるよう、食事と体重を定期的に記録しましょう。';
+
+  @override
+  String statsFamiliarReason(String reason) {
+    return '以前スキャンした食事と一致し、今日の残りの栄養目標に適しています。';
+  }
+
+  @override
+  String get statsFitsReason => '残りのカロリー内に収まり、次の食事に適しています。';
+
+  @override
+  String get statsSauceSide => 'カロリー管理のため、ドレッシングは別添えにしましょう。';
+
+  @override
+  String get statsLessOil => '油分を控えめにし、野菜を加えて軽めの食事にしましょう。';
+
+  @override
+  String get statsHighProtein => '高たんぱくなメニューです。ゆっくり食べて満腹感を持続させましょう。';
+
+  @override
+  String get statsReduceSauce => 'より軽めにしたい場合は、ソースや油を控えめにしましょう。';
+
+  @override
+  String get statsModerateCarbs => '炭水化物は適量にし、野菜をプラスしましょう。';
+
+  @override
+  String get statsBoostProtein => '卵や豆腐、ヨーグルトを添えてたんぱく質をプラスしましょう。';
+
+  @override
+  String get statsSplitPortions => 'この後まだ食事があるなら、小さめのポーションに分けましょう。';
+
+  @override
+  String get statsHalfPortion => '今日すでにカロリー上限に近いなら、半分のポーションにして野菜を足しましょう。';
+
+  @override
+  String get statsEatSlowly => '適量を守り、ゆっくり食べて満腹感を感じましょう。';
+
+  @override
+  String get statsScanFirst => '今日の最初の食事をスキャンしてください。残りの目標を計算して次の食事を提案します。';
+
+  @override
+  String get statsReachedToday =>
+      '今日のカロリー目標に到達しました！この調子を維持しましょう。空腹なら水分や軽めの軽食を選んでください。';
+
+  @override
+  String get statsNearTarget =>
+      '今日の目標に近づいたか少し超えましたが大丈夫！お腹が空いたら、軽めのたんぱく質を選びましょう。';
+
+  @override
+  String get statsNoMatchingMeals =>
+      '現在のデータから適切なメニューが見つかりませんでした。より正確な提案のため次の食事をスキャンしてください。';
+
+  @override
+  String statsPeriodDays(String days) {
+    return '$days日';
+  }
+
+  @override
+  String statsOnTrackBody(String calories, String target, String weeks) {
+    return '1日平均$calories kcalを維持すると、約$weeksで$target kgに到達できます。';
+  }
+
+  @override
+  String statsGuidanceProjection(
+    String dateSuffix,
+    String target,
+    String weeks,
+  ) {
+    return '今日のような摂取量を維持すると、約$weeks週間で$target kgに到達する見込みです$dateSuffix。';
+  }
+
+  @override
+  String statsProteinReason(String proteinG) {
+    return '残りのカロリー内で約${proteinG}gのたんぱく質を補給できます。';
+  }
+
+  @override
+  String statsRemainingMessage(String calRemaining, String protRemaining) {
+    return '残り約$calRemaining kcalで、たんぱく質はあと${protRemaining}g必要です。';
+  }
+
+  @override
+  String get statsLevel1 => '初心者';
+
+  @override
+  String get statsLevel2 => '記録者';
+
+  @override
+  String get statsLevel3 => '継続者';
+
+  @override
+  String get statsLevel4 => '自己管理者';
+
+  @override
+  String get statsLevel5 => '情熱家';
+
+  @override
+  String get statsLevel6 => '健康愛好家';
+
+  @override
+  String get statsLevel7 => '栄養の専門家';
+
+  @override
+  String get statsLevel8 => 'チャンピオン';
+
+  @override
+  String get statsLevel9 => 'レジェンド';
+
+  @override
+  String get statsLevel10 => 'CalGoマスター';
+
+  @override
+  String get statsAchievementFirstScanName => '輝かしいスタート';
+
+  @override
+  String get statsAchievementFirstScanDescription => '最初の食事を記録';
+
+  @override
+  String get statsAchievementScanMasterName => 'スキャンマスター';
+
+  @override
+  String get statsAchievementScanMasterDescription => 'AIで10食をスキャン';
+
+  @override
+  String get statsAchievementProteinKingName => 'プロテインキング';
+
+  @override
+  String get statsAchievementProteinKingDescription => '1日のたんぱく質目標を100%達成';
+
+  @override
+  String get statsAchievementStreak7Name => '7日間連続';
+
+  @override
+  String get statsAchievementStreak7Description => '7日連続で食事を記録';
+
+  @override
+  String get statsAchievementCaloChampName => 'カロリーチャンピオン';
+
+  @override
+  String get statsAchievementCaloChampDescription => '5日連続でカロリー目標を達成';
+
+  @override
+  String get statsAchievementLegendName => 'CalGoレジェンド';
+
+  @override
+  String get statsAchievementLegendDescription => 'レベル10に到達';
+
+  @override
+  String get statsForecastNoDataBody => '食事を記録すると、実際の摂取量に基づく予測を始められます。';
+
+  @override
+  String get statsForecastReachedBody => '現在の食事量と習慣を続けて、体重を安定させましょう。';
+
+  @override
+  String statsForecastHealthyBody(
+    String balance,
+    String calories,
+    String goal,
+    String periodLabel,
+    String target,
+    String weeksLabel,
+  ) {
+    return '$periodLabel $calories kcal前後を続けると、約$weeksLabelで$target kgに到達できます。';
+  }
+
+  @override
+  String statsForecastSlowBody(String goal, String target) {
+    return '目標の方向には進んでいますが、変化はゆっくりです。目標まで時間がかかる可能性があります。';
+  }
+
+  @override
+  String statsForecastAggressiveDeficitBody(
+    String calories,
+    String recommendedCalories,
+  ) {
+    return '現在の摂取量は約$calories kcalです。赤字が大きすぎる可能性があるため、約$recommendedCalories kcalまで少しずつ増やしましょう。';
+  }
+
+  @override
+  String statsForecastAggressiveSurplusBody(String balance) {
+    return '維持カロリーを約$balance kcal上回っています。計画より早く体重が増える可能性があります。';
+  }
+
+  @override
+  String get statsForecastMaintenanceBody =>
+      '摂取量が維持カロリーに近いため、体重は大きく変わらない可能性があります。';
+
+  @override
+  String statsForecastOppositeBody(
+    String balance,
+    String direction,
+    String target,
+  ) {
+    return 'この摂取量を続けると、体重が目標から遠ざかる可能性があります。';
+  }
+
+  @override
+  String get planThreeMonths => '3ヶ月';
+
+  @override
+  String get planDurationThreeMonths => '3ヶ月';
+
+  @override
+  String get billedThreeMonthsNote => '3ヶ月ごとに請求';
+
+  @override
+  String iosAutoRenewTermsThreeMonths(String price) {
+    return '$price/3ヶ月として請求されます。3ヶ月ごとに自動更新。App Storeの設定でいつでもキャンセル可能。';
+  }
+
+  @override
+  String get whatToEatTitle => '今日何食べる？';
+
+  @override
+  String get whatToEatTag => '何食べる？';
+
+  @override
+  String get spinRandomAction => 'ランダムに選ぶ';
+
+  @override
+  String get spinAgainAction => 'もう一度回す';
+
+  @override
+  String get mealBreakfast => '朝食';
+
+  @override
+  String get mealLunch => '昼食';
+
+  @override
+  String get mealDinner => '夕食';
+
+  @override
+  String get selectedDishTitle => 'おすすめの料理！';
+
+  @override
+  String get logThisMeal => 'この食事を記録する';
+
+  @override
+  String approxCalories(int calories) {
+    return '~$calories kcal';
+  }
+
+  @override
+  String get whatToEatHint => '料理をタップするかランダム抽選を押してください';
+
+  @override
+  String get dishTagHighProtein => '高たんぱく';
+
+  @override
+  String get dishTagQuick => '手軽で腹持ち◎';
+
+  @override
+  String get dishTagEnergetic => 'エネルギー補給';
+
+  @override
+  String get dishTagLight => 'あっさり軽め';
+
+  @override
+  String get dishTagBalanced => 'バランス良好';
+
+  @override
+  String get dishTagHealthy => 'ヘルシー・低脂質';
 }

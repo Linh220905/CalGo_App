@@ -1512,5 +1512,230 @@
   "usdaDietaryCitation": "USDA 美国人饮食指南（宏量营养素）",
   "cdcWeightLossCitation": "CDC — 健康减重指南 (每周0.5–1公斤)",
   "bmiMicronutrientSourceTitle": "BMI与微量营养素标准",
-  "bmiMicronutrientSourceDesc": "身体质量指数BMI分类（正常范围18.5–24.9）及每日微量营养素限额（膳食纤维14g/1000kcal，游离糖<10%，钠<2000mg）。"
+  "bmiMicronutrientSourceDesc": "身体质量指数BMI分类（正常范围18.5–24.9）及每日微量营养素限额（膳食纤维14g/1000kcal，游离糖<10%，钠<2000mg）。",
+  "statsOnTrack": "进展顺利",
+  "statsNeedsAdjustment": "需要调整",
+  "statsGoalReached": "已达成目标",
+  "statsAdjustmentBody": "当前摄入量不足以可靠预测何时达到 {target} kg。请持续记录并根据目标调整。",
+  "@statsAdjustmentBody": {
+    "placeholders": {
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "statsNoDataBody": "请记录更多体重和营养数据，以开始可靠预测。",
+  "statsCaloriePeriod": "过去7天平均",
+  "statsCaloriePeriodToday": "今天",
+  "statsNoCalories": "暂无热量数据",
+  "statsSlow": "进展较慢但稳定",
+  "statsHighDeficit": "热量缺口过大",
+  "statsHighSurplus": "热量盈余偏高",
+  "statsStalled": "进度暂时停滞",
+  "statsOpposite": "正在偏离目标",
+  "statsGuidanceOnTrack": "进展顺利",
+  "statsNeedData": "需要更多数据",
+  "statsFirstMeal": "等待首餐",
+  "statsMinorAdjustment": "需要微调",
+  "statsMoreSurplus": "需要补充热量",
+  "statsBalanced": "平衡体态",
+  "statsKeepTracking": "持续观察",
+  "statsSteady": "保持良好节奏",
+  "statsBuilding": "正在累积",
+  "statsFirstMealForecast": "记录今天的首餐，即可开始计算进度预测。",
+  "statsLowIntake": "今天的摄入量低于计划。请完整记录所有餐次以获得更准确的预测。",
+  "statsSmallBalance": "今天的热量差较小。请再记录几天以获得更清晰的预测。",
+  "statsOverIntake": "今天摄入量高于预估消耗。明天稍作调整即可重回正轨。",
+  "statsUnderSurplus": "今天的摄入量未达到增重所需盈余。明天请在每餐中补充更多营养。",
+  "statsKeepLogging": "请持续记录饮食和体重，以便 CalGo 预测您的真实趋势。",
+  "statsFamiliarReason": "与您之前扫描过的分量相符，且适合今天剩余的营养目标。",
+  "@statsFamiliarReason": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "statsFitsReason": "符合剩余热量预算，非常适合作为下一餐。",
+  "statsSauceSide": "酱汁单独分装以便更好地控制热量。",
+  "statsLessOil": "选择少油做法并增加蔬菜，让这一餐更清爽。",
+  "statsHighProtein": "高蛋白之选，细嚼慢咽能维持更长久的饱腹感。",
+  "statsReduceSauce": "如需更清淡，可减少酱料或用油量。",
+  "statsModerateCarbs": "保持适量碳水并在此餐中加入蔬菜。",
+  "statsBoostProtein": "可搭配鸡蛋、豆腐或酸奶以补充蛋白质。",
+  "statsSplitPortions": "如果后面还有餐次，可将分量分成两份小餐。",
+  "statsHalfPortion": "若今天热量接近达标，建议选择半份并多配蔬菜。",
+  "statsEatSlowly": "保持适中分量，细嚼慢咽以便及时感知饱腹。",
+  "statsScanFirst": "拍摄今天的第一餐，我来帮您计算剩余配额并推荐下一餐。",
+  "statsReachedToday": "您已达到今日热量目标！继续保持好节奏；如果还饿，建议多喝水或选极轻负担的食物。",
+  "statsNearTarget": "今天已接近或略超目标，但完全没关系！如果还饿，优先选择清淡且富含蛋白质的食物。",
+  "statsNoMatchingMeals": "暂未从现有数据中找到匹配的菜品。您可以拍摄下一餐，让我帮您更准确地计算。",
+  "statsPeriodDays": "{days}天",
+  "@statsPeriodDays": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "statsOnTrackBody": "保持每天平均 {calories} kcal，预计约 {weeks} 后达到 {target} kg。",
+  "@statsOnTrackBody": {
+    "placeholders": {
+      "calories": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "weeks": {
+        "type": "String"
+      }
+    }
+  },
+  "statsGuidanceProjection": "保持今天的摄入水平，预计约 {weeks} 周后达到 {target} kg{dateSuffix}。",
+  "@statsGuidanceProjection": {
+    "placeholders": {
+      "dateSuffix": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "weeks": {
+        "type": "String"
+      }
+    }
+  },
+  "statsProteinReason": "在剩余热量范围内补充约 {proteinG}g 蛋白质。",
+  "@statsProteinReason": {
+    "placeholders": {
+      "proteinG": {
+        "type": "String"
+      }
+    }
+  },
+  "statsRemainingMessage": "您还剩约 {calRemaining} kcal 配额，蛋白质还差 {protRemaining}g。",
+  "@statsRemainingMessage": {
+    "placeholders": {
+      "calRemaining": {
+        "type": "String"
+      },
+      "protRemaining": {
+        "type": "String"
+      }
+    }
+  },
+  "statsLevel1": "新手",
+  "statsLevel2": "记录者",
+  "statsLevel3": "坚持者",
+  "statsLevel4": "自律者",
+  "statsLevel5": "热忱者",
+  "statsLevel6": "健康达人",
+  "statsLevel7": "营养专家",
+  "statsLevel8": "冠军",
+  "statsLevel9": "传奇",
+  "statsLevel10": "CalGo大师",
+  "statsAchievementFirstScanName": "精彩开始",
+  "statsAchievementFirstScanDescription": "记录第一餐",
+  "statsAchievementScanMasterName": "扫描达人",
+  "statsAchievementScanMasterDescription": "用 AI 扫描 10 餐",
+  "statsAchievementProteinKingName": "蛋白质之王",
+  "statsAchievementProteinKingDescription": "达到每日蛋白质目标的 100%",
+  "statsAchievementStreak7Name": "连续 7 天",
+  "statsAchievementStreak7Description": "连续 7 天记录饮食",
+  "statsAchievementCaloChampName": "热量冠军",
+  "statsAchievementCaloChampDescription": "连续 5 天达到热量目标",
+  "statsAchievementLegendName": "CalGo 传奇",
+  "statsAchievementLegendDescription": "达到 10 级",
+  "statsForecastNoDataBody": "记录一餐后，我们就能根据实际摄入量开始预测。",
+  "statsForecastReachedBody": "保持当前摄入量和习惯，稳定维持体重。",
+  "statsForecastHealthyBody": "按{periodLabel}每天约摄入 {calories} kcal，预计约 {weeksLabel} 后达到 {target} kg。",
+  "@statsForecastHealthyBody": {
+    "placeholders": {
+      "balance": {
+        "type": "String"
+      },
+      "calories": {
+        "type": "String"
+      },
+      "goal": {
+        "type": "String"
+      },
+      "periodLabel": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "weeksLabel": {
+        "type": "String"
+      }
+    }
+  },
+  "statsForecastSlowBody": "你正在朝目标前进，但热量差较小，达到 {target} kg 可能需要更久。",
+  "@statsForecastSlowBody": {
+    "placeholders": {
+      "goal": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "statsForecastAggressiveDeficitBody": "你每天约摄入 {calories} kcal，热量缺口可能过大。建议逐步提高到约 {recommendedCalories} kcal。",
+  "@statsForecastAggressiveDeficitBody": {
+    "placeholders": {
+      "calories": {
+        "type": "String"
+      },
+      "recommendedCalories": {
+        "type": "String"
+      }
+    }
+  },
+  "statsForecastAggressiveSurplusBody": "你每天比维持所需多摄入约 {balance} kcal，体重可能增长过快。",
+  "@statsForecastAggressiveSurplusBody": {
+    "placeholders": {
+      "balance": {
+        "type": "String"
+      }
+    }
+  },
+  "statsForecastMaintenanceBody": "当前摄入接近维持水平，体重可能不会有明显变化。",
+  "statsForecastOppositeBody": "按当前摄入，体重可能{direction, select, up {增加} other {减少}}，并进一步偏离 {target} kg。",
+  "@statsForecastOppositeBody": {
+    "placeholders": {
+      "balance": {
+        "type": "String"
+      },
+      "direction": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "planThreeMonths": "3个月",
+  "planDurationThreeMonths": "3个月",
+  "billedThreeMonthsNote": "每3个月计费",
+  "iosAutoRenewTermsThreeMonths": "按 {price}/3个月 计费。每3个月自动续订。随时在 App Store 设置中取消。",
+  "whatToEatTitle": "今天吃什么？",
+  "whatToEatTag": "吃什么？",
+  "spinRandomAction": "随机转转",
+  "spinAgainAction": "再转一次",
+  "mealBreakfast": "早餐",
+  "mealLunch": "午餐",
+  "mealDinner": "晚餐",
+  "selectedDishTitle": "为你推荐！",
+  "logThisMeal": "记录这顿餐",
+  "approxCalories": "~{calories} 千卡",
+  "whatToEatHint": "点击任意菜品或按下随机抽取",
+  "dishTagHighProtein": "高蛋白",
+  "dishTagQuick": "快捷管饱",
+  "dishTagEnergetic": "能量满满",
+  "dishTagLight": "清淡易消化",
+  "dishTagBalanced": "风味均衡",
+  "dishTagHealthy": "健康低脂"
 }

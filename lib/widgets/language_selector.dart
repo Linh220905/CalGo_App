@@ -134,8 +134,8 @@ void showLanguageSelectorModal(BuildContext context) {
                           decoration: BoxDecoration(
                             color: isSelected
                                 ? (isDark
-                                    ? const Color(0xFF2C2A34)
-                                    : const Color(0xFFF1F5F9))
+                                      ? const Color(0xFF2C2A34)
+                                      : const Color(0xFFF1F5F9))
                                 : Colors.transparent,
                             borderRadius: BorderRadius.circular(16),
                             border: isSelected
@@ -208,6 +208,8 @@ String _flagForLanguage(String code) {
   switch (code) {
     case 'vi':
       return '🇻🇳';
+    case 'de':
+      return '🇩🇪';
     case 'en':
       return '🇬🇧';
     case 'es':
@@ -232,6 +234,8 @@ String _flagForLanguage(String code) {
       return '🇷🇺';
     case 'ro':
       return '🇷🇴';
+    case 'hr':
+      return '🇭🇷';
     default:
       return '🌐';
   }

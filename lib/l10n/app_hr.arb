@@ -1,0 +1,1910 @@
+{
+  "@@locale": "hr",
+  "tabHome": "Početna",
+  "tabAnalytics": "Analitika",
+  "tabSettings": "Postavke",
+  "analysisEyebrow": "Analiza",
+  "progressTitle": "Napredak",
+  "settingsEyebrow": "postavke",
+  "profileHeading": "Profil",
+  "accountSection": "Račun",
+  "preferencesSection": "Postavke",
+  "trackingSection": "Ciljevi i praćenje",
+  "supportSection": "Podrška",
+  "today": "Danas",
+  "yesterday": "Jučer",
+  "caloriesLeft": "Preostalo kalorija",
+  "proteinLeft": "Preostalo proteina",
+  "carbsLeft": "Preostalo ugljikohidrata",
+  "fatsLeft": "Preostalo masti",
+  "recentlyUploaded": "Nedavno učitano",
+  "noMealsUploaded": "Još nema učitanih obroka",
+  "tapToScanMeal": "Dodirnite za skeniranje vašeg prvog obroka pomoću umjetne inteligencije",
+  "profileTitle": "Osobni račun",
+  "personalInfoTitle": "Osobni podaci",
+  "personalInfoName": "Ime",
+  "personalInfoAge": "Dob",
+  "personalInfoHeight": "Visina",
+  "personalInfoCurrentWeight": "Trenutna težina",
+  "personalInfoTargetWeight": "Ciljana težina",
+  "personalInfoGender": "Spol",
+  "personalInfoNotSet": "Nije postavljeno",
+  "creditsLabel": "Krediti za skeniranje",
+  "scannedCountLabel": "Skenirani obroci",
+  "buyCredits": "Kupite kredite",
+  "statistics": "Postignuća",
+  "calorieTarget": "Cilj kalorija",
+  "notifications": "Obavijesti",
+  "darkMode": "Tamni način rada",
+  "language": "Jezik",
+  "languageDisplayName": "Hrvatski",
+  "userGuide": "Upute za korištenje",
+  "customerSupport": "Korisnička podrška",
+  "logout": "Odjava",
+  "selectLanguageTitle": "Odaberite jezik",
+  "scanTitle": "Skenirajte obrok",
+  "scanInstructionHeader": "Držite hranu unutar okvira",
+  "scanInstructionSub": "Osigurajte odgovarajuće osvjetljenje za točno prepoznavanje AI",
+  "selectFromGallery": "Odaberite iz galerije",
+  "outOfCreditsTitle": "Nema kredita za skeniranje!",
+  "outOfCreditsMessage": "Iskoristili ste sve kredite za skeniranje. Nadopunite za nastavak praćenja prehrane!",
+  "buyMore": "Kupi više",
+  "cancel": "Otkazati",
+  "pricingTitle": "Nadogradnja i krediti",
+  "pricingSubtitle": "Odaberite najbolji plan za otključavanje svih AI mogućnosti",
+  "creditPacksTitle": "Skenirajte kreditne pakete",
+  "noExpiryBadge": "Bez isteka",
+  "popularBadge": "Popularan",
+  "subscriptionsTitle": "Pro pretplate",
+  "payButton": "Platite sada",
+  "privacyPolicy": "Politika privatnosti",
+  "termsOfService": "Uvjeti usluge",
+  "deleteAccount": "Izbriši račun",
+  "openOnline": "Otvori online",
+  "onlineGuide": "Online vodič",
+  "deleteAccountSubscriptionWarning": "Brisanje vašeg CalGo računa ne otkazuje pretplatu na Google Play. Ako imate Premium, otkažite ga zasebno na Google Playu kako biste izbjegli naplatu obnove.",
+  "restorePurchases": "Obnovi kupnje",
+  "privacyPolicyContent": "CalGo Pravila o privatnosti (ažurirano 5. kolovoza 2026.):\n\n1. Podaci koje prikupljamo: e-pošta računa, ime za prikaz, identifikator za prijavu na Google, informacije o uvođenju prehrane, fotografije obroka, rezultati skeniranja, povijest obroka, metapodaci o kupnji, dijagnostika aplikacije/uređaja i postavke obavijesti.\n2. Kako se koriste dopuštenja: pristup kameri i fotografiji traži se samo kada odaberete snimanje ili odabir fotografije obroka; obavijesti se koriste samo kada su omogućene.\n3. Kako se podaci koriste: za pružanje AI analize prehrane, sinkronizaciju vašeg računa, obradu Google Play kupnji, sprječavanje zloupotrebe, pružanje podrške i poboljšanje pouzdanosti. Fotografije mogu obrađivati ​​naši pružatelji usluga hostinga i umjetne inteligencije.\n4. Dijeljenje i sigurnost: ne prodajemo vaše osobne podatke ili fotografije obroka. Nužni pružatelji usluga kao što su hosting, AI obrada, Google prijava i Google Play naplata mogu obrađivati ​​ograničene podatke. Koristimo HTTPS i kontrole pristupa, ali nijedan sustav nije potpuno siguran.\n5. Zadržavanje i brisanje: podaci o računu i povijest obroka brišu se kada izbrišete svoj račun, osim podataka koji se moraju zadržati radi sprječavanja prijevara, sporova ili pravnih obveza. Sigurnosnim kopijama može trebati razumno vrijeme da isteknu.\n6. Vaša prava: izbrišite svoj račun u Profilu ili posjetite https://calgo.tech/delete-account. Za pristup, ispravak ili pitanja obratite se na support@calgo.tech. Puna pravila: https://calgo.tech/privacy.",
+  "termsOfServiceContent": "CalGo uvjeti usluge:\n\n1. Usluga i medicinsko odricanje od odgovornosti: AI rezultati prehrane samo su procjene i ne zamjenjuju profesionalni medicinski savjet. CalGo nije medicinski uređaj.\n2. Plaćanja: kreditni paketi su jednokratne digitalne kupnje. Premium tjedni, mjesečni i godišnji planovi su pretplate na Google Play koje se automatski obnavljaju osim ako se ne otkažu prije sljedeće obnove. Upravljajte ili otkažite na https://play.google.com/store/account/subscriptions.\n3. Povrat novca i brisanje: Google Play upravlja Android naplatom i povratom novca. Brisanjem CalGo računa ne otkazuje se pretplata na Google Play.\n4. Sadržaj i intelektualno vlasništvo: zadržavate vlasništvo nad učitanim fotografijama; CalGo dobiva ograničenu licencu za njihovu obradu radi pružanja i poboljšanja usluge. CalGo posjeduje svoju aplikaciju, robnu marku i softver.\n5. Kontakt: support@calgo.tech. Potpuni uvjeti: https://calgo.tech/terms.",
+  "deleteAccountConfirmMessage": "Jeste li sigurni da želite trajno izbrisati svoj CalGo račun i sve podatke o unosu kalorija? Ova se radnja ne može poništiti.",
+  "historyTitle": "Povijest obroka",
+  "historySubtitle": "Vaše prehrambeno putovanje",
+  "mealsCountLabel": "Obroci",
+  "streakDaysLabel": "Niz",
+  "kcalPerDay": "Kcal/dan",
+  "proteinPerDay": "Proteini/dan",
+  "noMealsHistory": "Još nema prijavljenih obroka",
+  "scanFirstMealPrompt": "Za početak skenirajte svoj prvi obrok\nvaše prehrambeno putovanje",
+  "scanFirstMealButton": "Skenirajte prvi obrok",
+  "deleteMealConfirm": "Želite li izbrisati ovaj obrok?",
+  "cannotDeleteMeal": "Nije moguće izbrisati obrok. Molimo pokušajte ponovo.",
+  "photoGalleryTitle": "Fotografije hrane",
+  "noPhotosYet": "Još nema skeniranih fotografija hrane",
+  "takePhotosPrompt": "Snimite fotografije svojih obroka i izgradite svoju kolekciju!",
+  "scanFoodNow": "Sada skenirajte hranu",
+  "welcomeTo": "Dobrodošli u",
+  "getStarted": "Započnite",
+  "snapPhotoAiTitle": "Snimite fotografiju. Neka AI radi.",
+  "snapPhotoAiDesc": "AI automatski prepoznaje hranu i izračunava kalorije u sekundi.",
+  "trackEasilyTitle": "Pratite s lakoćom.",
+  "trackEasilyDesc": "Pratite kalorije, proteine, ugljikohidrate i masti svaki dan.",
+  "reachGoalsTitle": "Postignite ciljeve brže.",
+  "reachGoalsDesc": "Dobijte personalizirane ciljeve i pratite napredak u mršavljenju.",
+  "nextStepButton": "Sljedeći",
+  "goalStepTitle": "Što je vaš cilj?",
+  "goalStepSubtitle": "Pomaže CalGou da napravi plan koji vam odgovara",
+  "goalLoseWeight": "Mršaviti",
+  "goalLoseWeightDesc": "Učinkovito sagorijevanje masti, tonirajte tijelo",
+  "goalLoseWeightReason": "To nam pomaže da izgradimo plan gubitka masti koji štiti mišiće i ostaje održiv.",
+  "goalGainMuscle": "Dobijte mišiće",
+  "goalGainMuscleDesc": "Izgradite mišiće i povećajte snagu",
+  "goalGainMuscleReason": "To nam pomaže da napravimo plan za dobivanje mišića u skladu s vašim potrebama za treningom i proteinima.",
+  "goalMaintain": "Održavajte težinu",
+  "goalMaintainDesc": "Održavajte svoju uravnoteženu tjelesnu građu",
+  "goalMaintainReason": "To nam pomaže da izgradimo uravnotežen plan koji dugoročno odgovara vašem životu.",
+  "nameStepTitle": "tvoje ime je...",
+  "nameStepHint": "Unesite svoje ime",
+  "demoStepTitle": "Pogledajte CalGo na djelu",
+  "genderStepTitle": "koji si spol",
+  "genderStepSubtitle": "Za točne izračune",
+  "genderMale": "Muški",
+  "genderFemale": "Žena",
+  "genderOther": "ostalo",
+  "ageStepTitle": "koliko imas godina",
+  "heightStepTitle": "Kolika je tvoja visina?",
+  "weightStepTitle": "Kolika je vaša trenutna težina?",
+  "targetWeightStepTitle": "Koja je vaša ciljna težina?",
+  "activityStepTitle": "Koja je vaša razina aktivnosti?",
+  "dietStepTitle": "Pridržavate li se neke posebne dijete?",
+  "analysisTitle": "Analiziramo vaše podatke...",
+  "accountStepTitle": "Stvorite račun da biste spremili svoj plan",
+  "continueWithGoogle": "Nastavite s Googleom",
+  "continueWithApple": "Nastavite s Appleom",
+  "heightStepDesc": "Pomaže izračunati BMI i točne potrebe za kalorijama",
+  "weightStepDesc": "Pomaže u određivanju vaših osobnih prehrambenih ciljeva",
+  "currentHeightHeader": "Trenutna visina",
+  "currentWeightHeader": "Trenutna težina",
+  "bmiIndexTitle": "BMI indeks",
+  "bmiUnderweight": "Pothranjenost",
+  "bmiNormal": "Normalan",
+  "bmiOverweight": "Prekomjerna težina",
+  "bmiObese": "pretilo",
+  "targetWeightDesc": "Pomaže postaviti vaše osobne prehrambene ciljeve",
+  "goalMaintainLabel": "Održavajte tjelesnu građu",
+  "goalLoseLabel": "Gubitak težine",
+  "goalGainLabel": "Dobivanje mišića",
+  "goalMaintainHint": "Cilj je jednak vašoj trenutnoj težini",
+  "goalLoseDiffText": "Cilj: Izgubiti {kg} kg",
+  "@goalLoseDiffText": {
+    "description": "Localized UI text: goalLoseDiffText",
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      }
+    }
+  },
+  "goalGainDiffText": "Cilj: Dobitak {kg} kg",
+  "@goalGainDiffText": {
+    "description": "Localized UI text: goalGainDiffText",
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      }
+    }
+  },
+  "paceStepTitle": "Tempo tjedno?",
+  "paceStepSubtitle": "Odaberite udobnu cijenu za svoj stil života",
+  "activityStepSubtitle": "Utječe na vašu dnevnu potrošnju kalorija",
+  "dietStepSubtitle": "CalGo preporučuje obroke koji najbolje odgovaraju vašem tijelu i ciljevima.",
+  "socialProofTitle": "Što zajednica kaže o CalGou",
+  "socialProofSubtitle": "Autentične recenzije stvarnih članova",
+  "ratingTag": "5★ Ocjena",
+  "referralStepTitle": "Kako ste čuli za CalGo?",
+  "referralStepSubtitle": "Pomaže nam razumjeti vaše putovanje",
+  "referralFriend": "Preporuka prijatelja",
+  "sportsStepTitle": "Kojim se sportovima baviš?",
+  "sportsStepSubtitle": "Odaberite aktivnosti koje redovito obavljate",
+  "accountStepSubtitle": "Zaštitite informacije i sinkronizirajte osobni napredak",
+  "dataPrivacyNote": "Vaši podaci su strogo šifrirani i povjerljivi",
+  "analysisHello": "Pozdrav, {name}",
+  "@analysisHello": {
+    "description": "Localized UI text: analysisHello",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "analysisPlanReady": "Vaš plan je spreman",
+  "dailyCalorieTargetTitle": "DNEVNI CILJ KALORIJA",
+  "kcalPerDayUnit": "kcal / dan",
+  "workoutLabel": "vježbanje",
+  "workoutDaysText": "{days} dana",
+  "@workoutDaysText": {
+    "description": "Localized UI text: workoutDaysText",
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "perWeekText": "tjedno",
+  "yourJourneyTitle": "TVOJE PUTOVANJE",
+  "journeyCurrent": "Trenutni",
+  "journeyTarget": "Cilj",
+  "journeyTimeframe": "Vremenski okvir",
+  "weeksUnit": "{weeks} tjedana",
+  "@weeksUnit": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
+  "completedPercent": "{p}% dovršeno",
+  "@completedPercent": {
+    "description": "Localized UI text: completedPercent",
+    "placeholders": {
+      "p": {
+        "type": "int"
+      }
+    }
+  },
+  "loginTitle": "Dobrodošli u CalGo",
+  "loginSubtitle": "Prijavite se za sinkronizaciju podataka o prehrani",
+  "alreadyHaveAccount": "Već imate račun?",
+  "loginAction": "Prijavite se",
+  "loginGoogle": "Nastavite s Googleom",
+  "loginApple": "Nastavite s Appleom",
+  "loginFailed": "Prijava nije uspjela: {error}",
+  "@loginFailed": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "appleComingSoon": "Apple prijava stiže uskoro!",
+  "loginRequired": "Prijavite se s Googleom kako biste zaštitili i sinkronizirali svoje podatke.",
+  "loginRequiredButton": "Za sinkronizaciju podataka potrebna je prijava",
+  "progressLabel": "Napredak",
+  "dataLoadFailed": "Nije moguće učitati podatke",
+  "deleteMealQuestion": "Želite li izbrisati ovaj obrok?",
+  "deleteMealFailed": "Nije moguće izbrisati obrok. Molimo pokušajte ponovo.",
+  "retry": "Pokušajte ponovno",
+  "mealTypeBreakfast": "Doručak",
+  "mealTypeLunch": "Ručak",
+  "mealTypeDinner": "Večera",
+  "mealTypeSnack": "Međuobrok",
+  "greetingMorning": "Dobro jutro",
+  "greetingAfternoon": "Dobar dan",
+  "greetingEvening": "Dobra večer",
+  "aiCoachAlmostGoal": "Skoro ste postigli cilj! Samo tako nastavi!",
+  "aiCoachPlentyCalories": "Danas je ostalo dosta kalorija. Jedi dobro!",
+  "aiCoachMomentum": "Nastavite s dobrim zamahom!",
+  "mascotGoalTipWater": "Popijte gutljaj vode da ostanete osvježeni!",
+  "mascotGoalTipSlow": "Sjajno je jesti polako i slušati svoje tijelo.",
+  "mascotGoalTipGreat": "Danas ste bili super ✨",
+  "mascotGoalReached": "Cilj kalorija za danas je postignut! Održavanje ovog tempa je vrhunska razina ✨",
+  "mascotGuidanceIntro": "Danas sam za vas odabrao neka dobra jela. Dodirnite da biste ih provjerili!",
+  "mascotGuidanceOpen": "Preporučena jela još uvijek su na zaslonu s prijedlozima!",
+  "mascotGuidanceTipWater": "Jeste li popili dovoljno vode? Popijte gutljaj za osvježenje!",
+  "mascotGuidanceTipSlow": "Jedite polako, duže ćete se osjećati siti!",
+  "mascotGuidanceOverTarget": "Preveli ste {calories} kcal. Odabrao sam lagana jela za vas!",
+  "@mascotGuidanceOverTarget": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "mascotGuidanceRemaining": "Trebate {calories} kcal više da postignete svoj cilj. Pogledajte moje odabire!",
+  "@mascotGuidanceRemaining": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "mascotTipHydration": "Jeste li već hidratizirani? Popijte gutljaj vode da ostanete oštri ✨",
+  "mascotTipChew": "Žvačite polako, pomaže probavi i održava vas sitima",
+  "mascotTipConsistency": "Dosljednost svaki dan gradi sjajnu tjelesnu građu",
+  "mascotNoMeals": "Još niste ništa upisali? Snimite fotografiju hrane da mi je pokažete!",
+  "mascotOverTarget": "Danas prekoračite svoj cilj za oko {calories} kcal. Bez brige, idite lagani i bogati proteinima za svoj sljedeći obrok!",
+  "@mascotOverTarget": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "mascotMissingCalories": "Još uvijek nedostaje {calories} kcal danas. Idi zgrabi nešto ukusno!",
+  "@mascotMissingCalories": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "mascotOnTrack": "Disciplina bez greške! Kalorije su točno u točku!",
+  "mealCount": "{count, plural, =0 {Nema obroka} =1 {1 obrok} other {{count} obroka}}",
+  "@mealCount": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "ingredientCount": "{count, plural, =0 {Nema sastojaka} =1 {1 sastojak} other {{count} sastojaka}}",
+  "@ingredientCount": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "unmatchedIngredientsNote": "Podaci o nutritivnoj vrijednosti nisu pronađeni za: {ingredients}. Dodajte ih ručno.",
+  "@unmatchedIngredientsNote": {
+    "description": "Localized UI text for ingredients without a nutrition match",
+    "placeholders": {
+      "ingredients": {
+        "type": "String"
+      }
+    }
+  },
+  "dishCount": "{count, plural, =1 {1 jelo} other {{count} jela}}",
+  "@dishCount": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "monthFallback": "Mjesec {month}",
+  "@monthFallback": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "month": {
+        "type": "int"
+      }
+    }
+  },
+  "scanProcessingRecognizing": "Prepoznavanje vašeg obroka...",
+  "scanProcessingRecognized": "Obrok priznat",
+  "scanProcessingIngredients": "Analiza sastojaka...",
+  "scanProcessingNutrition": "Prepoznavanje nutritivnih činjenica...",
+  "scanProcessingCalories": "Izračunavanje kalorija...",
+  "scanProcessingPortion": "Procjena veličine porcije...",
+  "scanProcessingSummary": "AI sastavlja vaš rezultat...",
+  "scanProcessingReport": "Priprema izvješća...",
+  "cameraPermissionDenied": "Dozvola za kameru je odbijena. Otvorite Postavke i dopustite pristup kameri za CalGo!",
+  "cameraPermissionRequired": "CalGo treba dopuštenje kamere za skeniranje obroka.",
+  "noCamera": "Kamera nije pronađena",
+  "cameraStartFailed": "Nije moguće pokrenuti kameru. Zatvorite ovaj zaslon i pokušajte ponovno!",
+  "scanInProgress": "Drugi obrok je u analizi. Molimo pričekajte trenutak!",
+  "notLoggedIn": "Niste prijavljeni. Prijavite se s Googleom da biste koristili ovu značajku!",
+  "cameraPermissionMissing": "Dopuštenje kamere nije omogućeno. Dopustite pristup kameri za CalGo u postavkama telefona!",
+  "networkTimeout": "Mreža je spora ili je isteklo. Provjerite vezu i pokušajte ponovno!",
+  "scanFailed": "Nije moguće analizirati fotografiju ({error}). Molimo pokušajte ponovno!",
+  "@scanFailed": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "scanAgain": "Ponovno skeniranje",
+  "nutritionTitle": "Prehrana",
+  "guidanceRecoverySubtitle": "Nježna prilagodba",
+  "guidanceLoggedSubtitle": "Na temelju vašeg posljednjeg obroka",
+  "guidanceRefreshTooltip": "Novi prijedlozi",
+  "guidanceCaloriesRemaining": "Preostalo {calories} kcal",
+  "@guidanceCaloriesRemaining": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "guidanceProteinRemaining": "{grams}g proteina potrebno",
+  "@guidanceProteinRemaining": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "guidanceAlternativesTitle": "Ili odaberite jedno od ovih jela",
+  "guidanceOtherMeal": "Planiram još nešto pojesti",
+  "guidanceSeeMore": "Pogledajte više",
+  "guidanceDisclaimer": "Prijedlozi su samo za referencu. Skenirajte stvarni obrok kako biste ga točno zabilježili.",
+  "guidanceFamiliarTag": "POZNATO",
+  "guidanceDishCalories": "{calories} kcal",
+  "@guidanceDishCalories": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "guidanceDishProtein": "P {grams}g",
+  "@guidanceDishProtein": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "guidanceDishCarbs": "C {grams}g",
+  "@guidanceDishCarbs": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "guidancePrepTime": "{minutes} min",
+  "@guidancePrepTime": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "guidancePrice": "~{price}k",
+  "@guidancePrice": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "guidanceFitGreat": "Odlično pristaje",
+  "guidanceFitAdjust": "Potrebna prilagodba",
+  "guidanceFitGood": "Dobro pristaje",
+  "guidanceAppleTitle": "Neka Tao računa s vama",
+  "guidanceFirstScanAction": "Skenirajte svoj prvi obrok",
+  "guidanceAppleSuggestionTitle": "Taovi prijedlozi",
+  "guidanceNextMealAction": "Skenirajte svoj sljedeći obrok",
+  "guidanceGoalReachedTitle": "Današnji cilj je ispunjen!",
+  "guidanceScreenTitle": "Što biste trebali jesti?",
+  "guidanceUnavailableTitle": "Još nema prijedloga",
+  "guidanceUnavailableMessage": "Pokušajte ponovno nakon skeniranja obroka.",
+  "guidanceScanMeal": "Skenirajte obrok",
+  "guidanceConsiderMeals": "Obroci koje treba uzeti u obzir",
+  "guidanceScanForAccuracy": "Skenirajte za točan zapis",
+  "guidanceSwapWith": "Ili ga zamijenite s",
+  "guidanceChangeSuggestion": "Promjena prijedloga",
+  "guidancePremiumSwapTitle": "Mijenjanje prijedloga značajka je Premiuma",
+  "guidancePremiumSwapMessage": "Nadogradite na Premium za promjenu prijedloga obroka bez ograničenja na temelju vaših ciljeva.",
+  "later": "Kasnije",
+  "upgradePremium": "Nadogradite na Premium",
+  "guidanceTodayTitle": "Osobni prijedlozi za danas",
+  "guidanceTodaySubtitle": "Odaberite obrok koji odgovara vašim makronaredbama, zatim skenirajte pravi obrok prije nego što ga zabilježite.",
+  "guidanceScanRealMeal": "Skenirajte pravi obrok",
+  "guidanceNextMealGoal": "CILJ ZA TVOJ SLJEDEĆI OBROK",
+  "remainingLabel": "Preostalo",
+  "proteinNeededLabel": "Potrebni proteini",
+  "familiarMacroLabel": "POZNATO · MACRO FIT",
+  "numberOneChoice": "IZBOR BROJ 1",
+  "energyLabel": "ENERGIJA",
+  "familiarLabel": "POZNATO",
+  "dishTip": "Savjet: {adjustment}",
+  "@dishTip": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "adjustment": {
+        "type": "String"
+      }
+    }
+  },
+  "dishMacroSummary": "{calories} kcal · {protein}g proteina",
+  "@dishMacroSummary": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      },
+      "protein": {
+        "type": "String"
+      }
+    }
+  },
+  "fitGoalGreat": "Izvrstan za vaš cilj",
+  "fitGoalAdjust": "Trebalo bi se prilagoditi",
+  "fitGoalGood": "Odgovara vašem cilju",
+  "goalSpecificGainTitle": "Koliko često trenirate svaki tjedan?",
+  "goalSpecificGainNone": "Još ne treniram",
+  "goalSpecificGain12": "1–2 sesije",
+  "goalSpecificGain34": "3–4 sesije",
+  "goalSpecificGain5": "5+ sesija",
+  "goalSpecificMaintainTitle": "Što je najvažnije za održavanje forme?",
+  "goalSpecificStable": "Održi moju težinu stabilnom",
+  "goalSpecificBalanced": "Jedite više uravnoteženih obroka",
+  "goalSpecificHabits": "Izgradite dugoročne navike",
+  "goalSpecificWeekends": "Vikendom ostanite na pravom putu",
+  "goalSpecificLoseTitle": "Što vam najteže čini gubitak masnoće?",
+  "goalSpecificHunger": "Često ogladnim",
+  "goalSpecificPortions": "Kontrola porcija",
+  "goalSpecificChoices": "Ne znam što da jedem",
+  "goalSpecificLogging": "Zapisivanje je teško",
+  "goalSpecificOvereat": "Noću se prejedem",
+  "goalSpecificWeekendsHard": "Vikendi su teški",
+  "avoidFoodsTitle": "Imate li alergije na neku hranu ili sastojke?",
+  "foodSeafood": "Plodovi mora",
+  "foodRedMeat": "Crveno meso",
+  "foodEggs": "jaja",
+  "foodDairy": "Mlijeko i sir",
+  "foodFried": "Pržena hrana",
+  "foodSpicy": "Začinjena hrana",
+  "challengeTitle": "Što vam je najteže?",
+  "challengeCalories": "Ne znam kalorije u svojoj hrani",
+  "challengeSweets": "Otpornost na slatkiše",
+  "challengePortions": "Kontrola porcija",
+  "challengeBetweenMeals": "Postati gladan između obroka",
+  "challengeCookingTime": "Nema vremena za kuhanje",
+  "challengeMotivation": "Ostati motiviran",
+  "budgetTitle": "Koliki je vaš budžet za jedan obrok?",
+  "budgetNote": "CalGo traži kako bi mogao predložiti obroke koji odgovaraju vašim ciljevima i proračunu.",
+  "budgetLow": "Ispod 5 dolara",
+  "budgetLowNote": "Jednostavna, jeftina jela",
+  "budgetMid": "5 – 12 dolara",
+  "budgetMidNote": "Tipični budžet za obrok",
+  "budgetHigh": "12 – 25 dolara",
+  "budgetHighNote": "Više prostora za kvalitetu",
+  "budgetAny": "Bez ograničenja",
+  "budgetAnyNote": "Dajte prioritet prehrambenim ciljevima",
+  "prepTitle": "Koliko vremena imate za pripremu jednog obroka?",
+  "prepNote": "CalGo traži kako bi mogao predložiti obroke koji odgovaraju vašem rasporedu.",
+  "prepShort": "Manje od 10 minuta",
+  "prepShortNote": "Brzo i praktično kada imate posla",
+  "prepMedium": "10–20 minuta",
+  "prepMediumNote": "Dovoljno za jednostavan obrok",
+  "prepLong": "Više od 20 minuta",
+  "prepLongNote": "Više vremena za pažljivo pripremanje",
+  "prepAny": "Bez preferencija",
+  "prepAnyNote": "Sve dok odgovara mojim ciljevima",
+  "nutritionPriorityTitle": "Čemu dajete prednost u obroku?",
+  "nutritionPriorityNote": "CalGo pita kako vam ne bi dao generičke prijedloge.",
+  "priorityProtein": "Visoka količina proteina",
+  "priorityProteinNote": "Podržava punoću i oporavak mišića",
+  "priorityLight": "Lagane kalorije",
+  "priorityLightNote": "Lako se balansira tijekom dana",
+  "priorityBalanced": "Uravnotežena",
+  "priorityBalancedNote": "Razumna mješavina kalorija i makronaredbi",
+  "priorityFilling": "Drži me sit",
+  "priorityFillingNote": "Dajte prednost proteinima i dovoljno ugljikohidrata",
+  "habitTitle": "Kakve su vaše prehrambene navike?",
+  "habitNote": "CalGo traži kako bi mogao predložiti obroke koji odgovaraju vašem životnom stilu.",
+  "habitRegular": "Jedem redovite, uravnotežene obroke",
+  "habitSnacking": "Često grickam",
+  "habitSkipBreakfast": "Često preskačem doručak",
+  "habitLateNight": "Jedem kasno navečer",
+  "habitEatingOut": "Često jedem vani",
+  "habitCook": "Kuham kod kuće",
+  "motivationTitle": "Zbog čega se želite promijeniti?",
+  "motivationHealth": "Bolje zdravlje",
+  "motivationMuscle": "Izgradite mišiće",
+  "motivationClothes": "Izgledajte bolje u odjeći",
+  "motivationWeight": "Mršaviti",
+  "motivationEnergy": "Osjećajte se zdravi i puni energije",
+  "motivationOther": "Drugi razlog",
+  "painTitle": "Jeste li ikada...",
+  "painNote": "Odaberite stvari koje ste doživjeli",
+  "painEatLess": "Jedite vrlo malo, ali još uvijek ne gubite na težini",
+  "painCardio": "Radite puno kardio vježbi",
+  "painGiveUp": "Odustanite nakon nekoliko dana",
+  "painUnknownCalories": "Ne znam koliko kalorija jedem",
+  "painHungry": "Ogladni na pola puta",
+  "painStressEating": "Prehrana pod stresom",
+  "emotionalTitle": "Ako nastavite jesti kao sada...",
+  "emotionalCurrent": "Sada",
+  "emotionalAfterSixMonths": "Nakon 6 mjeseci",
+  "emotionalStillWeight": "Možete ostati oko svoje trenutne težine. Uz CalGo, možete se promijeniti.",
+  "emotionalHelpChange": "Pomoći ću ti da se promijeniš",
+  "referralX": "X (Twitter)",
+  "referralOther": "ostalo",
+  "sportsRunning": "Trčanje",
+  "sportsCycling": "Biciklizam",
+  "sportsSwimming": "Plivanje",
+  "sportsFootball": "Nogomet",
+  "sportsBadminton": "Badminton",
+  "sportsBasketball": "Košarka",
+  "sportsOther": "ostalo",
+  "durationTitle": "Trajanje",
+  "durationNote": "Odaberite vremenski okvir koji vam odgovara",
+  "dailyCalorieGoal": "Dnevni cilj kalorija",
+  "dailyCalorieGoalMessage": "Vaš trenutni cilj je {calories} kcal/dan. Možete ga promijeniti u postavkama integracije ili kontaktirati podršku.",
+  "@dailyCalorieGoalMessage": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "close": "Zatvoriti",
+  "reminderNotifications": "Obavijesti o podsjetnicima",
+  "reminderNotificationsEnabled": "Automatski su omogućeni podsjetnici za obroke i obavijesti o dnevnom praćenju kalorija.",
+  "gotIt": "shvaćam",
+  "userGuideTitle": "Kako koristiti CalGo",
+  "userGuideContent": "1. Dodirnite Skeniraj (+) za snimanje ili odabir fotografije obroka.\n2. AI automatski analizira kalorije i prehranu.\n3. Uredite količine ili dodajte sastojke prije spremanja.\n4. Pregledajte svoju povijest obroka na kartici Povijest.",
+  "great": "Sjajno",
+  "customerSupportMessage": "Za pomoć ili povratne informacije o proizvodu, pošaljite nam e-poštu na: support@calgo.tech",
+  "deleteAccountFailed": "Nije moguće izbrisati račun. Pogledajte mrežni vodič ili kontaktirajte podršku.",
+  "galleryLoadFailed": "Nije moguće učitati zbirku fotografija",
+  "viewResult": "Pogledajte detalje rezultata",
+  "shareMemoryCard": "Podijelite memorijsku karticu",
+  "deletePhoto": "Izbriši ovu fotografiju",
+  "confirmDelete": "Potvrdite brisanje",
+  "deletePhotoMessage": "Jeste li sigurni da želite izbrisati fotografiju obroka \"{meal}\"?",
+  "@deletePhotoMessage": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "meal": {
+        "type": "String"
+      }
+    }
+  },
+  "mealDeleted": "Obrok uklonjen iz vaše kolekcije",
+  "deleteFailed": "Nije moguće izbrisati. Molimo pokušajte ponovo.",
+  "paymentProcessing": "Obrada plaćanja putem Google Playa...",
+  "paymentOpenFailed": "Nije moguće otvoriti Google Play plaćanje. Molimo pokušajte ponovo.",
+  "paymentVerificationFailed": "Plaćanje nije bilo moguće izvršiti. Molimo pokušajte ponovo.",
+  "errorWithDetails": "Greška: {error}",
+  "@errorWithDetails": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "packIncludes": "Uključuje {count} AI skeniranje prehrane",
+  "@packIncludes": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "permanentCredits": "Skeniranja nikad ne ističu",
+  "testingFreeCredits": "Testna verzija: Premium skeniranja su besplatna. Nije izvršeno plaćanje na Google Playu.",
+  "restoreSuccess": "Vraćanje kupnje uspješno je provjereno!",
+  "restoreFailed": "Nije moguće vratiti kupnje na Google Playu.",
+  "restoreFailedWithDetails": "Vraćanje nije uspjelo: {error}",
+  "@restoreFailedWithDetails": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "moreScanCredits": "Kupite više AI skeniranja obroka",
+  "shareCreateFailed": "Nije moguće izraditi sliku kartice. Molimo pokušajte ponovno!",
+  "shareExported": "Memorijska kartica je uspješno izvezena!",
+  "shareResult": "Podijeli rezultat",
+  "shareNutritionLabel": "Slika će biti spremljena s oznakama hranjivih vrijednosti",
+  "saveImage": "Spremi sliku",
+  "share": "Udio",
+  "resultLoadFailed": "Nije moguće učitati rezultat analize (ID: {id}). Molimo pokušajte ponovno!",
+  "@resultLoadFailed": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "edit": "Uredi",
+  "done": "Gotovo",
+  "healthScore": "Zdravstveni rezultat",
+  "dishesInPhoto": "Posuđe na fotografiji",
+  "ingredientsInDish": "Sastojci",
+  "addIngredient": "Dodajte sastojak",
+  "feedbackThanks": "Hvala na povratnim informacijama!",
+  "feedbackPrompt": "Je li AI skeniranje bilo netočno? Recite nam što se dogodilo:",
+  "feedbackHint": "Primjer: pogrešan naziv jela, nedostaje povrće...",
+  "skip": "Preskočiti",
+  "sending": "Slanje...",
+  "sendFeedback": "Pošaljite povratne informacije",
+  "newIngredient": "Novi sastojak",
+  "choosePortion": "Izaberite porciju",
+  "searchNutritionLibrary": "Pretražite knjižnicu prehrane",
+  "adjustBeforeAdding": "Prilagodite količinu prije dodavanja",
+  "ingredientSearchHint": "Traži govedinu, jaja, rižu...",
+  "ingredientNotFound": "Sastojak nije pronađen",
+  "ingredientSearchTip": "Pokušajte s kraćim ili uobičajenijim imenom",
+  "unitPiece": "komad",
+  "defaultUserName": "vas",
+  "analyzingMessage1": "Analiziranje podataka vašeg profila...",
+  "analyzingMessage2": "Izračunavanje dnevnih ciljeva kalorija...",
+  "analyzingMessage3": "Dizajniranje personaliziranih ciljeva...",
+  "analyzingMessage4": "Izgradnja strategije prehrane...",
+  "analyzingMessage5": "Skoro spremno...",
+  "dietNormal": "Redovita prehrana",
+  "dietClean": "Jedite čisto",
+  "dietKeto": "Keto",
+  "dietLowCarb": "Nisko ugljikohidrati",
+  "dietVegetarian": "Vegetarijanac",
+  "dietVegan": "veganska",
+  "activitySedentary": "Sjedeći",
+  "activitySedentaryDesc": "Rad za stolom, malo kretanja",
+  "activityLight": "Lagano hodanje",
+  "activityLightDesc": "Lagano kretanje 1-2 puta tjedno",
+  "activityModerate": "Trenirajte 1-3 puta",
+  "activityModerateDesc": "Vježbajte 1-3 dana tjedno",
+  "activityActive": "Trenirajte 4-5 puta",
+  "activityActiveDesc": "Vježbajte 4-5 dana tjedno",
+  "activityVeryActive": "Treniraj svakodnevno",
+  "activityVeryActiveDesc": "Teška vježba svaki dan",
+  "paceSlow": "🐢 Sporo — 0,25 kg/tjedan",
+  "paceLight": "🚶 Lagano — 0,5 kg/tjedan (Popularno)",
+  "paceMedium": "🏃 Srednje — 0,75 kg/tjedan",
+  "paceHigh": "🔥 Visoko — 1 kg/tjedan",
+  "paceHighest": "⚡ Najviša — 1,25–1,5 kg/tjedan",
+  "weekUnit": "tjedan",
+  "sportsGym": "teretana",
+  "sportsYoga": "Joga",
+  "scanResultUnavailable": "Ovaj obrok nije moguće analizirati",
+  "scanResultRetryHint": "Pokušajte ponovno skenirati.",
+  "guidanceDishFat": "F {grams}g",
+  "@guidanceDishFat": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "ok": "U REDU",
+  "defaultProfileName": "CalGo korisnik",
+  "premiumMembership": "Premium članstvo",
+  "creditsCount": "{count} kredita",
+  "@creditsCount": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "paymentMethods": "Plaćanje putem Google Play / App Store",
+  "deleteAction": "Izbrisati",
+  "proteinLabel": "Protein",
+  "onboardingSaveFailed": "Nije moguće spremiti vaš prehrambeni cilj. Molimo pokušajte ponovo.",
+  "onboardingSaveNetworkFailed": "Nije moguće spremiti vaš prehrambeni cilj. Provjerite vezu i pokušajte ponovno.",
+  "googleSignInFailed": "Google prijava nije uspjela: {error}",
+  "@googleSignInFailed": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "appleSignInFailed": "Apple prijava nije uspjela. Provjerite svoj Apple ID račun i internetsku vezu.",
+  "appleSignInPending": "Apple prijava još uvijek se dovršava. Za sada koristite Google.",
+  "firstScanTitle": "Jeste li spremni skenirati svoj prvi obrok?",
+  "firstScanSubtitle": "Za početak dodirnite Skeniraj ispod",
+  "scanLabel": "Skenirati",
+  "startScanning": "Započnite skeniranje",
+  "socialProofOneTag": "Izgubila 6,5 ​​kg",
+  "socialProofOneTime": "prije 2 dana",
+  "socialProofOneTitle": "Prepoznavanje vijetnamske hrane je na mjestu!",
+  "socialProofOneBody": "Prije sam imao problema s praćenjem pho i bun cha u stranim aplikacijama. CalGo točno prepoznaje vijetnamska jela i kalorije prema fotografiji. 10/10!",
+  "socialProofTwoTag": "Dobio 4 kg mišića",
+  "socialProofTwoTime": "prije 5 dana",
+  "socialProofTwoTitle": "Glatko korisničko sučelje i točan TDEE",
+  "socialProofTwoBody": "Detaljni su prijedlozi za praćenje BMI i makronaredbe. Treniram i pratim kalorije svaki dan, a moje tijelo izgleda jače nakon mjesec dana.",
+  "socialProofThreeTag": "Održavala sam formu",
+  "socialProofThreeTime": "prije 1 tjedan",
+  "socialProofThreeTitle": "Izgradnja zdravih prehrambenih navika",
+  "socialProofThreeBody": "Taovi podsjetnici su divni. Aplikacija nikada ne forsira ekstremne dijete; vodi me prema uravnoteženoj prehrani.",
+  "premiumActivatedMessage": "Premium je aktivan. Uživajte u obrocima!",
+  "premiumPaymentFailed": "Nije moguće otvoriti Premium plaćanje.",
+  "continueFreePremium": "Nastavi · Besplatna pretplata",
+  "continueLabel": "Nastaviti",
+  "premiumFreeUnlocked": "Premium otključan besplatno",
+  "premiumActivated": "Premium aktiviran",
+  "processingShort": "Obrada…",
+  "subscribePremium": "Pretplatite se na Premium",
+  "premiumTestingNote": "Testna verzija: Premium je besplatan. Plaćanje nije izvršeno.",
+  "premiumNoChargeNote": "Ovaj vam korak neće biti naplaćen.",
+  "premiumAutoRenewNote": "Automatski se obnavlja. Otkaži bilo kada.",
+  "premiumHeadlineBefore": "Promjena počinje od",
+  "todayLower": "danas",
+  "yourExperience": "Vaš\niskustvo",
+  "premiumBenefitCalories": "Odmah saznajte svoje kalorije — neograničena AI skeniranja",
+  "premiumBenefitSuggestions": "Neograničeni prijedlozi obroka prilagođeni vašem dnevnom cilju",
+  "premiumBenefitDescriptions": "AI opisi obroka bez ručnog unosa",
+  "premiumBenefitProgress": "Pratite napredak svog tijela svaki dan",
+  "premiumBenefitSupport": "Prioritetna podrška kad god vam je potrebna",
+  "planWeek": "Tjedan",
+  "planYear": "Godina",
+  "planMonth": "Mjesec",
+  "free": "Besplatno",
+  "weeklyPayment": "tjedno plaćanje",
+  "popularMost": "60% POPUSTA",
+  "testingAccess": "testiranje pristupa",
+  "restoreChecked": "Vraćanje kupnje provjereno.",
+  "restoreException": "Vraćanje nije uspjelo: {error}",
+  "@restoreException": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "manageSubscription": "Upravljanje pretplatom",
+  "manageSubscriptionFailed": "Nije moguće otvoriti upravljanje pretplatom.",
+  "scanCreditsExhausted": "Nemate više kredita za skeniranje.",
+  "scanSpamDetectedTitle": "Otkrivena neuobičajena aktivnost",
+  "scanSpamDetectedMessage": "Otkrivena je neuobičajena aktivnost, kontaktirajte podršku za pomoć.",
+  "networkRetry": "Veza je spora. Pokušajte ponovno.",
+  "scanUnavailable": "Ovu sliku nije bilo moguće analizirati.",
+  "notificationChannelName": "Dnevni podsjetnici za obroke",
+  "notificationChannelDescription": "Podsjetnici za skeniranje doručka, ručka i večere uz CalGo",
+  "notificationBreakfastTitle": "CalGo doručak",
+  "notificationBreakfastBody": "Dobro jutro. Ne zaboravite skenirati doručak kako biste imali dovoljno energije za cijeli dan.",
+  "notificationLunchTitle": "CalGo ručak",
+  "notificationLunchBody": "Pauza je za ručak. Skenirajte svoj obrok u CalGou kako biste točno pratili kalorije.",
+  "notificationDinnerTitle": "CalGo večera",
+  "notificationDinnerBody": "Kada je večera spremna, skenirajte je kako biste ostali na putu prema svojim ciljevima.",
+  "notificationDirectChannel": "Izravne obavijesti",
+  "caloriesLabel": "Kalorije",
+  "carbsLabel": "Ugljikohidrati",
+  "fatLabel": "Mast",
+  "guidanceTodayShortSubtitle": "Pogledajte prijedloge za današnji cilj",
+  "ingredientBeef": "Svježa govedina",
+  "ingredientChicken": "Pileća prsa pečena na tavi",
+  "ingredientEgg": "Jaje",
+  "ingredientRiceNoodles": "Svježi pho rezanci",
+  "ingredientRice": "Bijela riža",
+  "ingredientBun": "Svježi rižini vermicelli",
+  "ingredientSalad": "Zelena salata & rajčica",
+  "ingredientCheddar": "Cheddar sir",
+  "ingredientPassionSauce": "Umak od marakuje",
+  "ingredientPork": "Nemasna svinjetina",
+  "mockPhoTitle": "Rare goveđi pho s prsima",
+  "mockPhoNoodles": "Svježi pho rezanci",
+  "mockPhoRareBeef": "Rijetka govedina",
+  "mockPhoBrisket": "Goveđa prsa",
+  "mockPhoBroth": "Pho juha i mladi luk",
+  "mockRiceTitle": "Lomljena riža sa pečenom svinjetinom, svinjskom kožom i kolačem od jaja",
+  "mockRice": "Lomljena riža",
+  "mockGrilledPork": "Svinjska rebra na žaru",
+  "mockEggCake": "Kolač od jaja na pari",
+  "mockFriedEgg": "Pečeno jaje",
+  "mockSaladTitle": "Pileća salata s preljevom od marakuje",
+  "mockChicken": "Pileća prsa pečena na tavi",
+  "mockSalad": "Zelena salata i cherry rajčice",
+  "mockPassionSauce": "Preljev od marakuje",
+  "motivationAdviceLose": "Još samo {remaining} kg od cilja. Male dnevne navike djeluju bolje od ekstremnih dijeta.",
+  "@motivationAdviceLose": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "remaining": {
+        "type": "String"
+      }
+    }
+  },
+  "motivationAdviceGain": "Vaš cilj kalorija optimiziran je za izgradnju čistih mišića uz ograničavanje viška masnog tkiva.",
+  "motivationAdviceMaintain": "Vaša trenutna težina je u zdravom rasponu. Dopustite nam da izgradimo navike koje će vam pomoći da se svaki dan osjećate najbolje.",
+  "motivationAdviceDefault": "Dopustite nam da zajedno s održivim navikama postignemo vaš zdravstveni cilj.",
+  "taoAdviceLabel": "TAO-OV SAVJET",
+  "taoReminder": "Tao će vas podsjećati svaki dan",
+  "packBasic": "Starter",
+  "packPopular": "Popularan",
+  "packPremium": "Premija",
+  "creditPackageSummary": "{count} kredita • {unit}",
+  "@creditPackageSummary": {
+    "description": "Localized UI text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "perScan": "/skenirati",
+  "caloriesValue": "{calories} kcal",
+  "@caloriesValue": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "caloriesPer100g": "{calories} kcal / 100 g",
+  "@caloriesPer100g": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "gramsValue": "{grams}g",
+  "@gramsValue": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "weightKgValue": "{weight} kg",
+  "@weightKgValue": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
+  "galleryMacroSummary": "{calories} kcal • C:{carbs}g P:{protein}g F:{fat}g",
+  "@galleryMacroSummary": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      },
+      "carbs": {
+        "type": "String"
+      },
+      "protein": {
+        "type": "String"
+      },
+      "fat": {
+        "type": "String"
+      }
+    }
+  },
+  "sharePayload": "🔥 {dish} · {calories} kcal | CalGo",
+  "@sharePayload": {
+    "placeholders": {
+      "dish": {
+        "type": "String"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "connectAppleHealthTitle": "Povežite se s Apple Healthom",
+  "connectAppleHealthDesc": "Sinkronizirajte svoje dnevne aktivnosti između CalGo-a i aplikacije Health kako biste imali najtemeljitije podatke.",
+  "weightUpdateSuccess": "Težina je uspješno ažurirana",
+  "weightUpdateFailed": "Nije moguće uštedjeti težinu. Molimo pokušajte ponovo.",
+  "nutritionSectionHeader": "Prehrana",
+  "healthSectionHeader": "Zdravlje",
+  "currentWeightKicker": "Trenutna težina",
+  "logWeightButton": "Log Težina",
+  "startLabel": "Start",
+  "targetLabel": "Cilj",
+  "weightProgressTitle": "Napredak težine",
+  "ofTargetPercent": "{percent}% cilja",
+  "@ofTargetPercent": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "notEnoughWeightData": "Nema dovoljno podataka o težini",
+  "calorieNutritionStatsTitle": "Statistika kalorija i prehrane",
+  "consumedAvgLabel": "Potrošeno (prosj.)",
+  "targetLabelUpper": "Cilj",
+  "differenceLabelUpper": "Razlika",
+  "consumedLabel": "Potrošeno",
+  "thisWeek": "Ovaj tjedan",
+  "lastWeek": "Prošli tjedan",
+  "twoWeeksAgo": "prije 2 tjedna",
+  "threeWeeksAgo": "prije 3 tjedna",
+  "weeklyEnergyTitle": "Tjedna energija",
+  "consumedLabelUpper": "Potrošeno",
+  "loggedActivityTitle": "Zabilježena aktivnost",
+  "daysWithData": "{logged}/{total} dana s podacima",
+  "@daysWithData": {
+    "placeholders": {
+      "logged": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "lessLabel": "Manje",
+  "moreLabel": "Više",
+  "weightTargetForecastTitle": "Prognoza cilja težine",
+  "levelLabel": "Razina {level}",
+  "@levelLabel": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "maxLevelReached": "Dosegli ste maksimalnu razinu!",
+  "expToNextLevel": "{exp} EXP na sljedeću razinu",
+  "@expToNextLevel": {
+    "placeholders": {
+      "exp": {
+        "type": "int"
+      }
+    }
+  },
+  "scansTodaySummary": "Skenirano {scansToday} obroka danas · {totalScans} ukupno",
+  "@scansTodaySummary": {
+    "placeholders": {
+      "scansToday": {
+        "type": "int"
+      },
+      "totalScans": {
+        "type": "int"
+      }
+    }
+  },
+  "milestonesHeader": "PREKRETNICE",
+  "noMilestoneData": "Još nema podataka o prekretnici.",
+  "notEnoughNutritionData": "Nema dovoljno podataka o prehrani",
+  "noEnergyData": "Nema podataka o energiji",
+  "noData": "Nema podataka",
+  "weightChangeTitle": "Promjene težine",
+  "logWeightEmptyDesc": "Zabilježite težinu najmanje dva puta kako biste pratili svoj napredak.",
+  "logWeightNow": "Prijavite težinu sada",
+  "weightDecreased": "izgubljeno",
+  "weightIncreased": "stečeno",
+  "weightUnchanged": "Bez promjene",
+  "dateColumnHeader": "Datum",
+  "addPhoto": "Dodaj fotografiju",
+  "photoSelected": "Fotografija odabrana",
+  "photoOptional": "Neobavezno",
+  "lastLogWeight": "Zadnji put zabilježeno: {weight} kg",
+  "@lastLogWeight": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
+  "selectedDateText": "{month}/{day}/{year}",
+  "@selectedDateText": {
+    "placeholders": {
+      "day": {
+        "type": "int"
+      },
+      "month": {
+        "type": "int"
+      },
+      "year": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionTargetModalTitle": "Nutricionistički cilj",
+  "dailyCalorieGoalKicker": "DNEVNI CILJ KALORIJA",
+  "macroDistributionKicker": "MAKRO DISTRIBUCIJA",
+  "proteinMacroLabel": "Protein",
+  "carbMacroLabel": "Ugljikohidrati",
+  "fatMacroLabel": "Mast",
+  "recalculateTargetButton": "Ponovno izračunaj cilj",
+  "burnedCaloriesPill": "+{calories} sagorjelih kcal",
+  "@burnedCaloriesPill": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "burnedLabelUpper": "Spaljena",
+  "filterAll": "Sve",
+  "filterFood": "Hrana",
+  "filterWorkout": "vježbanje",
+  "noWorkoutLoggedToday": "Danas nije zabilježen nijedan trening",
+  "noFoodLoggedToday": "Danas nije zabilježena hrana",
+  "noLogsYet": "Još nema zapisnika",
+  "targetTimelineTitle": "Procijenjeno vrijeme do cilja",
+  "weeksFormat": "{weeks} tjedana",
+  "@weeksFormat": {
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
+  "forecastProgressTitle": "Prognoza napretka cilja",
+  "forecastPremiumUnlockDesc": "Nadogradite na Premium da biste otključali ljestvice i procijenjene tjedne za postizanje cilja težine!",
+  "unlockPremiumButton": "Otključaj Premium",
+  "currentLabel": "Sada",
+  "weekAbbrev": "W{weeks}",
+  "@weekAbbrev": {
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
+  "logWorkoutTile": "Dnevnik vježbanja",
+  "scanMealTile": "Skeniraj obrok",
+  "chooseExerciseTypeSubtitle": "Odaberite vrstu aktivnosti za izračun sagorjelih kalorija.",
+  "exerciseRunning": "Trčanje",
+  "exerciseRunningDesc": "Procijenjeno tempom, težinom i trajanjem",
+  "exerciseWalking": "Hodanje",
+  "exerciseWalkingDesc": "Procijenjeno brzinom neobaveznog ili brzog hoda",
+  "exerciseCycling": "Biciklizam",
+  "exerciseCyclingDesc": "Procijenjeno povremenoj ili snažnoj brzini vožnje biciklom",
+  "exerciseSwimming": "Plivanje",
+  "exerciseSwimmingDesc": "Slobodno ili prsno prema razini napora",
+  "exerciseWorkout": "Vježbanje (teretana)",
+  "exerciseWorkoutDesc": "Trening otpora ili kružni trening po intenzitetu",
+  "exerciseManual": "Ručni unos",
+  "exerciseManualDesc": "Unesite kalorije sa sprava ili uređaja za teretanu",
+  "intensityTitle": "Intenzitet",
+  "burnedCaloriesTitle": "Potrošene kalorije",
+  "kcalSuffix": "kcal",
+  "minutesSuffix": "min",
+  "manualCaloriesHint": "Unesite kalorije sa stroja ili uređaja",
+  "durationHint": "Trajanje vježbe",
+  "willAddToToday": "Dodat ću danas",
+  "estimatedActiveCalories": "Procijenjene aktivne kalorije",
+  "exerciseCalcWeightNote": "Izračunato za {weight} kg težine i MET iz Adult Compendium 2024. Nosivi uređaji mogu biti precizniji.",
+  "@exerciseCalcWeightNote": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
+  "exerciseUpdateWeightPrompt": "Ažurirajte svoju težinu u svom profilu kako bi CalGo mogao procijeniti kalorije.",
+  "exerciseHealthSyncWarning": "Ako je Apple Health već zabilježio ovaj trening, nemojte se prijavljivati ​​ovdje kako biste izbjegli dvostruko brojanje.",
+  "saveWorkoutButton": "Spremi vježbanje",
+  "intensityLow": "Niska",
+  "intensityModerate": "Umjereno",
+  "intensityHigh": "visoko",
+  "exerciseRunLowDesc": "Lagano trčanje 6,4–6,8 km/h · ~9:20 min/km",
+  "exerciseRunModDesc": "Mirna vožnja 9,7–10,1 km/h · ~6:10 min/km",
+  "exerciseRunHighDesc": "Brza vožnja 12,9 km/h · ~4:40 min/km",
+  "exerciseWalkLowDesc": "Ležerna šetnja 4,0 km/h",
+  "exerciseWalkModDesc": "Brzo hodanje 5,6 km/h",
+  "exerciseWalkHighDesc": "Vrlo brz hod / lagani uspon 6,4–7,2 km/h",
+  "exerciseCycleLowDesc": "Lagana vožnja bicikla 16–19 km/h",
+  "exerciseCycleModDesc": "Umjerena vožnja bicikla 19–22 km/h",
+  "exerciseCycleHighDesc": "Snažna brza vožnja bicikla 22–25 km/h",
+  "exerciseSwimLowDesc": "Lagano ležerno plivanje",
+  "exerciseSwimModDesc": "Slobodno/prsno umjereni tempo",
+  "exerciseSwimHighDesc": "Kontinuirano plivanje s velikim naporom",
+  "exerciseWorkoutLowDesc": "Lagani otpor, dug odmor između serija",
+  "exerciseWorkoutModDesc": "Umjereno kružno kretanje, znojenje i brže disanje",
+  "exerciseWorkoutHighDesc": "Teški krug, minimalan odmor, veliki napor",
+  "exerciseCalorieRangeError": "Unesite kalorije između 1 i 5000 kcal.",
+  "exerciseDurationRangeError": "Trajanje mora biti između 1 i 1440 minuta.",
+  "exerciseSaveNetworkError": "Nije moguće spremiti vježbanje. Provjerite vezu i pokušajte ponovo.",
+  "deleteExerciseConfirm": "Jeste li sigurni da želite izbrisati ovaj trening?",
+  "deleteExerciseFailed": "Nije moguće izbrisati vježbanje. Molimo pokušajte ponovo.",
+  "appleHealthSynced": "Apple Health Sync",
+  "guidanceRecoveryTitle": "Spasite danas",
+  "guidanceReadyTitle": "Što jesti da postignete današnji cilj?",
+  "expGainTitle": "Zaradili ste +{exp} EXP",
+  "@expGainTitle": {
+    "placeholders": {
+      "exp": {
+        "type": "int"
+      }
+    }
+  },
+  "expGainDesc": "Dodani bodovi od {reason}.",
+  "@expGainDesc": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "expGainClaim": "Zahtjev",
+  "scanMealReason": "skeniranje hrane",
+  "dailySummaryBannerTitle": "Dnevni pregled i AI trener",
+  "dailySummaryBannerSubtitle": "Pogledajte uvide o prehrani i zaradite EXP",
+  "cannotOpenShareSheet": "Nije moguće otvoriti dijeljeni list.",
+  "profileSaveFailed": "Nije moguće spremiti profil. Molimo pokušajte ponovo.",
+  "trialDaysFree": "Isprobajte {days} dana besplatno",
+  "@trialDaysFree": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "enableTrialDaysFree": "Omogućite {days}-dnevno besplatno probno razdoblje",
+  "@enableTrialDaysFree": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "trialNoChargeTodayReminder": "Danas se ne naplaćuje, podsjetnik 24 sata prije",
+  "trialDirectChargeOnRegister": "Naplaćuje se odmah po prijavi",
+  "trialPaymentSchedule": "Raspored probnog plaćanja:",
+  "trialStepToday": "Danas",
+  "trialStepUnlockFree": "Otključaj za 0 USD",
+  "trialStepDayReminder": "Dan {day}",
+  "@trialStepDayReminder": {
+    "placeholders": {
+      "day": {
+        "type": "int"
+      }
+    }
+  },
+  "trialStepPushReminder": "Push podsjetnik",
+  "trialStepChargeStarts": "Naplata počinje",
+  "trialDaysCountBadge": "PROBAJTE {days} DANA 0 USD",
+  "@trialDaysCountBadge": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "trialDaysNote": "Isprobajte {days} dana $0",
+  "@trialDaysNote": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "payYearlyNote": "Naplaćuje se godišnje",
+  "payMonthlyNote": "Naplaćuje se mjesečno",
+  "trialCancelAnytimeNote": "Danas se ne naplaćuje. Otkažite bilo kada u postavkama App Store/Google Play.",
+  "changeYourselfNow": "Transformirajte svoje tijelo sada",
+  "tryFreeNow": "Isprobajte 3 dana besplatno",
+  "completeSetup": "Kompletno postavljanje",
+  "servicesAndPlans": "Usluge i planovi",
+  "connectedStatus": "Povezan",
+  "notConnectedStatus": "Nije povezano",
+  "scanBarcodeTip": "Za pakiranu hranu/artikle isprobajte skeniranje barkoda za 100% točnu hranjivu vrijednost!",
+  "scanBarcodeNow": "Sada skenirajte crtični kod",
+  "progressForecastPrefix": "Prognoza napretka • {goal}",
+  "@progressForecastPrefix": {
+    "placeholders": {
+      "goal": {
+        "type": "String"
+      }
+    }
+  },
+  "weeksLeftCount": "Još {weeks} tjedana",
+  "@weeksLeftCount": {
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
+  "reachTargetWeight": "→ Dosegnite cilj od {weight}kg",
+  "@reachTargetWeight": {
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
+  "badgeUnlockedTitle": "BEDŽ OTKLJUČAN!",
+  "greatExclamation": "super!",
+  "appleHealthPermissionDenied": "Nije moguće dati dopuštenja. Provjerite jeste li dopustili pristup u iPhone Settings > Privacy & Security > Health.",
+  "appleHealthSyncTitle": "Apple Health Sync",
+  "appleHealthSyncDesc": "CalGo očitava samo aktivnu energiju izgorjelu iz Apple Healtha kako bi je dodao vašem dnevnom proračunu kalorija.",
+  "appleHealthStatusConnected": "Status: Povezano",
+  "appleHealthStatusNotConnected": "Status: Nije povezano",
+  "appleHealthConnectedDesc": "Aplikacija ima dopuštenje za čitanje i sinkronizaciju podataka s Apple Healthom.",
+  "appleHealthNotConnectedDesc": "Dodirnite donji gumb za otvaranje dijaloškog okvira za autorizaciju iOS-a.",
+  "appleHealthReconnectButton": "Ponovno autoriziraj/poveži iOS",
+  "appleHealthConnectButton": "Povežite Apple Health (iOS)",
+  "disconnect": "Prekini vezu",
+  "scanBarcodeTitle": "Skeniraj crtični kod",
+  "lookingUpBarcode": "Traženje crtičnog koda...",
+  "alignBarcodeInstruction": "Poravnajte kameru s crtičnim kodom na pakiranju",
+  "switchToPhotoScan": "Prebacite se na skeniranje fotografija hrane",
+  "barcodeNotFound": "Nisu pronađeni podaci za ovaj crtični kod. Pokušajte fotografirati hranu! 📸",
+  "addedExerciseCaloriesSnackbar": "Današnjem cilju dodano {calories} kcal vježbanja.",
+  "@addedExerciseCaloriesSnackbar": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "foodNotRecognizedTitle": "Hrana nije jasno prepoznata",
+  "foodNotRecognizedMessage": "Snimite jasniju fotografiju svoje hrane ili je unesite ručno.",
+  "retakePhoto": "Ponovno snimanje",
+  "manualFoodEntry": "Ručni unos",
+  "backTooltip": "Nazad",
+  "exitTooltip": "Izlaz ",
+  "completeAndSaveGoal": "Dovršite i spremite cilj",
+  "winbackExclusiveOffer": "🔥 EKSKLUZIVNA PONUDA",
+  "winbackStayTitle": "Čekati! Nastavite s {price}/god",
+  "@winbackStayTitle": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "winbackDisclaimer": "Cijene i uvjete ponude provjerava izravno trgovina.",
+  "winbackSubscribeButton": "Pretplatite se {price} godišnje",
+  "@winbackSubscribeButton": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "winbackDismissButton": "Odbaci ponudu",
+  "savePremiumToAccountTitle": "Spremite Premium na svoj račun",
+  "savePremiumToAccountDesc": "Prijavite se jednom kako biste potvrdili transakcije i sinkronizirali svoj personalizirani plan.",
+  "signInFailed": "Prijava nije uspjela.",
+  "dailyRecapTitle": "Rekapitulacija na kraju dana",
+  "recapReadyAfterTime": "Rekapitulacija će biti spremna nakon 22:00, nakon što danas budete imali skenirane podatke.",
+  "todayRecap": "Današnji Recap",
+  "mealsLoggedCount": "{count} obroka zabilježeno",
+  "@mealsLoggedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "consumedToday": "danas konzumiran",
+  "targetCaloProgress": "{percent}% od cilja {target} kcal",
+  "@targetCaloProgress": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "aiReview": "AI pregled",
+  "tomorrowTipTitle": "Savjet za sutra",
+  "finishDayButton": "Kompletan dan",
+  "reportButton": "Izvješće",
+  "likeTooltip": "Kao",
+  "dislikeTooltip": "Ne sviđa mi se",
+  "addCustomFoodTitle": "Dodajte hranu ručno",
+  "foodNameLabel": "Naziv hrane",
+  "foodNameHint": "Unesite naziv hrane...",
+  "caloriePer100gLabel": "Kalorije (kcal / 100g)",
+  "addNow": "Dodajte sada",
+  "logFoodTitle": "Dnevnik hrane",
+  "creditsPurchasedSuccess": "Potvrđeni i dodani krediti za skeniranje na vaš račun.",
+  "progressPhotosTitle": "Fotografije napretka",
+  "photosCount": "{count} fotografije",
+  "@photosCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "creditsCountSuffix": "{count} kredita",
+  "@creditsCountSuffix": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "quizStepCount": "Korak {current} / 3",
+  "@quizStepCount": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      }
+    }
+  },
+  "quizMealPatternTitle": "Vaši dnevni obroci",
+  "quizMealPatternDesc": "Na koliko obroka želite podijeliti svoje dnevne kalorije?",
+  "quizMealPattern3Title": "3 glavna obroka",
+  "quizMealPattern3Desc": "Standardni doručak - ručak - večera, jednostavan za upravljanje",
+  "quizMealPattern3SnackTitle": "3 glavna obroka + 1 međuobrok",
+  "quizMealPattern3SnackDesc": "Uključuje lagani poslijepodnevni međuobrok kako biste izbjegli osjećaj gladi",
+  "quizMealPatternIFTitle": "2 glavna obroka (povremeni post)",
+  "quizMealPatternIFDesc": "Slijedi raspored isprekidanog posta od 16:8",
+  "quizMealPatternSmallTitle": "4 - 5 malih obroka",
+  "quizMealPatternSmallDesc": "Ravnomjerno raspoređuje energiju tijekom dana",
+  "quizVarietyTitle": "Fleksibilnost izbornika",
+  "quizVarietyDesc": "Kako vam se sviđaju vaši prijedlozi za jelo?",
+  "quizVarietySimpleTitle": "Jednostavno ponavljanje",
+  "quizVarietySimpleDesc": "Kuhajte jednom, pojedite 2-3 obroka, uštedite vrijeme",
+  "quizVarietyRotateTitle": "Dnevna raznolikost",
+  "quizVarietyRotateDesc": "Svaki dan svježi jelovnik, neka obroci budu zanimljivi",
+  "quizVarietyLocalTitle": "Lokalna i azijska kuhinja",
+  "quizVarietyLocalDesc": "Sastojci se lako mogu pronaći na lokalnim tržnicama i u trgovinama",
+  "quizPriorityTitle": "Vaši prehrambeni ciljevi",
+  "quizPriorityDesc": "Čemu želite dati prioritet u svom planu prehrane?",
+  "quizOptSatietyTitle": "Duga sitost, niske kalorijske vrijednosti",
+  "quizOptSatietyDesc": "Visoko proteinski, povrće i jela s malo ulja za održavanje kalorijskog deficita",
+  "quizOptCalorieFitTitle": "Uskladite preostale kalorije",
+  "quizOptCalorieFitDesc": "Odaberite porcije koje odgovaraju proračunu vašeg obroka",
+  "quizOptSmartSwapTitle": "Pametne zamjene hrane",
+  "quizOptSmartSwapDesc": "Predložite laganije obroke kada ste ranije jeli malo teški",
+  "quizOptHighProteinTitle": "Visoko proteinski, mršav",
+  "quizOptHighProteinDesc": "Usredotočite se na nemasne proteine ​​kako biste podržali rast mišića bez viška masnog tkiva",
+  "quizOptTrainingFuelTitle": "Gorivo za obuku i oporavak",
+  "quizOptTrainingFuelDesc": "Uravnoteženi proteini i ugljikohidrati oko treninga",
+  "quizOptCalorieSurplusTitle": "Zdravi kalorijski višak",
+  "quizOptCalorieSurplusDesc": "Raščlanjivanje obroka koje je lako pojesti kako biste postigli svoj dnevni cilj viška",
+  "quizOptBalancedMacrosTitle": "Uravnotežene makronaredbe",
+  "quizOptBalancedMacrosDesc": "Neka proteini, ugljikohidrati i masti budu dosljedni svaki dan",
+  "quizOptWeightStabilityTitle": "Stabilnost težine",
+  "quizOptWeightStabilityDesc": "Ciljajte obroke koji odgovaraju vašim trenutnim kalorijama održavanja",
+  "quizOptFlexibleWeekendsTitle": "Fleksibilni vikendi",
+  "quizOptFlexibleWeekendsDesc": "Ponovno uravnotežite svoj unos nakon uživanja u društvenom obroku",
+  "quizSyncAnswersLater": "Nastavi, sinkroniziraj odgovore kasnije",
+  "quizCompleteAndGenerateMenu": "Dovršite i stvorite izbornik",
+  "quizSettingUpMenu": "CalGo izrađuje vaš jelovnik...",
+  "quizPersonalizingCalories": "Personaliziranje kalorija i vama najprikladnijih obroka",
+  "quizFinalizingSetup": "Dovršavanje postavljanja",
+  "searchFoodOrIngredientsHint": "Traži hranu ili sastojke...",
+  "searchResultsTitle": "Rezultati pretraživanja",
+  "searchingInProgress": "Pretraživanje...",
+  "nutritionServerConnectError": "Nije moguće spojiti se na poslužitelj prehrane.",
+  "planReadySubtitle": "Ostanite na putu da postignete svoj cilj",
+  "perMonthText": "mjesečno",
+  "planMonthsNote": "{months} mj • {price}",
+  "planBenefitScans": "Neograničena AI skeniranja hrane",
+  "planBenefitSuggestions": "Personalizirani prijedlozi obroka",
+  "planBenefitMacros": "Automatsko praćenje kalorija i makronaredbi",
+  "planBenefitProgress": "Dnevno praćenje napretka",
+  "@planMonthsNote": {
+    "placeholders": {
+      "months": {
+        "type": "int"
+      },
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "spinWheelTitle": "Okreni kotač i traži\nvaš popust",
+  "spinWheelBtn": "Spin",
+  "oneTimeOfferTitle": "Vaša jednokratna ponuda",
+  "oneTimeOfferSubtitle": "Jednom kada zatvorite svoju jednokratnu ponudu, nestala je!",
+  "savePercentTag": "UŠTEDITE {percent}%",
+  "offPercentHeader": "{percent}% POPUSTA",
+  "claimOfferBtn": "Nastaviti",
+  "@savePercentTag": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "@offPercentHeader": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "potentialMotivationTitle": "Imaš super\npotencijal za drobljenje\ntvoj cilj",
+  "weightTransitionTitle": "Vaš prijelaz težine",
+  "weightTransitionDesc": "Promjena težine zahtijeva vrijeme. Najvažnija je dosljednost u prvim tjednima",
+  "days3": "3 dana",
+  "days7": "7 dana",
+  "days30": "30 dana",
+  "analysisGreeting": "Dobrodošli u CalGo",
+  "rateAppTitle": "Uživate li u CalGou?",
+  "rateAppSubtitle": "Dodirnite zvjezdicu za ocjenu u App Storeu.",
+  "rateAppSubtitleAndroid": "Dodirnite zvjezdicu da biste ocijenili na Google Playu.",
+  "rateAppSubmit": "Stopa",
+  "rateAppLater": "Ne sad",
+  "stayOnTrackTitle": "Dizajnirano da vam pomogne\nostati na pravom putu",
+  "weightTrendTitle": "Trend težine",
+  "withoutPlanLabel": "Bez plana",
+  "month1": "1. mjesec",
+  "month6": "mjesec 6",
+  "stayOnTrackDesc": "Pratite svoje navike i ostanite dosljedni tijekom vremena.",
+  "paceHeadline": "Koliko brzo ti\nželite doći do svog\ncilj?",
+  "paceSpeedSubtitle": "Brzina mršavljenja tjedno",
+  "paceSpeedSubtitleGain": "Brzina debljanja po tjednu",
+  "paceSpeedSubtitleMaintain": "Ciljani tempo održavanja",
+  "pacePaceSlow": "Usporiti",
+  "pacePaceRecommended": "Preporučeno",
+  "pacePaceFast": "Brzo",
+  "pacePaceMax": "Agresivno",
+  "reachGoalInMonths": "Trebali biste postići svoj cilj u {time}",
+  "@reachGoalInMonths": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "reachGoalBalancedDesc": "Ovo je najuravnoteženiji tempo, motivirajući i idealan za većinu korisnika.",
+  "reachGoalSlowDesc": "Ravnomjeran, blag tempo koji je najlakše održati dugoročno.",
+  "reachGoalFastDesc": "Brz, ambiciozan tempo koji zahtijeva strogu disciplinu i predanost.",
+  "dailyCalorieGoalText": "Dnevni cilj kalorija: {calories} cal",
+  "@dailyCalorieGoalText": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "paywallHeroTitle": "Postignite svoje ciljeve brže\nuz CalGo Pro",
+  "paywallHeroSubtitle": "Neograničeno AI skeniranje hrane i personalizirano makro praćenje.",
+  "widgetsSection": "Widgeti",
+  "howToAddWidget": "Kako dodati?",
+  "scanFood": "Skeniraj hranu",
+  "barcode": "Crtični kod",
+  "liveActivityTitle": "Aktivnost zaključanog zaslona uživo",
+  "liveActivityPromptTitle": "Želite li i dalje dopuštati CalGo aktivnosti uživo?",
+  "liveActivityPromptDesc": "Zadržite CalGo na zaključanom zaslonu kako biste brzo zabilježili obroke i pratili kalorije.",
+  "alwaysAllow": "Uvijek dopusti",
+  "deny": "Poreći",
+  "howToAddTitle": "Kako dodati widgete",
+  "howToAddIosGuide": "iOS: dodirnite i držite prazno područje na zaključanom ili početnom zaslonu -> dodirnite Prilagodi/Dodaj (+) -> odaberite CalGo.",
+  "howToAddAndroidGuide": "Android: dodirnite i držite prazan prostor na početnom zaslonu -> dodirnite Widgeti -> pronađite i dodajte CalGo.",
+  "howToAddIosStep1": "Dodirnite i držite prazan prostor na početnom zaslonu ili zaključanom zaslonu dok se aplikacije ne počnu tresti.",
+  "howToAddIosStep2": "Dodirnite gumb (+) Dodaj u gornjem kutu (ili Prilagodi na zaključanom zaslonu).",
+  "howToAddIosStep3": "Pretražite ili odaberite CalGo, odaberite veličinu widgeta i dodirnite Dodaj widget.",
+  "howToAddAndroidStep1": "Dodirnite i držite prazno područje na početnom zaslonu.",
+  "howToAddAndroidStep2": "Dodirnite Widgeti u izborniku koji će se pojaviti.",
+  "howToAddAndroidStep3": "Pronađite CalGo, povucite i ispustite widget na svoj zaslon.",
+  "heroTitle": "Praćenje kalorija\nolakšano",
+  "aiScanStep1": "Prepoznavanje hrane...",
+  "aiScanStep2": "Otkrivena hrana",
+  "aiScanStep3": "Analiza sastojaka...",
+  "aiScanStep4": "Procjena nutritivne vrijednosti...",
+  "aiScanStep5": "Izračunavanje kalorija...",
+  "noNewDataTag": "Čekaju se novi podaci",
+  "fiberLabel": "Vlakno",
+  "sugarLabel": "Šećer",
+  "sodiumLabel": "Natrij",
+  "fatsLabel": "masti",
+  "healthScoreTitle": "Ocjena zdravlja",
+  "healthScoreSubtitle": "CalGo procjena iz zabilježenih proteina, vlakana i šećera; nije medicinski rezultat.",
+  "bodyVitalityTitle": "Pokazatelji uhranjenosti",
+  "fourMetricsCount": "4 metrike",
+  "vitalityEnergyTitle": "Napredak kalorija i ugljikohidrata",
+  "vitalityEnergyDetailTitle": "Napredak kalorija i ugljikohidrata",
+  "vitalityEnergyDetailDesc": "CalGo uspoređuje zabilježene kalorije i ugljikohidrate s osobnim ciljevima i oduzima bodove za šećer iznad cilja. Ovo ne mjeri budnost ili glukozu u krvi.",
+  "vitalityEnergyDetailSource": "Referenca: WHO — Zdrava prehrana",
+  "vitalitySatietyTitle": "Napredak proteina i vlakana",
+  "vitalitySatietyDetailTitle": "Napredak proteina i vlakana",
+  "vitalitySatietyDetailDesc": "CalGo kombinira zabilježene proteine ​​i vlakna u odnosu na osobne ciljeve. Ovaj rezultat ne mjeri punoću ili hormone.",
+  "vitalitySatietyDetailSource": "Referenca: Dijetalne referentne količine unosa",
+  "vitalityRecoveryTitle": "Ravnoteža proteina i masti",
+  "vitalityRecoveryDetailTitle": "Ravnoteža proteina i masti",
+  "vitalityRecoveryDetailDesc": "CalGo kombinira napredak proteina s ukupnim unosom masti blizu cilja. Ovo ne mjeri zdravlje srca ili oporavak mišića.",
+  "vitalityRecoveryDetailSource": "Referenca: Dijetalne referentne količine unosa",
+  "vitalityBalanceTitle": "Unos natrija",
+  "vitalityBalanceDetailTitle": "Unos natrija",
+  "vitalityBalanceDetailDesc": "CalGo uspoređuje zabilježeni natrij s referencom SZO-a od 2000 mg/dan. Ovo ne mjeri hidrataciju ili ravnotežu elektrolita.",
+  "vitalityBalanceDetailSource": "Izvor: Smjernice WHO za natrij",
+  "fiberDetailTitle": "Dijetalna vlakna",
+  "fiberDetailDesc": "Podržava zdrav crijevni mikrobiom i usporava apsorpciju šećera u krvotok.",
+  "fiberDetailSource": "Izvor: Dietary Reference Intakes — vlakna",
+  "sugarDetailTitle": "Zabilježeni šećeri",
+  "sugarDetailDesc": "Smjernice WHO-a odnose se na slobodne šećere. CalGo bilježi ukupne šećere, uključujući prirodne šećere, tako da je ova usporedba približna.",
+  "sugarDetailSource": "Izvor: Smjernice SZO o unosu šećera za odrasle",
+  "sodiumDetailTitle": "Natrij",
+  "sodiumDetailDesc": "Ograničenje natrija ispod 2000 mg/dan pomaže u sprječavanju hipertenzije i zadržavanja vode.",
+  "sodiumDetailSource": "Izvor: Smjernice WHO za unos natrija",
+  "healthScoreDetailDesc": "CalGo interni rezultat na temelju proteina, vlakana i šećera u odnosu na ciljeve; ne Nutri-Score.",
+  "healthScoreSource": "Referenca: WHO — Zdrava prehrana",
+  "nutritionBreakdownTitle": "RASPOD ISHRANE",
+  "intakeConsumedLabel": "Potrošeno",
+  "dailyGoalLabel": "Dnevni cilj",
+  "safeLimitLabel": "Sigurna granica",
+  "maxRecommendedLabel": "Maksimalno preporučeno",
+  "proteinBalanceLabel": "Ravnoteža proteina",
+  "fiberQualityLabel": "Dijetalna vlakna",
+  "freeSugarControlLabel": "Zabilježeni šećeri",
+  "complexCarbRatioLabel": "Složeni ugljikohidrati",
+  "complexCarbRatioValue": "Uravnotežena",
+  "simpleSugarIntakeLabel": "Jednostavni šećeri",
+  "whoLimit50g": "Pod ograničenjem SZO od 50 g",
+  "totalProteinLoggedLabel": "Ukupni protein",
+  "standardMetLabel": "Ispunjen standard",
+  "totalFiberLoggedLabel": "Ukupna vlakna",
+  "freeSugarRatioLabel": "Omjer slobodnog šećera",
+  "freeSugarRatioValue": "Niska (stabilna energija)",
+  "dietaryFiberIntakeLabel": "Dijetalna vlakna",
+  "satFatControlLabel": "Zasićene masti",
+  "satFatControlValue": "Kontrolirano (<10% kcal)",
+  "sodiumConsumedLabel": "Potrošeni natrij",
+  "dishNutrientsDetailTitle": "Mikronutrijenti i vitalnost jela",
+  "dishNutrientsDetailSubtitle": "6 mikronutrijenata i energetski metabolizam",
+  "dishMicronutrientsHeader": "6 Pokazatelji mikronutrijenata",
+  "dishMicronutrientsCount": "6 metrika",
+  "calciumLabel": "Kalcij",
+  "ironLabel": "Željezo",
+  "potassiumLabel": "Kalij",
+  "dishVitalityHeader": "Energija i vitalnost tijela",
+  "dishVitalityFocus": "Fokus i ravnoteža",
+  "unlockPremiumNutrientsTitle": "Cal AI Premium značajka",
+  "unlockPremiumNutrientsSubtitle": "Otključajte detaljnih 6 mikronutrijenata i energetsku vitalnost za obroke.",
+  "equivalentLabel": "ekvivalent",
+  "perYearText": "godišnje",
+  "billedWeeklyNote": "Naplaćuje se tjedno",
+  "billedMonthlyNote": "Naplaćuje se mjesečno",
+  "billedYearlyNote": "Naplaćuje se godišnje",
+  "iosAutoRenewTermsYearly": "Naplaćuje se kao {price}/godina. Automatski se obnavlja godišnje. Otkažite bilo kada u postavkama App Storea.",
+  "@iosAutoRenewTermsYearly": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "iosAutoRenewTermsTrial": "7 dana besplatno, zatim {price}/godišnje. Automatski se obnavlja. Otkažite bilo kada u postavkama App Storea.",
+  "@iosAutoRenewTermsTrial": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "iosAutoRenewTermsWeekly": "Naplaćuje se kao {price}/tjedan. Automatski se obnavlja tjedno. Otkažite bilo kada u postavkama App Storea.",
+  "@iosAutoRenewTermsWeekly": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "iosAutoRenewTermsMonthly": "Naplaćuje se kao {price} mjesečno. Automatski se obnavlja mjesečno. Otkažite bilo kada u postavkama App Storea.",
+  "@iosAutoRenewTermsMonthly": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "bmiReferenceSource": "Izvor: WHO — Pretilost i prekomjerna težina",
+  "bmiAdultOnlyDisclaimer": "Standard za odrasle (18+). Nije primjenjivo za djecu i tinejdžere.",
+  "bmiAdultOnlyShort": "Odrasli 18+",
+  "startFreeTrialBtn": "Započnite besplatno probno razdoblje",
+  "medicalDisclaimerNote": "CalGo daje procjene nutritivne vrijednosti i kalorija samo u informativne svrhe i ne daje medicinske savjete. Posavjetujte se sa zdravstvenim radnikom prije nego započnete bilo koji plan prehrane.",
+  "calculationSourcesTitle": "Izvori i izračun",
+  "calorieCalculationNote": "CalGo procjenjuje energiju u mirovanju s Mifflin–St Jeorom, primjenjuje faktor aktivnosti, zatim prilagođava odabranu ciljnu težinu. Točne kalorijske i makro ciljeve procjenjuje CalGo; promjena težine nije zajamčena.",
+  "nutrientCalculationNote": "Referentni rasponi makronaredbi i vlakana dolaze iz referentnih unosa u prehrani. Ograničenja šećera i natrija odnose se na smjernice SZO. CalGo ih kombinira u vlastite ciljeve i rezultate. Smjernice SZO-a o šećeru odnose se na slobodne šećere, dok CalGo prati ukupne šećere; ta usporedba je približna.",
+  "exerciseCalculationNote": "Aktivne kalorije procjenjuju se iz MET-a, tjelesne težine i trajanja; stvarna potrošnja energije varira.",
+  "foodCalculationNote": "Vrijednosti hrane su procjene umjetne inteligencije iz vaše fotografije ili unesenih količina. Ove poveznice objašnjavaju smjernice o hranjivim tvarima, a ne izmjereni sastav ovog obroka. Provjerite količine i etikete. Postoci koriste opće referentne vrijednosti aplikacije i mogu se razlikovati od vaših osobnih potreba.",
+  "sourceMifflin": "Mifflin i sur. — jednadžba energije mirovanja",
+  "sourceCdcWeight": "CDC — postupno mršavljenje",
+  "sourceMacroDri": "Dijetetski referentni unos — makronaredbe i vlakna",
+  "sourceWhoDiet": "WHO — zdrava prehrana",
+  "sourceActivityCompendium": "2024 Compendium za odrasle — MET vrijednosti",
+  "bmiAsianReferenceSource": "Izvor: Stručno savjetovanje SZO — Azijski BMI (2004.)",
+  "paceCalculationNote": "CDC opisuje postupni gubitak od oko 1-2 lb (0,5-1 kg) tjedno. Ovaj klizač je CalGo procjena planiranja, a ne predviđanje.",
+  "sourceMineralDri": "Dijetetski referentni unos — minerali",
+  "sourceActivityFactor": "FAO/WHO — Energetske potrebe i faktori aktivnosti",
+  "activityGuidanceNote": "Dani vježbanja su CalGo prijedlozi na temelju vaše odabrane razine aktivnosti. Smjernice WHO-a usmjerene su na ukupnu tjednu aktivnost, a ne na fiksni broj dana.",
+  "sourceWhoActivity": "WHO — Tjelesna aktivnost",
+  "mealGuidanceSourcesNote": "Prijedlozi obroka koriste vaše preostale ciljeve aplikacije i procijenjene vrijednosti jela. Ovi izvori objašnjavaju opće prehrambene smjernice, a ne sastav predloženog jela. Provjerite dijelove i etikete.",
+  "weightForecastSourcesNote": "Vremenska linija koristi fiksnu procjenu od 7700 kcal po kg. NIH objašnjava da se stvarna promjena težine usporava kako se tijelo prilagođava; datumi su približni.",
+  "sourceNihWeightPlanner": "NIH — planer tjelesne težine",
+  "nutritionSourcesTitle": "Znanstveni i medicinski izvori",
+  "nutritionSourcesSubtitle": "Formule i prehrambene smjernice koje se koriste u CalGou",
+  "calorieCalculationSourceTitle": "Dnevni ciljni unos kalorija i BMR",
+  "calorieCalculationSourceDesc": "Bazalna stopa metabolizma izračunava se pomoću jednadžbe Mifflin–St Jeor, prilagođene FAO/WHO faktorima razine tjelesne aktivnosti (PAL).",
+  "macroDistributionSourceTitle": "Raspodjela makronutrijenata",
+  "macroDistributionSourceDesc": "Ciljane vrijednosti proteina, ugljikohidrata i masti slijede prihvatljive raspone raspodjele makronutrijenata (AMDR) iz USDA-e i Dijetetske smjernice za Amerikance.",
+  "safeWeightRateSourceTitle": "Sigurna stopa promjene težine",
+  "safeWeightRateSourceDesc": "Kalorijski deficiti sigurno su ograničeni između 500-1000 kcal/dan (0,5-1,0 kg/tjedan) u skladu sa smjernicama CDC-a i NIH-a, s minimalnim sigurnosnim pragovima.",
+  "mifflinStJeorCitation": "PubMed: Mifflin et al. — Jednadžba energije mirovanja (1990.)",
+  "faoWhoEnergyCitation": "FAO/WHO/UNU — Potrebe ljudske energije i faktori aktivnosti",
+  "usdaDietaryCitation": "USDA dijetetske smjernice za Amerikance (makronutrijenti)",
+  "cdcWeightLossCitation": "CDC — Smjernice za zdravo mršavljenje (0,5–1 kg/tjedan)",
+  "bmiMicronutrientSourceTitle": "BMI i standardi mikronutrijenata",
+  "bmiMicronutrientSourceDesc": "Klasifikacija indeksa tjelesne mase (18,5–24,9 normalni raspon) i dnevni pragovi mikronutrijenata (vlakna 14 g/1000 kcal, slobodni šećeri <10%, natrij <2000 mg).",
+  "statsOnTrack": "On track",
+  "statsNeedsAdjustment": "Needs adjustment",
+  "statsGoalReached": "Goal reached",
+  "statsAdjustmentBody": "Your current intake does not support a reliable estimate for reaching {target} kg. Keep logging and adjust toward your goal.",
+  "@statsAdjustmentBody": {
+    "placeholders": {
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "statsNoDataBody": "Log more weight and nutrition data to start a reliable forecast.",
+  "statsCaloriePeriod": "the past 7-day average",
+  "statsCaloriePeriodToday": "today",
+  "statsNoCalories": "No calorie data yet",
+  "statsSlow": "Progressing slowly but steadily",
+  "statsHighDeficit": "Calorie deficit is too high",
+  "statsHighSurplus": "Calorie surplus is quite high",
+  "statsStalled": "Progress is currently stalled",
+  "statsOpposite": "Moving away from your goal",
+  "statsGuidanceOnTrack": "On track",
+  "statsNeedData": "Need more data",
+  "statsFirstMeal": "Awaiting 1st meal",
+  "statsMinorAdjustment": "Minor adjustment",
+  "statsMoreSurplus": "Need more surplus",
+  "statsBalanced": "Balanced body",
+  "statsKeepTracking": "Keep tracking",
+  "statsSteady": "Steady pace",
+  "statsBuilding": "Building progress",
+  "statsFirstMealForecast": "Log your first meal today to start calculating your progress forecast.",
+  "statsLowIntake": "Today’s intake is lower than planned. Log all your meals for a more accurate forecast.",
+  "statsSmallBalance": "Today’s calorie balance is small. Keep logging for a few more days for a clearer projection.",
+  "statsOverIntake": "Today’s intake exceeded estimated burn. Make a gentle adjustment tomorrow to stay on track.",
+  "statsUnderSurplus": "Today’s intake didn’t reach the surplus needed for weight gain. Add extra nutrition to each meal tomorrow.",
+  "statsKeepLogging": "Keep logging meals and weight regularly so CalGo can forecast your true trend.",
+  "statsFamiliarReason": "Matches a portion you scanned previously and fits your remaining macros today.",
+  "@statsFamiliarReason": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "statsFitsReason": "Fits within your remaining calories and works well for your next meal.",
+  "statsSauceSide": "Keep sauce on the side for easier calorie control.",
+  "statsLessOil": "Opt for less oil and add vegetables for a lighter meal.",
+  "statsHighProtein": "High-protein option; eat slowly to stay full longer.",
+  "statsReduceSauce": "Reduce sauce or oil if you want a lighter version.",
+  "statsModerateCarbs": "Keep carbs moderate and add vegetables to this meal.",
+  "statsBoostProtein": "Pair with eggs, tofu, or yogurt to boost protein.",
+  "statsSplitPortions": "Split into smaller portions if you have more meals ahead.",
+  "statsHalfPortion": "If near your calorie limit today, opt for half a portion with extra greens.",
+  "statsEatSlowly": "Keep portions moderate and eat slowly to feel fullness.",
+  "statsScanFirst": "Scan your first meal today so I can calculate what remains and suggest your next meal.",
+  "statsReachedToday": "You’ve reached today’s calorie target. Keep this momentum; if still hungry, stick to water or light snacks.",
+  "statsNearTarget": "You’re near or past your target today, but your day is still on track! If hungry, choose a light protein option.",
+  "statsNoMatchingMeals": "Could not find matching meals from current data. Scan your next meal for more accurate suggestions.",
+  "statsPeriodDays": "{days} dana",
+  "@statsPeriodDays": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "statsOnTrackBody": "Uz prosjek od {calories} kcal/dan, mogli biste dostići {target} kg za oko {weeks}.",
+  "@statsOnTrackBody": {
+    "placeholders": {
+      "calories": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "weeks": {
+        "type": "String"
+      }
+    }
+  },
+  "statsGuidanceProjection": "Održavajući današnji unos, procjenjuje se da ćete doseći {target} kg za oko {weeks} tjedana{dateSuffix}.",
+  "@statsGuidanceProjection": {
+    "placeholders": {
+      "dateSuffix": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "weeks": {
+        "type": "String"
+      }
+    }
+  },
+  "statsProteinReason": "Daje oko {proteinG}g proteina unutar vaših preostalih kalorija.",
+  "@statsProteinReason": {
+    "placeholders": {
+      "proteinG": {
+        "type": "String"
+      }
+    }
+  },
+  "statsRemainingMessage": "Preostalo vam je oko {calRemaining} kcal i potrebno vam je još {protRemaining}g proteina.",
+  "@statsRemainingMessage": {
+    "placeholders": {
+      "calRemaining": {
+        "type": "String"
+      },
+      "protRemaining": {
+        "type": "String"
+      }
+    }
+  },
+  "statsLevel1": "Početnik",
+  "statsLevel2": "Promatrač",
+  "statsLevel3": "Ustrajan",
+  "statsLevel4": "Discipliniran",
+  "statsLevel5": "Entuzijast",
+  "statsLevel6": "Ljubitelj zdravlja",
+  "statsLevel7": "Stručnjak za prehranu",
+  "statsLevel8": "Prvak",
+  "statsLevel9": "Legenda",
+  "statsLevel10": "CalGo Majstor",
+  "statsAchievementFirstScanName": "Sjajan početak",
+  "statsAchievementFirstScanDescription": "Zabilježite svoj prvi obrok",
+  "statsAchievementScanMasterName": "Majstor skeniranja",
+  "statsAchievementScanMasterDescription": "Skenirajte 10 obroka uz AI",
+  "statsAchievementProteinKingName": "Kralj proteina",
+  "statsAchievementProteinKingDescription": "Ostvarite 100% dnevnog cilja proteina",
+  "statsAchievementStreak7Name": "Niz od 7 dana",
+  "statsAchievementStreak7Description": "Bilježite obroke 7 dana uzastopno",
+  "statsAchievementCaloChampName": "Prvak u kalorijama",
+  "statsAchievementCaloChampDescription": "Postignite cilj kalorija 5 uzastopnih dana",
+  "statsAchievementLegendName": "CalGo Legenda",
+  "statsAchievementLegendDescription": "Dosegnite razinu 10",
+  "statsForecastNoDataBody": "Zabilježite obrok za početak prognoze temeljene na vašem stvarnom unosu.",
+  "statsForecastReachedBody": "Održavajte trenutni unos i navike kako biste zadržali svoj rezultat.",
+  "statsForecastHealthyBody": "Uz {periodLabel} od oko {calories} kcal/dan, mogli biste dostići {target} kg za oko {weeksLabel}.",
+  "@statsForecastHealthyBody": {
+    "placeholders": {
+      "balance": {
+        "type": "String"
+      },
+      "calories": {
+        "type": "String"
+      },
+      "goal": {
+        "type": "String"
+      },
+      "periodLabel": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "weeksLabel": {
+        "type": "String"
+      }
+    }
+  },
+  "statsForecastSlowBody": "Krećete se u dobrom smjeru, ali razlika u kalorijama je mala. Dosezanje cilja od {target} kg može potrajati duže.",
+  "@statsForecastSlowBody": {
+    "placeholders": {
+      "goal": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "statsForecastAggressiveDeficitBody": "Unosite oko {calories} kcal/dan. Ovaj deficit možda nije siguran. Postupno povećajte unos prema {recommendedCalories} kcal/dan.",
+  "@statsForecastAggressiveDeficitBody": {
+    "placeholders": {
+      "calories": {
+        "type": "String"
+      },
+      "recommendedCalories": {
+        "type": "String"
+      }
+    }
+  },
+  "statsForecastAggressiveSurplusBody": "Unosite oko {balance} kcal/dan iznad održavanja. Težina bi mogla rasti brže nego planirano.",
+  "@statsForecastAggressiveSurplusBody": {
+    "placeholders": {
+      "balance": {
+        "type": "String"
+      }
+    }
+  },
+  "statsForecastMaintenanceBody": "Vaš unos je blizu razine održavanja, pa se vaša težina možda neće puno promijeniti.",
+  "statsForecastOppositeBody": "Uz ovaj unos, vaša bi težina mogla {direction, select, up {rasti} other {padati}} suprotno od cilja od {target} kg.",
+  "@statsForecastOppositeBody": {
+    "placeholders": {
+      "balance": {
+        "type": "String"
+      },
+      "direction": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "planThreeMonths": "3 Mjeseca",
+  "planDurationThreeMonths": "3 mjeseca",
+  "billedThreeMonthsNote": "Naplaćuje se svaka 3 mjeseca",
+  "iosAutoRenewTermsThreeMonths": "Naplaćuje se kao {price}/3 mjeseca. Automatski se obnavlja svaka 3 mjeseca. Otkažite bilo kada u postavkama App Storea.",
+  "whatToEatTitle": "Što jesti danas?",
+  "whatToEatTag": "Što jesti?",
+  "spinRandomAction": "Nasumično zavrti",
+  "spinAgainAction": "Zavrti ponovno",
+  "mealBreakfast": "Doručak",
+  "mealLunch": "Ručak",
+  "mealDinner": "Večera",
+  "selectedDishTitle": "Prijedlog za vas!",
+  "logThisMeal": "Zabilježi ovaj obrok",
+  "approxCalories": "~{calories} kcal",
+  "whatToEatHint": "Dodirnite jelo ili pritisnite Nasumični odabir",
+  "dishTagHighProtein": "Bogato proteinima",
+  "dishTagQuick": "Brzo i zasitno",
+  "dishTagEnergetic": "Puno energije",
+  "dishTagLight": "Lagano i probavljivo",
+  "dishTagBalanced": "Ukusno i uravnoteženo",
+  "dishTagHealthy": "Zdravo i lagano"
+}

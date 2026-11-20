@@ -1512,5 +1512,230 @@
   "usdaDietaryCitation": "الإرشادات الغذائية الأمريكية الصادرة عن USDA (المغذيات الكبرى)",
   "cdcWeightLossCitation": "CDC — إرشادات فقدان الوزن الصحي (0.5–1 كجم/أسبوع)",
   "bmiMicronutrientSourceTitle": "معايير مؤشر كتلة الجسم والمغذيات الدقيقة",
-  "bmiMicronutrientSourceDesc": "تصنيف مؤشر كتلة الجسم (المعدل الطبيعي 18.5–24.9) والحدود اليومية (ألياف 14 جم/1000 سعرة، سكريات حرة <10%، صوديوم <2000 ملجم)."
+  "bmiMicronutrientSourceDesc": "تصنيف مؤشر كتلة الجسم (المعدل الطبيعي 18.5–24.9) والحدود اليومية (ألياف 14 جم/1000 سعرة، سكريات حرة <10%، صوديوم <2000 ملجم).",
+  "statsOnTrack": "على الطريق الصحيح",
+  "statsNeedsAdjustment": "يحتاج إلى تعديل",
+  "statsGoalReached": "تم تحقيق الهدف",
+  "statsAdjustmentBody": "مدخولك الحالي لا يكفي لتقدير موثوق لموعد الوصول إلى {target} كجم. واصل التسجيل واضبط خطتك نحو هدفك.",
+  "@statsAdjustmentBody": {
+    "placeholders": {
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "statsNoDataBody": "سجّل المزيد من بيانات الوزن والتغذية لبدء توقع موثوق.",
+  "statsCaloriePeriod": "متوسط آخر 7 أيام",
+  "statsCaloriePeriodToday": "اليوم",
+  "statsNoCalories": "لا توجد بيانات سعرات بعد",
+  "statsSlow": "تقدم بطيء لكنه ثابت",
+  "statsHighDeficit": "عجز السعرات مرتفع جدًا",
+  "statsHighSurplus": "فائض السعرات مرتفع نسبيًا",
+  "statsStalled": "التقدم متوقف حاليًا",
+  "statsOpposite": "أنت تبتعد عن هدفك",
+  "statsGuidanceOnTrack": "على الطريق الصحيح",
+  "statsNeedData": "بحاجة لمزيد من البيانات",
+  "statsFirstMeal": "بانتظار الوجبة الأولى",
+  "statsMinorAdjustment": "تعديل بسيط",
+  "statsMoreSurplus": "بحاجة للمزيد من السعرات",
+  "statsBalanced": "توازن القوام",
+  "statsKeepTracking": "متابعة إضافية",
+  "statsSteady": "إيقاع ثابت",
+  "statsBuilding": "بناء التقدم",
+  "statsFirstMealForecast": "سجّل وجبتك الأولى اليوم لبدء حساب توقعات تقدمك.",
+  "statsLowIntake": "مدخول اليوم أقل من المخطط. سجّل جميع وجباتك للحصول على توقع أكثر دقة.",
+  "statsSmallBalance": "فارق السعرات اليوم صغير. واصل التسجيل لبضعة أيام أخرى للحصول على توقع أوضح.",
+  "statsOverIntake": "تجاوز مدخول اليوم معدل الحرق المقدر. قم بتعديل بسيط غدًا للمحافظة على مسارك.",
+  "statsUnderSurplus": "لم يصل مدخول اليوم إلى الفائض المطلوب لزيادة الوزن. أضف المزيد من العناصر الغذائية غدًا.",
+  "statsKeepLogging": "واصل تسجيل الوجبات والوزن بانتظام حتى يتمكن CalGo من توقع اتجاهك الحقيقي.",
+  "statsFamiliarReason": "يطابق حصة قمت بمسحها سابقًا ويناسب عناصرك الغذائية المتبقية اليوم.",
+  "@statsFamiliarReason": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "statsFitsReason": "يناسب سعراتك المتبقية ومثالي لوجبتك القادمة.",
+  "statsSauceSide": "اجعل الصلصة جانبية للتحكم في السعرات بسهولة.",
+  "statsLessOil": "اختر زيتًا أقل وأضف الخضار لوجبة أخف.",
+  "statsHighProtein": "خيار غني بالبروتين؛ تناول الطعام ببطء للشبع لفترة أطول.",
+  "statsReduceSauce": "قلل الصلصة أو الزيت إذا أردت وجبة أخف.",
+  "statsModerateCarbs": "حافظ على كربوهيدرات معتدلة وأضف الخضار إلى هذه الوجبة.",
+  "statsBoostProtein": "تناولها مع البيض أو التوفو أو الزبادي لزيادة البروتين.",
+  "statsSplitPortions": "قسم الوجبة إلى حصص أصغر إذا كانت لديك وجبات أخرى قادمة.",
+  "statsHalfPortion": "إذا اقتربت من حد السعرات اليوم، اختر نصف حصة مع إضافة الخضار.",
+  "statsEatSlowly": "حافظ على حصص معتدلة وتناول الطعام ببطء للشعور بالشبع.",
+  "statsScanFirst": "امسح وجبتك الأولى اليوم حتى أحسب ما تبقى وأقترح وجبتك القادمة.",
+  "statsReachedToday": "لقد حققت هدف السعرات لليوم! حافظ على هذا الإيقاع؛ إن كنت جائعًا، اختر الماء أو وجبة خفيفة جدًا.",
+  "statsNearTarget": "أنت قريب من هدفك أو تجاوزته اليوم، لكن لا تقلق! إذا شعرت بالجوع، اختر بروتينًا خفيفًا.",
+  "statsNoMatchingMeals": "لم نتمكن من العثور على وجبات مناسبة من البيانات الحالية. امسح وجبتك التالية للحصول على اقتراحات أدق.",
+  "statsPeriodDays": "{days} أيام",
+  "@statsPeriodDays": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "statsOnTrackBody": "بمتوسط {calories} سعرة يوميًا، يمكنك الوصول إلى {target} كجم خلال نحو {weeks}.",
+  "@statsOnTrackBody": {
+    "placeholders": {
+      "calories": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "weeks": {
+        "type": "String"
+      }
+    }
+  },
+  "statsGuidanceProjection": "إذا حافظت على مدخول اليوم، فمن المتوقع أن تصل إلى {target} كجم خلال نحو {weeks} أسبوعًا{dateSuffix}.",
+  "@statsGuidanceProjection": {
+    "placeholders": {
+      "dateSuffix": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "weeks": {
+        "type": "String"
+      }
+    }
+  },
+  "statsProteinReason": "يمدك بنحو {proteinG} جم بروتين ضمن السعرات المتبقية.",
+  "@statsProteinReason": {
+    "placeholders": {
+      "proteinG": {
+        "type": "String"
+      }
+    }
+  },
+  "statsRemainingMessage": "متبقي لديك نحو {calRemaining} سعرة حرارية وينقصك {protRemaining} جم بروتين.",
+  "@statsRemainingMessage": {
+    "placeholders": {
+      "calRemaining": {
+        "type": "String"
+      },
+      "protRemaining": {
+        "type": "String"
+      }
+    }
+  },
+  "statsLevel1": "مبتدئ",
+  "statsLevel2": "متابع",
+  "statsLevel3": "مثابر",
+  "statsLevel4": "منضبط",
+  "statsLevel5": "متحمس",
+  "statsLevel6": "محب للصحة",
+  "statsLevel7": "خبير تغذية",
+  "statsLevel8": "بطل",
+  "statsLevel9": "أسطورة",
+  "statsLevel10": "خبير CalGo",
+  "statsAchievementFirstScanName": "بداية رائعة",
+  "statsAchievementFirstScanDescription": "سجّل وجبتك الأولى",
+  "statsAchievementScanMasterName": "خبير المسح",
+  "statsAchievementScanMasterDescription": "امسح 10 وجبات بالذكاء الاصطناعي",
+  "statsAchievementProteinKingName": "ملك البروتين",
+  "statsAchievementProteinKingDescription": "حقق 100% من هدف البروتين اليومي",
+  "statsAchievementStreak7Name": "سلسلة 7 أيام",
+  "statsAchievementStreak7Description": "سجّل وجباتك 7 أيام متتالية",
+  "statsAchievementCaloChampName": "بطل السعرات",
+  "statsAchievementCaloChampDescription": "حقق هدف السعرات 5 أيام متتالية",
+  "statsAchievementLegendName": "أسطورة CalGo",
+  "statsAchievementLegendDescription": "الوصول إلى المستوى 10",
+  "statsForecastNoDataBody": "سجّل وجبة لبدء توقع يعتمد على مدخولك الفعلي.",
+  "statsForecastReachedBody": "حافظ على مدخولك وعاداتك الحالية للحفاظ على النتيجة.",
+  "statsForecastHealthyBody": "مع {periodLabel} بنحو {calories} سعرة يوميًا، يمكنك الوصول إلى {target} كجم خلال نحو {weeksLabel}.",
+  "@statsForecastHealthyBody": {
+    "placeholders": {
+      "balance": {
+        "type": "String"
+      },
+      "calories": {
+        "type": "String"
+      },
+      "goal": {
+        "type": "String"
+      },
+      "periodLabel": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "weeksLabel": {
+        "type": "String"
+      }
+    }
+  },
+  "statsForecastSlowBody": "أنت تتقدم نحو هدفك، لكن الفارق في السعرات صغير. قد يستغرق الوصول إلى {target} كجم وقتًا أطول.",
+  "@statsForecastSlowBody": {
+    "placeholders": {
+      "goal": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "statsForecastAggressiveDeficitBody": "تتناول نحو {calories} سعرة يوميًا. قد لا يكون هذا العجز آمنًا. زد المدخول تدريجيًا نحو {recommendedCalories} سعرة.",
+  "@statsForecastAggressiveDeficitBody": {
+    "placeholders": {
+      "calories": {
+        "type": "String"
+      },
+      "recommendedCalories": {
+        "type": "String"
+      }
+    }
+  },
+  "statsForecastAggressiveSurplusBody": "تتناول نحو {balance} سعرة يوميًا فوق مستوى المحافظة. قد يزيد وزنك أسرع من المخطط.",
+  "@statsForecastAggressiveSurplusBody": {
+    "placeholders": {
+      "balance": {
+        "type": "String"
+      }
+    }
+  },
+  "statsForecastMaintenanceBody": "مدخولك قريب من مستوى المحافظة، لذلك قد لا يتغير وزنك كثيرًا.",
+  "statsForecastOppositeBody": "مع هذا المدخول قد {direction, select, up {يزداد} other {ينخفض}} وزنك ويبتعد عن {target} كجم.",
+  "@statsForecastOppositeBody": {
+    "placeholders": {
+      "balance": {
+        "type": "String"
+      },
+      "direction": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "planThreeMonths": "3 أشهر",
+  "planDurationThreeMonths": "3 أشهر",
+  "billedThreeMonthsNote": "تتم الفاتورة كل 3 أشهر",
+  "iosAutoRenewTermsThreeMonths": "تتم الفاتورة بقيمة {price}/3 أشهر. يتجدد تلقائياً كل 3 أشهر. يمكنك الإلغاء في أي وقت من إعدادات App Store.",
+  "whatToEatTitle": "ماذا نأكل اليوم؟",
+  "whatToEatTag": "ماذا نأكل؟",
+  "spinRandomAction": "تدوير عشوائي",
+  "spinAgainAction": "إعادة التدوير",
+  "mealBreakfast": "الإفطار",
+  "mealLunch": "الغداء",
+  "mealDinner": "العشاء",
+  "selectedDishTitle": "مقترح لك!",
+  "logThisMeal": "تسجيل هذه الوجبة",
+  "approxCalories": "~{calories} سعرة",
+  "whatToEatHint": "اضغط على أي طبق أو اختر عشوائياً",
+  "dishTagHighProtein": "غني بالبروتين",
+  "dishTagQuick": "سريع ومشبع",
+  "dishTagEnergetic": "غني بالطاقة",
+  "dishTagLight": "خفيف وسهل الهضم",
+  "dishTagBalanced": "لذيذ ومتوازن",
+  "dishTagHealthy": "صحي وقليل الدهون"
 }

@@ -3466,4 +3466,374 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get bmiMicronutrientSourceDesc =>
       'تصنيف مؤشر كتلة الجسم (المعدل الطبيعي 18.5–24.9) والحدود اليومية (ألياف 14 جم/1000 سعرة، سكريات حرة <10%، صوديوم <2000 ملجم).';
+
+  @override
+  String get statsOnTrack => 'على الطريق الصحيح';
+
+  @override
+  String get statsNeedsAdjustment => 'يحتاج إلى تعديل';
+
+  @override
+  String get statsGoalReached => 'تم تحقيق الهدف';
+
+  @override
+  String statsAdjustmentBody(String target) {
+    return 'مدخولك الحالي لا يكفي لتقدير موثوق لموعد الوصول إلى $target كجم. واصل التسجيل واضبط خطتك نحو هدفك.';
+  }
+
+  @override
+  String get statsNoDataBody =>
+      'سجّل المزيد من بيانات الوزن والتغذية لبدء توقع موثوق.';
+
+  @override
+  String get statsCaloriePeriod => 'متوسط آخر 7 أيام';
+
+  @override
+  String get statsCaloriePeriodToday => 'اليوم';
+
+  @override
+  String get statsNoCalories => 'لا توجد بيانات سعرات بعد';
+
+  @override
+  String get statsSlow => 'تقدم بطيء لكنه ثابت';
+
+  @override
+  String get statsHighDeficit => 'عجز السعرات مرتفع جدًا';
+
+  @override
+  String get statsHighSurplus => 'فائض السعرات مرتفع نسبيًا';
+
+  @override
+  String get statsStalled => 'التقدم متوقف حاليًا';
+
+  @override
+  String get statsOpposite => 'أنت تبتعد عن هدفك';
+
+  @override
+  String get statsGuidanceOnTrack => 'على الطريق الصحيح';
+
+  @override
+  String get statsNeedData => 'بحاجة لمزيد من البيانات';
+
+  @override
+  String get statsFirstMeal => 'بانتظار الوجبة الأولى';
+
+  @override
+  String get statsMinorAdjustment => 'تعديل بسيط';
+
+  @override
+  String get statsMoreSurplus => 'بحاجة للمزيد من السعرات';
+
+  @override
+  String get statsBalanced => 'توازن القوام';
+
+  @override
+  String get statsKeepTracking => 'متابعة إضافية';
+
+  @override
+  String get statsSteady => 'إيقاع ثابت';
+
+  @override
+  String get statsBuilding => 'بناء التقدم';
+
+  @override
+  String get statsFirstMealForecast =>
+      'سجّل وجبتك الأولى اليوم لبدء حساب توقعات تقدمك.';
+
+  @override
+  String get statsLowIntake =>
+      'مدخول اليوم أقل من المخطط. سجّل جميع وجباتك للحصول على توقع أكثر دقة.';
+
+  @override
+  String get statsSmallBalance =>
+      'فارق السعرات اليوم صغير. واصل التسجيل لبضعة أيام أخرى للحصول على توقع أوضح.';
+
+  @override
+  String get statsOverIntake =>
+      'تجاوز مدخول اليوم معدل الحرق المقدر. قم بتعديل بسيط غدًا للمحافظة على مسارك.';
+
+  @override
+  String get statsUnderSurplus =>
+      'لم يصل مدخول اليوم إلى الفائض المطلوب لزيادة الوزن. أضف المزيد من العناصر الغذائية غدًا.';
+
+  @override
+  String get statsKeepLogging =>
+      'واصل تسجيل الوجبات والوزن بانتظام حتى يتمكن CalGo من توقع اتجاهك الحقيقي.';
+
+  @override
+  String statsFamiliarReason(String reason) {
+    return 'يطابق حصة قمت بمسحها سابقًا ويناسب عناصرك الغذائية المتبقية اليوم.';
+  }
+
+  @override
+  String get statsFitsReason => 'يناسب سعراتك المتبقية ومثالي لوجبتك القادمة.';
+
+  @override
+  String get statsSauceSide => 'اجعل الصلصة جانبية للتحكم في السعرات بسهولة.';
+
+  @override
+  String get statsLessOil => 'اختر زيتًا أقل وأضف الخضار لوجبة أخف.';
+
+  @override
+  String get statsHighProtein =>
+      'خيار غني بالبروتين؛ تناول الطعام ببطء للشبع لفترة أطول.';
+
+  @override
+  String get statsReduceSauce => 'قلل الصلصة أو الزيت إذا أردت وجبة أخف.';
+
+  @override
+  String get statsModerateCarbs =>
+      'حافظ على كربوهيدرات معتدلة وأضف الخضار إلى هذه الوجبة.';
+
+  @override
+  String get statsBoostProtein =>
+      'تناولها مع البيض أو التوفو أو الزبادي لزيادة البروتين.';
+
+  @override
+  String get statsSplitPortions =>
+      'قسم الوجبة إلى حصص أصغر إذا كانت لديك وجبات أخرى قادمة.';
+
+  @override
+  String get statsHalfPortion =>
+      'إذا اقتربت من حد السعرات اليوم، اختر نصف حصة مع إضافة الخضار.';
+
+  @override
+  String get statsEatSlowly =>
+      'حافظ على حصص معتدلة وتناول الطعام ببطء للشعور بالشبع.';
+
+  @override
+  String get statsScanFirst =>
+      'امسح وجبتك الأولى اليوم حتى أحسب ما تبقى وأقترح وجبتك القادمة.';
+
+  @override
+  String get statsReachedToday =>
+      'لقد حققت هدف السعرات لليوم! حافظ على هذا الإيقاع؛ إن كنت جائعًا، اختر الماء أو وجبة خفيفة جدًا.';
+
+  @override
+  String get statsNearTarget =>
+      'أنت قريب من هدفك أو تجاوزته اليوم، لكن لا تقلق! إذا شعرت بالجوع، اختر بروتينًا خفيفًا.';
+
+  @override
+  String get statsNoMatchingMeals =>
+      'لم نتمكن من العثور على وجبات مناسبة من البيانات الحالية. امسح وجبتك التالية للحصول على اقتراحات أدق.';
+
+  @override
+  String statsPeriodDays(String days) {
+    return '$days أيام';
+  }
+
+  @override
+  String statsOnTrackBody(String calories, String target, String weeks) {
+    return 'بمتوسط $calories سعرة يوميًا، يمكنك الوصول إلى $target كجم خلال نحو $weeks.';
+  }
+
+  @override
+  String statsGuidanceProjection(
+    String dateSuffix,
+    String target,
+    String weeks,
+  ) {
+    return 'إذا حافظت على مدخول اليوم، فمن المتوقع أن تصل إلى $target كجم خلال نحو $weeks أسبوعًا$dateSuffix.';
+  }
+
+  @override
+  String statsProteinReason(String proteinG) {
+    return 'يمدك بنحو $proteinG جم بروتين ضمن السعرات المتبقية.';
+  }
+
+  @override
+  String statsRemainingMessage(String calRemaining, String protRemaining) {
+    return 'متبقي لديك نحو $calRemaining سعرة حرارية وينقصك $protRemaining جم بروتين.';
+  }
+
+  @override
+  String get statsLevel1 => 'مبتدئ';
+
+  @override
+  String get statsLevel2 => 'متابع';
+
+  @override
+  String get statsLevel3 => 'مثابر';
+
+  @override
+  String get statsLevel4 => 'منضبط';
+
+  @override
+  String get statsLevel5 => 'متحمس';
+
+  @override
+  String get statsLevel6 => 'محب للصحة';
+
+  @override
+  String get statsLevel7 => 'خبير تغذية';
+
+  @override
+  String get statsLevel8 => 'بطل';
+
+  @override
+  String get statsLevel9 => 'أسطورة';
+
+  @override
+  String get statsLevel10 => 'خبير CalGo';
+
+  @override
+  String get statsAchievementFirstScanName => 'بداية رائعة';
+
+  @override
+  String get statsAchievementFirstScanDescription => 'سجّل وجبتك الأولى';
+
+  @override
+  String get statsAchievementScanMasterName => 'خبير المسح';
+
+  @override
+  String get statsAchievementScanMasterDescription =>
+      'امسح 10 وجبات بالذكاء الاصطناعي';
+
+  @override
+  String get statsAchievementProteinKingName => 'ملك البروتين';
+
+  @override
+  String get statsAchievementProteinKingDescription =>
+      'حقق 100% من هدف البروتين اليومي';
+
+  @override
+  String get statsAchievementStreak7Name => 'سلسلة 7 أيام';
+
+  @override
+  String get statsAchievementStreak7Description => 'سجّل وجباتك 7 أيام متتالية';
+
+  @override
+  String get statsAchievementCaloChampName => 'بطل السعرات';
+
+  @override
+  String get statsAchievementCaloChampDescription =>
+      'حقق هدف السعرات 5 أيام متتالية';
+
+  @override
+  String get statsAchievementLegendName => 'أسطورة CalGo';
+
+  @override
+  String get statsAchievementLegendDescription => 'الوصول إلى المستوى 10';
+
+  @override
+  String get statsForecastNoDataBody =>
+      'سجّل وجبة لبدء توقع يعتمد على مدخولك الفعلي.';
+
+  @override
+  String get statsForecastReachedBody =>
+      'حافظ على مدخولك وعاداتك الحالية للحفاظ على النتيجة.';
+
+  @override
+  String statsForecastHealthyBody(
+    String balance,
+    String calories,
+    String goal,
+    String periodLabel,
+    String target,
+    String weeksLabel,
+  ) {
+    return 'مع $periodLabel بنحو $calories سعرة يوميًا، يمكنك الوصول إلى $target كجم خلال نحو $weeksLabel.';
+  }
+
+  @override
+  String statsForecastSlowBody(String goal, String target) {
+    return 'أنت تتقدم نحو هدفك، لكن الفارق في السعرات صغير. قد يستغرق الوصول إلى $target كجم وقتًا أطول.';
+  }
+
+  @override
+  String statsForecastAggressiveDeficitBody(
+    String calories,
+    String recommendedCalories,
+  ) {
+    return 'تتناول نحو $calories سعرة يوميًا. قد لا يكون هذا العجز آمنًا. زد المدخول تدريجيًا نحو $recommendedCalories سعرة.';
+  }
+
+  @override
+  String statsForecastAggressiveSurplusBody(String balance) {
+    return 'تتناول نحو $balance سعرة يوميًا فوق مستوى المحافظة. قد يزيد وزنك أسرع من المخطط.';
+  }
+
+  @override
+  String get statsForecastMaintenanceBody =>
+      'مدخولك قريب من مستوى المحافظة، لذلك قد لا يتغير وزنك كثيرًا.';
+
+  @override
+  String statsForecastOppositeBody(
+    String balance,
+    String direction,
+    String target,
+  ) {
+    String _temp0 = intl.Intl.selectLogic(direction, {
+      'up': 'يزداد',
+      'other': 'ينخفض',
+    });
+    return 'مع هذا المدخول قد $_temp0 وزنك ويبتعد عن $target كجم.';
+  }
+
+  @override
+  String get planThreeMonths => '3 أشهر';
+
+  @override
+  String get planDurationThreeMonths => '3 أشهر';
+
+  @override
+  String get billedThreeMonthsNote => 'تتم الفاتورة كل 3 أشهر';
+
+  @override
+  String iosAutoRenewTermsThreeMonths(String price) {
+    return 'تتم الفاتورة بقيمة $price/3 أشهر. يتجدد تلقائياً كل 3 أشهر. يمكنك الإلغاء في أي وقت من إعدادات App Store.';
+  }
+
+  @override
+  String get whatToEatTitle => 'ماذا نأكل اليوم؟';
+
+  @override
+  String get whatToEatTag => 'ماذا نأكل؟';
+
+  @override
+  String get spinRandomAction => 'تدوير عشوائي';
+
+  @override
+  String get spinAgainAction => 'إعادة التدوير';
+
+  @override
+  String get mealBreakfast => 'الإفطار';
+
+  @override
+  String get mealLunch => 'الغداء';
+
+  @override
+  String get mealDinner => 'العشاء';
+
+  @override
+  String get selectedDishTitle => 'مقترح لك!';
+
+  @override
+  String get logThisMeal => 'تسجيل هذه الوجبة';
+
+  @override
+  String approxCalories(int calories) {
+    return '~$calories سعرة';
+  }
+
+  @override
+  String get whatToEatHint => 'اضغط على أي طبق أو اختر عشوائياً';
+
+  @override
+  String get dishTagHighProtein => 'غني بالبروتين';
+
+  @override
+  String get dishTagQuick => 'سريع ومشبع';
+
+  @override
+  String get dishTagEnergetic => 'غني بالطاقة';
+
+  @override
+  String get dishTagLight => 'خفيف وسهل الهضم';
+
+  @override
+  String get dishTagBalanced => 'لذيذ ومتوازن';
+
+  @override
+  String get dishTagHealthy => 'صحي وقليل الدهون';
 }

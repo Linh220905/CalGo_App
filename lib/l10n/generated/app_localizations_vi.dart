@@ -3477,4 +3477,390 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String get bmiMicronutrientSourceDesc =>
       'Phân loại chỉ số khối cơ thể BMI (chuẩn 18.5–24.9) và ngưỡng vi chất hàng ngày (Chất xơ 14g/1000kcal, Đường tự do <10%, Natri <2000mg).';
+
+  @override
+  String get statsOnTrack => 'Đang đi đúng hướng';
+
+  @override
+  String get statsNeedsAdjustment => 'Cần điều chỉnh';
+
+  @override
+  String get statsGoalReached => 'Đã đạt mục tiêu';
+
+  @override
+  String statsAdjustmentBody(String target) {
+    return 'Mức nạp hiện tại chưa phù hợp để dự báo chắc chắn thời điểm đạt $target kg. Hãy ghi nhận đều đặn và điều chỉnh theo mục tiêu.';
+  }
+
+  @override
+  String get statsNoDataBody =>
+      'Hãy ghi nhận thêm dữ liệu cân nặng và dinh dưỡng để bắt đầu dự báo.';
+
+  @override
+  String get statsCaloriePeriod => 'trung bình 7 ngày qua';
+
+  @override
+  String get statsCaloriePeriodToday => 'hôm nay';
+
+  @override
+  String get statsNoCalories => 'Chưa có dữ liệu calo';
+
+  @override
+  String get statsSlow => 'Đang tiến bộ chậm nhưng ổn định';
+
+  @override
+  String get statsHighDeficit => 'Thâm hụt calo quá mức';
+
+  @override
+  String get statsHighSurplus => 'Thặng dư calo hơi cao';
+
+  @override
+  String get statsStalled => 'Tiến độ đang chững lại';
+
+  @override
+  String get statsOpposite => 'Đang đi ngược mục tiêu';
+
+  @override
+  String get statsGuidanceOnTrack => 'Đang đi đúng hướng';
+
+  @override
+  String get statsNeedData => 'Cần thêm dữ liệu';
+
+  @override
+  String get statsFirstMeal => 'Chờ bữa đầu';
+
+  @override
+  String get statsMinorAdjustment => 'Cần điều chỉnh nhẹ';
+
+  @override
+  String get statsMoreSurplus => 'Cần bổ sung thêm';
+
+  @override
+  String get statsBalanced => 'Cân bằng vóc dáng';
+
+  @override
+  String get statsKeepTracking => 'Theo dõi thêm';
+
+  @override
+  String get statsSteady => 'Giữ nhịp chuẩn';
+
+  @override
+  String get statsBuilding => 'Đang tích lũy';
+
+  @override
+  String get statsFirstMealForecast =>
+      'Hãy chụp bữa đầu tiên hôm nay để mình bắt đầu tính toán tiến trình dự báo nhé.';
+
+  @override
+  String get statsLowIntake =>
+      'Lượng calo hôm nay còn khá thấp so với kế hoạch. Hãy ghi đủ các bữa để CalGo dự báo chính xác hơn.';
+
+  @override
+  String get statsSmallBalance =>
+      'Chênh lệch calo hôm nay còn nhỏ. Hãy tiếp tục ghi nhận thêm vài ngày để dự báo rõ nét hơn.';
+
+  @override
+  String get statsOverIntake =>
+      'Lượng nạp hôm nay cao hơn mức tiêu hao. Hãy điều chỉnh nhẹ lại vào ngày mai để tiếp tục tiến trình.';
+
+  @override
+  String get statsUnderSurplus =>
+      'Lượng nạp hôm nay chưa đủ thặng dư để tăng cân. Ngày mai hãy bổ sung thêm dinh dưỡng trong từng bữa nhé.';
+
+  @override
+  String get statsKeepLogging =>
+      'Tiếp tục ghi nhận bữa ăn và cân nặng đều đặn để CalGo dự báo xu hướng thực tế của bạn.';
+
+  @override
+  String statsFamiliarReason(String reason) {
+    return '$reason';
+  }
+
+  @override
+  String get statsFitsReason =>
+      'Nằm trong phần calo còn lại và phù hợp cho bữa tiếp theo.';
+
+  @override
+  String get statsSauceSide => 'Để sốt riêng để dễ kiểm soát lượng calo.';
+
+  @override
+  String get statsLessOil =>
+      'Ưu tiên phần ít dầu và thêm rau để bữa ăn nhẹ hơn.';
+
+  @override
+  String get statsHighProtein =>
+      'Đây là lựa chọn giàu đạm; ăn chậm để giữ no lâu.';
+
+  @override
+  String get statsReduceSauce =>
+      'Giảm phần sốt hoặc dầu nếu muốn món này nhẹ hơn.';
+
+  @override
+  String get statsModerateCarbs =>
+      'Giữ phần tinh bột vừa phải và thêm rau vào bữa này.';
+
+  @override
+  String get statsBoostProtein =>
+      'Có thể ăn kèm trứng, đậu hũ hoặc sữa chua để đủ đạm hơn.';
+
+  @override
+  String get statsSplitPortions =>
+      'Chia khẩu phần thành hai phần nhỏ nếu bạn còn nhiều bữa.';
+
+  @override
+  String get statsHalfPortion =>
+      'Nếu hôm nay đã gần đủ calo, chọn nửa khẩu phần và thêm rau.';
+
+  @override
+  String get statsEatSlowly =>
+      'Giữ khẩu phần vừa đủ và ăn chậm để nhận biết lúc no.';
+
+  @override
+  String get statsScanFirst =>
+      'Chụp bữa đầu tiên hôm nay để mình tính phần còn lại và gợi ý bữa tiếp theo cho bạn.';
+
+  @override
+  String get statsReachedToday =>
+      'Bạn đã chạm mức calo hôm nay. Cứ giữ nhịp này nha; nếu còn đói, ưu tiên nước và món thật nhẹ.';
+
+  @override
+  String get statsNearTarget =>
+      'Hôm nay đã gần hoặc vượt mục tiêu, nhưng ngày chưa hề hỏng. Nếu còn đói, ưu tiên một lựa chọn nhẹ và có protein nhé.';
+
+  @override
+  String get statsNoMatchingMeals =>
+      'Mình chưa tìm được món phù hợp từ dữ liệu hiện có. Bạn có thể chụp món tiếp theo để mình tính chính xác hơn.';
+
+  @override
+  String statsPeriodDays(String days) {
+    return '$days ngày';
+  }
+
+  @override
+  String statsOnTrackBody(String calories, String target, String weeks) {
+    return 'Nếu duy trì trung bình $calories kcal/ngày, bạn có thể đạt $target kg trong khoảng $weeks.';
+  }
+
+  @override
+  String statsGuidanceProjection(
+    String dateSuffix,
+    String target,
+    String weeks,
+  ) {
+    return 'Maintaining today’s intake, you are projected to reach $target kg in about $weeks weeks$dateSuffix.';
+  }
+
+  @override
+  String statsProteinReason(String proteinG) {
+    return 'Bổ sung khoảng ${proteinG}g protein mà vẫn vừa phần calo còn lại.';
+  }
+
+  @override
+  String statsRemainingMessage(String calRemaining, String protRemaining) {
+    return 'Bạn còn khoảng $calRemaining kcal và thiếu ${protRemaining}g protein.';
+  }
+
+  @override
+  String get statsLevel1 => 'Người mới bắt đầu';
+
+  @override
+  String get statsLevel2 => 'Người theo dõi';
+
+  @override
+  String get statsLevel3 => 'Người kiên trì';
+
+  @override
+  String get statsLevel4 => 'Người có kỷ luật';
+
+  @override
+  String get statsLevel5 => 'Người nhiệt huyết';
+
+  @override
+  String get statsLevel6 => 'Người đam mê sức khỏe';
+
+  @override
+  String get statsLevel7 => 'Chuyên gia dinh dưỡng';
+
+  @override
+  String get statsLevel8 => 'Nhà vô địch';
+
+  @override
+  String get statsLevel9 => 'Huyền thoại';
+
+  @override
+  String get statsLevel10 => 'Master CalGo';
+
+  @override
+  String get statsAchievementFirstScanName => 'Khởi đầu rực rỡ';
+
+  @override
+  String get statsAchievementFirstScanDescription => 'Ghi nhận bữa ăn đầu tiên';
+
+  @override
+  String get statsAchievementScanMasterName => 'Chuyên gia Scan';
+
+  @override
+  String get statsAchievementScanMasterDescription =>
+      'Quét đủ 10 bữa ăn bằng AI';
+
+  @override
+  String get statsAchievementProteinKingName => 'Vua Protein';
+
+  @override
+  String get statsAchievementProteinKingDescription =>
+      'Đạt 100% mục tiêu đạm trong ngày';
+
+  @override
+  String get statsAchievementStreak7Name => '7 Ngày Siêu Cấp';
+
+  @override
+  String get statsAchievementStreak7Description =>
+      'Duy trì ghi chép liên tục 7 ngày';
+
+  @override
+  String get statsAchievementCaloChampName => 'Chiến Thắng Calo';
+
+  @override
+  String get statsAchievementCaloChampDescription =>
+      'Đạt mục tiêu Calo 5 ngày liên tiếp';
+
+  @override
+  String get statsAchievementLegendName => 'Huyền Thoại CalGo';
+
+  @override
+  String get statsAchievementLegendDescription => 'Đạt Cấp độ 10';
+
+  @override
+  String get statsForecastNoDataBody =>
+      'Hãy ghi nhận bữa ăn để bắt đầu dự báo theo lượng calo thực tế.';
+
+  @override
+  String get statsForecastReachedBody =>
+      'Hãy duy trì mức calo và thói quen hiện tại để giữ cân ổn định.';
+
+  @override
+  String statsForecastHealthyBody(
+    String balance,
+    String calories,
+    String goal,
+    String periodLabel,
+    String target,
+    String weeksLabel,
+  ) {
+    String _temp0 = intl.Intl.selectLogic(goal, {
+      'lose': 'thâm hụt',
+      'other': 'thặng dư',
+    });
+    return 'Với $periodLabel khoảng $calories kcal/ngày, bạn đang tạo $_temp0 khoảng $balance kcal/ngày. Nếu duy trì, bạn có thể đạt $target kg trong khoảng $weeksLabel nữa.';
+  }
+
+  @override
+  String statsForecastSlowBody(String goal, String target) {
+    String _temp0 = intl.Intl.selectLogic(goal, {
+      'lose': 'thâm hụt',
+      'other': 'thặng dư',
+    });
+    return 'Bạn vẫn đang đi đúng hướng nhưng mức $_temp0 còn nhẹ. Cân nặng sẽ thay đổi chậm hơn và có thể cần lâu hơn để đạt $target kg.';
+  }
+
+  @override
+  String statsForecastAggressiveDeficitBody(
+    String calories,
+    String recommendedCalories,
+  ) {
+    return 'Bạn đang nạp khoảng $calories kcal/ngày. Mức thâm hụt hiện tại có thể không an toàn và không nên dùng để giảm cân nhanh hơn. Hãy tăng dần về khoảng $recommendedCalories kcal/ngày.';
+  }
+
+  @override
+  String statsForecastAggressiveSurplusBody(String balance) {
+    return 'Bạn đang nạp cao hơn mức duy trì khoảng $balance kcal/ngày. Cân nặng có thể tăng nhanh hơn kế hoạch; hãy điều chỉnh về mức thặng dư vừa phải.';
+  }
+
+  @override
+  String get statsForecastMaintenanceBody =>
+      'Lượng calo hiện tại gần bằng mức duy trì. Nếu tiếp tục như vậy, cân nặng có thể không thay đổi đáng kể.';
+
+  @override
+  String statsForecastOppositeBody(
+    String balance,
+    String direction,
+    String target,
+  ) {
+    String _temp0 = intl.Intl.selectLogic(direction, {
+      'up': 'cao hơn',
+      'other': 'thấp hơn',
+    });
+    String _temp1 = intl.Intl.selectLogic(direction, {
+      'up': 'tăng',
+      'other': 'giảm',
+    });
+    return 'Bạn đang nạp $_temp0 mức duy trì khoảng $balance kcal/ngày. Nếu tiếp tục, cân nặng sẽ có xu hướng $_temp1 và mục tiêu $target kg sẽ khó đạt hơn.';
+  }
+
+  @override
+  String get planThreeMonths => '3 Tháng';
+
+  @override
+  String get planDurationThreeMonths => '3 tháng';
+
+  @override
+  String get billedThreeMonthsNote => 'Thanh toán mỗi 3 tháng';
+
+  @override
+  String iosAutoRenewTermsThreeMonths(String price) {
+    return 'Thanh toán $price/3 tháng. Tự động gia hạn mỗi 3 tháng. Hủy bất cứ lúc nào trong Cài đặt App Store.';
+  }
+
+  @override
+  String get whatToEatTitle => 'Hôm nay ăn gì?';
+
+  @override
+  String get whatToEatTag => 'Nay ăn gì?';
+
+  @override
+  String get spinRandomAction => 'Quay ngẫu nhiên';
+
+  @override
+  String get spinAgainAction => 'Quay lại';
+
+  @override
+  String get mealBreakfast => 'Bữa sáng';
+
+  @override
+  String get mealLunch => 'Bữa trưa';
+
+  @override
+  String get mealDinner => 'Bữa tối';
+
+  @override
+  String get selectedDishTitle => 'Gợi ý cho bạn!';
+
+  @override
+  String get logThisMeal => 'Ghi món này vào nhật ký';
+
+  @override
+  String approxCalories(int calories) {
+    return '~$calories kcal';
+  }
+
+  @override
+  String get whatToEatHint => 'Chạm thẻ bất kỳ hoặc nhấn Quay ngẫu nhiên';
+
+  @override
+  String get dishTagHighProtein => 'Giàu đạm';
+
+  @override
+  String get dishTagQuick => 'Nhanh gọn • No lâu';
+
+  @override
+  String get dishTagEnergetic => 'Giàu năng lượng';
+
+  @override
+  String get dishTagLight => 'Thanh nhẹ • Dễ tiêu';
+
+  @override
+  String get dishTagBalanced => 'Đậm đà • Đủ chất';
+
+  @override
+  String get dishTagHealthy => 'Healthy • Ít béo';
 }

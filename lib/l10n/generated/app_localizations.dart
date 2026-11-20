@@ -7,10 +7,12 @@ import 'package:intl/intl.dart' as intl;
 
 import 'app_localizations_ar.dart';
 import 'app_localizations_bn.dart';
+import 'app_localizations_de.dart';
 import 'app_localizations_en.dart';
 import 'app_localizations_es.dart';
 import 'app_localizations_fr.dart';
 import 'app_localizations_hi.dart';
+import 'app_localizations_hr.dart';
 import 'app_localizations_ja.dart';
 import 'app_localizations_ko.dart';
 import 'app_localizations_pt.dart';
@@ -107,10 +109,12 @@ abstract class AppLocalizations {
   static const List<Locale> supportedLocales = <Locale>[
     Locale('ar'),
     Locale('bn'),
+    Locale('de'),
     Locale('en'),
     Locale('es'),
     Locale('fr'),
     Locale('hi'),
+    Locale('hr'),
     Locale('ja'),
     Locale('ko'),
     Locale('pt'),
@@ -6328,6 +6332,618 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Body Mass Index classification (18.5–24.9 normal range) and daily micronutrient thresholds (Fiber 14g/1000kcal, Free Sugars <10%, Sodium <2000mg).'**
   String get bmiMicronutrientSourceDesc;
+
+  /// No description provided for @statsOnTrack.
+  ///
+  /// In en, this message translates to:
+  /// **'On track'**
+  String get statsOnTrack;
+
+  /// No description provided for @statsNeedsAdjustment.
+  ///
+  /// In en, this message translates to:
+  /// **'Needs adjustment'**
+  String get statsNeedsAdjustment;
+
+  /// No description provided for @statsGoalReached.
+  ///
+  /// In en, this message translates to:
+  /// **'Goal reached'**
+  String get statsGoalReached;
+
+  /// No description provided for @statsAdjustmentBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your current intake does not support a reliable estimate for reaching {target} kg. Keep logging and adjust toward your goal.'**
+  String statsAdjustmentBody(String target);
+
+  /// No description provided for @statsNoDataBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Log more weight and nutrition data to start a reliable forecast.'**
+  String get statsNoDataBody;
+
+  /// No description provided for @statsCaloriePeriod.
+  ///
+  /// In en, this message translates to:
+  /// **'the past 7-day average'**
+  String get statsCaloriePeriod;
+
+  /// No description provided for @statsCaloriePeriodToday.
+  ///
+  /// In en, this message translates to:
+  /// **'today'**
+  String get statsCaloriePeriodToday;
+
+  /// No description provided for @statsNoCalories.
+  ///
+  /// In en, this message translates to:
+  /// **'No calorie data yet'**
+  String get statsNoCalories;
+
+  /// No description provided for @statsSlow.
+  ///
+  /// In en, this message translates to:
+  /// **'Progressing slowly but steadily'**
+  String get statsSlow;
+
+  /// No description provided for @statsHighDeficit.
+  ///
+  /// In en, this message translates to:
+  /// **'Calorie deficit is too high'**
+  String get statsHighDeficit;
+
+  /// No description provided for @statsHighSurplus.
+  ///
+  /// In en, this message translates to:
+  /// **'Calorie surplus is quite high'**
+  String get statsHighSurplus;
+
+  /// No description provided for @statsStalled.
+  ///
+  /// In en, this message translates to:
+  /// **'Progress is currently stalled'**
+  String get statsStalled;
+
+  /// No description provided for @statsOpposite.
+  ///
+  /// In en, this message translates to:
+  /// **'Moving away from your goal'**
+  String get statsOpposite;
+
+  /// No description provided for @statsGuidanceOnTrack.
+  ///
+  /// In en, this message translates to:
+  /// **'On track'**
+  String get statsGuidanceOnTrack;
+
+  /// No description provided for @statsNeedData.
+  ///
+  /// In en, this message translates to:
+  /// **'Need more data'**
+  String get statsNeedData;
+
+  /// No description provided for @statsFirstMeal.
+  ///
+  /// In en, this message translates to:
+  /// **'Awaiting 1st meal'**
+  String get statsFirstMeal;
+
+  /// No description provided for @statsMinorAdjustment.
+  ///
+  /// In en, this message translates to:
+  /// **'Minor adjustment'**
+  String get statsMinorAdjustment;
+
+  /// No description provided for @statsMoreSurplus.
+  ///
+  /// In en, this message translates to:
+  /// **'Need more surplus'**
+  String get statsMoreSurplus;
+
+  /// No description provided for @statsBalanced.
+  ///
+  /// In en, this message translates to:
+  /// **'Balanced body'**
+  String get statsBalanced;
+
+  /// No description provided for @statsKeepTracking.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep tracking'**
+  String get statsKeepTracking;
+
+  /// No description provided for @statsSteady.
+  ///
+  /// In en, this message translates to:
+  /// **'Steady pace'**
+  String get statsSteady;
+
+  /// No description provided for @statsBuilding.
+  ///
+  /// In en, this message translates to:
+  /// **'Building progress'**
+  String get statsBuilding;
+
+  /// No description provided for @statsFirstMealForecast.
+  ///
+  /// In en, this message translates to:
+  /// **'Log your first meal today to start calculating your progress forecast.'**
+  String get statsFirstMealForecast;
+
+  /// No description provided for @statsLowIntake.
+  ///
+  /// In en, this message translates to:
+  /// **'Today’s intake is lower than planned. Log all your meals for a more accurate forecast.'**
+  String get statsLowIntake;
+
+  /// No description provided for @statsSmallBalance.
+  ///
+  /// In en, this message translates to:
+  /// **'Today’s calorie balance is small. Keep logging for a few more days for a clearer projection.'**
+  String get statsSmallBalance;
+
+  /// No description provided for @statsOverIntake.
+  ///
+  /// In en, this message translates to:
+  /// **'Today’s intake exceeded estimated burn. Make a gentle adjustment tomorrow to stay on track.'**
+  String get statsOverIntake;
+
+  /// No description provided for @statsUnderSurplus.
+  ///
+  /// In en, this message translates to:
+  /// **'Today’s intake didn’t reach the surplus needed for weight gain. Add extra nutrition to each meal tomorrow.'**
+  String get statsUnderSurplus;
+
+  /// No description provided for @statsKeepLogging.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep logging meals and weight regularly so CalGo can forecast your true trend.'**
+  String get statsKeepLogging;
+
+  /// No description provided for @statsFamiliarReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Matches a portion you scanned previously and fits your remaining macros today.'**
+  String statsFamiliarReason(String reason);
+
+  /// No description provided for @statsFitsReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Fits within your remaining calories and works well for your next meal.'**
+  String get statsFitsReason;
+
+  /// No description provided for @statsSauceSide.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep sauce on the side for easier calorie control.'**
+  String get statsSauceSide;
+
+  /// No description provided for @statsLessOil.
+  ///
+  /// In en, this message translates to:
+  /// **'Opt for less oil and add vegetables for a lighter meal.'**
+  String get statsLessOil;
+
+  /// No description provided for @statsHighProtein.
+  ///
+  /// In en, this message translates to:
+  /// **'High-protein option; eat slowly to stay full longer.'**
+  String get statsHighProtein;
+
+  /// No description provided for @statsReduceSauce.
+  ///
+  /// In en, this message translates to:
+  /// **'Reduce sauce or oil if you want a lighter version.'**
+  String get statsReduceSauce;
+
+  /// No description provided for @statsModerateCarbs.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep carbs moderate and add vegetables to this meal.'**
+  String get statsModerateCarbs;
+
+  /// No description provided for @statsBoostProtein.
+  ///
+  /// In en, this message translates to:
+  /// **'Pair with eggs, tofu, or yogurt to boost protein.'**
+  String get statsBoostProtein;
+
+  /// No description provided for @statsSplitPortions.
+  ///
+  /// In en, this message translates to:
+  /// **'Split into smaller portions if you have more meals ahead.'**
+  String get statsSplitPortions;
+
+  /// No description provided for @statsHalfPortion.
+  ///
+  /// In en, this message translates to:
+  /// **'If near your calorie limit today, opt for half a portion with extra greens.'**
+  String get statsHalfPortion;
+
+  /// No description provided for @statsEatSlowly.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep portions moderate and eat slowly to feel fullness.'**
+  String get statsEatSlowly;
+
+  /// No description provided for @statsScanFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan your first meal today so I can calculate what remains and suggest your next meal.'**
+  String get statsScanFirst;
+
+  /// No description provided for @statsReachedToday.
+  ///
+  /// In en, this message translates to:
+  /// **'You’ve reached today’s calorie target. Keep this momentum; if still hungry, stick to water or light snacks.'**
+  String get statsReachedToday;
+
+  /// No description provided for @statsNearTarget.
+  ///
+  /// In en, this message translates to:
+  /// **'You’re near or past your target today, but your day is still on track! If hungry, choose a light protein option.'**
+  String get statsNearTarget;
+
+  /// No description provided for @statsNoMatchingMeals.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not find matching meals from current data. Scan your next meal for more accurate suggestions.'**
+  String get statsNoMatchingMeals;
+
+  /// No description provided for @statsPeriodDays.
+  ///
+  /// In en, this message translates to:
+  /// **'{days} days'**
+  String statsPeriodDays(String days);
+
+  /// No description provided for @statsOnTrackBody.
+  ///
+  /// In en, this message translates to:
+  /// **'At an average of {calories} kcal/day, you may reach {target} kg in about {weeks}.'**
+  String statsOnTrackBody(String calories, String target, String weeks);
+
+  /// No description provided for @statsGuidanceProjection.
+  ///
+  /// In en, this message translates to:
+  /// **'Maintaining today’s intake, you are projected to reach {target} kg in about {weeks} weeks{dateSuffix}.'**
+  String statsGuidanceProjection(
+    String dateSuffix,
+    String target,
+    String weeks,
+  );
+
+  /// No description provided for @statsProteinReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Adds about {proteinG}g protein while staying within your remaining calories.'**
+  String statsProteinReason(String proteinG);
+
+  /// No description provided for @statsRemainingMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'You have about {calRemaining} kcal left and need {protRemaining}g more protein.'**
+  String statsRemainingMessage(String calRemaining, String protRemaining);
+
+  /// No description provided for @statsLevel1.
+  ///
+  /// In en, this message translates to:
+  /// **'Beginner'**
+  String get statsLevel1;
+
+  /// No description provided for @statsLevel2.
+  ///
+  /// In en, this message translates to:
+  /// **'Tracker'**
+  String get statsLevel2;
+
+  /// No description provided for @statsLevel3.
+  ///
+  /// In en, this message translates to:
+  /// **'Consistent'**
+  String get statsLevel3;
+
+  /// No description provided for @statsLevel4.
+  ///
+  /// In en, this message translates to:
+  /// **'Disciplined'**
+  String get statsLevel4;
+
+  /// No description provided for @statsLevel5.
+  ///
+  /// In en, this message translates to:
+  /// **'Energetic'**
+  String get statsLevel5;
+
+  /// No description provided for @statsLevel6.
+  ///
+  /// In en, this message translates to:
+  /// **'Health Enthusiast'**
+  String get statsLevel6;
+
+  /// No description provided for @statsLevel7.
+  ///
+  /// In en, this message translates to:
+  /// **'Nutrition Expert'**
+  String get statsLevel7;
+
+  /// No description provided for @statsLevel8.
+  ///
+  /// In en, this message translates to:
+  /// **'Champion'**
+  String get statsLevel8;
+
+  /// No description provided for @statsLevel9.
+  ///
+  /// In en, this message translates to:
+  /// **'Legend'**
+  String get statsLevel9;
+
+  /// No description provided for @statsLevel10.
+  ///
+  /// In en, this message translates to:
+  /// **'Master CalGo'**
+  String get statsLevel10;
+
+  /// No description provided for @statsAchievementFirstScanName.
+  ///
+  /// In en, this message translates to:
+  /// **'Bright Start'**
+  String get statsAchievementFirstScanName;
+
+  /// No description provided for @statsAchievementFirstScanDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Record your first meal'**
+  String get statsAchievementFirstScanDescription;
+
+  /// No description provided for @statsAchievementScanMasterName.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan Master'**
+  String get statsAchievementScanMasterName;
+
+  /// No description provided for @statsAchievementScanMasterDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan 10 meals with AI'**
+  String get statsAchievementScanMasterDescription;
+
+  /// No description provided for @statsAchievementProteinKingName.
+  ///
+  /// In en, this message translates to:
+  /// **'Protein King'**
+  String get statsAchievementProteinKingName;
+
+  /// No description provided for @statsAchievementProteinKingDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Reach 100% of your daily protein goal'**
+  String get statsAchievementProteinKingDescription;
+
+  /// No description provided for @statsAchievementStreak7Name.
+  ///
+  /// In en, this message translates to:
+  /// **'7-Day Streak'**
+  String get statsAchievementStreak7Name;
+
+  /// No description provided for @statsAchievementStreak7Description.
+  ///
+  /// In en, this message translates to:
+  /// **'Log meals for 7 consecutive days'**
+  String get statsAchievementStreak7Description;
+
+  /// No description provided for @statsAchievementCaloChampName.
+  ///
+  /// In en, this message translates to:
+  /// **'Calorie Champion'**
+  String get statsAchievementCaloChampName;
+
+  /// No description provided for @statsAchievementCaloChampDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Reach your calorie goal for 5 consecutive days'**
+  String get statsAchievementCaloChampDescription;
+
+  /// No description provided for @statsAchievementLegendName.
+  ///
+  /// In en, this message translates to:
+  /// **'CalGo Legend'**
+  String get statsAchievementLegendName;
+
+  /// No description provided for @statsAchievementLegendDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Reach level 10'**
+  String get statsAchievementLegendDescription;
+
+  /// No description provided for @statsForecastNoDataBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Log a meal to start a forecast based on your actual intake.'**
+  String get statsForecastNoDataBody;
+
+  /// No description provided for @statsForecastReachedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep your current intake and habits to maintain your result.'**
+  String get statsForecastReachedBody;
+
+  /// No description provided for @statsForecastHealthyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'At about {calories} kcal/day over {periodLabel}, you may reach {target} kg in about {weeksLabel}.'**
+  String statsForecastHealthyBody(
+    String balance,
+    String calories,
+    String goal,
+    String periodLabel,
+    String target,
+    String weeksLabel,
+  );
+
+  /// No description provided for @statsForecastSlowBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You are moving toward your goal, but the calorie balance is small. Reaching {target} kg may take longer.'**
+  String statsForecastSlowBody(String goal, String target);
+
+  /// No description provided for @statsForecastAggressiveDeficitBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You are eating about {calories} kcal/day. This deficit may not be safe. Gradually move toward about {recommendedCalories} kcal/day.'**
+  String statsForecastAggressiveDeficitBody(
+    String calories,
+    String recommendedCalories,
+  );
+
+  /// No description provided for @statsForecastAggressiveSurplusBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You are about {balance} kcal/day above maintenance. Your weight may rise faster than planned.'**
+  String statsForecastAggressiveSurplusBody(String balance);
+
+  /// No description provided for @statsForecastMaintenanceBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your intake is close to maintenance, so your weight may not change much.'**
+  String get statsForecastMaintenanceBody;
+
+  /// No description provided for @statsForecastOppositeBody.
+  ///
+  /// In en, this message translates to:
+  /// **'At this intake, your weight is likely to {direction, select, up {increase} other {decrease}} and move farther from {target} kg.'**
+  String statsForecastOppositeBody(
+    String balance,
+    String direction,
+    String target,
+  );
+
+  /// No description provided for @planThreeMonths.
+  ///
+  /// In en, this message translates to:
+  /// **'3 Months'**
+  String get planThreeMonths;
+
+  /// No description provided for @planDurationThreeMonths.
+  ///
+  /// In en, this message translates to:
+  /// **'3 months'**
+  String get planDurationThreeMonths;
+
+  /// No description provided for @billedThreeMonthsNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Billed every 3 months'**
+  String get billedThreeMonthsNote;
+
+  /// No description provided for @iosAutoRenewTermsThreeMonths.
+  ///
+  /// In en, this message translates to:
+  /// **'Billed as {price}/3 months. Auto-renews every 3 months. Cancel anytime in App Store Settings.'**
+  String iosAutoRenewTermsThreeMonths(String price);
+
+  /// No description provided for @whatToEatTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'What to eat today?'**
+  String get whatToEatTitle;
+
+  /// No description provided for @whatToEatTag.
+  ///
+  /// In en, this message translates to:
+  /// **'What to eat?'**
+  String get whatToEatTag;
+
+  /// No description provided for @spinRandomAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Spin random'**
+  String get spinRandomAction;
+
+  /// No description provided for @spinAgainAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Spin again'**
+  String get spinAgainAction;
+
+  /// No description provided for @mealBreakfast.
+  ///
+  /// In en, this message translates to:
+  /// **'Breakfast'**
+  String get mealBreakfast;
+
+  /// No description provided for @mealLunch.
+  ///
+  /// In en, this message translates to:
+  /// **'Lunch'**
+  String get mealLunch;
+
+  /// No description provided for @mealDinner.
+  ///
+  /// In en, this message translates to:
+  /// **'Dinner'**
+  String get mealDinner;
+
+  /// No description provided for @selectedDishTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggested for you!'**
+  String get selectedDishTitle;
+
+  /// No description provided for @logThisMeal.
+  ///
+  /// In en, this message translates to:
+  /// **'Log this meal'**
+  String get logThisMeal;
+
+  /// No description provided for @approxCalories.
+  ///
+  /// In en, this message translates to:
+  /// **'~{calories} kcal'**
+  String approxCalories(int calories);
+
+  /// No description provided for @whatToEatHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap any dish or press Spin random'**
+  String get whatToEatHint;
+
+  /// No description provided for @dishTagHighProtein.
+  ///
+  /// In en, this message translates to:
+  /// **'High protein'**
+  String get dishTagHighProtein;
+
+  /// No description provided for @dishTagQuick.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick & filling'**
+  String get dishTagQuick;
+
+  /// No description provided for @dishTagEnergetic.
+  ///
+  /// In en, this message translates to:
+  /// **'Energy boost'**
+  String get dishTagEnergetic;
+
+  /// No description provided for @dishTagLight.
+  ///
+  /// In en, this message translates to:
+  /// **'Light & easy'**
+  String get dishTagLight;
+
+  /// No description provided for @dishTagBalanced.
+  ///
+  /// In en, this message translates to:
+  /// **'Rich & balanced'**
+  String get dishTagBalanced;
+
+  /// No description provided for @dishTagHealthy.
+  ///
+  /// In en, this message translates to:
+  /// **'Healthy & lean'**
+  String get dishTagHealthy;
 }
 
 class _AppLocalizationsDelegate
@@ -6343,10 +6959,12 @@ class _AppLocalizationsDelegate
   bool isSupported(Locale locale) => <String>[
     'ar',
     'bn',
+    'de',
     'en',
     'es',
     'fr',
     'hi',
+    'hr',
     'ja',
     'ko',
     'pt',
@@ -6367,6 +6985,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
       return AppLocalizationsAr();
     case 'bn':
       return AppLocalizationsBn();
+    case 'de':
+      return AppLocalizationsDe();
     case 'en':
       return AppLocalizationsEn();
     case 'es':
@@ -6375,6 +6995,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
       return AppLocalizationsFr();
     case 'hi':
       return AppLocalizationsHi();
+    case 'hr':
+      return AppLocalizationsHr();
     case 'ja':
       return AppLocalizationsJa();
     case 'ko':

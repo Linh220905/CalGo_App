@@ -1512,5 +1512,230 @@
   "usdaDietaryCitation": "Диетические рекомендации USDA для американцев (Макронутриенты)",
   "cdcWeightLossCitation": "CDC — Рекомендации по здоровому снижению веса (0,5–1 кг/неделю)",
   "bmiMicronutrientSourceTitle": "Стандарты ИМТ и микронутриентов",
-  "bmiMicronutrientSourceDesc": "Классификация ИМТ (норма 18,5–24,9) и суточные нормы микронутриентов (Клетчатка 14г/1000ккал, Сахар <10%, Натрий <2000мг)."
+  "bmiMicronutrientSourceDesc": "Классификация ИМТ (норма 18,5–24,9) и суточные нормы микронутриентов (Клетчатка 14г/1000ккал, Сахар <10%, Натрий <2000мг).",
+  "statsOnTrack": "Всё по плану",
+  "statsNeedsAdjustment": "Нужна корректировка",
+  "statsGoalReached": "Цель достигнута",
+  "statsAdjustmentBody": "Текущего рациона недостаточно для надёжной оценки достижения {target} кг. Продолжайте записывать питание и корректируйте план.",
+  "@statsAdjustmentBody": {
+    "placeholders": {
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "statsNoDataBody": "Добавьте данные о весе и питании, чтобы начать надёжный прогноз.",
+  "statsCaloriePeriod": "среднем за последние 7 дней",
+  "statsCaloriePeriodToday": "сегодня",
+  "statsNoCalories": "Пока нет данных о калориях",
+  "statsSlow": "Медленный, но стабильный прогресс",
+  "statsHighDeficit": "Слишком большой дефицит калорий",
+  "statsHighSurplus": "Избыток калорий довольно большой",
+  "statsStalled": "Прогресс пока остановился",
+  "statsOpposite": "Вы удаляетесь от цели",
+  "statsGuidanceOnTrack": "Всё по плану",
+  "statsNeedData": "Нужно больше данных",
+  "statsFirstMeal": "Ждем первый прием",
+  "statsMinorAdjustment": "Небольшая корректировка",
+  "statsMoreSurplus": "Нужно больше калорий",
+  "statsBalanced": "Баланс формы",
+  "statsKeepTracking": "Продолжайте следить",
+  "statsSteady": "Стабильный ритм",
+  "statsBuilding": "Набираем темп",
+  "statsFirstMealForecast": "Запишите первый приём пищи за сегодня, чтобы рассчитать прогноз прогресса.",
+  "statsLowIntake": "Сегодняшний рацион ниже плана. Записывайте все приёмы пищи для точного прогноза.",
+  "statsSmallBalance": "Разница калорий за сегодня невелика. Записывайте питание ещё несколько дней для чёткого прогноза.",
+  "statsOverIntake": "Сегодняшний рацион превысил расход. Скорректируйте питание завтра, чтобы вернуться к цели.",
+  "statsUnderSurplus": "Сегодняшний рацион не создал нужного избытка для набора веса. Добавьте питательности завтра.",
+  "statsKeepLogging": "Продолжайте регулярно записывать питание и вес, чтобы CalGo показал ваш реальный тренд.",
+  "statsFamiliarReason": "Соответствует ранее отсканированной порции и подходит под оставшиеся макросы.",
+  "@statsFamiliarReason": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "statsFitsReason": "Вписывается в оставшиеся калории и отлично подходит для следующего приёма.",
+  "statsSauceSide": "Попросите соус отдельно, чтобы контролировать калории.",
+  "statsLessOil": "Выбирайте меньше масла и добавьте овощей для лёгкости блюда.",
+  "statsHighProtein": "Блюдо богато белком; ешьте медленно для долгого насыщения.",
+  "statsReduceSauce": "Уменьшите количество соуса или масла, если хотите облегчить блюдо.",
+  "statsModerateCarbs": "Соблюдайте умеренность в углеводах и добавьте овощи.",
+  "statsBoostProtein": "Добавьте яйцо, тофу или йогурт для повышения белка.",
+  "statsSplitPortions": "Разделите на небольшие порции, если впереди ещё есть приёмы пищи.",
+  "statsHalfPortion": "Если вы близки к лимиту калорий, выберите полпорции и добавьте овощей.",
+  "statsEatSlowly": "Контролируйте порцию и ешьте медленно, чтобы почувствовать насыщение.",
+  "statsScanFirst": "Отсканируйте первый приём пищи за сегодня, чтобы рассчитать остаток и предложить блюда.",
+  "statsReachedToday": "Вы достигли дневной нормы калорий! Держите темп; если ещё голодны, отдайте предпочтение воде или лёгкому перекусу.",
+  "statsNearTarget": "Вы около или чуть превысили норму, но всё в порядке! Если голодны, выберите лёгкий белковый перекус.",
+  "statsNoMatchingMeals": "Не удалось подобрать блюда по текущим данным. Отсканируйте следующий приём пищи для точных рекомендаций.",
+  "statsPeriodDays": "{days} дн.",
+  "@statsPeriodDays": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "statsOnTrackBody": "При среднем рационе {calories} ккал в день вы можете достичь {target} кг примерно за {weeks}.",
+  "@statsOnTrackBody": {
+    "placeholders": {
+      "calories": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "weeks": {
+        "type": "String"
+      }
+    }
+  },
+  "statsGuidanceProjection": "Сохраняя сегодняшнее питание, вы достигнете {target} кг примерно за {weeks} нед.{dateSuffix}.",
+  "@statsGuidanceProjection": {
+    "placeholders": {
+      "dateSuffix": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "weeks": {
+        "type": "String"
+      }
+    }
+  },
+  "statsProteinReason": "Добавляет около {proteinG} г белка в пределах оставшихся калорий.",
+  "@statsProteinReason": {
+    "placeholders": {
+      "proteinG": {
+        "type": "String"
+      }
+    }
+  },
+  "statsRemainingMessage": "У вас осталось около {calRemaining} ккал и не хватает {protRemaining} г белка.",
+  "@statsRemainingMessage": {
+    "placeholders": {
+      "calRemaining": {
+        "type": "String"
+      },
+      "protRemaining": {
+        "type": "String"
+      }
+    }
+  },
+  "statsLevel1": "Новичок",
+  "statsLevel2": "Наблюдатель",
+  "statsLevel3": "Настойчивый",
+  "statsLevel4": "Дисциплинированный",
+  "statsLevel5": "Энтузиаст",
+  "statsLevel6": "Любитель здоровья",
+  "statsLevel7": "Эксперт по питанию",
+  "statsLevel8": "Чемпион",
+  "statsLevel9": "Легенда",
+  "statsLevel10": "Мастер CalGo",
+  "statsAchievementFirstScanName": "Яркий старт",
+  "statsAchievementFirstScanDescription": "Запишите первый приём пищи",
+  "statsAchievementScanMasterName": "Мастер сканирования",
+  "statsAchievementScanMasterDescription": "Отсканируйте 10 блюд с ИИ",
+  "statsAchievementProteinKingName": "Белковый чемпион",
+  "statsAchievementProteinKingDescription": "Достигните 100% дневной цели белка",
+  "statsAchievementStreak7Name": "Серия 7 дней",
+  "statsAchievementStreak7Description": "Записывайте питание 7 дней подряд",
+  "statsAchievementCaloChampName": "Чемпион калорий",
+  "statsAchievementCaloChampDescription": "Достигайте цели 5 дней подряд",
+  "statsAchievementLegendName": "Легенда CalGo",
+  "statsAchievementLegendDescription": "Достигните 10 уровня",
+  "statsForecastNoDataBody": "Запишите приём пищи, чтобы начать прогноз по фактическому рациону.",
+  "statsForecastReachedBody": "Сохраняйте текущий рацион и привычки, чтобы удерживать результат.",
+  "statsForecastHealthyBody": "При {periodLabel} около {calories} ккал в день вы можете достичь {target} кг примерно за {weeksLabel}.",
+  "@statsForecastHealthyBody": {
+    "placeholders": {
+      "balance": {
+        "type": "String"
+      },
+      "calories": {
+        "type": "String"
+      },
+      "goal": {
+        "type": "String"
+      },
+      "periodLabel": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "weeksLabel": {
+        "type": "String"
+      }
+    }
+  },
+  "statsForecastSlowBody": "Вы движетесь к цели, но разница калорий небольшая. Достижение {target} кг может занять больше времени.",
+  "@statsForecastSlowBody": {
+    "placeholders": {
+      "goal": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "statsForecastAggressiveDeficitBody": "Вы употребляете около {calories} ккал в день. Такой дефицит может быть небезопасным. Постепенно приблизьтесь к {recommendedCalories} ккал.",
+  "@statsForecastAggressiveDeficitBody": {
+    "placeholders": {
+      "calories": {
+        "type": "String"
+      },
+      "recommendedCalories": {
+        "type": "String"
+      }
+    }
+  },
+  "statsForecastAggressiveSurplusBody": "Вы получаете примерно на {balance} ккал в день больше уровня поддержания. Вес может расти слишком быстро.",
+  "@statsForecastAggressiveSurplusBody": {
+    "placeholders": {
+      "balance": {
+        "type": "String"
+      }
+    }
+  },
+  "statsForecastMaintenanceBody": "Ваш рацион близок к уровню поддержания, поэтому вес может почти не меняться.",
+  "statsForecastOppositeBody": "При таком рационе вес может {direction, select, up {увеличиваться} other {снижаться}} и удаляться от {target} кг.",
+  "@statsForecastOppositeBody": {
+    "placeholders": {
+      "balance": {
+        "type": "String"
+      },
+      "direction": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "planThreeMonths": "3 месяца",
+  "planDurationThreeMonths": "3 месяца",
+  "billedThreeMonthsNote": "Оплата каждые 3 месяца",
+  "iosAutoRenewTermsThreeMonths": "Оплата {price}/3 месяца. Автопродление каждые 3 месяца. Отмена в любое время в настройках App Store.",
+  "whatToEatTitle": "Что поесть сегодня?",
+  "whatToEatTag": "Что поесть?",
+  "spinRandomAction": "Случайный выбор",
+  "spinAgainAction": "Крутить снова",
+  "mealBreakfast": "Завтрак",
+  "mealLunch": "Обед",
+  "mealDinner": "Ужин",
+  "selectedDishTitle": "Рекомендация для вас!",
+  "logThisMeal": "Записать этот прием пищи",
+  "approxCalories": "~{calories} ккал",
+  "whatToEatHint": "Нажмите на блюдо или кнопку Случайный выбор",
+  "dishTagHighProtein": "Много белка",
+  "dishTagQuick": "Быстро и сытно",
+  "dishTagEnergetic": "Заряд энергии",
+  "dishTagLight": "Легко усваивается",
+  "dishTagBalanced": "Сытно и сбалансировано",
+  "dishTagHealthy": "Полезно и легко"
 }

@@ -3501,4 +3501,377 @@ class AppLocalizationsBn extends AppLocalizations {
   @override
   String get bmiMicronutrientSourceDesc =>
       'বডি ম্যাস ইনডেক্স শ্রেণিবিভাগ (স্বাভাবিক ১৮.৫–২৪.৯) এবং দৈনিক মাইক্রোনিউট্রিয়েন্ট সীমা (ফাইবার ১৪ গ্রাম/১০০০ক্যালোরি, চিনি <১০%, সোডিয়াম <২০০০মিলিগ্রাম)।';
+
+  @override
+  String get statsOnTrack => 'সঠিক পথে';
+
+  @override
+  String get statsNeedsAdjustment => 'সমন্বয় প্রয়োজন';
+
+  @override
+  String get statsGoalReached => 'লক্ষ্য অর্জিত';
+
+  @override
+  String statsAdjustmentBody(String target) {
+    return 'বর্তমান গ্রহণ $target kg-এ পৌঁছানোর নির্ভরযোগ্য সময় অনুমানের জন্য যথেষ্ট নয়। নিয়মিত রেকর্ড করুন ও লক্ষ্য অনুযায়ী সামঞ্জস্য করুন।';
+  }
+
+  @override
+  String get statsNoDataBody =>
+      'নির্ভরযোগ্য পূর্বাভাস শুরু করতে আরও ওজন ও পুষ্টির তথ্য রেকর্ড করুন।';
+
+  @override
+  String get statsCaloriePeriod => 'গত ৭ দিনের গড়';
+
+  @override
+  String get statsCaloriePeriodToday => 'আজ';
+
+  @override
+  String get statsNoCalories => 'এখনও ক্যালোরির তথ্য নেই';
+
+  @override
+  String get statsSlow => 'ধীর কিন্তু স্থির অগ্রগতি';
+
+  @override
+  String get statsHighDeficit => 'ক্যালোরির ঘাটতি খুব বেশি';
+
+  @override
+  String get statsHighSurplus => 'ক্যালোরির উদ্বৃত্ত বেশ বেশি';
+
+  @override
+  String get statsStalled => 'অগ্রগতি আপাতত থেমে আছে';
+
+  @override
+  String get statsOpposite => 'আপনি আপনার লক্ষ্য থেকে দূরে সরে যাচ্ছেন';
+
+  @override
+  String get statsGuidanceOnTrack => 'সঠিক পথে';
+
+  @override
+  String get statsNeedData => 'আরও তথ্যের প্রয়োজন';
+
+  @override
+  String get statsFirstMeal => 'প্রথম খাবারের অপেক্ষা';
+
+  @override
+  String get statsMinorAdjustment => 'সামান্য সমন্বয় প্রয়োজন';
+
+  @override
+  String get statsMoreSurplus => 'আরও অতিরিক্ত গ্রহণ প্রয়োজন';
+
+  @override
+  String get statsBalanced => 'শারীরিক ভারসাম্য';
+
+  @override
+  String get statsKeepTracking => 'আরও পর্যবেক্ষণ করুন';
+
+  @override
+  String get statsSteady => 'স্থির ছন্দ';
+
+  @override
+  String get statsBuilding => 'অগ্রগতি তৈরি হচ্ছে';
+
+  @override
+  String get statsFirstMealForecast =>
+      'অগ্রগতির পূর্বাভাস গণনা শুরু করতে আজকের প্রথম খাবারটি রেকর্ড করুন।';
+
+  @override
+  String get statsLowIntake =>
+      'আজকের গ্রহণ পরিকল্পনার চেয়ে কম। আরও সঠিক পূর্বাভাসে জন্য সব খাবার রেকর্ড করুন।';
+
+  @override
+  String get statsSmallBalance =>
+      'আজকের ক্যালোরির ব্যবধান কম। স্পষ্ট পূর্বাভাসের জন্য আরও কয়েক দিন রেকর্ড চালিয়ে যান।';
+
+  @override
+  String get statsOverIntake =>
+      'আজকের গ্রহণ আনুমানিক ব্যয়ের চেয়ে বেশি ছিল। ট্র্যাকে ফিরতে আগামীকাল সামান্য সমন্বয় করুন।';
+
+  @override
+  String get statsUnderSurplus =>
+      'আজকের গ্রহণ ওজন বৃদ্ধির জন্য প্রয়োজনীয় উদ্বৃত্তে পৌঁছায়নি। আগামীকাল খাবারে পুষ্টি যোগ করুন।';
+
+  @override
+  String get statsKeepLogging =>
+      'নিয়মিত খাবার ও ওজন রেকর্ড করুন যাতে CalGo আপনার আসল প্রবণতা পূর্বাভাস দিতে পারে।';
+
+  @override
+  String statsFamiliarReason(String reason) {
+    return 'এটি আপনার আগে স্ক্যান করা খাবারের সাথে মিলে যায় এবং আজকের বাকি লক্ষ্যের জন্য উপযুক্ত।';
+  }
+
+  @override
+  String get statsFitsReason =>
+      'আপনার বাকি ক্যালোরির মধ্যে উপযুক্ত এবং পরবর্তী খাবারের জন্য ভালো।';
+
+  @override
+  String get statsSauceSide => 'ক্যালোরি সহজে নিয়ন্ত্রণ করতে সস আলাদা রাখুন।';
+
+  @override
+  String get statsLessOil =>
+      'হালকা খাবারের জন্য কম তেল বেছে নিন এবং শাকসবজি যোগ করুন।';
+
+  @override
+  String get statsHighProtein =>
+      'উচ্চ প্রোটিনযুক্ত খাবার; দীর্ঘক্ষণ তৃপ্ত থাকতে ধীরে খান।';
+
+  @override
+  String get statsReduceSauce => 'হালকা সংস্করণ চাইলে সস বা তেল কমিয়ে নিন।';
+
+  @override
+  String get statsModerateCarbs =>
+      'কার্বোহাইড্রেট পরিমিত রাখুন এবং এই খাবারে শাকসবজি যোগ করুন।';
+
+  @override
+  String get statsBoostProtein =>
+      'প্রোটিন বাড়াতে ডিম, তোফু বা দইয়ের সাথে খেতে পারেন।';
+
+  @override
+  String get statsSplitPortions =>
+      'সামনে আরও খাবার থাকলে এটিকে ছোট অংশে ভাগ করে নিন।';
+
+  @override
+  String get statsHalfPortion =>
+      'আজ ক্যালোরি প্রায় পূর্ণ হয়ে থাকলে অর্ধেক অংশ নিন এবং বেশি সবজি খান।';
+
+  @override
+  String get statsEatSlowly =>
+      'পরিমিত অংশ রাখুন এবং তৃপ্তি বুঝতে ধীরে ধীরে খান।';
+
+  @override
+  String get statsScanFirst =>
+      'আজকের প্রথম খাবারটি স্ক্যান করুন যাতে আমি বাকি অংশ হিসাব করে পরের খাবারের পরামর্শ দিতে পারি।';
+
+  @override
+  String get statsReachedToday =>
+      'আপনি আজকের ক্যালোরির লক্ষ্য পূরণ করেছেন। এই ধারাবাহিকতা ধরে রাখুন; এখনও ক্ষুধা পেলে পানি বা হালকা খাবার বেছে নিন।';
+
+  @override
+  String get statsNearTarget =>
+      'আজ লক্ষ্যমাত্রার কাছাকাছি বা কিছুটা বেশি হলেও কোনো সমস্যা নেই! ক্ষুধা লাগলে হালকা প্রোটিনযুক্ত খাবার বেছে নিন।';
+
+  @override
+  String get statsNoMatchingMeals =>
+      'বর্তমান তথ্য থেকে উপযুক্ত খাবার পাওয়া যায়নি। আরও সঠিক পরামর্শের জন্য আপনার পরবর্তী খাবার স্ক্যান করুন।';
+
+  @override
+  String statsPeriodDays(String days) {
+    return '$days দিন';
+  }
+
+  @override
+  String statsOnTrackBody(String calories, String target, String weeks) {
+    return 'প্রতিদিন গড়ে $calories kcal রাখলে প্রায় $weeks-এ $target kg-এ পৌঁছাতে পারেন।';
+  }
+
+  @override
+  String statsGuidanceProjection(
+    String dateSuffix,
+    String target,
+    String weeks,
+  ) {
+    return 'আজকের মতো গ্রহণ বজায় রাখলে আনুমানিক $weeks সপ্তাহে $target kg-এ পৌঁছাতে পারেন$dateSuffix।';
+  }
+
+  @override
+  String statsProteinReason(String proteinG) {
+    return 'বাকি ক্যালোরির মধ্যেই প্রায় ${proteinG}g প্রোটিন সরবরাহ করে।';
+  }
+
+  @override
+  String statsRemainingMessage(String calRemaining, String protRemaining) {
+    return 'আপনার প্রায় $calRemaining kcal বাকি আছে এবং ${protRemaining}g প্রোটিন প্রয়োজন।';
+  }
+
+  @override
+  String get statsLevel1 => 'শিক্ষানবিস';
+
+  @override
+  String get statsLevel2 => 'ট্র্যাকার';
+
+  @override
+  String get statsLevel3 => 'নিয়মিত';
+
+  @override
+  String get statsLevel4 => 'শৃঙ্খলাবদ্ধ';
+
+  @override
+  String get statsLevel5 => 'উৎসাহী';
+
+  @override
+  String get statsLevel6 => 'স্বাস্থ্যপ্রেমী';
+
+  @override
+  String get statsLevel7 => 'পুষ্টি বিশেষজ্ঞ';
+
+  @override
+  String get statsLevel8 => 'চ্যাম্পিয়ন';
+
+  @override
+  String get statsLevel9 => 'কিংবদন্তি';
+
+  @override
+  String get statsLevel10 => 'CalGo মাস্টার';
+
+  @override
+  String get statsAchievementFirstScanName => 'দারুণ শুরু';
+
+  @override
+  String get statsAchievementFirstScanDescription => 'প্রথম খাবার রেকর্ড করুন';
+
+  @override
+  String get statsAchievementScanMasterName => 'স্ক্যান মাস্টার';
+
+  @override
+  String get statsAchievementScanMasterDescription =>
+      'AI দিয়ে ১০টি খাবার স্ক্যান করুন';
+
+  @override
+  String get statsAchievementProteinKingName => 'প্রোটিন কিং';
+
+  @override
+  String get statsAchievementProteinKingDescription =>
+      'দৈনিক প্রোটিন লক্ষ্যের ১০০% পূরণ করুন';
+
+  @override
+  String get statsAchievementStreak7Name => '৭ দিনের ধারাবাহিকতা';
+
+  @override
+  String get statsAchievementStreak7Description =>
+      'টানা ৭ দিন খাবার রেকর্ড করুন';
+
+  @override
+  String get statsAchievementCaloChampName => 'ক্যালরি চ্যাম্পিয়ন';
+
+  @override
+  String get statsAchievementCaloChampDescription =>
+      'টানা ৫ দিন ক্যালরি লক্ষ্য পূরণ করুন';
+
+  @override
+  String get statsAchievementLegendName => 'CalGo কিংবদন্তি';
+
+  @override
+  String get statsAchievementLegendDescription => 'লেভেল ১০-এ পৌঁছান';
+
+  @override
+  String get statsForecastNoDataBody =>
+      'বাস্তব গ্রহণের ভিত্তিতে পূর্বাভাস শুরু করতে একটি খাবার রেকর্ড করুন।';
+
+  @override
+  String get statsForecastReachedBody =>
+      'ফল ধরে রাখতে বর্তমান গ্রহণ ও অভ্যাস বজায় রাখুন।';
+
+  @override
+  String statsForecastHealthyBody(
+    String balance,
+    String calories,
+    String goal,
+    String periodLabel,
+    String target,
+    String weeksLabel,
+  ) {
+    return '$periodLabel প্রতিদিন প্রায় $calories kcal রাখলে প্রায় $weeksLabel-এ $target kg-এ পৌঁছাতে পারেন।';
+  }
+
+  @override
+  String statsForecastSlowBody(String goal, String target) {
+    return 'আপনি লক্ষ্যের দিকে এগোচ্ছেন, তবে ক্যালোরির পার্থক্য কম। $target kg-এ পৌঁছাতে বেশি সময় লাগতে পারে।';
+  }
+
+  @override
+  String statsForecastAggressiveDeficitBody(
+    String calories,
+    String recommendedCalories,
+  ) {
+    return 'আপনি প্রতিদিন প্রায় $calories kcal নিচ্ছেন। এই ঘাটতি নিরাপদ নাও হতে পারে। ধীরে ধীরে $recommendedCalories kcal-এর দিকে বাড়ান।';
+  }
+
+  @override
+  String statsForecastAggressiveSurplusBody(String balance) {
+    return 'আপনি রক্ষণাবেক্ষণ মাত্রার চেয়ে প্রতিদিন প্রায় $balance kcal বেশি নিচ্ছেন। ওজন পরিকল্পনার চেয়ে দ্রুত বাড়তে পারে।';
+  }
+
+  @override
+  String get statsForecastMaintenanceBody =>
+      'আপনার গ্রহণ রক্ষণাবেক্ষণ মাত্রার কাছাকাছি, তাই ওজনের পরিবর্তন কম হতে পারে।';
+
+  @override
+  String statsForecastOppositeBody(
+    String balance,
+    String direction,
+    String target,
+  ) {
+    String _temp0 = intl.Intl.selectLogic(direction, {
+      'up': 'বাড়তে',
+      'other': 'কমতে',
+    });
+    return 'এই গ্রহণে ওজন $_temp0 পারে এবং $target kg থেকে দূরে সরে যেতে পারে।';
+  }
+
+  @override
+  String get planThreeMonths => '৩ মাস';
+
+  @override
+  String get planDurationThreeMonths => '৩ মাস';
+
+  @override
+  String get billedThreeMonthsNote => 'প্রতি ৩ মাসে বিল করা হয়';
+
+  @override
+  String iosAutoRenewTermsThreeMonths(String price) {
+    return '$price/৩ মাস হিসেবে বিল করা হবে। প্রতি ৩ মাসে স্বয়ংক্রিয় পুনর্নবীকরণ। অ্যাপ স্টোর সেটিংসে যেকোনো সময় বাতিল করুন।';
+  }
+
+  @override
+  String get whatToEatTitle => 'আজ কি খাবেন?';
+
+  @override
+  String get whatToEatTag => 'কি খাবেন?';
+
+  @override
+  String get spinRandomAction => 'এলোমেলো ঘোরান';
+
+  @override
+  String get spinAgainAction => 'আবার ঘোরান';
+
+  @override
+  String get mealBreakfast => 'সকালের নাস্তা';
+
+  @override
+  String get mealLunch => 'দুপুরের খাবার';
+
+  @override
+  String get mealDinner => 'রাতের খাবার';
+
+  @override
+  String get selectedDishTitle => 'আপনার জন্য প্রস্তাবিত!';
+
+  @override
+  String get logThisMeal => 'এই খাবারটি লগ করুন';
+
+  @override
+  String approxCalories(int calories) {
+    return '~$calories কিলোক্যালরি';
+  }
+
+  @override
+  String get whatToEatHint => 'যেকোনো খাবারে ট্যাপ করুন বা র‍্যান্ডম ঘোরান';
+
+  @override
+  String get dishTagHighProtein => 'উচ্চ প্রোটিন';
+
+  @override
+  String get dishTagQuick => 'দ্রুত ও পেট ভরা';
+
+  @override
+  String get dishTagEnergetic => 'শক্তিবর্ধক';
+
+  @override
+  String get dishTagLight => 'হালকা ও সহজপাচ্য';
+
+  @override
+  String get dishTagBalanced => 'সুস্বাদু ও সুষম';
+
+  @override
+  String get dishTagHealthy => 'স্বাস্থ্যকর ও কম ফ্যাট';
 }

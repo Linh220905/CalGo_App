@@ -1512,5 +1512,230 @@
   "usdaDietaryCitation": "আমেরিকানদের জন্য USDA ডায়েটরি নির্দেশিকা (ম্যাক্রোনিউট্রিয়েন্ট)",
   "cdcWeightLossCitation": "CDC — স্বাস্থ্যকর ওজন কমানোর নির্দেশিকা (সপ্তাহে ০.৫–১ কেজি)",
   "bmiMicronutrientSourceTitle": "বিএমআই এবং মাইক্রোনিউট্রিয়েন্ট মান",
-  "bmiMicronutrientSourceDesc": "বডি ম্যাস ইনডেক্স শ্রেণিবিভাগ (স্বাভাবিক ১৮.৫–২৪.৯) এবং দৈনিক মাইক্রোনিউট্রিয়েন্ট সীমা (ফাইবার ১৪ গ্রাম/১০০০ক্যালোরি, চিনি <১০%, সোডিয়াম <২০০০মিলিগ্রাম)।"
+  "bmiMicronutrientSourceDesc": "বডি ম্যাস ইনডেক্স শ্রেণিবিভাগ (স্বাভাবিক ১৮.৫–২৪.৯) এবং দৈনিক মাইক্রোনিউট্রিয়েন্ট সীমা (ফাইবার ১৪ গ্রাম/১০০০ক্যালোরি, চিনি <১০%, সোডিয়াম <২০০০মিলিগ্রাম)।",
+  "statsOnTrack": "সঠিক পথে",
+  "statsNeedsAdjustment": "সমন্বয় প্রয়োজন",
+  "statsGoalReached": "লক্ষ্য অর্জিত",
+  "statsAdjustmentBody": "বর্তমান গ্রহণ {target} kg-এ পৌঁছানোর নির্ভরযোগ্য সময় অনুমানের জন্য যথেষ্ট নয়। নিয়মিত রেকর্ড করুন ও লক্ষ্য অনুযায়ী সামঞ্জস্য করুন।",
+  "@statsAdjustmentBody": {
+    "placeholders": {
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "statsNoDataBody": "নির্ভরযোগ্য পূর্বাভাস শুরু করতে আরও ওজন ও পুষ্টির তথ্য রেকর্ড করুন।",
+  "statsCaloriePeriod": "গত ৭ দিনের গড়",
+  "statsCaloriePeriodToday": "আজ",
+  "statsNoCalories": "এখনও ক্যালোরির তথ্য নেই",
+  "statsSlow": "ধীর কিন্তু স্থির অগ্রগতি",
+  "statsHighDeficit": "ক্যালোরির ঘাটতি খুব বেশি",
+  "statsHighSurplus": "ক্যালোরির উদ্বৃত্ত বেশ বেশি",
+  "statsStalled": "অগ্রগতি আপাতত থেমে আছে",
+  "statsOpposite": "আপনি আপনার লক্ষ্য থেকে দূরে সরে যাচ্ছেন",
+  "statsGuidanceOnTrack": "সঠিক পথে",
+  "statsNeedData": "আরও তথ্যের প্রয়োজন",
+  "statsFirstMeal": "প্রথম খাবারের অপেক্ষা",
+  "statsMinorAdjustment": "সামান্য সমন্বয় প্রয়োজন",
+  "statsMoreSurplus": "আরও অতিরিক্ত গ্রহণ প্রয়োজন",
+  "statsBalanced": "শারীরিক ভারসাম্য",
+  "statsKeepTracking": "আরও পর্যবেক্ষণ করুন",
+  "statsSteady": "স্থির ছন্দ",
+  "statsBuilding": "অগ্রগতি তৈরি হচ্ছে",
+  "statsFirstMealForecast": "অগ্রগতির পূর্বাভাস গণনা শুরু করতে আজকের প্রথম খাবারটি রেকর্ড করুন।",
+  "statsLowIntake": "আজকের গ্রহণ পরিকল্পনার চেয়ে কম। আরও সঠিক পূর্বাভাসে জন্য সব খাবার রেকর্ড করুন।",
+  "statsSmallBalance": "আজকের ক্যালোরির ব্যবধান কম। স্পষ্ট পূর্বাভাসের জন্য আরও কয়েক দিন রেকর্ড চালিয়ে যান।",
+  "statsOverIntake": "আজকের গ্রহণ আনুমানিক ব্যয়ের চেয়ে বেশি ছিল। ট্র্যাকে ফিরতে আগামীকাল সামান্য সমন্বয় করুন।",
+  "statsUnderSurplus": "আজকের গ্রহণ ওজন বৃদ্ধির জন্য প্রয়োজনীয় উদ্বৃত্তে পৌঁছায়নি। আগামীকাল খাবারে পুষ্টি যোগ করুন।",
+  "statsKeepLogging": "নিয়মিত খাবার ও ওজন রেকর্ড করুন যাতে CalGo আপনার আসল প্রবণতা পূর্বাভাস দিতে পারে।",
+  "statsFamiliarReason": "এটি আপনার আগে স্ক্যান করা খাবারের সাথে মিলে যায় এবং আজকের বাকি লক্ষ্যের জন্য উপযুক্ত।",
+  "@statsFamiliarReason": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "statsFitsReason": "আপনার বাকি ক্যালোরির মধ্যে উপযুক্ত এবং পরবর্তী খাবারের জন্য ভালো।",
+  "statsSauceSide": "ক্যালোরি সহজে নিয়ন্ত্রণ করতে সস আলাদা রাখুন।",
+  "statsLessOil": "হালকা খাবারের জন্য কম তেল বেছে নিন এবং শাকসবজি যোগ করুন।",
+  "statsHighProtein": "উচ্চ প্রোটিনযুক্ত খাবার; দীর্ঘক্ষণ তৃপ্ত থাকতে ধীরে খান।",
+  "statsReduceSauce": "হালকা সংস্করণ চাইলে সস বা তেল কমিয়ে নিন।",
+  "statsModerateCarbs": "কার্বোহাইড্রেট পরিমিত রাখুন এবং এই খাবারে শাকসবজি যোগ করুন।",
+  "statsBoostProtein": "প্রোটিন বাড়াতে ডিম, তোফু বা দইয়ের সাথে খেতে পারেন।",
+  "statsSplitPortions": "সামনে আরও খাবার থাকলে এটিকে ছোট অংশে ভাগ করে নিন।",
+  "statsHalfPortion": "আজ ক্যালোরি প্রায় পূর্ণ হয়ে থাকলে অর্ধেক অংশ নিন এবং বেশি সবজি খান।",
+  "statsEatSlowly": "পরিমিত অংশ রাখুন এবং তৃপ্তি বুঝতে ধীরে ধীরে খান।",
+  "statsScanFirst": "আজকের প্রথম খাবারটি স্ক্যান করুন যাতে আমি বাকি অংশ হিসাব করে পরের খাবারের পরামর্শ দিতে পারি।",
+  "statsReachedToday": "আপনি আজকের ক্যালোরির লক্ষ্য পূরণ করেছেন। এই ধারাবাহিকতা ধরে রাখুন; এখনও ক্ষুধা পেলে পানি বা হালকা খাবার বেছে নিন।",
+  "statsNearTarget": "আজ লক্ষ্যমাত্রার কাছাকাছি বা কিছুটা বেশি হলেও কোনো সমস্যা নেই! ক্ষুধা লাগলে হালকা প্রোটিনযুক্ত খাবার বেছে নিন।",
+  "statsNoMatchingMeals": "বর্তমান তথ্য থেকে উপযুক্ত খাবার পাওয়া যায়নি। আরও সঠিক পরামর্শের জন্য আপনার পরবর্তী খাবার স্ক্যান করুন।",
+  "statsPeriodDays": "{days} দিন",
+  "@statsPeriodDays": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "statsOnTrackBody": "প্রতিদিন গড়ে {calories} kcal রাখলে প্রায় {weeks}-এ {target} kg-এ পৌঁছাতে পারেন।",
+  "@statsOnTrackBody": {
+    "placeholders": {
+      "calories": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "weeks": {
+        "type": "String"
+      }
+    }
+  },
+  "statsGuidanceProjection": "আজকের মতো গ্রহণ বজায় রাখলে আনুমানিক {weeks} সপ্তাহে {target} kg-এ পৌঁছাতে পারেন{dateSuffix}।",
+  "@statsGuidanceProjection": {
+    "placeholders": {
+      "dateSuffix": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "weeks": {
+        "type": "String"
+      }
+    }
+  },
+  "statsProteinReason": "বাকি ক্যালোরির মধ্যেই প্রায় {proteinG}g প্রোটিন সরবরাহ করে।",
+  "@statsProteinReason": {
+    "placeholders": {
+      "proteinG": {
+        "type": "String"
+      }
+    }
+  },
+  "statsRemainingMessage": "আপনার প্রায় {calRemaining} kcal বাকি আছে এবং {protRemaining}g প্রোটিন প্রয়োজন।",
+  "@statsRemainingMessage": {
+    "placeholders": {
+      "calRemaining": {
+        "type": "String"
+      },
+      "protRemaining": {
+        "type": "String"
+      }
+    }
+  },
+  "statsLevel1": "শিক্ষানবিস",
+  "statsLevel2": "ট্র্যাকার",
+  "statsLevel3": "নিয়মিত",
+  "statsLevel4": "শৃঙ্খলাবদ্ধ",
+  "statsLevel5": "উৎসাহী",
+  "statsLevel6": "স্বাস্থ্যপ্রেমী",
+  "statsLevel7": "পুষ্টি বিশেষজ্ঞ",
+  "statsLevel8": "চ্যাম্পিয়ন",
+  "statsLevel9": "কিংবদন্তি",
+  "statsLevel10": "CalGo মাস্টার",
+  "statsAchievementFirstScanName": "দারুণ শুরু",
+  "statsAchievementFirstScanDescription": "প্রথম খাবার রেকর্ড করুন",
+  "statsAchievementScanMasterName": "স্ক্যান মাস্টার",
+  "statsAchievementScanMasterDescription": "AI দিয়ে ১০টি খাবার স্ক্যান করুন",
+  "statsAchievementProteinKingName": "প্রোটিন কিং",
+  "statsAchievementProteinKingDescription": "দৈনিক প্রোটিন লক্ষ্যের ১০০% পূরণ করুন",
+  "statsAchievementStreak7Name": "৭ দিনের ধারাবাহিকতা",
+  "statsAchievementStreak7Description": "টানা ৭ দিন খাবার রেকর্ড করুন",
+  "statsAchievementCaloChampName": "ক্যালরি চ্যাম্পিয়ন",
+  "statsAchievementCaloChampDescription": "টানা ৫ দিন ক্যালরি লক্ষ্য পূরণ করুন",
+  "statsAchievementLegendName": "CalGo কিংবদন্তি",
+  "statsAchievementLegendDescription": "লেভেল ১০-এ পৌঁছান",
+  "statsForecastNoDataBody": "বাস্তব গ্রহণের ভিত্তিতে পূর্বাভাস শুরু করতে একটি খাবার রেকর্ড করুন।",
+  "statsForecastReachedBody": "ফল ধরে রাখতে বর্তমান গ্রহণ ও অভ্যাস বজায় রাখুন।",
+  "statsForecastHealthyBody": "{periodLabel} প্রতিদিন প্রায় {calories} kcal রাখলে প্রায় {weeksLabel}-এ {target} kg-এ পৌঁছাতে পারেন।",
+  "@statsForecastHealthyBody": {
+    "placeholders": {
+      "balance": {
+        "type": "String"
+      },
+      "calories": {
+        "type": "String"
+      },
+      "goal": {
+        "type": "String"
+      },
+      "periodLabel": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "weeksLabel": {
+        "type": "String"
+      }
+    }
+  },
+  "statsForecastSlowBody": "আপনি লক্ষ্যের দিকে এগোচ্ছেন, তবে ক্যালোরির পার্থক্য কম। {target} kg-এ পৌঁছাতে বেশি সময় লাগতে পারে।",
+  "@statsForecastSlowBody": {
+    "placeholders": {
+      "goal": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "statsForecastAggressiveDeficitBody": "আপনি প্রতিদিন প্রায় {calories} kcal নিচ্ছেন। এই ঘাটতি নিরাপদ নাও হতে পারে। ধীরে ধীরে {recommendedCalories} kcal-এর দিকে বাড়ান।",
+  "@statsForecastAggressiveDeficitBody": {
+    "placeholders": {
+      "calories": {
+        "type": "String"
+      },
+      "recommendedCalories": {
+        "type": "String"
+      }
+    }
+  },
+  "statsForecastAggressiveSurplusBody": "আপনি রক্ষণাবেক্ষণ মাত্রার চেয়ে প্রতিদিন প্রায় {balance} kcal বেশি নিচ্ছেন। ওজন পরিকল্পনার চেয়ে দ্রুত বাড়তে পারে।",
+  "@statsForecastAggressiveSurplusBody": {
+    "placeholders": {
+      "balance": {
+        "type": "String"
+      }
+    }
+  },
+  "statsForecastMaintenanceBody": "আপনার গ্রহণ রক্ষণাবেক্ষণ মাত্রার কাছাকাছি, তাই ওজনের পরিবর্তন কম হতে পারে।",
+  "statsForecastOppositeBody": "এই গ্রহণে ওজন {direction, select, up {বাড়তে} other {কমতে}} পারে এবং {target} kg থেকে দূরে সরে যেতে পারে।",
+  "@statsForecastOppositeBody": {
+    "placeholders": {
+      "balance": {
+        "type": "String"
+      },
+      "direction": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "planThreeMonths": "৩ মাস",
+  "planDurationThreeMonths": "৩ মাস",
+  "billedThreeMonthsNote": "প্রতি ৩ মাসে বিল করা হয়",
+  "iosAutoRenewTermsThreeMonths": "{price}/৩ মাস হিসেবে বিল করা হবে। প্রতি ৩ মাসে স্বয়ংক্রিয় পুনর্নবীকরণ। অ্যাপ স্টোর সেটিংসে যেকোনো সময় বাতিল করুন।",
+  "whatToEatTitle": "আজ কি খাবেন?",
+  "whatToEatTag": "কি খাবেন?",
+  "spinRandomAction": "এলোমেলো ঘোরান",
+  "spinAgainAction": "আবার ঘোরান",
+  "mealBreakfast": "সকালের নাস্তা",
+  "mealLunch": "দুপুরের খাবার",
+  "mealDinner": "রাতের খাবার",
+  "selectedDishTitle": "আপনার জন্য প্রস্তাবিত!",
+  "logThisMeal": "এই খাবারটি লগ করুন",
+  "approxCalories": "~{calories} কিলোক্যালরি",
+  "whatToEatHint": "যেকোনো খাবারে ট্যাপ করুন বা র‍্যান্ডম ঘোরান",
+  "dishTagHighProtein": "উচ্চ প্রোটিন",
+  "dishTagQuick": "দ্রুত ও পেট ভরা",
+  "dishTagEnergetic": "শক্তিবর্ধক",
+  "dishTagLight": "হালকা ও সহজপাচ্য",
+  "dishTagBalanced": "সুস্বাদু ও সুষম",
+  "dishTagHealthy": "স্বাস্থ্যকর ও কম ফ্যাট"
 }

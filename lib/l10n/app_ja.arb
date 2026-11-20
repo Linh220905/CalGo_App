@@ -1103,5 +1103,230 @@
   "usdaDietaryCitation": "USDA 米国食事ガイドライン（三大栄養素）",
   "cdcWeightLossCitation": "CDC — 健康的な体重減少ガイドライン (週0.5〜1kg)",
   "bmiMicronutrientSourceTitle": "BMIおよび微量栄養素基準",
-  "bmiMicronutrientSourceDesc": "BMI分類（普通体重18.5〜24.9）および微量栄養素の推奨基準値（食物繊維14g/1000kcal、遊離糖類<10%、ナトリウム<2000mg）。"
+  "bmiMicronutrientSourceDesc": "BMI分類（普通体重18.5〜24.9）および微量栄養素の推奨基準値（食物繊維14g/1000kcal、遊離糖類<10%、ナトリウム<2000mg）。",
+  "statsOnTrack": "順調に進んでいます",
+  "statsNeedsAdjustment": "調整が必要です",
+  "statsGoalReached": "目標達成",
+  "statsAdjustmentBody": "現在の摂取量では{target} kgに到達する時期を正確に予測できません。記録を続けて目標に合わせて調整しましょう。",
+  "@statsAdjustmentBody": {
+    "placeholders": {
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "statsNoDataBody": "信頼できる予測を始めるには、体重と栄養データをさらに記録してください。",
+  "statsCaloriePeriod": "過去7日間の平均",
+  "statsCaloriePeriodToday": "今日",
+  "statsNoCalories": "カロリーデータがありません",
+  "statsSlow": "ゆっくりですが順調です",
+  "statsHighDeficit": "カロリー赤字が大きすぎます",
+  "statsHighSurplus": "カロリー余剰がやや多めです",
+  "statsStalled": "進捗が一時的に停滞しています",
+  "statsOpposite": "目標から遠ざかっています",
+  "statsGuidanceOnTrack": "順調に進んでいます",
+  "statsNeedData": "データ不足",
+  "statsFirstMeal": "最初の食事待ち",
+  "statsMinorAdjustment": "少し調整が必要",
+  "statsMoreSurplus": "追加補給が必要",
+  "statsBalanced": "体型バランス維持",
+  "statsKeepTracking": "継続して観察",
+  "statsSteady": "安定したペース",
+  "statsBuilding": "蓄積中",
+  "statsFirstMealForecast": "今日の最初の食事を記録して、進捗予測の計算を始めましょう。",
+  "statsLowIntake": "今日の摂取量は計画より少なめです。より正確な予測のためにすべての食事を記録してください。",
+  "statsSmallBalance": "今日のカロリー差は小さめです。より明確な予測のため、数日間記録を続けてみましょう。",
+  "statsOverIntake": "今日の摂取量が推定消費量を上回りました。明日少し調整してペースを維持しましょう。",
+  "statsUnderSurplus": "今日の摂取量は体重増加に必要な余剰に届きませんでした。明日は各食事に栄養を少し足してみましょう。",
+  "statsKeepLogging": "CalGoが実際の傾向を予測できるよう、食事と体重を定期的に記録しましょう。",
+  "statsFamiliarReason": "以前スキャンした食事と一致し、今日の残りの栄養目標に適しています。",
+  "@statsFamiliarReason": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "statsFitsReason": "残りのカロリー内に収まり、次の食事に適しています。",
+  "statsSauceSide": "カロリー管理のため、ドレッシングは別添えにしましょう。",
+  "statsLessOil": "油分を控えめにし、野菜を加えて軽めの食事にしましょう。",
+  "statsHighProtein": "高たんぱくなメニューです。ゆっくり食べて満腹感を持続させましょう。",
+  "statsReduceSauce": "より軽めにしたい場合は、ソースや油を控えめにしましょう。",
+  "statsModerateCarbs": "炭水化物は適量にし、野菜をプラスしましょう。",
+  "statsBoostProtein": "卵や豆腐、ヨーグルトを添えてたんぱく質をプラスしましょう。",
+  "statsSplitPortions": "この後まだ食事があるなら、小さめのポーションに分けましょう。",
+  "statsHalfPortion": "今日すでにカロリー上限に近いなら、半分のポーションにして野菜を足しましょう。",
+  "statsEatSlowly": "適量を守り、ゆっくり食べて満腹感を感じましょう。",
+  "statsScanFirst": "今日の最初の食事をスキャンしてください。残りの目標を計算して次の食事を提案します。",
+  "statsReachedToday": "今日のカロリー目標に到達しました！この調子を維持しましょう。空腹なら水分や軽めの軽食を選んでください。",
+  "statsNearTarget": "今日の目標に近づいたか少し超えましたが大丈夫！お腹が空いたら、軽めのたんぱく質を選びましょう。",
+  "statsNoMatchingMeals": "現在のデータから適切なメニューが見つかりませんでした。より正確な提案のため次の食事をスキャンしてください。",
+  "statsPeriodDays": "{days}日",
+  "@statsPeriodDays": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "statsOnTrackBody": "1日平均{calories} kcalを維持すると、約{weeks}で{target} kgに到達できます。",
+  "@statsOnTrackBody": {
+    "placeholders": {
+      "calories": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "weeks": {
+        "type": "String"
+      }
+    }
+  },
+  "statsGuidanceProjection": "今日のような摂取量を維持すると、約{weeks}週間で{target} kgに到達する見込みです{dateSuffix}。",
+  "@statsGuidanceProjection": {
+    "placeholders": {
+      "dateSuffix": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "weeks": {
+        "type": "String"
+      }
+    }
+  },
+  "statsProteinReason": "残りのカロリー内で約{proteinG}gのたんぱく質を補給できます。",
+  "@statsProteinReason": {
+    "placeholders": {
+      "proteinG": {
+        "type": "String"
+      }
+    }
+  },
+  "statsRemainingMessage": "残り約{calRemaining} kcalで、たんぱく質はあと{protRemaining}g必要です。",
+  "@statsRemainingMessage": {
+    "placeholders": {
+      "calRemaining": {
+        "type": "String"
+      },
+      "protRemaining": {
+        "type": "String"
+      }
+    }
+  },
+  "statsLevel1": "初心者",
+  "statsLevel2": "記録者",
+  "statsLevel3": "継続者",
+  "statsLevel4": "自己管理者",
+  "statsLevel5": "情熱家",
+  "statsLevel6": "健康愛好家",
+  "statsLevel7": "栄養の専門家",
+  "statsLevel8": "チャンピオン",
+  "statsLevel9": "レジェンド",
+  "statsLevel10": "CalGoマスター",
+  "statsAchievementFirstScanName": "輝かしいスタート",
+  "statsAchievementFirstScanDescription": "最初の食事を記録",
+  "statsAchievementScanMasterName": "スキャンマスター",
+  "statsAchievementScanMasterDescription": "AIで10食をスキャン",
+  "statsAchievementProteinKingName": "プロテインキング",
+  "statsAchievementProteinKingDescription": "1日のたんぱく質目標を100%達成",
+  "statsAchievementStreak7Name": "7日間連続",
+  "statsAchievementStreak7Description": "7日連続で食事を記録",
+  "statsAchievementCaloChampName": "カロリーチャンピオン",
+  "statsAchievementCaloChampDescription": "5日連続でカロリー目標を達成",
+  "statsAchievementLegendName": "CalGoレジェンド",
+  "statsAchievementLegendDescription": "レベル10に到達",
+  "statsForecastNoDataBody": "食事を記録すると、実際の摂取量に基づく予測を始められます。",
+  "statsForecastReachedBody": "現在の食事量と習慣を続けて、体重を安定させましょう。",
+  "statsForecastHealthyBody": "{periodLabel} {calories} kcal前後を続けると、約{weeksLabel}で{target} kgに到達できます。",
+  "@statsForecastHealthyBody": {
+    "placeholders": {
+      "balance": {
+        "type": "String"
+      },
+      "calories": {
+        "type": "String"
+      },
+      "goal": {
+        "type": "String"
+      },
+      "periodLabel": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "weeksLabel": {
+        "type": "String"
+      }
+    }
+  },
+  "statsForecastSlowBody": "目標の方向には進んでいますが、変化はゆっくりです。目標まで時間がかかる可能性があります。",
+  "@statsForecastSlowBody": {
+    "placeholders": {
+      "goal": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "statsForecastAggressiveDeficitBody": "現在の摂取量は約{calories} kcalです。赤字が大きすぎる可能性があるため、約{recommendedCalories} kcalまで少しずつ増やしましょう。",
+  "@statsForecastAggressiveDeficitBody": {
+    "placeholders": {
+      "calories": {
+        "type": "String"
+      },
+      "recommendedCalories": {
+        "type": "String"
+      }
+    }
+  },
+  "statsForecastAggressiveSurplusBody": "維持カロリーを約{balance} kcal上回っています。計画より早く体重が増える可能性があります。",
+  "@statsForecastAggressiveSurplusBody": {
+    "placeholders": {
+      "balance": {
+        "type": "String"
+      }
+    }
+  },
+  "statsForecastMaintenanceBody": "摂取量が維持カロリーに近いため、体重は大きく変わらない可能性があります。",
+  "statsForecastOppositeBody": "この摂取量を続けると、体重が目標から遠ざかる可能性があります。",
+  "@statsForecastOppositeBody": {
+    "placeholders": {
+      "balance": {
+        "type": "String"
+      },
+      "direction": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "planThreeMonths": "3ヶ月",
+  "planDurationThreeMonths": "3ヶ月",
+  "billedThreeMonthsNote": "3ヶ月ごとに請求",
+  "iosAutoRenewTermsThreeMonths": "{price}/3ヶ月として請求されます。3ヶ月ごとに自動更新。App Storeの設定でいつでもキャンセル可能。",
+  "whatToEatTitle": "今日何食べる？",
+  "whatToEatTag": "何食べる？",
+  "spinRandomAction": "ランダムに選ぶ",
+  "spinAgainAction": "もう一度回す",
+  "mealBreakfast": "朝食",
+  "mealLunch": "昼食",
+  "mealDinner": "夕食",
+  "selectedDishTitle": "おすすめの料理！",
+  "logThisMeal": "この食事を記録する",
+  "approxCalories": "~{calories} kcal",
+  "whatToEatHint": "料理をタップするかランダム抽選を押してください",
+  "dishTagHighProtein": "高たんぱく",
+  "dishTagQuick": "手軽で腹持ち◎",
+  "dishTagEnergetic": "エネルギー補給",
+  "dishTagLight": "あっさり軽め",
+  "dishTagBalanced": "バランス良好",
+  "dishTagHealthy": "ヘルシー・低脂質"
 }

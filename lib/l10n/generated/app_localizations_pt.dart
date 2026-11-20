@@ -3516,4 +3516,380 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get bmiMicronutrientSourceDesc =>
       'Classificação de IMC (18,5–24,9 normal) e limites diários de micronutrientes (Fibras 14g/1000kcal, Açúcares livres <10%, Sódio <2000mg).';
+
+  @override
+  String get statsOnTrack => 'No caminho certo';
+
+  @override
+  String get statsNeedsAdjustment => 'Precisa de ajuste';
+
+  @override
+  String get statsGoalReached => 'Meta alcançada';
+
+  @override
+  String statsAdjustmentBody(String target) {
+    return 'A ingestão atual não permite estimar com segurança quando você chegará a $target kg. Continue registrando e ajuste o plano.';
+  }
+
+  @override
+  String get statsNoDataBody =>
+      'Registre mais dados de peso e nutrição para iniciar uma previsão confiável.';
+
+  @override
+  String get statsCaloriePeriod => 'a média dos últimos 7 dias';
+
+  @override
+  String get statsCaloriePeriodToday => 'hoje';
+
+  @override
+  String get statsNoCalories => 'Ainda não há dados de calorias';
+
+  @override
+  String get statsSlow => 'Progresso lento, mas constante';
+
+  @override
+  String get statsHighDeficit => 'Déficit calórico muito alto';
+
+  @override
+  String get statsHighSurplus => 'Superávit calórico um pouco alto';
+
+  @override
+  String get statsStalled => 'O progresso está parado';
+
+  @override
+  String get statsOpposite => 'Você está se afastando da meta';
+
+  @override
+  String get statsGuidanceOnTrack => 'No caminho certo';
+
+  @override
+  String get statsNeedData => 'Mais dados necessários';
+
+  @override
+  String get statsFirstMeal => 'Aguardando 1ª refeição';
+
+  @override
+  String get statsMinorAdjustment => 'Pequeno ajuste';
+
+  @override
+  String get statsMoreSurplus => 'Precisa suplementar';
+
+  @override
+  String get statsBalanced => 'Equilíbrio corporal';
+
+  @override
+  String get statsKeepTracking => 'Acompanhar mais';
+
+  @override
+  String get statsSteady => 'Ritmo constante';
+
+  @override
+  String get statsBuilding => 'Construindo progresso';
+
+  @override
+  String get statsFirstMealForecast =>
+      'Registre sua primeira refeição de hoje para calcular a previsão de progresso.';
+
+  @override
+  String get statsLowIntake =>
+      'A ingestão de hoje está abaixo do planejado. Registre todas as refeições para uma previsão mais precisa.';
+
+  @override
+  String get statsSmallBalance =>
+      'O balanço de hoje é pequeno. Continue registrando mais alguns dias para uma projeção mais clara.';
+
+  @override
+  String get statsOverIntake =>
+      'A ingestão de hoje superou o gasto estimado. Faça um leve ajuste amanhã para manter o ritmo.';
+
+  @override
+  String get statsUnderSurplus =>
+      'A ingestão de hoje não atingiu o superávit para ganho de peso. Adicione mais nutrição a cada refeição amanhã.';
+
+  @override
+  String get statsKeepLogging =>
+      'Continue registrando refeições e peso regularmente para o CalGo projetar sua tendência real.';
+
+  @override
+  String statsFamiliarReason(String reason) {
+    return 'Combina com uma porção escaneada antes e cabe nos seus macros restantes de hoje.';
+  }
+
+  @override
+  String get statsFitsReason =>
+      'Cabe nas calorias restantes e funciona bem para a próxima refeição.';
+
+  @override
+  String get statsSauceSide =>
+      'Deixe o molho à parte para controlar melhor as calorias.';
+
+  @override
+  String get statsLessOil =>
+      'Prefira menos óleo e adicione vegetais para uma refeição mais leve.';
+
+  @override
+  String get statsHighProtein =>
+      'Opção rica em proteína; coma devagar para manter a saciedade.';
+
+  @override
+  String get statsReduceSauce =>
+      'Reduza o molho ou o óleo se quiser uma versão mais leve.';
+
+  @override
+  String get statsModerateCarbs =>
+      'Mantenha os carboidratos moderados e adicione vegetais.';
+
+  @override
+  String get statsBoostProtein =>
+      'Acompanhe com ovo, tofu ou iogurte para reforçar as proteínas.';
+
+  @override
+  String get statsSplitPortions =>
+      'Divida em porções menores se ainda tiver outras refeições.';
+
+  @override
+  String get statsHalfPortion =>
+      'Se já estiver perto do limite calórico, escolha meia porção com mais verduras.';
+
+  @override
+  String get statsEatSlowly =>
+      'Mantenha porções moderadas e coma devagar para sentir a saciedade.';
+
+  @override
+  String get statsScanFirst =>
+      'Escaneie a primeira refeição de hoje para calcular o restante e sugerir a próxima.';
+
+  @override
+  String get statsReachedToday =>
+      'Você atingiu a meta de calorias de hoje! Mantenha o ritmo; se ainda tiver fome, prefira água ou algo bem leve.';
+
+  @override
+  String get statsNearTarget =>
+      'Você está perto ou passou da meta de hoje, mas está tudo bem! Se tiver fome, escolha algo leve com proteína.';
+
+  @override
+  String get statsNoMatchingMeals =>
+      'Não encontramos pratos adequados com os dados atuais. Escaneie sua próxima refeição para sugestões mais precisas.';
+
+  @override
+  String statsPeriodDays(String days) {
+    return '$days dias';
+  }
+
+  @override
+  String statsOnTrackBody(String calories, String target, String weeks) {
+    return 'Com uma média de $calories kcal por dia, você pode chegar a $target kg em cerca de $weeks.';
+  }
+
+  @override
+  String statsGuidanceProjection(
+    String dateSuffix,
+    String target,
+    String weeks,
+  ) {
+    return 'Mantendo o consumo de hoje, estima-se que você alcance $target kg em cerca de $weeks semanas$dateSuffix.';
+  }
+
+  @override
+  String statsProteinReason(String proteinG) {
+    return 'Adiciona cerca de ${proteinG}g de proteína dentro das calorias restantes.';
+  }
+
+  @override
+  String statsRemainingMessage(String calRemaining, String protRemaining) {
+    return 'Restam cerca de $calRemaining kcal e faltam ${protRemaining}g de proteína.';
+  }
+
+  @override
+  String get statsLevel1 => 'Iniciante';
+
+  @override
+  String get statsLevel2 => 'Registrador';
+
+  @override
+  String get statsLevel3 => 'Persistente';
+
+  @override
+  String get statsLevel4 => 'Disciplinado';
+
+  @override
+  String get statsLevel5 => 'Entusiasta';
+
+  @override
+  String get statsLevel6 => 'Amante da saúde';
+
+  @override
+  String get statsLevel7 => 'Especialista em nutrição';
+
+  @override
+  String get statsLevel8 => 'Campeão';
+
+  @override
+  String get statsLevel9 => 'Lenda';
+
+  @override
+  String get statsLevel10 => 'Mestre CalGo';
+
+  @override
+  String get statsAchievementFirstScanName => 'Começo brilhante';
+
+  @override
+  String get statsAchievementFirstScanDescription =>
+      'Registre sua primeira refeição';
+
+  @override
+  String get statsAchievementScanMasterName => 'Mestre do scan';
+
+  @override
+  String get statsAchievementScanMasterDescription =>
+      'Escaneie 10 refeições com IA';
+
+  @override
+  String get statsAchievementProteinKingName => 'Rei da proteína';
+
+  @override
+  String get statsAchievementProteinKingDescription =>
+      'Alcance 100% da meta diária de proteína';
+
+  @override
+  String get statsAchievementStreak7Name => 'Sequência de 7 dias';
+
+  @override
+  String get statsAchievementStreak7Description =>
+      'Registre refeições por 7 dias seguidos';
+
+  @override
+  String get statsAchievementCaloChampName => 'Campeão das calorias';
+
+  @override
+  String get statsAchievementCaloChampDescription =>
+      'Alcance a meta por 5 dias seguidos';
+
+  @override
+  String get statsAchievementLegendName => 'Lenda CalGo';
+
+  @override
+  String get statsAchievementLegendDescription => 'Alcance o nível 10';
+
+  @override
+  String get statsForecastNoDataBody =>
+      'Registre uma refeição para iniciar uma previsão baseada no seu consumo real.';
+
+  @override
+  String get statsForecastReachedBody =>
+      'Mantenha o consumo e os hábitos atuais para estabilizar o peso.';
+
+  @override
+  String statsForecastHealthyBody(
+    String balance,
+    String calories,
+    String goal,
+    String periodLabel,
+    String target,
+    String weeksLabel,
+  ) {
+    return 'Com $periodLabel de cerca de $calories kcal por dia, você pode chegar a $target kg em aproximadamente $weeksLabel.';
+  }
+
+  @override
+  String statsForecastSlowBody(String goal, String target) {
+    return 'Você está avançando, mas o saldo calórico é pequeno. Pode levar mais tempo para chegar a $target kg.';
+  }
+
+  @override
+  String statsForecastAggressiveDeficitBody(
+    String calories,
+    String recommendedCalories,
+  ) {
+    return 'Você está consumindo cerca de $calories kcal por dia. Esse déficit pode não ser seguro. Aumente gradualmente até $recommendedCalories kcal.';
+  }
+
+  @override
+  String statsForecastAggressiveSurplusBody(String balance) {
+    return 'Você consome cerca de $balance kcal por dia acima da manutenção. O peso pode subir mais rápido que o planejado.';
+  }
+
+  @override
+  String get statsForecastMaintenanceBody =>
+      'Seu consumo está próximo da manutenção, então o peso pode mudar pouco.';
+
+  @override
+  String statsForecastOppositeBody(
+    String balance,
+    String direction,
+    String target,
+  ) {
+    String _temp0 = intl.Intl.selectLogic(direction, {
+      'up': 'aumentar',
+      'other': 'diminuir',
+    });
+    return 'Com esse consumo, seu peso pode $_temp0 e se afastar de $target kg.';
+  }
+
+  @override
+  String get planThreeMonths => '3 Meses';
+
+  @override
+  String get planDurationThreeMonths => '3 meses';
+
+  @override
+  String get billedThreeMonthsNote => 'Faturado a cada 3 meses';
+
+  @override
+  String iosAutoRenewTermsThreeMonths(String price) {
+    return 'Faturado como $price/3 meses. Renovação automática a cada 3 meses. Cancele a qualquer momento nos Ajustes da App Store.';
+  }
+
+  @override
+  String get whatToEatTitle => 'O que comer hoje?';
+
+  @override
+  String get whatToEatTag => 'O que comer?';
+
+  @override
+  String get spinRandomAction => 'Girar aleatório';
+
+  @override
+  String get spinAgainAction => 'Girar novamente';
+
+  @override
+  String get mealBreakfast => 'Café da manhã';
+
+  @override
+  String get mealLunch => 'Almoço';
+
+  @override
+  String get mealDinner => 'Jantar';
+
+  @override
+  String get selectedDishTitle => 'Sugerido para você!';
+
+  @override
+  String get logThisMeal => 'Registrar esta refeição';
+
+  @override
+  String approxCalories(int calories) {
+    return '~$calories kcal';
+  }
+
+  @override
+  String get whatToEatHint => 'Toque em um prato ou em Girar aleatório';
+
+  @override
+  String get dishTagHighProtein => 'Rico em proteína';
+
+  @override
+  String get dishTagQuick => 'Rápido e nutritivo';
+
+  @override
+  String get dishTagEnergetic => 'Muita energia';
+
+  @override
+  String get dishTagLight => 'Leve e suave';
+
+  @override
+  String get dishTagBalanced => 'Saboroso e equilibrado';
+
+  @override
+  String get dishTagHealthy => 'Saudável e leve';
 }

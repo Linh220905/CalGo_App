@@ -3333,4 +3333,351 @@ class AppLocalizationsZh extends AppLocalizations {
   @override
   String get bmiMicronutrientSourceDesc =>
       '身体质量指数BMI分类（正常范围18.5–24.9）及每日微量营养素限额（膳食纤维14g/1000kcal，游离糖<10%，钠<2000mg）。';
+
+  @override
+  String get statsOnTrack => '进展顺利';
+
+  @override
+  String get statsNeedsAdjustment => '需要调整';
+
+  @override
+  String get statsGoalReached => '已达成目标';
+
+  @override
+  String statsAdjustmentBody(String target) {
+    return '当前摄入量不足以可靠预测何时达到 $target kg。请持续记录并根据目标调整。';
+  }
+
+  @override
+  String get statsNoDataBody => '请记录更多体重和营养数据，以开始可靠预测。';
+
+  @override
+  String get statsCaloriePeriod => '过去7天平均';
+
+  @override
+  String get statsCaloriePeriodToday => '今天';
+
+  @override
+  String get statsNoCalories => '暂无热量数据';
+
+  @override
+  String get statsSlow => '进展较慢但稳定';
+
+  @override
+  String get statsHighDeficit => '热量缺口过大';
+
+  @override
+  String get statsHighSurplus => '热量盈余偏高';
+
+  @override
+  String get statsStalled => '进度暂时停滞';
+
+  @override
+  String get statsOpposite => '正在偏离目标';
+
+  @override
+  String get statsGuidanceOnTrack => '进展顺利';
+
+  @override
+  String get statsNeedData => '需要更多数据';
+
+  @override
+  String get statsFirstMeal => '等待首餐';
+
+  @override
+  String get statsMinorAdjustment => '需要微调';
+
+  @override
+  String get statsMoreSurplus => '需要补充热量';
+
+  @override
+  String get statsBalanced => '平衡体态';
+
+  @override
+  String get statsKeepTracking => '持续观察';
+
+  @override
+  String get statsSteady => '保持良好节奏';
+
+  @override
+  String get statsBuilding => '正在累积';
+
+  @override
+  String get statsFirstMealForecast => '记录今天的首餐，即可开始计算进度预测。';
+
+  @override
+  String get statsLowIntake => '今天的摄入量低于计划。请完整记录所有餐次以获得更准确的预测。';
+
+  @override
+  String get statsSmallBalance => '今天的热量差较小。请再记录几天以获得更清晰的预测。';
+
+  @override
+  String get statsOverIntake => '今天摄入量高于预估消耗。明天稍作调整即可重回正轨。';
+
+  @override
+  String get statsUnderSurplus => '今天的摄入量未达到增重所需盈余。明天请在每餐中补充更多营养。';
+
+  @override
+  String get statsKeepLogging => '请持续记录饮食和体重，以便 CalGo 预测您的真实趋势。';
+
+  @override
+  String statsFamiliarReason(String reason) {
+    return '与您之前扫描过的分量相符，且适合今天剩余的营养目标。';
+  }
+
+  @override
+  String get statsFitsReason => '符合剩余热量预算，非常适合作为下一餐。';
+
+  @override
+  String get statsSauceSide => '酱汁单独分装以便更好地控制热量。';
+
+  @override
+  String get statsLessOil => '选择少油做法并增加蔬菜，让这一餐更清爽。';
+
+  @override
+  String get statsHighProtein => '高蛋白之选，细嚼慢咽能维持更长久的饱腹感。';
+
+  @override
+  String get statsReduceSauce => '如需更清淡，可减少酱料或用油量。';
+
+  @override
+  String get statsModerateCarbs => '保持适量碳水并在此餐中加入蔬菜。';
+
+  @override
+  String get statsBoostProtein => '可搭配鸡蛋、豆腐或酸奶以补充蛋白质。';
+
+  @override
+  String get statsSplitPortions => '如果后面还有餐次，可将分量分成两份小餐。';
+
+  @override
+  String get statsHalfPortion => '若今天热量接近达标，建议选择半份并多配蔬菜。';
+
+  @override
+  String get statsEatSlowly => '保持适中分量，细嚼慢咽以便及时感知饱腹。';
+
+  @override
+  String get statsScanFirst => '拍摄今天的第一餐，我来帮您计算剩余配额并推荐下一餐。';
+
+  @override
+  String get statsReachedToday => '您已达到今日热量目标！继续保持好节奏；如果还饿，建议多喝水或选极轻负担的食物。';
+
+  @override
+  String get statsNearTarget => '今天已接近或略超目标，但完全没关系！如果还饿，优先选择清淡且富含蛋白质的食物。';
+
+  @override
+  String get statsNoMatchingMeals => '暂未从现有数据中找到匹配的菜品。您可以拍摄下一餐，让我帮您更准确地计算。';
+
+  @override
+  String statsPeriodDays(String days) {
+    return '$days天';
+  }
+
+  @override
+  String statsOnTrackBody(String calories, String target, String weeks) {
+    return '保持每天平均 $calories kcal，预计约 $weeks 后达到 $target kg。';
+  }
+
+  @override
+  String statsGuidanceProjection(
+    String dateSuffix,
+    String target,
+    String weeks,
+  ) {
+    return '保持今天的摄入水平，预计约 $weeks 周后达到 $target kg$dateSuffix。';
+  }
+
+  @override
+  String statsProteinReason(String proteinG) {
+    return '在剩余热量范围内补充约 ${proteinG}g 蛋白质。';
+  }
+
+  @override
+  String statsRemainingMessage(String calRemaining, String protRemaining) {
+    return '您还剩约 $calRemaining kcal 配额，蛋白质还差 ${protRemaining}g。';
+  }
+
+  @override
+  String get statsLevel1 => '新手';
+
+  @override
+  String get statsLevel2 => '记录者';
+
+  @override
+  String get statsLevel3 => '坚持者';
+
+  @override
+  String get statsLevel4 => '自律者';
+
+  @override
+  String get statsLevel5 => '热忱者';
+
+  @override
+  String get statsLevel6 => '健康达人';
+
+  @override
+  String get statsLevel7 => '营养专家';
+
+  @override
+  String get statsLevel8 => '冠军';
+
+  @override
+  String get statsLevel9 => '传奇';
+
+  @override
+  String get statsLevel10 => 'CalGo大师';
+
+  @override
+  String get statsAchievementFirstScanName => '精彩开始';
+
+  @override
+  String get statsAchievementFirstScanDescription => '记录第一餐';
+
+  @override
+  String get statsAchievementScanMasterName => '扫描达人';
+
+  @override
+  String get statsAchievementScanMasterDescription => '用 AI 扫描 10 餐';
+
+  @override
+  String get statsAchievementProteinKingName => '蛋白质之王';
+
+  @override
+  String get statsAchievementProteinKingDescription => '达到每日蛋白质目标的 100%';
+
+  @override
+  String get statsAchievementStreak7Name => '连续 7 天';
+
+  @override
+  String get statsAchievementStreak7Description => '连续 7 天记录饮食';
+
+  @override
+  String get statsAchievementCaloChampName => '热量冠军';
+
+  @override
+  String get statsAchievementCaloChampDescription => '连续 5 天达到热量目标';
+
+  @override
+  String get statsAchievementLegendName => 'CalGo 传奇';
+
+  @override
+  String get statsAchievementLegendDescription => '达到 10 级';
+
+  @override
+  String get statsForecastNoDataBody => '记录一餐后，我们就能根据实际摄入量开始预测。';
+
+  @override
+  String get statsForecastReachedBody => '保持当前摄入量和习惯，稳定维持体重。';
+
+  @override
+  String statsForecastHealthyBody(
+    String balance,
+    String calories,
+    String goal,
+    String periodLabel,
+    String target,
+    String weeksLabel,
+  ) {
+    return '按$periodLabel每天约摄入 $calories kcal，预计约 $weeksLabel 后达到 $target kg。';
+  }
+
+  @override
+  String statsForecastSlowBody(String goal, String target) {
+    return '你正在朝目标前进，但热量差较小，达到 $target kg 可能需要更久。';
+  }
+
+  @override
+  String statsForecastAggressiveDeficitBody(
+    String calories,
+    String recommendedCalories,
+  ) {
+    return '你每天约摄入 $calories kcal，热量缺口可能过大。建议逐步提高到约 $recommendedCalories kcal。';
+  }
+
+  @override
+  String statsForecastAggressiveSurplusBody(String balance) {
+    return '你每天比维持所需多摄入约 $balance kcal，体重可能增长过快。';
+  }
+
+  @override
+  String get statsForecastMaintenanceBody => '当前摄入接近维持水平，体重可能不会有明显变化。';
+
+  @override
+  String statsForecastOppositeBody(
+    String balance,
+    String direction,
+    String target,
+  ) {
+    String _temp0 = intl.Intl.selectLogic(direction, {
+      'up': '增加',
+      'other': '减少',
+    });
+    return '按当前摄入，体重可能$_temp0，并进一步偏离 $target kg。';
+  }
+
+  @override
+  String get planThreeMonths => '3个月';
+
+  @override
+  String get planDurationThreeMonths => '3个月';
+
+  @override
+  String get billedThreeMonthsNote => '每3个月计费';
+
+  @override
+  String iosAutoRenewTermsThreeMonths(String price) {
+    return '按 $price/3个月 计费。每3个月自动续订。随时在 App Store 设置中取消。';
+  }
+
+  @override
+  String get whatToEatTitle => '今天吃什么？';
+
+  @override
+  String get whatToEatTag => '吃什么？';
+
+  @override
+  String get spinRandomAction => '随机转转';
+
+  @override
+  String get spinAgainAction => '再转一次';
+
+  @override
+  String get mealBreakfast => '早餐';
+
+  @override
+  String get mealLunch => '午餐';
+
+  @override
+  String get mealDinner => '晚餐';
+
+  @override
+  String get selectedDishTitle => '为你推荐！';
+
+  @override
+  String get logThisMeal => '记录这顿餐';
+
+  @override
+  String approxCalories(int calories) {
+    return '~$calories 千卡';
+  }
+
+  @override
+  String get whatToEatHint => '点击任意菜品或按下随机抽取';
+
+  @override
+  String get dishTagHighProtein => '高蛋白';
+
+  @override
+  String get dishTagQuick => '快捷管饱';
+
+  @override
+  String get dishTagEnergetic => '能量满满';
+
+  @override
+  String get dishTagLight => '清淡易消化';
+
+  @override
+  String get dishTagBalanced => '风味均衡';
+
+  @override
+  String get dishTagHealthy => '健康低脂';
 }

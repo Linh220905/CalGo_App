@@ -1512,5 +1512,230 @@
   "usdaDietaryCitation": "Pautas dietéticas del USDA para estadounidenses (Macronutrientes)",
   "cdcWeightLossCitation": "CDC — Pautas para una pérdida de peso saludable (0,5–1 kg/semana)",
   "bmiMicronutrientSourceTitle": "Estándares de IMC y micronutrientes",
-  "bmiMicronutrientSourceDesc": "Clasificación del IMC (rango normal 18,5–24,9) y límites de micronutrientes (Fibra 14g/1000kcal, Azúcares libres <10%, Sodio <2000mg)."
+  "bmiMicronutrientSourceDesc": "Clasificación del IMC (rango normal 18,5–24,9) y límites de micronutrientes (Fibra 14g/1000kcal, Azúcares libres <10%, Sodio <2000mg).",
+  "statsOnTrack": "Vas por buen camino",
+  "statsNeedsAdjustment": "Necesita ajustes",
+  "statsGoalReached": "Objetivo alcanzado",
+  "statsAdjustmentBody": "Tu ingesta actual no permite estimar con fiabilidad cuándo llegarás a {target} kg. Sigue registrando y ajusta tu plan.",
+  "@statsAdjustmentBody": {
+    "placeholders": {
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "statsNoDataBody": "Registra más datos de peso y nutrición para iniciar una previsión fiable.",
+  "statsCaloriePeriod": "el promedio de los últimos 7 días",
+  "statsCaloriePeriodToday": "hoy",
+  "statsNoCalories": "Aún no hay datos de calorías",
+  "statsSlow": "Progreso lento pero constante",
+  "statsHighDeficit": "El déficit calórico es demasiado alto",
+  "statsHighSurplus": "El superávit calórico es alto",
+  "statsStalled": "El progreso está estancado",
+  "statsOpposite": "Te alejas de tu objetivo",
+  "statsGuidanceOnTrack": "Vas por buen camino",
+  "statsNeedData": "Se necesitan más datos",
+  "statsFirstMeal": "Esperando 1ª comida",
+  "statsMinorAdjustment": "Ajuste leve",
+  "statsMoreSurplus": "Necesitas más calorías",
+  "statsBalanced": "Equilibrio corporal",
+  "statsKeepTracking": "Seguir observando",
+  "statsSteady": "Ritmo constante",
+  "statsBuilding": "Acumulando progreso",
+  "statsFirstMealForecast": "Registra tu primera comida de hoy para calcular tu previsión de progreso.",
+  "statsLowIntake": "La ingesta de hoy es menor de lo planeado. Registra todas tus comidas para una previsión más precisa.",
+  "statsSmallBalance": "El balance de hoy es pequeño. Sigue registrando unos días más para una proyección más clara.",
+  "statsOverIntake": "La ingesta de hoy superó el gasto estimado. Ajusta suavemente mañana para retomar el rumbo.",
+  "statsUnderSurplus": "La ingesta de hoy no alcanzó el superávit para ganar peso. Añade más nutrientes en cada comida mañana.",
+  "statsKeepLogging": "Sigue registrando comidas y peso con regularidad para que CalGo proyecte tu tendencia real.",
+  "statsFamiliarReason": "Coincide con una porción que escaneaste antes y se ajusta a tus macros restantes de hoy.",
+  "@statsFamiliarReason": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "statsFitsReason": "Encaja en tus calorías restantes y es ideal para tu próxima comida.",
+  "statsSauceSide": "Pide la salsa aparte para controlar mejor las calorías.",
+  "statsLessOil": "Elige menos aceite y añade verduras para una comida más ligera.",
+  "statsHighProtein": "Opción rica en proteínas; come despacio para mayor saciedad.",
+  "statsReduceSauce": "Reduce la salsa o el aceite si prefieres una versión más ligera.",
+  "statsModerateCarbs": "Modera los carbohidratos y añade verduras a esta comida.",
+  "statsBoostProtein": "Acompaña con huevo, tofu o yogur para más proteína.",
+  "statsSplitPortions": "Divide en porciones más pequeñas si te quedan más comidas.",
+  "statsHalfPortion": "Si estás cerca de tu límite de calorías, elige media porción con verduras.",
+  "statsEatSlowly": "Mantén porciones moderadas y come despacio para notar la saciedad.",
+  "statsScanFirst": "Escanea tu primera comida de hoy para calcular lo restante y sugerirte la siguiente.",
+  "statsReachedToday": "¡Has alcanzado tu objetivo calórico de hoy! Mantén este ritmo; si tienes hambre, opta por agua o algo ligero.",
+  "statsNearTarget": "Estás cerca o superaste tu meta de hoy, ¡pero vas bien! Si tienes hambre, elige una opción ligera con proteína.",
+  "statsNoMatchingMeals": "No encontramos platos adecuados con los datos actuales. Escanea tu próxima comida para sugerencias precisas.",
+  "statsPeriodDays": "{days} días",
+  "@statsPeriodDays": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "statsOnTrackBody": "Con una media de {calories} kcal al día, podrías alcanzar {target} kg en unos {weeks}.",
+  "@statsOnTrackBody": {
+    "placeholders": {
+      "calories": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "weeks": {
+        "type": "String"
+      }
+    }
+  },
+  "statsGuidanceProjection": "Si mantienes la ingesta de hoy, se estima que alcanzarás {target} kg en unas {weeks} semanas{dateSuffix}.",
+  "@statsGuidanceProjection": {
+    "placeholders": {
+      "dateSuffix": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "weeks": {
+        "type": "String"
+      }
+    }
+  },
+  "statsProteinReason": "Aporta unos {proteinG}g de proteína dentro de tus calorías restantes.",
+  "@statsProteinReason": {
+    "placeholders": {
+      "proteinG": {
+        "type": "String"
+      }
+    }
+  },
+  "statsRemainingMessage": "Te quedan unas {calRemaining} kcal y te faltan {protRemaining}g de proteína.",
+  "@statsRemainingMessage": {
+    "placeholders": {
+      "calRemaining": {
+        "type": "String"
+      },
+      "protRemaining": {
+        "type": "String"
+      }
+    }
+  },
+  "statsLevel1": "Principiante",
+  "statsLevel2": "Registrador",
+  "statsLevel3": "Constante",
+  "statsLevel4": "Disciplinado",
+  "statsLevel5": "Entusiasta",
+  "statsLevel6": "Amante de la salud",
+  "statsLevel7": "Experto en nutrición",
+  "statsLevel8": "Campeón",
+  "statsLevel9": "Leyenda",
+  "statsLevel10": "Maestro CalGo",
+  "statsAchievementFirstScanName": "Gran comienzo",
+  "statsAchievementFirstScanDescription": "Registra tu primera comida",
+  "statsAchievementScanMasterName": "Maestro del escaneo",
+  "statsAchievementScanMasterDescription": "Escanea 10 comidas con IA",
+  "statsAchievementProteinKingName": "Rey de la proteína",
+  "statsAchievementProteinKingDescription": "Alcanza el 100% de tu objetivo diario de proteína",
+  "statsAchievementStreak7Name": "Racha de 7 días",
+  "statsAchievementStreak7Description": "Registra comidas durante 7 días seguidos",
+  "statsAchievementCaloChampName": "Campeón de calorías",
+  "statsAchievementCaloChampDescription": "Alcanza tu objetivo calórico 5 días seguidos",
+  "statsAchievementLegendName": "Leyenda CalGo",
+  "statsAchievementLegendDescription": "Alcanza el nivel 10",
+  "statsForecastNoDataBody": "Registra una comida para empezar una previsión basada en tu ingesta real.",
+  "statsForecastReachedBody": "Mantén tu ingesta y tus hábitos actuales para conservar el resultado.",
+  "statsForecastHealthyBody": "Con {periodLabel} de unos {calories} kcal al día, podrías alcanzar {target} kg en aproximadamente {weeksLabel}.",
+  "@statsForecastHealthyBody": {
+    "placeholders": {
+      "balance": {
+        "type": "String"
+      },
+      "calories": {
+        "type": "String"
+      },
+      "goal": {
+        "type": "String"
+      },
+      "periodLabel": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "weeksLabel": {
+        "type": "String"
+      }
+    }
+  },
+  "statsForecastSlowBody": "Avanzas hacia tu objetivo, pero el balance calórico es pequeño. Podrías tardar más en llegar a {target} kg.",
+  "@statsForecastSlowBody": {
+    "placeholders": {
+      "goal": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "statsForecastAggressiveDeficitBody": "Estás consumiendo unas {calories} kcal al día. Este déficit podría no ser seguro. Acércate poco a poco a {recommendedCalories} kcal.",
+  "@statsForecastAggressiveDeficitBody": {
+    "placeholders": {
+      "calories": {
+        "type": "String"
+      },
+      "recommendedCalories": {
+        "type": "String"
+      }
+    }
+  },
+  "statsForecastAggressiveSurplusBody": "Consumes unas {balance} kcal al día por encima del mantenimiento. Tu peso podría subir más rápido de lo previsto.",
+  "@statsForecastAggressiveSurplusBody": {
+    "placeholders": {
+      "balance": {
+        "type": "String"
+      }
+    }
+  },
+  "statsForecastMaintenanceBody": "Tu ingesta está cerca del mantenimiento, por lo que tu peso podría cambiar poco.",
+  "statsForecastOppositeBody": "Con esta ingesta, tu peso podría {direction, select, up {subir} other {bajar}} y alejarse de {target} kg.",
+  "@statsForecastOppositeBody": {
+    "placeholders": {
+      "balance": {
+        "type": "String"
+      },
+      "direction": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "planThreeMonths": "3 Meses",
+  "planDurationThreeMonths": "3 meses",
+  "billedThreeMonthsNote": "Facturado cada 3 meses",
+  "iosAutoRenewTermsThreeMonths": "Facturado como {price}/3 meses. Renovación automática cada 3 meses. Cancela en cualquier momento en Configuración de App Store.",
+  "whatToEatTitle": "¿Qué comer hoy?",
+  "whatToEatTag": "¿Qué comer?",
+  "spinRandomAction": "Girar al azar",
+  "spinAgainAction": "Girar de nuevo",
+  "mealBreakfast": "Desayuno",
+  "mealLunch": "Almuerzo",
+  "mealDinner": "Cena",
+  "selectedDishTitle": "¡Sugerido para ti!",
+  "logThisMeal": "Registrar esta comida",
+  "approxCalories": "~{calories} kcal",
+  "whatToEatHint": "Toca un plato o pulsa Girar al azar",
+  "dishTagHighProtein": "Alto en proteína",
+  "dishTagQuick": "Rápido y saciante",
+  "dishTagEnergetic": "Mucha energía",
+  "dishTagLight": "Ligero y suave",
+  "dishTagBalanced": "Sabroso y equilibrado",
+  "dishTagHealthy": "Saludable y ligero"
 }

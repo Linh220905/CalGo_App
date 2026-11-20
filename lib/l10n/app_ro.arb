@@ -1836,5 +1836,230 @@
   "usdaDietaryCitation": "Ghidurile dietetice USDA pentru americani (Macronutrienți)",
   "cdcWeightLossCitation": "CDC — Ghid pentru o scădere sănătoasă în greutate (0,5–1 kg/săptămână)",
   "bmiMicronutrientSourceTitle": "Standarde IMC și micronutrienți",
-  "bmiMicronutrientSourceDesc": "Clasificarea indicelui de masă corporală (18,5–24,9 normal) și limitele zilnice de micronutrienți (Fibre 14g/1000kcal, Zaharuri libere <10%, Sodiu <2000mg)."
+  "bmiMicronutrientSourceDesc": "Clasificarea indicelui de masă corporală (18,5–24,9 normal) și limitele zilnice de micronutrienți (Fibre 14g/1000kcal, Zaharuri libere <10%, Sodiu <2000mg).",
+  "statsOnTrack": "On track",
+  "statsNeedsAdjustment": "Needs adjustment",
+  "statsGoalReached": "Goal reached",
+  "statsAdjustmentBody": "Your current intake does not support a reliable estimate for reaching {target} kg. Keep logging and adjust toward your goal.",
+  "@statsAdjustmentBody": {
+    "placeholders": {
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "statsNoDataBody": "Log more weight and nutrition data to start a reliable forecast.",
+  "statsCaloriePeriod": "the past 7-day average",
+  "statsCaloriePeriodToday": "today",
+  "statsNoCalories": "No calorie data yet",
+  "statsSlow": "Progressing slowly but steadily",
+  "statsHighDeficit": "Calorie deficit is too high",
+  "statsHighSurplus": "Calorie surplus is quite high",
+  "statsStalled": "Progress is currently stalled",
+  "statsOpposite": "Moving away from your goal",
+  "statsGuidanceOnTrack": "Pe drumul cel bun",
+  "statsNeedData": "Sunt necesare mai multe date",
+  "statsFirstMeal": "Așteptare prima masă",
+  "statsMinorAdjustment": "Ajustare minoră",
+  "statsMoreSurplus": "E nevoie de suplimentare",
+  "statsBalanced": "Echilibru corporal",
+  "statsKeepTracking": "Urmărește în continuare",
+  "statsSteady": "Ritm stabil",
+  "statsBuilding": "Construire progres",
+  "statsFirstMealForecast": "Înregistrează prima masă de azi pentru a calcula prognoza progresului.",
+  "statsLowIntake": "Aportul de azi este mai mic decât planul. Înregistrează toate mesele pentru o prognoză mai exactă.",
+  "statsSmallBalance": "Balanța de azi este mică. Înregistrează încă câteva zile pentru o proiecție mai clară.",
+  "statsOverIntake": "Aportul de azi a depășit consumul estimat. Fă o mică ajustare mâine pentru a rămâne pe drum.",
+  "statsUnderSurplus": "Aportul de azi nu a atins surplusul necesar pentru creșterea în greutate. Adaugă mai multă hrană mâine.",
+  "statsKeepLogging": "Înregistrează mesele și greutatea în mod regulat pentru ca CalGo să îți poată prognoza trendul.",
+  "statsFamiliarReason": "Se potrivește cu o porție scanată anterior și cu macronutrienții rămași azi.",
+  "@statsFamiliarReason": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "statsFitsReason": "Se încadrează în caloriile rămase și este potrivit pentru următoarea masă.",
+  "statsSauceSide": "Păstrează sosul separat pentru un control mai ușor al caloriilor.",
+  "statsLessOil": "Alege mai puțin ulei și adaugă legume pentru o masă mai ușoară.",
+  "statsHighProtein": "Opțiune bogată în proteine; mănâncă încet pentru a menține sațietatea.",
+  "statsReduceSauce": "Redu sosul sau uleiul dacă vrei o variantă mai ușoară.",
+  "statsModerateCarbs": "Păstrează carbohidrații moderați și adaugă legume la această masă.",
+  "statsBoostProtein": "Combină cu ou, tofu sau iaurt pentru mai multe proteine.",
+  "statsSplitPortions": "Împarte în porții mai mici dacă mai ai mese de luat azi.",
+  "statsHalfPortion": "Dacă ești aproape de limita calorică, alege o jumătate de porție cu legume.",
+  "statsEatSlowly": "Păstrează porții moderate și mănâncă încet pentru a simți sațietatea.",
+  "statsScanFirst": "Scanează prima masă de azi ca să pot calcula ce a rămas și să-ți sugerez următoarea masă.",
+  "statsReachedToday": "Ai atins ținta de calorii de azi! Menține acest ritm; dacă mai ai poftă, alege apă sau ceva foarte ușor.",
+  "statsNearTarget": "Ești aproape sau ai depășit ținta de azi, dar e în regulă! Dacă ți-e foame, alege o opțiune ușoară cu proteine.",
+  "statsNoMatchingMeals": "Nu am găsit mâncăruri potrivite din datele actuale. Scanează următoarea masă pentru sugestii mai exacte.",
+  "statsPeriodDays": "{days} zile",
+  "@statsPeriodDays": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "statsOnTrackBody": "Cu o medie de {calories} kcal/zi, ai putea atinge {target} kg în aproximativ {weeks}.",
+  "@statsOnTrackBody": {
+    "placeholders": {
+      "calories": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "weeks": {
+        "type": "String"
+      }
+    }
+  },
+  "statsGuidanceProjection": "Dacă menții aportul de azi, se estimează că vei atinge {target} kg în circa {weeks} săptămâni{dateSuffix}.",
+  "@statsGuidanceProjection": {
+    "placeholders": {
+      "dateSuffix": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "weeks": {
+        "type": "String"
+      }
+    }
+  },
+  "statsProteinReason": "Oferă aproximativ {proteinG}g de proteine în limita caloriilor rămase.",
+  "@statsProteinReason": {
+    "placeholders": {
+      "proteinG": {
+        "type": "String"
+      }
+    }
+  },
+  "statsRemainingMessage": "Îți mai rămân aproximativ {calRemaining} kcal și ai nevoie de încă {protRemaining}g de proteine.",
+  "@statsRemainingMessage": {
+    "placeholders": {
+      "calRemaining": {
+        "type": "String"
+      },
+      "protRemaining": {
+        "type": "String"
+      }
+    }
+  },
+  "statsLevel1": "Începător",
+  "statsLevel2": "Observator",
+  "statsLevel3": "Perseverent",
+  "statsLevel4": "Disciplinat",
+  "statsLevel5": "Entuziast",
+  "statsLevel6": "Pasionat de sănătate",
+  "statsLevel7": "Expert în nutriție",
+  "statsLevel8": "Campion",
+  "statsLevel9": "Legendă",
+  "statsLevel10": "Maestru CalGo",
+  "statsAchievementFirstScanName": "Început excelent",
+  "statsAchievementFirstScanDescription": "Înregistrează prima ta masă",
+  "statsAchievementScanMasterName": "Maestru al scanării",
+  "statsAchievementScanMasterDescription": "Scanează 10 mese cu AI",
+  "statsAchievementProteinKingName": "Regele proteinelor",
+  "statsAchievementProteinKingDescription": "Atinge 100% din obiectivul zilnic de proteine",
+  "statsAchievementStreak7Name": "Serie de 7 zile",
+  "statsAchievementStreak7Description": "Înregistrează mese timp de 7 zile consecutive",
+  "statsAchievementCaloChampName": "Campionul caloriilor",
+  "statsAchievementCaloChampDescription": "Atinge obiectivul caloric 5 zile la rând",
+  "statsAchievementLegendName": "Legendă CalGo",
+  "statsAchievementLegendDescription": "Atinge nivelul 10",
+  "statsForecastNoDataBody": "Înregistrează o masă pentru a începe o prognoză bazată pe aportul tău real.",
+  "statsForecastReachedBody": "Păstrează aportul și obiceiurile actuale pentru a-ți menține rezultatul.",
+  "statsForecastHealthyBody": "Cu {periodLabel} de aproximativ {calories} kcal/zi, ai putea atinge {target} kg în circa {weeksLabel}.",
+  "@statsForecastHealthyBody": {
+    "placeholders": {
+      "balance": {
+        "type": "String"
+      },
+      "calories": {
+        "type": "String"
+      },
+      "goal": {
+        "type": "String"
+      },
+      "periodLabel": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "weeksLabel": {
+        "type": "String"
+      }
+    }
+  },
+  "statsForecastSlowBody": "Mergi în direcția bună, dar deficitul/surplusul caloric este mic. Atingerea țintei de {target} kg poate dura mai mult.",
+  "@statsForecastSlowBody": {
+    "placeholders": {
+      "goal": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "statsForecastAggressiveDeficitBody": "Consumi aproximativ {calories} kcal/zi. Acest deficit poate să nu fie sigur. Crește treptat spre aproximativ {recommendedCalories} kcal/zi.",
+  "@statsForecastAggressiveDeficitBody": {
+    "placeholders": {
+      "calories": {
+        "type": "String"
+      },
+      "recommendedCalories": {
+        "type": "String"
+      }
+    }
+  },
+  "statsForecastAggressiveSurplusBody": "Consumi cu aproximativ {balance} kcal/zi peste nivelul de menținere. Greutatea ar putea crește mai repede decât ai planificat.",
+  "@statsForecastAggressiveSurplusBody": {
+    "placeholders": {
+      "balance": {
+        "type": "String"
+      }
+    }
+  },
+  "statsForecastMaintenanceBody": "Aportul tău caloric este aproape de menținere, așa că greutatea s-ar putea să nu se schimbe prea mult.",
+  "statsForecastOppositeBody": "Cu acest aport caloric, greutatea tinde să {direction, select, up {crească} other {scadă}} și să se îndepărteze de {target} kg.",
+  "@statsForecastOppositeBody": {
+    "placeholders": {
+      "balance": {
+        "type": "String"
+      },
+      "direction": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "planThreeMonths": "3 Luni",
+  "planDurationThreeMonths": "3 luni",
+  "billedThreeMonthsNote": "Facturat la fiecare 3 luni",
+  "iosAutoRenewTermsThreeMonths": "Facturat ca {price}/3 luni. Reînnoire automată la fiecare 3 luni. Anulează oricând în Configurări App Store.",
+  "whatToEatTitle": "Ce mâncăm azi?",
+  "whatToEatTag": "Ce mâncăm?",
+  "spinRandomAction": "Alege la întâmplare",
+  "spinAgainAction": "Rotește din nou",
+  "mealBreakfast": "Mic dejun",
+  "mealLunch": "Prânz",
+  "mealDinner": "Cină",
+  "selectedDishTitle": "Sugestie pentru tine!",
+  "logThisMeal": "Înregistrează această masă",
+  "approxCalories": "~{calories} kcal",
+  "whatToEatHint": "Atinge un preparat sau apasă Alege aleatoriu",
+  "dishTagHighProtein": "Bogat în proteine",
+  "dishTagQuick": "Rapid și sățios",
+  "dishTagEnergetic": "Plin de energie",
+  "dishTagLight": "Ușor și digerabil",
+  "dishTagBalanced": "Gustos și echilibrat",
+  "dishTagHealthy": "Sănătos și ușor"
 }

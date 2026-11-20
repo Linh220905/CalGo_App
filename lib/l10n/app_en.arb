@@ -1681,5 +1681,244 @@
   "usdaDietaryCitation": "USDA Dietary Guidelines for Americans (Macronutrients)",
   "cdcWeightLossCitation": "CDC — Healthy Weight Loss Guidelines (0.5–1 kg/week)",
   "bmiMicronutrientSourceTitle": "BMI & Micronutrient Standards",
-  "bmiMicronutrientSourceDesc": "Body Mass Index classification (18.5–24.9 normal range) and daily micronutrient thresholds (Fiber 14g/1000kcal, Free Sugars <10%, Sodium <2000mg)."
+  "bmiMicronutrientSourceDesc": "Body Mass Index classification (18.5–24.9 normal range) and daily micronutrient thresholds (Fiber 14g/1000kcal, Free Sugars <10%, Sodium <2000mg).",
+  "statsOnTrack": "On track",
+  "statsNeedsAdjustment": "Needs adjustment",
+  "statsGoalReached": "Goal reached",
+  "statsAdjustmentBody": "Your current intake does not support a reliable estimate for reaching {target} kg. Keep logging and adjust toward your goal.",
+  "@statsAdjustmentBody": {
+    "placeholders": {
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "statsNoDataBody": "Log more weight and nutrition data to start a reliable forecast.",
+  "statsCaloriePeriod": "the past 7-day average",
+  "statsCaloriePeriodToday": "today",
+  "statsNoCalories": "No calorie data yet",
+  "statsSlow": "Progressing slowly but steadily",
+  "statsHighDeficit": "Calorie deficit is too high",
+  "statsHighSurplus": "Calorie surplus is quite high",
+  "statsStalled": "Progress is currently stalled",
+  "statsOpposite": "Moving away from your goal",
+  "statsGuidanceOnTrack": "On track",
+  "statsNeedData": "Need more data",
+  "statsFirstMeal": "Awaiting 1st meal",
+  "statsMinorAdjustment": "Minor adjustment",
+  "statsMoreSurplus": "Need more surplus",
+  "statsBalanced": "Balanced body",
+  "statsKeepTracking": "Keep tracking",
+  "statsSteady": "Steady pace",
+  "statsBuilding": "Building progress",
+  "statsFirstMealForecast": "Log your first meal today to start calculating your progress forecast.",
+  "statsLowIntake": "Today’s intake is lower than planned. Log all your meals for a more accurate forecast.",
+  "statsSmallBalance": "Today’s calorie balance is small. Keep logging for a few more days for a clearer projection.",
+  "statsOverIntake": "Today’s intake exceeded estimated burn. Make a gentle adjustment tomorrow to stay on track.",
+  "statsUnderSurplus": "Today’s intake didn’t reach the surplus needed for weight gain. Add extra nutrition to each meal tomorrow.",
+  "statsKeepLogging": "Keep logging meals and weight regularly so CalGo can forecast your true trend.",
+  "statsFamiliarReason": "Matches a portion you scanned previously and fits your remaining macros today.",
+  "@statsFamiliarReason": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "statsFitsReason": "Fits within your remaining calories and works well for your next meal.",
+  "statsSauceSide": "Keep sauce on the side for easier calorie control.",
+  "statsLessOil": "Opt for less oil and add vegetables for a lighter meal.",
+  "statsHighProtein": "High-protein option; eat slowly to stay full longer.",
+  "statsReduceSauce": "Reduce sauce or oil if you want a lighter version.",
+  "statsModerateCarbs": "Keep carbs moderate and add vegetables to this meal.",
+  "statsBoostProtein": "Pair with eggs, tofu, or yogurt to boost protein.",
+  "statsSplitPortions": "Split into smaller portions if you have more meals ahead.",
+  "statsHalfPortion": "If near your calorie limit today, opt for half a portion with extra greens.",
+  "statsEatSlowly": "Keep portions moderate and eat slowly to feel fullness.",
+  "statsScanFirst": "Scan your first meal today so I can calculate what remains and suggest your next meal.",
+  "statsReachedToday": "You’ve reached today’s calorie target. Keep this momentum; if still hungry, stick to water or light snacks.",
+  "statsNearTarget": "You’re near or past your target today, but your day is still on track! If hungry, choose a light protein option.",
+  "statsNoMatchingMeals": "Could not find matching meals from current data. Scan your next meal for more accurate suggestions.",
+  "statsPeriodDays": "{days} days",
+  "@statsPeriodDays": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "statsOnTrackBody": "At an average of {calories} kcal/day, you may reach {target} kg in about {weeks}.",
+  "@statsOnTrackBody": {
+    "placeholders": {
+      "calories": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "weeks": {
+        "type": "String"
+      }
+    }
+  },
+  "statsGuidanceProjection": "Maintaining today’s intake, you are projected to reach {target} kg in about {weeks} weeks{dateSuffix}.",
+  "@statsGuidanceProjection": {
+    "placeholders": {
+      "dateSuffix": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "weeks": {
+        "type": "String"
+      }
+    }
+  },
+  "statsProteinReason": "Adds about {proteinG}g protein while staying within your remaining calories.",
+  "@statsProteinReason": {
+    "placeholders": {
+      "proteinG": {
+        "type": "String"
+      }
+    }
+  },
+  "statsRemainingMessage": "You have about {calRemaining} kcal left and need {protRemaining}g more protein.",
+  "@statsRemainingMessage": {
+    "placeholders": {
+      "calRemaining": {
+        "type": "String"
+      },
+      "protRemaining": {
+        "type": "String"
+      }
+    }
+  },
+  "statsLevel1": "Beginner",
+  "statsLevel2": "Tracker",
+  "statsLevel3": "Consistent",
+  "statsLevel4": "Disciplined",
+  "statsLevel5": "Energetic",
+  "statsLevel6": "Health Enthusiast",
+  "statsLevel7": "Nutrition Expert",
+  "statsLevel8": "Champion",
+  "statsLevel9": "Legend",
+  "statsLevel10": "Master CalGo",
+  "statsAchievementFirstScanName": "Bright Start",
+  "statsAchievementFirstScanDescription": "Record your first meal",
+  "statsAchievementScanMasterName": "Scan Master",
+  "statsAchievementScanMasterDescription": "Scan 10 meals with AI",
+  "statsAchievementProteinKingName": "Protein King",
+  "statsAchievementProteinKingDescription": "Reach 100% of your daily protein goal",
+  "statsAchievementStreak7Name": "7-Day Streak",
+  "statsAchievementStreak7Description": "Log meals for 7 consecutive days",
+  "statsAchievementCaloChampName": "Calorie Champion",
+  "statsAchievementCaloChampDescription": "Reach your calorie goal for 5 consecutive days",
+  "statsAchievementLegendName": "CalGo Legend",
+  "statsAchievementLegendDescription": "Reach level 10",
+  "statsForecastNoDataBody": "Log a meal to start a forecast based on your actual intake.",
+  "statsForecastReachedBody": "Keep your current intake and habits to maintain your result.",
+  "statsForecastHealthyBody": "At about {calories} kcal/day over {periodLabel}, you may reach {target} kg in about {weeksLabel}.",
+  "@statsForecastHealthyBody": {
+    "placeholders": {
+      "balance": {
+        "type": "String"
+      },
+      "calories": {
+        "type": "String"
+      },
+      "goal": {
+        "type": "String"
+      },
+      "periodLabel": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "weeksLabel": {
+        "type": "String"
+      }
+    }
+  },
+  "statsForecastSlowBody": "You are moving toward your goal, but the calorie balance is small. Reaching {target} kg may take longer.",
+  "@statsForecastSlowBody": {
+    "placeholders": {
+      "goal": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "statsForecastAggressiveDeficitBody": "You are eating about {calories} kcal/day. This deficit may not be safe. Gradually move toward about {recommendedCalories} kcal/day.",
+  "@statsForecastAggressiveDeficitBody": {
+    "placeholders": {
+      "calories": {
+        "type": "String"
+      },
+      "recommendedCalories": {
+        "type": "String"
+      }
+    }
+  },
+  "statsForecastAggressiveSurplusBody": "You are about {balance} kcal/day above maintenance. Your weight may rise faster than planned.",
+  "@statsForecastAggressiveSurplusBody": {
+    "placeholders": {
+      "balance": {
+        "type": "String"
+      }
+    }
+  },
+  "statsForecastMaintenanceBody": "Your intake is close to maintenance, so your weight may not change much.",
+  "statsForecastOppositeBody": "At this intake, your weight is likely to {direction, select, up {increase} other {decrease}} and move farther from {target} kg.",
+  "@statsForecastOppositeBody": {
+    "placeholders": {
+      "balance": {
+        "type": "String"
+      },
+      "direction": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "planThreeMonths": "3 Months",
+  "planDurationThreeMonths": "3 months",
+  "billedThreeMonthsNote": "Billed every 3 months",
+  "iosAutoRenewTermsThreeMonths": "Billed as {price}/3 months. Auto-renews every 3 months. Cancel anytime in App Store Settings.",
+  "@iosAutoRenewTermsThreeMonths": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "whatToEatTitle": "What to eat today?",
+  "whatToEatTag": "What to eat?",
+  "spinRandomAction": "Spin random",
+  "spinAgainAction": "Spin again",
+  "mealBreakfast": "Breakfast",
+  "mealLunch": "Lunch",
+  "mealDinner": "Dinner",
+  "selectedDishTitle": "Suggested for you!",
+  "logThisMeal": "Log this meal",
+  "approxCalories": "~{calories} kcal",
+  "@approxCalories": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "whatToEatHint": "Tap any dish or press Spin random",
+  "dishTagHighProtein": "High protein",
+  "dishTagQuick": "Quick & filling",
+  "dishTagEnergetic": "Energy boost",
+  "dishTagLight": "Light & easy",
+  "dishTagBalanced": "Rich & balanced",
+  "dishTagHealthy": "Healthy & lean"
 }

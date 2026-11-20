@@ -3525,4 +3525,379 @@ class AppLocalizationsRo extends AppLocalizations {
   @override
   String get bmiMicronutrientSourceDesc =>
       'Clasificarea indicelui de masă corporală (18,5–24,9 normal) și limitele zilnice de micronutrienți (Fibre 14g/1000kcal, Zaharuri libere <10%, Sodiu <2000mg).';
+
+  @override
+  String get statsOnTrack => 'On track';
+
+  @override
+  String get statsNeedsAdjustment => 'Needs adjustment';
+
+  @override
+  String get statsGoalReached => 'Goal reached';
+
+  @override
+  String statsAdjustmentBody(String target) {
+    return 'Your current intake does not support a reliable estimate for reaching $target kg. Keep logging and adjust toward your goal.';
+  }
+
+  @override
+  String get statsNoDataBody =>
+      'Log more weight and nutrition data to start a reliable forecast.';
+
+  @override
+  String get statsCaloriePeriod => 'the past 7-day average';
+
+  @override
+  String get statsCaloriePeriodToday => 'today';
+
+  @override
+  String get statsNoCalories => 'No calorie data yet';
+
+  @override
+  String get statsSlow => 'Progressing slowly but steadily';
+
+  @override
+  String get statsHighDeficit => 'Calorie deficit is too high';
+
+  @override
+  String get statsHighSurplus => 'Calorie surplus is quite high';
+
+  @override
+  String get statsStalled => 'Progress is currently stalled';
+
+  @override
+  String get statsOpposite => 'Moving away from your goal';
+
+  @override
+  String get statsGuidanceOnTrack => 'Pe drumul cel bun';
+
+  @override
+  String get statsNeedData => 'Sunt necesare mai multe date';
+
+  @override
+  String get statsFirstMeal => 'Așteptare prima masă';
+
+  @override
+  String get statsMinorAdjustment => 'Ajustare minoră';
+
+  @override
+  String get statsMoreSurplus => 'E nevoie de suplimentare';
+
+  @override
+  String get statsBalanced => 'Echilibru corporal';
+
+  @override
+  String get statsKeepTracking => 'Urmărește în continuare';
+
+  @override
+  String get statsSteady => 'Ritm stabil';
+
+  @override
+  String get statsBuilding => 'Construire progres';
+
+  @override
+  String get statsFirstMealForecast =>
+      'Înregistrează prima masă de azi pentru a calcula prognoza progresului.';
+
+  @override
+  String get statsLowIntake =>
+      'Aportul de azi este mai mic decât planul. Înregistrează toate mesele pentru o prognoză mai exactă.';
+
+  @override
+  String get statsSmallBalance =>
+      'Balanța de azi este mică. Înregistrează încă câteva zile pentru o proiecție mai clară.';
+
+  @override
+  String get statsOverIntake =>
+      'Aportul de azi a depășit consumul estimat. Fă o mică ajustare mâine pentru a rămâne pe drum.';
+
+  @override
+  String get statsUnderSurplus =>
+      'Aportul de azi nu a atins surplusul necesar pentru creșterea în greutate. Adaugă mai multă hrană mâine.';
+
+  @override
+  String get statsKeepLogging =>
+      'Înregistrează mesele și greutatea în mod regulat pentru ca CalGo să îți poată prognoza trendul.';
+
+  @override
+  String statsFamiliarReason(String reason) {
+    return 'Se potrivește cu o porție scanată anterior și cu macronutrienții rămași azi.';
+  }
+
+  @override
+  String get statsFitsReason =>
+      'Se încadrează în caloriile rămase și este potrivit pentru următoarea masă.';
+
+  @override
+  String get statsSauceSide =>
+      'Păstrează sosul separat pentru un control mai ușor al caloriilor.';
+
+  @override
+  String get statsLessOil =>
+      'Alege mai puțin ulei și adaugă legume pentru o masă mai ușoară.';
+
+  @override
+  String get statsHighProtein =>
+      'Opțiune bogată în proteine; mănâncă încet pentru a menține sațietatea.';
+
+  @override
+  String get statsReduceSauce =>
+      'Redu sosul sau uleiul dacă vrei o variantă mai ușoară.';
+
+  @override
+  String get statsModerateCarbs =>
+      'Păstrează carbohidrații moderați și adaugă legume la această masă.';
+
+  @override
+  String get statsBoostProtein =>
+      'Combină cu ou, tofu sau iaurt pentru mai multe proteine.';
+
+  @override
+  String get statsSplitPortions =>
+      'Împarte în porții mai mici dacă mai ai mese de luat azi.';
+
+  @override
+  String get statsHalfPortion =>
+      'Dacă ești aproape de limita calorică, alege o jumătate de porție cu legume.';
+
+  @override
+  String get statsEatSlowly =>
+      'Păstrează porții moderate și mănâncă încet pentru a simți sațietatea.';
+
+  @override
+  String get statsScanFirst =>
+      'Scanează prima masă de azi ca să pot calcula ce a rămas și să-ți sugerez următoarea masă.';
+
+  @override
+  String get statsReachedToday =>
+      'Ai atins ținta de calorii de azi! Menține acest ritm; dacă mai ai poftă, alege apă sau ceva foarte ușor.';
+
+  @override
+  String get statsNearTarget =>
+      'Ești aproape sau ai depășit ținta de azi, dar e în regulă! Dacă ți-e foame, alege o opțiune ușoară cu proteine.';
+
+  @override
+  String get statsNoMatchingMeals =>
+      'Nu am găsit mâncăruri potrivite din datele actuale. Scanează următoarea masă pentru sugestii mai exacte.';
+
+  @override
+  String statsPeriodDays(String days) {
+    return '$days zile';
+  }
+
+  @override
+  String statsOnTrackBody(String calories, String target, String weeks) {
+    return 'Cu o medie de $calories kcal/zi, ai putea atinge $target kg în aproximativ $weeks.';
+  }
+
+  @override
+  String statsGuidanceProjection(
+    String dateSuffix,
+    String target,
+    String weeks,
+  ) {
+    return 'Dacă menții aportul de azi, se estimează că vei atinge $target kg în circa $weeks săptămâni$dateSuffix.';
+  }
+
+  @override
+  String statsProteinReason(String proteinG) {
+    return 'Oferă aproximativ ${proteinG}g de proteine în limita caloriilor rămase.';
+  }
+
+  @override
+  String statsRemainingMessage(String calRemaining, String protRemaining) {
+    return 'Îți mai rămân aproximativ $calRemaining kcal și ai nevoie de încă ${protRemaining}g de proteine.';
+  }
+
+  @override
+  String get statsLevel1 => 'Începător';
+
+  @override
+  String get statsLevel2 => 'Observator';
+
+  @override
+  String get statsLevel3 => 'Perseverent';
+
+  @override
+  String get statsLevel4 => 'Disciplinat';
+
+  @override
+  String get statsLevel5 => 'Entuziast';
+
+  @override
+  String get statsLevel6 => 'Pasionat de sănătate';
+
+  @override
+  String get statsLevel7 => 'Expert în nutriție';
+
+  @override
+  String get statsLevel8 => 'Campion';
+
+  @override
+  String get statsLevel9 => 'Legendă';
+
+  @override
+  String get statsLevel10 => 'Maestru CalGo';
+
+  @override
+  String get statsAchievementFirstScanName => 'Început excelent';
+
+  @override
+  String get statsAchievementFirstScanDescription =>
+      'Înregistrează prima ta masă';
+
+  @override
+  String get statsAchievementScanMasterName => 'Maestru al scanării';
+
+  @override
+  String get statsAchievementScanMasterDescription => 'Scanează 10 mese cu AI';
+
+  @override
+  String get statsAchievementProteinKingName => 'Regele proteinelor';
+
+  @override
+  String get statsAchievementProteinKingDescription =>
+      'Atinge 100% din obiectivul zilnic de proteine';
+
+  @override
+  String get statsAchievementStreak7Name => 'Serie de 7 zile';
+
+  @override
+  String get statsAchievementStreak7Description =>
+      'Înregistrează mese timp de 7 zile consecutive';
+
+  @override
+  String get statsAchievementCaloChampName => 'Campionul caloriilor';
+
+  @override
+  String get statsAchievementCaloChampDescription =>
+      'Atinge obiectivul caloric 5 zile la rând';
+
+  @override
+  String get statsAchievementLegendName => 'Legendă CalGo';
+
+  @override
+  String get statsAchievementLegendDescription => 'Atinge nivelul 10';
+
+  @override
+  String get statsForecastNoDataBody =>
+      'Înregistrează o masă pentru a începe o prognoză bazată pe aportul tău real.';
+
+  @override
+  String get statsForecastReachedBody =>
+      'Păstrează aportul și obiceiurile actuale pentru a-ți menține rezultatul.';
+
+  @override
+  String statsForecastHealthyBody(
+    String balance,
+    String calories,
+    String goal,
+    String periodLabel,
+    String target,
+    String weeksLabel,
+  ) {
+    return 'Cu $periodLabel de aproximativ $calories kcal/zi, ai putea atinge $target kg în circa $weeksLabel.';
+  }
+
+  @override
+  String statsForecastSlowBody(String goal, String target) {
+    return 'Mergi în direcția bună, dar deficitul/surplusul caloric este mic. Atingerea țintei de $target kg poate dura mai mult.';
+  }
+
+  @override
+  String statsForecastAggressiveDeficitBody(
+    String calories,
+    String recommendedCalories,
+  ) {
+    return 'Consumi aproximativ $calories kcal/zi. Acest deficit poate să nu fie sigur. Crește treptat spre aproximativ $recommendedCalories kcal/zi.';
+  }
+
+  @override
+  String statsForecastAggressiveSurplusBody(String balance) {
+    return 'Consumi cu aproximativ $balance kcal/zi peste nivelul de menținere. Greutatea ar putea crește mai repede decât ai planificat.';
+  }
+
+  @override
+  String get statsForecastMaintenanceBody =>
+      'Aportul tău caloric este aproape de menținere, așa că greutatea s-ar putea să nu se schimbe prea mult.';
+
+  @override
+  String statsForecastOppositeBody(
+    String balance,
+    String direction,
+    String target,
+  ) {
+    String _temp0 = intl.Intl.selectLogic(direction, {
+      'up': 'crească',
+      'other': 'scadă',
+    });
+    return 'Cu acest aport caloric, greutatea tinde să $_temp0 și să se îndepărteze de $target kg.';
+  }
+
+  @override
+  String get planThreeMonths => '3 Luni';
+
+  @override
+  String get planDurationThreeMonths => '3 luni';
+
+  @override
+  String get billedThreeMonthsNote => 'Facturat la fiecare 3 luni';
+
+  @override
+  String iosAutoRenewTermsThreeMonths(String price) {
+    return 'Facturat ca $price/3 luni. Reînnoire automată la fiecare 3 luni. Anulează oricând în Configurări App Store.';
+  }
+
+  @override
+  String get whatToEatTitle => 'Ce mâncăm azi?';
+
+  @override
+  String get whatToEatTag => 'Ce mâncăm?';
+
+  @override
+  String get spinRandomAction => 'Alege la întâmplare';
+
+  @override
+  String get spinAgainAction => 'Rotește din nou';
+
+  @override
+  String get mealBreakfast => 'Mic dejun';
+
+  @override
+  String get mealLunch => 'Prânz';
+
+  @override
+  String get mealDinner => 'Cină';
+
+  @override
+  String get selectedDishTitle => 'Sugestie pentru tine!';
+
+  @override
+  String get logThisMeal => 'Înregistrează această masă';
+
+  @override
+  String approxCalories(int calories) {
+    return '~$calories kcal';
+  }
+
+  @override
+  String get whatToEatHint => 'Atinge un preparat sau apasă Alege aleatoriu';
+
+  @override
+  String get dishTagHighProtein => 'Bogat în proteine';
+
+  @override
+  String get dishTagQuick => 'Rapid și sățios';
+
+  @override
+  String get dishTagEnergetic => 'Plin de energie';
+
+  @override
+  String get dishTagLight => 'Ușor și digerabil';
+
+  @override
+  String get dishTagBalanced => 'Gustos și echilibrat';
+
+  @override
+  String get dishTagHealthy => 'Sănătos și ușor';
 }

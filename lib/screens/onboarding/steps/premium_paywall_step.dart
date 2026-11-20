@@ -42,7 +42,7 @@ TextStyle _f(
   letterSpacing: letterSpacing,
 );
 
-enum _Plan { weekly, annual, monthly }
+enum _Plan { threeMonth, annual, monthly }
 
 class PremiumPaywallStep extends StatefulWidget {
   final bool onboardingMode;
@@ -439,10 +439,11 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
       final currentOffering = offerings?.current;
       if (currentOffering != null && currentOffering.availablePackages.isNotEmpty) {
         Package? pkg;
-        if (_selectedPlan == _Plan.weekly) {
-          pkg = currentOffering.weekly ??
+        if (_selectedPlan == _Plan.threeMonth) {
+          pkg = currentOffering.threeMonth ??
+              currentOffering.getPackage(r'$rc_three_month') ??
               currentOffering.availablePackages.firstWhere(
-                (p) => p.packageType == PackageType.weekly,
+                (p) => p.packageType == PackageType.threeMonth,
                 orElse: () => currentOffering.availablePackages.first,
               );
         } else if (_selectedPlan == _Plan.monthly) {
@@ -482,7 +483,7 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
   }
 
   PremiumPlan _toPremiumPlan(_Plan plan) => switch (plan) {
-    _Plan.weekly => PremiumPlan.weekly,
+    _Plan.threeMonth => PremiumPlan.threeMonth,
     _Plan.monthly => PremiumPlan.monthly,
     _Plan.annual => PremiumPlan.annual,
   };
@@ -526,20 +527,21 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
       return s.premiumAutoRenewNote;
     }
     final annualOffer = payment.premiumOffer(PremiumPlan.annual, preferFreeTrial: true);
-    final weeklyOffer = payment.premiumOffer(PremiumPlan.weekly, preferFreeTrial: false);
+    final threeMonthOffer = payment.premiumOffer(PremiumPlan.threeMonth, preferFreeTrial: false);
     final monthlyOffer = payment.premiumOffer(PremiumPlan.monthly, preferFreeTrial: false);
 
     final rcOfferings = RevenueCatService.cachedOfferings?.current;
-    final rcWeekly = rcOfferings?.weekly?.storeProduct.priceString;
+    final rcThreeMonth = rcOfferings?.threeMonth?.storeProduct.priceString ??
+        rcOfferings?.getPackage(r'$rc_three_month')?.storeProduct.priceString;
     final rcMonthly = rcOfferings?.monthly?.storeProduct.priceString;
     final rcAnnual = rcOfferings?.annual?.storeProduct.priceString;
 
     final isVietnamese = s.localeName == 'vi';
-    final defaultWeek = isVietnamese ? '29.000đ' : '\$1.99';
-    final defaultAnnual = isVietnamese ? '469.000đ' : '\$29.99';
-    final defaultMonth = isVietnamese ? '59.000đ' : '\$4.99';
+    final defaultThreeMonth = isVietnamese ? '149.000đ' : r'$11.99';
+    final defaultAnnual = isVietnamese ? '469.000đ' : r'$29.99';
+    final defaultMonth = isVietnamese ? '59.000đ' : r'$4.99';
 
-    final weekPrice = rcWeekly ?? (weeklyOffer?.recurringPrice.isNotEmpty == true ? weeklyOffer!.recurringPrice : defaultWeek);
+    final threeMonthTotal = rcThreeMonth ?? (threeMonthOffer?.recurringPrice.isNotEmpty == true ? threeMonthOffer!.recurringPrice : defaultThreeMonth);
     final annualTotal = rcAnnual ?? (annualOffer?.recurringPrice.isNotEmpty == true ? annualOffer!.recurringPrice : defaultAnnual);
     final monthPrice = rcMonthly ?? (monthlyOffer?.recurringPrice.isNotEmpty == true ? monthlyOffer!.recurringPrice : defaultMonth);
 
@@ -549,8 +551,8 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
         return s.iosAutoRenewTermsTrial(annualTotal);
       }
       return s.iosAutoRenewTermsYearly(annualTotal);
-    } else if (_selectedPlan == _Plan.weekly) {
-      return s.iosAutoRenewTermsWeekly(weekPrice);
+    } else if (_selectedPlan == _Plan.threeMonth) {
+      return s.iosAutoRenewTermsThreeMonths(threeMonthTotal);
     } else {
       return s.iosAutoRenewTermsMonthly(monthPrice);
     }
@@ -561,8 +563,6 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
     const testing = AppBuildConfig.isTesting;
     final s = context.watch<AppSettingsProvider>().strings;
     final payment = context.watch<PaymentProvider>();
-    final onboarding = context.watch<OnboardingProvider>();
-    final auth = context.watch<AuthProvider>();
 
     final premiumState =
         payment.purchaseStates[PaymentProvider.productIdForPremiumPlan(
@@ -575,15 +575,6 @@ class _PremiumPaywallStepState extends State<PremiumPaywallStep> {
         premiumState == PurchaseState.pending ||
         premiumState == PurchaseState.verifying;
     final activated = testing || premiumState == PurchaseState.purchased;
-
-    // Nutrition values from Onboarding or User model
-    final user = auth.user;
-    final kcal = (user?.dailyCalorieTarget ?? onboarding.data.targetCaloriesPerDay)
-        .round();
-    final targetKcal = kcal > 0 ? kcal : 1850;
-    final targetProtein = (user?.proteinGrams ?? onboarding.data.targetProteinG)
-        .round();
-    final proteinVal = targetProtein > 0 ? targetProtein : 125;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -823,14 +814,43 @@ class _VerticalPricingList extends StatelessWidget {
     final payment = context.watch<PaymentProvider>();
     final isVietnamese = context.watch<AppSettingsProvider>().locale.languageCode == 'vi';
 
-    final weeklyOffer = payment.premiumOffer(PremiumPlan.weekly, preferFreeTrial: false);
+    final threeMonthOffer = payment.premiumOffer(PremiumPlan.threeMonth, preferFreeTrial: false);
     final annualOffer = payment.premiumOffer(PremiumPlan.annual, preferFreeTrial: true);
     final monthlyOffer = payment.premiumOffer(PremiumPlan.monthly, preferFreeTrial: false);
 
     final rcOfferings = RevenueCatService.cachedOfferings?.current;
-    final rcWeekly = rcOfferings?.weekly?.storeProduct.priceString;
+    final rcThreeMonth = rcOfferings?.threeMonth?.storeProduct.priceString ??
+        rcOfferings?.getPackage(r'$rc_three_month')?.storeProduct.priceString;
     final rcMonthly = rcOfferings?.monthly?.storeProduct.priceString;
     final rcAnnual = rcOfferings?.annual?.storeProduct.priceString;
+
+    String? rcThreeMonthMonthly;
+    final threeMonthPriceNum = rcOfferings?.threeMonth?.storeProduct.price ??
+        rcOfferings?.getPackage(r'$rc_three_month')?.storeProduct.price;
+    final threeMonthCurrency = rcOfferings?.threeMonth?.storeProduct.currencyCode ??
+        rcOfferings?.getPackage(r'$rc_three_month')?.storeProduct.currencyCode ?? '';
+    if (threeMonthPriceNum != null && threeMonthPriceNum > 0) {
+      final monthlyVal = threeMonthPriceNum / 3.0;
+      if (threeMonthCurrency.toUpperCase() == 'VND' || threeMonthCurrency == '₫') {
+        final rounded = monthlyVal.round();
+        final formatted = rounded.toString().replaceAllMapped(
+              RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+              (m) => '${m[1]}.',
+            );
+        rcThreeMonthMonthly = '$formattedđ';
+      } else if (threeMonthCurrency.toUpperCase() == 'USD' || threeMonthCurrency == r'$') {
+        rcThreeMonthMonthly = '\$${monthlyVal.toStringAsFixed(2)}';
+      } else if (monthlyVal >= 1000) {
+        final rounded = monthlyVal.round();
+        final formatted = rounded.toString().replaceAllMapped(
+              RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+              (m) => '${m[1]},',
+            );
+        rcThreeMonthMonthly = '$formatted $threeMonthCurrency';
+      } else {
+        rcThreeMonthMonthly = '${monthlyVal.toStringAsFixed(2)} $threeMonthCurrency';
+      }
+    }
 
     String? rcAnnualMonthly;
     final annualPriceNum = rcOfferings?.annual?.storeProduct.price;
@@ -882,12 +902,14 @@ class _VerticalPricingList extends StatelessWidget {
       return testingFallback;
     }
 
-    final defaultWeek = isVietnamese ? '29.000đ' : '\$1.99';
-    final defaultAnnual = isVietnamese ? '469.000đ' : '\$29.99';
-    final defaultAnnualMonthly = isVietnamese ? '39.000đ' : '\$2.49';
-    final defaultMonth = isVietnamese ? '59.000đ' : '\$4.99';
+    final defaultThreeMonth = isVietnamese ? '149.000đ' : r'$11.99';
+    final defaultThreeMonthMonthly = isVietnamese ? '49.000đ' : r'$3.99';
+    final defaultAnnual = isVietnamese ? '469.000đ' : r'$29.99';
+    final defaultAnnualMonthly = isVietnamese ? '39.000đ' : r'$2.49';
+    final defaultMonth = isVietnamese ? '59.000đ' : r'$4.99';
 
-    final weekPrice = formatRecurring(weeklyOffer, rcWeekly, defaultWeek);
+    final threeMonthTotal = formatRecurring(threeMonthOffer, rcThreeMonth, defaultThreeMonth);
+    final threeMonthMonthly = formatMonthly(threeMonthOffer, rcThreeMonthMonthly, defaultThreeMonthMonthly);
     final annualTotal = formatRecurring(annualOffer, rcAnnual, defaultAnnual);
     final annualMonthly = formatMonthly(annualOffer, rcAnnualMonthly, defaultAnnualMonthly);
     final monthPrice = formatRecurring(monthlyOffer, rcMonthly, defaultMonth);
@@ -895,15 +917,15 @@ class _VerticalPricingList extends StatelessWidget {
 
     return Column(
       children: [
-        // 1. Week Plan
+        // 1. Three-Month Plan
         _VerticalPlanCard(
-          title: s.planWeek,
-          subtitle: isIos ? s.billedWeeklyNote : null,
-          priceText: weekPrice,
-          unitText: '/ ${s.perWeekText.replaceAll('per ', '').replaceAll('mỗi ', '')}',
-          selected: selectedPlan == _Plan.weekly,
+          title: s.planThreeMonths,
+          subtitle: '$threeMonthTotal / ${s.planDurationThreeMonths}',
+          priceText: threeMonthMonthly,
+          unitText: '/ ${s.perMonthText.replaceAll('per ', '').replaceAll('mỗi ', '')}',
+          selected: selectedPlan == _Plan.threeMonth,
           badge: null,
-          onTap: () => onChanged(_Plan.weekly),
+          onTap: () => onChanged(_Plan.threeMonth),
         ),
         const SizedBox(height: 8),
 

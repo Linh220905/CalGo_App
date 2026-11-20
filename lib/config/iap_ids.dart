@@ -11,12 +11,14 @@ class IapIds {
   /// Console and App Store Connect, then mirror them in backend .env.
   static const String premiumWeekly = 'calgo_premium_weekly';
   static const String premiumMonthly = 'calgo_premium_monthly';
+  static const String premiumThreeMonth = 'calgo_premium_three_month';
   static const String premiumAnnual = 'calgo_premium_annual';
   static const String premiumAnnualDiscount = 'calgo_premium_annual_discount';
 
   static const Set<String> premiumProducts = {
     premiumWeekly,
     premiumMonthly,
+    premiumThreeMonth,
     premiumAnnual,
     premiumAnnualDiscount,
   };

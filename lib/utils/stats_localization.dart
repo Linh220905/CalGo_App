@@ -1,6 +1,8 @@
 import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
 
 import '../models/meal_guidance.dart';
+import '../l10n/generated/app_localizations.dart';
 import 'weight_forecast.dart';
 
 /// Localized copy for dynamic values that come from the API catalog.
@@ -9,6 +11,8 @@ import 'weight_forecast.dart';
 /// presentation text belongs to the client so the Stats screen follows the
 /// selected app locale instead of rendering server-side Vietnamese strings.
 class StatsLocalization {
+  static final _germanStrings = lookupAppLocalizations(const Locale('de'));
+
   static String languageCode(BuildContext context) =>
       Localizations.localeOf(context).languageCode;
 
@@ -183,6 +187,32 @@ class StatsLocalization {
         'Legendă',
         'Maestru CalGo',
       ],
+      'hr': const [
+        '',
+        'Početnik',
+        'Promatrač',
+        'Ustrajan',
+        'Discipliniran',
+        'Entuzijast',
+        'Ljubitelj zdravlja',
+        'Stručnjak za prehranu',
+        'Prvak',
+        'Legenda',
+        'CalGo Majstor',
+      ],
+      'de': [
+        '',
+        _germanStrings.statsLevel1,
+        _germanStrings.statsLevel2,
+        _germanStrings.statsLevel3,
+        _germanStrings.statsLevel4,
+        _germanStrings.statsLevel5,
+        _germanStrings.statsLevel6,
+        _germanStrings.statsLevel7,
+        _germanStrings.statsLevel8,
+        _germanStrings.statsLevel9,
+        _germanStrings.statsLevel10,
+      ],
     };
     final list = titles[languageCode(context)] ?? titles['en']!;
     final safeLevel = level.clamp(1, list.length - 1);
@@ -245,12 +275,17 @@ class StatsLocalization {
         return '$days أيام';
       case 'ro':
         return '$days zile';
+      case 'hr':
+        return '$days dana';
+      case 'de':
+        return AppLocalizations.of(context)!.statsPeriodDays(days.toString());
       default:
         return '$days days';
     }
   }
 
   static String weekdayShort(BuildContext context, DateTime date) {
+    if (languageCode(context) == 'de') return DateFormat.E('de').format(date);
     final names = <String, List<String>>{
       'vi': const ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'],
       'en': const ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
@@ -265,12 +300,14 @@ class StatsLocalization {
       'bn': const ['সোম', 'মঙ্গল', 'বুধ', 'বৃহস্পতি', 'শুক্র', 'শনি', 'রবি'],
       'ar': const ['اثن', 'ثلث', 'أرب', 'خمي', 'جمع', 'سبت', 'أحد'],
       'ro': const ['Lun', 'Mar', 'Mie', 'Joi', 'Vin', 'Sâm', 'Dum'],
+      'hr': const ['Pon', 'Uto', 'Sri', 'Čet', 'Pet', 'Sub', 'Ned'],
     };
     final list = names[languageCode(context)] ?? names['en']!;
     return list[date.weekday - 1];
   }
 
   static String monthShort(BuildContext context, DateTime date) {
+    if (languageCode(context) == 'de') return DateFormat.MMM('de').format(date);
     final names = <String, List<String>>{
       'vi': const [
         '',
@@ -467,6 +504,21 @@ class StatsLocalization {
         'Nov',
         'Dec',
       ],
+      'hr': const [
+        '',
+        'Sij',
+        'Velj',
+        'Ožu',
+        'Tra',
+        'Svi',
+        'Lip',
+        'Srp',
+        'Kol',
+        'Ruj',
+        'Lis',
+        'Stu',
+        'Pro',
+      ],
     };
     final list = names[languageCode(context)] ?? names['en']!;
     return date.month >= 1 && date.month <= 12
@@ -474,53 +526,14 @@ class StatsLocalization {
         : '${date.month}';
   }
 
-  static String forecastOnTrackTitle(BuildContext context) => _text(
-    context,
-    vi: 'Đang đi đúng hướng',
-    en: 'On track',
-    ko: '순조롭게 진행 중',
-    ja: '順調に進んでいます',
-    zh: '进展顺利',
-    es: 'Vas por buen camino',
-    fr: 'En bonne voie',
-    pt: 'No caminho certo',
-    ru: 'Всё по плану',
-    hi: 'सही दिशा में',
-    bn: 'সঠিক পথে',
-    ar: 'على الطريق الصحيح',
-  );
+  static String forecastOnTrackTitle(BuildContext context) =>
+      AppLocalizations.of(context)!.statsOnTrack;
 
-  static String forecastNeedsAdjustmentTitle(BuildContext context) => _text(
-    context,
-    vi: 'Cần điều chỉnh',
-    en: 'Needs adjustment',
-    ko: '조정이 필요해요',
-    ja: '調整が必要です',
-    zh: '需要调整',
-    es: 'Necesita ajustes',
-    fr: 'Ajustement nécessaire',
-    pt: 'Precisa de ajuste',
-    ru: 'Нужна корректировка',
-    hi: 'समायोजन की आवश्यकता',
-    bn: 'সমন্বয় প্রয়োজন',
-    ar: 'يحتاج إلى تعديل',
-  );
+  static String forecastNeedsAdjustmentTitle(BuildContext context) =>
+      AppLocalizations.of(context)!.statsNeedsAdjustment;
 
-  static String forecastGoalReachedTitle(BuildContext context) => _text(
-    context,
-    vi: 'Đã đạt mục tiêu',
-    en: 'Goal reached',
-    ko: '목표 달성',
-    ja: '目標達成',
-    zh: '已达成目标',
-    es: 'Objetivo alcanzado',
-    fr: 'Objectif atteint',
-    pt: 'Meta alcançada',
-    ru: 'Цель достигнута',
-    hi: 'लक्ष्य प्राप्त',
-    bn: 'লক্ষ্য অর্জিত',
-    ar: 'تم تحقيق الهدف',
-  );
+  static String forecastGoalReachedTitle(BuildContext context) =>
+      AppLocalizations.of(context)!.statsGoalReached;
 
   static String forecastOnTrackBody(
     BuildContext context, {
@@ -554,6 +567,12 @@ class StatsLocalization {
         return 'بمتوسط $calories سعرة يوميًا، يمكنك الوصول إلى $target كجم خلال نحو $weeks.';
       case 'ro':
         return 'Cu o medie de $calories kcal/zi, ai putea atinge $target kg în aproximativ $weeks.';
+      case 'hr':
+        return 'Uz prosjek od $calories kcal/dan, mogli biste dostići $target kg za oko $weeks.';
+      case 'de':
+        return AppLocalizations.of(
+          context,
+        )!.statsOnTrackBody(calories.toString(), target, weeks);
       default:
         return 'At an average of $calories kcal/day, you may reach $target kg in about $weeks.';
     }
@@ -562,154 +581,41 @@ class StatsLocalization {
   static String forecastNeedsAdjustmentBody(
     BuildContext context, {
     required String target,
-  }) => _text(
-    context,
-    vi: 'Mức nạp hiện tại chưa phù hợp để dự báo chắc chắn thời điểm đạt $target kg. Hãy ghi nhận đều đặn và điều chỉnh theo mục tiêu.',
-    en: 'Your current intake does not support a reliable estimate for reaching $target kg. Keep logging and adjust toward your goal.',
-    ko: '현재 섭취량으로는 $target kg 도달 시점을 정확히 예측하기 어려워요. 꾸준히 기록하며 목표에 맞게 조정하세요.',
-    ja: '現在の摂取量では$target kgに到達する時期を正確に予測できません。記録を続けて目標に合わせて調整しましょう。',
-    zh: '当前摄入量不足以可靠预测何时达到 $target kg。请持续记录并根据目标调整。',
-    es: 'Tu ingesta actual no permite estimar con fiabilidad cuándo llegarás a $target kg. Sigue registrando y ajusta tu plan.',
-    fr: 'Votre apport actuel ne permet pas d’estimer précisément quand vous atteindrez $target kg. Continuez à noter et ajustez votre plan.',
-    pt: 'A ingestão atual não permite estimar com segurança quando você chegará a $target kg. Continue registrando e ajuste o plano.',
-    ru: 'Текущего рациона недостаточно для надёжной оценки достижения $target кг. Продолжайте записывать питание и корректируйте план.',
-    hi: 'आपका वर्तमान सेवन $target kg तक पहुँचने का विश्वसनीय अनुमान देने के लिए पर्याप्त नहीं है। रिकॉर्ड करते रहें और लक्ष्य के अनुसार समायोजित करें।',
-    bn: 'বর্তমান গ্রহণ $target kg-এ পৌঁছানোর নির্ভরযোগ্য সময় অনুমানের জন্য যথেষ্ট নয়। নিয়মিত রেকর্ড করুন ও লক্ষ্য অনুযায়ী সামঞ্জস্য করুন।',
-    ar: 'مدخولك الحالي لا يكفي لتقدير موثوق لموعد الوصول إلى $target كجم. واصل التسجيل واضبط خطتك نحو هدفك.',
-  );
+  }) => AppLocalizations.of(context)!.statsAdjustmentBody(target);
 
-  static String forecastNoDataBody(BuildContext context) => _text(
-    context,
-    vi: 'Hãy ghi nhận thêm dữ liệu cân nặng và dinh dưỡng để bắt đầu dự báo.',
-    en: 'Log more weight and nutrition data to start a reliable forecast.',
-    ko: '신뢰할 수 있는 예측을 시작하려면 체중과 영양 데이터를 더 기록하세요.',
-    ja: '信頼できる予測を始めるには、体重と栄養データをさらに記録してください。',
-    zh: '请记录更多体重和营养数据，以开始可靠预测。',
-    es: 'Registra más datos de peso y nutrición para iniciar una previsión fiable.',
-    fr: 'Enregistrez davantage de données de poids et de nutrition pour commencer une prévision fiable.',
-    pt: 'Registre mais dados de peso e nutrição para iniciar uma previsão confiável.',
-    ru: 'Добавьте данные о весе и питании, чтобы начать надёжный прогноз.',
-    hi: 'विश्वसनीय पूर्वानुमान शुरू करने के लिए अधिक वजन और पोषण डेटा दर्ज करें।',
-    bn: 'নির্ভরযোগ্য পূর্বাভাস শুরু করতে আরও ওজন ও পুষ্টির তথ্য রেকর্ড করুন।',
-    ar: 'سجّل المزيد من بيانات الوزن والتغذية لبدء توقع موثوق.',
-  );
+  static String forecastNoDataBody(BuildContext context) =>
+      AppLocalizations.of(context)!.statsNoDataBody;
 
   static String caloriePeriodLabel(
     BuildContext context, {
     required bool weekly,
-  }) => _text(
-    context,
-    vi: weekly ? 'trung bình 7 ngày qua' : 'hôm nay',
-    en: weekly ? 'the past 7-day average' : 'today',
-    ko: weekly ? '최근 7일 평균' : '오늘',
-    ja: weekly ? '過去7日間の平均' : '今日',
-    zh: weekly ? '过去7天平均' : '今天',
-    es: weekly ? 'el promedio de los últimos 7 días' : 'hoy',
-    fr: weekly ? 'la moyenne des 7 derniers jours' : "aujourd’hui",
-    pt: weekly ? 'a média dos últimos 7 dias' : 'hoje',
-    ru: weekly ? 'среднем за последние 7 дней' : 'сегодня',
-    hi: weekly ? 'पिछले 7 दिनों के औसत' : 'आज',
-    bn: weekly ? 'গত ৭ দিনের গড়' : 'আজ',
-    ar: weekly ? 'متوسط آخر 7 أيام' : 'اليوم',
-  );
+  }) => weekly
+      ? AppLocalizations.of(context)!.statsCaloriePeriod
+      : AppLocalizations.of(context)!.statsCaloriePeriodToday;
 
   static String forecastStatusTitle(
     BuildContext context,
     WeightForecast forecast,
   ) {
     return switch (forecast.status) {
-      WeightForecastStatus.noData => _text(
+      WeightForecastStatus.noData => AppLocalizations.of(
         context,
-        vi: 'Chưa có dữ liệu calo',
-        en: 'No calorie data yet',
-        ko: '아직 칼로리 데이터가 없어요',
-        ja: 'カロリーデータがありません',
-        zh: '暂无热量数据',
-        es: 'Aún no hay datos de calorías',
-        fr: 'Aucune donnée calorique',
-        pt: 'Ainda não há dados de calorias',
-        ru: 'Пока нет данных о калориях',
-        hi: 'अभी कैलोरी डेटा नहीं है',
-        bn: 'এখনও ক্যালোরির তথ্য নেই',
-        ar: 'لا توجد بيانات سعرات بعد',
-      ),
+      )!.statsNoCalories,
       WeightForecastStatus.reached => forecastGoalReachedTitle(context),
       WeightForecastStatus.healthy => forecastOnTrackTitle(context),
-      WeightForecastStatus.slow => _text(
+      WeightForecastStatus.slow => AppLocalizations.of(context)!.statsSlow,
+      WeightForecastStatus.aggressiveDeficit => AppLocalizations.of(
         context,
-        vi: 'Đang tiến bộ chậm nhưng ổn định',
-        en: 'Progressing slowly but steadily',
-        ko: '느리지만 꾸준히 진행 중',
-        ja: 'ゆっくりですが順調です',
-        zh: '进展较慢但稳定',
-        es: 'Progreso lento pero constante',
-        fr: 'Progression lente mais régulière',
-        pt: 'Progresso lento, mas constante',
-        ru: 'Медленный, но стабильный прогресс',
-        hi: 'धीमी लेकिन स्थिर प्रगति',
-        bn: 'ধীর কিন্তু স্থির অগ্রগতি',
-        ar: 'تقدم بطيء لكنه ثابت',
-      ),
-      WeightForecastStatus.aggressiveDeficit => _text(
+      )!.statsHighDeficit,
+      WeightForecastStatus.aggressiveSurplus => AppLocalizations.of(
         context,
-        vi: 'Thâm hụt calo quá mức',
-        en: 'Calorie deficit is too high',
-        ko: '칼로리 적자가 너무 커요',
-        ja: 'カロリー赤字が大きすぎます',
-        zh: '热量缺口过大',
-        es: 'El déficit calórico es demasiado alto',
-        fr: 'Déficit calorique trop élevé',
-        pt: 'Déficit calórico muito alto',
-        ru: 'Слишком большой дефицит калорий',
-        hi: 'कैलोरी की कमी बहुत अधिक है',
-        bn: 'ক্যালোরির ঘাটতি খুব বেশি',
-        ar: 'عجز السعرات مرتفع جدًا',
-      ),
-      WeightForecastStatus.aggressiveSurplus => _text(
+      )!.statsHighSurplus,
+      WeightForecastStatus.maintenance => AppLocalizations.of(
         context,
-        vi: 'Thặng dư calo hơi cao',
-        en: 'Calorie surplus is quite high',
-        ko: '칼로리 흑자가 조금 높아요',
-        ja: 'カロリー余剰がやや多めです',
-        zh: '热量盈余偏高',
-        es: 'El superávit calórico es alto',
-        fr: 'Excédent calorique assez élevé',
-        pt: 'Superávit calórico um pouco alto',
-        ru: 'Избыток калорий довольно большой',
-        hi: 'कैलोरी अधिशेष काफी अधिक है',
-        bn: 'ক্যালোরির উদ্বৃত্ত বেশ বেশি',
-        ar: 'فائض السعرات مرتفع نسبيًا',
-      ),
-      WeightForecastStatus.maintenance => _text(
+      )!.statsStalled,
+      WeightForecastStatus.opposite => AppLocalizations.of(
         context,
-        vi: 'Tiến độ đang chững lại',
-        en: 'Progress is currently stalled',
-        ko: '진행이 잠시 멈춰 있어요',
-        ja: '進捗が一時的に停滞しています',
-        zh: '进度暂时停滞',
-        es: 'El progreso está estancado',
-        fr: 'La progression stagne',
-        pt: 'O progresso está parado',
-        ru: 'Прогресс пока остановился',
-        hi: 'प्रगति फिलहाल रुक गई है',
-        bn: 'অগ্রগতি আপাতত থেমে আছে',
-        ar: 'التقدم متوقف حاليًا',
-      ),
-      WeightForecastStatus.opposite => _text(
-        context,
-        vi: 'Đang đi ngược mục tiêu',
-        en: 'Moving away from your goal',
-        ko: '목표에서 멀어지고 있어요',
-        ja: '目標から遠ざかっています',
-        zh: '正在偏离目标',
-        es: 'Te alejas de tu objetivo',
-        fr: 'Vous vous éloignez de votre objectif',
-        pt: 'Você está se afastando da meta',
-        ru: 'Вы удаляетесь от цели',
-        hi: 'आप अपने लक्ष्य से दूर जा रहे हैं',
-        bn: 'আপনি আপনার লক্ষ্য থেকে দূরে সরে যাচ্ছেন',
-        ar: 'أنت تبتعد عن هدفك',
-      ),
+      )!.statsOpposite,
     };
   }
 
@@ -946,6 +852,63 @@ class StatsLocalization {
           WeightForecastStatus.opposite =>
             'Cu acest aport caloric, greutatea tinde să ${isUp ? 'crească' : 'scadă'} și să se îndepărteze de $target kg.',
         };
+      case 'hr':
+        return switch (forecast.status) {
+          WeightForecastStatus.noData =>
+            'Zabilježite obrok za početak prognoze temeljene na vašem stvarnom unosu.',
+          WeightForecastStatus.reached =>
+            'Održavajte trenutni unos i navike kako biste zadržali svoj rezultat.',
+          WeightForecastStatus.healthy =>
+            'Uz $periodLabel od oko $calories kcal/dan, mogli biste dostići $target kg za oko $weeksLabel.',
+          WeightForecastStatus.slow =>
+            'Krećete se u dobrom smjeru, ali razlika u kalorijama je mala. Dosezanje cilja od $target kg može potrajati duže.',
+          WeightForecastStatus.aggressiveDeficit =>
+            'Unosite oko $calories kcal/dan. Ovaj deficit možda nije siguran. Postupno povećajte unos prema $recommendedCalories kcal/dan.',
+          WeightForecastStatus.aggressiveSurplus =>
+            'Unosite oko $balance kcal/dan iznad održavanja. Težina bi mogla rasti brže nego planirano.',
+          WeightForecastStatus.maintenance =>
+            'Vaš unos je blizu razine održavanja, pa se vaša težina možda neće puno promijeniti.',
+          WeightForecastStatus.opposite =>
+            'Uz ovaj unos, vaša bi težina mogla ${isUp ? 'rasti' : 'padati'} suprotno od cilja od $target kg.',
+        };
+      case 'de':
+        return switch (forecast.status) {
+          WeightForecastStatus.noData => AppLocalizations.of(
+            context,
+          )!.statsForecastNoDataBody,
+          WeightForecastStatus.reached => AppLocalizations.of(
+            context,
+          )!.statsForecastReachedBody,
+          WeightForecastStatus.healthy =>
+            AppLocalizations.of(context)!.statsForecastHealthyBody(
+              balance.toString(),
+              calories.toString(),
+              forecast.goal,
+              periodLabel,
+              target,
+              weeksLabel,
+            ),
+          WeightForecastStatus.slow => AppLocalizations.of(
+            context,
+          )!.statsForecastSlowBody(forecast.goal, target),
+          WeightForecastStatus.aggressiveDeficit =>
+            AppLocalizations.of(context)!.statsForecastAggressiveDeficitBody(
+              calories.toString(),
+              recommendedCalories.toString(),
+            ),
+          WeightForecastStatus.aggressiveSurplus => AppLocalizations.of(
+            context,
+          )!.statsForecastAggressiveSurplusBody(balance.toString()),
+          WeightForecastStatus.maintenance => AppLocalizations.of(
+            context,
+          )!.statsForecastMaintenanceBody,
+          WeightForecastStatus.opposite =>
+            AppLocalizations.of(context)!.statsForecastOppositeBody(
+              balance.toString(),
+              isUp ? 'up' : 'down',
+              target,
+            ),
+        };
       default:
         return switch (forecast.status) {
           WeightForecastStatus.noData =>
@@ -968,40 +931,13 @@ class StatsLocalization {
     }
   }
 
-  static String _text(
-    BuildContext context, {
-    required String vi,
-    required String en,
-    required String ko,
-    required String ja,
-    required String zh,
-    required String es,
-    required String fr,
-    required String pt,
-    required String ru,
-    required String hi,
-    required String bn,
-    required String ar,
-    String? ro,
-  }) {
-    return switch (languageCode(context)) {
-      'vi' => vi,
-      'ko' => ko,
-      'ja' => ja,
-      'zh' => zh,
-      'es' => es,
-      'fr' => fr,
-      'pt' => pt,
-      'ru' => ru,
-      'hi' => hi,
-      'bn' => bn,
-      'ar' => ar,
-      'ro' => ro ?? en,
-      _ => en,
-    };
-  }
-
-  static const _bmi = <String, Map<String, String>>{
+  static final _bmi = <String, Map<String, String>>{
+    'de': {
+      'underweight': _germanStrings.bmiUnderweight,
+      'normal': _germanStrings.bmiNormal,
+      'overweight': _germanStrings.bmiOverweight,
+      'obese': _germanStrings.bmiObese,
+    },
     'en': {
       'underweight': 'Underweight',
       'normal': 'Normal',
@@ -1080,9 +1016,41 @@ class StatsLocalization {
       'overweight': 'Supraponderal',
       'obese': 'Obezitate',
     },
+    'hr': {
+      'underweight': 'Pothranjenost',
+      'normal': 'Normalna težina',
+      'overweight': 'Prekomjerna težina',
+      'obese': 'Pretilost',
+    },
   };
 
-  static const _achievements = <String, Map<String, (String, String)>>{
+  static final _achievements = <String, Map<String, (String, String)>>{
+    'de': {
+      'first_scan': (
+        _germanStrings.statsAchievementFirstScanName,
+        _germanStrings.statsAchievementFirstScanDescription,
+      ),
+      'scan_master': (
+        _germanStrings.statsAchievementScanMasterName,
+        _germanStrings.statsAchievementScanMasterDescription,
+      ),
+      'protein_king': (
+        _germanStrings.statsAchievementProteinKingName,
+        _germanStrings.statsAchievementProteinKingDescription,
+      ),
+      'streak_7': (
+        _germanStrings.statsAchievementStreak7Name,
+        _germanStrings.statsAchievementStreak7Description,
+      ),
+      'calo_champ': (
+        _germanStrings.statsAchievementCaloChampName,
+        _germanStrings.statsAchievementCaloChampDescription,
+      ),
+      'legend': (
+        _germanStrings.statsAchievementLegendName,
+        _germanStrings.statsAchievementLegendDescription,
+      ),
+    },
     'en': {
       'first_scan': ('Bright Start', 'Record your first meal'),
       'scan_master': ('Scan Master', 'Scan 10 meals with AI'),
@@ -1232,6 +1200,20 @@ class StatsLocalization {
       ),
       'legend': ('Legendă CalGo', 'Atinge nivelul 10'),
     },
+    'hr': {
+      'first_scan': ('Sjajan početak', 'Zabilježite svoj prvi obrok'),
+      'scan_master': ('Majstor skeniranja', 'Skenirajte 10 obroka uz AI'),
+      'protein_king': (
+        'Kralj proteina',
+        'Ostvarite 100% dnevnog cilja proteina',
+      ),
+      'streak_7': ('Niz od 7 dana', 'Bilježite obroke 7 dana uzastopno'),
+      'calo_champ': (
+        'Prvak u kalorijama',
+        'Postignite cilj kalorija 5 uzastopnih dana',
+      ),
+      'legend': ('CalGo Legenda', 'Dosegnite razinu 10'),
+    },
   };
 
   // ── Meal Guidance & Transformation Forecast Localization ───────────────────
@@ -1241,166 +1223,31 @@ class StatsLocalization {
     if (tag.isEmpty) return '';
 
     if (tag.contains('Đang đi đúng hướng')) {
-      return _text(
-        context,
-        vi: 'Đang đi đúng hướng',
-        en: 'On track',
-        ko: '순조롭게 진행 중',
-        ja: '順調に進んでいます',
-        zh: '进展顺利',
-        es: 'Vas por buen camino',
-        fr: 'En bonne voie',
-        pt: 'No caminho certo',
-        ru: 'Всё по плану',
-        hi: 'सही दिशा में',
-        bn: 'সঠিক পথে',
-        ar: 'على الطريق الصحيح',
-        ro: 'Pe drumul cel bun',
-      );
+      return AppLocalizations.of(context)!.statsGuidanceOnTrack;
     }
     if (tag.contains('Cần thêm dữ liệu')) {
-      return _text(
-        context,
-        vi: 'Cần thêm dữ liệu',
-        en: 'Need more data',
-        ko: '추가 데이터 필요',
-        ja: 'データ不足',
-        zh: '需要更多数据',
-        es: 'Se necesitan más datos',
-        fr: 'Plus de données nécessaires',
-        pt: 'Mais dados necessários',
-        ru: 'Нужно больше данных',
-        hi: 'अधिक डेटा चाहिए',
-        bn: 'আরও তথ্যের প্রয়োজন',
-        ar: 'بحاجة لمزيد من البيانات',
-        ro: 'Sunt necesare mai multe date',
-      );
+      return AppLocalizations.of(context)!.statsNeedData;
     }
     if (tag.contains('Chờ bữa đầu')) {
-      return _text(
-        context,
-        vi: 'Chờ bữa đầu',
-        en: 'Awaiting 1st meal',
-        ko: '첫 식사 대기',
-        ja: '最初の食事待ち',
-        zh: '等待首餐',
-        es: 'Esperando 1ª comida',
-        fr: 'En attente 1er repas',
-        pt: 'Aguardando 1ª refeição',
-        ru: 'Ждем первый прием',
-        hi: 'पहले भोजन की प्रतीक्षा',
-        bn: 'প্রথম খাবারের অপেক্ষা',
-        ar: 'بانتظار الوجبة الأولى',
-        ro: 'Așteptare prima masă',
-      );
+      return AppLocalizations.of(context)!.statsFirstMeal;
     }
     if (tag.contains('Cần điều chỉnh') || tag.contains('Cần điều chỉnh nhẹ')) {
-      return _text(
-        context,
-        vi: 'Cần điều chỉnh nhẹ',
-        en: 'Minor adjustment',
-        ko: '가벼운 조정 필요',
-        ja: '少し調整が必要',
-        zh: '需要微调',
-        es: 'Ajuste leve',
-        fr: 'Léger ajustement',
-        pt: 'Pequeno ajuste',
-        ru: 'Небольшая корректировка',
-        hi: 'हल्का समायोजन',
-        bn: 'সামান্য সমন্বয় প্রয়োজন',
-        ar: 'تعديل بسيط',
-        ro: 'Ajustare minoră',
-      );
+      return AppLocalizations.of(context)!.statsMinorAdjustment;
     }
     if (tag.contains('Cần bổ sung thêm')) {
-      return _text(
-        context,
-        vi: 'Cần bổ sung thêm',
-        en: 'Need more surplus',
-        ko: '추가 보충 필요',
-        ja: '追加補給が必要',
-        zh: '需要补充热量',
-        es: 'Necesitas más calorías',
-        fr: 'Apport supplémentaire requis',
-        pt: 'Precisa suplementar',
-        ru: 'Нужно больше калорий',
-        hi: 'और अधिक सेवन चाहिए',
-        bn: 'আরও অতিরিক্ত গ্রহণ প্রয়োজন',
-        ar: 'بحاجة للمزيد من السعرات',
-        ro: 'E nevoie de suplimentare',
-      );
+      return AppLocalizations.of(context)!.statsMoreSurplus;
     }
     if (tag.contains('Cân bằng vóc dáng')) {
-      return _text(
-        context,
-        vi: 'Cân bằng vóc dáng',
-        en: 'Balanced body',
-        ko: '체형 균형 유지',
-        ja: '体型バランス維持',
-        zh: '平衡体态',
-        es: 'Equilibrio corporal',
-        fr: 'Équilibre silhouette',
-        pt: 'Equilíbrio corporal',
-        ru: 'Баланс формы',
-        hi: 'संतुलित शारीरिक बनावट',
-        bn: 'শারীরিক ভারসাম্য',
-        ar: 'توازن القوام',
-        ro: 'Echilibru corporal',
-      );
+      return AppLocalizations.of(context)!.statsBalanced;
     }
     if (tag.contains('Theo dõi thêm')) {
-      return _text(
-        context,
-        vi: 'Theo dõi thêm',
-        en: 'Keep tracking',
-        ko: '추가 관찰 필요',
-        ja: '継続して観察',
-        zh: '持续观察',
-        es: 'Seguir observando',
-        fr: 'Suivre de près',
-        pt: 'Acompanhar mais',
-        ru: 'Продолжайте следить',
-        hi: 'और ट्रैक करें',
-        bn: 'আরও পর্যবেক্ষণ করুন',
-        ar: 'متابعة إضافية',
-        ro: 'Urmărește în continuare',
-      );
+      return AppLocalizations.of(context)!.statsKeepTracking;
     }
     if (tag.contains('Giữ nhịp chuẩn')) {
-      return _text(
-        context,
-        vi: 'Giữ nhịp chuẩn',
-        en: 'Steady pace',
-        ko: '안정적인 리듬',
-        ja: '安定したペース',
-        zh: '保持良好节奏',
-        es: 'Ritmo constante',
-        fr: 'Rythme régulier',
-        pt: 'Ritmo constante',
-        ru: 'Стабильный ритм',
-        hi: 'स्थिर लय',
-        bn: 'স্থির ছন্দ',
-        ar: 'إيقاع ثابت',
-        ro: 'Ritm stabil',
-      );
+      return AppLocalizations.of(context)!.statsSteady;
     }
     if (tag.contains('Đang tích lũy') || tag.contains('Đang tiến bộ')) {
-      return _text(
-        context,
-        vi: 'Đang tích lũy',
-        en: 'Building progress',
-        ko: '진행 중',
-        ja: '蓄積中',
-        zh: '正在累积',
-        es: 'Acumulando progreso',
-        fr: 'Progression en cours',
-        pt: 'Construindo progresso',
-        ru: 'Набираем темп',
-        hi: 'प्रगति जारी है',
-        bn: 'অগ্রগতি তৈরি হচ্ছে',
-        ar: 'بناء التقدم',
-        ro: 'Construire progres',
-      );
+      return AppLocalizations.of(context)!.statsBuilding;
     }
 
     return tag;
@@ -1414,40 +1261,28 @@ class StatsLocalization {
     if (msg.isEmpty) return '';
 
     final weeks = forecast.projectedWeeksToGoal != null
-        ? (forecast.projectedWeeksToGoal == forecast.projectedWeeksToGoal!.roundToDouble()
-            ? forecast.projectedWeeksToGoal!.toStringAsFixed(0)
-            : forecast.projectedWeeksToGoal!.toStringAsFixed(1))
+        ? (forecast.projectedWeeksToGoal ==
+                  forecast.projectedWeeksToGoal!.roundToDouble()
+              ? forecast.projectedWeeksToGoal!.toStringAsFixed(0)
+              : forecast.projectedWeeksToGoal!.toStringAsFixed(1))
         : '';
     final target = forecast.targetWeightKg != null
         ? (forecast.targetWeightKg == forecast.targetWeightKg!.roundToDouble()
-            ? forecast.targetWeightKg!.toStringAsFixed(0)
-            : forecast.targetWeightKg!.toStringAsFixed(1))
+              ? forecast.targetWeightKg!.toStringAsFixed(0)
+              : forecast.targetWeightKg!.toStringAsFixed(1))
         : '';
     final date = forecast.projectedGoalDate ?? '';
 
     // Pattern 1: Initial empty state awaiting first scan
     if (msg.contains('Chụp bữa đầu tiên hôm nay') ||
         msg.contains('Hãy chụp bữa đầu tiên')) {
-      return _text(
-        context,
-        vi: 'Hãy chụp bữa đầu tiên hôm nay để mình bắt đầu tính toán tiến trình dự báo nhé.',
-        en: 'Log your first meal today to start calculating your progress forecast.',
-        ko: '오늘의 첫 식사를 기록하여 진행 상황 예측 계산을 시작해보세요.',
-        ja: '今日の最初の食事を記録して、進捗予測の計算を始めましょう。',
-        zh: '记录今天的首餐，即可开始计算进度预测。',
-        es: 'Registra tu primera comida de hoy para calcular tu previsión de progreso.',
-        fr: 'Enregistrez votre premier repas aujourd’hui pour calculer votre progression.',
-        pt: 'Registre sua primeira refeição de hoje para calcular a previsão de progresso.',
-        ru: 'Запишите первый приём пищи за сегодня, чтобы рассчитать прогноз прогресса.',
-        hi: 'प्रगति पूर्वानुमान की गणना शुरू करने के लिए आज का अपना पहला भोजन दर्ज करें।',
-        bn: 'অগ্রগতির পূর্বাভাস গণনা শুরু করতে আজকের প্রথম খাবারটি রেকর্ড করুন।',
-        ar: 'سجّل وجبتك الأولى اليوم لبدء حساب توقعات تقدمك.',
-        ro: 'Înregistrează prima masă de azi pentru a calcula prognoza progresului.',
-      );
+      return AppLocalizations.of(context)!.statsFirstMealForecast;
     }
 
     // Pattern 2: On track with projected weeks & target weight
-    if (msg.contains('Nếu duy trì mức nạp khoảng') && weeks.isNotEmpty && target.isNotEmpty) {
+    if (msg.contains('Nếu duy trì mức nạp khoảng') &&
+        weeks.isNotEmpty &&
+        target.isNotEmpty) {
       final code = languageCode(context);
       final isLoss = forecast.goalType == 'lose';
       final dateSuffix = date.isNotEmpty ? ' ($date)' : '';
@@ -1479,6 +1314,12 @@ class StatsLocalization {
           return 'إذا حافظت على مدخول اليوم، فمن المتوقع أن تصل إلى $target كجم خلال نحو $weeks أسبوعًا$dateSuffix.';
         case 'ro':
           return 'Dacă menții aportul de azi, se estimează că vei atinge $target kg în circa $weeks săptămâni$dateSuffix.';
+        case 'hr':
+          return 'Održavajući današnji unos, procjenjuje se da ćete doseći $target kg za oko $weeks tjedana$dateSuffix.';
+        case 'de':
+          return AppLocalizations.of(
+            context,
+          )!.statsGuidanceProjection(dateSuffix, target, weeks);
         default:
           return 'Maintaining today’s intake, you are projected to reach $target kg in about $weeks weeks$dateSuffix.';
       }
@@ -1487,108 +1328,33 @@ class StatsLocalization {
     // Pattern 3: Low intake ratio - Need more data
     if (msg.contains('chưa muốn đoán thời gian') ||
         msg.contains('thấp hơn kế hoạch khá nhiều')) {
-      return _text(
-        context,
-        vi: 'Lượng calo hôm nay còn khá thấp so với kế hoạch. Hãy ghi đủ các bữa để CalGo dự báo chính xác hơn.',
-        en: 'Today’s intake is lower than planned. Log all your meals for a more accurate forecast.',
-        ko: '오늘 섭취량이 계획보다 적습니다. 더 정확한 예측을 위해 모든 식사를 기록해주세요.',
-        ja: '今日の摂取量は計画より少なめです。より正確な予測のためにすべての食事を記録してください。',
-        zh: '今天的摄入量低于计划。请完整记录所有餐次以获得更准确的预测。',
-        es: 'La ingesta de hoy es menor de lo planeado. Registra todas tus comidas para una previsión más precisa.',
-        fr: 'L’apport d’aujourd’hui est inférieur aux prévisions. Notez tous vos repas pour une prévision plus précise.',
-        pt: 'A ingestão de hoje está abaixo do planejado. Registre todas as refeições para uma previsão mais precisa.',
-        ru: 'Сегодняшний рацион ниже плана. Записывайте все приёмы пищи для точного прогноза.',
-        hi: 'आज का सेवन योजना से कम है। अधिक सटीक पूर्वानुमान के लिए अपने सभी भोजन दर्ज करें।',
-        bn: 'আজকের গ্রহণ পরিকল্পনার চেয়ে কম। আরও সঠিক পূর্বাভাসে জন্য সব খাবার রেকর্ড করুন।',
-        ar: 'مدخول اليوم أقل من المخطط. سجّل جميع وجباتك للحصول على توقع أكثر دقة.',
-        ro: 'Aportul de azi este mai mic decât planul. Înregistrează toate mesele pentru o prognoză mai exactă.',
-      );
+      return AppLocalizations.of(context)!.statsLowIntake;
     }
 
     // Pattern 4: Deficit too small / progress needs more days
     if (msg.contains('Mức thâm hụt thực tế chỉ khoảng') ||
         msg.contains('mức thặng dư chỉ khoảng') ||
         msg.contains('Chưa đủ dữ liệu để dự báo chắc chắn')) {
-      return _text(
-        context,
-        vi: 'Chênh lệch calo hôm nay còn nhỏ. Hãy tiếp tục ghi nhận thêm vài ngày để dự báo rõ nét hơn.',
-        en: 'Today’s calorie balance is small. Keep logging for a few more days for a clearer projection.',
-        ko: '오늘의 칼로리 차이가 작습니다. 더 명확한 예측을 위해 며칠 더 꾸준히 기록해주세요.',
-        ja: '今日のカロリー差は小さめです。より明確な予測のため、数日間記録を続けてみましょう。',
-        zh: '今天的热量差较小。请再记录几天以获得更清晰的预测。',
-        es: 'El balance de hoy es pequeño. Sigue registrando unos días más para una proyección más clara.',
-        fr: 'L’équilibre d’aujourd’hui est léger. Continuez à noter quelques jours pour une prévision plus claire.',
-        pt: 'O balanço de hoje é pequeno. Continue registrando mais alguns dias para uma projeção mais clara.',
-        ru: 'Разница калорий за сегодня невелика. Записывайте питание ещё несколько дней для чёткого прогноза.',
-        hi: 'आज का कैलोरी संतुलन कम है। स्पष्ट अनुमान के लिए कुछ और दिनों तक रिकॉर्ड करते रहें।',
-        bn: 'আজকের ক্যালোরির ব্যবধান কম। স্পষ্ট পূর্বাভাসের জন্য আরও কয়েক দিন রেকর্ড চালিয়ে যান।',
-        ar: 'فارق السعرات اليوم صغير. واصل التسجيل لبضعة أيام أخرى للحصول على توقع أوضح.',
-        ro: 'Balanța de azi este mică. Înregistrează încă câteva zile pentru o proiecție mai clară.',
-      );
+      return AppLocalizations.of(context)!.statsSmallBalance;
     }
 
     // Pattern 5: Calorie surplus on weight loss
     if (msg.contains('cao hơn mức tiêu hao ước tính') ||
         msg.contains('tiến độ giảm cân chưa bắt đầu')) {
-      return _text(
-        context,
-        vi: 'Lượng nạp hôm nay cao hơn mức tiêu hao. Hãy điều chỉnh nhẹ lại vào ngày mai để tiếp tục tiến trình.',
-        en: 'Today’s intake exceeded estimated burn. Make a gentle adjustment tomorrow to stay on track.',
-        ko: '오늘 섭취량이 예상 소비량보다 높습니다. 내일 가볍게 조절하여 페이스를 되찾아보세요.',
-        ja: '今日の摂取量が推定消費量を上回りました。明日少し調整してペースを維持しましょう。',
-        zh: '今天摄入量高于预估消耗。明天稍作调整即可重回正轨。',
-        es: 'La ingesta de hoy superó el gasto estimado. Ajusta suavemente mañana para retomar el rumbo.',
-        fr: 'L’apport d’aujourd’hui a dépassé la dépense estimée. Réajustez demain pour garder le cap.',
-        pt: 'A ingestão de hoje superou o gasto estimado. Faça um leve ajuste amanhã para manter o ritmo.',
-        ru: 'Сегодняшний рацион превысил расход. Скорректируйте питание завтра, чтобы вернуться к цели.',
-        hi: 'आज का सेवन अनुमानित खर्च से अधिक था। पटरी पर लौटने के लिए कल हल्का समायोजन करें।',
-        bn: 'আজকের গ্রহণ আনুমানিক ব্যয়ের চেয়ে বেশি ছিল। ট্র্যাকে ফিরতে আগামীকাল সামান্য সমন্বয় করুন।',
-        ar: 'تجاوز مدخول اليوم معدل الحرق المقدر. قم بتعديل بسيط غدًا للمحافظة على مسارك.',
-        ro: 'Aportul de azi a depășit consumul estimat. Fă o mică ajustare mâine pentru a rămâne pe drum.',
-      );
+      return AppLocalizations.of(context)!.statsOverIntake;
     }
 
     // Pattern 6: Deficit on weight gain
     if (msg.contains('thấp hơn mức tiêu hao ước tính') ||
         msg.contains('chưa có đủ thặng dư cần thiết để tăng cân')) {
-      return _text(
-        context,
-        vi: 'Lượng nạp hôm nay chưa đủ thặng dư để tăng cân. Ngày mai hãy bổ sung thêm dinh dưỡng trong từng bữa nhé.',
-        en: 'Today’s intake didn’t reach the surplus needed for weight gain. Add extra nutrition to each meal tomorrow.',
-        ko: '오늘 섭취량은 증량에 필요한 흑자에 도달하지 못했습니다. 내일 각 식사마다 영양을 조금 더 보충해보세요.',
-        ja: '今日の摂取量は体重増加に必要な余剰に届きませんでした。明日は各食事に栄養を少し足してみましょう。',
-        zh: '今天的摄入量未达到增重所需盈余。明天请在每餐中补充更多营养。',
-        es: 'La ingesta de hoy no alcanzó el superávit para ganar peso. Añade más nutrientes en cada comida mañana.',
-        fr: 'L’apport d’aujourd’hui n’a pas atteint le surplus pour prendre du poids. Ajoutez de la nutrition demain.',
-        pt: 'A ingestão de hoje não atingiu o superávit para ganho de peso. Adicione mais nutrição a cada refeição amanhã.',
-        ru: 'Сегодняшний рацион не создал нужного избытка для набора веса. Добавьте питательности завтра.',
-        hi: 'आज का सेवन वजन बढ़ाने के लिए आवश्यक अधिशेष तक नहीं पहुँचा। कल प्रत्येक भोजन में पोषण जोड़ें।',
-        bn: 'আজকের গ্রহণ ওজন বৃদ্ধির জন্য প্রয়োজনীয় উদ্বৃত্তে পৌঁছায়নি। আগামীকাল খাবারে পুষ্টি যোগ করুন।',
-        ar: 'لم يصل مدخول اليوم إلى الفائض المطلوب لزيادة الوزن. أضف المزيد من العناصر الغذائية غدًا.',
-        ro: 'Aportul de azi nu a atins surplusul necesar pentru creșterea în greutate. Adaugă mai multă hrană mâine.',
-      );
+      return AppLocalizations.of(context)!.statsUnderSurplus;
     }
 
     // Pattern 7: Maintain or general monitoring
     if (msg.contains('Cần thêm dữ liệu cân nặng') ||
         msg.contains('Cần thêm dữ liệu nhiều ngày') ||
         msg.contains('Mục tiêu cân nặng của bạn là')) {
-      return _text(
-        context,
-        vi: 'Tiếp tục ghi nhận bữa ăn và cân nặng đều đặn để CalGo dự báo xu hướng thực tế của bạn.',
-        en: 'Keep logging meals and weight regularly so CalGo can forecast your true trend.',
-        ko: 'CalGo가 실제 추세를 예측할 수 있도록 식사와 체중을 꾸준히 기록해주세요.',
-        ja: 'CalGoが実際の傾向を予測できるよう、食事と体重を定期的に記録しましょう。',
-        zh: '请持续记录饮食和体重，以便 CalGo 预测您的真实趋势。',
-        es: 'Sigue registrando comidas y peso con regularidad para que CalGo proyecte tu tendencia real.',
-        fr: 'Notez vos repas et votre poids régulièrement pour que CalGo prévoie votre tendance réelle.',
-        pt: 'Continue registrando refeições e peso regularmente para o CalGo projetar sua tendência real.',
-        ru: 'Продолжайте регулярно записывать питание и вес, чтобы CalGo показал ваш реальный тренд.',
-        hi: 'नियमित रूप से भोजन और वजन दर्ज करते रहें ताकि CalGo आपकी वास्तविक प्रवृत्ति का अनुमान लगा सके।',
-        bn: 'নিয়মিত খাবার ও ওজন রেকর্ড করুন যাতে CalGo আপনার আসল প্রবণতা পূর্বাভাস দিতে পারে।',
-        ar: 'واصل تسجيل الوجبات والوزن بانتظام حتى يتمكن CalGo من توقع اتجاهك الحقيقي.',
-        ro: 'Înregistrează mesele și greutatea în mod regulat pentru ca CalGo să îți poată prognoza trendul.',
-      );
+      return AppLocalizations.of(context)!.statsKeepLogging;
     }
 
     return msg;
@@ -1605,26 +1371,13 @@ class StatsLocalization {
     // Familiar match from history
     if (reason.contains('Bạn đã quét món này') ||
         reason.contains('khẩu phần trước đó')) {
-      return _text(
-        context,
-        vi: reason,
-        en: 'Matches a portion you scanned previously and fits your remaining macros today.',
-        ko: '이전에 스캔한 식사와 일치하며 오늘 남은 영양 목표에 잘 맞습니다.',
-        ja: '以前スキャンした食事と一致し、今日の残りの栄養目標に適しています。',
-        zh: '与您之前扫描过的分量相符，且适合今天剩余的营养目标。',
-        es: 'Coincide con una porción que escaneaste antes y se ajusta a tus macros restantes de hoy.',
-        fr: 'Correspond à une portion enregistrée précédemment et convient à vos macros restantes.',
-        pt: 'Combina com uma porção escaneada antes e cabe nos seus macros restantes de hoje.',
-        ru: 'Соответствует ранее отсканированной порции и подходит под оставшиеся макросы.',
-        hi: 'यह आपके पहले स्कैन किए गए हिस्से से मेल खाता है और आज के शेष मैक्रोज़ में फिट बैठता है।',
-        bn: 'এটি আপনার আগে স্ক্যান করা খাবারের সাথে মিলে যায় এবং আজকের বাকি লক্ষ্যের জন্য উপযুক্ত।',
-        ar: 'يطابق حصة قمت بمسحها سابقًا ويناسب عناصرك الغذائية المتبقية اليوم.',
-        ro: 'Se potrivește cu o porție scanată anterior și cu macronutrienții rămași azi.',
-      );
+      return AppLocalizations.of(context)!.statsFamiliarReason(reason);
     }
 
     // High protein boost
-    if (reason.contains('protein') && (reason.contains('Bổ sung khoảng') || reason.contains('vừa phần calo'))) {
+    if (reason.contains('protein') &&
+        (reason.contains('Bổ sung khoảng') ||
+            reason.contains('vừa phần calo'))) {
       final proteinG = dish.protein.round();
       final code = languageCode(context);
       switch (code) {
@@ -1652,6 +1405,12 @@ class StatsLocalization {
           return 'يمدك بنحو ${proteinG} جم بروتين ضمن السعرات المتبقية.';
         case 'ro':
           return 'Oferă aproximativ ${proteinG}g de proteine în limita caloriilor rămase.';
+        case 'hr':
+          return 'Daje oko ${proteinG}g proteina unutar vaših preostalih kalorija.';
+        case 'de':
+          return AppLocalizations.of(
+            context,
+          )!.statsProteinReason(proteinG.toString());
         default:
           return 'Adds about ${proteinG}g protein while staying within your remaining calories.';
       }
@@ -1660,22 +1419,7 @@ class StatsLocalization {
     // Standard remaining fit
     if (reason.contains('Nằm trong phần calo còn lại') ||
         reason.contains('phù hợp cho bữa tiếp theo')) {
-      return _text(
-        context,
-        vi: 'Nằm trong phần calo còn lại và phù hợp cho bữa tiếp theo.',
-        en: 'Fits within your remaining calories and works well for your next meal.',
-        ko: '남은 칼로리 범위에 맞으며 다음 식사로 적합합니다.',
-        ja: '残りのカロリー内に収まり、次の食事に適しています。',
-        zh: '符合剩余热量预算，非常适合作为下一餐。',
-        es: 'Encaja en tus calorías restantes y es ideal para tu próxima comida.',
-        fr: 'S’intègre dans vos calories restantes et convient pour le prochain repas.',
-        pt: 'Cabe nas calorias restantes e funciona bem para a próxima refeição.',
-        ru: 'Вписывается в оставшиеся калории и отлично подходит для следующего приёма.',
-        hi: 'आपकी शेष कैलोरी के भीतर फिट बैठता है और अगले भोजन के लिए उपयुक्त है।',
-        bn: 'আপনার বাকি ক্যালোরির মধ্যে উপযুক্ত এবং পরবর্তী খাবারের জন্য ভালো।',
-        ar: 'يناسب سعراتك المتبقية ومثالي لوجبتك القادمة.',
-        ro: 'Se încadrează în caloriile rămase și este potrivit pentru următoarea masă.',
-      );
+      return AppLocalizations.of(context)!.statsFitsReason;
     }
 
     return reason;
@@ -1689,174 +1433,43 @@ class StatsLocalization {
     if (adj.isEmpty) return '';
 
     if (adj.contains('Để sốt riêng') || adj.contains('sốt riêng')) {
-      return _text(
-        context,
-        vi: 'Để sốt riêng để dễ kiểm soát lượng calo.',
-        en: 'Keep sauce on the side for easier calorie control.',
-        ko: '칼로리 조절을 위해 소스를 따로 덜어 드세요.',
-        ja: 'カロリー管理のため、ドレッシングは別添えにしましょう。',
-        zh: '酱汁单独分装以便更好地控制热量。',
-        es: 'Pide la salsa aparte para controlar mejor las calorías.',
-        fr: 'Gardez la sauce à part pour mieux contrôler les calories.',
-        pt: 'Deixe o molho à parte para controlar melhor as calorias.',
-        ru: 'Попросите соус отдельно, чтобы контролировать калории.',
-        hi: 'कैलोरी नियंत्रण आसान बनाने के लिए सॉस अलग रखें।',
-        bn: 'ক্যালোরি সহজে নিয়ন্ত্রণ করতে সস আলাদা রাখুন।',
-        ar: 'اجعل الصلصة جانبية للتحكم في السعرات بسهولة.',
-        ro: 'Păstrează sosul separat pentru un control mai ușor al caloriilor.',
-      );
+      return AppLocalizations.of(context)!.statsSauceSide;
     }
 
     if (adj.contains('ít dầu') || adj.contains('thêm rau để bữa ăn nhẹ hơn')) {
-      return _text(
-        context,
-        vi: 'Ưu tiên phần ít dầu và thêm rau để bữa ăn nhẹ hơn.',
-        en: 'Opt for less oil and add vegetables for a lighter meal.',
-        ko: '기름기를 줄이고 채소를 추가해 가볍게 즐겨보세요.',
-        ja: '油分を控えめにし、野菜を加えて軽めの食事にしましょう。',
-        zh: '选择少油做法并增加蔬菜，让这一餐更清爽。',
-        es: 'Elige menos aceite y añade verduras para una comida más ligera.',
-        fr: 'Privilégiez moins d’huile et ajoutez des légumes pour alléger le repas.',
-        pt: 'Prefira menos óleo e adicione vegetais para uma refeição mais leve.',
-        ru: 'Выбирайте меньше масла и добавьте овощей для лёгкости блюда.',
-        hi: 'हल्के भोजन के लिए कम तेल चुनें और सब्जियाँ जोड़ें।',
-        bn: 'হালকা খাবারের জন্য কম তেল বেছে নিন এবং শাকসবজি যোগ করুন।',
-        ar: 'اختر زيتًا أقل وأضف الخضار لوجبة أخف.',
-        ro: 'Alege mai puțin ulei și adaugă legume pentru o masă mai ușoară.',
-      );
+      return AppLocalizations.of(context)!.statsLessOil;
     }
 
     if (adj.contains('giàu đạm') || adj.contains('ăn chậm để giữ no lâu')) {
-      return _text(
-        context,
-        vi: 'Đây là lựa chọn giàu đạm; ăn chậm để giữ no lâu.',
-        en: 'High-protein option; eat slowly to stay full longer.',
-        ko: '고단백 식단입니다. 천천히 드시면 포만감이 오래 유지됩니다.',
-        ja: '高たんぱくなメニューです。ゆっくり食べて満腹感を持続させましょう。',
-        zh: '高蛋白之选，细嚼慢咽能维持更长久的饱腹感。',
-        es: 'Opción rica en proteínas; come despacio para mayor saciedad.',
-        fr: 'Riche en protéines; mangez lentement pour prolonger la satiété.',
-        pt: 'Opção rica em proteína; coma devagar para manter a saciedade.',
-        ru: 'Блюдо богато белком; ешьте медленно для долгого насыщения.',
-        hi: 'उच्च प्रोटीन विकल्प; लंबे समय तक तृप्त रहने के लिए धीरे-धीरे खाएं।',
-        bn: 'উচ্চ প্রোটিনযুক্ত খাবার; দীর্ঘক্ষণ তৃপ্ত থাকতে ধীরে খান।',
-        ar: 'خيار غني بالبروتين؛ تناول الطعام ببطء للشبع لفترة أطول.',
-        ro: 'Opțiune bogată în proteine; mănâncă încet pentru a menține sațietatea.',
-      );
+      return AppLocalizations.of(context)!.statsHighProtein;
     }
 
     if (adj.contains('Giảm phần sốt hoặc dầu')) {
-      return _text(
-        context,
-        vi: 'Giảm phần sốt hoặc dầu nếu muốn món này nhẹ hơn.',
-        en: 'Reduce sauce or oil if you want a lighter version.',
-        ko: '더 가볍게 드시려면 소스나 기름 양을 줄여보세요.',
-        ja: 'より軽めにしたい場合は、ソースや油を控えめにしましょう。',
-        zh: '如需更清淡，可减少酱料或用油量。',
-        es: 'Reduce la salsa o el aceite si prefieres una versión más ligera.',
-        fr: 'Diminuez la sauce ou l’huile pour une version plus légère.',
-        pt: 'Reduza o molho ou o óleo se quiser uma versão mais leve.',
-        ru: 'Уменьшите количество соуса или масла, если хотите облегчить блюдо.',
-        hi: 'यदि आप हल्का विकल्प चाहते हैं तो सॉस या तेल कम करें।',
-        bn: 'হালকা সংস্করণ চাইলে সস বা তেল কমিয়ে নিন।',
-        ar: 'قلل الصلصة أو الزيت إذا أردت وجبة أخف.',
-        ro: 'Redu sosul sau uleiul dacă vrei o variantă mai ușoară.',
-      );
+      return AppLocalizations.of(context)!.statsReduceSauce;
     }
 
-    if (adj.contains('tinh bột vừa phải') || adj.contains('thêm rau vào bữa này')) {
-      return _text(
-        context,
-        vi: 'Giữ phần tinh bột vừa phải và thêm rau vào bữa này.',
-        en: 'Keep carbs moderate and add vegetables to this meal.',
-        ko: '탄수화물은 적당히 유지하고 채소를 곁들여보세요.',
-        ja: '炭水化物は適量にし、野菜をプラスしましょう。',
-        zh: '保持适量碳水并在此餐中加入蔬菜。',
-        es: 'Modera los carbohidratos y añade verduras a esta comida.',
-        fr: 'Modérez les féculents et ajoutez des légumes à ce repas.',
-        pt: 'Mantenha os carboidratos moderados e adicione vegetais.',
-        ru: 'Соблюдайте умеренность в углеводах и добавьте овощи.',
-        hi: 'कार्ब्स को मध्यम रखें और इस भोजन में सब्जियां शामिल करें।',
-        bn: 'কার্বোহাইড্রেট পরিমিত রাখুন এবং এই খাবারে শাকসবজি যোগ করুন।',
-        ar: 'حافظ على كربوهيدرات معتدلة وأضف الخضار إلى هذه الوجبة.',
-        ro: 'Păstrează carbohidrații moderați și adaugă legume la această masă.',
-      );
+    if (adj.contains('tinh bột vừa phải') ||
+        adj.contains('thêm rau vào bữa này')) {
+      return AppLocalizations.of(context)!.statsModerateCarbs;
     }
 
-    if (adj.contains('trứng, đậu hũ hoặc sữa chua') || adj.contains('đủ đạm hơn')) {
-      return _text(
-        context,
-        vi: 'Có thể ăn kèm trứng, đậu hũ hoặc sữa chua để đủ đạm hơn.',
-        en: 'Pair with eggs, tofu, or yogurt to boost protein.',
-        ko: '단백질 보충을 위해 계란, 두부 또는 요거트를 곁들여보세요.',
-        ja: '卵や豆腐、ヨーグルトを添えてたんぱく質をプラスしましょう。',
-        zh: '可搭配鸡蛋、豆腐或酸奶以补充蛋白质。',
-        es: 'Acompaña con huevo, tofu o yogur para más proteína.',
-        fr: 'Accompagnez d’œuf, de tofu ou de yaourt pour plus de protéines.',
-        pt: 'Acompanhe com ovo, tofu ou iogurte para reforçar as proteínas.',
-        ru: 'Добавьте яйцо, тофу или йогурт для повышения белка.',
-        hi: 'प्रोटीन बढ़ाने के लिए अंडे, टोफू या दही के साथ लें।',
-        bn: 'প্রোটিন বাড়াতে ডিম, তোফু বা দইয়ের সাথে খেতে পারেন।',
-        ar: 'تناولها مع البيض أو التوفو أو الزبادي لزيادة البروتين.',
-        ro: 'Combină cu ou, tofu sau iaurt pentru mai multe proteine.',
-      );
+    if (adj.contains('trứng, đậu hũ hoặc sữa chua') ||
+        adj.contains('đủ đạm hơn')) {
+      return AppLocalizations.of(context)!.statsBoostProtein;
     }
 
     if (adj.contains('Chia khẩu phần') || adj.contains('hai phần nhỏ')) {
-      return _text(
-        context,
-        vi: 'Chia khẩu phần thành hai phần nhỏ nếu bạn còn nhiều bữa.',
-        en: 'Split into smaller portions if you have more meals ahead.',
-        ko: '남은 식사가 있다면 작은 두 부분으로 나누어 드세요.',
-        ja: 'この後まだ食事があるなら、小さめのポーションに分けましょう。',
-        zh: '如果后面还有餐次，可将分量分成两份小餐。',
-        es: 'Divide en porciones más pequeñas si te quedan más comidas.',
-        fr: 'Divisez en petites portions s’il vous reste d’autres repas.',
-        pt: 'Divida em porções menores se ainda tiver outras refeições.',
-        ru: 'Разделите на небольшие порции, если впереди ещё есть приёмы пищи.',
-        hi: 'यदि आपके आगे और भोजन हैं तो इसे छोटे भागों में बांटें।',
-        bn: 'সামনে আরও খাবার থাকলে এটিকে ছোট অংশে ভাগ করে নিন।',
-        ar: 'قسم الوجبة إلى حصص أصغر إذا كانت لديك وجبات أخرى قادمة.',
-        ro: 'Împarte în porții mai mici dacă mai ai mese de luat azi.',
-      );
+      return AppLocalizations.of(context)!.statsSplitPortions;
     }
 
-    if (adj.contains('nửa khẩu phần và thêm rau') || adj.contains('đã gần đủ calo')) {
-      return _text(
-        context,
-        vi: 'Nếu hôm nay đã gần đủ calo, chọn nửa khẩu phần và thêm rau.',
-        en: 'If near your calorie limit today, opt for half a portion with extra greens.',
-        ko: '오늘 칼로리가 거의 찼다면 반 공기만 드시고 채소를 더해보세요.',
-        ja: '今日すでにカロリー上限に近いなら、半分のポーションにして野菜を足しましょう。',
-        zh: '若今天热量接近达标，建议选择半份并多配蔬菜。',
-        es: 'Si estás cerca de tu límite de calorías, elige media porción con verduras.',
-        fr: 'Si vous êtes proche de votre limite calorique, prenez une demi-portion avec des légumes.',
-        pt: 'Se já estiver perto do limite calórico, escolha meia porção com mais verduras.',
-        ru: 'Если вы близки к лимиту калорий, выберите полпорции и добавьте овощей.',
-        hi: 'यदि आज आपकी कैलोरी सीमा पूरी होने वाली है, तो आधा हिस्सा लें और सब्जियां जोड़ें।',
-        bn: 'আজ ক্যালোরি প্রায় পূর্ণ হয়ে থাকলে অর্ধেক অংশ নিন এবং বেশি সবজি খান।',
-        ar: 'إذا اقتربت من حد السعرات اليوم، اختر نصف حصة مع إضافة الخضار.',
-        ro: 'Dacă ești aproape de limita calorică, alege o jumătate de porție cu legume.',
-      );
+    if (adj.contains('nửa khẩu phần và thêm rau') ||
+        adj.contains('đã gần đủ calo')) {
+      return AppLocalizations.of(context)!.statsHalfPortion;
     }
 
-    if (adj.contains('Giữ khẩu phần vừa đủ') || adj.contains('ăn chậm để nhận biết lúc no')) {
-      return _text(
-        context,
-        vi: 'Giữ khẩu phần vừa đủ và ăn chậm để nhận biết lúc no.',
-        en: 'Keep portions moderate and eat slowly to feel fullness.',
-        ko: '적당한 양을 유지하고 천천히 드시면서 포만감을 느껴보세요.',
-        ja: '適量を守り、ゆっくり食べて満腹感を感じましょう。',
-        zh: '保持适中分量，细嚼慢咽以便及时感知饱腹。',
-        es: 'Mantén porciones moderadas y come despacio para notar la saciedad.',
-        fr: 'Gardez des portions modérées et mangez lentement pour ressentir la satiété.',
-        pt: 'Mantenha porções moderadas e coma devagar para sentir a saciedade.',
-        ru: 'Контролируйте порцию и ешьте медленно, чтобы почувствовать насыщение.',
-        hi: 'मध्यम मात्रा रखें और तृप्ति महसूस करने के लिए धीरे-धीरे खाएं।',
-        bn: 'পরিমিত অংশ রাখুন এবং তৃপ্তি বুঝতে ধীরে ধীরে খান।',
-        ar: 'حافظ على حصص معتدلة وتناول الطعام ببطء للشعور بالشبع.',
-        ro: 'Păstrează porții moderate și mănâncă încet pentru a simți sațietatea.',
-      );
+    if (adj.contains('Giữ khẩu phần vừa đủ') ||
+        adj.contains('ăn chậm để nhận biết lúc no')) {
+      return AppLocalizations.of(context)!.statsEatSlowly;
     }
 
     return adj;
@@ -1870,68 +1483,28 @@ class StatsLocalization {
     if (msg.isEmpty) return '';
 
     // Needs first scan
-    if (guidance.needsFirstScan || msg.contains('Chụp bữa đầu tiên hôm nay để mình')) {
-      return _text(
-        context,
-        vi: 'Chụp bữa đầu tiên hôm nay để mình tính phần còn lại và gợi ý bữa tiếp theo cho bạn.',
-        en: 'Scan your first meal today so I can calculate what remains and suggest your next meal.',
-        ko: '오늘 첫 식사를 스캔해주시면 남은 목표를 계산해 다음 식사를 추천해 드릴게요.',
-        ja: '今日の最初の食事をスキャンしてください。残りの目標を計算して次の食事を提案します。',
-        zh: '拍摄今天的第一餐，我来帮您计算剩余配额并推荐下一餐。',
-        es: 'Escanea tu primera comida de hoy para calcular lo restante y sugerirte la siguiente.',
-        fr: 'Scannez votre premier repas pour que je calcule le reste et vous propose le suivant.',
-        pt: 'Escaneie a primeira refeição de hoje para calcular o restante e sugerir a próxima.',
-        ru: 'Отсканируйте первый приём пищи за сегодня, чтобы рассчитать остаток и предложить блюда.',
-        hi: 'आज का अपना पहला भोजन स्कैन करें ताकि मैं शेष गणना कर सकूँ और अगले भोजन का सुझाव दे सकूँ।',
-        bn: 'আজকের প্রথম খাবারটি স্ক্যান করুন যাতে আমি বাকি অংশ হিসাব করে পরের খাবারের পরামর্শ দিতে পারি।',
-        ar: 'امسح وجبتك الأولى اليوم حتى أحسب ما تبقى وأقترح وجبتك القادمة.',
-        ro: 'Scanează prima masă de azi ca să pot calcula ce a rămas și să-ți sugerez următoarea masă.',
-      );
+    if (guidance.needsFirstScan ||
+        msg.contains('Chụp bữa đầu tiên hôm nay để mình')) {
+      return AppLocalizations.of(context)!.statsScanFirst;
     }
 
     // Goal reached
     if (guidance.goalReached || msg.contains('Bạn đã chạm mức calo hôm nay')) {
-      return _text(
-        context,
-        vi: 'Bạn đã chạm mức calo hôm nay. Cứ giữ nhịp này nha; nếu còn đói, ưu tiên nước và món thật nhẹ.',
-        en: 'You’ve reached today’s calorie target. Keep this momentum; if still hungry, stick to water or light snacks.',
-        ko: '오늘의 칼로리 목표를 달성했습니다. 이 페이스를 유지하세요. 출출하다면 물이나 가벼운 음식을 드세요.',
-        ja: '今日のカロリー目標に到達しました！この調子を維持しましょう。空腹なら水分や軽めの軽食を選んでください。',
-        zh: '您已达到今日热量目标！继续保持好节奏；如果还饿，建议多喝水或选极轻负担的食物。',
-        es: '¡Has alcanzado tu objetivo calórico de hoy! Mantén este ritmo; si tienes hambre, opta por agua o algo ligero.',
-        fr: 'Vous avez atteint votre objectif calorique ! Gardez ce rythme ; si vous avez faim, buvez de l’eau ou prenez du léger.',
-        pt: 'Você atingiu a meta de calorias de hoje! Mantenha o ritmo; se ainda tiver fome, prefira água ou algo bem leve.',
-        ru: 'Вы достигли дневной нормы калорий! Держите темп; если ещё голодны, отдайте предпочтение воде или лёгкому перекусу.',
-        hi: 'आपने आज का कैलोरी लक्ष्य पूरा कर लिया है। इस लय को बनाए रखें; यदि अभी भी भूख लगी है, तो पानी या हल्का नाश्ता लें।',
-        bn: 'আপনি আজকের ক্যালোরির লক্ষ্য পূরণ করেছেন। এই ধারাবাহিকতা ধরে রাখুন; এখনও ক্ষুধা পেলে পানি বা হালকা খাবার বেছে নিন।',
-        ar: 'لقد حققت هدف السعرات لليوم! حافظ على هذا الإيقاع؛ إن كنت جائعًا، اختر الماء أو وجبة خفيفة جدًا.',
-        ro: 'Ai atins ținta de calorii de azi! Menține acest ritm; dacă mai ai poftă, alege apă sau ceva foarte ușor.',
-      );
+      return AppLocalizations.of(context)!.statsReachedToday;
     }
 
     // Recovery mode
-    if (guidance.isRecovery || msg.contains('Hôm nay đã gần hoặc vượt mục tiêu')) {
-      return _text(
-        context,
-        vi: 'Hôm nay đã gần hoặc vượt mục tiêu, nhưng ngày chưa hề hỏng. Nếu còn đói, ưu tiên một lựa chọn nhẹ và có protein nhé.',
-        en: 'You’re near or past your target today, but your day is still on track! If hungry, choose a light protein option.',
-        ko: '오늘 목표에 근접했거나 조금 넘었지만 괜찮습니다! 배가 고프다면 가벼운 단백질 위주로 선택해보세요.',
-        ja: '今日の目標に近づいたか少し超えましたが大丈夫！お腹が空いたら、軽めのたんぱく質を選びましょう。',
-        zh: '今天已接近或略超目标，但完全没关系！如果还饿，优先选择清淡且富含蛋白质的食物。',
-        es: 'Estás cerca o superaste tu meta de hoy, ¡pero vas bien! Si tienes hambre, elige una opción ligera con proteína.',
-        fr: 'Vous êtes proche ou avez dépassé votre objectif, mais tout va bien ! Si vous avez faim, privilégiez des protéines légères.',
-        pt: 'Você está perto ou passou da meta de hoje, mas está tudo bem! Se tiver fome, escolha algo leve com proteína.',
-        ru: 'Вы около или чуть превысили норму, но всё в порядке! Если голодны, выберите лёгкий белковый перекус.',
-        hi: 'आप आज अपने लक्ष्य के करीब हैं या उससे आगे निकल गए हैं, लेकिन सब ठीक है! भूख लगने पर हल्का प्रोटीन विकल्प चुनें।',
-        bn: 'আজ লক্ষ্যমাত্রার কাছাকাছি বা কিছুটা বেশি হলেও কোনো সমস্যা নেই! ক্ষুধা লাগলে হালকা প্রোটিনযুক্ত খাবার বেছে নিন।',
-        ar: 'أنت قريب من هدفك أو تجاوزته اليوم، لكن لا تقلق! إذا شعرت بالجوع، اختر بروتينًا خفيفًا.',
-        ro: 'Ești aproape sau ai depășit ținta de azi, dar e în regulă! Dacă ți-e foame, alege o opțiune ușoară cu proteine.',
-      );
+    if (guidance.isRecovery ||
+        msg.contains('Hôm nay đã gần hoặc vượt mục tiêu')) {
+      return AppLocalizations.of(context)!.statsNearTarget;
     }
 
     // Dynamic calorie and protein remaining message
-    if (guidance.summary != null && (msg.contains('Bạn còn khoảng') || msg.contains('thiếu'))) {
-      final calRemaining = guidance.summary!.caloriesRemaining.clamp(0, 9999).round();
+    if (guidance.summary != null &&
+        (msg.contains('Bạn còn khoảng') || msg.contains('thiếu'))) {
+      final calRemaining = guidance.summary!.caloriesRemaining
+          .clamp(0, 9999)
+          .round();
       final protRemaining = guidance.summary!.proteinRemaining.round();
       final code = languageCode(context);
       switch (code) {
@@ -1959,6 +1532,13 @@ class StatsLocalization {
           return 'متبقي لديك نحو $calRemaining سعرة حرارية وينقصك ${protRemaining} جم بروتين.';
         case 'ro':
           return 'Îți mai rămân aproximativ $calRemaining kcal și ai nevoie de încă ${protRemaining}g de proteine.';
+        case 'hr':
+          return 'Preostalo vam je oko $calRemaining kcal i potrebno vam je još ${protRemaining}g proteina.';
+        case 'de':
+          return AppLocalizations.of(context)!.statsRemainingMessage(
+            calRemaining.toString(),
+            protRemaining.toString(),
+          );
         default:
           return 'You have about $calRemaining kcal left and need ${protRemaining}g more protein.';
       }
@@ -1966,22 +1546,7 @@ class StatsLocalization {
 
     // Unavailable fallback
     if (msg.contains('Mình chưa tìm được món phù hợp')) {
-      return _text(
-        context,
-        vi: 'Mình chưa tìm được món phù hợp từ dữ liệu hiện có. Bạn có thể chụp món tiếp theo để mình tính chính xác hơn.',
-        en: 'Could not find matching meals from current data. Scan your next meal for more accurate suggestions.',
-        ko: '현재 데이터에서 적절한 식사를 찾지 못했습니다. 더 정확한 추천을 위해 다음 식사를 스캔해주세요.',
-        ja: '現在のデータから適切なメニューが見つかりませんでした。より正確な提案のため次の食事をスキャンしてください。',
-        zh: '暂未从现有数据中找到匹配的菜品。您可以拍摄下一餐，让我帮您更准确地计算。',
-        es: 'No encontramos platos adecuados con los datos actuales. Escanea tu próxima comida para sugerencias precisas.',
-        fr: 'Aucun plat correspondant trouvé dans les données actuelles. Scannez votre prochain repas pour plus de précision.',
-        pt: 'Não encontramos pratos adequados com os dados atuais. Escaneie sua próxima refeição para sugestões mais precisas.',
-        ru: 'Не удалось подобрать блюда по текущим данным. Отсканируйте следующий приём пищи для точных рекомендаций.',
-        hi: 'वर्तमान डेटा से उपयुक्त भोजन नहीं मिला। अधिक सटीक सुझावों के लिए अपना अगला भोजन स्कैन करें।',
-        bn: 'বর্তমান তথ্য থেকে উপযুক্ত খাবার পাওয়া যায়নি। আরও সঠিক পরামর্শের জন্য আপনার পরবর্তী খাবার স্ক্যান করুন।',
-        ar: 'لم نتمكن من العثور على وجبات مناسبة من البيانات الحالية. امسح وجبتك التالية للحصول على اقتراحات أدق.',
-        ro: 'Nu am găsit mâncăruri potrivite din datele actuale. Scanează următoarea masă pentru sugestii mai exacte.',
-      );
+      return AppLocalizations.of(context)!.statsNoMatchingMeals;
     }
 
     return msg;

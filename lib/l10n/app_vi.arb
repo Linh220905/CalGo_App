@@ -1566,5 +1566,230 @@
   "usdaDietaryCitation": "USDA Hướng dẫn dinh dưỡng cho người Mỹ (Đa lượng)",
   "cdcWeightLossCitation": "CDC — Hướng dẫn giảm cân lành mạnh (0.5–1 kg/tuần)",
   "bmiMicronutrientSourceTitle": "Tiêu chuẩn BMI & Vi chất",
-  "bmiMicronutrientSourceDesc": "Phân loại chỉ số khối cơ thể BMI (chuẩn 18.5–24.9) và ngưỡng vi chất hàng ngày (Chất xơ 14g/1000kcal, Đường tự do <10%, Natri <2000mg)."
+  "bmiMicronutrientSourceDesc": "Phân loại chỉ số khối cơ thể BMI (chuẩn 18.5–24.9) và ngưỡng vi chất hàng ngày (Chất xơ 14g/1000kcal, Đường tự do <10%, Natri <2000mg).",
+  "statsOnTrack": "Đang đi đúng hướng",
+  "statsNeedsAdjustment": "Cần điều chỉnh",
+  "statsGoalReached": "Đã đạt mục tiêu",
+  "statsAdjustmentBody": "Mức nạp hiện tại chưa phù hợp để dự báo chắc chắn thời điểm đạt {target} kg. Hãy ghi nhận đều đặn và điều chỉnh theo mục tiêu.",
+  "@statsAdjustmentBody": {
+    "placeholders": {
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "statsNoDataBody": "Hãy ghi nhận thêm dữ liệu cân nặng và dinh dưỡng để bắt đầu dự báo.",
+  "statsCaloriePeriod": "trung bình 7 ngày qua",
+  "statsCaloriePeriodToday": "hôm nay",
+  "statsNoCalories": "Chưa có dữ liệu calo",
+  "statsSlow": "Đang tiến bộ chậm nhưng ổn định",
+  "statsHighDeficit": "Thâm hụt calo quá mức",
+  "statsHighSurplus": "Thặng dư calo hơi cao",
+  "statsStalled": "Tiến độ đang chững lại",
+  "statsOpposite": "Đang đi ngược mục tiêu",
+  "statsGuidanceOnTrack": "Đang đi đúng hướng",
+  "statsNeedData": "Cần thêm dữ liệu",
+  "statsFirstMeal": "Chờ bữa đầu",
+  "statsMinorAdjustment": "Cần điều chỉnh nhẹ",
+  "statsMoreSurplus": "Cần bổ sung thêm",
+  "statsBalanced": "Cân bằng vóc dáng",
+  "statsKeepTracking": "Theo dõi thêm",
+  "statsSteady": "Giữ nhịp chuẩn",
+  "statsBuilding": "Đang tích lũy",
+  "statsFirstMealForecast": "Hãy chụp bữa đầu tiên hôm nay để mình bắt đầu tính toán tiến trình dự báo nhé.",
+  "statsLowIntake": "Lượng calo hôm nay còn khá thấp so với kế hoạch. Hãy ghi đủ các bữa để CalGo dự báo chính xác hơn.",
+  "statsSmallBalance": "Chênh lệch calo hôm nay còn nhỏ. Hãy tiếp tục ghi nhận thêm vài ngày để dự báo rõ nét hơn.",
+  "statsOverIntake": "Lượng nạp hôm nay cao hơn mức tiêu hao. Hãy điều chỉnh nhẹ lại vào ngày mai để tiếp tục tiến trình.",
+  "statsUnderSurplus": "Lượng nạp hôm nay chưa đủ thặng dư để tăng cân. Ngày mai hãy bổ sung thêm dinh dưỡng trong từng bữa nhé.",
+  "statsKeepLogging": "Tiếp tục ghi nhận bữa ăn và cân nặng đều đặn để CalGo dự báo xu hướng thực tế của bạn.",
+  "statsFamiliarReason": "{reason}",
+  "@statsFamiliarReason": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "statsFitsReason": "Nằm trong phần calo còn lại và phù hợp cho bữa tiếp theo.",
+  "statsSauceSide": "Để sốt riêng để dễ kiểm soát lượng calo.",
+  "statsLessOil": "Ưu tiên phần ít dầu và thêm rau để bữa ăn nhẹ hơn.",
+  "statsHighProtein": "Đây là lựa chọn giàu đạm; ăn chậm để giữ no lâu.",
+  "statsReduceSauce": "Giảm phần sốt hoặc dầu nếu muốn món này nhẹ hơn.",
+  "statsModerateCarbs": "Giữ phần tinh bột vừa phải và thêm rau vào bữa này.",
+  "statsBoostProtein": "Có thể ăn kèm trứng, đậu hũ hoặc sữa chua để đủ đạm hơn.",
+  "statsSplitPortions": "Chia khẩu phần thành hai phần nhỏ nếu bạn còn nhiều bữa.",
+  "statsHalfPortion": "Nếu hôm nay đã gần đủ calo, chọn nửa khẩu phần và thêm rau.",
+  "statsEatSlowly": "Giữ khẩu phần vừa đủ và ăn chậm để nhận biết lúc no.",
+  "statsScanFirst": "Chụp bữa đầu tiên hôm nay để mình tính phần còn lại và gợi ý bữa tiếp theo cho bạn.",
+  "statsReachedToday": "Bạn đã chạm mức calo hôm nay. Cứ giữ nhịp này nha; nếu còn đói, ưu tiên nước và món thật nhẹ.",
+  "statsNearTarget": "Hôm nay đã gần hoặc vượt mục tiêu, nhưng ngày chưa hề hỏng. Nếu còn đói, ưu tiên một lựa chọn nhẹ và có protein nhé.",
+  "statsNoMatchingMeals": "Mình chưa tìm được món phù hợp từ dữ liệu hiện có. Bạn có thể chụp món tiếp theo để mình tính chính xác hơn.",
+  "statsPeriodDays": "{days} ngày",
+  "@statsPeriodDays": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "statsOnTrackBody": "Nếu duy trì trung bình {calories} kcal/ngày, bạn có thể đạt {target} kg trong khoảng {weeks}.",
+  "@statsOnTrackBody": {
+    "placeholders": {
+      "calories": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "weeks": {
+        "type": "String"
+      }
+    }
+  },
+  "statsGuidanceProjection": "Maintaining today’s intake, you are projected to reach {target} kg in about {weeks} weeks{dateSuffix}.",
+  "@statsGuidanceProjection": {
+    "placeholders": {
+      "dateSuffix": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "weeks": {
+        "type": "String"
+      }
+    }
+  },
+  "statsProteinReason": "Bổ sung khoảng {proteinG}g protein mà vẫn vừa phần calo còn lại.",
+  "@statsProteinReason": {
+    "placeholders": {
+      "proteinG": {
+        "type": "String"
+      }
+    }
+  },
+  "statsRemainingMessage": "Bạn còn khoảng {calRemaining} kcal và thiếu {protRemaining}g protein.",
+  "@statsRemainingMessage": {
+    "placeholders": {
+      "calRemaining": {
+        "type": "String"
+      },
+      "protRemaining": {
+        "type": "String"
+      }
+    }
+  },
+  "statsLevel1": "Người mới bắt đầu",
+  "statsLevel2": "Người theo dõi",
+  "statsLevel3": "Người kiên trì",
+  "statsLevel4": "Người có kỷ luật",
+  "statsLevel5": "Người nhiệt huyết",
+  "statsLevel6": "Người đam mê sức khỏe",
+  "statsLevel7": "Chuyên gia dinh dưỡng",
+  "statsLevel8": "Nhà vô địch",
+  "statsLevel9": "Huyền thoại",
+  "statsLevel10": "Master CalGo",
+  "statsAchievementFirstScanName": "Khởi đầu rực rỡ",
+  "statsAchievementFirstScanDescription": "Ghi nhận bữa ăn đầu tiên",
+  "statsAchievementScanMasterName": "Chuyên gia Scan",
+  "statsAchievementScanMasterDescription": "Quét đủ 10 bữa ăn bằng AI",
+  "statsAchievementProteinKingName": "Vua Protein",
+  "statsAchievementProteinKingDescription": "Đạt 100% mục tiêu đạm trong ngày",
+  "statsAchievementStreak7Name": "7 Ngày Siêu Cấp",
+  "statsAchievementStreak7Description": "Duy trì ghi chép liên tục 7 ngày",
+  "statsAchievementCaloChampName": "Chiến Thắng Calo",
+  "statsAchievementCaloChampDescription": "Đạt mục tiêu Calo 5 ngày liên tiếp",
+  "statsAchievementLegendName": "Huyền Thoại CalGo",
+  "statsAchievementLegendDescription": "Đạt Cấp độ 10",
+  "statsForecastNoDataBody": "Hãy ghi nhận bữa ăn để bắt đầu dự báo theo lượng calo thực tế.",
+  "statsForecastReachedBody": "Hãy duy trì mức calo và thói quen hiện tại để giữ cân ổn định.",
+  "statsForecastHealthyBody": "Với {periodLabel} khoảng {calories} kcal/ngày, bạn đang tạo {goal, select, lose {thâm hụt} other {thặng dư}} khoảng {balance} kcal/ngày. Nếu duy trì, bạn có thể đạt {target} kg trong khoảng {weeksLabel} nữa.",
+  "@statsForecastHealthyBody": {
+    "placeholders": {
+      "balance": {
+        "type": "String"
+      },
+      "calories": {
+        "type": "String"
+      },
+      "goal": {
+        "type": "String"
+      },
+      "periodLabel": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "weeksLabel": {
+        "type": "String"
+      }
+    }
+  },
+  "statsForecastSlowBody": "Bạn vẫn đang đi đúng hướng nhưng mức {goal, select, lose {thâm hụt} other {thặng dư}} còn nhẹ. Cân nặng sẽ thay đổi chậm hơn và có thể cần lâu hơn để đạt {target} kg.",
+  "@statsForecastSlowBody": {
+    "placeholders": {
+      "goal": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "statsForecastAggressiveDeficitBody": "Bạn đang nạp khoảng {calories} kcal/ngày. Mức thâm hụt hiện tại có thể không an toàn và không nên dùng để giảm cân nhanh hơn. Hãy tăng dần về khoảng {recommendedCalories} kcal/ngày.",
+  "@statsForecastAggressiveDeficitBody": {
+    "placeholders": {
+      "calories": {
+        "type": "String"
+      },
+      "recommendedCalories": {
+        "type": "String"
+      }
+    }
+  },
+  "statsForecastAggressiveSurplusBody": "Bạn đang nạp cao hơn mức duy trì khoảng {balance} kcal/ngày. Cân nặng có thể tăng nhanh hơn kế hoạch; hãy điều chỉnh về mức thặng dư vừa phải.",
+  "@statsForecastAggressiveSurplusBody": {
+    "placeholders": {
+      "balance": {
+        "type": "String"
+      }
+    }
+  },
+  "statsForecastMaintenanceBody": "Lượng calo hiện tại gần bằng mức duy trì. Nếu tiếp tục như vậy, cân nặng có thể không thay đổi đáng kể.",
+  "statsForecastOppositeBody": "Bạn đang nạp {direction, select, up {cao hơn} other {thấp hơn}} mức duy trì khoảng {balance} kcal/ngày. Nếu tiếp tục, cân nặng sẽ có xu hướng {direction, select, up {tăng} other {giảm}} và mục tiêu {target} kg sẽ khó đạt hơn.",
+  "@statsForecastOppositeBody": {
+    "placeholders": {
+      "balance": {
+        "type": "String"
+      },
+      "direction": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "planThreeMonths": "3 Tháng",
+  "planDurationThreeMonths": "3 tháng",
+  "billedThreeMonthsNote": "Thanh toán mỗi 3 tháng",
+  "iosAutoRenewTermsThreeMonths": "Thanh toán {price}/3 tháng. Tự động gia hạn mỗi 3 tháng. Hủy bất cứ lúc nào trong Cài đặt App Store.",
+  "whatToEatTitle": "Hôm nay ăn gì?",
+  "whatToEatTag": "Nay ăn gì?",
+  "spinRandomAction": "Quay ngẫu nhiên",
+  "spinAgainAction": "Quay lại",
+  "mealBreakfast": "Bữa sáng",
+  "mealLunch": "Bữa trưa",
+  "mealDinner": "Bữa tối",
+  "selectedDishTitle": "Gợi ý cho bạn!",
+  "logThisMeal": "Ghi món này vào nhật ký",
+  "approxCalories": "~{calories} kcal",
+  "whatToEatHint": "Chạm thẻ bất kỳ hoặc nhấn Quay ngẫu nhiên",
+  "dishTagHighProtein": "Giàu đạm",
+  "dishTagQuick": "Nhanh gọn • No lâu",
+  "dishTagEnergetic": "Giàu năng lượng",
+  "dishTagLight": "Thanh nhẹ • Dễ tiêu",
+  "dishTagBalanced": "Đậm đà • Đủ chất",
+  "dishTagHealthy": "Healthy • Ít béo"
 }
