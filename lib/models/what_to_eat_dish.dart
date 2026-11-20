@@ -1,3 +1,4 @@
+import '../config/api_config.dart';
 import '../l10n/generated/app_localizations.dart';
 
 enum MealTimeCategory { breakfast, lunch, dinner }
@@ -14,7 +15,9 @@ class WhatToEatDish {
   final int fat;
   final DishTagKey tagKey;
   final String emoji;
-  final String localAsset;
+
+  /// Server-hosted image path (relative `/api/v1/...` or full `https://...`).
+  final String imageUrl;
 
   const WhatToEatDish({
     required this.id,
@@ -26,8 +29,11 @@ class WhatToEatDish {
     required this.fat,
     required this.tagKey,
     required this.emoji,
-    required this.localAsset,
+    required this.imageUrl,
   });
+
+  /// Full URL resolved against [ApiConfig.baseUrl] for remote loading & caching.
+  String get resolvedImageUrl => ApiConfig.resolveMediaUrl(imageUrl) ?? '';
 
   String localizedTag(AppLocalizations s) => switch (tagKey) {
     DishTagKey.highProtein => s.dishTagHighProtein,
@@ -36,6 +42,80 @@ class WhatToEatDish {
     DishTagKey.light => s.dishTagLight,
     DishTagKey.balanced => s.dishTagBalanced,
     DishTagKey.healthy => s.dishTagHealthy,
+  };
+
+  static MealTimeCategory _parseMealType(Object? value) {
+    final normalized = value?.toString().trim().toLowerCase();
+    return switch (normalized) {
+      'breakfast' => MealTimeCategory.breakfast,
+      'lunch' => MealTimeCategory.lunch,
+      'dinner' => MealTimeCategory.dinner,
+      _ => MealTimeCategory.lunch,
+    };
+  }
+
+  static String _mealTypeToApi(MealTimeCategory category) => switch (category) {
+    MealTimeCategory.breakfast => 'breakfast',
+    MealTimeCategory.lunch => 'lunch',
+    MealTimeCategory.dinner => 'dinner',
+  };
+
+  static DishTagKey _parseTagKey(Object? value) {
+    final normalized = value?.toString().trim().toLowerCase().replaceAll(
+      '-',
+      '_',
+    );
+    return switch (normalized) {
+      'high_protein' || 'highprotein' => DishTagKey.highProtein,
+      'quick' => DishTagKey.quick,
+      'energetic' => DishTagKey.energetic,
+      'light' => DishTagKey.light,
+      'healthy' => DishTagKey.healthy,
+      _ => DishTagKey.balanced,
+    };
+  }
+
+  static String _tagKeyToApi(DishTagKey key) => switch (key) {
+    DishTagKey.highProtein => 'high_protein',
+    DishTagKey.quick => 'quick',
+    DishTagKey.energetic => 'energetic',
+    DishTagKey.light => 'light',
+    DishTagKey.balanced => 'balanced',
+    DishTagKey.healthy => 'healthy',
+  };
+
+  factory WhatToEatDish.fromJson(Map<String, dynamic> json) {
+    int parseInt(Object? raw) {
+      if (raw is int) return raw;
+      if (raw is num) return raw.round();
+      return int.tryParse(raw?.toString() ?? '') ?? 0;
+    }
+
+    return WhatToEatDish(
+      id: (json['id'] ?? '').toString(),
+      name: (json['name'] ?? '').toString(),
+      mealType: _parseMealType(json['meal_type'] ?? json['mealType']),
+      calories: parseInt(json['calories']),
+      protein: parseInt(json['protein']),
+      carbs: parseInt(json['carbs']),
+      fat: parseInt(json['fat']),
+      tagKey: _parseTagKey(json['tag_key'] ?? json['tagKey']),
+      emoji: (json['emoji'] ?? '🍽️').toString(),
+      imageUrl: (json['image_url'] ?? json['imageUrl'] ?? '').toString(),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'name': name,
+    'meal_type': _mealTypeToApi(mealType),
+    'calories': calories,
+    'protein': protein,
+    'carbs': carbs,
+    'fat': fat,
+    'tag_key': _tagKeyToApi(tagKey),
+    'emoji': emoji,
+    'image_url': imageUrl,
   };
 
   static MealTimeCategory currentMealCategory() {
@@ -49,8 +129,11 @@ class WhatToEatDish {
     }
   }
 
-  /// Curated list of popular Vietnamese dishes for each meal.
-  static const List<WhatToEatDish> allDishes = [
+  static const String _imageBase = '/api/v1/nutrition/what-to-eat/images';
+
+  /// Lightweight offline fallback catalog (metadata only; all images are hosted
+  /// on the backend and cached to device temp storage on demand).
+  static const List<WhatToEatDish> fallbackDishes = [
     // ── BỮA SÁNG ───────────────────────────────────────────────────────────
     WhatToEatDish(
       id: 'pho_bo',
@@ -62,7 +145,7 @@ class WhatToEatDish {
       fat: 11,
       tagKey: DishTagKey.highProtein,
       emoji: '🍜',
-      localAsset: 'assets/images/dishes/pho_bo.jpg',
+      imageUrl: '$_imageBase/pho_bo.jpg',
     ),
     WhatToEatDish(
       id: 'banh_mi_thit',
@@ -74,7 +157,7 @@ class WhatToEatDish {
       fat: 16,
       tagKey: DishTagKey.quick,
       emoji: '🥖',
-      localAsset: 'assets/images/dishes/banh_mi_thit.jpg',
+      imageUrl: '$_imageBase/banh_mi_thit.jpg',
     ),
     WhatToEatDish(
       id: 'xoi_xeo_ga',
@@ -86,7 +169,7 @@ class WhatToEatDish {
       fat: 14,
       tagKey: DishTagKey.energetic,
       emoji: '🍚',
-      localAsset: 'assets/images/dishes/xoi_xeo_ga.jpg',
+      imageUrl: '$_imageBase/xoi_xeo_ga.jpg',
     ),
     WhatToEatDish(
       id: 'banh_cuon',
@@ -98,7 +181,7 @@ class WhatToEatDish {
       fat: 10,
       tagKey: DishTagKey.light,
       emoji: '🥟',
-      localAsset: 'assets/images/dishes/banh_cuon.jpg',
+      imageUrl: '$_imageBase/banh_cuon.jpg',
     ),
     WhatToEatDish(
       id: 'bun_bo_hue',
@@ -110,7 +193,7 @@ class WhatToEatDish {
       fat: 16,
       tagKey: DishTagKey.highProtein,
       emoji: '🍲',
-      localAsset: 'assets/images/dishes/bun_bo_hue.jpg',
+      imageUrl: '$_imageBase/bun_bo_hue.jpg',
     ),
     WhatToEatDish(
       id: 'hu_tieu_nam_vang',
@@ -122,7 +205,7 @@ class WhatToEatDish {
       fat: 12,
       tagKey: DishTagKey.balanced,
       emoji: '🍜',
-      localAsset: 'assets/images/dishes/hu_tieu_nam_vang.jpg',
+      imageUrl: '$_imageBase/hu_tieu_nam_vang.jpg',
     ),
     WhatToEatDish(
       id: 'chao_suon_yen_mach',
@@ -134,7 +217,7 @@ class WhatToEatDish {
       fat: 8,
       tagKey: DishTagKey.light,
       emoji: '🥣',
-      localAsset: 'assets/images/dishes/chao_suon_yen_mach.jpg',
+      imageUrl: '$_imageBase/chao_suon_yen_mach.jpg',
     ),
     WhatToEatDish(
       id: 'banh_mi_op_la',
@@ -146,7 +229,7 @@ class WhatToEatDish {
       fat: 15,
       tagKey: DishTagKey.quick,
       emoji: '🍳',
-      localAsset: 'assets/images/dishes/banh_mi_op_la.jpg',
+      imageUrl: '$_imageBase/banh_mi_op_la.jpg',
     ),
     WhatToEatDish(
       id: 'bun_moc',
@@ -158,7 +241,7 @@ class WhatToEatDish {
       fat: 11,
       tagKey: DishTagKey.light,
       emoji: '🍜',
-      localAsset: 'assets/images/dishes/bun_moc.jpg',
+      imageUrl: '$_imageBase/bun_moc.jpg',
     ),
     WhatToEatDish(
       id: 'mi_quang_ga',
@@ -170,7 +253,7 @@ class WhatToEatDish {
       fat: 15,
       tagKey: DishTagKey.balanced,
       emoji: '🍲',
-      localAsset: 'assets/images/dishes/mi_quang_ga.jpg',
+      imageUrl: '$_imageBase/mi_quang_ga.jpg',
     ),
 
     // ── BỮA TRƯA ────────────────────────────────────────────────────────────
@@ -184,7 +267,7 @@ class WhatToEatDish {
       fat: 18,
       tagKey: DishTagKey.energetic,
       emoji: '🍱',
-      localAsset: 'assets/images/dishes/com_tam_suon.jpg',
+      imageUrl: '$_imageBase/com_tam_suon.jpg',
     ),
     WhatToEatDish(
       id: 'bun_cha_ha_noi',
@@ -196,7 +279,7 @@ class WhatToEatDish {
       fat: 16,
       tagKey: DishTagKey.balanced,
       emoji: '🥗',
-      localAsset: 'assets/images/dishes/bun_cha_ha_noi.jpg',
+      imageUrl: '$_imageBase/bun_cha_ha_noi.jpg',
     ),
     WhatToEatDish(
       id: 'com_ga_hoi_an',
@@ -208,7 +291,7 @@ class WhatToEatDish {
       fat: 13,
       tagKey: DishTagKey.highProtein,
       emoji: '🍗',
-      localAsset: 'assets/images/dishes/com_ga_hoi_an.jpg',
+      imageUrl: '$_imageBase/com_ga_hoi_an.jpg',
     ),
     WhatToEatDish(
       id: 'bun_dau_thit_luoc',
@@ -220,7 +303,7 @@ class WhatToEatDish {
       fat: 21,
       tagKey: DishTagKey.balanced,
       emoji: '🥢',
-      localAsset: 'assets/images/dishes/bun_dau_thit_luoc.jpg',
+      imageUrl: '$_imageBase/bun_dau_thit_luoc.jpg',
     ),
     WhatToEatDish(
       id: 'com_nieu_ca_kho',
@@ -232,7 +315,7 @@ class WhatToEatDish {
       fat: 12,
       tagKey: DishTagKey.balanced,
       emoji: '🐟',
-      localAsset: 'assets/images/dishes/com_nieu_ca_kho.jpg',
+      imageUrl: '$_imageBase/com_nieu_ca_kho.jpg',
     ),
     WhatToEatDish(
       id: 'bun_ca_nha_trang',
@@ -244,7 +327,7 @@ class WhatToEatDish {
       fat: 9,
       tagKey: DishTagKey.healthy,
       emoji: '🍜',
-      localAsset: 'assets/images/dishes/bun_ca_nha_trang.jpg',
+      imageUrl: '$_imageBase/bun_ca_nha_trang.jpg',
     ),
     WhatToEatDish(
       id: 'com_bo_luc_lac',
@@ -256,7 +339,7 @@ class WhatToEatDish {
       fat: 17,
       tagKey: DishTagKey.highProtein,
       emoji: '🥩',
-      localAsset: 'assets/images/dishes/com_bo_luc_lac.jpg',
+      imageUrl: '$_imageBase/com_bo_luc_lac.jpg',
     ),
     WhatToEatDish(
       id: 'bun_rieu_cua',
@@ -268,7 +351,7 @@ class WhatToEatDish {
       fat: 13,
       tagKey: DishTagKey.balanced,
       emoji: '🍲',
-      localAsset: 'assets/images/dishes/bun_rieu_cua.jpg',
+      imageUrl: '$_imageBase/bun_rieu_cua.jpg',
     ),
     WhatToEatDish(
       id: 'com_suon_rim',
@@ -280,7 +363,7 @@ class WhatToEatDish {
       fat: 15,
       tagKey: DishTagKey.balanced,
       emoji: '🍱',
-      localAsset: 'assets/images/dishes/com_suon_rim.jpg',
+      imageUrl: '$_imageBase/com_suon_rim.jpg',
     ),
     WhatToEatDish(
       id: 'com_ca_hoi_ap_chao',
@@ -292,7 +375,7 @@ class WhatToEatDish {
       fat: 16,
       tagKey: DishTagKey.healthy,
       emoji: '🍣',
-      localAsset: 'assets/images/dishes/com_ca_hoi_ap_chao.jpg',
+      imageUrl: '$_imageBase/com_ca_hoi_ap_chao.jpg',
     ),
 
     // ── BỮA TỐI ─────────────────────────────────────────────────────────────
@@ -306,7 +389,7 @@ class WhatToEatDish {
       fat: 7,
       tagKey: DishTagKey.healthy,
       emoji: '🥗',
-      localAsset: 'assets/images/dishes/goi_cuon_tom_thit.jpg',
+      imageUrl: '$_imageBase/goi_cuon_tom_thit.jpg',
     ),
     WhatToEatDish(
       id: 'canh_chua_ca_loc',
@@ -318,7 +401,7 @@ class WhatToEatDish {
       fat: 7,
       tagKey: DishTagKey.light,
       emoji: '🍲',
-      localAsset: 'assets/images/dishes/canh_chua_ca_loc.jpg',
+      imageUrl: '$_imageBase/canh_chua_ca_loc.jpg',
     ),
     WhatToEatDish(
       id: 'canh_kho_qua_nhoi_thit',
@@ -330,7 +413,7 @@ class WhatToEatDish {
       fat: 9,
       tagKey: DishTagKey.light,
       emoji: '🥣',
-      localAsset: 'assets/images/dishes/canh_kho_qua_nhoi_thit.jpg',
+      imageUrl: '$_imageBase/canh_kho_qua_nhoi_thit.jpg',
     ),
     WhatToEatDish(
       id: 'bo_xao_thien_ly',
@@ -342,7 +425,7 @@ class WhatToEatDish {
       fat: 14,
       tagKey: DishTagKey.highProtein,
       emoji: '🥩',
-      localAsset: 'assets/images/dishes/bo_xao_thien_ly.jpg',
+      imageUrl: '$_imageBase/bo_xao_thien_ly.jpg',
     ),
     WhatToEatDish(
       id: 'bun_thit_nuong',
@@ -354,7 +437,7 @@ class WhatToEatDish {
       fat: 13,
       tagKey: DishTagKey.balanced,
       emoji: '🍜',
-      localAsset: 'assets/images/dishes/bun_thit_nuong.jpg',
+      imageUrl: '$_imageBase/bun_thit_nuong.jpg',
     ),
     WhatToEatDish(
       id: 'lau_nam_ga_tiem',
@@ -366,7 +449,7 @@ class WhatToEatDish {
       fat: 12,
       tagKey: DishTagKey.highProtein,
       emoji: '🍲',
-      localAsset: 'assets/images/dishes/lau_nam_ga_tiem.jpg',
+      imageUrl: '$_imageBase/lau_nam_ga_tiem.jpg',
     ),
     WhatToEatDish(
       id: 'uc_ga_ap_chao',
@@ -378,7 +461,7 @@ class WhatToEatDish {
       fat: 10,
       tagKey: DishTagKey.highProtein,
       emoji: '🍗',
-      localAsset: 'assets/images/dishes/uc_ga_ap_chao.jpg',
+      imageUrl: '$_imageBase/uc_ga_ap_chao.jpg',
     ),
     WhatToEatDish(
       id: 'chao_ca_hoi_hat_sen',
@@ -390,7 +473,7 @@ class WhatToEatDish {
       fat: 8,
       tagKey: DishTagKey.light,
       emoji: '🥣',
-      localAsset: 'assets/images/dishes/chao_ca_hoi_hat_sen.jpg',
+      imageUrl: '$_imageBase/chao_ca_hoi_hat_sen.jpg',
     ),
     WhatToEatDish(
       id: 'salad_uc_ga',
@@ -402,7 +485,7 @@ class WhatToEatDish {
       fat: 12,
       tagKey: DishTagKey.healthy,
       emoji: '🥗',
-      localAsset: 'assets/images/dishes/salad_uc_ga.jpg',
+      imageUrl: '$_imageBase/salad_uc_ga.jpg',
     ),
     WhatToEatDish(
       id: 'canh_rong_bien_thit_bo',
@@ -414,11 +497,15 @@ class WhatToEatDish {
       fat: 8,
       tagKey: DishTagKey.healthy,
       emoji: '🍲',
-      localAsset: 'assets/images/dishes/canh_rong_bien_thit_bo.jpg',
+      imageUrl: '$_imageBase/canh_rong_bien_thit_bo.jpg',
     ),
   ];
 
-  static List<WhatToEatDish> getDishesFor(MealTimeCategory category) {
-    return allDishes.where((d) => d.mealType == category).toList();
+  static List<WhatToEatDish> getDishesFor(
+    MealTimeCategory category, [
+    List<WhatToEatDish>? source,
+  ]) {
+    final list = source ?? fallbackDishes;
+    return list.where((d) => d.mealType == category).toList();
   }
 }

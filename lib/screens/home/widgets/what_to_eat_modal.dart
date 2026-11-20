@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,6 +9,7 @@ import 'package:provider/provider.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../../models/what_to_eat_dish.dart';
 import '../../../providers/app_settings_provider.dart';
+import '../../../services/what_to_eat_service.dart';
 
 class WhatToEatModal extends StatefulWidget {
   final bool isDark;
@@ -28,6 +31,7 @@ class WhatToEatModal extends StatefulWidget {
 
 class _WhatToEatModalState extends State<WhatToEatModal> {
   late MealTimeCategory _selectedMeal;
+  late List<WhatToEatDish> _allDishes;
   late List<WhatToEatDish> _dishes;
   late ScrollController _scrollController;
   bool _isSpinning = false;
@@ -43,7 +47,8 @@ class _WhatToEatModalState extends State<WhatToEatModal> {
   void initState() {
     super.initState();
     _selectedMeal = WhatToEatDish.currentMealCategory();
-    _dishes = WhatToEatDish.getDishesFor(_selectedMeal);
+    _allDishes = WhatToEatService.instance.getCachedDishes();
+    _dishes = WhatToEatDish.getDishesFor(_selectedMeal, _allDishes);
     final initialOffset = _dishes.isNotEmpty ? _dishes.length * _itemExtent : 0.0;
     _scrollController = ScrollController(initialScrollOffset: initialOffset);
     _scrollController.addListener(_onScroll);
@@ -54,7 +59,56 @@ class _WhatToEatModalState extends State<WhatToEatModal> {
           _scrollController.jumpTo(target);
         }
       }
+      if (mounted) {
+        unawaited(_syncCatalogFromServer());
+      }
     });
+  }
+
+  Future<void> _syncCatalogFromServer() async {
+    String locale = 'vi';
+    try {
+      locale = context.read<AppSettingsProvider>().languageCode;
+    } catch (_) {}
+
+    final service = WhatToEatService.instance;
+    final persisted = await service.loadPersistedDishes(locale: locale);
+    _applyCatalogIfIdle(persisted);
+
+    final fresh = await service.fetchDishes(locale: locale);
+    _applyCatalogIfIdle(fresh);
+
+    if (mounted) {
+      unawaited(service.prefetchImages(_dishes));
+    }
+  }
+
+  void _applyCatalogIfIdle(List<WhatToEatDish> catalog) {
+    if (!mounted || catalog.isEmpty) return;
+    final nextMealDishes = WhatToEatDish.getDishesFor(_selectedMeal, catalog);
+    final changed =
+        nextMealDishes.length != _dishes.length ||
+        !_sameDishIds(nextMealDishes, _dishes);
+    _allDishes = catalog;
+    if (!changed || _isSpinning || nextMealDishes.isEmpty) return;
+    setState(() {
+      _dishes = nextMealDishes;
+    });
+    if (_scrollController.hasClients) {
+      _scrollController.jumpTo(_dishes.length * _itemExtent);
+    }
+  }
+
+  bool _sameDishIds(List<WhatToEatDish> a, List<WhatToEatDish> b) {
+    if (a.length != b.length) return false;
+    for (var i = 0; i < a.length; i++) {
+      if (a[i].id != b[i].id ||
+          a[i].name != b[i].name ||
+          a[i].imageUrl != b[i].imageUrl) {
+        return false;
+      }
+    }
+    return true;
   }
 
   @override
@@ -77,11 +131,12 @@ class _WhatToEatModalState extends State<WhatToEatModal> {
     if (_isSpinning || _selectedMeal == category) return;
     setState(() {
       _selectedMeal = category;
-      _dishes = WhatToEatDish.getDishesFor(category);
+      _dishes = WhatToEatDish.getDishesFor(category, _allDishes);
     });
     if (_scrollController.hasClients && _dishes.isNotEmpty) {
       _scrollController.jumpTo(_dishes.length * _itemExtent);
     }
+    unawaited(WhatToEatService.instance.prefetchImages(_dishes));
   }
 
   Future<void> _spinReel() async {
@@ -636,11 +691,10 @@ class _DishCard extends StatelessWidget {
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
-                    Image.asset(
-                      dish.localAsset,
-                      fit: BoxFit.cover,
+                    _RemoteDishImage(
+                      imageUrl: dish.resolvedImageUrl,
                       cacheWidth: 360,
-                      errorBuilder: (_, __, ___) => _fallbackEmojiBox(),
+                      fallbackBuilder: _fallbackEmojiBox,
                     ),
                     Positioned(
                       top: 8,
@@ -787,11 +841,10 @@ class _DishResultDialog extends StatelessWidget {
                         child: Stack(
                           fit: StackFit.expand,
                           children: [
-                            Image.asset(
-                              dish.localAsset,
-                              fit: BoxFit.cover,
+                            _RemoteDishImage(
+                              imageUrl: dish.resolvedImageUrl,
                               cacheWidth: 720,
-                              errorBuilder: (_, __, ___) => _fallbackHeroEmoji(),
+                              fallbackBuilder: _fallbackHeroEmoji,
                             ),
                             Positioned(
                               left: 0,
@@ -1107,6 +1160,77 @@ class _DishResultDialog extends StatelessWidget {
           style: const TextStyle(fontSize: 64),
         ),
       ),
+    );
+  }
+}
+
+class _RemoteDishImage extends StatefulWidget {
+  final String imageUrl;
+  final int cacheWidth;
+  final Widget Function() fallbackBuilder;
+
+  const _RemoteDishImage({
+    required this.imageUrl,
+    required this.cacheWidth,
+    required this.fallbackBuilder,
+  });
+
+  @override
+  State<_RemoteDishImage> createState() => _RemoteDishImageState();
+}
+
+class _RemoteDishImageState extends State<_RemoteDishImage> {
+  File? _cachedFile;
+
+  @override
+  void initState() {
+    super.initState();
+    _initImage();
+  }
+
+  @override
+  void didUpdateWidget(covariant _RemoteDishImage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.imageUrl != widget.imageUrl) {
+      _initImage();
+    }
+  }
+
+  void _initImage() {
+    final url = widget.imageUrl;
+    final syncFile = WhatToEatService.instance.getCachedImageFileSync(url);
+    if (syncFile != null) {
+      _cachedFile = syncFile;
+      return;
+    }
+    _cachedFile = null;
+    if (url.isEmpty) return;
+    unawaited(_loadFromCacheOrServer(url));
+  }
+
+  Future<void> _loadFromCacheOrServer(String url) async {
+    final file = await WhatToEatService.instance.loadImageFile(url);
+    if (!mounted || widget.imageUrl != url || file == null) return;
+    setState(() => _cachedFile = file);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final file = _cachedFile;
+    if (file == null) {
+      return widget.fallbackBuilder();
+    }
+
+    return Image.file(
+      file,
+      fit: BoxFit.cover,
+      cacheWidth: widget.cacheWidth,
+      gaplessPlayback: true,
+      frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+        if (wasSynchronouslyLoaded || frame != null) return child;
+        return widget.fallbackBuilder();
+      },
+      errorBuilder: (_, __, ___) => widget.fallbackBuilder(),
     );
   }
 }

@@ -67,7 +67,6 @@ flutter:
 
   assets:
     - assets/images/
-    - assets/images/dishes/
     - assets/images/tao/
     - assets/images/badges/
     - assets/images/apple_mascot/
