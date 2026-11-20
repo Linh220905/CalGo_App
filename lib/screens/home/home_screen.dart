@@ -21,6 +21,7 @@ import '../../utils/localized_date_utils.dart';
 import 'widgets/cal_ai_hero_card.dart';
 import 'widgets/cal_ai_macro_card.dart';
 import 'widgets/nutrition_swipe_section.dart';
+import 'widgets/what_to_eat_tag.dart';
 import '../../utils/macro_colors.dart';
 import '../../utils/macro_icons.dart';
 import '../recap/daily_recap_screen.dart';
@@ -150,6 +151,14 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          // ── Top-Left Floating Tag: "Hôm nay ăn gì" ──
+                          Row(
+                            children: [
+                              WhatToEatTag(isDark: isDark),
+                            ],
+                          ),
+                          const SizedBox(height: 10),
+
                           // ── Top Header Bar with Mascot Speech Bubble ─────
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
